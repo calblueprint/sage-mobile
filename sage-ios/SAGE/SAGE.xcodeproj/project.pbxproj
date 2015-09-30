@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
 		2705CC401BB927D7004FE927 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* ViewController.swift */; };
-		2705CC431BB927D8004FE927 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2705CC411BB927D8004FE927 /* Main.storyboard */; };
-		2705CC451BB927D8004FE927 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2705CC441BB927D8004FE927 /* Assets.xcassets */; };
-		2705CC481BB927D8004FE927 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2705CC461BB927D8004FE927 /* LaunchScreen.storyboard */; };
 		2705CC531BB927D8004FE927 /* SAGETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC521BB927D8004FE927 /* SAGETests.swift */; };
 		2705CC5E1BB927D8004FE927 /* SAGEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */; };
+		27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F990B61BBC7E0700D61DA2 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +35,6 @@
 		2705CC3A1BB927D7004FE927 /* SAGE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAGE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC3D1BB927D7004FE927 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2705CC3F1BB927D7004FE927 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2705CC421BB927D8004FE927 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		2705CC441BB927D8004FE927 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2705CC471BB927D8004FE927 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2705CC491BB927D8004FE927 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2705CC4E1BB927D8004FE927 /* SAGETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAGETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC521BB927D8004FE927 /* SAGETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAGETests.swift; sourceTree = "<group>"; };
@@ -47,6 +42,7 @@
 		2705CC591BB927D8004FE927 /* SAGEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAGEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAGEUITests.swift; sourceTree = "<group>"; };
 		2705CC5F1BB927D8004FE927 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27F990B61BBC7E0700D61DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +95,8 @@
 			children = (
 				2705CC3D1BB927D7004FE927 /* AppDelegate.swift */,
 				2705CC3F1BB927D7004FE927 /* ViewController.swift */,
-				2705CC411BB927D8004FE927 /* Main.storyboard */,
-				2705CC441BB927D8004FE927 /* Assets.xcassets */,
-				2705CC461BB927D8004FE927 /* LaunchScreen.storyboard */,
 				2705CC491BB927D8004FE927 /* Info.plist */,
+				27F990B61BBC7E0700D61DA2 /* Images.xcassets */,
 			);
 			path = SAGE;
 			sourceTree = "<group>";
@@ -192,6 +186,7 @@
 				TargetAttributes = {
 					2705CC391BB927D7004FE927 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = Y635P4CS27;
 					};
 					2705CC4D1BB927D8004FE927 = {
 						CreatedOnToolsVersion = 7.0;
@@ -228,9 +223,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2705CC481BB927D8004FE927 /* LaunchScreen.storyboard in Resources */,
-				2705CC451BB927D8004FE927 /* Assets.xcassets in Resources */,
-				2705CC431BB927D8004FE927 /* Main.storyboard in Resources */,
+				27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,25 +283,6 @@
 			targetProxy = 2705CC5A1BB927D8004FE927 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		2705CC411BB927D8004FE927 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2705CC421BB927D8004FE927 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		2705CC461BB927D8004FE927 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2705CC471BB927D8004FE927 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		2705CC601BB927D8004FE927 /* Debug */ = {
@@ -396,10 +370,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SAGE/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -407,10 +387,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SAGE/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -481,6 +467,7 @@
 				2705CC641BB927D8004FE927 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2705CC651BB927D8004FE927 /* Build configuration list for PBXNativeTarget "SAGETests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +476,7 @@
 				2705CC671BB927D8004FE927 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2705CC681BB927D8004FE927 /* Build configuration list for PBXNativeTarget "SAGEUITests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +485,7 @@
 				2705CC6A1BB927D8004FE927 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  RootTabBarController.swift
 //  SAGE
 //
 //  Created by Andrew Millman on 9/28/15.
@@ -12,7 +12,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBar.tintColor = UIColor.yellowColor()
+        self.tabBar.tintColor = UIColor.mainColor()
         self.tabBar.translucent = false
         
         self.setupTabs()

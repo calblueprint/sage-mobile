@@ -26,6 +26,13 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
             NSLocalizedString("Profile", comment: "Profile")
         ];
         
+        let images = [
+            FAKIonIcons.radioWavesIconWithSize(28).imageWithSize(CGSizeMake(28,28)),
+            FAKIonIcons.locationIconWithSize(28).imageWithSize(CGSizeMake(28,28)),
+            FAKIonIcons.statsBarsIconWithSize(28).imageWithSize(CGSizeMake(28,28)),
+            FAKIonIcons.personIconWithSize(28).imageWithSize(CGSizeMake(28,28))
+        ]
+        
         let announcementsViewController = UIViewController()
         let checkInViewController = UIViewController()
         let myStatsViewController = UIViewController()
@@ -38,7 +45,8 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         for (var i = 0; i < rootViewControllers.count; i++) {
             let navigationController = UINavigationController()
             navigationController.delegate = self
-            navigationController.tabBarItem = UITabBarItem(title: titles[i], image: nil, tag:i)
+            navigationController.tabBarItem = UITabBarItem(title: titles[i], image: images[i], tag:i)
+            navigationController.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -3) // Offset to move text up
             navigationController.viewControllers = [rootViewControllers[i]]
             
             viewControllers.append(navigationController)

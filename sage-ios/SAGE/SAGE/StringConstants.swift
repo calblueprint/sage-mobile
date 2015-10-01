@@ -10,5 +10,5 @@ import Foundation
 
 struct StringConstants {
     
-    static let baseURL = "SAGE"
+    static let kBaseURL = "SAGE"
 }

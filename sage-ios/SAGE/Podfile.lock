@@ -44,13 +44,11 @@ PODS:
   - Mantle (2.0.5):
     - Mantle/extobjc (= 2.0.5)
   - Mantle/extobjc (2.0.5)
-  - Masonry (0.6.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - FontAwesomeKit (from `https://github.com/PrideChung/FontAwesomeKit.git`)
   - Mantle
-  - Masonry
 
 EXTERNAL SOURCES:
   FontAwesomeKit:
@@ -65,6 +63,5 @@ SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   FontAwesomeKit: 1a21b835bd74f0591bfc1dac8c5540188eab3f38
   Mantle: 1912395033f601de5adc8ee91e48f46e4c7051ad
-  Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
 
 COCOAPODS: 0.38.2

@@ -27,12 +27,16 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         ];
         
         let images = [
-            FAKIonIcons.radioWavesIconWithSize(28).imageWithSize(CGSizeMake(28,28)),
-            FAKIonIcons.locationIconWithSize(28).imageWithSize(CGSizeMake(28,28)),
-            FAKIonIcons.statsBarsIconWithSize(28).imageWithSize(CGSizeMake(28,28)),
-            FAKIonIcons.personIconWithSize(28).imageWithSize(CGSizeMake(28,28))
+            FAKIonIcons.radioWavesIconWithSize(UIConstants.tabBarIconSize)
+                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize)),
+            FAKIonIcons.locationIconWithSize(UIConstants.tabBarIconSize)
+                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize)),
+            FAKIonIcons.statsBarsIconWithSize(UIConstants.tabBarIconSize)
+                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize)),
+            FAKIonIcons.personIconWithSize(UIConstants.tabBarIconSize)
+                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
-        
+
         let announcementsViewController = UIViewController()
         let checkInViewController = UIViewController()
         let myStatsViewController = UIViewController()

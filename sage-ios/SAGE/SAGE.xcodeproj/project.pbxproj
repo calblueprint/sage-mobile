@@ -49,6 +49,7 @@
 		27F990B61BBC7E0700D61DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		27F990B81BBCC3CB00D61DA2 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		27F990BF1BBCE3B300D61DA2 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		27F990C11BBDC5C200D61DA2 /* SAGE-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAGE-Bridging-Header.h"; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F1F2282D26B35880052B3998 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -117,6 +118,7 @@
 				27F990BD1BBCC59500D61DA2 /* Models */,
 				27F990BA1BBCC57300D61DA2 /* Categories */,
 				2705CC3D1BB927D7004FE927 /* AppDelegate.swift */,
+				27F990C11BBDC5C200D61DA2 /* SAGE-Bridging-Header.h */,
 				2705CC491BB927D8004FE927 /* Info.plist */,
 				27F990B61BBC7E0700D61DA2 /* Images.xcassets */,
 			);
@@ -487,6 +489,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SAGE/SAGE-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -505,6 +508,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SAGE/SAGE-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

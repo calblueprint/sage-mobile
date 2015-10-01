@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
-		2705CC401BB927D7004FE927 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* ViewController.swift */; };
+		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
 		2705CC531BB927D8004FE927 /* SAGETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC521BB927D8004FE927 /* SAGETests.swift */; };
 		2705CC5E1BB927D8004FE927 /* SAGEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */; };
 		27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F990B61BBC7E0700D61DA2 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
@@ -36,7 +36,7 @@
 		038E557A8664D96BC0F724A9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2705CC3A1BB927D7004FE927 /* SAGE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAGE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC3D1BB927D7004FE927 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2705CC3F1BB927D7004FE927 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
 		2705CC491BB927D8004FE927 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2705CC4E1BB927D8004FE927 /* SAGETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAGETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC521BB927D8004FE927 /* SAGETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAGETests.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				2705CC3D1BB927D7004FE927 /* AppDelegate.swift */,
-				2705CC3F1BB927D7004FE927 /* ViewController.swift */,
+				2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */,
 				2705CC491BB927D8004FE927 /* Info.plist */,
 				27F990B61BBC7E0700D61DA2 /* Images.xcassets */,
 			);
@@ -307,7 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2705CC401BB927D7004FE927 /* ViewController.swift in Sources */,
+				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
 				2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

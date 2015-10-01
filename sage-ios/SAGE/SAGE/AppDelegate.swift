@@ -16,12 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        let mainViewController = ViewController()
+        let rootViewController = RootTabBarController()
         
-        window?.rootViewController = mainViewController
+        window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
         
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent;
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        UINavigationBar.appearance().barTintColor = UIColor.yellowColor()
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().translucent = false
         return true
     }
 

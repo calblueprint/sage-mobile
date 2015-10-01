@@ -110,9 +110,11 @@
 		2705CC3C1BB927D7004FE927 /* SAGE */ = {
 			isa = PBXGroup;
 			children = (
-				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
+				27F990BB1BBCC58700D61DA2 /* Controllers */,
+				27F990BC1BBCC58D00D61DA2 /* Views */,
+				27F990BD1BBCC59500D61DA2 /* Models */,
+				27F990BA1BBCC57300D61DA2 /* Categories */,
 				2705CC3D1BB927D7004FE927 /* AppDelegate.swift */,
-				2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */,
 				2705CC491BB927D8004FE927 /* Info.plist */,
 				27F990B61BBC7E0700D61DA2 /* Images.xcassets */,
 			);
@@ -135,6 +137,44 @@
 				2705CC5F1BB927D8004FE927 /* Info.plist */,
 			);
 			path = SAGEUITests;
+			sourceTree = "<group>";
+		};
+		27F990BA1BBCC57300D61DA2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		27F990BB1BBCC58700D61DA2 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		27F990BC1BBCC58D00D61DA2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				27F990BE1BBCC5A300D61DA2 /* Reusable */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		27F990BD1BBCC59500D61DA2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		27F990BE1BBCC5A300D61DA2 /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Reusable;
 			sourceTree = "<group>";
 		};
 		EDECFCEB40B96BC560906CF2 /* Pods */ = {

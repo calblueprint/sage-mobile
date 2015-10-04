@@ -15,6 +15,7 @@ class Checkin: NSObject {
     var endTime: NSDate?
     var school: School?
     var comment: String?
+    var verified: Bool?
     
     init(propertyDictionary: [String: AnyObject]) {
         super.init()

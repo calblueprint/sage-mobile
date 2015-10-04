@@ -16,5 +16,6 @@ struct CheckinConstants {
     static let kEndTime: String = "end_time"
     static let kSchool: String = "school"
     static let kComment: String = "comment"
+    static let kVerified: String = "verified"
 
 }

@@ -12,6 +12,8 @@
 		2705CC531BB927D8004FE927 /* SAGETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC521BB927D8004FE927 /* SAGETests.swift */; };
 		2705CC5E1BB927D8004FE927 /* SAGEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */; };
 		278160181BC0DF7700A1DB75 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278160171BC0DF7700A1DB75 /* APIKeys.swift */; settings = {ASSET_TAGS = (); }; };
+		2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601D1BC0E26B00A1DB75 /* CheckinView.swift */; settings = {ASSET_TAGS = (); }; };
 		27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F990B61BBC7E0700D61DA2 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
 		27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; settings = {ASSET_TAGS = (); }; };
 		27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; settings = {ASSET_TAGS = (); }; };
@@ -91,6 +93,8 @@
 		2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAGEUITests.swift; sourceTree = "<group>"; };
 		2705CC5F1BB927D8004FE927 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		278160171BC0DF7700A1DB75 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
+		2781601D1BC0E26B00A1DB75 /* CheckinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinView.swift; sourceTree = "<group>"; };
 		27F990B61BBC7E0700D61DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		27F990B81BBCC3CB00D61DA2 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		27F990BF1BBCE3B300D61DA2 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -211,6 +215,22 @@
 			path = SAGEUITests;
 			sourceTree = "<group>";
 		};
+		278160191BC0E1FD00A1DB75 /* Checkin */ = {
+			isa = PBXGroup;
+			children = (
+				2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */,
+			);
+			name = Checkin;
+			sourceTree = "<group>";
+		};
+		2781601A1BC0E23B00A1DB75 /* Checkin */ = {
+			isa = PBXGroup;
+			children = (
+				2781601D1BC0E26B00A1DB75 /* CheckinView.swift */,
+			);
+			name = Checkin;
+			sourceTree = "<group>";
+		};
 		27F990BA1BBCC57300D61DA2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +243,7 @@
 		27F990BB1BBCC58700D61DA2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				278160191BC0E1FD00A1DB75 /* Checkin */,
 				2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */,
 			);
 			name = Controllers;
@@ -232,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				27F990BE1BBCC5A300D61DA2 /* Reusable */,
+				2781601A1BC0E23B00A1DB75 /* Checkin */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -506,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
+				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
@@ -514,6 +537,7 @@
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
+				2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
 				4223342D1BC0C96000E863D0 /* AnnouncementConstants.swift in Sources */,
 				27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */,
@@ -606,6 +630,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -651,6 +676,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

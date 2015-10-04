@@ -38,7 +38,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         ]
 
         let announcementsViewController = UIViewController()
-        let checkInViewController = UIViewController()
+        let checkInViewController = CheckinViewController()
         let myStatsViewController = UIViewController()
         let profileViewController = UIViewController()
         

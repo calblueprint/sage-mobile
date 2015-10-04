@@ -9,28 +9,26 @@
 import XCTest
 @testable import SAGE
 
-class SAGETests: XCTestCase {
+
+
+class ModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
+    func modelInitializationTests() {
+        let userDict = [UserConstants.kId: 2]
+        let schoolDict = [SchoolConstants.kId: 3]
+        let announcement = Announcement(propertyDictionary: [AnnouncementConstants.kId: 1, AnnouncementConstants.kSender: userDict, AnnouncementConstants.kTitle: "Title of the announcement", AnnouncementConstants.kSchool: schoolDict])
+        XCTAssertEqual(announcement.id, 1);
+        XCTAssertEqual(announcement.sender!.id!, 2);
+        XCTAssertEqual(announcement.school!.id!, 3);
+        XCTAssertEqual(announcement.title, "Title of the announcement");
     }
     
 }

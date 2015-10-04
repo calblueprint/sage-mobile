@@ -6,5 +6,6 @@
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
+#import <GoogleMaps/GoogleMaps.h>
 #import <AFNetworking/AFNetworking.h>
 #import <FontAwesomeKit/FontAwesomeKit.h>

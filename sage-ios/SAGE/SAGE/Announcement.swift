@@ -17,7 +17,7 @@ class Announcement: NSObject {
     var timeCreated: NSDate?
     var school: School?
     
-    init(id: Int, sender: User, title: String, text: String, timeCreated: NSDate, school: School) {
+    init(id: Int? = nil, sender: User? = nil, title: String? = nil, text: String? = nil, timeCreated: NSDate? = nil, school: School? = nil) {
         super.init()
         self.id = id
         self.sender = sender;
@@ -27,19 +27,19 @@ class Announcement: NSObject {
         self.school = school;
     }
     
-    init(propertyDictionary: [String: AnyObject]) {
+    init(properties propertyDictionary: [String: AnyObject]) {
         super.init()
         for (propertyName, value) in propertyDictionary {
             switch propertyName {
             case AnnouncementConstants.kSender:
-                let userDictionary = propertyDictionary[propertyName] as! [String: AnyObject]
+                let userDictionary = value as! [String: AnyObject]
                 self.sender = User(propertyDictionary: userDictionary)
             case AnnouncementConstants.kTimeCreated:
                 let formatter = NSDateFormatter()
                 formatter.dateFormat = StringConstants.JSONdateFormat
-                self.timeCreated = formatter.dateFromString(propertyDictionary[propertyName] as! String)
+                self.timeCreated = formatter.dateFromString(value as! String)
             case AnnouncementConstants.kSchool:
-                let schoolDictionary = propertyDictionary[propertyName] as! [String: AnyObject]
+                let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
             default:
                 self.setValue(value, forKey: propertyName)
@@ -47,7 +47,28 @@ class Announcement: NSObject {
         }
     }
     
-    override init() {
-        super.init()
+    func toDictionary() -> [String: AnyObject]{
+        var propertyDict: [String: AnyObject] = [String: AnyObject]()
+        if let id = self.id {
+            propertyDict[AnnouncementConstants.kId] = id
+        }
+        if let sender = self.sender {
+            propertyDict[AnnouncementConstants.kSender] = sender.toDictionary()
+        }
+        if let title = self.title {
+            propertyDict[AnnouncementConstants.kTitle] = title
+        }
+        if let text = self.text {
+            propertyDict[AnnouncementConstants.kText] = text
+        }
+        if let timeCreated = self.timeCreated {
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = StringConstants.JSONdateFormat
+            propertyDict[AnnouncementConstants.kTimeCreated] = formatter.stringFromDate(timeCreated)
+        }
+        if let school = self.school {
+            propertyDict[AnnouncementConstants.kSchool] = school.toDictionary()
+        }
+        return propertyDict
     }
 }

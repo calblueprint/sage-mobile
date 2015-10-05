@@ -11,11 +11,11 @@ import CoreLocation
 class School: NSObject {
     var id: Int?
     var name: String?
-    var location: CLLocation = CLLocation(latitude: 0, longitude: 0)
+    var location: CLLocation? = CLLocation(latitude: 0, longitude: 0)
     var students: [User]?
     var director: User?
     
-    init(id: Int, name: String, location: CLLocation, students: [User], director: User) {
+    init(id: Int? = nil, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil) {
         super.init()
         self.id = id
         self.name = name
@@ -30,18 +30,18 @@ class School: NSObject {
             switch propertyName {
             case SchoolConstants.kStudents:
                 self.students = []
-                let studentsDictionaryArray = propertyDictionary[propertyName] as? [[String: AnyObject]]
+                let studentsDictionaryArray = value as? [[String: AnyObject]]
                 for studentDictionary in studentsDictionaryArray! {
                     let student: User = User(propertyDictionary: studentDictionary)
                     self.students!.append(student)
                 }
             case SchoolConstants.kLocation:
-                let locationDictionary = propertyDictionary[propertyName] as! [String:Double]
-                let latitude = locationDictionary["lat"]
-                let longitude = locationDictionary["long"]
+                let locationDictionary = value as! [String:Double]
+                let latitude = locationDictionary[SchoolConstants.kLat]
+                let longitude = locationDictionary[SchoolConstants.kLong]
                 self.location = CLLocation(latitude: latitude!, longitude: longitude!)
             case SchoolConstants.kDirector:
-                let directorDictionary = propertyDictionary[propertyName] as! [String: AnyObject]
+                let directorDictionary = value as! [String: AnyObject]
                 self.director = User(propertyDictionary: directorDictionary)
             default:
                 self.setValue(value, forKey: propertyName)
@@ -49,7 +49,28 @@ class School: NSObject {
         }
     }
     
-    override init() {
-        super.init()
+    func toDictionary() -> [String: AnyObject]{
+        var propertyDict: [String: AnyObject] = [String: AnyObject]()
+        if let id = self.id {
+            propertyDict[SchoolConstants.kId] = id
+        }
+        if let name = self.name {
+            propertyDict[SchoolConstants.kName] = name
+        }
+        if let location = self.location {
+            let latLongDict = [SchoolConstants.kLat: location.coordinate.latitude, SchoolConstants.kLong: location.coordinate.longitude]
+            propertyDict[SchoolConstants.kLocation] = latLongDict
+        }
+        if let students = self.students {
+            var studentDict: [[String: AnyObject]] = [[String: AnyObject]]()
+            for student in students{
+                studentDict.append(student.toDictionary())
+            }
+            propertyDict[SchoolConstants.kStudents] = students
+        }
+        if let director = self.director {
+            propertyDict[SchoolConstants.kDirector] = director.toDictionary()
+        }
+        return propertyDict
     }
 }

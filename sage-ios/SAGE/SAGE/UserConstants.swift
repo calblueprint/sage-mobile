@@ -11,7 +11,10 @@ import Foundation
 struct UserConstants {
     
     static let kId: String = "id"
-    static let kName: String = "name"
+    static let kFirstName: String = "first_name"
+    static let kLastName: String = "last_name"
+    static let kUsername: String = "username"
+    static let kEmail: String = "email"
     static let kSchool: String = "school"
     static let kLevel: String = "level"
     static let kRole: String = "role"

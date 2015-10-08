@@ -19,6 +19,8 @@ struct UIConstants {
     static let barbuttonIconSize: CGFloat = 24.0
     static let tabBarIconSize: CGFloat = 28.0
     
+    static let blurredBerkeleyBackground: String = "BerkeleySunsetBlurred.jpg"
+    
     static func dividerHeight() -> CGFloat {
         return 1 / UIScreen.mainScreen().scale
     }

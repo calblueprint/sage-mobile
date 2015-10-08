@@ -6,8 +6,22 @@
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
-import Cocoa
+import UIKit
 
 class LoginController: UIViewController {
-
+    
+    override func loadView() {
+        super.loadView()
+        self.view = LoginView.init(frame: self.view.frame)
+    }
+    
+    func isValidUsername(completion: () -> Void) {
+        // check that it hasn't been taken already for new usernames
+    }
+    
+    func proceedToMainApplication() {
+        // show root tab bar controller
+    }
+    
+    
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
@@ -14,7 +15,6 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         super.viewDidLoad()
         self.tabBar.tintColor = UIColor.mainColor()
         self.tabBar.translucent = false
-        
         self.setupTabs()
     }
     
@@ -57,5 +57,10 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         }
         
         self.viewControllers = viewControllers
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        print("view did appear")
     }
 }

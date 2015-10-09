@@ -12,26 +12,84 @@ class LoginView: UIView, UITextFieldDelegate {
     var loginUsernameField: UITextField?
     var loginPasswordField: UITextField?
     var signUpLink: UILabel?
+    var sageLabel: UILabel?
     var containerView: UIView?
+    var firstDivider: UIView?
+    var secondDivider: UIView?
     
     var movedUp: Bool = false
     
-    
     required override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.setUpView()
+        let screenRect = UIScreen.mainScreen().bounds;
+        let screenWidth = screenRect.size.width;
+        let screenHeight = screenRect.size.height;
+        let newFrame = CGRectMake(0, 0, screenWidth, screenHeight)
+        super.init(frame: newFrame)
+        self.setUpViews()
+    }
+    
+    override func layoutSubviews() {
+        self.positionViews()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.setUpView()
+        self.setUpViews()
     }
     
-    func setUpView () {
+    func setUpViews () {
         self.setUpBackground()
         self.setUpGestureRecognizer()
         self.setUpKeyboardNotifications()
+        self.setUpLoginItems()
+    }
+    
+    func positionViews() {
         self.setUpLoginArea()
+    }
+    
+    func setUpLoginItems() {
+        self.containerView = UIView()
+        self.addSubview(self.containerView!)
+        
+        self.sageLabel = UILabel()
+        self.sageLabel!.text = "SAGE"
+        self.sageLabel!.textColor = UIColor.whiteColor()
+        self.sageLabel!.font = UIFont.getTitleFont(64)
+        
+        self.containerView!.addSubview(self.sageLabel!)
+        
+        self.loginUsernameField = UITextField()
+        self.loginUsernameField?.textColor = UIColor.whiteColor()
+        self.loginUsernameField?.attributedPlaceholder = NSAttributedString(string:"Email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        self.containerView!.addSubview(self.loginUsernameField!)
+        
+        self.firstDivider = UIView()
+        self.firstDivider!.backgroundColor = UIColor.whiteColor()
+        self.containerView!.addSubview(self.firstDivider!)
+        
+        self.loginPasswordField = UITextField()
+        self.loginPasswordField?.textColor = UIColor.whiteColor()
+        self.loginPasswordField?.attributedPlaceholder = NSAttributedString(string:"Password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        self.containerView!.addSubview(self.loginPasswordField!)
+        
+        self.secondDivider = UIView()
+        self.secondDivider!.backgroundColor = UIColor.whiteColor()
+        self.containerView!.addSubview(self.secondDivider!)
+        
+        self.signUpLink = UILabel()
+        self.signUpLink?.textColor = UIColor.whiteColor()
+        self.signUpLink?.font = UIFont.metaFont
+        let signUpString = "Don't have an account? Sign up here."
+        let range = (signUpString as NSString).rangeOfString("here")
+        let attributedString = NSMutableAttributedString(string: signUpString)
+        
+        attributedString.addAttribute(NSUnderlineStyleAttributeName, value: NSNumber(int: 1), range: range)
+        
+        self.signUpLink!.attributedText = attributedString
+        
+        self.signUpLink?.textAlignment = NSTextAlignment.Center
+        self.containerView!.addSubview(self.signUpLink!)
     }
     
     func screenTapped() {
@@ -100,54 +158,61 @@ class LoginView: UIView, UITextFieldDelegate {
     
     func setUpLoginArea() {
         
-        let containerView = UIView()
-        self.containerView = containerView
-        containerView.centerHorizontally()
-        containerView.centerVertically()
-        containerView.setHeight(self.frame.height * 0.6)
-        containerView.setWidth(self.frame.width - 2 * UIConstants.sideMargin)
-        containerView.setX(UIConstants.sideMargin)
-        containerView.setY(self.frame.height * 0.2)
-        self.addSubview(containerView)
-        
-        let sageFrame = CGRectMake(0, 0, containerView.frame.width, containerView.frame.height * 0.4)
-        let sageLabel = UILabel.init(frame: sageFrame)
-        sageLabel.text = "SAGE"
-        sageLabel.textAlignment = NSTextAlignment.Center
-        sageLabel.textColor = UIColor.whiteColor()
-        sageLabel.font = UIFont.getTitleFont(64)
-        containerView.addSubview(sageLabel)
+        self.containerView!.centerHorizontally()
+        self.containerView!.centerVertically()
+        self.containerView!.setHeight(self.frame.height * 0.6)
+        self.containerView!.setWidth(self.frame.width - 2 * UIConstants.sideMargin)
+        self.containerView!.setX(UIConstants.sideMargin)
+        self.containerView!.setY(self.frame.height * 0.2)
+    
+        self.sageLabel!.setX(0)
+        self.sageLabel!.setY(0)
+        self.sageLabel!.setWidth(self.containerView!.frame.width)
+        self.sageLabel!.setHeight(self.containerView!.frame.height * 0.4)
+        self.sageLabel!.textAlignment = NSTextAlignment.Center
         
         let dividerMargin: CGFloat = 30
         let textOffset: CGFloat = 40
+        let textFieldHeight: CGFloat = 40
         
-        let usernameFrame = CGRectMake(textOffset, containerView.frame.height * 0.35, containerView.frame.width - 2 * textOffset, 40)
-        self.loginUsernameField = UITextField(frame: usernameFrame)
-        self.loginUsernameField?.textColor = UIColor.whiteColor()
-        self.loginUsernameField?.attributedPlaceholder = NSAttributedString(string:"Email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
-        self.loginUsernameField?.centerHorizontally()
-        self.alignBottomWithMargin(0)
-        containerView.addSubview(self.loginUsernameField!)
+        self.loginUsernameField!.setX(textOffset)
+        self.loginUsernameField!.setY(self.containerView!.frame.height * 0.35)
+        self.loginUsernameField!.setWidth(self.containerView!.frame.width - 2 * textOffset)
+        self.loginUsernameField!.setHeight(textFieldHeight)
         
-        let firstDividerFrame = CGRectMake(dividerMargin, containerView.frame.height * 0.35 + 40, containerView.frame.width - 2 * dividerMargin, UIConstants.dividerHeight())
-        let firstDivider = UIView(frame: firstDividerFrame)
-        firstDivider.alignBottomWithMargin(0)
-        firstDivider.backgroundColor = UIColor.whiteColor()
-        containerView.addSubview(firstDivider)
+        self.firstDivider!.setX(dividerMargin)
+        self.firstDivider!.setY(self.containerView!.frame.height * 0.35 + textFieldHeight)
+        self.firstDivider!.setWidth(self.containerView!.frame.width - 2 * dividerMargin)
+        self.firstDivider!.setHeight(UIConstants.dividerHeight())
         
-        let passwordFrame = CGRectMake(textOffset, containerView.frame.height * 0.48, containerView.frame.width - 2 * textOffset, 40)
-        self.loginPasswordField = UITextField(frame: passwordFrame)
-        self.loginPasswordField?.textColor = UIColor.whiteColor()
-        self.loginPasswordField?.attributedPlaceholder = NSAttributedString(string:"Password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
-        containerView.addSubview(self.loginPasswordField!)
+        self.loginPasswordField!.setX(textOffset)
+        self.loginPasswordField!.setY(self.containerView!.frame.height * 0.48)
+        self.loginPasswordField!.setWidth(self.containerView!.frame.width - 2 * textOffset)
+        self.loginPasswordField!.setHeight(textFieldHeight)
         
-        let secondDividerFrame = CGRectMake(dividerMargin, containerView.frame.height * 0.48 + 40, containerView.frame.width - 2 * dividerMargin, UIConstants.dividerHeight())
-        let secondDivider = UIView(frame: secondDividerFrame)
-        secondDivider.alignBottomWithMargin(0)
-        secondDivider.backgroundColor = UIColor.whiteColor()
-        containerView.addSubview(secondDivider)
+        self.secondDivider!.setX(dividerMargin)
+        self.secondDivider!.setY(containerView!.frame.height * 0.48 + textFieldHeight)
+        self.secondDivider!.setWidth(self.containerView!.frame.width - 2 * dividerMargin)
+        self.secondDivider!.setHeight(UIConstants.dividerHeight())
+        
+        self.signUpLink!.setX(0)
+        self.signUpLink!.setY(self.containerView!.frame.height * 0.48 + 65)
+        self.signUpLink!.setWidth(self.containerView!.frame.width)
+        self.signUpLink!.setHeight(20)
+        
         
     }    
     
 }
+
+
+
+
+
+
+
+
+
+
+
 

@@ -11,8 +11,7 @@ import UIKit
 class LoginController: UIViewController {
     
     override func loadView() {
-        super.loadView()
-        self.view = LoginView.init(frame: self.view.frame)
+        self.view = LoginView.init()
     }
     
     func proceedToMainApplication() {

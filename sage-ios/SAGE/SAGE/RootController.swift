@@ -61,6 +61,7 @@ class RootController: UIViewController {
     func pushRootTabBarController() {
         LoginHelper.setUserSingleton()
         let rootTabBarController = RootTabBarController()
+        self.presentViewController(rootTabBarController, animated: false, completion: nil)
         self.showViewController(rootTabBarController, sender: self)
     }
 }

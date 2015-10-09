@@ -27,20 +27,18 @@ class User: NSObject {
     var firstName: String?
     var lastName: String?
     var email: String?
-    var username: String?
     var school: School?
     var level: VolunteerLevel?
     var role: UserRole?
     var totalHours: Int?
     var verified: Bool?
     
-    init(id: Int? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, username: String? = nil, school: School? = nil, level: VolunteerLevel? = nil, role: UserRole? = nil, totalHours: Int? = nil, verified: Bool? = nil) {
+    init(id: Int? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel? = nil, role: UserRole? = nil, totalHours: Int? = nil, verified: Bool? = nil) {
         super.init()
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
-        self.username = username
         self.school = school
         self.level = level
         self.role = role
@@ -90,9 +88,6 @@ class User: NSObject {
         }
         if let lastName = self.lastName {
             propertyDict[UserConstants.kLastName] = lastName
-        }
-        if let username = self.username {
-            propertyDict[UserConstants.kUsername] = username
         }
         if let email = self.email {
             propertyDict[UserConstants.kEmail] = email

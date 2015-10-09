@@ -15,10 +15,6 @@ class LoginController: UIViewController {
         self.view = LoginView.init(frame: self.view.frame)
     }
     
-    func isValidUsername(completion: () -> Void) {
-        // check that it hasn't been taken already for new usernames
-    }
-    
     func proceedToMainApplication() {
         // show root tab bar controller
     }

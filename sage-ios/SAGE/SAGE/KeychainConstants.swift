@@ -10,7 +10,6 @@ import Foundation
 
 struct KeychainConstants {
 
-    static let kUsername: String = StringConstants.kBaseURL + "username"
     static let kAuthToken: String = StringConstants.kBaseURL + "authToken"
     static let kEmail: String = StringConstants.kBaseURL + "email"
     static let kVerified: String = StringConstants.kBaseURL + "verified"

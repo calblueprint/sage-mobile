@@ -13,7 +13,7 @@ class LoginHelper: NSObject {
         if let _ = User.currentUser {
             return true
         }
-        let retrievedUsername: String? = KeychainWrapper.stringForKey(KeychainConstants.kUsername)
+        let retrievedUsername: String? = KeychainWrapper.stringForKey(KeychainConstants.kEmail)
         if let _ = retrievedUsername {
             return true
         }
@@ -29,16 +29,20 @@ class LoginHelper: NSObject {
         return false
     }
     
-    func isValidLogin(completion: (valid: Bool) -> Void) {
-        
+    func isValidLogin(completion: (Bool) -> Void) {
+        let value: Bool = false
+        completion(value)
+    }
+    
+    func isValidUsername(completion: (Bool) -> Void) {
+        // check that it hasn't been taken already for new usernames
+        let value: Bool = false
+        completion(value)
     }
     
     static func getKeyChainData() -> [String: String] {
         var data: [String: String] = [String: String]()
         
-        if let username = KeychainWrapper.stringForKey(KeychainConstants.kUsername) {
-            data[UserConstants.kUsername] = username
-        }
         if let email = KeychainWrapper.stringForKey(KeychainConstants.kEmail) {
             data[UserConstants.kEmail] = email
         }

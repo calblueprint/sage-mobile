@@ -43,7 +43,7 @@ class RootController: UIViewController {
         sageLabel.text = "If you want to be happy, be."
         sageLabel.textAlignment = NSTextAlignment.Center
         sageLabel.textColor = UIColor.whiteColor()
-        sageLabel.font = sageLabel.font.fontWithSize(20)
+        sageLabel.font = UIFont.systemFontOfSize(20)
         self.view.addSubview(sageLabel)
     }
     

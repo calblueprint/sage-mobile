@@ -50,18 +50,23 @@ class RootController: UIViewController {
     // a function that will fill in values and present the login view controller
     func pushLoginViewController() {
         let loginController = LoginController()
-        self.showViewController(loginController, sender: self)
+        self.displayViewController(loginController)
+    }
+    
+    func displayViewController(vc: UIViewController) {
+        self.view = UIView(frame: self.view.frame)
+        self.addChildViewController(vc)
+        self.view.addSubview(vc.view)
     }
     
     func pushUnverifiedViewController() {
         let unverifiedController = UnverifiedViewController()
-        self.showViewController(unverifiedController, sender: self)
+        self.displayViewController(unverifiedController)
     }
     
     func pushRootTabBarController() {
         LoginHelper.setUserSingleton()
         let rootTabBarController = RootTabBarController()
-        self.presentViewController(rootTabBarController, animated: false, completion: nil)
-        self.showViewController(rootTabBarController, sender: self)
+        self.displayViewController(rootTabBarController)
     }
 }

@@ -59,9 +59,11 @@
 		4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */; settings = {ASSET_TAGS = (); }; };
 		4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2981BC62B4500C831C7 /* LoginView.swift */; settings = {ASSET_TAGS = (); }; };
+		427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427432EF1BC776FD00464200 /* UnverifiedView.swift */; settings = {ASSET_TAGS = (); }; };
 		42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3933E1BC45DB900630F93 /* LoginController.swift */; settings = {ASSET_TAGS = (); }; };
 		42C393411BC45DEC00630F93 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393401BC45DEC00630F93 /* RootController.swift */; settings = {ASSET_TAGS = (); }; };
 		42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393421BC4607D00630F93 /* UnverifiedViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */; settings = {ASSET_TAGS = (); }; };
 		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
@@ -119,9 +121,11 @@
 		4264DFEA1BC59BE20097804D /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Pods/../build/Debug-iphoneos/AFNetworking.framework"; sourceTree = "<group>"; };
 		4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = "Pods/../build/Debug-iphoneos/FontAwesomeKit.framework"; sourceTree = "<group>"; };
 		4264DFEC1BC59BE20097804D /* SwiftKeychainWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftKeychainWrapper.framework; path = "Pods/../build/Debug-iphoneos/SwiftKeychainWrapper.framework"; sourceTree = "<group>"; };
+		427432EF1BC776FD00464200 /* UnverifiedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedView.swift; sourceTree = "<group>"; };
 		42C3933E1BC45DB900630F93 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		42C393401BC45DEC00630F93 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		42C393421BC4607D00630F93 /* UnverifiedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedViewController.swift; sourceTree = "<group>"; };
+		42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -241,6 +245,7 @@
 		27F990BB1BBCC58700D61DA2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				42EFD66E1BC7A96A0063FD78 /* Sign Up */,
 				4254D2961BC5B19100C831C7 /* Login */,
 				2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */,
 				42C393401BC45DEC00630F93 /* RootController.swift */,
@@ -253,6 +258,7 @@
 			children = (
 				27F990BE1BBCC5A300D61DA2 /* Reusable */,
 				4254D2981BC62B4500C831C7 /* LoginView.swift */,
+				427432EF1BC776FD00464200 /* UnverifiedView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -320,6 +326,14 @@
 				4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		42EFD66E1BC7A96A0063FD78 /* Sign Up */ = {
+			isa = PBXGroup;
+			children = (
+				42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */,
+			);
+			name = "Sign Up";
 			sourceTree = "<group>";
 		};
 		EDECFCEB40B96BC560906CF2 /* Pods */ = {
@@ -554,6 +568,7 @@
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */,
+				42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
 				4223342D1BC0C96000E863D0 /* AnnouncementConstants.swift in Sources */,
@@ -564,6 +579,7 @@
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
+				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,
 				2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

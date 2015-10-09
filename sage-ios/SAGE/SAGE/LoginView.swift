@@ -7,11 +7,11 @@
 
 import UIKit
 
-class LoginView: UIView, UITextFieldDelegate {
+class LoginView: UIView {
     
-    var loginUsernameField: UITextField?
+    var loginEmailField: UITextField?
     var loginPasswordField: UITextField?
-    var signUpLink: UILabel?
+    var signUpLink: UIButton?
     var sageLabel: UILabel?
     var containerView: UIView?
     var firstDivider: UIView?
@@ -59,10 +59,11 @@ class LoginView: UIView, UITextFieldDelegate {
         
         self.containerView!.addSubview(self.sageLabel!)
         
-        self.loginUsernameField = UITextField()
-        self.loginUsernameField?.textColor = UIColor.whiteColor()
-        self.loginUsernameField?.attributedPlaceholder = NSAttributedString(string:"Email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
-        self.containerView!.addSubview(self.loginUsernameField!)
+        self.loginEmailField = UITextField()
+        self.loginEmailField?.textColor = UIColor.whiteColor()
+        self.loginEmailField?.attributedPlaceholder = NSAttributedString(string:"Email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        self.loginEmailField?.returnKeyType = UIReturnKeyType.Done
+        self.containerView!.addSubview(self.loginEmailField!)
         
         self.firstDivider = UIView()
         self.firstDivider!.backgroundColor = UIColor.whiteColor()
@@ -71,24 +72,23 @@ class LoginView: UIView, UITextFieldDelegate {
         self.loginPasswordField = UITextField()
         self.loginPasswordField?.textColor = UIColor.whiteColor()
         self.loginPasswordField?.attributedPlaceholder = NSAttributedString(string:"Password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        self.loginPasswordField?.secureTextEntry = true;
+        self.loginPasswordField?.returnKeyType = UIReturnKeyType.Done
         self.containerView!.addSubview(self.loginPasswordField!)
         
         self.secondDivider = UIView()
         self.secondDivider!.backgroundColor = UIColor.whiteColor()
         self.containerView!.addSubview(self.secondDivider!)
         
-        self.signUpLink = UILabel()
-        self.signUpLink?.textColor = UIColor.whiteColor()
-        self.signUpLink?.font = UIFont.metaFont
+        self.signUpLink = UIButton()
         let signUpString = "Don't have an account? Sign up here."
         let range = (signUpString as NSString).rangeOfString("here")
         let attributedString = NSMutableAttributedString(string: signUpString)
-        
         attributedString.addAttribute(NSUnderlineStyleAttributeName, value: NSNumber(int: 1), range: range)
-        
-        self.signUpLink!.attributedText = attributedString
-        
-        self.signUpLink?.textAlignment = NSTextAlignment.Center
+        self.signUpLink?.setAttributedTitle(attributedString, forState: UIControlState.Normal)
+        self.signUpLink?.titleLabel!.textAlignment = NSTextAlignment.Center
+        self.signUpLink?.titleLabel!.font = UIFont.metaFont
+        self.signUpLink?.titleLabel!.textColor = UIColor.whiteColor()
         self.containerView!.addSubview(self.signUpLink!)
     }
     
@@ -103,11 +103,6 @@ class LoginView: UIView, UITextFieldDelegate {
         let imageView = UIImageView.init(frame: frame)
         imageView.image = image
         self.addSubview(imageView)
-    }
-    
-    // dismisses the keyboard when the return key is pressed
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        return true
     }
     
     func setUpGestureRecognizer() {
@@ -175,10 +170,10 @@ class LoginView: UIView, UITextFieldDelegate {
         let textOffset: CGFloat = 40
         let textFieldHeight: CGFloat = 40
         
-        self.loginUsernameField!.setX(textOffset)
-        self.loginUsernameField!.setY(self.containerView!.frame.height * 0.35)
-        self.loginUsernameField!.setWidth(self.containerView!.frame.width - 2 * textOffset)
-        self.loginUsernameField!.setHeight(textFieldHeight)
+        self.loginEmailField!.setX(textOffset)
+        self.loginEmailField!.setY(self.containerView!.frame.height * 0.35)
+        self.loginEmailField!.setWidth(self.containerView!.frame.width - 2 * textOffset)
+        self.loginEmailField!.setHeight(textFieldHeight)
         
         self.firstDivider!.setX(dividerMargin)
         self.firstDivider!.setY(self.containerView!.frame.height * 0.35 + textFieldHeight)

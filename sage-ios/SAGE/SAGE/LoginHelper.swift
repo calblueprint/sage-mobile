@@ -22,19 +22,18 @@ class LoginHelper: NSObject {
     
     static func userIsVerified() -> Bool {
         // this returns only true for now because it hasn't been connected to the backend
-        // also needs to create a user singleton
         if let _ = KeychainWrapper.stringForKey(KeychainConstants.kVerified) {
             return true
         }
         return false
     }
     
-    func isValidLogin(completion: (Bool) -> Void) {
-        let value: Bool = false
-        completion(value)
+    static func isValidLogin(email: String, password: String, completion: ((Bool) -> Void)?) {
+        let value: Bool = true
+        completion?(value)
     }
     
-    func isValidUsername(completion: (Bool) -> Void) {
+    static func isValidEmail(completion: (Bool) -> Void) {
         // check that it hasn't been taken already for new usernames
         let value: Bool = false
         completion(value)

@@ -69,8 +69,7 @@ public @Data class Announcement {
                 return minutes + " minute ago";
             }
             return minutes + " minutes ago";
-        }
-        else {
+        } else {
             if (seconds == 1) {
                 return seconds + " second ago";
             }

@@ -1,4 +1,4 @@
-package blueprint.com.sage.network;
+package blueprint.com.sage.utility.network;
 
 import android.content.Context;
 

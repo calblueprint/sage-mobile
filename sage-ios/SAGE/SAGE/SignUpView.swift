@@ -44,6 +44,8 @@ class SignUpView: UIScrollView, UIScrollViewDelegate {
         self.addSubview(self.emailPasswordView)
         self.addSubview(self.schoolHoursView)
         self.addSubview(self.photoView)
+        self.addSubview(self.pageControl)
+        self.bringSubviewToFront(self.pageControl)
         
         self.allViews.append(self.nameView)
         self.allViews.append(self.emailPasswordView)
@@ -55,11 +57,18 @@ class SignUpView: UIScrollView, UIScrollViewDelegate {
         self.schoolHoursView.setX(2 * screenWidth)
         self.photoView.setX(3 * screenWidth)
         
-        for formView in self.allViews {
-            formView.backgroundColor = UIColor.redColor()
-        }
+        self.nameView.backgroundColor = UIColor.lightRedColor
+        self.emailPasswordView.backgroundColor = UIColor.lightOrangeColor
+        self.schoolHoursView.backgroundColor = UIColor.lightYellowColor
+        self.photoView.backgroundColor = UIColor.lightGreenColor
         
         // any view setup goes here
+    }
+    
+    override func layoutSubviews() {
+        self.pageControl.sizeToFit()
+        self.pageControl.centerHorizontally()
+        self.pageControl.setY(225)
     }
     
     func calculateColor(firstColor: UIColor, secondColor: UIColor, offset: CGFloat) -> UIColor {
@@ -79,9 +88,8 @@ class SignUpView: UIScrollView, UIScrollViewDelegate {
         let colorIndex = Int(offset / screenWidth)
         let colorOffset = (offset % screenWidth) / screenWidth
         self.pageControl.currentPage = colorIndex
-        
-        let sageRed = UIColor(red: 231, green: 76, blue: 60, alpha: 1.0)
-        let colors = [UIColor.redColor(), UIColor.orangeColor(), UIColor.yellowColor(), UIColor.greenColor(), UIColor.greenColor()]
+            
+        let colors = [UIColor.lightRedColor, UIColor.lightOrangeColor, UIColor.lightYellowColor, UIColor.lightGreenColor, UIColor.lightGreenColor]
         UIView.animateWithDuration(UIView.animationTime, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
             for formView in self.allViews {
                 formView.backgroundColor = self.calculateColor(colors[colorIndex], secondColor: colors[colorIndex + 1], offset: colorOffset)

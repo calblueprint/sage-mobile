@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class SignUpSchoolHoursView: SignUpFormView {
     
@@ -14,5 +15,8 @@ class SignUpSchoolHoursView: SignUpFormView {
         super.setUpViews()
         self.headerLabel.text = "Almost here..."
         self.subHeaderLabel.text = "Which school do you mentor?"
+        
+        let erlenmeyerFlask = FAKIonIcons.erlenmeyerFlaskIconWithSize(48).imageWithSize(CGSizeMake(48, 48))
+        self.icon.image = erlenmeyerFlask
     }    
 }

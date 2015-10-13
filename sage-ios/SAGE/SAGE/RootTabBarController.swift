@@ -13,7 +13,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBar.tintColor = UIColor.mainColor()
+        self.tabBar.tintColor = UIColor.mainColor
         self.tabBar.translucent = false
         self.setupTabs()
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class SignUpPhotoView: SignUpFormView {
     var photoButton: UIButton = UIButton()
@@ -23,5 +24,6 @@ class SignUpPhotoView: SignUpFormView {
         self.subHeaderLabel.text = "Let's put a face to you!"
         self.skipAndFinishLink.titleLabel!.text = "Skip and finish"
         self.finishButton.titleLabel!.text = "Finish"
+        
     }
 }

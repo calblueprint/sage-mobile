@@ -39,7 +39,7 @@ class SignUpFormView: UIView {
         
         // set colors and stuff
         self.headerLabel.textColor = UIColor.whiteColor()
-        self.headerLabel.font = UIFont.titleFont
+        self.headerLabel.font = UIFont.getTitleFont(36)
         self.subHeaderLabel.textColor = UIColor.whiteColor()
         self.backgroundColor = UIColor.whiteColor()
     }
@@ -60,9 +60,18 @@ class SignUpFormView: UIView {
         let xButtonIcon = FAKIonIcons.closeRoundIconWithSize(22).imageWithSize(CGSizeMake(22, 22))
         self.xButton.setImage(xButtonIcon, forState: UIControlState.Normal)
         
-        self.headerLabel.setWidth(self.containerView.frame.width)
-        self.headerLabel.setX(0)
         self.headerLabel.setY(85)
-        self.headerLabel.setHeight(40)
+        self.headerLabel.sizeToFit()
+        self.headerLabel.centerHorizontally()
+        
+        self.subHeaderLabel.setY(CGRectGetMaxY(self.headerLabel.frame))
+        self.subHeaderLabel.sizeToFit()
+        self.subHeaderLabel.centerHorizontally()
+        
+        self.icon.setY(CGRectGetMaxY(self.subHeaderLabel.frame) + 20)
+        self.icon.setWidth(58)
+        self.icon.setHeight(58)
+        self.icon.centerHorizontally()
+        
     }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.sign_up.SignUpPagerAdapter;
+import blueprint.com.sage.sign_up.animation.SignUpPageTransformer;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -46,5 +47,6 @@ public class SignUpPagerFragment extends Fragment {
         mViewPagerAdapter.addFragment(SignUpProfileFragment.newInstance(), getString(R.string.sign_up_profile));
 
         mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setPageTransformer(true, new SignUpPageTransformer());
     }
 }

@@ -16,6 +16,6 @@ public class SignUpActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        FragUtil.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this    );
+        FragUtil.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
     }
 }

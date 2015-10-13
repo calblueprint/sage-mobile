@@ -25,7 +25,7 @@ public class SignUpProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_sign_up_email, parent, false);
+        View view = inflater.inflate(R.layout.fragment_sign_up_profile, parent, false);
         ButterKnife.bind(this, view);
         return view;
     }

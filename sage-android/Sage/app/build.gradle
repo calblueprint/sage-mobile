@@ -15,6 +15,7 @@ repositories {
 }
 
 
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -32,18 +33,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions{
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
-        transitive = true;
-    }
 
     // External Libraries
     compile 'com.jakewharton:butterknife:7.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
+        transitive = true;
+    }
 
 }

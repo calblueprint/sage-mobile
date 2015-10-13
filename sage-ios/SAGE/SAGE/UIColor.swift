@@ -13,34 +13,13 @@ extension UIColor {
     //
     // MARK: - Standard App Coloring
     //
-    class func mainColor() -> UIColor {
-        return UIColor.colorWithIntRed(255, green: 204, blue: 0, alpha: 1);
-    }
-    
-    class func primaryTextColor() -> UIColor {
-        return UIColor.init(white: 0.30, alpha: 1);
-    }
-    
-    class func secondaryTextColor() -> UIColor {
-        return UIColor.init(white: 0.85, alpha: 1);
-    }
-    
-    class func borderColor() -> UIColor {
-        return UIColor.init(white: 0.80, alpha: 0.90);
-    }
-    
-    
-    //
-    // MARK: - Extra Flat Colors
-    //
-    class func lightGreenColor() -> UIColor {
-        return UIColor.colorWithIntRed(46, green: 204, blue: 113, alpha: 1);
-    }
-    
-    class func lightRedColor() -> UIColor {
-        return UIColor.colorWithIntRed(236, green: 76, blue: 60, alpha: 1);
-    }
-    
+    @nonobjc static let mainColor =  UIColor.colorWithIntRed(255, green: 204, blue: 0, alpha: 1)
+    @nonobjc static let primaryTextColor = UIColor(white: 0.30, alpha: 1)
+    @nonobjc static let borderColor = UIColor(white: 0.80, alpha: 0.90)
+    @nonobjc static let lightGreenColor = UIColor.colorWithIntRed(46, green: 204, blue: 113, alpha: 1)
+    @nonobjc static let lightRedColor = UIColor.colorWithIntRed(236, green: 76, blue: 60, alpha: 1)
+    @nonobjc static let lightOrangeColor = UIColor.colorWithIntRed(245, green: 146, blue: 35, alpha: 1)
+    @nonobjc static let lightYellowColor = UIColor.colorWithIntRed(46, green: 204, blue: 113, alpha: 1)
     
     //
     // MARK: - Helper Methods

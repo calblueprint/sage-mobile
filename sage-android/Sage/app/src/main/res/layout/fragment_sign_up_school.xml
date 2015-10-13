@@ -4,6 +4,41 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="@color/yellow500">
+
+    <TextView
+        style="@style/SignUpTitle"
+        android:id="@+id/sign_up_email_title"
+        android:text="@string/sign_up_school_title" />
+
+    <TextView
+        style="@style/SignUpSubTitle"
+        android:id="@+id/sign_up_email_subtitle"
+        android:text="@string/sign_up_school_subtitle" />
+
+    <ImageView
+        style="@style/SignUpIcon"
+        android:background="@drawable/ic_location_city_white"/>
+
+    <include layout="@layout/white_dots" />
+
+    <EditText
+        android:id="@+id/sign_up_first_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/sign_up_first_name"
+        android:fontFamily="sans-serif-light"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/sign_up_last_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/sign_up_last_name"
+        android:fontFamily="sans-serif-light" />
+
+    <blueprint.com.sage.shared.views.Spacer
+        style="@style/SignUpSpacer"/>
 
 </LinearLayout>

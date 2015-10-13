@@ -4,6 +4,25 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="@color/green500">
 
+    <TextView
+        style="@style/SignUpTitle"
+        android:id="@+id/sign_up_email_title"
+        android:text="@string/sign_up_profile_title" />
+
+    <TextView
+        style="@style/SignUpSubTitle"
+        android:id="@+id/sign_up_email_subtitle"
+        android:text="@string/sign_up_profile_subtitle" />
+
+    <ImageView
+        style="@style/SignUpIcon"
+        android:background="@drawable/ic_person_pin_white"/>
+
+    <include layout="@layout/white_dots" />
+
+    <blueprint.com.sage.shared.views.Spacer
+        style="@style/SignUpSpacer"/>
 </LinearLayout>

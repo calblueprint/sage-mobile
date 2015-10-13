@@ -10,6 +10,8 @@ import UIKit
 
 extension UIView {
     
+    @nonobjc static let animationTime = 0.3
+    
     func setX(x: CGFloat) {
         var frame = self.frame
         frame.origin.x = x

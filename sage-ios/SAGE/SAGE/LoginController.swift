@@ -11,18 +11,24 @@ import UIKit
 class LoginController: UIViewController, UITextFieldDelegate {
     
     override func loadView() {
-        self.view = LoginView.init()
+        self.view = LoginView()
         (self.view as! LoginView).loginEmailField?.delegate = self
         (self.view as! LoginView).loginPasswordField?.delegate = self
         (self.view as! LoginView).signUpLink?.addTarget(self, action: "signUpLinkTapped", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
     func signUpLinkTapped() {
-        // redirect to sign in here
-    }
-    
-    func proceedToMainApplication() {
-        // show root tab bar controller
+        let signUpController = SignUpController()
+        signUpController.view.alpha = 0.0
+        
+        UIView.animateWithDuration(UIView.animationTime/2, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                // initial animation
+                let currentY = (self.view as! LoginView).containerView!.frame.origin.y
+                (self.view as! LoginView).containerView!.setY(currentY + 5)
+                self.view.alpha = 0.0
+            }, completion: { (Bool) -> Void in
+                self.displayViewController(signUpController)
+        })
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -43,7 +49,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
     }
     
     func displayViewController(vc: UIViewController) {
-        self.showViewController(vc, sender: self)
+        self.presentViewController(vc, animated: false, completion: nil)
     }
     
     func pushRootTabBarController() {

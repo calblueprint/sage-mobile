@@ -8,21 +8,20 @@
     android:background="@color/amber500">
 
     <TextView
+        style="@style/SignUpTitle"
         android:id="@+id/sign_up_email_title"
-        android:textSize="36sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up_email_title"
-        android:textColor="@color/white"
-        android:fontFamily="sans-serif-light" />
+        android:text="@string/sign_up_email_title" />
 
     <TextView
+        style="@style/SignUpSubTitle"
         android:id="@+id/sign_up_email_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:text="@string/sign_up_email_subtitle"
-        android:fontFamily="sans-serif-light"/>
+        android:text="@string/sign_up_email_subtitle" />
+
+    <ImageView
+        style="@style/SignUpIcon"
+        android:background="@drawable/ic_mail_white"/>
+
+    <include layout="@layout/white_dots" />
 
     <EditText
         android:id="@+id/sign_up_email"
@@ -30,7 +29,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/sign_up_email"
         android:inputType="textEmailAddress"
-        android:fontFamily="sans-serif-light"/>
+        android:fontFamily="sans-serif-light"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/sign_up_password"
@@ -40,4 +40,6 @@
         android:inputType="textPassword"
         android:fontFamily="sans-serif-light" />
 
+    <blueprint.com.sage.shared.views.Spacer
+        style="@style/SignUpSpacer"/>
 </LinearLayout>

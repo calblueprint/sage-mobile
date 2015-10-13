@@ -4,6 +4,40 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:background="@color/amber500">
+
+    <TextView
+        android:id="@+id/sign_up_email_title"
+        android:textSize="36sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_email_title"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-light" />
+
+    <TextView
+        android:id="@+id/sign_up_email_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="@string/sign_up_email_subtitle"
+        android:fontFamily="sans-serif-light"/>
+
+    <EditText
+        android:id="@+id/sign_up_email"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/sign_up_email"
+        android:inputType="textEmailAddress"
+        android:fontFamily="sans-serif-light"/>
+
+    <EditText
+        android:id="@+id/sign_up_password"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/sign_up_password"
+        android:inputType="textPassword"
+        android:fontFamily="sans-serif-light" />
 
 </LinearLayout>

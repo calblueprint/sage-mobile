@@ -43,25 +43,19 @@ public class SignUpEmailFragment extends SignInAbstractFragment {
 
     private void initializeViews() {
         String email = getParentActivity().getUser().getEmail();
-        if (!email.isEmpty())
+        if (email != null && !email.isEmpty())
             mEmail.setText(email);
 
         String password = getParentActivity().getUser().getPassword();
-        if (!password.isEmpty())
+        if (password != null && !password.isEmpty())
             mPassword.setText(password);
 
         String passwordConfirm = getParentActivity().getUser().getConfirmPassword();
-        if (!passwordConfirm.isEmpty())
+        if (passwordConfirm != null && !passwordConfirm.isEmpty())
             mConfirmation.setText(passwordConfirm);
     }
 
-    private void submitForm() {
-        if (hasValidFields()) {
-            return;
-        }
-    }
-
-    private boolean hasValidFields() {
+    public boolean hasValidFields() {
         boolean isValid = true;
 
         if (!hasValidEmail()) {
@@ -91,5 +85,9 @@ public class SignUpEmailFragment extends SignInAbstractFragment {
 
     private boolean hasMatchingPassword() {
         return mPassword.getText().toString().equals(mConfirmation.getText().toString());
+    }
+
+    public void continueToNextPage() {
+
     }
 }

@@ -72,7 +72,7 @@ public class SignUpNameFragment extends SignInAbstractFragment {
         return !mLastName.getText().toString().isEmpty();
     }
 
-    public void contineToNextPage() {
+    public void continueToNextPage() {
 
     }
 }

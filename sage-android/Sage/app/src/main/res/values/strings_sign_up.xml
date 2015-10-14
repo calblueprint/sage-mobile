@@ -25,4 +25,10 @@
     <string name="sign_up_email_error">Email must be a valid berkeley.edu address.</string>
     <string name="sign_up_password_blank_error">Password and Confirmation cannot be blank.</string>
     <string name="sign_up_password_nonmatch_error">Password and Confirmation must match.</string>
+
+    <string-array name="sign_up_volunteer_types">
+        <item>Volunteer</item>
+        <item>One Unit</item>
+        <item>Two Unit</item>
+    </string-array>
 </resources>

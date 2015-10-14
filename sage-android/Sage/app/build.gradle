@@ -52,4 +52,5 @@ dependencies {
         transitive = true;
     }
 
+    provided "org.projectlombok:lombok:1.12.6"
 }

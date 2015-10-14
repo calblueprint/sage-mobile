@@ -8,7 +8,10 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -21,13 +24,12 @@ import blueprint.com.sage.utility.network.NetworkManager;
  */
 public class BaseRequest extends JsonObjectRequest {
 
-    private final String mBaseUrl = "http://sage-rails.herokuapp.com/api";
-    private final String mBaseUrlV1 = mBaseUrl + "/v1";
+    private static final String mBaseUrl = "http://sage-rails.herokuapp.com/api/v1";
 
     private Activity mActivity;
 
     public BaseRequest(int requestType, String url, JSONObject params,
-                       Response.Listener onSuccess, final Response.ErrorListener onFailure, Activity activity) {
+                       Response.Listener<JSONObject> onSuccess, final Response.ErrorListener onFailure, Activity activity) {
         super(requestType, url, params, onSuccess, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -63,8 +65,23 @@ public class BaseRequest extends JsonObjectRequest {
         return headers;
     }
 
-    public String makeUrl(String url) { return mBaseUrl + url; }
-    public String makeUrlV1(String url) { return mBaseUrl + url; }
+    public static String makeUrl(String url) { return mBaseUrl + url; }
+
+    public static JSONObject convertToParams(Object object, Context context) {
+        ObjectMapper mapper =  NetworkManager.getInstance(context).getObjectMapper();
+        JSONObject objectJSON = null;
+
+        try {
+            String objectString = mapper.writeValueAsString(object);
+            objectJSON = new JSONObject(objectString);
+        } catch(JsonProcessingException e) {
+            Log.e("Processing Error", e.toString());
+        } catch(JSONException e) {
+            Log.e("Mapper Failure", e.toString());
+        }
+
+        return objectJSON;
+    }
 
     private NetworkManager getNetworkManager(Context context) {
         return NetworkManager.getInstance(context);

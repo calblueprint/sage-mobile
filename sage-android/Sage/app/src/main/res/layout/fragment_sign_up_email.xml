@@ -40,6 +40,14 @@
         android:inputType="textPassword"
         android:fontFamily="sans-serif-light" />
 
+    <EditText
+        android:id="@+id/sign_up_password_confirm"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/sign_up_password_confirm"
+        android:inputType="textPassword"
+        android:fontFamily="sans-serif-light" />
+
     <blueprint.com.sage.shared.views.Spacer
         style="@style/SignUpSpacer"/>
 </LinearLayout>

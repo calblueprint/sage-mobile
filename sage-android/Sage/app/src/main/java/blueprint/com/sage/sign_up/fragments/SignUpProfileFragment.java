@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  */
 public class SignUpProfileFragment extends Fragment {
 
-    public static SignUpEmailFragment newInstance() { return new SignUpEmailFragment(); }
+    public static SignUpProfileFragment newInstance() { return new SignUpProfileFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

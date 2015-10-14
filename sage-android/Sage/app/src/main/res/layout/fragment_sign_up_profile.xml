@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,9 +18,12 @@
         android:id="@+id/sign_up_email_subtitle"
         android:text="@string/sign_up_profile_subtitle" />
 
-    <ImageView
-        style="@style/SignUpIcon"
-        android:background="@drawable/ic_person_pin_white"/>
+    <blueprint.com.sage.shared.views.CircleImageView
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+        android:background="@drawable/ic_person_pin_white"
+        app:border_color="@color/white"
+        app:border="true"/>
 
     <include layout="@layout/white_dots" />
 

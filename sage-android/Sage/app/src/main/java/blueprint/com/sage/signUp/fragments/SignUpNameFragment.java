@@ -74,4 +74,8 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     private boolean hasValidLastName() {
         return !mLastName.getText().toString().isEmpty();
     }
+
+    public void continueToNextPage() {
+
+    }
 }

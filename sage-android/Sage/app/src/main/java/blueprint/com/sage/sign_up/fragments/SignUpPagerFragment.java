@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.sign_up.SignUpPagerAdapter;
+import blueprint.com.sage.sign_up.adapters.SignUpPagerAdapter;
 import blueprint.com.sage.sign_up.animation.SignUpPageTransformer;
 import butterknife.Bind;
 import butterknife.ButterKnife;

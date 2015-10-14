@@ -22,4 +22,7 @@ public @Data class User {
     private int directorId;
     private String volunteerType;
     private int totalHours;
+
+    private String password;
+    private String confirmPassword;
 }

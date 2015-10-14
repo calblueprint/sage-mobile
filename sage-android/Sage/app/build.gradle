@@ -53,4 +53,5 @@ dependencies {
     }
     provided "org.projectlombok:lombok:1.12.6"
 
+    provided "org.projectlombok:lombok:1.12.6"
 }

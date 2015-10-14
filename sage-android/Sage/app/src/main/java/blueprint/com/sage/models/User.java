@@ -25,4 +25,8 @@ public @Data class User {
 
     private String password;
     private String confirmPassword;
+
+    // Used for Sign Ups
+    private int schoolPosition = -1;
+    private int typePosition = -1;
 }

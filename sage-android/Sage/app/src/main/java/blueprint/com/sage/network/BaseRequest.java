@@ -10,17 +10,14 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-<<<<<<< HEAD
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpStatus;
-=======
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
->>>>>>> working on validations for email fragment
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -40,11 +37,7 @@ public class BaseRequest extends JsonObjectRequest {
     private Activity mActivity;
 
     public BaseRequest(int requestType, String url, JSONObject params,
-<<<<<<< HEAD
-                       Response.Listener onSuccess, final Response.Listener<APIError> onFailure, final Activity activity) {
-=======
-                       Response.Listener<JSONObject> onSuccess, final Response.ErrorListener onFailure, Activity activity) {
->>>>>>> working on validations for email fragment
+                       Response.Listener<JSONObject> onSuccess, final Response.Listener<APIError> onFailure, final Activity activity) {
         super(requestType, url, params, onSuccess, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -109,8 +102,6 @@ public class BaseRequest extends JsonObjectRequest {
     }
 
     public static String makeUrl(String url) { return mBaseUrl + url; }
-<<<<<<< HEAD
-=======
 
     public static JSONObject convertToParams(Object object, Context context) {
         ObjectMapper mapper =  NetworkManager.getInstance(context).getObjectMapper();
@@ -127,7 +118,6 @@ public class BaseRequest extends JsonObjectRequest {
 
         return objectJSON;
     }
->>>>>>> working on validations for email fragment
 
     public static NetworkManager getNetworkManager(Context context) {
         return NetworkManager.getInstance(context);

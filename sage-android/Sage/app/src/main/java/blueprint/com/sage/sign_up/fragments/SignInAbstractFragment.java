@@ -12,4 +12,13 @@ public abstract class SignInAbstractFragment extends Fragment {
     public SignUpActivity getParentActivity() {
         return (SignUpActivity) getActivity();
     }
+
+    public void submitForm() {
+        if (hasValidFields()) {
+            continueToNextPage();
+        }
+    }
+
+    public abstract boolean hasValidFields();
+    public abstract void continueToNextPage();
 }

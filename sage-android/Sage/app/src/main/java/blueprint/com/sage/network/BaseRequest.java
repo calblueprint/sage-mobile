@@ -21,8 +21,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
  */
 public class BaseRequest extends JsonObjectRequest {
 
-    private final String mBaseUrl = "http://sage-rails.herokuapp.com/api";
-    private final String mBaseUrlV1 = mBaseUrl + "/v1";
+    private final String mBaseUrl = "http://sage-rails.herokuapp.com/api/v1";
 
     private Activity mActivity;
 
@@ -64,7 +63,6 @@ public class BaseRequest extends JsonObjectRequest {
     }
 
     public String makeUrl(String url) { return mBaseUrl + url; }
-    public String makeUrlV1(String url) { return mBaseUrl + url; }
 
     private NetworkManager getNetworkManager(Context context) {
         return NetworkManager.getInstance(context);

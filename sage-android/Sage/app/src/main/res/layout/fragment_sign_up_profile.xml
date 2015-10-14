@@ -21,7 +21,8 @@
     <blueprint.com.sage.shared.views.CircleImageView
         android:layout_height="70dp"
         android:layout_width="70dp"
-        android:background="@drawable/ic_person_pin_white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_profile"
         app:border_color="@color/white"
         app:border="true"/>
 

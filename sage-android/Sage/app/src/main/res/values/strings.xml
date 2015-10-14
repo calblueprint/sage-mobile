@@ -2,4 +2,7 @@
     <string name="app_name">Sage</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- General Errors -->
+    <string name="cannot_be_blank">%1$s cannot be blank.</string>
 </resources>

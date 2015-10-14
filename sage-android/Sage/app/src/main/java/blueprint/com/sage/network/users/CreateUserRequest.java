@@ -37,10 +37,10 @@ public class CreateUserRequest extends BaseRequest {
                 }
             }
         }, new Response.Listener<APIError>() {
-            @Override
-            public void onResponse(APIError error) {
-                onFailure.onResponse(error);
-            }
-        }, activity);
+                    @Override
+                    public void onResponse(APIError error) {
+                        onFailure.onResponse(error);
+                    }
+                }, activity);
     }
 }

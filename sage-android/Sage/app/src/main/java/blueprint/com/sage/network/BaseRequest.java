@@ -10,10 +10,12 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpStatus;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,6 +27,7 @@ import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
  * Created by charlesx on 9/25/15.
+ * Base request inherited by all other requests.u
  */
 public class BaseRequest extends JsonObjectRequest {
 
@@ -98,6 +101,22 @@ public class BaseRequest extends JsonObjectRequest {
     }
 
     public static String makeUrl(String url) { return mBaseUrl + url; }
+
+    public static JSONObject convertToParams(Object object, Context context) {
+        ObjectMapper mapper =  NetworkManager.getInstance(context).getObjectMapper();
+        JSONObject objectJSON = null;
+
+        try {
+            String objectString = mapper.writeValueAsString(object);
+            objectJSON = new JSONObject(objectString);
+        } catch(JsonProcessingException e) {
+            Log.e("Processing Error", e.toString());
+        } catch(JSONException e) {
+            Log.e("Mapper Failure", e.toString());
+        }
+
+        return objectJSON;
+    }
 
     public static NetworkManager getNetworkManager(Context context) {
         return NetworkManager.getInstance(context);

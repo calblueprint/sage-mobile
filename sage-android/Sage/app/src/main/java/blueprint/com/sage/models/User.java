@@ -8,18 +8,18 @@ import lombok.Data;
  * Created by kelseylam on 10/11/15.
  */
 public @Data class User {
-    private int mId;
-    private Date mCreatedAt;
-    private Date mUpdatedAt;
-    private String mEmail;
-    private String mEncryptedPassword;
-    private boolean mVerified;
-    private String mFirstName;
-    private String mLastName;
-    private String mAuthenticationToken;
-    private String mRole;
-    private int mSchoolId;
-    private int mDirectorId;
-    private String mVolunteerType;
-    private int mTotalHours;
+    private int id;
+    private Date createdAt;
+    private Date updatedAt;
+    private String email;
+    private String encryptedPassword;
+    private boolean verified;
+    private String firstName;
+    private String lastName;
+    private String authenticationToken;
+    private String role;
+    private int schoolId;
+    private int directorId;
+    private String volunteerType;
+    private int totalHours;
 }

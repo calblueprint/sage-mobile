@@ -9,8 +9,10 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.sign_up.events.BackEvent;
 import blueprint.com.sage.sign_up.fragments.SignUpPagerFragment;
 import blueprint.com.sage.utility.view.FragUtil;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 10/12/15.
@@ -47,5 +49,10 @@ public class SignUpActivity extends FragmentActivity {
 
     public void setSchools(List<School> schools) {
         mSchools = schools;
+    }
+
+    @Override
+    public void onBackPressed() {
+        EventBus.getDefault().post(new BackEvent());
     }
 }

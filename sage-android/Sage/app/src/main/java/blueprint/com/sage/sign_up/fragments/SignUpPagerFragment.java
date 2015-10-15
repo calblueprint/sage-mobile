@@ -8,13 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.sign_up.SignUpActivity;
 import blueprint.com.sage.sign_up.adapters.SignUpPagerAdapter;
 import blueprint.com.sage.sign_up.animation.SignUpPageTransformer;
+import blueprint.com.sage.sign_up.events.BackEvent;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 10/12/15.
+ * Fragment that contains the viewpager
  */
 public class SignUpPagerFragment extends Fragment {
 
@@ -38,6 +42,18 @@ public class SignUpPagerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void setUpViews(View view) {
         mViewPagerAdapter = new SignUpPagerAdapter(getChildFragmentManager());
 
@@ -48,5 +64,14 @@ public class SignUpPagerFragment extends Fragment {
 
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setPageTransformer(true, new SignUpPageTransformer());
+    }
+
+    public void onEvent(BackEvent event) {
+        if (mViewPager.getCurrentItem() == 0) {
+            SignUpActivity activity = (SignUpActivity) getActivity();
+            activity.finish();
+        } else {
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
+        }
     }
 }

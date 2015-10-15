@@ -5,8 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
-import butterknife.ButterKnife;
+import android.widget.TextView;
 
 /**
  * Created by charlesx on 10/14/15.
@@ -16,12 +15,16 @@ public class SignUpTypeSpinnerAdapter extends ArrayAdapter<String> {
     private String[] mTypes;
     private Context mContext;
     private int mLayoutId;
+    private int mTextViewId;
 
-    public SignUpTypeSpinnerAdapter(Context context, int layoutId, String[] types) {
-        super(context, layoutId);
+    private TextView mTextView;
+
+    public SignUpTypeSpinnerAdapter(Context context, int layoutId, int textViewId, String[] types) {
+        super(context, layoutId, textViewId);
         mTypes = types;
         mContext = context;
         mLayoutId = layoutId;
+        mTextViewId = textViewId;
     }
 
     @Override
@@ -46,7 +49,8 @@ public class SignUpTypeSpinnerAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(mLayoutId, parent, false);
         }
 
-        ButterKnife.bind(mContext, convertView);
+        mTextView = (TextView) convertView.findViewById(mTextViewId);
+        mTextView.setText(getItem(position));
 
         return convertView;
     }

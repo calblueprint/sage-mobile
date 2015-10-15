@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by charlesx on 10/12/15.
  * Fragment where users can choose their school/volunteer type
  */
-public class SignUpSchoolFragment extends SignInAbstractFragment {
+public class SignUpSchoolFragment extends SignUpAbstractFragment {
 
     @Bind(R.id.sign_up_school) Spinner mSchoolSpinner;
     @Bind(R.id.sign_up_volunteer_type) Spinner mVolunteerTypeSpinner;
@@ -43,6 +43,7 @@ public class SignUpSchoolFragment extends SignInAbstractFragment {
         ArrayAdapter<School> schoolAdapter =
                 new SignUpSchoolSpinnerAdapter(getParentActivity(),
                                                R.layout.sign_in_spinner_item,
+                                               R.id.sign_up_spinner_item_text,
                                                getParentActivity().getSchools());
         mSchoolSpinner.setAdapter(schoolAdapter);
         int selectedSchool = getParentActivity().getUser().getSchoolPosition();
@@ -53,6 +54,7 @@ public class SignUpSchoolFragment extends SignInAbstractFragment {
         ArrayAdapter<String> typeAdapter =
                 new SignUpTypeSpinnerAdapter(getParentActivity(),
                                              R.layout.sign_in_spinner_item,
+                                             R.id.sign_up_spinner_item_text,
                                              getResources().getStringArray(R.array.sign_up_volunteer_types));
         mVolunteerTypeSpinner.setAdapter(typeAdapter);
         int selectedType = getParentActivity().getUser().getTypePosition();

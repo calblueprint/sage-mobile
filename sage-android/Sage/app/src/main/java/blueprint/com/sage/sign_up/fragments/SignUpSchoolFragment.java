@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.School;
+import blueprint.com.sage.sign_up.adapters.SignUpSchoolSpinnerAdapter;
 import blueprint.com.sage.sign_up.adapters.SignUpTypeSpinnerAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,16 +34,16 @@ public class SignUpSchoolFragment extends SignInAbstractFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_sign_up_school, parent, false);
-        initializeFields();
         ButterKnife.bind(this, view);
+        initializeFields();
         return view;
     }
 
     private void initializeFields() {
-        ArrayAdapter<String> schoolAdapter =
-                new SignUpTypeSpinnerAdapter(getParentActivity(),
-                                             R.layout.sign_in_spinner_item,
-                                             getResources().getStringArray(R.array.sign_up_volunteer_types));
+        ArrayAdapter<School> schoolAdapter =
+                new SignUpSchoolSpinnerAdapter(getParentActivity(),
+                                               R.layout.sign_in_spinner_item,
+                                               getParentActivity().getSchools());
         mSchoolSpinner.setAdapter(schoolAdapter);
         int selectedSchool = getParentActivity().getUser().getSchoolPosition();
         if (selectedSchool > -1) {

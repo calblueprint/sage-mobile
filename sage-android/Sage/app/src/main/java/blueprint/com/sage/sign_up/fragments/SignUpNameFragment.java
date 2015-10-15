@@ -13,7 +13,7 @@ import butterknife.ButterKnife;
 /**
  * Created by charlesx on 10/12/15.
  */
-public class SignUpNameFragment extends SignInAbstractFragment {
+public class SignUpNameFragment extends SignUpAbstractFragment {
 
     @Bind(R.id.sign_up_first_name) EditText mFirstName;
     @Bind(R.id.sign_up_last_name) EditText mLastName;

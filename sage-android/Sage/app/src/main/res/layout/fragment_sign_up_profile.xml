@@ -19,6 +19,7 @@
         android:text="@string/sign_up_profile_subtitle" />
 
     <blueprint.com.sage.shared.views.CircleImageView
+        android:id="@+id/sign_up_profile_picture"
         android:layout_height="70dp"
         android:layout_width="70dp"
         android:scaleType="centerCrop"

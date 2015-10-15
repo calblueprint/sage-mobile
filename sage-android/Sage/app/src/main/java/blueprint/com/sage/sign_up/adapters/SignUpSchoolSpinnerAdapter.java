@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import java.util.List;
+
 import blueprint.com.sage.models.School;
 import butterknife.ButterKnife;
 
@@ -14,11 +16,11 @@ import butterknife.ButterKnife;
  * Adapter for the sign up spinner
  */
 public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
-    private School[] mSchools;
+    private List<School> mSchools;
     private Context mContext;
     private int mLayoutId;
 
-    public SignUpSchoolSpinnerAdapter(Context context, int layoutId, School[] schools) {
+    public SignUpSchoolSpinnerAdapter(Context context, int layoutId, List<School> schools) {
         super(context, layoutId);
         mSchools = schools;
         mContext = context;
@@ -27,17 +29,17 @@ public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
 
     @Override
     public long getItemId(int position) {
-        return mSchools[position].getId();
+        return mSchools.get(position).getId();
     }
 
     @Override
     public School getItem(int position) {
-        return mSchools[position];
+        return mSchools.get(position);
     }
 
     @Override
     public int getCount() {
-        return mSchools.length;
+        return mSchools.size();
     }
 
     @Override

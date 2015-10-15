@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
  * Created by charlesx on 10/12/15.
  * Sign Up email fragment
  */
-public class SignUpEmailFragment extends SignInAbstractFragment {
+public class SignUpEmailFragment extends SignUpAbstractFragment {
 
     @Bind(R.id.sign_up_email) EditText mEmail;
     @Bind(R.id.sign_up_password) EditText mPassword;

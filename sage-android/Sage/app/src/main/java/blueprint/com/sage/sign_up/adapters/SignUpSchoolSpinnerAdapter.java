@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
-import butterknife.ButterKnife;
+import butterknife.Bind;
 
 /**
  * Created by charlesx on 10/14/15.
@@ -19,12 +21,16 @@ public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
     private List<School> mSchools;
     private Context mContext;
     private int mLayoutId;
+    private int mTextViewId;
 
-    public SignUpSchoolSpinnerAdapter(Context context, int layoutId, List<School> schools) {
-        super(context, layoutId);
+    @Bind(R.id.sign_up_spinner_item_text) TextView mTextView;
+
+    public SignUpSchoolSpinnerAdapter(Context context, int layoutId, int textViewId, List<School> schools) {
+        super(context, layoutId, textViewId);
         mSchools = schools;
         mContext = context;
         mLayoutId = layoutId;
+        mTextViewId = textViewId;
     }
 
     @Override
@@ -49,7 +55,8 @@ public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
             convertView = inflater.inflate(mLayoutId, parent, false);
         }
 
-        ButterKnife.bind(mContext, convertView);
+        mTextView = (TextView) convertView.findViewById(R.id.sign_up_spinner_item_text);
+        mTextView.setText(getItem(position).getName());
 
         return convertView;
     }

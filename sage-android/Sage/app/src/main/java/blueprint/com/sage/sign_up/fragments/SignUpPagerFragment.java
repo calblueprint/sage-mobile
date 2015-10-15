@@ -1,5 +1,7 @@
 package blueprint.com.sage.sign_up.fragments;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,6 +14,7 @@ import blueprint.com.sage.sign_up.SignUpActivity;
 import blueprint.com.sage.sign_up.adapters.SignUpPagerAdapter;
 import blueprint.com.sage.sign_up.animation.SignUpPageTransformer;
 import blueprint.com.sage.sign_up.events.BackEvent;
+import blueprint.com.sage.sign_up.events.PhotoEvent;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -72,6 +75,15 @@ public class SignUpPagerFragment extends Fragment {
             activity.finish();
         } else {
             mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @TargetApi(16)
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String title = (String) mViewPagerAdapter.getPageTitle(mViewPager.getCurrentItem());
+        if (title.equals(getString(R.string.sign_up_profile))) {
+            EventBus.getDefault().post(new PhotoEvent(requestCode, resultCode, data));
         }
     }
 }

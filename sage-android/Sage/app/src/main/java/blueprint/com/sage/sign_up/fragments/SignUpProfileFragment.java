@@ -29,9 +29,11 @@ import java.util.Locale;
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.sign_up.SignUpActivity;
+import blueprint.com.sage.sign_up.events.PhotoEvent;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 10/12/15.
@@ -43,10 +45,10 @@ public class SignUpProfileFragment extends Fragment {
 
     private String mPhotoPath;
 
-    private final int CAMERA_REQUEST = 1337;
-    private final int PICK_PHOTO_REQUEST = 9001;
-    private final int DIALOG_CODE = 200;
-    private final String DIALOG_TAG = "SignUpProfileFragment";
+    private static final int CAMERA_REQUEST = 1337;
+    private static final int PICK_PHOTO_REQUEST = 9001;
+    private static final int DIALOG_CODE = 200;
+    private static final String DIALOG_TAG = "SignUpProfileFragment";
 
     public static SignUpProfileFragment newInstance() { return new SignUpProfileFragment(); }
 
@@ -61,6 +63,23 @@ public class SignUpProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sign_up_profile, parent, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(PhotoEvent event) {
+        if (event == null) return;
+        onPhotoEvent(event);
     }
 
     @OnClick(R.id.sign_up_profile_picture)
@@ -102,15 +121,18 @@ public class SignUpProfileFragment extends Fragment {
         return image;
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != SignUpActivity.RESULT_OK) return;
 
-        switch (requestCode) {
+    public void onPhotoEvent(PhotoEvent event)  {
+        Log.e(getClass().toString(), "got here");
+
+        if (event.getResultCode() != SignUpActivity.RESULT_OK) return;
+
+        switch (event.getRequestCode()) {
             case PICK_PHOTO_REQUEST:
-                pickPhotoResult(data);
+                pickPhotoResult(event.getData());
                 break;
             case CAMERA_REQUEST:
-                cameraResult(data);
+                cameraResult(event.getData());
                 break;
         }
     }

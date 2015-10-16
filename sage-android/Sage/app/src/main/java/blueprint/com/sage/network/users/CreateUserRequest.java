@@ -28,7 +28,7 @@ public class CreateUserRequest extends BaseRequest {
             @Override
             public void onResponse(JSONObject o) {
                 try {
-                    String sessionString = o.getString("user").toString();
+                    String sessionString = o.getString("user");
                     ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
                     Session session = mapper.readValue(sessionString, new TypeReference<Session>() {});
                     onSuccess.onResponse(session);

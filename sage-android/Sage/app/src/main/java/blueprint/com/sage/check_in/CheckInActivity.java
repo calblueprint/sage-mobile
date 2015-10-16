@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 public class CheckInActivity extends FragmentActivity {
 
     @Bind(R.id.check_in_left_drawer) LinearLayout mDrawer;
-    
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,11 @@ public class SignUpPagerFragment extends Fragment {
         mViewPager.setPageTransformer(true, new SignUpPageTransformer());
     }
 
+    public void onEvent(PhotoEvent event) {
+        Log.w("Got here", "wtatwatawat");
+        if (event == null) return;
+    }
+
     public void onEvent(BackEvent event) {
         if (mViewPager.getCurrentItem() == 0) {
             SignUpActivity activity = (SignUpActivity) getActivity();
@@ -81,9 +87,36 @@ public class SignUpPagerFragment extends Fragment {
     @SuppressWarnings("deprecation")
     @TargetApi(16)
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String title = (String) mViewPagerAdapter.getPageTitle(mViewPager.getCurrentItem());
-        if (title.equals(getString(R.string.sign_up_profile))) {
-            EventBus.getDefault().post(new PhotoEvent(requestCode, resultCode, data));
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != SignUpActivity.RESULT_OK) return;
+
+        switch (requestCode) {
+            case SignUpProfileFragment.CAMERA_REQUEST:
+                handleTakePhotoResult(data);
+                break;
+            case SignUpProfileFragment.PICK_PHOTO_REQUEST:
+                handlePickPhotoResult(data);
+                break;
+        }
+    }
+
+    private void handlePickPhotoResult(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof SignUpProfileFragment)) continue;
+
+            SignUpProfileFragment profFragment = (SignUpProfileFragment) fragment;
+            profFragment.pickPhotoResult(data);
+        }
+    }
+
+    private void handleTakePhotoResult(Intent data) {
+        if (getChildFragmentManager().getFragments() == null) return;
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof SignUpProfileFragment)) continue;
+
+            SignUpProfileFragment profFragment = (SignUpProfileFragment) fragment;
+            profFragment.takePhotoResult(data);
         }
     }
 }

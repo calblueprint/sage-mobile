@@ -42,6 +42,7 @@ public class SignUpActivity extends FragmentActivity {
 
         mUser = new User();
         mSchools = new ArrayList<>();
+        mManager = NetworkManager.getInstance(this);
         mPreferenceTag = getString(R.string.shared_preferences);
         mPreferences = getSharedPreferences(mPreferenceTag, MODE_PRIVATE);
 

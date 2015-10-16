@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
+import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.BaseRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -20,17 +21,17 @@ import blueprint.com.sage.utility.network.NetworkManager;
  */
 public class CreateUserRequest extends BaseRequest {
     public CreateUserRequest(final Activity activity, User user,
-                             final Response.Listener<User> onSuccess,
-                             final Response.ErrorListener onFailure) {
+                             final Response.Listener<Session> onSuccess,
+                             final Response.Listener onFailure) {
         super(Method.POST, makeUrl("/users"), convertToParams(user, activity),
          new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject o) {
                 try {
-                    String userString = o.getString("user").toString();
+                    String sessionString = o.getString("user").toString();
                     ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
-                    User user = mapper.readValue(userString, new TypeReference<User>() {});
-                    onSuccess.onResponse(user);
+                    Session session = mapper.readValue(sessionString, new TypeReference<Session>() {});
+                    onSuccess.onResponse(session);
                 } catch (Exception e) {
                     Log.e(getClass().toString(), e.toString());
                 }
@@ -38,7 +39,7 @@ public class CreateUserRequest extends BaseRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                onFailure.onErrorResponse(error);
+                onFailure.onResponse(error);
             }
         }, activity);
     }

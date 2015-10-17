@@ -4,6 +4,6 @@
     <item
         android:id="@+id/menu_request"
         android:title="@string/menu_create_request"
-        android:icon="@drawable/ic_alarm_on_black"
+        android:icon="@drawable/ic_add_alarm_white"
         app:showAsAction="ifRoom"/>
 </menu>

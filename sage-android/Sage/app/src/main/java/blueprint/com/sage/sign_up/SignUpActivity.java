@@ -2,7 +2,7 @@ package blueprint.com.sage.sign_up;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -26,7 +26,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 10/12/15.
  * Activity for signups
  */
-public class SignUpActivity extends FragmentActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     private User mUser;
     private List<School> mSchools;

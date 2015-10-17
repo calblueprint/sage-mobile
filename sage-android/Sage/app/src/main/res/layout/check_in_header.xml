@@ -26,5 +26,5 @@
         android:text="test@berkeley.edu"
         android:layout_marginTop="3dp"
         />
-    
+
 </LinearLayout>

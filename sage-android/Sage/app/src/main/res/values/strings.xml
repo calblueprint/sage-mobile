@@ -4,6 +4,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="announcements">Announcements</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
     <!-- General Errors -->
     <string name="cannot_be_blank">%1$s cannot be blank.</string>
 

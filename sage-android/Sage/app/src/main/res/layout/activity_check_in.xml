@@ -5,15 +5,22 @@
     android:layout_height="match_parent">
 
     <!-- The main content view -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/check_in_toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/check_in_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/check_in_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <android.support.v7.widget.Toolbar
+            app:theme="@style/ToolBarStyle"
+            android:id="@+id/check_in_toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+    </RelativeLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/check_in_left_drawer"
@@ -21,6 +28,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/check_in_header"
-        app:menu="@menu/check_in_menu"/>
+        app:menu="@menu/menu_drawer"/>
 
 </android.support.v4.widget.DrawerLayout>

@@ -9,6 +9,10 @@
 
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
+    <!-- Maps -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,5 +29,11 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map"/>
     </application>
 </manifest>

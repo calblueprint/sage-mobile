@@ -54,7 +54,6 @@ public class CheckInActivity extends AppCompatActivity
                     super.onDrawerOpened(drawerView);
                 }
             };
-
         mDrawerLayout.setDrawerListener(mToggle);
         mToggle.syncState();
     }

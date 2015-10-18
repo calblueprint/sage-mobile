@@ -10,12 +10,25 @@ import UIKit
 
 class CheckinView: UIView {
 
-    init() {
-        super.init(frame:CGRect.zero)
+    var mapView: GMSMapView = GMSMapView()
+
+    //
+    // MARK: - Initialization
+    //
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
+        self.addSubview(self.mapView)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.mapView.fillWidth()
+        self.mapView.fillHeight()
     }
 }

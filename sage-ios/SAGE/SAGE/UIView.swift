@@ -34,9 +34,21 @@ extension UIView {
         self.frame = frame
     }
     
-    func setSize(width: CGFloat, height: CGFloat) {
+    func setSize(width width: CGFloat, height: CGFloat) {
         var frame = self.frame
         frame.size = CGSizeMake(width, height)
+        self.frame = frame
+    }
+    
+    func moveX(x: CGFloat) {
+        var frame = self.frame
+        frame.origin.x += x
+        self.frame = frame
+    }
+    
+    func moveY(y: CGFloat) {
+        var frame = self.frame
+        frame.origin.y += y
         self.frame = frame
     }
     
@@ -98,5 +110,10 @@ extension UIView {
         if (self.superview != nil) {
             self.setY(CGRectGetHeight(self.superview!.frame)/2 - CGRectGetHeight(self.frame)/2)
         }
+    }
+    
+    func centerInSuperview() {
+        self.centerHorizontally()
+        self.centerVertically()
     }
 }

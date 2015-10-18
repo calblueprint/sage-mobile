@@ -25,6 +25,16 @@ class CheckinViewController: UIViewController {
         self.locationManager.requestAlwaysAuthorization()
         self.startGettingCurrentLocation()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        // Change mode on init depending on whether user is
+        // mid-check in or not
+        if true {
+            self.checkinView.animateToStartMode(2.30)
+        } else {
+            self.checkinView.animateToEndMode(0.30)
+        }
+    }
 
     private func startGettingCurrentLocation() {
         self.locationManager.startUpdatingLocation()

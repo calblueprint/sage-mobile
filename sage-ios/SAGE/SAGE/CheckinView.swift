@@ -11,6 +11,8 @@ import UIKit
 class CheckinView: UIView {
 
     var mapView: GMSMapView = GMSMapView()
+    var startButton: UIButton = UIButton()
+    var endButton: UIButton = UIButton()
 
     //
     // MARK: - Initialization
@@ -19,6 +21,8 @@ class CheckinView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
         self.addSubview(self.mapView)
+
+        //self.startButton.backgroundColor = UIColor.l
     }
 
     required init?(coder aDecoder: NSCoder) {

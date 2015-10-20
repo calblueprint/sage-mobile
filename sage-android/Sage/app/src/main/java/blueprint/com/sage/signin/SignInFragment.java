@@ -31,7 +31,6 @@ public class SignInFragment extends Fragment {
     @Bind(R.id.sign_in_password) EditText mPasswordField;
     @Bind(R.id.login_button) Button loginButton;
 
-
     public static SignInFragment newInstance() {
         return new SignInFragment();
     }
@@ -50,7 +49,7 @@ public class SignInFragment extends Fragment {
     }
 
     @OnClick(R.id.login_button)
-    public void pressLogin(Button loginButton) {
+    public void pressLogin() {
         boolean error = false;
         String email = mUserField.getText().toString();
         String password = mPasswordField.getText().toString();
@@ -65,7 +64,7 @@ public class SignInFragment extends Fragment {
         if (error) {
             return;
         }
-        HashMap<String, String> params = new HashMap<String, String>();
+        HashMap<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
         SignInActivity activity = (SignInActivity) getActivity();
@@ -84,10 +83,4 @@ public class SignInFragment extends Fragment {
         });
         requestQueue.add(loginRequest);
     }
-
-
-
-//    private void something() {
-//        mTextView.setError("asdfasdasdf");
-//    }
 }

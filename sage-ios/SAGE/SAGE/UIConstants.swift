@@ -19,6 +19,11 @@ struct UIConstants {
     static let barbuttonIconSize: CGFloat = 24.0
     static let tabBarIconSize: CGFloat = 28.0
     
+    static let fastAnimationTime: NSTimeInterval = 0.35
+    static let normalAnimationTime: NSTimeInterval = 0.60
+    static let defaultSpringDampening: CGFloat = 0.60
+    static let defaultSpringVelocity: CGFloat = 1.0
+    
     static func dividerHeight() -> CGFloat {
         return 1 / UIScreen.mainScreen().scale
     }

@@ -18,4 +18,6 @@ public class SignInActivity extends FragmentActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.sign_in_container, SignInFragment.newInstance()).commit();
     }
+
+
 }

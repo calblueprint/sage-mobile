@@ -32,15 +32,16 @@
         />
 
     <Button
-        android:layout_width="325dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="@string/log_in_button"
         android:background="@drawable/translucent_button"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="sans-serif"
         android:layout_margin="20dp"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16dp"/>
+        android:textSize="16dp"
+        android:id="@+id/login_button"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="@string/no_account"
             android:textColor="@color/white"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif"/>
 
         <!--<TextView-->
             <!--android:layout_width="wrap_content"-->

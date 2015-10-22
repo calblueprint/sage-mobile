@@ -13,6 +13,7 @@ class CheckinView: UIView {
     var startButton: UIButton = UIButton()
     var endButton: UIButton = UIButton()
     var timerView: UIView = UIView()
+    var timerLabel: UILabel = UILabel()
     var timerArc: CAShapeLayer = CAShapeLayer()
     var mapView: GMSMapView = GMSMapView()
     
@@ -48,6 +49,10 @@ class CheckinView: UIView {
         
         self.timerView.setY(margin)
         self.timerView.alignRightWithMargin(margin)
+        
+        self.timerLabel.fillWidth()
+        self.timerLabel.fillHeight()
+        self.timerLabel.centerInSuperview()
     }
     
     //
@@ -60,14 +65,15 @@ class CheckinView: UIView {
         }
     }
     
-    func presentSessionMode(duration: NSTimeInterval) {
+    func presentSessionMode(duration: NSTimeInterval, timeElapsed: NSTimeInterval = 0, percentage: CGFloat = 0) {
         self.showView(self.endButton, hide: self.startButton, duration: duration)
         self.showView(self.timerView, hide: nil, duration: duration)
-        self.updateTimerWithTime(20, completionTime: 20)
+        self.updateTimerWithTime(timeElapsed, percentage: percentage)
     }
     
-    func updateTimerWithTime(time: NSTimeInterval, completionTime: NSTimeInterval) {
-        self.timerArc.path = self.createTimerArcWithPercentage(0.20)
+    func updateTimerWithTime(timeElapsed: NSTimeInterval, percentage: CGFloat) {
+        self.timerLabel.text = "0:00"
+        self.timerArc.path = self.createTimerArcWithPercentage(percentage)
     }
     
     //
@@ -103,6 +109,11 @@ class CheckinView: UIView {
         self.addShadowToView(self.timerView)
         self.addSubview(self.timerView)
         
+        self.timerLabel.textAlignment = .Center
+        self.timerLabel.font = UIFont.systemFontOfSize(22.0)
+        self.timerLabel.textColor = UIColor.lightRedColor
+        self.timerView.addSubview(self.timerLabel)
+        
         self.timerArc.fillColor = UIColor.lightRedColor.CGColor
     }
     
@@ -137,7 +148,7 @@ class CheckinView: UIView {
             timerSize/2, timerSize/2,   // center.x, center.y
             timerSize/2,                // radius
             -pi/2,                      // start angle
-            -pi/2 + 2*pi*percentage,    // end angle
+            -pi/2 + max(0.30,2*pi*percentage),    // end angle
             false)                      // counter clockwise?
         let strokedArc = CGPathCreateCopyByStrokingPath(arc, nil,
             5.0,                        // lineWidth

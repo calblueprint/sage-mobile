@@ -55,16 +55,28 @@ class CheckinViewController: UIViewController {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .AuthorizedWhenInUse, .AuthorizedAlways:
-                let alertController = UIAlertController(
-                    title: "Start mentoring session?",
-                    message: "Do you want to start your mentoring session?",
-                    preferredStyle: .Alert)
-                alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                    //save start time locally and start timer
-                    self.presentSessionMode(UIConstants.normalAnimationTime)
-                }))
-                alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
+                //verify user's location first
+                // if verified: then do this
+                // if not: show a too far alert
+                if true {
+                    let alertController = UIAlertController(
+                        title: "Start mentoring session?",
+                        message: "Do you want to start your mentoring session?",
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                        //save start time locally and start timer
+                        self.presentSessionMode(UIConstants.normalAnimationTime)
+                    }))
+                    alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                } else {
+                    let alertController = UIAlertController(
+                        title: "Location too far",
+                        message: "You are too far from your school. Please move closer to your school to check in.",
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                }
                 break
             case .Denied, .Restricted, .NotDetermined:
                 self.presentNeedsLocationAlert()
@@ -74,10 +86,18 @@ class CheckinViewController: UIViewController {
     }
     
     @objc private func userPressedEndSession(sender: UIButton!) {
-        // send request to make check in and present to default
-        // when finished. if failure, store locally and 
-        // try again until success
-        self.presentDefaultMode(UIConstants.normalAnimationTime)
+        let alertController = UIAlertController(
+            title: "End mentoring session?",
+            message: "Do you want to end your mentoring session?",
+            preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            // send request to make check in and present to default
+            // when finished. if failure, store locally and
+            // try again until success
+            self.presentDefaultMode(UIConstants.normalAnimationTime)
+        }))
+        alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     //

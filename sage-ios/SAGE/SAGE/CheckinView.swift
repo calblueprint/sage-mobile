@@ -12,6 +12,7 @@ class CheckinView: UIView {
 
     var startButton: UIButton = UIButton()
     var endButton: UIButton = UIButton()
+    var timerView: UIView = UIView()
     var mapView: GMSMapView = GMSMapView()
     
     private let buttonSize: CGFloat = 56.0
@@ -42,6 +43,9 @@ class CheckinView: UIView {
         
         self.endButton.alignBottomWithMargin(margin * 2 + buttonSize)
         self.endButton.alignRightWithMargin(margin)
+        
+        self.timerView.setY(margin)
+        self.timerView.alignRightWithMargin(margin)
     }
     
     //
@@ -80,6 +84,12 @@ class CheckinView: UIView {
         closeIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
         self.endButton.setImage(closeIcon.imageWithSize(CGSizeMake(checkSize,checkSize)), forState: .Normal)
         self.addSubview(self.endButton)
+        
+        self.timerView.backgroundColor = UIColor.whiteColor()
+        self.timerView.setSize(width: 70, height: 70)
+        self.timerView.layer.cornerRadius = 35
+        self.addShadowToView(self.timerView)
+        self.addSubview(self.timerView)
     }
     
     private func showButton(buttonShow: UIButton, hide buttonHide: UIButton, duration: NSTimeInterval) {

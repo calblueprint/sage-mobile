@@ -28,7 +28,8 @@ class CheckinViewController: UIViewController {
         self.checkinView.endButton.addTarget(self, action: "userPressedEndSession:", forControlEvents: .TouchUpInside)
 
         self.locationManager.delegate = self
-        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        // May wanna put in viewDidAppear() if we want to get the user's location every time the mapView appears
         self.startGettingCurrentLocation()
     }
     
@@ -51,17 +52,22 @@ class CheckinViewController: UIViewController {
     // MARK: - Button event handling
     //
     @objc private func userPressedBeginSession(sender: UIButton!) {
-        // make an alert to ask if start. if start, check if location
-        // services allowed
-        // save start time locally and start timer
-        
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
+            case .AuthorizedWhenInUse, .AuthorizedAlways:
+                let alertController = UIAlertController(
+                    title: "Start mentoring session?",
+                    message: "Do you want to start your mentoring session?",
+                    preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                    //save start time locally and start timer
+                    self.presentSessionMode(UIConstants.normalAnimationTime)
+                }))
+                alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                break
             case .Denied, .Restricted, .NotDetermined:
                 self.presentNeedsLocationAlert()
-                break
-            case .AuthorizedWhenInUse, .AuthorizedAlways:
-                self.presentSessionMode(UIConstants.normalAnimationTime)
                 break
             }
         }
@@ -120,18 +126,17 @@ extension CheckinViewController: CLLocationManagerDelegate {
 
         switch status {
 
-        case .AuthorizedAlways, .AuthorizedWhenInUse:
+        case .AuthorizedWhenInUse, .AuthorizedAlways:
             self.startGettingCurrentLocation()
             break
         case .Restricted, .Denied:
             self.presentNeedsLocationAlert()
             break
         case .NotDetermined:
-            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
             break
         }
     }
-
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 

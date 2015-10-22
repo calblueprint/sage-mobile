@@ -14,4 +14,5 @@ public class Announcement {
     private int mSchoolId;
     private int mUserId;
     private int mCategory;
+
 }

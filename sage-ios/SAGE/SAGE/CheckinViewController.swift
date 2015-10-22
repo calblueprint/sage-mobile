@@ -24,8 +24,8 @@ class CheckinViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Check in"
         
-        self.checkinView.startButton.addTarget(self, action: "beginSession:", forControlEvents: .TouchUpInside)
-        self.checkinView.endButton.addTarget(self, action: "endSession:", forControlEvents: .TouchUpInside)
+        self.checkinView.startButton.addTarget(self, action: "userPressedBeginSession:", forControlEvents: .TouchUpInside)
+        self.checkinView.endButton.addTarget(self, action: "userPressedEndSession:", forControlEvents: .TouchUpInside)
 
         self.locationManager.delegate = self
         self.locationManager.requestAlwaysAuthorization()
@@ -50,12 +50,25 @@ class CheckinViewController: UIViewController {
     //
     // MARK: - Button event handling
     //
-    @objc private func beginSession(sender: UIButton!) {
+    @objc private func userPressedBeginSession(sender: UIButton!) {
+        // make an alert to ask if start. if start, check if location
+        // services allowed
         // save start time locally and start timer
-        self.presentSessionMode(UIConstants.normalAnimationTime)
+        
+        if CLLocationManager.locationServicesEnabled() {
+            if  CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied ||
+                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Restricted ||
+                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
+                self.presentNeedsLocationAlert()
+            } else if
+                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
+                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedAlways {
+                self.presentSessionMode(UIConstants.normalAnimationTime)
+            }
+        }
     }
     
-    @objc private func endSession(sender: UIButton!) {
+    @objc private func userPressedEndSession(sender: UIButton!) {
         // send request to make check in and present to default
         // when finished. if failure, store locally and 
         // try again until success
@@ -88,6 +101,15 @@ class CheckinViewController: UIViewController {
             self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         }
     }
+    
+    private func presentNeedsLocationAlert() {
+        let alertController = UIAlertController(
+            title: "Please turn on location services.",
+            message: "In order to turn on location services, go to Settings > SAGE > Location and allow 'While Using the App'",
+            preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 }
 
 //
@@ -103,7 +125,7 @@ extension CheckinViewController: CLLocationManagerDelegate {
             self.startGettingCurrentLocation()
             break
         case .Restricted, .Denied:
-            // Manually ask the user to authorize
+            self.presentNeedsLocationAlert()
             break
         case .NotDetermined:
             self.locationManager.requestAlwaysAuthorization()

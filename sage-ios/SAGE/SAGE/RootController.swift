@@ -10,8 +10,8 @@ import UIKit
 
 class RootController: UIViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         self.setUpView()
         if LoginHelper.userIsLoggedIn() {
             if LoginHelper.userIsVerified() {

@@ -35,8 +35,10 @@ class SignUpNameView: SignUpFormView {
         self.subHeaderLabel.text = "What's your name?"
         // set icon and color
         
-        let people = FAKIonIcons.personIconWithSize(48).imageWithSize(CGSizeMake(48, 48))
-        self.icon.image = people
+        let peopleIcon = FAKIonIcons.personIconWithSize(48)
+        peopleIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
+        let peopleImage = peopleIcon.imageWithSize(CGSizeMake(48, 48))
+        self.icon.image = peopleImage
     }
     
     override func layoutSubviews() {

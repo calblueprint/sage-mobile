@@ -70,6 +70,7 @@
 		42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */; settings = {ASSET_TAGS = (); }; };
 		42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */; settings = {ASSET_TAGS = (); }; };
 		42EFD67F1BC9ED730063FD78 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67E1BC9ED730063FD78 /* SignUpFormView.swift */; settings = {ASSET_TAGS = (); }; };
+		42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F75B211BD451DA00835595 /* SignUpTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
@@ -138,6 +139,7 @@
 		42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSchoolHoursView.swift; sourceTree = "<group>"; };
 		42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPhotoView.swift; sourceTree = "<group>"; };
 		42EFD67E1BC9ED730063FD78 /* SignUpFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
+		42F75B211BD451DA00835595 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -345,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */,
+				42F75B211BD451DA00835595 /* SignUpTableViewController.swift */,
 			);
 			name = "Sign Up";
 			sourceTree = "<group>";
@@ -501,21 +504,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6EC3BC9EE0B44E6424018C8B /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3465F6269308AC7041D907AB /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -624,6 +612,7 @@
 				422334281BC09E0F00E863D0 /* School.swift in Sources */,
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
+				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,
 				2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */,

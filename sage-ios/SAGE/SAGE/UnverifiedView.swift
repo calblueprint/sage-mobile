@@ -12,10 +12,11 @@ import FontAwesomeKit
 class UnverifiedView: UIView {
     
     var unverifiedLabel: UILabel = UILabel()
-    var changeInfoLabel: UILabel = UILabel()
     var containerView: UIView = UIView()
     var profileImage: UIImageView = UIImageView()
     var iconImage: UIImageView = UIImageView()
+    var photo: UIImageView = UIImageView()
+    var photoBorder: UIView = UIView()
     
     required override init(frame: CGRect) {
         let screenRect = UIScreen.mainScreen().bounds;
@@ -42,18 +43,21 @@ class UnverifiedView: UIView {
         self.iconImage.setHeight(170)
         self.iconImage.centerHorizontally()
         
+        self.photo.setY(0)
+        self.photo.setWidth(70)
+        self.photo.setHeight(70)
+        self.photo.centerHorizontally()
+        self.photo.setX(self.photo.frame.origin.x - 75)
+
+        self.photoBorder.setWidth(80)
+        self.photoBorder.setHeight(80)
+        self.photoBorder.center = self.photo.center
+        
         self.unverifiedLabel.setY(CGRectGetMaxY(self.iconImage.frame) + 20)
         self.unverifiedLabel.setX(40)
         self.unverifiedLabel.setWidth(self.containerView.frame.width - 80)
         self.unverifiedLabel.setHeight(65)
         self.unverifiedLabel.centerHorizontally()
-        
-        self.changeInfoLabel.setY(CGRectGetMaxY(self.containerView.frame) - 300)
-        self.changeInfoLabel.setX(0)
-        self.changeInfoLabel.setWidth(self.containerView.frame.width)
-        self.changeInfoLabel.setHeight(40)
-        self.centerHorizontally()
-    
         
     }
     
@@ -63,6 +67,8 @@ class UnverifiedView: UIView {
     }
     
     func setUpViews() {
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        
         self.backgroundColor = UIColor.whiteColor()
         self.addSubview(self.containerView)
         
@@ -73,17 +79,30 @@ class UnverifiedView: UIView {
         self.unverifiedLabel.numberOfLines = 3
         self.unverifiedLabel.textAlignment = NSTextAlignment.Center
         
-        
-        self.containerView.addSubview(self.changeInfoLabel)
-        self.changeInfoLabel.text = "Change information"
-        self.changeInfoLabel.textColor = UIColor.blueColor()
-        self.changeInfoLabel.textAlignment = NSTextAlignment.Center
-        
         self.containerView.addSubview(self.profileImage)
         
-        let checkmark = FAKIonIcons.checkmarkCircledIconWithSize(170).imageWithSize(CGSizeMake(170, 170))
-        self.iconImage.image = checkmark
+        let checkmarkIcon = FAKIonIcons.checkmarkCircledIconWithSize(170)
+        checkmarkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
+        let checkmarkImage = checkmarkIcon.imageWithSize(CGSizeMake(170, 170))
+        self.iconImage.image = checkmarkImage
         self.containerView.addSubview(self.iconImage)
+        
+        self.containerView.addSubview(self.photoBorder)
+        self.photoBorder.layer.cornerRadius = 40
+        self.photoBorder.clipsToBounds = true
+        self.photoBorder.backgroundColor = UIColor.whiteColor()
+
+        self.containerView.addSubview(self.photo)
+        self.photo.layer.cornerRadius = 35
+        self.photo.clipsToBounds = true
+        self.photo.contentMode = UIViewContentMode.ScaleAspectFit
+        
+        let personIcon = FAKIonIcons.personIconWithSize(200)
+        personIcon.setAttributes([NSForegroundColorAttributeName: UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+        let personImage = personIcon.imageWithSize(CGSizeMake(200, 200))
+        self.photo.image = personImage
+        self.photo.clipsToBounds = true
+        self.photo.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
     }
     
 }

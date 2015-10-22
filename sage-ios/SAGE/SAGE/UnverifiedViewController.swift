@@ -13,4 +13,8 @@ class UnverifiedViewController: UIViewController {
     override func loadView() {
         self.view = UnverifiedView()
     }
+    
+    func setImage(image: UIImage) {
+        (self.view as! UnverifiedView).photo.image = image
+    }
 }

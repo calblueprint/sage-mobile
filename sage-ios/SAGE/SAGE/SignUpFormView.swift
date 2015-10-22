@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import FontAwesomeKit
 
 class SignUpFormView: UIView {
     var headerLabel: UILabel = UILabel()
     var subHeaderLabel: UILabel = UILabel()
     var icon: UIImageView = UIImageView()
-    var xButton: UIButton = UIButton()
     var containerView: UIView = UIView()
     
     override init(frame: CGRect) {
@@ -35,7 +33,6 @@ class SignUpFormView: UIView {
         self.containerView.addSubview(self.headerLabel)
         self.containerView.addSubview(self.subHeaderLabel)
         self.containerView.addSubview(self.icon)
-        self.containerView.addSubview(self.xButton)
         
         // set colors and stuff
         self.headerLabel.textColor = UIColor.whiteColor()
@@ -52,13 +49,6 @@ class SignUpFormView: UIView {
         self.containerView.setWidth(self.frame.width)
         self.containerView.setX(0)
         self.containerView.setY(0)
-        
-        self.xButton.setX(0)
-        self.xButton.setY(0)
-        self.xButton.setWidth(44)
-        self.xButton.setHeight(66)
-        let xButtonIcon = FAKIonIcons.closeRoundIconWithSize(22).imageWithSize(CGSizeMake(22, 22))
-        self.xButton.setImage(xButtonIcon, forState: UIControlState.Normal)
         
         self.headerLabel.setY(85)
         self.headerLabel.sizeToFit()

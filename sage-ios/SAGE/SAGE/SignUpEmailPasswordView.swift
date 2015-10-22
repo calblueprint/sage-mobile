@@ -36,8 +36,10 @@ class SignUpEmailPasswordView: SignUpFormView {
         self.subHeaderLabel.text = "What's your email and password?"
         
         // set icon and color
-        let email = FAKIonIcons.emailIconWithSize(48).imageWithSize(CGSizeMake(48, 48))
-        self.icon.image = email
+        let emailIcon = FAKIonIcons.emailIconWithSize(48)
+        emailIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
+        let emailImage = emailIcon.imageWithSize(CGSizeMake(48, 48))
+        self.icon.image = emailImage
     }
     
     override func layoutSubviews() {

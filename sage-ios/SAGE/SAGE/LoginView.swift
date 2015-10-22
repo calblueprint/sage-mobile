@@ -16,6 +16,8 @@ class LoginView: UIView {
     var containerView: UIView?
     var firstDivider: UIView?
     var secondDivider: UIView?
+    var loginButton: UIButton?
+    var loginButtonText: UILabel?
     
     var movedUp: Bool = false
     
@@ -90,6 +92,20 @@ class LoginView: UIView {
         self.signUpLink?.titleLabel!.font = UIFont.metaFont
         self.signUpLink?.titleLabel!.textColor = UIColor.whiteColor()
         self.containerView!.addSubview(self.signUpLink!)
+        
+        self.loginButton = UIButton()
+        self.loginButton?.backgroundColor = UIColor.whiteColor()
+        self.loginButton?.alpha = 0.45
+        self.loginButton?.layer.cornerRadius = 5
+        self.loginButton?.clipsToBounds = true
+        self.containerView!.addSubview(self.loginButton!)
+        
+        self.loginButtonText = UILabel()
+        self.loginButtonText?.textColor = UIColor.whiteColor()
+        self.loginButtonText?.text = "Log in"
+        self.loginButtonText?.textAlignment = NSTextAlignment.Center
+        self.containerView!.addSubview(self.loginButtonText!)
+        
     }
     
     func screenTapped() {
@@ -190,8 +206,15 @@ class LoginView: UIView {
         self.secondDivider!.setWidth(self.containerView!.frame.width - 2 * dividerMargin)
         self.secondDivider!.setHeight(UIConstants.dividerHeight())
         
+        self.loginButton!.setX(dividerMargin)
+        self.loginButton!.setWidth(self.containerView!.frame.width - 2 * dividerMargin)
+        self.loginButton!.setHeight(40)
+        self.loginButton!.setY(self.containerView!.frame.height * 0.48 + 65)
+        
+        self.loginButtonText!.frame = self.loginButton!.frame
+        
         self.signUpLink!.setX(0)
-        self.signUpLink!.setY(self.containerView!.frame.height * 0.48 + 65)
+        self.signUpLink!.setY(CGRectGetMaxY(self.loginButton!.frame) + 20)
         self.signUpLink!.setWidth(self.containerView!.frame.width)
         self.signUpLink!.setHeight(20)
         

@@ -10,7 +10,6 @@ import SwiftKeychainWrapper
 
 class LoginHelper: NSObject {
     static func userIsLoggedIn() -> Bool {
-        return true
         if let _ = User.currentUser {
             return true
         }
@@ -23,7 +22,6 @@ class LoginHelper: NSObject {
     
     static func userIsVerified() -> Bool {
         // this returns only true for now because it hasn't been connected to the backend
-        return false
         if let _ = KeychainWrapper.stringForKey(KeychainConstants.kVerified) {
             return true
         }

@@ -15,6 +15,7 @@ class UnverifiedViewController: UIViewController {
     }
     
     func setImage(image: UIImage) {
+        (self.view as! UnverifiedView).photo.contentMode = UIViewContentMode.ScaleAspectFill
         (self.view as! UnverifiedView).photo.image = image
     }
 }

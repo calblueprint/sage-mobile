@@ -8,31 +8,40 @@
 
 import UIKit
 
-class SignUpTableViewController: UITableViewController {
+class SignUpTableViewController: UITableViewController, UINavigationBarDelegate {
     
     var modalType: String?
+    var navigationBar: UINavigationBar?
+    var parentVC: SignUpController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-//        let leftButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "doneButtonPressed")
-//
-//        self.navigationController?.setNavigationBarHidden(false, animated: false)
-//        self.navigationItem.leftBarButtonItem = leftButton
-//        let navigationBar = navigationController!.navigationBar
-//        navigationBar.tintColor = UIColor.blueColor()
-//        
-//        let leftButton =  UIBarButtonItem(title: "Left Button", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-//        let rightButton = UIBarButtonItem(title: "Right Button", style: UIBarButtonItemStyle.Plain, target: self, action: nil)
-//        
-//        navigationItem.leftBarButtonItem = leftButton
-//        navigationItem.rightBarButtonItem = rightButton
+        let rightButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelClicked")
+        self.navigationItem.rightBarButtonItem = rightButton
 
+    }
+    
+    func cancelClicked() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let _ = self.parentVC {
+            let schoolHoursView = (self.parentVC!.view as! SignUpView).schoolHoursView
+            if (self.modalType == "School") {
+                schoolHoursView.chooseSchoolButton.setTitle("school selected", forState: UIControlState.Normal)
+            } else if (self.modalType == "Hours") {
+                schoolHoursView.chooseHoursButton.setTitle("hours selected", forState: UIControlState.Normal)
+            }
+        }
+        self.cancelClicked()
     }
     
     func setType(typeString: String) {
         self.modalType = typeString
+        self.navigationController!.navigationBar.topItem!.title = "Choose " + typeString
     }
 
     // MARK: - Table view data source

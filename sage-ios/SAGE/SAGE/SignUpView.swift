@@ -20,7 +20,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
     var allViews = [SignUpFormView]()
     var xButton: UIButton = UIButton()
     var scrollView: UIScrollView = UIScrollView()
-    
+        
     override init(frame: CGRect) {
         let screenRect = UIScreen.mainScreen().bounds;
         let screenWidth = screenRect.size.width;
@@ -96,7 +96,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.pageControl.centerHorizontally()
         self.pageControl.setY(225)
         
-        self.xButton.setX(24)
+        self.xButton.setX(10)
         self.xButton.setY(0)
         self.xButton.setWidth(44)
         self.xButton.setHeight(66)

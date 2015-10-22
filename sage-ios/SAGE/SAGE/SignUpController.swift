@@ -87,15 +87,19 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func presentSchoolModal() {
-        let modalViewController = SignUpTableViewController()
-        modalViewController.setType("school")
-        self.presentViewController(modalViewController, animated: true, completion: nil)
+        let tableViewController = SignUpTableViewController()
+        let navigationController = UINavigationController(rootViewController: tableViewController)
+        tableViewController.parentVC = self
+        self.presentViewController(navigationController, animated: true, completion: nil)
+        tableViewController.setType("School")
     }
     
     func presentHoursModal() {
-        let modalViewController = SignUpTableViewController()
-        modalViewController.setType("hours")
-        self.presentViewController(modalViewController, animated: true, completion: nil)
+        let tableViewController = SignUpTableViewController()
+        let navigationController = UINavigationController(rootViewController: tableViewController)
+        tableViewController.parentVC = self
+        self.presentViewController(navigationController, animated: true, completion: nil)
+        tableViewController.setType("Hours")
     }
     
     func xButtonPressed() {

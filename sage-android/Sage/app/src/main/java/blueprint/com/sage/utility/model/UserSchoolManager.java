@@ -24,6 +24,7 @@ public @Data class UserSchoolManager {
 
     public UserSchoolManager(Context context, SharedPreferences preferences) {
         this.preferences = preferences;
+        this.context = context;
         setUpModels();
     }
 

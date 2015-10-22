@@ -31,16 +31,8 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.scrollView.delegate = self
     }
     
-    func screenTapped() {
-        self.scrollView.endEditing(true)
-        self.endEditing(true)
-    }
-    
-    func setUpGestureRecognizer() {
-        let recognizer = UITapGestureRecognizer()
-        recognizer.addTarget(self, action: "screenTapped")
-        self.addGestureRecognizer(recognizer)
-        self.userInteractionEnabled = true
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setUpViews() {
@@ -53,6 +45,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.scrollView.showsVerticalScrollIndicator = false
         self.pageControl.numberOfPages = 4
         self.pageControl.currentPage = 0
+        self.pageControl.userInteractionEnabled = false
         
         let screenRect = UIScreen.mainScreen().bounds;
         let screenWidth = screenRect.size.width;
@@ -97,7 +90,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.pageControl.setY(225)
         
         self.xButton.setX(10)
-        self.xButton.setY(0)
+        self.xButton.setY(10)
         self.xButton.setWidth(44)
         self.xButton.setHeight(66)
         let xButtonIcon = FAKIonIcons.closeRoundIconWithSize(22)
@@ -106,6 +99,10 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.xButton.setImage(xButtonImage, forState: UIControlState.Normal)
 
     }
+    
+    //
+    // MARK: - Methods for background color of scrollview
+    //
     
     func calculateColor(firstColor: UIColor, secondColor: UIColor, offset: CGFloat) -> UIColor {
         let firstCIColor = CIColor(color: firstColor)
@@ -132,11 +129,34 @@ class SignUpView: UIView, UIScrollViewDelegate {
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        self.changeBackgroundColor(scrollView.contentOffset.x)
+    //
+    // MARK: - Gesture recognizer methods
+    //
+    
+    func screenTapped() {
+        self.scrollView.endEditing(true)
+        self.endEditing(true)
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    func setUpGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer()
+        recognizer.addTarget(self, action: "screenTapped")
+        self.addGestureRecognizer(recognizer)
+        self.userInteractionEnabled = true
+    }
+    
+    //
+    // MARK: - UIScrollViewDelegate methods
+    //
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.x < 0 {
+            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+        } else if scrollView.contentOffset.x > 3 * self.frame.width {
+            scrollView.setContentOffset(CGPointMake(3 * self.frame.width, 0), animated: false)
+        } else {
+            self.endEditing(true)
+            self.changeBackgroundColor(scrollView.contentOffset.x)
+        }
     }
 }

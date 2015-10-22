@@ -30,14 +30,14 @@ class SignUpSchoolHoursView: SignUpFormView {
         self.containerView.addSubview(self.chevronOne)
         self.containerView.addSubview(self.chevronTwo)
         
-        self.chooseSchoolButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        self.chooseHoursButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.chooseSchoolButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.chooseHoursButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.firstDivider.backgroundColor = UIColor.whiteColor()
         self.secondDivider.backgroundColor = UIColor.whiteColor()
-        self.chooseSchoolButton.setTitle("Choose School...", forState: UIControlState.Normal)
-        self.chooseHoursButton.setTitle("Choose Hours...", forState: UIControlState.Normal)
-        self.chooseSchoolButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-        self.chooseHoursButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        self.chooseSchoolButton.setTitle("Choose School...", forState: .Normal)
+        self.chooseHoursButton.setTitle("Choose Hours...", forState: .Normal)
+        self.chooseSchoolButton.contentHorizontalAlignment = .Left
+        self.chooseHoursButton.contentHorizontalAlignment = .Left
         
         let erlenmeyerFlaskIcon = FAKIonIcons.erlenmeyerFlaskIconWithSize(48)
         erlenmeyerFlaskIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])

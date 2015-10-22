@@ -61,6 +61,5 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        print("view did appear")
     }
 }

@@ -12,7 +12,6 @@ class RootController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.setUpView()
         if LoginHelper.userIsLoggedIn() {
             if LoginHelper.userIsVerified() {
                 self.pushRootTabBarController()
@@ -24,7 +23,8 @@ class RootController: UIViewController {
         }
     }
     
-    func setUpView() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         let frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         let image = UIImage.init(named: UIConstants.blurredBerkeleyBackground)
         let imageView = UIImageView.init(frame: frame)
@@ -41,7 +41,7 @@ class RootController: UIViewController {
         let sageFrame = CGRectMake(0, self.view.frame.height/20, self.view.frame.width, self.view.frame.height)
         let sageLabel = UILabel.init(frame: sageFrame)
         sageLabel.text = "If you want to be happy, be."
-        sageLabel.textAlignment = NSTextAlignment.Center
+        sageLabel.textAlignment = .Center
         sageLabel.textColor = UIColor.whiteColor()
         sageLabel.font = UIFont.systemFontOfSize(20)
         self.view.addSubview(sageLabel)
@@ -50,23 +50,23 @@ class RootController: UIViewController {
     // a function that will fill in values and present the login view controller
     func pushLoginViewController() {
         let loginController = LoginController()
-        self.displayViewController(loginController)
-    }
-    
-    func displayViewController(vc: UIViewController) {
         self.view = UIView(frame: self.view.frame)
-        self.addChildViewController(vc)
-        self.view.addSubview(vc.view)
+        self.addChildViewController(loginController)
+        self.view.addSubview(loginController.view)
     }
     
     func pushUnverifiedViewController() {
         let unverifiedController = UnverifiedViewController()
-        self.displayViewController(unverifiedController)
+        self.view = UIView(frame: self.view.frame)
+        self.addChildViewController(unverifiedController)
+        self.view.addSubview(unverifiedController.view)
     }
     
     func pushRootTabBarController() {
         LoginHelper.setUserSingleton()
         let rootTabBarController = RootTabBarController()
-        self.displayViewController(rootTabBarController)
+        self.view = UIView(frame: self.view.frame)
+        self.addChildViewController(rootTabBarController)
+        self.view.addSubview(rootTabBarController.view)
     }
 }

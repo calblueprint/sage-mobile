@@ -27,6 +27,50 @@ class UnverifiedView: UIView {
         self.setUpViews()
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setUpViews()
+    }
+    
+    func setUpViews() {
+        UIApplication.sharedApplication().statusBarStyle = .Default
+        
+        self.backgroundColor = UIColor.whiteColor()
+        self.addSubview(self.containerView)
+        
+        self.containerView.addSubview(self.unverifiedLabel)
+        self.unverifiedLabel.text = "Thanks for signing up! A request has been sent to SAGE for approval."
+        self.unverifiedLabel.font = UIFont.titleFont
+        self.unverifiedLabel.textColor = UIColor.blackColor()
+        self.unverifiedLabel.numberOfLines = 3
+        self.unverifiedLabel.textAlignment = .Center
+        
+        self.containerView.addSubview(self.profileImage)
+        
+        let checkmarkIcon = FAKIonIcons.checkmarkCircledIconWithSize(170)
+        checkmarkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
+        let checkmarkImage = checkmarkIcon.imageWithSize(CGSizeMake(170, 170))
+        self.iconImage.image = checkmarkImage
+        self.containerView.addSubview(self.iconImage)
+        
+        self.containerView.addSubview(self.photoBorder)
+        self.photoBorder.layer.cornerRadius = 40
+        self.photoBorder.clipsToBounds = true
+        self.photoBorder.backgroundColor = UIColor.whiteColor()
+        
+        self.containerView.addSubview(self.photo)
+        self.photo.layer.cornerRadius = 35
+        self.photo.clipsToBounds = true
+        self.photo.contentMode = .ScaleAspectFit
+        
+        let personIcon = FAKIonIcons.personIconWithSize(200)
+        personIcon.setAttributes([NSForegroundColorAttributeName: UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+        let personImage = personIcon.imageWithSize(CGSizeMake(200, 200))
+        self.photo.image = personImage
+        self.photo.clipsToBounds = true
+        self.photo.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+    }
+    
     override func layoutSubviews() {
         let screenRect = UIScreen.mainScreen().bounds;
         let screenWidth = screenRect.size.width;
@@ -60,49 +104,4 @@ class UnverifiedView: UIView {
         self.unverifiedLabel.centerHorizontally()
         
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.setUpViews()
-    }
-    
-    func setUpViews() {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        
-        self.backgroundColor = UIColor.whiteColor()
-        self.addSubview(self.containerView)
-        
-        self.containerView.addSubview(self.unverifiedLabel)
-        self.unverifiedLabel.text = "Thanks for signing up! A request has been sent to SAGE for approval."
-        self.unverifiedLabel.font = UIFont.titleFont
-        self.unverifiedLabel.textColor = UIColor.blackColor()
-        self.unverifiedLabel.numberOfLines = 3
-        self.unverifiedLabel.textAlignment = NSTextAlignment.Center
-        
-        self.containerView.addSubview(self.profileImage)
-        
-        let checkmarkIcon = FAKIonIcons.checkmarkCircledIconWithSize(170)
-        checkmarkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
-        let checkmarkImage = checkmarkIcon.imageWithSize(CGSizeMake(170, 170))
-        self.iconImage.image = checkmarkImage
-        self.containerView.addSubview(self.iconImage)
-        
-        self.containerView.addSubview(self.photoBorder)
-        self.photoBorder.layer.cornerRadius = 40
-        self.photoBorder.clipsToBounds = true
-        self.photoBorder.backgroundColor = UIColor.whiteColor()
-
-        self.containerView.addSubview(self.photo)
-        self.photo.layer.cornerRadius = 35
-        self.photo.clipsToBounds = true
-        self.photo.contentMode = UIViewContentMode.ScaleAspectFit
-        
-        let personIcon = FAKIonIcons.personIconWithSize(200)
-        personIcon.setAttributes([NSForegroundColorAttributeName: UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
-        let personImage = personIcon.imageWithSize(CGSizeMake(200, 200))
-        self.photo.image = personImage
-        self.photo.clipsToBounds = true
-        self.photo.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-    }
-    
 }

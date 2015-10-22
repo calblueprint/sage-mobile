@@ -14,7 +14,6 @@ class SignUpPhotoView: SignUpFormView {
     var photoLabel: UILabel = UILabel()
     var skipAndFinishLink: UIButton = UIButton()
     var finishButton: UIButton = UIButton()
-    var finishLabel: UILabel = UILabel()
     var takePhotoButton: UIButton = UIButton()
     var takePhotoBorder: UIView = UIView()
     
@@ -29,17 +28,15 @@ class SignUpPhotoView: SignUpFormView {
         self.containerView.addSubview(self.takePhotoButton)
         self.containerView.addSubview(self.photo)
         self.containerView.addSubview(self.takePhotoBorder)
-        self.containerView.addSubview(self.finishLabel)
         
         self.photoButton.layer.cornerRadius = 5
         self.photoButton.clipsToBounds = true
         self.photoButton.backgroundColor = UIColor.whiteColor()
         self.photoButton.alpha = 0.3
         
-        self.finishButton.layer.cornerRadius = 5
-        self.finishButton.clipsToBounds = true
-        self.finishButton.backgroundColor = UIColor.whiteColor()
-        self.finishButton.alpha = 0.3
+        self.finishButton.hidden = true
+        self.finishButton.setTitle("Finish", forState: .Normal)
+        self.finishButton.titleLabel!.font = UIFont.normalFont
         self.finishButton.hidden = true
 
         self.takePhotoButton.layer.cornerRadius = 35
@@ -49,29 +46,26 @@ class SignUpPhotoView: SignUpFormView {
         
         self.photo.layer.cornerRadius = 35
         self.photo.clipsToBounds = true
+        self.photo.contentMode = .ScaleAspectFill
+        self.photo.userInteractionEnabled = false
         
         self.takePhotoBorder.layer.cornerRadius = 35
         self.takePhotoBorder.clipsToBounds = true
         self.takePhotoBorder.layer.borderWidth = 3
         self.takePhotoBorder.layer.borderColor = UIColor.whiteColor().CGColor
+        self.takePhotoBorder.userInteractionEnabled = false
         
         self.photoLabel.text = "Add photo"
         self.photoLabel.textColor = UIColor.whiteColor()
-        self.photoLabel.textAlignment = NSTextAlignment.Center
+        self.photoLabel.textAlignment = .Center
         self.photoLabel.font = UIFont.titleFont
-        
-        self.finishLabel.text = "Finish"
-        self.finishLabel.textColor = UIColor.whiteColor()
-        self.finishLabel.textAlignment = NSTextAlignment.Center
-        self.finishLabel.font = UIFont.titleFont
-        self.finishLabel.hidden = true
         
         self.headerLabel.text = "One last step!"
         
         self.subHeaderLabel.text = "Let's put a face to you!"
         
-        self.skipAndFinishLink.setTitle("Skip and Finish", forState: UIControlState.Normal)
-        self.skipAndFinishLink.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        self.skipAndFinishLink.setTitle("Skip and Finish", forState: .Normal)
+        self.skipAndFinishLink.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.skipAndFinishLink.titleLabel?.font = UIFont.normalFont
         
     }
@@ -110,11 +104,6 @@ class SignUpPhotoView: SignUpFormView {
         self.finishButton.setWidth(180)
         self.finishButton.setY(screenRect.size.height - 129)
         self.finishButton.setHeight(44)
-        
-        self.finishLabel.setX(self.finishButton.frame.origin.x)
-        self.finishLabel.setY(self.finishButton.frame.origin.y)
-        self.finishLabel.setWidth(self.finishButton.frame.width)
-        self.finishLabel.setHeight(self.finishButton.frame.height)
         
         self.skipAndFinishLink.sizeToFit()
         self.skipAndFinishLink.setY(CGRectGetMaxY(self.photoButton.frame) + 10)

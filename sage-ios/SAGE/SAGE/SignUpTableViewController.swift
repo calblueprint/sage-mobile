@@ -18,7 +18,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         super.viewDidLoad()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        let rightButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelClicked")
+        let rightButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClicked")
         self.navigationItem.rightBarButtonItem = rightButton
 
     }
@@ -27,25 +27,15 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let _ = self.parentVC {
-            let schoolHoursView = (self.parentVC!.view as! SignUpView).schoolHoursView
-            if (self.modalType == "School") {
-                schoolHoursView.chooseSchoolButton.setTitle("school selected", forState: UIControlState.Normal)
-            } else if (self.modalType == "Hours") {
-                schoolHoursView.chooseHoursButton.setTitle("hours selected", forState: UIControlState.Normal)
-            }
-        }
-        self.cancelClicked()
-    }
-    
     func setType(typeString: String) {
         self.modalType = typeString
         self.navigationController!.navigationBar.topItem!.title = "Choose " + typeString
     }
 
+    //
     // MARK: - Table view data source
-
+    //
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -59,6 +49,18 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         cell.textLabel?.text = "Sample School/Hour option"
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let _ = self.parentVC {
+            let schoolHoursView = (self.parentVC!.view as! SignUpView).schoolHoursView
+            if (self.modalType == "School") {
+                schoolHoursView.chooseSchoolButton.setTitle("school selected", forState: .Normal)
+            } else if (self.modalType == "Hours") {
+                schoolHoursView.chooseHoursButton.setTitle("hours selected", forState: .Normal)
+            }
+        }
+        self.cancelClicked()
     }
 
 }

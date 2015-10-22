@@ -4,18 +4,21 @@
 
     <string name="check_in_start_time">start</string>
     <string name="check_in_end_time">end</string>
+    
+    <string name="check_in_oob_title">Invalid location.</string>
+    <string name="check_in_oob_body">Look\'s like your too far away from the school! Try checking in a little closer.</string>
+    <string name="check_in_oob_confirm">Return</string>
 
     <string name="check_in_request_error">Invalid check-in request.</string>
 
-    <string name="check_in_end_title">Do you want to make a time request?</string>
-    <string name="check_in_end_body">Your start time: %1$s \n Your end time: %2$s \n Total time: %3$s</string>
-
-    <string name="check_in_end_confirm">Submit</string>
-    <string name="check_in_end_return">Return</string>
+    <string name="check_in_start_title">Start Session</string>
+    <string name="check_in_start_body">Do you want to start your mentoring session?</string>
+    <string name="check_in_start_confirm">Start</string>
+    <string name="check_in_start_return">Cancel</string>
 
     <string name="check_in_location_off_title">Location Services off</string>
     <string name="check_in_location_off_body">Please enable location services to continue.</string>
 
     <string name="check_in_location_off_confirm">Settings</string>
-    <string name="check_in_location_off_return">Return</string>
+    <string name="check_in_location_off_return">Cancel</string>
 </resources>

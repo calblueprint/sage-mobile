@@ -12,6 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 import blueprint.com.sage.R;
 import blueprint.com.sage.check_in.fragments.CheckInMapFragment;
 import blueprint.com.sage.utility.model.UserSchoolManager;
@@ -34,6 +37,7 @@ public class CheckInActivity extends AppCompatActivity
 
     private UserSchoolManager mManager;
     private SharedPreferences mPreferences;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,11 +46,31 @@ public class CheckInActivity extends AppCompatActivity
         setContentView(R.layout.activity_check_in);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
-
+        initializeGoogleApiClient();
         initializeDrawer();
         initializeUser();
 
         FragUtil.replace(R.id.check_in_container, CheckInMapFragment.newInstance(), this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
+            mGoogleApiClient.disconnect();
+    }
+
+    protected synchronized void initializeGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                                              .addApi(LocationServices.API)
+                                              .build();
     }
 
     private void initializeDrawer() {
@@ -100,4 +124,5 @@ public class CheckInActivity extends AppCompatActivity
     }
 
     public UserSchoolManager getManager() { return mManager; }
+    public GoogleApiClient getClient() { return mGoogleApiClient; }
 }

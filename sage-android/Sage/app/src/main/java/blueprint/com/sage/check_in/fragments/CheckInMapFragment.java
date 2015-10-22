@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
@@ -15,13 +16,16 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.android.volley.Response;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,7 +47,12 @@ import butterknife.OnClick;
  * Created by charlesx on 10/16/15.
  * Fragment for check in map.
  */
-public class CheckInMapFragment extends CheckInAbstractFragment implements OnMapReadyCallback {
+public class CheckInMapFragment extends CheckInAbstractFragment
+                                implements OnMapReadyCallback {
+
+    private final static int ZOOM = 16;
+    // Radius of cirlce boundary of school (int meters)
+    private final static int DISTANCE = 250;
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
     @Bind(R.id.check_in_check_fab) FloatingActionButton mCheckButton;
@@ -91,6 +100,9 @@ public class CheckInMapFragment extends CheckInAbstractFragment implements OnMap
     public void onMapReady(GoogleMap map) {
         map.getUiSettings().setCompassEnabled(false);
         mMap = map;
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        checkAndMoveLocation();
     }
 
     private void initializeViews(Bundle savedInstanceState) {
@@ -99,21 +111,45 @@ public class CheckInMapFragment extends CheckInAbstractFragment implements OnMap
     }
 
     @OnClick(R.id.check_in_location_fab)
-    public void onLocationClick(Button button) {
-        if (NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+    public void onLocationClick(FloatingActionButton button) { checkAndMoveLocation(); }
 
+    private void checkAndMoveLocation() {
+        if (!NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+            showEnableLocationDialog();
+        } else {
+            moveToCurrentLocation();
         }
     }
 
-    @OnClick(R.id.check_in_location_fab)
-    public void onCheckInClick(Button button) {
+    private void moveToCurrentLocation() {
+        if (mMap == null)
+            return;
+
+        Location location = getLocation();
+
+        if (location == null)
+            return;
+
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM));
+    }
+
+    @OnClick(R.id.check_in_check_fab)
+    public void onCheckInClick(FloatingActionButton button) {
+        if (!NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+            showEnableLocationDialog();
+            return;
+        }
+
+        if (!locationInBounds()) {
+            showOutOfBoundsDialog();
+            return;
+        }
+
         String startTime = mPreferences.getString(getString(R.string.check_in_start_time), "");
-        // We get here when we hit the check
         if (startTime.isEmpty()) {
-            if (NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
-
-
-            }
+            startCheckIn();
         } else {
 //            stopCheckIn();
             toggleButton(true);
@@ -121,7 +157,38 @@ public class CheckInMapFragment extends CheckInAbstractFragment implements OnMap
     }
 
     private void showOutOfBoundsDialog() {
-//        new AlertDialog.Builder(getActivity()).setMessage().show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.check_in_oob_title)
+                .setMessage(R.string.check_in_oob_body)
+                .setPositiveButton(R.string.check_in_oob_confirm,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+        builder.show();
+    }
+
+    private void showStartCheckInDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.check_in_start_title)
+                .setMessage(R.string.check_in_start_body)
+                .setPositiveButton(R.string.check_in_start_confirm,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startCheckIn();
+                            }
+                        })
+                .setNegativeButton(R.string.check_in_start_return,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+        builder.show();
     }
 
     private void showStopCheckInDialog() {
@@ -129,24 +196,24 @@ public class CheckInMapFragment extends CheckInAbstractFragment implements OnMap
     }
 
     private void showEnableLocationDialog() {
-        new AlertDialog.Builder(getActivity())
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.check_in_location_off_title)
-                .setMessage(R.string.check_in_location_off_title)
+                .setMessage(R.string.check_in_location_off_body)
                 .setPositiveButton(R.string.check_in_location_off_confirm,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            openLocationSettings();
-                        }
-                    })
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                openLocationSettings();
+                            }
+                        })
                 .setNegativeButton(R.string.check_in_location_off_return,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                })
-                .show();
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+        builder.show();
     }
 
     private void openLocationSettings() {
@@ -155,8 +222,27 @@ public class CheckInMapFragment extends CheckInAbstractFragment implements OnMap
     }
 
 
-    private boolean checkBounds() {
-        return true;
+    private boolean locationInBounds() {
+        Location location = getLocation();
+        if (location == null)
+            return false;
+        School school = new School();
+        school.setLat(0);
+        school.setLng(0);
+//        School school = getParentActivity().getManager().getSchool();
+        float[] results = new float[1];
+        Location.distanceBetween(location.getLatitude(), location.getLongitude(), school.getLat(), school.getLng(), results);
+
+        return results[0] <= DISTANCE;
+    }
+
+    private Location getLocation() {
+        GoogleApiClient client = getParentActivity().getClient();
+
+        if (client == null)
+            return null;
+
+        return LocationServices.FusedLocationApi.getLastLocation(client);
     }
 
     private void startCheckIn() {

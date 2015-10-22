@@ -56,14 +56,13 @@ class CheckinViewController: UIViewController {
         // save start time locally and start timer
         
         if CLLocationManager.locationServicesEnabled() {
-            if  CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied ||
-                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Restricted ||
-                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
+            switch CLLocationManager.authorizationStatus() {
+            case .Denied, .Restricted, .NotDetermined:
                 self.presentNeedsLocationAlert()
-            } else if
-                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse ||
-                CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedAlways {
+                break
+            case .AuthorizedWhenInUse, .AuthorizedAlways:
                 self.presentSessionMode(UIConstants.normalAnimationTime)
+                break
             }
         }
     }

@@ -12,6 +12,8 @@ class CheckinViewController: UIViewController {
 
     let locationManager = CLLocationManager()
     let checkinView = CheckinView()
+    let defaultTitleLabel = UILabel()
+    let sessionTitleLabel = UILabel()
 
     //
     // MARK: - ViewController Lifecycle
@@ -22,7 +24,8 @@ class CheckinViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Check in"
+        self.setupDefaultTitleLabel()
+        self.setupSessionTitleLabel()
         
         self.checkinView.startButton.addTarget(self, action: "userPressedBeginSession:", forControlEvents: .TouchUpInside)
         self.checkinView.endButton.addTarget(self, action: "userPressedEndSession:", forControlEvents: .TouchUpInside)
@@ -103,6 +106,33 @@ class CheckinViewController: UIViewController {
     //
     // MARK: - Private methods
     //
+    
+    private func setupDefaultTitleLabel() {
+        self.defaultTitleLabel.text = "Check In"
+        self.defaultTitleLabel.font = UIFont.boldSystemFontOfSize(17.0)
+        self.defaultTitleLabel.textAlignment = .Center
+        self.defaultTitleLabel.textColor = UIColor.whiteColor()
+        self.defaultTitleLabel.alpha = 0
+        
+        self.navigationController?.navigationBar.addSubview(self.defaultTitleLabel)
+        self.defaultTitleLabel.sizeToFit()
+        self.defaultTitleLabel.frame = CGRectIntegral(self.defaultTitleLabel.frame) // Done to prevent fuzzy text
+        self.defaultTitleLabel.centerInSuperview()
+    }
+    
+    private func setupSessionTitleLabel() {
+        self.sessionTitleLabel.text = "Currently Mentoring"
+        self.sessionTitleLabel.font = UIFont.boldSystemFontOfSize(17.0)
+        self.sessionTitleLabel.textAlignment = .Center
+        self.sessionTitleLabel.textColor = UIColor.blackColor()
+        self.sessionTitleLabel.alpha = 0
+        
+        self.navigationController?.navigationBar.addSubview(self.sessionTitleLabel)
+        self.sessionTitleLabel.sizeToFit()
+        self.sessionTitleLabel.frame = CGRectIntegral(self.sessionTitleLabel.frame) // Done to prevent fuzzy text
+        self.sessionTitleLabel.centerInSuperview()
+    }
+    
     private func startGettingCurrentLocation() {
         self.locationManager.startUpdatingLocation()
         self.checkinView.mapView.myLocationEnabled = true
@@ -113,7 +143,8 @@ class CheckinViewController: UIViewController {
         self.checkinView.presentDefaultMode(duration)
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: duration != 0)
         UIView.animateWithDuration(duration) { () -> Void in
-            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+            self.defaultTitleLabel.alpha = 1
+            self.sessionTitleLabel.alpha = 0
             self.navigationController?.navigationBar.barTintColor = UIColor.mainColor
         }
     }
@@ -122,7 +153,8 @@ class CheckinViewController: UIViewController {
         self.checkinView.presentSessionMode(duration)
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: duration != 0)
         UIView.animateWithDuration(duration) { () -> Void in
-            self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blackColor()]
+            self.defaultTitleLabel.alpha = 0
+            self.sessionTitleLabel.alpha = 1
             self.navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
         }
     }

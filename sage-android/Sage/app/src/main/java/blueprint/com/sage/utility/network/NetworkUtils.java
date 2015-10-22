@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -32,5 +33,21 @@ public class NetworkUtils {
 
         Intent loginIntent = new Intent(activity, SignInActivity.class);
         activity.startActivity(loginIntent);
+    }
+
+    public static boolean hasLocationServiceEnabled(Context context) {
+        LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean hasGps = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean hasNetwork = manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        return hasGps || hasNetwork;
+    }
+
+    public static boolean isVerifiedUser(Context context, SharedPreferences preferences) {
+        return !preferences.getString(context.getString(R.string.email), "").isEmpty() &&
+               !preferences.getString(context.getString(R.string.auth_token), "").isEmpty() &&
+               // TODO: replace this with getString after Kelsey merges her stuff
+               !preferences.getString("user", "").isEmpty() &&
+               !preferences.getString("school", "").isEmpty();
     }
 }

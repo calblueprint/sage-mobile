@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="menu_create_request">Create Request</string>
+
+    <string name="check_in_start_time">start</string>
+    <string name="check_in_end_time">end</string>
+
+    <string name="check_in_request_error">Invalid check-in request.</string>
+
+    <string name="check_in_end_title">Do you want to make a time request?</string>
+    <string name="check_in_end_body">Your start time: %1$s \n Your end time: %2$s \n Total time: %3$s</string>
+
+    <string name="check_in_end_confirm">Submit</string>
+    <string name="check_in_end_return">Return</string>
+
+    <string name="check_in_location_off_title">Location Services off</string>
+    <string name="check_in_location_off_body">Please enable location services to continue.</string>
+
+    <string name="check_in_location_off_confirm">Settings</string>
+    <string name="check_in_location_off_return">Return</string>
 </resources>

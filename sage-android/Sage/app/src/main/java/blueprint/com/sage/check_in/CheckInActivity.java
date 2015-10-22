@@ -1,5 +1,6 @@
 package blueprint.com.sage.check_in;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.check_in.fragments.CheckInMapFragment;
+import blueprint.com.sage.utility.model.UserSchoolManager;
 import blueprint.com.sage.utility.view.FragUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,14 +32,20 @@ public class CheckInActivity extends AppCompatActivity
 
     private ActionBarDrawerToggle mToggle;
 
+    private UserSchoolManager mManager;
+    private SharedPreferences mPreferences;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_check_in);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
         initializeDrawer();
+        initializeUser();
+
         FragUtil.replace(R.id.check_in_container, CheckInMapFragment.newInstance(), this);
     }
 
@@ -85,4 +93,11 @@ public class CheckInActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void initializeUser() {
+        mPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
+        mManager = new UserSchoolManager(this, mPreferences);
+    }
+
+    public UserSchoolManager getManager() { return mManager; }
 }

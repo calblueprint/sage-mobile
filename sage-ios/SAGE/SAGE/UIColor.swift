@@ -22,11 +22,11 @@ extension UIColor {
     }
     
     class func secondaryTextColor() -> UIColor {
-        return UIColor.init(white: 0.85, alpha: 1);
+        return UIColor.init(white: 0.70, alpha: 1);
     }
     
     class func borderColor() -> UIColor {
-        return UIColor.init(white: 0.80, alpha: 0.90);
+        return UIColor.init(white: 0.90, alpha: 1);
     }
     
     

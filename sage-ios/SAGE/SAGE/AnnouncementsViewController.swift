@@ -26,7 +26,7 @@ class AnnouncementsViewController: UIViewController {
 
 extension AnnouncementsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44.0
+        return 44.0*3
     }
 }
 
@@ -40,12 +40,14 @@ extension AnnouncementsViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var tableViewCell = tableView.dequeueReusableCellWithIdentifier("Announcement")
-        if (tableViewCell == nil) {
-            tableViewCell = UITableViewCell(style: .Default, reuseIdentifier: "Announcement")
+        var cell = tableView.dequeueReusableCellWithIdentifier("Announcement")
+        if (cell == nil) {
+            cell = AnnouncementsTableViewCell(style:UITableViewCellStyle.Default, reuseIdentifier:"Announcement")
         }
-        tableViewCell!.textLabel?.text = "Ass"
-        return tableViewCell!
+        var announcementsCell = cell as! AnnouncementsTableViewCell
+//        announcementsCell.setupWithAnnouncement(announcements[indexPath.row])
+        return announcementsCell
+
     }
     
 }

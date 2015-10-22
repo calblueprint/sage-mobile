@@ -14,6 +14,7 @@ class AnnouncementsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.tableView.tableFooterView = UIView()
         self.addSubview(self.tableView)
     }
 

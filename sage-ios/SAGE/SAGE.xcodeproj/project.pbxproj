@@ -57,6 +57,7 @@
 		422334511BC0D8D400E863D0 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334501BC0D8D400E863D0 /* libAFNetworking.a */; };
 		422334531BC0D8D900E863D0 /* libFontAwesomeKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */; };
 		584CDC4300AD746DE61B3744 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F2282D26B35880052B3998 /* libPods.a */; };
+		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */; settings = {ASSET_TAGS = (); }; };
 		B0757999335F9E65BB628038 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F2282D26B35880052B3998 /* libPods.a */; };
@@ -110,6 +111,7 @@
 		422334501BC0D8D400E863D0 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "Pods/../build/Debug-iphoneos/libAFNetworking.a"; sourceTree = "<group>"; };
 		422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFontAwesomeKit.a; path = "Pods/../build/Debug-iphoneos/libFontAwesomeKit.a"; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewCell.swift; sourceTree = "<group>"; };
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsView.swift; sourceTree = "<group>"; };
 		F1F2282D26B35880052B3998 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,8 +236,8 @@
 		27F990BC1BBCC58D00D61DA2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5DD14CFF1BD33B4200B935DE /* Announcements */,
 				27F990BE1BBCC5A300D61DA2 /* Reusable */,
-				5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -285,6 +287,15 @@
 				422334301BC0C97E00E863D0 /* SchoolConstants.swift */,
 			);
 			name = ModelConstants;
+			sourceTree = "<group>";
+		};
+		5DD14CFF1BD33B4200B935DE /* Announcements */ = {
+			isa = PBXGroup;
+			children = (
+				5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */,
+				5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */,
+			);
+			name = Announcements;
 			sourceTree = "<group>";
 		};
 		EDECFCEB40B96BC560906CF2 /* Pods */ = {
@@ -516,6 +527,7 @@
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
+				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,

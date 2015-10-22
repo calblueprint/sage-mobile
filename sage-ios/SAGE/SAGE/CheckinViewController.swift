@@ -14,6 +14,8 @@ class CheckinViewController: UIViewController {
     let checkinView = CheckinView()
     let defaultTitleLabel = UILabel()
     let sessionTitleLabel = UILabel()
+    var startTime: NSTimeInterval = 0.0
+    var inSession: Bool = false
 
     //
     // MARK: - ViewController Lifecycle
@@ -41,8 +43,11 @@ class CheckinViewController: UIViewController {
         // mid-check in or not
         if true {
             self.presentDefaultMode(0)
+            self.inSession = false
         } else {
             self.presentSessionMode(0)
+            self.inSession = true
+            // self.startTime = getFromKeychain
         }
     }
     
@@ -69,6 +74,10 @@ class CheckinViewController: UIViewController {
                     alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
                         //save start time locally and start timer
                         self.presentSessionMode(UIConstants.normalAnimationTime)
+                        self.inSession = true
+                        self.startTime = NSDate.timeIntervalSinceReferenceDate()
+                        // make sure to save the startTime in keychain too
+                        self.updateSessionTime()
                     }))
                     alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
@@ -98,6 +107,7 @@ class CheckinViewController: UIViewController {
             // when finished. if failure, store locally and
             // try again until success
             self.presentDefaultMode(UIConstants.normalAnimationTime)
+            self.inSession = false
         }))
         alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
         self.presentViewController(alertController, animated: true, completion: nil)
@@ -106,6 +116,15 @@ class CheckinViewController: UIViewController {
     //
     // MARK: - Private methods
     //
+    @objc private func updateSessionTime() {
+        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+        let timePassed = currentTime - startTime
+        self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/20.0))
+        if (self.inSession) {
+            self.performSelector("updateSessionTime", withObject: nil, afterDelay: 1)
+        }
+        NSLog("hit")
+    }
     
     private func setupDefaultTitleLabel() {
         self.defaultTitleLabel.text = "Check In"

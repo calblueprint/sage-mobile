@@ -68,11 +68,19 @@ class CheckinView: UIView {
     func presentSessionMode(duration: NSTimeInterval, timeElapsed: NSTimeInterval = 0, percentage: CGFloat = 0) {
         self.showView(self.endButton, hide: self.startButton, duration: duration)
         self.showView(self.timerView, hide: nil, duration: duration)
+        self.timerLabel.textColor = UIColor.lightRedColor
+        self.timerArc.fillColor = UIColor.lightRedColor.CGColor
         self.updateTimerWithTime(timeElapsed, percentage: percentage)
     }
     
     func updateTimerWithTime(timeElapsed: NSTimeInterval, percentage: CGFloat) {
-        self.timerLabel.text = "0:00"
+        if percentage > 1.0 {
+            self.timerLabel.textColor = UIColor.lightGreenColor
+            self.timerArc.fillColor = UIColor.lightGreenColor.CGColor
+        }
+        let minutesPassed: NSTimeInterval = (timeElapsed / 60) % 60
+        let hoursPassed: NSTimeInterval = timeElapsed / 3600
+        self.timerLabel.text = String(format:"%.0f:%02.0f", hoursPassed, minutesPassed)
         self.timerArc.path = self.createTimerArcWithPercentage(percentage)
     }
     
@@ -148,7 +156,7 @@ class CheckinView: UIView {
             timerSize/2, timerSize/2,   // center.x, center.y
             timerSize/2,                // radius
             -pi/2,                      // start angle
-            -pi/2 + max(0.30,2*pi*percentage),    // end angle
+            -pi/2 + min(2*pi, max(0.30,2*pi*percentage)),    // end angle
             false)                      // counter clockwise?
         let strokedArc = CGPathCreateCopyByStrokingPath(arc, nil,
             5.0,                        // lineWidth

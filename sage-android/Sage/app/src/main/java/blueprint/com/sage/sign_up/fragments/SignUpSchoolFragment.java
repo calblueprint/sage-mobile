@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.sign_up.adapters.SignUpSchoolSpinnerAdapter;
 import blueprint.com.sage.sign_up.adapters.SignUpTypeSpinnerAdapter;
 import butterknife.Bind;
@@ -22,6 +22,9 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
 
     @Bind(R.id.sign_up_school) Spinner mSchoolSpinner;
     @Bind(R.id.sign_up_volunteer_type) Spinner mVolunteerTypeSpinner;
+
+    private SignUpSchoolSpinnerAdapter mSchoolAdapter;
+    private SignUpTypeSpinnerAdapter mTypeAdapter;
 
     public static SignUpSchoolFragment newInstance() { return new SignUpSchoolFragment(); }
 
@@ -40,23 +43,23 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     }
 
     private void initializeFields() {
-        ArrayAdapter<School> schoolAdapter =
+        mSchoolAdapter =
                 new SignUpSchoolSpinnerAdapter(getParentActivity(),
                                                R.layout.sign_in_spinner_item,
                                                R.id.sign_up_spinner_item_text,
                                                getParentActivity().getSchools());
-        mSchoolSpinner.setAdapter(schoolAdapter);
+        mSchoolSpinner.setAdapter(mSchoolAdapter);
         int selectedSchool = getParentActivity().getUser().getSchoolPosition();
         if (selectedSchool > -1) {
             mSchoolSpinner.setSelection(selectedSchool);
         }
 
-        ArrayAdapter<String> typeAdapter =
+        mTypeAdapter =
                 new SignUpTypeSpinnerAdapter(getParentActivity(),
                                              R.layout.sign_in_spinner_item,
                                              R.id.sign_up_spinner_item_text,
                                              getResources().getStringArray(R.array.sign_up_volunteer_types));
-        mVolunteerTypeSpinner.setAdapter(typeAdapter);
+        mVolunteerTypeSpinner.setAdapter(mTypeAdapter);
         int selectedType = getParentActivity().getUser().getTypePosition();
         if (selectedType > -1) {
             mVolunteerTypeSpinner.setSelection(selectedType);
@@ -64,6 +67,14 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
+
+        User user = getParentActivity().getUser();
+        user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
+        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
+
+        user.setVolunteerType((String) mSchoolSpinner.getSelectedItem());
+        user.setTypePosition(mSchoolSpinner.getSelectedItemPosition());
+
         return true;
     }
 }

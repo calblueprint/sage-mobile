@@ -9,6 +9,7 @@ import android.widget.EditText;
 import java.util.regex.Pattern;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.User;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -67,9 +68,14 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
             mPassword.setError(getString(R.string.sign_up_password_blank_error));
             isValid = false;
         } else if (!hasMatchingPassword()) {
-            mPassword.setError(getString(R.string.sign_up_password_nonmatch_error));
+            mConfirmation.setError(getString(R.string.sign_up_password_nonmatch_error));
             isValid = false;
         }
+
+        User user = getParentActivity().getUser();
+        user.setEmail(mEmail.getText().toString());
+        user.setPassword(mPassword.getText().toString());
+        user.setConfirmPassword(mConfirmation.getText().toString());
 
         return isValid;
     }

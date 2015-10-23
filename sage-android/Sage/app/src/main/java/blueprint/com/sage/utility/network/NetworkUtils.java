@@ -12,6 +12,7 @@ import blueprint.com.sage.signin.SignInActivity;
 
 /**
  * Created by kelseylam on 10/17/15.
+ * General network connection utility functions.
  */
 public class NetworkUtils {
     public static boolean isConnectedToInternet(Activity activity) {

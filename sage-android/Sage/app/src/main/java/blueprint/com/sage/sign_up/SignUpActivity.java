@@ -48,6 +48,7 @@ public class SignUpActivity extends FragmentActivity {
 
         makeSchoolRequest();
         FragUtil.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
+
     }
 
     private void makeSchoolRequest() {

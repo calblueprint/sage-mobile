@@ -60,7 +60,7 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
                                getString(R.string.sign_up_last_name)));
             isValid = false;
         }
-
+        
         return isValid;
     }
 
@@ -70,9 +70,5 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
 
     private boolean hasValidLastName() {
         return !mLastName.getText().toString().isEmpty();
-    }
-
-    public void continueToNextPage() {
-
     }
 }

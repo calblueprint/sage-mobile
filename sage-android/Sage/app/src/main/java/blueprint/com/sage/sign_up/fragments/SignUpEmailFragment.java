@@ -86,8 +86,4 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     private boolean hasMatchingPassword() {
         return mPassword.getText().toString().equals(mConfirmation.getText().toString());
     }
-
-    public void continueToNextPage() {
-
-    }
 }

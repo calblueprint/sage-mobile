@@ -66,8 +66,4 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     public boolean hasValidFields() {
         return true;
     }
-
-    public void continueToNextPage() {
-
-    }
 }

@@ -15,6 +15,7 @@ class CheckinView: UIView {
     var timerView: UIView = UIView()
     var timerLabel: UILabel = UILabel()
     var timerArc: CAShapeLayer = CAShapeLayer()
+    var timerBubble: UIView = UIView()
     var mapView: GMSMapView = GMSMapView()
     
     private let buttonSize: CGFloat = 56.0
@@ -74,14 +75,26 @@ class CheckinView: UIView {
     }
     
     func updateTimerWithTime(timeElapsed: NSTimeInterval, percentage: CGFloat) {
+        let minutesPassed = (Int(timeElapsed) / 60) % 60
+        let hoursPassed = Int(timeElapsed) / 3600
+        self.timerLabel.text = String(format:"%d:%02d", hoursPassed, minutesPassed)
+        self.timerArc.path = self.createTimerArcWithPercentage(percentage)
+        
+        // Turn the timer green if min. hours completed
         if percentage > 1.0 {
             self.timerLabel.textColor = UIColor.lightGreenColor
             self.timerArc.fillColor = UIColor.lightGreenColor.CGColor
         }
-        let minutesPassed: NSTimeInterval = (timeElapsed / 60) % 60
-        let hoursPassed: NSTimeInterval = timeElapsed / 3600
-        self.timerLabel.text = String(format:"%.0f:%02.0f", hoursPassed, minutesPassed)
-        self.timerArc.path = self.createTimerArcWithPercentage(percentage)
+        
+        // Radiate the bubble every 5 seconds
+        if (Int(timeElapsed) % 5 == 0) {
+            self.timerBubble.transform = CGAffineTransformMakeScale(0.05, 0.05)
+            self.timerBubble.alpha = 1
+            UIView.animateWithDuration(0.9, delay: 0, options: .CurveLinear, animations: { () -> Void in
+                self.timerBubble.transform = CGAffineTransformIdentity
+                self.timerBubble.alpha = 0
+                }, completion: nil)
+        }
     }
     
     //
@@ -113,7 +126,6 @@ class CheckinView: UIView {
         self.timerView.backgroundColor = UIColor.whiteColor()
         self.timerView.setSize(width: timerSize, height: timerSize)
         self.timerView.layer.cornerRadius = timerSize/2
-        self.timerView.layer.addSublayer(self.timerArc)
         self.addShadowToView(self.timerView)
         self.addSubview(self.timerView)
         
@@ -123,6 +135,12 @@ class CheckinView: UIView {
         self.timerView.addSubview(self.timerLabel)
         
         self.timerArc.fillColor = UIColor.lightRedColor.CGColor
+        self.timerView.layer.addSublayer(self.timerArc)
+        
+        self.timerBubble.backgroundColor = UIColor(white: 0.90, alpha: 1)
+        self.timerBubble.setSize(width: timerSize, height: timerSize)
+        self.timerBubble.layer.cornerRadius = timerSize/2
+        self.timerView.insertSubview(self.timerBubble, atIndex: 0)
     }
     
     private func showView(showView: UIView, hide hideView: UIView?, duration: NSTimeInterval) {

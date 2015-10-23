@@ -119,11 +119,11 @@ class CheckinViewController: UIViewController {
     @objc private func updateSessionTime() {
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
         let timePassed = currentTime - startTime
-        self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/20.0))
+        // get the user's min hours and pass that into percentage
+        self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/3600))
         if (self.inSession) {
             self.performSelector("updateSessionTime", withObject: nil, afterDelay: 1)
         }
-        NSLog("hit")
     }
     
     private func setupDefaultTitleLabel() {

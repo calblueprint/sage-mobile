@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
@@ -46,9 +47,8 @@ public class SignUpActivity extends FragmentActivity {
         mPreferenceTag = getString(R.string.shared_preferences);
         mPreferences = getSharedPreferences(mPreferenceTag, MODE_PRIVATE);
 
-        makeSchoolRequest();
+//        makeSchoolRequest();
         FragUtil.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
-
     }
 
     private void makeSchoolRequest() {
@@ -59,9 +59,9 @@ public class SignUpActivity extends FragmentActivity {
                     setSchools(schools);
                 }
             },
-            new Response.Listener() {
+            new Response.Listener<APIError>() {
                 @Override
-                public void onResponse(Object o) {
+                public void onResponse(APIError o) {
                     Log.e(getClass().toString(), o.toString());
             }
         });

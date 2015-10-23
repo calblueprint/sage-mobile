@@ -38,6 +38,11 @@
         android:hint="@string/sign_up_last_name"
         android:fontFamily="sans-serif-light" />
 
+    <Button
+        style="@style/LandingButton"
+        android:id="@+id/sign_up_continue"
+        android:text="@string/sign_up_continue"/>
+
     <blueprint.com.sage.shared.views.Spacer
         style="@style/SignUpSpacer"/>
 

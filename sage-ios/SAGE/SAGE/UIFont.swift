@@ -16,9 +16,9 @@ extension UIFont {
     // above 45 thin
     // semibold instead of bold
 
-    @nonobjc static let metaFont = UIFont.systemFontOfSize(12)
-    @nonobjc static let normalFont = UIFont.systemFontOfSize(14)
-    @nonobjc static let titleFont = UIFont.systemFontOfSize(17)
+    @nonobjc static let metaFont = UIFont(name: ".SFUIText-Regular", size: 12)!
+    @nonobjc static let normalFont = UIFont(name: ".SFUIText-Regular", size: 14)!
+    @nonobjc static let titleFont = UIFont(name: ".SFUIText-Regular", size: 17)!
     
     static func getTitleFont(size: CGFloat = 20) -> UIFont {
         if size < 45 {

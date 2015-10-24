@@ -13,11 +13,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
  * Created by charlesx on 10/12/15.
  * Fragment for profile picture;
  */
-public class SignUpProfileFragment extends Fragment {
+public class SignUpProfileFragment extends SignUpAbstractFragment {
 
     @Bind(R.id.sign_up_profile_picture) CircleImageView mProfile;
 
@@ -59,7 +60,14 @@ public class SignUpProfileFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_sign_up_profile, parent, false);
         ButterKnife.bind(this, view);
+        initializeViews();
         return view;
+    }
+
+    private void initializeViews() {
+        Bitmap bitmap = getParentActivity().getUser().getProfile();
+        if (bitmap != null)
+            mProfile.setImageBitmap(bitmap);
     }
 
     @OnClick(R.id.sign_up_profile_picture)
@@ -150,6 +158,23 @@ public class SignUpProfileFragment extends Fragment {
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
 
         mProfile.setImageBitmap(scaledBitmap);
+        User user = getParentActivity().getUser();
+        user.setProfile(scaledBitmap);
+    }
+
+    public boolean hasValidFields() {
+        User user = getParentActivity().getUser();
+
+        boolean isValid = true;
+
+        if (user.getProfile() == null) {
+            Toast.makeText(getActivity(),
+                           getString(R.string.sign_up_profile_blank_error),
+                           Toast.LENGTH_SHORT).show();
+            isValid = false;
+        }
+
+        return isValid;
     }
 
     public static class PhotoOptionDialog extends DialogFragment {

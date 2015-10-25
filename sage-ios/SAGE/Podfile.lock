@@ -41,10 +41,12 @@ PODS:
     - FontAwesomeKit/Core
   - FontAwesomeKit/Zocial (2.1.9):
     - FontAwesomeKit/Core
+  - SwiftKeychainWrapper (1.0.11)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - FontAwesomeKit (from `https://github.com/PrideChung/FontAwesomeKit.git`)
+  - SwiftKeychainWrapper
 
 EXTERNAL SOURCES:
   FontAwesomeKit:
@@ -58,5 +60,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   FontAwesomeKit: 1a21b835bd74f0591bfc1dac8c5540188eab3f38
+  SwiftKeychainWrapper: 011a6946923948ffa49708014dd691164d7621d1
 
 COCOAPODS: 0.39.0

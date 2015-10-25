@@ -5,3 +5,5 @@
 .DS_Store
 /build
 /captures
+
+strings_application.xml

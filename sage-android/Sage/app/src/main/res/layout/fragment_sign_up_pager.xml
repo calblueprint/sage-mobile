@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
-    <blueprint.com.sage.sign_up.views.NoSwipeViewPager
+    <blueprint.com.sage.signUp.views.NoSwipeViewPager
         android:id="@+id/sign_up_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.fragments;
+package blueprint.com.sage.signUp.fragments;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.sign_up.SignUpActivity;
-import blueprint.com.sage.sign_up.adapters.SignUpPagerAdapter;
-import blueprint.com.sage.sign_up.animation.SignUpPageTransformer;
-import blueprint.com.sage.sign_up.events.BackEvent;
-import blueprint.com.sage.sign_up.events.PhotoEvent;
+import blueprint.com.sage.signUp.SignUpActivity;
+import blueprint.com.sage.signUp.adapters.SignUpPagerAdapter;
+import blueprint.com.sage.signUp.animation.SignUpPageTransformer;
+import blueprint.com.sage.signUp.events.BackEvent;
+import blueprint.com.sage.signUp.events.PhotoEvent;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;

@@ -1,4 +1,4 @@
-package blueprint.com.sage.signin;
+package blueprint.com.sage.signIn;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.network.SignInRequest;
-import blueprint.com.sage.sign_up.SignUpActivity;
+import blueprint.com.sage.signUp.SignUpActivity;
 import blueprint.com.sage.utility.network.NetworkManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;

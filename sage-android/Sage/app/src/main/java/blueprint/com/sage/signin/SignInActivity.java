@@ -1,4 +1,4 @@
-package blueprint.com.sage.signin;
+package blueprint.com.sage.signIn;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up;
+package blueprint.com.sage.signUp;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
-import blueprint.com.sage.sign_up.events.BackEvent;
-import blueprint.com.sage.sign_up.fragments.SignUpPagerFragment;
+import blueprint.com.sage.signUp.events.BackEvent;
+import blueprint.com.sage.signUp.fragments.SignUpPagerFragment;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.view.FragUtil;
 import de.greenrobot.event.EventBus;

@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.events;
+package blueprint.com.sage.signUp.events;
 
 import android.content.Intent;
 

@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.views;
+package blueprint.com.sage.signUp.views;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.signin.SignInActivity;
+import blueprint.com.sage.signIn.SignInActivity;
 
 /**
  * Created by kelseylam on 10/17/15.

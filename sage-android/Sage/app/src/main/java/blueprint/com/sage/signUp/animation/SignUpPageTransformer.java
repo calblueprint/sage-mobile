@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.animation;
+package blueprint.com.sage.signUp.animation;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

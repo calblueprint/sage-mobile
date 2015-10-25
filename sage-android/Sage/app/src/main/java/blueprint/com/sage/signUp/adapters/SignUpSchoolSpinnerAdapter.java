@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.adapters;
+package blueprint.com.sage.signUp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

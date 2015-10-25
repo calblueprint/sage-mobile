@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.fragments;
+package blueprint.com.sage.signUp.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.Spinner;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.sign_up.adapters.SignUpSchoolSpinnerAdapter;
-import blueprint.com.sage.sign_up.adapters.SignUpTypeSpinnerAdapter;
+import blueprint.com.sage.signUp.adapters.SignUpSchoolSpinnerAdapter;
+import blueprint.com.sage.signUp.adapters.SignUpTypeSpinnerAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

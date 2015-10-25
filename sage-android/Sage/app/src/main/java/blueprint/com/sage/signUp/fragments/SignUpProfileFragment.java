@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.fragments;
+package blueprint.com.sage.signUp.fragments;
 
 
 import android.app.AlertDialog;

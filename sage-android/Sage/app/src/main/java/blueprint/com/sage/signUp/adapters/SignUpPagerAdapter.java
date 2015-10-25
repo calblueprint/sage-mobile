@@ -1,4 +1,4 @@
-package blueprint.com.sage.sign_up.adapters;
+package blueprint.com.sage.signUp.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

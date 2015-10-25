@@ -1,9 +1,9 @@
-package blueprint.com.sage.sign_up.fragments;
+package blueprint.com.sage.signUp.fragments;
 
 import android.support.v4.app.Fragment;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.sign_up.SignUpActivity;
+import blueprint.com.sage.signUp.SignUpActivity;
 import butterknife.OnClick;
 
 /**

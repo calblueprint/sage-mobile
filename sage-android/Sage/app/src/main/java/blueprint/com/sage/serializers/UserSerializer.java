@@ -12,7 +12,7 @@ import blueprint.com.sage.models.User;
  * Created by charlesx on 10/23/15.
  */
 public class UserSerializer extends JsonSerializer<User> {
-    
+
     @Override
     public void serialize(User user, JsonGenerator jgen, SerializerProvider provider) throws IOException {
         jgen.writeStartObject();

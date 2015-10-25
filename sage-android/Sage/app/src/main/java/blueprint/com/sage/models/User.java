@@ -4,13 +4,18 @@ import android.graphics.Bitmap;
 import android.util.Base64;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.io.ByteArrayOutputStream;
 
+import blueprint.com.sage.serializers.UserSerializer;
 import lombok.Data;
 
 /**
  * Created by kelseylam on 10/11/15.
+ * User model.
  */
+@JsonSerialize(using = UserSerializer.class)
 public @Data class User {
     private int id;
     private String email;

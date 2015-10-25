@@ -8,7 +8,9 @@
     <string name="sign_up_password_confirm">Confirm Password</string>
     <string name="sign_up_first_name">First Name</string>
     <string name="sign_up_last_name">Last Name</string>
+
     <string name="sign_up_continue">Continue</string>
+    <string name="sign_up_finish">Finish</string>
 
     <string name="sign_up_name_title">Welcome to SAGE!</string>
     <string name="sign_up_name_subtitle">What\'s your name?</string>

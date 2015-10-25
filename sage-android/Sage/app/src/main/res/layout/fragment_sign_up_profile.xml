@@ -29,6 +29,8 @@
 
     <include layout="@layout/white_dots" />
 
-    <blueprint.com.sage.shared.views.Spacer
-        style="@style/SignUpSpacer"/>
+    <Button
+        style="@style/LandingButton"
+        android:id="@+id/sign_up_finish"
+        android:text="@string/sign_up_finish"/>
 </LinearLayout>

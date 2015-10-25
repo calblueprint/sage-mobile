@@ -22,6 +22,11 @@ public abstract class SignUpAbstractFragment extends Fragment {
         }
     }
 
+    @OnClick(R.id.sign_up_finish)
+    public void createUser() {
+        
+    }
+
     public abstract boolean hasValidFields();
 
     public void continueToNextPage() {

@@ -14,7 +14,9 @@ struct KeychainConstants {
     static let kEmail: String = StringConstants.kBaseURL + "email"
     static let kVerified: String = StringConstants.kBaseURL + "verified"
     
-    // string constants for stored data for request verification
+    //
+    // MARK:- Verification
+    //
     static let kVerificationBaseURL = StringConstants.kBaseURL + "Verification"
     static let kVFirstName: String = KeychainConstants.kVerificationBaseURL + "FirstName"
     static let kVLastName: String = KeychainConstants.kVerificationBaseURL + "LastName"
@@ -22,6 +24,12 @@ struct KeychainConstants {
     static let kVPassword: String = KeychainConstants.kVerificationBaseURL + "Password"
     static let kVSchool: String = KeychainConstants.kVerificationBaseURL + "School"
     static let kVHours: String = KeychainConstants.kVerificationBaseURL + "Hours"
+    
+    
+    //
+    // MARK:- Check In
+    //
+    static let kSessionStartTime: String = "Session Start Time"
     
     
 }

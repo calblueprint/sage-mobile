@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class CheckinViewController: UIViewController {
 
@@ -41,13 +42,14 @@ class CheckinViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         // Change mode on loading view depending on whether user is
         // mid-check in or not
-        if true {
-            self.presentDefaultMode(0)
-            self.inSession = false
-        } else {
+        if let storedStartTime = KeychainWrapper.stringForKey(KeychainConstants.kSessionStartTime) {
             self.presentSessionMode(0)
             self.inSession = true
-            // self.startTime = getFromKeychain
+            self.startTime = NSTimeInterval(storedStartTime)!
+            self.updateSessionTime()
+        } else {
+            self.presentDefaultMode(0)
+            self.inSession = false
         }
     }
     
@@ -76,7 +78,7 @@ class CheckinViewController: UIViewController {
                         self.presentSessionMode(UIConstants.normalAnimationTime)
                         self.inSession = true
                         self.startTime = NSDate.timeIntervalSinceReferenceDate()
-                        // make sure to save the startTime in keychain too
+                        KeychainWrapper.setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
                         self.updateSessionTime()
                     }))
                     alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
@@ -98,25 +100,31 @@ class CheckinViewController: UIViewController {
     }
     
     @objc private func userPressedEndSession(sender: UIButton!) {
-        let alertController = UIAlertController(
-            title: "End mentoring session?",
-            message: "Do you want to end your mentoring session?",
-            preferredStyle: .Alert)
-        alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
-            // send request to make check in and present to default
-            // when finished. if failure, store locally and
-            // try again until success
-            self.presentDefaultMode(UIConstants.normalAnimationTime)
-            self.inSession = false
-        }))
-        alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
-        self.presentViewController(alertController, animated: true, completion: nil)
+        //Verify location
+        if true {
+            let alertController = UIAlertController(
+                title: "End mentoring session?",
+                message: "Do you want to end your mentoring session?",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                // send request to make check in and present to default
+                // when finished. if failure, store locally and
+                // try again until success
+                self.presentDefaultMode(UIConstants.normalAnimationTime)
+                self.inSession = false
+                KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                //make a request
+            }))
+            alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     //
     // MARK: - Private methods
     //
     @objc private func updateSessionTime() {
+        NSObject.cancelPreviousPerformRequestsWithTarget(self)
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
         let timePassed = currentTime - startTime
         // get the user's min hours and pass that into percentage

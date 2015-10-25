@@ -31,7 +31,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     func setUpCellStyle() {
-        announcementUserImg.backgroundColor = UIColor.borderColor()
+        announcementUserImg.backgroundColor = UIColor.borderColor
         announcementUserImg.setHeight(32)
         announcementUserImg.setWidth(32)
         
@@ -39,7 +39,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementUserName.textAlignment = NSTextAlignment.Left
         announcementUserName.text = "John Doe"
         
-        announcementTime.textColor = UIColor.secondaryTextColor()
+        announcementTime.textColor = UIColor.secondaryTextColor
         announcementTime.font = UIFont(name: "Arial", size: 14)
         announcementTime.textAlignment = NSTextAlignment.Left
         announcementTime.text = "5 days ago"
@@ -52,7 +52,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementMessage.lineBreakMode = NSLineBreakMode.ByWordWrapping
         announcementMessage.font = UIFont(name: "Arial", size: 14)
         announcementMessage.textAlignment = NSTextAlignment.Left
-        announcementMessage.text = "text here hello goodbye i like to eat but i really just need to sleep overflow nom nom nom nom nom nom nom nom nom nom"
+        announcementMessage.text = "text here hello goodbye i like to eat but i really just need to sleep overflow nom nom nom nom nom nom nom nom nom nom fml i just realized that i'm not done with this yet"
     }
     
     override func layoutSubviews() {
@@ -86,7 +86,5 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementMessage.fillWidthWithMargin(15)
         let width = CGRectGetWidth(announcementMessage.frame)
         announcementMessage.setSize(announcementMessage.sizeThatFits(CGSizeMake(width, CGFloat.max)))
-
-
     }
 }

@@ -265,10 +265,10 @@
 		27F990BB1BBCC58700D61DA2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5DF500571BDC89DD00FE16E3 /* Announcements */,
 				42EFD66E1BC7A96A0063FD78 /* Sign Up */,
 				4254D2961BC5B19100C831C7 /* Login */,
 				2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */,
-				5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */,
 				42C393401BC45DEC00630F93 /* RootController.swift */,
 			);
 			name = Controllers;
@@ -378,6 +378,14 @@
 			children = (
 				5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */,
 				5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */,
+			);
+			name = Announcements;
+			sourceTree = "<group>";
+		};
+		5DF500571BDC89DD00FE16E3 /* Announcements */ = {
+			isa = PBXGroup;
+			children = (
+				5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */,
 			);
 			name = Announcements;
 			sourceTree = "<group>";

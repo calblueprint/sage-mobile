@@ -1,5 +1,6 @@
 package blueprint.com.sage.signUp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -91,8 +92,12 @@ public class SignUpActivity extends FragmentActivity {
         editPreference.putString(getString(R.string.shared_preference_email), session.getEmail());
         editPreference.putString(getString(R.string.shared_preference_auth_token),
                                            session.getAuthenticationToken());
+//        editPreference.putString(getString(R.string.user), session.getUser());
         editPreference.apply();
 
+        Intent intent = new Intent(this, UnverifiedActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         // Start activity here
     }
 

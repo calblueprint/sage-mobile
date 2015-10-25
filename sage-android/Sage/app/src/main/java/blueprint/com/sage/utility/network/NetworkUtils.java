@@ -32,6 +32,7 @@ public class NetworkUtils {
         editor.apply();
 
         Intent loginIntent = new Intent(activity, SignInActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(loginIntent);
     }
 }

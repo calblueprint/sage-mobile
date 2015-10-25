@@ -8,6 +8,7 @@ import blueprint.com.sage.R;
 
 /**
  * Created by kelseylam on 10/11/15.
+ * Activity for signing in.
  */
 public class SignInActivity extends FragmentActivity {
 
@@ -18,6 +19,4 @@ public class SignInActivity extends FragmentActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.sign_in_container, SignInFragment.newInstance()).commit();
     }
-
-
 }

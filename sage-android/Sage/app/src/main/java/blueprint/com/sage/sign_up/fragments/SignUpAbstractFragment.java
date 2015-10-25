@@ -24,7 +24,7 @@ public abstract class SignUpAbstractFragment extends Fragment {
 
     @OnClick(R.id.sign_up_finish)
     public void createUser() {
-        
+        getParentActivity().makeUserRequest();
     }
 
     public abstract boolean hasValidFields();

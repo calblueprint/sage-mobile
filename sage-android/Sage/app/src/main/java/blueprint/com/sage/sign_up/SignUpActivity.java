@@ -69,7 +69,7 @@ public class SignUpActivity extends FragmentActivity {
         mManager.getRequestQueue().add(request);
     }
 
-    private void makeUserRequest() {
+    public void makeUserRequest() {
         CreateUserRequest request = new CreateUserRequest(this, getUser(),
                 new Response.Listener<Session>() {
                     @Override

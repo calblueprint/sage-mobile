@@ -10,4 +10,5 @@ public @Data class Session {
     private String email;
     private String authenticationToken;
     private User user;
+    private School school;
 }

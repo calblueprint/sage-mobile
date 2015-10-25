@@ -24,7 +24,7 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_password_confirm) EditText mConfirmation;
 
     public final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@berkeley\\.edu$", Pattern.CASE_INSENSITIVE);
+            Pattern.compile("^[a-zA-Z0-9._%+-]+@berkeley\\.edu$", Pattern.CASE_INSENSITIVE);
 
     public static SignUpEmailFragment newInstance() { return new SignUpEmailFragment(); }
 
@@ -81,7 +81,7 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     }
 
     private boolean hasValidEmail() {
-        return VALID_EMAIL_ADDRESS_REGEX.matcher(mPassword.getText().toString()).find();
+        return VALID_EMAIL_ADDRESS_REGEX.matcher(mEmail.getText().toString()).find();
     }
 
     private boolean hasNonBlankPassword() {

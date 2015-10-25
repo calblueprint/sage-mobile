@@ -1,5 +1,6 @@
 package blueprint.com.sage.signUp.fragments;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import blueprint.com.sage.R;
@@ -15,6 +16,7 @@ public abstract class SignUpAbstractFragment extends Fragment {
         return (SignUpActivity) getActivity();
     }
 
+    @Nullable
     @OnClick(R.id.sign_up_continue)
     public void submitForm() {
         if (hasValidFields()) {
@@ -22,6 +24,7 @@ public abstract class SignUpAbstractFragment extends Fragment {
         }
     }
 
+    @Nullable
     @OnClick(R.id.sign_up_finish)
     public void createUser() {
         getParentActivity().makeUserRequest();

@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.HashMap;
 
@@ -20,6 +22,7 @@ import blueprint.com.sage.models.Session;
 import blueprint.com.sage.network.SignInRequest;
 import blueprint.com.sage.signUp.SignUpActivity;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -78,7 +81,7 @@ public class SignInFragment extends Fragment {
         SignInRequest loginRequest = new SignInRequest(getActivity(), params, new Response.Listener<Session>() {
             @Override
             public void onResponse(Session session) {
-
+                loginUser(session);
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -87,6 +90,14 @@ public class SignInFragment extends Fragment {
             }
         });
         networkManager.getRequestQueue().add(loginRequest);
+    }
+
+    private void loginUser(Session session) {
+        try {
+            NetworkUtils.loginUser(session, getActivity());
+        } catch(JsonProcessingException e) {
+            Toast.makeText(getActivity(), "Something went wrong, try again!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.sign_in_sign_up)

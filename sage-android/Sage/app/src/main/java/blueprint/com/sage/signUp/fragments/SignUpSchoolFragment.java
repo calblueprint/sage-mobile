@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.signUp.adapters.SignUpSchoolSpinnerAdapter;
 import blueprint.com.sage.signUp.adapters.SignUpTypeSpinnerAdapter;
@@ -69,8 +68,10 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     public boolean hasValidFields() {
 
         User user = getParentActivity().getUser();
-        user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
-        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
+        // TODO: Change this after making seeds
+        user.setSchoolId(1);
+//        user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
+//        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
 
         user.setVolunteerType((String) mSchoolSpinner.getSelectedItem());
         user.setTypePosition(mSchoolSpinner.getSelectedItemPosition());

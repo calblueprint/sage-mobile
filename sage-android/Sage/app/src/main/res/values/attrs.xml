@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="CircleImageView">
         <attr name="border" format="boolean" />
+        <attr name="background_color" format="color" />
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
         <attr name="shadow" format="boolean" />

@@ -35,4 +35,7 @@
         <item>One Unit</item>
         <item>Two Unit</item>
     </string-array>
+
+    <!-- Unverified Activity -->
+    <string name="unverified_body">Thanks for signing up! A request has been sent to SAGE for approval.</string>
 </resources>

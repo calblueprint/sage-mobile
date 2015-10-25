@@ -23,6 +23,7 @@ struct UIConstants {
     static let normalAnimationTime: NSTimeInterval = 0.60
     static let defaultSpringDampening: CGFloat = 0.60
     static let defaultSpringVelocity: CGFloat = 1.0
+    static let blurredBerkeleyBackground: String = "BerkeleySunsetBlurred.jpg"
     
     static func dividerHeight() -> CGFloat {
         return 1 / UIScreen.mainScreen().scale

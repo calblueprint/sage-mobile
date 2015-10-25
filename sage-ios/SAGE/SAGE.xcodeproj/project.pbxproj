@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22E8AFA2C4807E582FFD7452 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3B940583EC03D3C82EAAD0 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
 		2705CC531BB927D8004FE927 /* SAGETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC521BB927D8004FE927 /* SAGETests.swift */; };
@@ -48,8 +49,6 @@
 		422334431BC0D29500E863D0 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C31BBDD1F300D61DA2 /* UIConstants.swift */; settings = {ASSET_TAGS = (); }; };
 		422334441BC0D29800E863D0 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C51BBDD76800D61DA2 /* StringConstants.swift */; settings = {ASSET_TAGS = (); }; };
 		422334451BC0D29900E863D0 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C51BBDD76800D61DA2 /* StringConstants.swift */; settings = {ASSET_TAGS = (); }; };
-		422334461BC0D2B600E863D0 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
-		422334471BC0D2B600E863D0 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; settings = {ASSET_TAGS = (); }; };
 		422334481BC0D2BE00E863D0 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */; settings = {ASSET_TAGS = (); }; };
 		422334491BC0D2BF00E863D0 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */; settings = {ASSET_TAGS = (); }; };
 		4223344A1BC0D2C200E863D0 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; settings = {ASSET_TAGS = (); }; };
@@ -59,8 +58,23 @@
 		4223344F1BC0D87B00E863D0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4223344E1BC0D87B00E863D0 /* libPods.a */; };
 		422334511BC0D8D400E863D0 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334501BC0D8D400E863D0 /* libAFNetworking.a */; };
 		422334531BC0D8D900E863D0 /* libFontAwesomeKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */; };
-		584CDC4300AD746DE61B3744 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F2282D26B35880052B3998 /* libPods.a */; };
-		B0757999335F9E65BB628038 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F2282D26B35880052B3998 /* libPods.a */; };
+		422715451BC7359D00FD719C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422715441BC7359D00FD719C /* UIFont.swift */; settings = {ASSET_TAGS = (); }; };
+		4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */; settings = {ASSET_TAGS = (); }; };
+		4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2981BC62B4500C831C7 /* LoginView.swift */; settings = {ASSET_TAGS = (); }; };
+		427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427432EF1BC776FD00464200 /* UnverifiedView.swift */; settings = {ASSET_TAGS = (); }; };
+		42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3933E1BC45DB900630F93 /* LoginController.swift */; settings = {ASSET_TAGS = (); }; };
+		42C393411BC45DEC00630F93 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393401BC45DEC00630F93 /* RootController.swift */; settings = {ASSET_TAGS = (); }; };
+		42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393421BC4607D00630F93 /* UnverifiedViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6731BC9E6F30063FD78 /* SignUpView.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD6771BC9EC540063FD78 /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6761BC9EC540063FD78 /* SignUpNameView.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6781BC9EC630063FD78 /* SignUpEmailPasswordView.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */; settings = {ASSET_TAGS = (); }; };
+		42EFD67F1BC9ED730063FD78 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67E1BC9ED730063FD78 /* SignUpFormView.swift */; settings = {ASSET_TAGS = (); }; };
+		42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F75B211BD451DA00835595 /* SignUpTableViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,8 +127,27 @@
 		4223344E1BC0D87B00E863D0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		422334501BC0D8D400E863D0 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "Pods/../build/Debug-iphoneos/libAFNetworking.a"; sourceTree = "<group>"; };
 		422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFontAwesomeKit.a; path = "Pods/../build/Debug-iphoneos/libFontAwesomeKit.a"; sourceTree = "<group>"; };
+		422715441BC7359D00FD719C /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainConstants.swift; sourceTree = "<group>"; };
+		4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
+		4254D2981BC62B4500C831C7 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		4264DFEA1BC59BE20097804D /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Pods/../build/Debug-iphoneos/AFNetworking.framework"; sourceTree = "<group>"; };
+		4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = "Pods/../build/Debug-iphoneos/FontAwesomeKit.framework"; sourceTree = "<group>"; };
+		4264DFEC1BC59BE20097804D /* SwiftKeychainWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftKeychainWrapper.framework; path = "Pods/../build/Debug-iphoneos/SwiftKeychainWrapper.framework"; sourceTree = "<group>"; };
+		427432EF1BC776FD00464200 /* UnverifiedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedView.swift; sourceTree = "<group>"; };
+		42C3933E1BC45DB900630F93 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		42C393401BC45DEC00630F93 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
+		42C393421BC4607D00630F93 /* UnverifiedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedViewController.swift; sourceTree = "<group>"; };
+		42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		42EFD6731BC9E6F30063FD78 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		42EFD6761BC9EC540063FD78 /* SignUpNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
+		42EFD6781BC9EC630063FD78 /* SignUpEmailPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpEmailPasswordView.swift; sourceTree = "<group>"; };
+		42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSchoolHoursView.swift; sourceTree = "<group>"; };
+		42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPhotoView.swift; sourceTree = "<group>"; };
+		42EFD67E1BC9ED730063FD78 /* SignUpFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
+		42F75B211BD451DA00835595 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		F1F2282D26B35880052B3998 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0757999335F9E65BB628038 /* libPods.a in Frameworks */,
+				22E8AFA2C4807E582FFD7452 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,7 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				584CDC4300AD746DE61B3744 /* libPods.a in Frameworks */,
+				584CDC4300AD746DE61B3744 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,10 +183,13 @@
 		19047DE251CEEBDEB3C70618 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4264DFEA1BC59BE20097804D /* AFNetworking.framework */,
+				4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */,
+				4264DFEC1BC59BE20097804D /* SwiftKeychainWrapper.framework */,
 				422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */,
 				422334501BC0D8D400E863D0 /* libAFNetworking.a */,
 				4223344E1BC0D87B00E863D0 /* libPods.a */,
-				F1F2282D26B35880052B3998 /* libPods.a */,
+				8F3B940583EC03D3C82EAAD0 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -183,6 +219,7 @@
 		2705CC3C1BB927D7004FE927 /* SAGE */ = {
 			isa = PBXGroup;
 			children = (
+				4254D2971BC5B1B200C831C7 /* Helpers */,
 				27F990BB1BBCC58700D61DA2 /* Controllers */,
 				27F990BC1BBCC58D00D61DA2 /* Views */,
 				27F990BD1BBCC59500D61DA2 /* Models */,
@@ -236,6 +273,7 @@
 			children = (
 				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
 				27F990BF1BBCE3B300D61DA2 /* UIView.swift */,
+				422715441BC7359D00FD719C /* UIFont.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -244,7 +282,10 @@
 			isa = PBXGroup;
 			children = (
 				278160191BC0E1FD00A1DB75 /* Checkin */,
+				42EFD66E1BC7A96A0063FD78 /* Sign Up */,
+				4254D2961BC5B19100C831C7 /* Login */,
 				2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */,
+				42C393401BC45DEC00630F93 /* RootController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -252,8 +293,11 @@
 		27F990BC1BBCC58D00D61DA2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				42EFD6751BC9EC0D0063FD78 /* Sign Up Views */,
 				27F990BE1BBCC5A300D61DA2 /* Reusable */,
 				2781601A1BC0E23B00A1DB75 /* Checkin */,
+				4254D2981BC62B4500C831C7 /* LoginView.swift */,
+				427432EF1BC776FD00464200 /* UnverifiedView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -281,6 +325,7 @@
 			children = (
 				422334291BC0C91B00E863D0 /* ModelConstants */,
 				27F990C31BBDD1F300D61DA2 /* UIConstants.swift */,
+				4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */,
 				27F990C51BBDD76800D61DA2 /* StringConstants.swift */,
 				278160171BC0DF7700A1DB75 /* APIKeys.swift */,
 			);
@@ -304,6 +349,45 @@
 				422334301BC0C97E00E863D0 /* SchoolConstants.swift */,
 			);
 			name = ModelConstants;
+			sourceTree = "<group>";
+		};
+		4254D2961BC5B19100C831C7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				42C3933E1BC45DB900630F93 /* LoginController.swift */,
+				42C393421BC4607D00630F93 /* UnverifiedViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		4254D2971BC5B1B200C831C7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		42EFD66E1BC7A96A0063FD78 /* Sign Up */ = {
+			isa = PBXGroup;
+			children = (
+				42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */,
+				42F75B211BD451DA00835595 /* SignUpTableViewController.swift */,
+			);
+			name = "Sign Up";
+			sourceTree = "<group>";
+		};
+		42EFD6751BC9EC0D0063FD78 /* Sign Up Views */ = {
+			isa = PBXGroup;
+			children = (
+				42EFD6731BC9E6F30063FD78 /* SignUpView.swift */,
+				42EFD6761BC9EC540063FD78 /* SignUpNameView.swift */,
+				42EFD67E1BC9ED730063FD78 /* SignUpFormView.swift */,
+				42EFD6781BC9EC630063FD78 /* SignUpEmailPasswordView.swift */,
+				42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */,
+				42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */,
+			);
+			name = "Sign Up Views";
 			sourceTree = "<group>";
 		};
 		EDECFCEB40B96BC560906CF2 /* Pods */ = {
@@ -452,21 +536,6 @@
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3465F6269308AC7041D907AB /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
 			name = "Copy Pods Resources";
 			outputPaths = (
 			);
@@ -488,6 +557,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6EC3BC9EE0B44E6424018C8B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		72372038996B782EA1C12B94 /* Check Pods Manifest.lock */ = {
@@ -527,24 +611,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42EFD67F1BC9ED730063FD78 /* SignUpFormView.swift in Sources */,
+				42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */,
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
+				42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */,
+				4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,
+				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,
+				422715451BC7359D00FD719C /* UIFont.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
+				4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */,
+				42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
 				4223342D1BC0C96000E863D0 /* AnnouncementConstants.swift in Sources */,
 				27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */,
+				42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */,
+				42C393411BC45DEC00630F93 /* RootController.swift in Sources */,
+				4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */,
 				422334281BC09E0F00E863D0 /* School.swift in Sources */,
+				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
+				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
+				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				278160181BC0DF7700A1DB75 /* APIKeys.swift in Sources */,
+				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,
 				2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */,
+				42EFD6771BC9EC540063FD78 /* SignUpNameView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +654,6 @@
 			files = (
 				4223343C1BC0D28B00E863D0 /* AnnouncementConstants.swift in Sources */,
 				4223344A1BC0D2C200E863D0 /* UIColor.swift in Sources */,
-				422334461BC0D2B600E863D0 /* RootTabBarController.swift in Sources */,
 				422334441BC0D29800E863D0 /* StringConstants.swift in Sources */,
 				4223343A1BC0D28800E863D0 /* UserConstants.swift in Sources */,
 				422334341BC0D27900E863D0 /* User.swift in Sources */,
@@ -576,7 +675,6 @@
 			files = (
 				4223343D1BC0D28C00E863D0 /* AnnouncementConstants.swift in Sources */,
 				4223344B1BC0D2C300E863D0 /* UIColor.swift in Sources */,
-				422334471BC0D2B600E863D0 /* RootTabBarController.swift in Sources */,
 				422334451BC0D29900E863D0 /* StringConstants.swift in Sources */,
 				4223343B1BC0D28800E863D0 /* UserConstants.swift in Sources */,
 				2705CC5E1BB927D8004FE927 /* SAGEUITests.swift in Sources */,
@@ -651,6 +749,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -690,6 +789,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -702,6 +802,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = SAGE/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -721,6 +825,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = SAGE/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -13,23 +13,28 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize"
+        android:screenOrientation="portrait" >
+
         <activity
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:name=".signIn.SignInActivity"
-            android:label="@string/app_name" >
+            android:name=".signIn.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".signUp.SignUpActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".signUp.UnverifiedActivity"
+            android:launchMode="singleTop" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />

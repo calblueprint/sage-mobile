@@ -32,8 +32,7 @@ public class SchoolListRequest extends BaseRequest {
                             String schoolString = o.get("schools").toString();
                             ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
                             ArrayList<School> schools =
-                                    mapper.readValue(schoolString, new TypeReference<ArrayList<School>>() {
-                                    });
+                                    mapper.readValue(schoolString, new TypeReference<ArrayList<School>>() {});
                             onSuccess.onResponse(schools);
                         } catch (Exception e) {
                             Log.e(getClass().toString(), e.toString());

@@ -23,12 +23,12 @@ public class CreateUserRequest extends BaseRequest {
     public CreateUserRequest(final Activity activity, User user,
                              final Response.Listener<Session> onSuccess,
                              final Response.Listener onFailure) {
-        super(Method.POST, makeUrl("/users"), convertToParams(user, activity),
+        super(Method.POST, makeUrl("/users"), convertToParams(user, "user", activity),
          new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject o) {
                 try {
-                    String sessionString = o.getString("user");
+                    String sessionString = o.getString("session");
                     ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
                     Session session = mapper.readValue(sessionString, new TypeReference<Session>() {});
                     onSuccess.onResponse(session);

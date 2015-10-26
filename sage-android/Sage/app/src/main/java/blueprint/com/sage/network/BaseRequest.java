@@ -32,8 +32,7 @@ import blueprint.com.sage.utility.network.NetworkUtils;
 public class BaseRequest extends JsonObjectRequest {
 
     private static final String mBaseUrl = "http://sage-rails.herokuapp.com/api/v1";
-//    private static final String mBaseUrl = "http://10.142.62.196:3000/api/v1";
-
+//    private static final String mBaseUrl = "http://192.168.0.104:3000/api/v1";
     private Activity mActivity;
 
     public BaseRequest(int requestType, String url, JSONObject params,
@@ -103,8 +102,9 @@ public class BaseRequest extends JsonObjectRequest {
 
     public static String makeUrl(String url) { return mBaseUrl + url; }
 
-    public static JSONObject convertToParams(Object object, Context context) {
+    public static JSONObject convertToParams(Object object, String objString, Context context) {
         ObjectMapper mapper =  NetworkManager.getInstance(context).getObjectMapper();
+        HashMap<String, JSONObject> params = new HashMap<>();
         JSONObject objectJSON = null;
 
         try {
@@ -116,7 +116,8 @@ public class BaseRequest extends JsonObjectRequest {
             Log.e("Mapper Failure", e.toString());
         }
 
-        return objectJSON;
+        params.put(objString, objectJSON);
+        return new JSONObject(params);
     }
 
     public static NetworkManager getNetworkManager(Context context) {

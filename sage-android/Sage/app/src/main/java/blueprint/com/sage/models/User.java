@@ -38,9 +38,9 @@ public @Data class User {
 
     private Bitmap profile;
 
-    public final static String VOLUNTEER = "volunteer";
-    public final static String ONE_UNIT = "one_unit";
-    public final static String TWO_UNIT = "unit";
+    public final static String VOLUNTEER = "Volunteer";
+    public final static String ONE_UNIT = "One Unit";
+    public final static String TWO_UNIT = "Two Unit";
 
     /**
      * Gets integer of volunteer type

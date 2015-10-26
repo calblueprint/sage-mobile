@@ -68,7 +68,7 @@ public class CircleImageView extends ImageView {
             setBorderColor(attributes.getColor(R.styleable.CircleImageView_border_color, Color.WHITE));
         }
 
-        mPaint.setColor(attributes.getColor(R.styleable.CircleImageView_background_color, Color.TRANSPARENT));
+//        mPaint.setColor(attributes.getColor(R.styleable.CircleImageView_background_color, Color.TRANSPARENT));
 
         attributes.recycle();
     }

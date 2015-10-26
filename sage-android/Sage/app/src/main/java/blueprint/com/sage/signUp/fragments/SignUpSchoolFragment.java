@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.signUp.adapters.SignUpSchoolSpinnerAdapter;
 import blueprint.com.sage.signUp.adapters.SignUpTypeSpinnerAdapter;
@@ -45,7 +46,6 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         mSchoolAdapter =
                 new SignUpSchoolSpinnerAdapter(getParentActivity(),
                                                R.layout.sign_in_spinner_item,
-                                               R.id.sign_up_spinner_item_text,
                                                getParentActivity().getSchools());
         mSchoolSpinner.setAdapter(mSchoolAdapter);
         int selectedSchool = getParentActivity().getUser().getSchoolPosition();
@@ -56,7 +56,6 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         mTypeAdapter =
                 new SignUpTypeSpinnerAdapter(getParentActivity(),
                                              R.layout.sign_in_spinner_item,
-                                             R.id.sign_up_spinner_item_text,
                                              getResources().getStringArray(R.array.sign_up_volunteer_types));
         mVolunteerTypeSpinner.setAdapter(mTypeAdapter);
         int selectedType = getParentActivity().getUser().getTypePosition();
@@ -69,12 +68,12 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
 
         User user = getParentActivity().getUser();
         // TODO: Change this after making seeds
-        user.setSchoolId(1);
-//        user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
-//        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
+//        user.setSchoolId(1);
+        user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
+        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
 
-        user.setVolunteerType((String) mSchoolSpinner.getSelectedItem());
-        user.setTypePosition(mSchoolSpinner.getSelectedItemPosition());
+        user.setVolunteerType((String) mVolunteerTypeSpinner.getSelectedItem());
+        user.setTypePosition(mVolunteerTypeSpinner.getSelectedItemPosition());
 
         return true;
     }

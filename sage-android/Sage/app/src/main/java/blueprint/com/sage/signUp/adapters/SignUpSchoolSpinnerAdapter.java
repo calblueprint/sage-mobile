@@ -21,16 +21,14 @@ public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
     private List<School> mSchools;
     private Context mContext;
     private int mLayoutId;
-    private int mTextViewId;
 
     @Bind(R.id.sign_up_spinner_item_text) TextView mTextView;
 
-    public SignUpSchoolSpinnerAdapter(Context context, int layoutId, int textViewId, List<School> schools) {
-        super(context, layoutId, textViewId);
+    public SignUpSchoolSpinnerAdapter(Context context, int layoutId, List<School> schools) {
+        super(context, layoutId);
         mSchools = schools;
         mContext = context;
         mLayoutId = layoutId;
-        mTextViewId = textViewId;
     }
 
     @Override
@@ -50,9 +48,18 @@ public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        return getCustomView(position, convertView, parent, R.layout.sign_in_spinner_item);
+    }
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return getCustomView(position, convertView, parent, R.layout.sign_in_spinner_drop_item);
+    }
+
+    private View getCustomView(int position, View convertView, ViewGroup parent, int layoutId) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(mLayoutId, parent, false);
+            convertView = inflater.inflate(layoutId, parent, false);
         }
 
         mTextView = (TextView) convertView.findViewById(R.id.sign_up_spinner_item_text);

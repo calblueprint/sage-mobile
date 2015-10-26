@@ -24,6 +24,7 @@
     <include layout="@layout/white_dots" />
 
     <Spinner
+        style="@style/LandingField"
         android:id="@+id/sign_up_school"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -32,6 +33,7 @@
         android:layout_marginTop="10dp"/>
 
     <Spinner
+        style="@style/LandingField"
         android:id="@+id/sign_up_volunteer_type"
         android:layout_width="250dp"
         android:layout_height="wrap_content"

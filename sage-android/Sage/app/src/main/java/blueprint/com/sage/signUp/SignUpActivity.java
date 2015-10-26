@@ -1,12 +1,13 @@
 package blueprint.com.sage.signUp;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Response;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.signUp.events.BackEvent;
 import blueprint.com.sage.signUp.fragments.SignUpPagerFragment;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtil;
 import de.greenrobot.event.EventBus;
 
@@ -48,7 +50,7 @@ public class SignUpActivity extends FragmentActivity {
         mPreferenceTag = getString(R.string.shared_preferences);
         mPreferences = getSharedPreferences(mPreferenceTag, MODE_PRIVATE);
 
-//        makeSchoolRequest();
+        makeSchoolRequest();
         FragUtil.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
     }
 
@@ -88,17 +90,11 @@ public class SignUpActivity extends FragmentActivity {
     }
 
     private void logInUser(Session session) {
-        SharedPreferences.Editor editPreference =  mPreferences.edit();
-        editPreference.putString(getString(R.string.shared_preference_email), session.getEmail());
-        editPreference.putString(getString(R.string.shared_preference_auth_token),
-                                           session.getAuthenticationToken());
-//        editPreference.putString(getString(R.string.user), session.getUser());
-        editPreference.apply();
-
-        Intent intent = new Intent(this, UnverifiedActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        // Start activity here
+        try {
+            NetworkUtils.loginUser(session, this);
+        } catch (JsonProcessingException e) {
+            Toast.makeText(this, "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public User getUser() {

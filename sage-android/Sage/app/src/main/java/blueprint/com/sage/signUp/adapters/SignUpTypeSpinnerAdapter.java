@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import blueprint.com.sage.R;
+
 /**
  * Created by charlesx on 10/14/15.
  * Spinner adapter for volunteer types.
@@ -15,16 +17,14 @@ public class SignUpTypeSpinnerAdapter extends ArrayAdapter<String> {
     private String[] mTypes;
     private Context mContext;
     private int mLayoutId;
-    private int mTextViewId;
 
     private TextView mTextView;
 
-    public SignUpTypeSpinnerAdapter(Context context, int layoutId, int textViewId, String[] types) {
-        super(context, layoutId, textViewId);
+    public SignUpTypeSpinnerAdapter(Context context, int layoutId, String[] types) {
+        super(context, layoutId);
         mTypes = types;
         mContext = context;
         mLayoutId = layoutId;
-        mTextViewId = textViewId;
     }
 
     @Override
@@ -44,12 +44,21 @@ public class SignUpTypeSpinnerAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        return getCustomView(position, convertView, parent, R.layout.sign_in_spinner_item);
+    }
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        return getCustomView(position, convertView, parent, R.layout.sign_in_spinner_drop_item);
+    }
+
+    private View getCustomView(int position, View convertView, ViewGroup parent, int layoutId) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(mLayoutId, parent, false);
+            convertView = inflater.inflate(layoutId, parent, false);
         }
 
-        mTextView = (TextView) convertView.findViewById(mTextViewId);
+        mTextView = (TextView) convertView.findViewById(R.id.sign_up_spinner_item_text);
         mTextView.setText(getItem(position));
 
         return convertView;

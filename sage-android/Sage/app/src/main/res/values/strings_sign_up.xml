@@ -33,7 +33,7 @@
     <string-array name="sign_up_volunteer_types">
         <item>Volunteer</item>
         <item>One Unit</item>
-        <item>Two Unit</item>
+        <item>Two Units</item>
     </string-array>
 
     <!-- Unverified Activity -->

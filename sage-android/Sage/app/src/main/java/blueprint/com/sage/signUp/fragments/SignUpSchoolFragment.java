@@ -72,7 +72,6 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
         user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
 
-        user.setVolunteerType((String) mVolunteerTypeSpinner.getSelectedItem());
         user.setTypePosition(mVolunteerTypeSpinner.getSelectedItemPosition());
 
         return true;

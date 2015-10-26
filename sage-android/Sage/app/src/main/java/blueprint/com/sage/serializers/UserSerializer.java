@@ -24,7 +24,9 @@ public class UserSerializer extends JsonSerializer<User> {
         jgen.writeNumberField("school_id", user.getSchoolId());
         jgen.writeNumberField("role", 0);
         jgen.writeNumberField("volunteer_type", user.getVolunteerTypeString());
-        jgen.writeStringField("data", user.getProfileData());
+        if (user.getProfileData() != null) {
+            jgen.writeStringField("data", user.getProfileData());
+        }
         jgen.writeEndObject();
     }
 }

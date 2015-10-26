@@ -37,10 +37,25 @@ public @Data class User {
     private String confirmPassword;
 
     private Bitmap profile;
+    private String imageUrl;
 
-    public final static String VOLUNTEER = "Volunteer";
-    public final static String ONE_UNIT = "One Unit";
-    public final static String TWO_UNIT = "Two Unit";
+    public final static String VOLUNTEER = "volunteer";
+    public final static String ONE_UNIT = "one_unit";
+    public final static String TWO_UNITS = "two_units";
+
+    public void setTypePosition(int type) {
+        switch (type) {
+            case 0:
+                volunteerType = VOLUNTEER;
+            case 1:
+                volunteerType = ONE_UNIT;
+            case 2:
+                volunteerType = TWO_UNITS;
+            default:
+                Log.e(getClass().toString(), "Invalid volunteer type");
+                volunteerType = VOLUNTEER;
+        }
+    }
 
     /**
      * Gets integer of volunteer type
@@ -53,7 +68,7 @@ public @Data class User {
                 return 0;
             case ONE_UNIT:
                 return 1;
-            case TWO_UNIT:
+            case TWO_UNITS:
                 return 2;
             default:
                 Log.e(getClass().toString(), "Invalid volunteer type");
@@ -86,6 +101,8 @@ public @Data class User {
      * @return
      */
     public String getProfileData() {
+        if (profile == null) return null;
+
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         profile.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);

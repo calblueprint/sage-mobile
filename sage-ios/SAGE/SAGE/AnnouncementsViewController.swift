@@ -10,10 +10,14 @@ import Foundation
 
 class AnnouncementsViewController: UIViewController {
     
+    var announcements: [Announcement] = [
+        Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Same-era", text: "I'm so same right now.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Andrea", lastName: "Millwoman"), title: "I'm so high.", text: "Very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, high.", timeCreated: NSDate())]
+    
     override func loadView() {
         self.view = AnnouncementsView()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -21,12 +25,12 @@ class AnnouncementsViewController: UIViewController {
         (self.view as! AnnouncementsView).tableView.delegate = self
         (self.view as! AnnouncementsView).tableView.dataSource = self
     }
-
+    
 }
 
 extension AnnouncementsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44.0*3
+        return AnnouncementsTableViewCell.heightForAnnouncement(announcements[indexPath.row], width: CGRectGetWidth(tableView.frame))
     }
 }
 
@@ -36,7 +40,7 @@ extension AnnouncementsViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return announcements.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -45,9 +49,9 @@ extension AnnouncementsViewController: UITableViewDataSource {
             cell = AnnouncementsTableViewCell(style:UITableViewCellStyle.Default, reuseIdentifier:"Announcement")
         }
         var announcementsCell = cell as! AnnouncementsTableViewCell
-//        announcementsCell.setupWithAnnouncement(announcements[indexPath.row])
+        announcementsCell.setupWithAnnouncement(announcements[indexPath.row])
         return announcementsCell
-
+        
     }
     
 }

@@ -16,6 +16,10 @@ class AnnouncementsTableViewCell: UITableViewCell {
     var announcementTime = UILabel()
     var announcementMessage = UILabel()
     
+    struct cellHolder {
+        static var cell = AnnouncementsTableViewCell()
+    }
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(announcementUserImg)
@@ -23,11 +27,26 @@ class AnnouncementsTableViewCell: UITableViewCell {
         contentView.addSubview(announcementTime)
         contentView.addSubview(announcementTitle)
         contentView.addSubview(announcementMessage)
+        self.selectionStyle = .None
         setUpCellStyle()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    static func heightForAnnouncement(announcement: Announcement, width: CGFloat) -> CGFloat {
+        var cell = AnnouncementsTableViewCell.cellHolder.cell
+        cell.setupWithAnnouncement(announcement)
+        return CGRectGetHeight(cell.frame)
+    }
+    
+    func setupWithAnnouncement(announcement: Announcement) {
+        self.announcementUserName.text = (announcement.sender?.firstName)! + " " + (announcement.sender?.lastName)!
+        self.announcementTitle.text = announcement.title
+        self.announcementMessage.text = announcement.text
+        self.announcementTime.text = "5 days ago"
+        layoutSubviews()
     }
     
     func setUpCellStyle() {
@@ -37,22 +56,18 @@ class AnnouncementsTableViewCell: UITableViewCell {
         
         announcementUserName.font = UIFont(name: "Arial", size: 14)
         announcementUserName.textAlignment = NSTextAlignment.Left
-        announcementUserName.text = "John Doe"
         
         announcementTime.textColor = UIColor.secondaryTextColor
         announcementTime.font = UIFont(name: "Arial", size: 14)
         announcementTime.textAlignment = NSTextAlignment.Left
-        announcementTime.text = "5 days ago"
         
         announcementTitle.font = UIFont.boldSystemFontOfSize(14)
         announcementTitle.textAlignment = NSTextAlignment.Left
-        announcementTitle.text = "Announcement Title"
         
         announcementMessage.numberOfLines = 0
         announcementMessage.lineBreakMode = NSLineBreakMode.ByWordWrapping
         announcementMessage.font = UIFont(name: "Arial", size: 14)
         announcementMessage.textAlignment = NSTextAlignment.Left
-        announcementMessage.text = "text here hello goodbye i like to eat but i really just need to sleep overflow nom nom nom nom nom nom nom nom nom nom fml i just realized that i'm not done with this yet"
     }
     
     override func layoutSubviews() {
@@ -86,5 +101,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementMessage.fillWidthWithMargin(15)
         let width = CGRectGetWidth(announcementMessage.frame)
         announcementMessage.setSize(announcementMessage.sizeThatFits(CGSizeMake(width, CGFloat.max)))
+        
+        self.setHeight(CGRectGetMaxY(announcementMessage.frame)+10)
     }
 }

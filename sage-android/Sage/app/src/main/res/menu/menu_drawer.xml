@@ -5,7 +5,12 @@
             android:id="@+id/announcements"
             android:checked="false"
             android:title="@string/announcements"
-            android:icon="@drawable/ic_announcement_black"
-            />
+            android:icon="@drawable/ic_announcement_black" />
+
+        <item
+            android:id="@+id/log_out"
+            android:checked="false"
+            android:title="@string/log_out"
+            android:icon="@drawable/ic_exit_to_app_black" />
     </group>
 </menu>

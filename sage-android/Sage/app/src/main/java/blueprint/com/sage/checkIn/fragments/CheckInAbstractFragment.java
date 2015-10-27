@@ -1,8 +1,8 @@
-package blueprint.com.sage.check_in.fragments;
+package blueprint.com.sage.checkIn.fragments;
 
 import android.support.v4.app.Fragment;
 
-import blueprint.com.sage.check_in.CheckInActivity;
+import blueprint.com.sage.checkIn.CheckInActivity;
 
 /**
  * Created by charlesx on 10/21/15.

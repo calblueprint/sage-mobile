@@ -1,4 +1,4 @@
-package blueprint.com.sage.check_in.fragments;
+package blueprint.com.sage.checkIn.fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;

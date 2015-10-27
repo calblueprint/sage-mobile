@@ -8,11 +8,13 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.models.Session;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.signIn.SignInActivity;
 import blueprint.com.sage.signUp.UnverifiedActivity;
 
@@ -27,7 +29,7 @@ public class NetworkUtils {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public static void loginUser(Session session, Activity activity) throws JsonProcessingException {
+    public static void loginUser(Session session, Activity activity) throws Exception {
         SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
                 Context.MODE_PRIVATE);
 
@@ -43,14 +45,25 @@ public class NetworkUtils {
         editor.putString(activity.getString(R.string.school), schoolString);
         editor.apply();
 
+        loginUser(activity);
+    }
+
+    public static void loginUser(Activity activity) throws Exception {
         Intent intent;
-        // TODO: Add this after we merge in the check in event
-//        if (session.getUser().isVerified()) {
-//            // Sign in to check in
-//        } else {
-//            intent = new Intent(activity, UnverifiedActivity.class);
-//        }
-        intent = new Intent(activity, UnverifiedActivity.class);
+
+        SharedPreferences sharedPreferences =
+                activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
+
+        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+        String userString = sharedPreferences.getString(activity.getString(R.string.user), "");
+        User user = mapper.readValue(userString, new TypeReference<User>() {});
+
+        if (user.isVerified()) {
+            intent = new Intent(activity, CheckInActivity.class);
+        } else {
+            intent = new Intent(activity, UnverifiedActivity.class);
+        }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
     }

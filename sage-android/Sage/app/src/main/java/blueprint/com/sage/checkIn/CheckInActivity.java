@@ -1,4 +1,4 @@
-package blueprint.com.sage.check_in;
+package blueprint.com.sage.checkIn;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,8 +16,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.check_in.fragments.CheckInMapFragment;
+import blueprint.com.sage.checkIn.fragments.CheckInMapFragment;
 import blueprint.com.sage.utility.model.UserSchoolManager;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -96,6 +97,11 @@ public class CheckInActivity extends AppCompatActivity
             case R.id.announcements:
                 item.setChecked(true);
                 Log.e("Selected announcements", "yay");
+                break;
+            case R.id.log_out:
+                item.setChecked(true);
+                Log.e("Logging out", "yay");
+                NetworkUtils.logoutCurrentUser(this);
                 break;
         }
 

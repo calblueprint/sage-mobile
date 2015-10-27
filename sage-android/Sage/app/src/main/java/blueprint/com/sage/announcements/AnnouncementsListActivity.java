@@ -16,12 +16,13 @@ import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
+
 /**
  * Created by kelseylam on 10/24/15.
  */
 public class AnnouncementsListActivity extends NavigationAbstractActivity {
 
-   private ArrayList<Announcement> mAnnouncementsList;
+    private ArrayList<Announcement> mAnnouncementsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

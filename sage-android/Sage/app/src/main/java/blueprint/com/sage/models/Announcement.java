@@ -10,7 +10,6 @@ import lombok.Data;
 /**
  * Created by kelseylam on 10/24/15.
  */
-<<<<<<< 5b198265d755220a81323fed860fb983bb6210ba
 public @Data class Announcement {
     private int id;
     private Date createdAt;
@@ -77,16 +76,4 @@ public @Data class Announcement {
             return seconds + " seconds ago";
         }
     }
-=======
-@Data
-public class Announcement {
-    private int mId;
-    private Date mCreatedAt;
-    private Date mUpdatedAt;
-    private String mTitle;
-    private int mSchoolId;
-    private int mUserId;
-    private int mCategory;
-
->>>>>>> gradle build
 }

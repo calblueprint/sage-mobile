@@ -106,10 +106,6 @@
     <orderEntry type="library" exported="" name="crashlytics-core-2.3.5" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-2.4.3" level="project" />
     <orderEntry type="library" exported="" name="eventbus-2.4.0" level="project" />
-
-    <orderEntry type="library" exported="" name="jackson-databind-2.4.3" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
-    <orderEntry type="library" exported="" name="aws-android-sdk-2.1.7-core" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-8.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />

@@ -1,18 +1,27 @@
 package blueprint.com.sage.announcements.adapters;
 
+import android.support.v7.widget.RecyclerView;
+
+<<<<<<< 384bbdc59182170d08ab21890316376f5e024d5c
 import android.support.v4.app.FragmentActivity;
+=======
+>>>>>>> adding annnouncment fragment
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+<<<<<<< 384bbdc59182170d08ab21890316376f5e024d5c
 import android.widget.Toast;
 
 import com.android.volley.Response;
+=======
+>>>>>>> adding annnouncment fragment
 
 import java.util.ArrayList;
 
 import blueprint.com.sage.R;
+<<<<<<< 384bbdc59182170d08ab21890316376f5e024d5c
 import blueprint.com.sage.announcements.AnnouncementFragment;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Announcement;
@@ -24,6 +33,11 @@ import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+=======
+import blueprint.com.sage.models.Announcement;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+>>>>>>> adding annnouncment fragment
 
 /**
  * Created by kelseylam on 10/24/15.
@@ -53,8 +67,6 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         viewHolder.vTime.setText(announcement.getTime());
         viewHolder.vTitle.setText(announcement.getTitle());
         viewHolder.vBody.setText(announcement.getBody());
-//        Picasso picasso = Picasso.with(activity);
-//        picasso.load(announcement.getUser().getImageUrl()).into(viewHolder.vPicture);
     }
 
     public void setAnnouncements(ArrayList<Announcement> curList) {
@@ -84,9 +96,10 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
             this.activity = activity;
             ButterKnife.bind(this, v);
         }
-//
+
+        //
         @OnClick(R.id.announcement_row)
-        public void onClick(View v){
+        public void onClick(View v) {
             NetworkManager networkManager = NetworkManager.getInstance(activity);
             Announcement announcement = announcementArrayList.get(getAdapterPosition());
             Toast.makeText(activity, "id:" + getAdapterPosition(), Toast.LENGTH_SHORT);
@@ -104,5 +117,4 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
             networkManager.getRequestQueue().add(announcementRequest);
         }
     }
-
 }

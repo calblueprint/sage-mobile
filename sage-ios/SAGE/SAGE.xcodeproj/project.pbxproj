@@ -15,6 +15,8 @@
 		278160181BC0DF7700A1DB75 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278160171BC0DF7700A1DB75 /* APIKeys.swift */; settings = {ASSET_TAGS = (); }; };
 		2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601D1BC0E26B00A1DB75 /* CheckinView.swift */; settings = {ASSET_TAGS = (); }; };
+		27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67B1BE0416F00F9D026 /* RequestHoursViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67D1BE0422900F9D026 /* RequestHoursView.swift */; settings = {ASSET_TAGS = (); }; };
 		27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F990B61BBC7E0700D61DA2 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
 		27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; settings = {ASSET_TAGS = (); }; };
 		27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; settings = {ASSET_TAGS = (); }; };
@@ -109,6 +111,8 @@
 		278160171BC0DF7700A1DB75 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		2781601D1BC0E26B00A1DB75 /* CheckinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinView.swift; sourceTree = "<group>"; };
+		27D1B67B1BE0416F00F9D026 /* RequestHoursViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHoursViewController.swift; sourceTree = "<group>"; };
+		27D1B67D1BE0422900F9D026 /* RequestHoursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHoursView.swift; sourceTree = "<group>"; };
 		27F990B61BBC7E0700D61DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		27F990B81BBCC3CB00D61DA2 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		27F990BF1BBCE3B300D61DA2 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */,
+				27D1B67B1BE0416F00F9D026 /* RequestHoursViewController.swift */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				2781601D1BC0E26B00A1DB75 /* CheckinView.swift */,
+				27D1B67D1BE0422900F9D026 /* RequestHoursView.swift */,
 			);
 			name = Checkin;
 			sourceTree = "<group>";
@@ -616,6 +622,7 @@
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
+				27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */,
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
 				42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */,
 				4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */,
@@ -640,6 +647,7 @@
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
+				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				278160181BC0DF7700A1DB75 /* APIKeys.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,

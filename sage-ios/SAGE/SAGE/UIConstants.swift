@@ -15,6 +15,7 @@ struct UIConstants {
     static let verticalMargin: CGFloat = 10.0
     static let textMargin: CGFloat = 10.0
     static let navbarHeight: CGFloat = 64.0
+    static let statusBarHeight: CGFloat = 20.0
     static let barbuttonSize: CGFloat = 44.0
     static let barbuttonIconSize: CGFloat = 24.0
     static let tabBarIconSize: CGFloat = 28.0

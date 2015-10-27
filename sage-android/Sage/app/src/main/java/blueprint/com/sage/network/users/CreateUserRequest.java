@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
+import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.BaseRequest;
@@ -22,7 +22,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
 public class CreateUserRequest extends BaseRequest {
     public CreateUserRequest(final Activity activity, User user,
                              final Response.Listener<Session> onSuccess,
-                             final Response.Listener onFailure) {
+                             final Response.Listener<APIError> onFailure) {
         super(Method.POST, makeUrl("/users"), convertToParams(user, activity),
          new Response.Listener<JSONObject>() {
             @Override
@@ -36,9 +36,9 @@ public class CreateUserRequest extends BaseRequest {
                     Log.e(getClass().toString(), e.toString());
                 }
             }
-        }, new Response.ErrorListener() {
+        }, new Response.Listener<APIError>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onResponse(APIError error) {
                 onFailure.onResponse(error);
             }
         }, activity);

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -12,6 +11,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.BaseRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -23,7 +23,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
 public class SchoolListRequest extends BaseRequest {
     public SchoolListRequest(final Activity activity,
                              final Response.Listener<ArrayList<School>> onSuccess,
-                             final Response.Listener onFailure) {
+                             final Response.Listener<APIError> onFailure) {
         super(Method.GET, makeUrl("/schools"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -40,10 +40,10 @@ public class SchoolListRequest extends BaseRequest {
                         }
                     }
                 },
-                new Response.ErrorListener() {
+                new Response.Listener<APIError>() {
                     @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        onFailure.onResponse(volleyError);
+                    public void onResponse(APIError error) {
+                        onFailure.onResponse(error);
                     }
                 }, activity);
     }

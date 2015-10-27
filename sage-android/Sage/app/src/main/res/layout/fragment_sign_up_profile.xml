@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/green500">
+
+    <TextView
+        style="@style/SignUpTitle"
+        android:id="@+id/sign_up_email_title"
+        android:text="@string/sign_up_profile_title" />
+
+    <TextView
+        style="@style/SignUpSubTitle"
+        android:id="@+id/sign_up_email_subtitle"
+        android:text="@string/sign_up_profile_subtitle" />
+
+    <blueprint.com.sage.shared.views.CircleImageView
+        android:id="@+id/sign_up_profile_picture"
+        android:layout_height="70dp"
+        android:layout_width="70dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_profile"
+        app:border_color="@color/white"
+        app:border="true"/>
+
+    <include layout="@layout/white_dots" />
+
+    <Button
+        style="@style/LandingButton"
+        android:id="@+id/sign_up_finish"
+        android:text="@string/sign_up_finish"/>
+</LinearLayout>

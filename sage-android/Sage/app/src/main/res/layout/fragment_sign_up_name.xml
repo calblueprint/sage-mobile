@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/red500">
+
+    <TextView
+        style="@style/SignUpTitle"
+        android:id="@+id/sign_up_email_title"
+        android:text="@string/sign_up_name_title" />
+
+    <TextView
+        style="@style/SignUpSubTitle"
+        android:id="@+id/sign_up_email_subtitle"
+        android:text="@string/sign_up_name_subtitle" />
+
+    <ImageView
+        style="@style/SignUpIcon"
+        android:background="@drawable/ic_person_pin_white"/>
+
+    <include layout="@layout/white_dots" />
+
+    <EditText
+        style="@style/LandingField"
+        android:id="@+id/sign_up_first_name"
+        android:hint="@string/sign_up_first_name"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        style="@style/LandingField"
+        android:id="@+id/sign_up_last_name"
+        android:hint="@string/sign_up_last_name" />
+
+    <Button
+        style="@style/LandingButton"
+        android:id="@+id/sign_up_continue"
+        android:text="@string/sign_up_continue"/>
+
+</LinearLayout>

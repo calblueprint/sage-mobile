@@ -10,10 +10,12 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpStatus;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,11 +27,12 @@ import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
  * Created by charlesx on 9/25/15.
+ * Base request inherited by all other requests.u
  */
 public class BaseRequest extends JsonObjectRequest {
 
     private static final String mBaseUrl = "http://sage-rails.herokuapp.com/api/v1";
-
+//    private static final String mBaseUrl = "http://192.168.0.104:3000/api/v1";
     private Activity mActivity;
 
     public BaseRequest(int requestType, String url, JSONObject params,
@@ -98,6 +101,24 @@ public class BaseRequest extends JsonObjectRequest {
     }
 
     public static String makeUrl(String url) { return mBaseUrl + url; }
+
+    public static JSONObject convertToParams(Object object, String objString, Context context) {
+        ObjectMapper mapper =  NetworkManager.getInstance(context).getObjectMapper();
+        HashMap<String, JSONObject> params = new HashMap<>();
+        JSONObject objectJSON = null;
+
+        try {
+            String objectString = mapper.writeValueAsString(object);
+            objectJSON = new JSONObject(objectString);
+        } catch(JsonProcessingException e) {
+            Log.e("Processing Error", e.toString());
+        } catch(JSONException e) {
+            Log.e("Mapper Failure", e.toString());
+        }
+
+        params.put(objString, objectJSON);
+        return new JSONObject(params);
+    }
 
     public static NetworkManager getNetworkManager(Context context) {
         return NetworkManager.getInstance(context);

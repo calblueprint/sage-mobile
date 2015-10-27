@@ -2,17 +2,18 @@ package blueprint.com.sage.models;
 
 import java.util.Date;
 
-/**
- * Created by kelseylam on 10/10/15.
- */
-@Data
-public class Announcement {
-    private int mId;
-    private Date mCreatedAt;
-    private Date mUpdatedAt;
-    private String mTitle;
-    private int mSchoolId;
-    private int mUserId;
-    private int mCategory;
+import lombok.Data;
 
+/**
+ * Created by kelseylam on 10/24/15.
+ */
+public @Data class Announcement {
+    private int id;
+    private Date createdAt;
+    private Date updatedAt;
+    private String title;
+    private String body;
+    private int schoolId;
+    private int userId;
+    private String category;
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/announcement_row"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="3dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/pomsky"
+            android:scaleType="centerCrop"
+            android:layout_toLeftOf="@id/announcement_user"/>
+
+        <TextView
+            android:id="@+id/announcement_user"
+            style="@style/AnnouncementRow"
+            android:layout_marginTop="10dp"
+            android:text="User Name"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/announcement_time"
+            style="@style/AnnouncementRow"
+            android:textColor="@color/date_gray"
+            android:text="2 days ago"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/announcement_title"
+            style="@style/AnnouncementRow"
+            android:text="Title"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/announcement_body"
+            style="@style/AnnouncementRow"
+            android:text="The actual announcement."
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"/>
+
+        <View
+            android:id="@+id/announcement_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_gray"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

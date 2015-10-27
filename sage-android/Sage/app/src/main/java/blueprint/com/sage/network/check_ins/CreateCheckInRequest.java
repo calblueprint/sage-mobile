@@ -18,7 +18,7 @@ public class CreateCheckInRequest extends BaseRequest {
     public CreateCheckInRequest(Activity activity, CheckIn checkIn,
                                Response.Listener<CheckIn> onSuccess,
                                final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl("/check_ins"), convertToParams(checkIn, activity),
+        super(Method.POST, makeUrl("/check_ins"), convertToParams(checkIn, "check_in", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

@@ -25,7 +25,9 @@ class SignUpEmailPasswordView: SignUpFormView {
         self.containerView.addSubview(self.secondDivider)
         
         self.emailInput.textColor = UIColor.whiteColor()
+        self.emailInput.returnKeyType = .Next
         self.passwordInput.textColor = UIColor.whiteColor()
+        self.passwordInput.returnKeyType = .Next
         self.firstDivider.backgroundColor = UIColor.whiteColor()
         self.secondDivider.backgroundColor = UIColor.whiteColor()
         

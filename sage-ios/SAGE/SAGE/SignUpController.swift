@@ -16,6 +16,7 @@ class SignUpController: UIViewController  {
     override func loadView() {
         self.view = SignUpView()
         self.setUpTargetActionPairs()
+        self.setDelegates()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -24,6 +25,17 @@ class SignUpController: UIViewController  {
         UIView.animateWithDuration(UIView.animationTime/2, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
             self.view.alpha = 1.0
             }, completion: nil)
+    }
+    
+    func setDelegates() {
+        let signUpView = (self.view as! SignUpView)
+        let nameView = signUpView.nameView
+        let emailPasswordView = signUpView.emailPasswordView
+        nameView.firstNameInput.delegate = self
+        nameView.lastNameInput.delegate = self
+        emailPasswordView.emailInput.delegate = self
+        emailPasswordView.passwordInput.delegate = self
+        
     }
     
     func setUpTargetActionPairs(){
@@ -115,7 +127,7 @@ class SignUpController: UIViewController  {
     }
 }
 
-extension SignUpController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension SignUpController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let signUpView = (self.view as! SignUpView)
         let photoView = signUpView.photoView
@@ -131,5 +143,48 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         photoView.headerLabel.centerHorizontally()
         photoView.subHeaderLabel.centerHorizontally()
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        let signUpView = (self.view as! SignUpView)
+        let nameView = signUpView.nameView
+        let emailPasswordView = signUpView.emailPasswordView
+        let firstName = nameView.firstNameInput
+        let lastName = nameView.lastNameInput
+        let email = emailPasswordView.emailInput
+        let password = emailPasswordView.passwordInput
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenWidth = screenRect.size.width
+        
+        if textField == firstName {
+            lastName.becomeFirstResponder()
+        } else if textField == lastName {
+            if firstName.text! != "" && lastName.text! != "" {
+                UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+                    signUpView.dismissKeyboard = false
+                    let newPoint = CGPointMake(signUpView.scrollView.contentOffset.x + screenWidth, signUpView.scrollView.contentOffset.y)
+                    signUpView.scrollView.contentOffset = newPoint
+                    signUpView.changeBackgroundColor(newPoint.x)
+                    }, completion: { (value) -> Void in
+                        email.becomeFirstResponder()
+                })
+            } else {
+                signUpView.showError("Please fill out your first and last name!")
+            }
+        } else if textField == email {
+            password.becomeFirstResponder()
+        } else {
+            if password.text! != "" && signUpView.isValidEmail(email.text!) {
+            
+                UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+                    let newPoint = CGPointMake(signUpView.scrollView.contentOffset.x + screenWidth, signUpView.scrollView.contentOffset.y)
+                    signUpView.scrollView.contentOffset = newPoint
+                    signUpView.changeBackgroundColor(newPoint.x)
+                }, completion: nil)
+            } else {
+                signUpView.showError("Please fill out your email and password!")
+            }
+        }
+        return true
     }
 }

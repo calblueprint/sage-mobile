@@ -12,7 +12,6 @@ import FontAwesomeKit
 class SignUpView: UIView, UIScrollViewDelegate {
     
     var pageControl: UIPageControl = UIPageControl()
-    var gestureRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     var nameView = SignUpNameView()
     var emailPasswordView = SignUpEmailPasswordView()
     var schoolHoursView = SignUpSchoolHoursView()
@@ -20,6 +19,9 @@ class SignUpView: UIView, UIScrollViewDelegate {
     var allViews = [SignUpFormView]()
     var xButton: UIButton = UIButton()
     var scrollView: UIScrollView = UIScrollView()
+    var dismissKeyboard: Bool = true
+    var currentErrorMessage: ErrorView?
+    var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
         
     override init(frame: CGRect) {
         let screenRect = UIScreen.mainScreen().bounds;
@@ -89,8 +91,8 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.pageControl.centerHorizontally()
         self.pageControl.setY(225)
         
-        self.xButton.setX(10)
-        self.xButton.setY(10)
+        self.xButton.setX(8)
+        self.xButton.setY(8)
         self.xButton.setWidth(44)
         self.xButton.setHeight(66)
         let xButtonIcon = FAKIonIcons.closeRoundIconWithSize(22)
@@ -115,8 +117,8 @@ class SignUpView: UIView, UIScrollViewDelegate {
     }
     
     func changeBackgroundColor(offset: CGFloat) {
-        let screenRect = UIScreen.mainScreen().bounds;
-        let screenWidth = screenRect.size.width;
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenWidth = screenRect.size.width
         
         let colorIndex = Int(offset / screenWidth)
         let colorOffset = (offset % screenWidth) / screenWidth
@@ -139,9 +141,8 @@ class SignUpView: UIView, UIScrollViewDelegate {
     }
     
     func setUpGestureRecognizer() {
-        let recognizer = UITapGestureRecognizer()
-        recognizer.addTarget(self, action: "screenTapped")
-        self.addGestureRecognizer(recognizer)
+        self.tapRecognizer.addTarget(self, action: "screenTapped")
+        self.addGestureRecognizer(self.tapRecognizer)
         self.userInteractionEnabled = true
     }
     
@@ -150,13 +151,68 @@ class SignUpView: UIView, UIScrollViewDelegate {
     //
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenWidth = screenRect.size.width
+        
         if scrollView.contentOffset.x < 0 {
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
         } else if scrollView.contentOffset.x > 3 * self.frame.width {
             scrollView.setContentOffset(CGPointMake(3 * self.frame.width, 0), animated: false)
+        } else if scrollView.contentOffset.x > screenWidth * 2 && !self.schoolHoursValid() {
+            scrollView.setContentOffset(CGPointMake(2 * self.frame.width, 0), animated: false)
+        } else if scrollView.contentOffset.x > screenWidth && !emailPasswordValid() {
+            scrollView.setContentOffset(CGPointMake(self.frame.width, 0), animated: false)
+        } else if scrollView.contentOffset.x > 0 && !firstLastNameValid() {
+            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
         } else {
-            self.endEditing(true)
-            self.changeBackgroundColor(scrollView.contentOffset.x)
+            if (self.dismissKeyboard) {
+                self.endEditing(true)
+                self.changeBackgroundColor(scrollView.contentOffset.x)
+            } else {
+                self.dismissKeyboard = true
+            }
         }
     }
+    
+    //
+    // MARK: - Validation and Errors
+    //
+    func schoolHoursValid() -> Bool {
+        return self.schoolHoursView.chooseSchoolButton.titleLabel?.text! != "Choose School..." && self.schoolHoursView.chooseHoursButton.titleLabel?.text! != "Choose Hours..."
+    }
+    
+    func emailPasswordValid() -> Bool {
+        return self.emailPasswordView.emailInput.text! != "" && self.emailPasswordView.passwordInput.text! != ""
+    }
+    
+    func firstLastNameValid() -> Bool {
+        return self.nameView.firstNameInput.text! != "" && self.nameView.lastNameInput.text! != ""
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+    
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr)
+    }
+    
+    
+    func showError(message: String) {
+        if let current = self.currentErrorMessage {
+            current.removeFromSuperview()
+        }
+        
+        let errorView = ErrorView(height: 64.0, messageString: message)
+        self.addSubview(errorView)
+        self.bringSubviewToFront(errorView)
+        errorView.setX(0)
+        errorView.setY(0)
+        self.currentErrorMessage = errorView
+        
+        UIView.animateWithDuration(1, delay: 3, options: .CurveLinear, animations: { () -> Void in
+            errorView.alpha = 0.0
+            }, completion: nil)
+    }
+    
 }

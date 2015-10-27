@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginController: UIViewController, UITextFieldDelegate {
+class LoginController: UIViewController {
     
     override func loadView() {
         self.view = LoginView()
@@ -35,6 +35,19 @@ class LoginController: UIViewController, UITextFieldDelegate {
         })
     }
     
+    //
+    // MARK: - Methods to handle navigation
+    //
+    
+    func pushRootTabBarController() {
+        LoginHelper.setUserSingleton()
+        let rootTabBarController = RootTabBarController()
+        self.presentViewController(rootTabBarController, animated: false, completion: nil)
+    }
+    
+}
+
+extension LoginController: UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let loginView = (self.view as! LoginView)
         if textField == loginView.loginEmailField {
@@ -55,15 +68,4 @@ class LoginController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    
-    //
-    // MARK: - Methods to handle navigation
-    //
-    
-    func pushRootTabBarController() {
-        LoginHelper.setUserSingleton()
-        let rootTabBarController = RootTabBarController()
-        self.presentViewController(rootTabBarController, animated: false, completion: nil)
-    }
-    
 }

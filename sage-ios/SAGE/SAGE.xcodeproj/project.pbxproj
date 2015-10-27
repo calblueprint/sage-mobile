@@ -60,6 +60,7 @@
 		4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2981BC62B4500C831C7 /* LoginView.swift */; settings = {ASSET_TAGS = (); }; };
 		427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427432EF1BC776FD00464200 /* UnverifiedView.swift */; settings = {ASSET_TAGS = (); }; };
+		429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429B1D131BDC881F006AADF6 /* ErrorView.swift */; settings = {ASSET_TAGS = (); }; };
 		42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3933E1BC45DB900630F93 /* LoginController.swift */; settings = {ASSET_TAGS = (); }; };
 		42C393411BC45DEC00630F93 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393401BC45DEC00630F93 /* RootController.swift */; settings = {ASSET_TAGS = (); }; };
 		42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393421BC4607D00630F93 /* UnverifiedViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -129,6 +130,7 @@
 		4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = "Pods/../build/Debug-iphoneos/FontAwesomeKit.framework"; sourceTree = "<group>"; };
 		4264DFEC1BC59BE20097804D /* SwiftKeychainWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftKeychainWrapper.framework; path = "Pods/../build/Debug-iphoneos/SwiftKeychainWrapper.framework"; sourceTree = "<group>"; };
 		427432EF1BC776FD00464200 /* UnverifiedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedView.swift; sourceTree = "<group>"; };
+		429B1D131BDC881F006AADF6 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		42C3933E1BC45DB900630F93 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		42C393401BC45DEC00630F93 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		42C393421BC4607D00630F93 /* UnverifiedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedViewController.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 		27F990BE1BBCC5A300D61DA2 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				429B1D131BDC881F006AADF6 /* ErrorView.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */,
+				429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */,
 				42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,

@@ -2,7 +2,7 @@ package blueprint.com.sage.shared;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,7 +17,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
  * Created by charlesx on 10/24/15.
  * Application activity that most activities inherit from
  */
-public abstract class AbstractActivity extends FragmentActivity {
+public abstract class AbstractActivity extends AppCompatActivity {
 
     protected SharedPreferences mPreferences;
     protected NetworkManager mNetworkManager;
@@ -58,12 +58,12 @@ public abstract class AbstractActivity extends FragmentActivity {
         }
     }
 
-    protected User getUser() { return mUser; }
-    protected void setUser(User user) { mUser = user; }
+    public User getUser() { return mUser; }
+    public void setUser(User user) { mUser = user; }
 
-    protected School getSchool() { return mSchool; }
-    protected void setSchool(School school) { mSchool = school; }
+    public School getSchool() { return mSchool; }
+    public void setSchool(School school) { mSchool = school; }
 
-    protected NetworkManager getNetworkManager() { return mNetworkManager; }
-    protected SharedPreferences getSharedPreferences() { return mPreferences; }
+    public NetworkManager getNetworkManager() { return mNetworkManager; }
+    public SharedPreferences getSharedPreferences() { return mPreferences; }
 }

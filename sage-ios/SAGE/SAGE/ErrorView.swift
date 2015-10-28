@@ -31,6 +31,8 @@ class ErrorView: UIView {
         self.message.text = messageString
         self.message.textColor = UIColor.whiteColor()
         self.message.font = UIFont.normalFont
+        self.message.lineBreakMode = .ByWordWrapping
+        self.message.numberOfLines = 2
         
         self.userInteractionEnabled = true
         let errorTapRecognizer = UITapGestureRecognizer()

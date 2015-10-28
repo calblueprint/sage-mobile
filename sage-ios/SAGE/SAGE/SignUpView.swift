@@ -160,10 +160,13 @@ class SignUpView: UIView, UIScrollViewDelegate {
             scrollView.setContentOffset(CGPointMake(3 * self.frame.width, 0), animated: false)
         } else if scrollView.contentOffset.x > screenWidth * 2 && !self.schoolHoursValid() {
             scrollView.setContentOffset(CGPointMake(2 * self.frame.width, 0), animated: false)
+            self.showError("Please select a school and time commitment!")
         } else if scrollView.contentOffset.x > screenWidth && !emailPasswordValid() {
             scrollView.setContentOffset(CGPointMake(self.frame.width, 0), animated: false)
+            self.showError("Please fill out your email and password!")
         } else if scrollView.contentOffset.x > 0 && !firstLastNameValid() {
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+            self.showError("Please fill out your first and last name!")
         } else {
             if (self.dismissKeyboard) {
                 self.endEditing(true)
@@ -182,7 +185,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
     }
     
     func emailPasswordValid() -> Bool {
-        return self.emailPasswordView.emailInput.text! != "" && self.emailPasswordView.passwordInput.text! != ""
+        return self.emailPasswordView.emailInput.text! != "" && self.emailPasswordView.passwordInput.text! != "" && self.emailPasswordView.emailInput.text!.containsString("berkeley")
     }
     
     func firstLastNameValid() -> Bool {

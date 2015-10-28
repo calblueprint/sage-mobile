@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class SignUpController: UIViewController  {
+    
+    // using nsmutable dictionaries so we can pass them by reference instead of by value
+    var schoolDict = NSMutableDictionary()
+    var volunteerDict = NSMutableDictionary()
     
     //
     // MARK: - Overridden UIViewController methods
@@ -56,16 +61,96 @@ class SignUpController: UIViewController  {
     // MARK: - Methods to take and process photo
     //
     func createAccountAndProceedToAppWithoutPicture() {
-        let unverifiedController = UnverifiedViewController()
-        self.presentViewController(unverifiedController, animated: true, completion: nil)
+        self.showLoadingView()
+        let completion = { (success: Bool) -> Void in
+            // switching back to main thread to ensure that UIKIT methods get called on the main thread
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if (success) {
+                    let unverifiedController = UnverifiedViewController()
+                    self.presentViewController(unverifiedController, animated: true, completion: nil)
+                } else {
+                    self.showFailureModal()
+                }
+            })
+        }
+        self.makeAccount(completion)
     }
     
     func createAccountAndProceedToAppWithPicture() {
-        let unverifiedController = UnverifiedViewController()
+        self.showLoadingView()
+        let completion = { (success: Bool) -> Void in
+            // switching back to main thread to ensure that UIKIT methods get called on the main thread
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if (success) {
+                    let unverifiedController = UnverifiedViewController()
+                    let signUpView = (self.view as! SignUpView)
+                    let photoView = signUpView.photoView
+                    unverifiedController.setImage(photoView.photo.image!)
+                    self.presentViewController(unverifiedController, animated: true, completion: nil)
+                } else {
+                    self.showFailureModal()
+                }
+            })
+        }
+        self.makeAccount(completion)
+    }
+    
+    func showLoadingView() {
+        let frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        let image = UIImage.init(named: UIConstants.blurredBerkeleyBackground)
+        let imageView = UIImageView.init(frame: frame)
+        imageView.image = image
+        self.view.addSubview(imageView)
+        
+        let activityIndicatorFrame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        let activityIndicator = UIActivityIndicatorView(frame: activityIndicatorFrame)
+        activityIndicator.color = UIColor.whiteColor()
+        activityIndicator.startAnimating()
+        activityIndicator.center = self.view.center
+        self.view.addSubview(activityIndicator)
+    }
+    
+    func showFailureModal() {
+        let alertController = UIAlertController(title: "Sorry!", message: "We're sorry! Something went wrong. Try again?", preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func makeAccount(completion: ((Bool) -> Void)) {
         let signUpView = (self.view as! SignUpView)
+        let nameView = signUpView.nameView
+        let emailPasswordView = signUpView.emailPasswordView
+        let schoolHoursView = signUpView.schoolHoursView
         let photoView = signUpView.photoView
-        unverifiedController.setImage(photoView.photo.image!)
-        self.presentViewController(unverifiedController, animated: true, completion: nil)
+        
+        let firstName = nameView.firstNameInput.text!
+        let lastName = nameView.lastNameInput.text!
+        let email = emailPasswordView.emailInput.text!
+        let password = emailPasswordView.passwordInput.text!
+        
+        let school = self.schoolDict[schoolHoursView.chooseSchoolButton.titleLabel!.text!] as! Int
+        
+        let hoursString = schoolHoursView.chooseHoursButton.titleLabel!.text!
+        let hours = self.volunteerDict[hoursString] as! Int
+        let verified = false
+        let role = 0
+        
+        var photoData: String
+        if let image = photoView.photo.image {
+            photoData = UIImage.encodedPhotoString(image)
+        } else {
+            let personIcon = FAKIonIcons.personIconWithSize(200)
+            personIcon.setAttributes([NSForegroundColorAttributeName: UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
+            let personImage = personIcon.imageWithSize(CGSizeMake(200, 200))
+            photoData = UIImage.encodedPhotoString(personImage)
+        }
+        
+        LoginHelper.storeUserDataInKeychain(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, verified: verified)
+        
+        LoginHelper.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, role: role, photoData: photoData, completion: completion)
     }
     
     func choosePhoto() {
@@ -100,19 +185,17 @@ class SignUpController: UIViewController  {
     //
     
     func presentSchoolModal() {
-        let tableViewController = SignUpTableViewController()
+        let tableViewController = SignUpTableViewController(type: SignUpTableViewController.ContentType.School, schoolIDDict: self.schoolDict, volunteerlevelDict: self.volunteerDict)
         let navigationController = UINavigationController(rootViewController: tableViewController)
         tableViewController.parentVC = self
         self.presentViewController(navigationController, animated: true, completion: nil)
-        tableViewController.setType("School")
     }
     
     func presentHoursModal() {
-        let tableViewController = SignUpTableViewController()
+        let tableViewController = SignUpTableViewController(type: SignUpTableViewController.ContentType.Hours, schoolIDDict: self.schoolDict, volunteerlevelDict: self.volunteerDict)
         let navigationController = UINavigationController(rootViewController: tableViewController)
         tableViewController.parentVC = self
         self.presentViewController(navigationController, animated: true, completion: nil)
-        tableViewController.setType("Hours")
     }
     
     

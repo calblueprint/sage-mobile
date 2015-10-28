@@ -1,11 +1,9 @@
 package blueprint.com.sage.checkIn;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -17,7 +15,7 @@ import com.google.android.gms.location.LocationServices;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.fragments.CheckInMapFragment;
-import blueprint.com.sage.utility.model.UserSchoolManager;
+import blueprint.com.sage.shared.AbstractActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtil;
 import butterknife.Bind;
@@ -27,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by charlesx on 10/16/15.
  * Check in Activity
  */
-public class CheckInActivity extends AppCompatActivity
+public class CheckInActivity extends AbstractActivity
                              implements NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.check_in_drawer_layout) DrawerLayout mDrawerLayout;
@@ -36,8 +34,6 @@ public class CheckInActivity extends AppCompatActivity
 
     private ActionBarDrawerToggle mToggle;
 
-    private UserSchoolManager mManager;
-    private SharedPreferences mPreferences;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -47,9 +43,9 @@ public class CheckInActivity extends AppCompatActivity
         setContentView(R.layout.activity_check_in);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+
         initializeGoogleApiClient();
         initializeDrawer();
-        initializeUser();
 
         FragUtil.replace(R.id.check_in_container, CheckInMapFragment.newInstance(), this);
     }
@@ -87,6 +83,7 @@ public class CheckInActivity extends AppCompatActivity
                     super.onDrawerOpened(drawerView);
                 }
             };
+        mNavigationView.setNavigationItemSelectedListener(this);
         mDrawerLayout.setDrawerListener(mToggle);
         mToggle.syncState();
     }
@@ -95,11 +92,9 @@ public class CheckInActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.announcements:
-                item.setChecked(true);
                 Log.e("Selected announcements", "yay");
                 break;
             case R.id.log_out:
-                item.setChecked(true);
                 Log.e("Logging out", "yay");
                 NetworkUtils.logoutCurrentUser(this);
                 break;
@@ -124,11 +119,5 @@ public class CheckInActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void initializeUser() {
-        mPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
-        mManager = new UserSchoolManager(this, mPreferences);
-    }
-
-    public UserSchoolManager getManager() { return mManager; }
     public GoogleApiClient getClient() { return mGoogleApiClient; }
 }

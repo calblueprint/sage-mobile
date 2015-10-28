@@ -39,6 +39,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.FragUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,7 +53,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
     private final static int ZOOM = 16;
     // Radius of cirlce boundary of school (int meters)
-    private final static int DISTANCE = 250;
+    private final static int DISTANCE = 100000;
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
     @Bind(R.id.check_in_check_fab) FloatingActionButton mCheckButton;
@@ -149,10 +150,11 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
         String startTime = mPreferences.getString(getString(R.string.check_in_start_time), "");
         if (startTime.isEmpty()) {
-            startCheckIn();
+            showStartCheckInDialog();
         } else {
 //            stopCheckIn();
             toggleButton(true);
+            FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
         }
     }
 
@@ -226,10 +228,8 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         Location location = getLocation();
         if (location == null)
             return false;
-        School school = new School();
-        school.setLat(0);
-        school.setLng(0);
-//        School school = getParentActivity().getManager().getSchool();
+
+        School school = getParentActivity().getSchool();
         float[] results = new float[1];
         Location.distanceBetween(location.getLatitude(), location.getLongitude(), school.getLat(), school.getLng(), results);
 
@@ -252,15 +252,14 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
 
-
     private void stopCheckIn(String endTime) {
         String startTime = mPreferences.getString(getString(R.string.check_in_start_time), "");
         if (startTime.isEmpty()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
 
-        User user = getParentActivity().getManager().getUser();
-        School school = getParentActivity().getManager().getSchool();
+        User user = getParentActivity().getUser();
+        School school = getParentActivity().getSchool();
         CheckIn checkin  = new CheckIn(startTime, endTime, user, school);
 
         CreateCheckInRequest request = new CreateCheckInRequest(getParentActivity(), checkin,

@@ -81,7 +81,9 @@ class CheckinViewController: UIViewController {
                         KeychainWrapper.setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
                         self.updateSessionTime()
                     }))
-                    alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+                    alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: {(action: UIAlertAction) -> Void in
+                        self.presentRequestHoursView()
+                    }))
                     self.presentViewController(alertController, animated: true, completion: nil)
                 } else {
                     let alertController = UIAlertController(
@@ -132,6 +134,16 @@ class CheckinViewController: UIViewController {
         if (self.inSession) {
             self.performSelector("updateSessionTime", withObject: nil, afterDelay: 1)
         }
+    }
+    
+    private func presentRequestHoursView() {
+        let requestHoursController = RequestHoursViewController()
+        if self.inSession {
+            requestHoursController.inSession = true
+            requestHoursController.startTime = self.startTime
+        }
+        let navController = UINavigationController(rootViewController: requestHoursController)
+        self.presentViewController(navController, animated: true, completion: nil)
     }
     
     private func setupDefaultTitleLabel() {

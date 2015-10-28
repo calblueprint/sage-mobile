@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Response;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,10 +32,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
-import blueprint.com.sage.models.User;
-import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtil;
@@ -52,7 +48,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
                                 implements OnMapReadyCallback {
 
     private final static int ZOOM = 16;
-    // Radius of cirlce boundary of school (int meters)
+    // Radius of circle boundary of school (int meters)
     private final static int DISTANCE = 100000;
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
@@ -103,6 +99,12 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         mMap = map;
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
+        if (!NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+
+        } else {
+
+        }
         checkAndMoveLocation();
     }
 
@@ -152,7 +154,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         if (startTime.isEmpty()) {
             showStartCheckInDialog();
         } else {
-//            stopCheckIn();
+            stopCheckIn();
             toggleButton(true);
             FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
         }
@@ -252,30 +254,37 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
 
-    private void stopCheckIn(String endTime) {
+    private void stopCheckIn() {
         String startTime = mPreferences.getString(getString(R.string.check_in_start_time), "");
         if (startTime.isEmpty()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
 
-        User user = getParentActivity().getUser();
-        School school = getParentActivity().getSchool();
-        CheckIn checkin  = new CheckIn(startTime, endTime, user, school);
+//        User user = getParentActivity().getUser();
+//        School school = getParentActivity().getSchool();
+//        String endTime = getFormattedTimeNow();
+//
+//        CheckIn checkin  = new CheckIn(startTime, endTime, user, school);
+//
+//        CreateCheckInRequest request = new CreateCheckInRequest(getParentActivity(), checkin,
+//                new Response.Listener<CheckIn>() {
+//                    @Override
+//                    public void onResponse(CheckIn checkIn) {
+//                        toggleButton(true);
+//                    }
+//                },
+//                new Response.Listener() {
+//                    @Override
+//                    public void onResponse(Object o) {
+//                    }
+//                });
+//
+//        mManager.getRequestQueue().add(request);
 
-        CreateCheckInRequest request = new CreateCheckInRequest(getParentActivity(), checkin,
-                new Response.Listener<CheckIn>() {
-                    @Override
-                    public void onResponse(CheckIn checkIn) {
-                        toggleButton(true);
-                    }
-                },
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object o) {
-                    }
-                });
-
-        mManager.getRequestQueue().add(request);
+        mPreferences.edit()
+                    .remove(getString(R.string.check_in_start_time))
+                    .remove(getString(R.string.check_in_end_time))
+                    .apply();
     }
 
     private String getFormattedTimeNow() {

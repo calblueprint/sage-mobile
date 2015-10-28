@@ -8,8 +8,8 @@
 
     <!-- ToolBar -->
     <style name="ToolBarStyle" parent="Theme.AppCompat">
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white</item>
+        <!--<item name="android:textColorPrimary">@color/white</item>-->
+        <!--<item name="android:textColorSecondary">@color/white</item>-->
         <item name="actionMenuTextColor">@color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>

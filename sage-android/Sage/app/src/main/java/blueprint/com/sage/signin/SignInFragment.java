@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.HashMap;
 
@@ -96,7 +95,7 @@ public class SignInFragment extends Fragment {
     private void loginUser(Session session) {
         try {
             NetworkUtils.loginUser(session, getActivity());
-        } catch(JsonProcessingException e) {
+        } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
             Toast.makeText(getActivity(), "Something went wrong, try again!", Toast.LENGTH_SHORT).show();
         }

@@ -20,12 +20,18 @@ class LoginHelper: NSObject {
         return false
     }
     
-    static func userIsVerified() -> Bool {
+    static func userIsVerified(completion: ((Bool) -> Void)) {
         // this returns only true for now because it hasn't been connected to the backend
         if let verified = KeychainWrapper.objectForKey(KeychainConstants.kVerified) {
-            return verified as! Bool
+            let verifiedBool = verified as! Bool
+            if verifiedBool {
+                completion(true)
+            } else {
+                // TODO: make network request to check whether a user is verified
+                
+            }
         }
-        return false
+        completion(false)
     }
     
     static func storeUserDataInKeychain(firstName: String, lastName: String, email: String, password: String, school: Int, hours: Int, verified: Bool) {
@@ -60,7 +66,6 @@ class LoginHelper: NSObject {
         
         let queue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) { (urlResponse, data, error) -> Void in
-            // nothing
             if error == nil {
                 completion(true)
             } else {
@@ -69,9 +74,29 @@ class LoginHelper: NSObject {
         }
     }
     
-    static func isValidLogin(email: String, password: String, completion: ((Bool) -> Void)?) {
-        let value: Bool = true
-        completion?(value)
+    static func isValidLogin(email: String, password: String, completion: ((Bool) -> Void)) {
+        let url = NSURL(string: StringConstants.kEndpointLogin)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "GET"
+        let params = ["user":
+                        [
+                            "email": email,
+                            "password": password,
+                        ]
+                    ]
+        if let body = try? NSJSONSerialization.dataWithJSONObject(params, options: []) {
+            request.HTTPBody = body
+        }
+        
+        let queue = NSOperationQueue()
+        NSURLConnection.sendAsynchronousRequest(request, queue: queue) { (urlResponse, data, error) -> Void in
+            // TODO: make sure to check later if the data is right (actual valid login check)
+            if error == nil {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
     }
     
     static func isValidEmail(completion: (Bool) -> Void) {

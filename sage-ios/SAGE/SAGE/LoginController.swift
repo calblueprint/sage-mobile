@@ -9,6 +9,7 @@
 import UIKit
 
 class LoginController: UIViewController {
+    var currentErrorMessage: ErrorView?
     
     override func loadView() {
         self.view = LoginView()
@@ -45,6 +46,40 @@ class LoginController: UIViewController {
         self.presentViewController(rootTabBarController, animated: false, completion: nil)
     }
     
+    func showError(message: String) {
+        if let current = self.currentErrorMessage {
+            current.removeFromSuperview()
+        }
+        
+        let errorView = ErrorView(height: 64.0, messageString: message)
+        self.view.addSubview(errorView)
+        self.view.bringSubviewToFront(errorView)
+        errorView.setX(0)
+        errorView.setY(0)
+        self.currentErrorMessage = errorView
+        
+        UIView.animateWithDuration(1, delay: 3, options: .CurveLinear, animations: { () -> Void in
+            errorView.alpha = 0.0
+            }, completion: nil)
+    }
+    
+    func attemptLogin() {
+        let loginView = (self.view as! LoginView)
+        if let email = loginView.loginEmailField.text {
+            if let password = loginView.loginPasswordField.text {
+                LoginHelper.isValidLogin(email, password: password, completion: {
+                    (valid: Bool) -> Void in
+                    if (valid) {
+                        self.pushRootTabBarController()
+                    } else {
+                        // indicate bad login
+                        self.showError("Invalid login - try again!")
+                    }
+                })
+            }
+        }
+    }
+    
 }
 
 extension LoginController: UITextFieldDelegate {
@@ -53,18 +88,7 @@ extension LoginController: UITextFieldDelegate {
         if textField == loginView.loginEmailField {
             loginView.loginPasswordField.becomeFirstResponder()
         } else if textField == loginView.loginPasswordField {
-            if let email = loginView.loginEmailField.text {
-                if let password = loginView.loginPasswordField.text {
-                    LoginHelper.isValidLogin(email, password: password, completion: {
-                        (valid: Bool) -> Void in
-                        if (valid) {
-                            self.pushRootTabBarController()
-                        } else {
-                            // indicate bad login
-                        }
-                    })
-                }
-            }
+            self.attemptLogin()
         }
         return true
     }

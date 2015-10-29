@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BSKeyboardControls
 
 class RequestHoursView: UIView {
     
@@ -14,6 +15,7 @@ class RequestHoursView: UIView {
     var startTimeField = FormFieldItem()
     var endTimeField = FormFieldItem()
     var commentField = FormTextItem()
+    var keyboardControls = BSKeyboardControls()
     private var scrollView = UIScrollView()
 
     //
@@ -23,6 +25,14 @@ class RequestHoursView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
         self.setupSubviews()
+        self.keyboardControls.fields = [
+            self.dateField.textField,
+            self.startTimeField.textField,
+            self.endTimeField.textField,
+            self.commentField.textView
+        ]
+        self.keyboardControls.barTintColor = UIColor.mainColor
+        self.keyboardControls.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,6 +62,21 @@ class RequestHoursView: UIView {
     }
     
     //
+    // MARK: - Event handlers
+    //
+    @objc private func datePicked(sender: UIDatePicker!) {
+        
+    }
+    
+    @objc private func startTimePicked(sender: UIDatePicker!) {
+        
+    }
+    
+    @objc private func endTimePicked(sender: UIDatePicker!) {
+        
+    }
+    
+    //
     // MARK: - Private methods
     //
     private func setupSubviews() {
@@ -59,34 +84,50 @@ class RequestHoursView: UIView {
         self.scrollView.keyboardDismissMode = .OnDrag
         self.addSubview(self.scrollView)
         
-        self.dateField.textField.delegate = self
         self.dateField.label.text = "Date"
+        self.dateField.textField.placeholder = "Enter a date"
+        self.dateField.textField.delegate = self
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .Date
+        datePicker.addTarget(self, action: "datePicked:", forControlEvents: .ValueChanged)
         self.dateField.textField.inputView = datePicker
         self.dateField.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.dateField)
         
-        self.startTimeField.textField.delegate = self
         self.startTimeField.label.text = "Start Time"
+        self.startTimeField.textField.placeholder = "Select start time"
+        self.startTimeField.textField.delegate = self
         let startTimePicker = UIDatePicker()
         startTimePicker.datePickerMode = .Time
+        startTimePicker.addTarget(self, action: "startTimePicked:", forControlEvents: .ValueChanged)
         self.startTimeField.textField.inputView = startTimePicker
         self.startTimeField.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.startTimeField)
         
-        self.endTimeField.textField.delegate = self
         self.endTimeField.label.text = "End Time"
+        self.endTimeField.textField.placeholder = "Select end time"
+        self.endTimeField.textField.delegate = self
         let endTimePicker = UIDatePicker()
         endTimePicker.datePickerMode = .Time
+        endTimePicker.addTarget(self, action: "endTimePicked:", forControlEvents: .ValueChanged)
         self.endTimeField.textField.inputView = endTimePicker
         self.endTimeField.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.endTimeField)
         
-        self.commentField.textView.delegate = self
         self.commentField.label.text = "Comment"
+        self.commentField.textView.delegate = self
         self.commentField.setHeight(FormTextItem.defaultHeight)
         self.scrollView.addSubview(self.commentField)
+    }
+}
+
+//
+// MARK: - BSKeyboardControlsDelegate
+//
+extension RequestHoursView: BSKeyboardControlsDelegate {
+    
+    func keyboardControlsDonePressed(keyboardControls: BSKeyboardControls!) {
+        keyboardControls.activeField.resignFirstResponder()
     }
 }
 
@@ -95,10 +136,10 @@ class RequestHoursView: UIView {
 //
 extension RequestHoursView: UITextFieldDelegate {
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    func textFieldDidBeginEditing(textField: UITextField) {
         let offset = textField.superview!.frame.origin
         self.scrollView.setContentOffset(CGPointMake(0, offset.y), animated: true)
-        return true
+        self.keyboardControls.activeField = textField
     }
 }
 
@@ -107,9 +148,9 @@ extension RequestHoursView: UITextFieldDelegate {
 //
 extension RequestHoursView: UITextViewDelegate {
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewDidBeginEditing(textView: UITextView) {
         let offset = textView.superview!.frame.origin
         self.scrollView.setContentOffset(CGPointMake(0, offset.y), animated: true)
-        return true
+        self.keyboardControls.activeField = textView
     }
 }

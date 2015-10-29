@@ -4,16 +4,49 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <EditText
+        <ImageView
+            android:id="@+id/check_in_request_start_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_alarm_on_black"
+            android:layout_centerVertical="true"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hello" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@id/check_in_request_start_icon"
+            android:layout_toEndOf="@id/check_in_request_start_icon"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-    </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/check_in_request_start_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="Start Time"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:hint="hello" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="250dp"

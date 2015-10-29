@@ -9,4 +9,8 @@
         <item name="elevation">10dp</item>
         <item name="fabSize">normal</item>
     </style>
+
+    <string name="CheckInField">
+
+    </string>
 </resources>

@@ -169,7 +169,6 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         } else {
             showStartCheckInDialog();
         }
-        toggleButton();
     }
 
     private void showOutOfBoundsDialog() {
@@ -279,6 +278,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     private void startCheckIn() {
         mPreferences.edit().putString(getString(R.string.check_in_start_time),
                                       getFormattedTimeNow()).apply();
+        toggleButton();
     }
 
 
@@ -287,7 +287,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         if (startTime.isEmpty()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
-
+        toggleButton();
         FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
 
 //        User user = getParentActivity().getUser();

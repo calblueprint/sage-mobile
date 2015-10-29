@@ -5,80 +5,100 @@
     android:gravity="center_horizontal">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/CheckInRequestRelativeLayout">
 
         <ImageView
+            style="@style/CheckInRequestIcon"
             android:id="@+id/check_in_request_start_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="16dp"
-            android:src="@drawable/ic_alarm_on_black"
-            android:layout_centerVertical="true"/>
+            android:src="@drawable/ic_alarm_on_black" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            style="@style/CheckInRequestLinearLayout"
             android:layout_toRightOf="@id/check_in_request_start_icon"
-            android:layout_toEndOf="@id/check_in_request_start_icon"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
+            android:layout_toEndOf="@id/check_in_request_start_icon" >
 
             <TextView
+                style="@style/CheckInRequestLabel"
                 android:id="@+id/check_in_request_start_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:text="Start Time"/>
+                android:text="@string/check_in_request_start_time"/>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:hint="hello" />
+                style="@style/CheckInRequestText" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/CheckInRequestRelativeLayout">
+
+        <ImageView
+            style="@style/CheckInRequestIcon"
+            android:id="@+id/check_in_request_start_icon"
+            android:src="@drawable/ic_alarm_on_black" />
+
+        <LinearLayout
+            style="@style/CheckInRequestLinearLayout"
+            android:layout_toRightOf="@id/check_in_request_start_icon"
+            android:layout_toEndOf="@id/check_in_request_start_icon" >
+
+            <TextView
+                style="@style/CheckInRequestLabel"
+                android:id="@+id/check_in_request_start_text"
+                android:text="@string/check_in_request_start_time"/>
+
+            <TextView
+                style="@style/CheckInRequestText" />
 
         </LinearLayout>
     </RelativeLayout>
 
 
+    <RelativeLayout
+        style="@style/CheckInRequestRelativeLayout">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content">
+        <ImageView
+            style="@style/CheckInRequestIcon"
+            android:id="@+id/check_in_request_start_icon"
+            android:src="@drawable/ic_alarm_on_black" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hello" />
+        <LinearLayout
+            style="@style/CheckInRequestLinearLayout"
+            android:layout_toRightOf="@id/check_in_request_start_icon"
+            android:layout_toEndOf="@id/check_in_request_start_icon" >
 
-    </android.support.design.widget.TextInputLayout>
+            <TextView
+                style="@style/CheckInRequestLabel"
+                android:id="@+id/check_in_request_start_text"
+                android:text="@string/check_in_request_start_time"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content">
+            <TextView
+                style="@style/CheckInRequestText" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hello" />
+        </LinearLayout>
+    </RelativeLayout>
 
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content">
+    <RelativeLayout
+        style="@style/CheckInRequestRelativeLayout">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="hello" />
+        <ImageView
+            style="@style/CheckInRequestIcon"
+            android:id="@+id/check_in_request_start_icon"
+            android:src="@drawable/ic_alarm_on_black" />
 
-    </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            style="@style/CheckInRequestLinearLayout"
+            android:layout_toRightOf="@id/check_in_request_start_icon"
+            android:layout_toEndOf="@id/check_in_request_start_icon" >
 
+            <TextView
+                style="@style/CheckInRequestLabel"
+                android:id="@+id/check_in_request_start_text"
+                android:text="@string/check_in_request_start_time"/>
+
+            <TextView
+                style="@style/CheckInRequestText" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

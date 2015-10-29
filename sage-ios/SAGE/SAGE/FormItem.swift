@@ -1,24 +1,24 @@
 //
-//  RequestHoursView.swift
+//  FormItem.swift
 //  SAGE
 //
-//  Created by Andrew on 10/27/15.
+//  Created by Andrew on 10/28/15.
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
 import Foundation
 
-class RequestHoursView: UIView {
+class FormItem: UIView {
     
-    
+    var formLabel: UILabel = UILabel()
     
     //
     // MARK: - Initialization
     //
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
-        self.setupSubviews()
+        
+        self.formLabel.font =
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,13 +26,6 @@ class RequestHoursView: UIView {
     }
     
     override func layoutSubviews() {
-        
-    }
-    
-    //
-    // MARK: - Private methods
-    //
-    private func setupSubviews() {
         
     }
 }

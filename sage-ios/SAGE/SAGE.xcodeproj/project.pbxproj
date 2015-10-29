@@ -17,6 +17,7 @@
 		2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601D1BC0E26B00A1DB75 /* CheckinView.swift */; settings = {ASSET_TAGS = (); }; };
 		27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67B1BE0416F00F9D026 /* RequestHoursViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67D1BE0422900F9D026 /* RequestHoursView.swift */; settings = {ASSET_TAGS = (); }; };
+		27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67F1BE1993700F9D026 /* FormItem.swift */; settings = {ASSET_TAGS = (); }; };
 		27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F990B61BBC7E0700D61DA2 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
 		27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; settings = {ASSET_TAGS = (); }; };
 		27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; settings = {ASSET_TAGS = (); }; };
@@ -113,6 +114,7 @@
 		2781601D1BC0E26B00A1DB75 /* CheckinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinView.swift; sourceTree = "<group>"; };
 		27D1B67B1BE0416F00F9D026 /* RequestHoursViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHoursViewController.swift; sourceTree = "<group>"; };
 		27D1B67D1BE0422900F9D026 /* RequestHoursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHoursView.swift; sourceTree = "<group>"; };
+		27D1B67F1BE1993700F9D026 /* FormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormItem.swift; sourceTree = "<group>"; };
 		27F990B61BBC7E0700D61DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		27F990B81BBCC3CB00D61DA2 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		27F990BF1BBCE3B300D61DA2 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 		27F990BE1BBCC5A300D61DA2 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				27D1B67F1BE1993700F9D026 /* FormItem.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -626,6 +629,7 @@
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
 				42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */,
 				4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */,
+				27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,

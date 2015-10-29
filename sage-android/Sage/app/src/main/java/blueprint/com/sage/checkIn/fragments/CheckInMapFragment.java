@@ -50,6 +50,8 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     private final static int ZOOM = 16;
     // Radius of circle boundary of school (int meters)
     private final static int DISTANCE = 100000;
+    private final static float DEFAULT_LONG = -122.26f;
+    private final static float DEFAULT_LAT = 37.87f;
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
     @Bind(R.id.check_in_check_fab) FloatingActionButton mCheckButton;
@@ -99,18 +101,30 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         mMap = map;
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(ZOOM));
 
-        if (!NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+        if (NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+            Location location = getLocation();
 
+            LatLng latLng;
+            if (location == null) {
+                latLng = new LatLng(DEFAULT_LAT, DEFAULT_LONG);
+            } else {
+                latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            }
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         } else {
-
+            LatLng latLng = new LatLng(DEFAULT_LAT, DEFAULT_LONG);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
-        checkAndMoveLocation();
     }
 
     private void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
+
+        toggleButton();
     }
 
     @OnClick(R.id.check_in_location_fab)
@@ -150,14 +164,12 @@ public class CheckInMapFragment extends CheckInAbstractFragment
             return;
         }
 
-        String startTime = mPreferences.getString(getString(R.string.check_in_start_time), "");
-        if (startTime.isEmpty()) {
-            showStartCheckInDialog();
+        if (hasStartedCheckIn()) {
+            showStopCheckInDialog();
         } else {
-            stopCheckIn();
-            toggleButton(true);
-            FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
+            showStartCheckInDialog();
         }
+        toggleButton();
     }
 
     private void showOutOfBoundsDialog() {
@@ -196,7 +208,24 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
     private void showStopCheckInDialog() {
-//        new AlertDialog.Builder(getActivity()).setMessage().show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.check_in_finish_title)
+                .setMessage(R.string.check_in_finish_body)
+                .setPositiveButton(R.string.check_in_finish_confirm,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                stopCheckIn();
+                            }
+                        })
+                .setNegativeButton(R.string.check_in_finish_return,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+        builder.show();
     }
 
     private void showEnableLocationDialog() {
@@ -250,7 +279,6 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     private void startCheckIn() {
         mPreferences.edit().putString(getString(R.string.check_in_start_time),
                                       getFormattedTimeNow()).apply();
-        toggleButton(false);
     }
 
 
@@ -259,6 +287,8 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         if (startTime.isEmpty()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
+
+        FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
 
 //        User user = getParentActivity().getUser();
 //        School school = getParentActivity().getSchool();
@@ -296,12 +326,12 @@ public class CheckInMapFragment extends CheckInAbstractFragment
      * Toggles buttons.
      * If showCheckIn is true, then we show the start icon.
      * Else, we show the stop icon.
-     * @param showCheckIn boolean
      */
     @SuppressWarnings("deprecation")
-    private void toggleButton(boolean showCheckIn) {
-        int icon = showCheckIn ? R.drawable.ic_done_white : R.drawable.ic_clear_white;
-        int color = showCheckIn ? R.color.green500 : R.color.red500;
+    private void toggleButton() {
+
+        int icon = hasStartedCheckIn() ? R.drawable.ic_clear_white : R.drawable.ic_done_white;
+        int color = hasStartedCheckIn() ? R.color.red500 : R.color.green500;
 
         Drawable drawable;
         if (android.os.Build.VERSION.SDK_INT >= 21) {
@@ -312,5 +342,9 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
         mCheckButton.setImageDrawable(drawable);
         mCheckButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(color)));
+    }
+
+    private boolean hasStartedCheckIn() {
+        return !mPreferences.getString(getString(R.string.check_in_start_time), "").isEmpty();
     }
 }

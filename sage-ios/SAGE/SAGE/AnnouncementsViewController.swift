@@ -48,7 +48,7 @@ extension AnnouncementsViewController: UITableViewDataSource {
         if (cell == nil) {
             cell = AnnouncementsTableViewCell(style:UITableViewCellStyle.Default, reuseIdentifier:"Announcement")
         }
-        var announcementsCell = cell as! AnnouncementsTableViewCell
+        let announcementsCell = cell as! AnnouncementsTableViewCell
         announcementsCell.setupWithAnnouncement(announcements[indexPath.row])
         return announcementsCell
         

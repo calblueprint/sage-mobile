@@ -36,17 +36,29 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     static func heightForAnnouncement(announcement: Announcement, width: CGFloat) -> CGFloat {
-        var cell = AnnouncementsTableViewCell.cellHolder.cell
+        let cell = AnnouncementsTableViewCell.cellHolder.cell
         cell.setupWithAnnouncement(announcement)
         return CGRectGetHeight(cell.frame)
     }
     
     func setupWithAnnouncement(announcement: Announcement) {
-        self.announcementUserName.text = (announcement.sender?.firstName)! + " " + (announcement.sender?.lastName)!
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
         self.announcementTime.text = "5 days ago"
+        var announcementTo = "Everyone"
+        if (announcement.school != nil) {
+            announcementTo = (announcement.school?.name)!
+        }
+        let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(14.0)]
+        let nameLength = (announcement.sender?.firstName)!.characters.count + (announcement.sender?.lastName)!.characters.count + 1
+        let toIndex = nameLength + 4
+        let toLength = announcementTo.characters.count
+        let announcementString = NSMutableAttributedString(string: (announcement.sender?.firstName)! + " " + (announcement.sender?.lastName)! + " to " + announcementTo)
+        announcementString.addAttributes(boldString, range: NSRange(location: 0, length: nameLength))
+        announcementString.addAttributes(boldString, range: NSRange(location: toIndex, length: toLength))
+        self.announcementUserName.attributedText = announcementString
         layoutSubviews()
+        
     }
     
     func setUpCellStyle() {
@@ -76,25 +88,25 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementUserImg.setX(UIConstants.sideMargin)
         announcementUserImg.setY(UIConstants.textMargin)
         
-        var announcementUserImgRight = CGRectGetMaxX(announcementUserImg.frame)
+        let announcementUserImgRight = CGRectGetMaxX(announcementUserImg.frame)
         announcementUserName.setX(announcementUserImgRight+UIConstants.textMargin)
         announcementUserName.setY(10)
         announcementUserName.setHeight(16)
         announcementUserName.fillWidthWithMargin(15)
         
-        var announcementTimeY = CGRectGetMaxY(announcementUserName.frame)
+        let announcementTimeY = CGRectGetMaxY(announcementUserName.frame)
         announcementTime.setX(announcementUserImgRight+UIConstants.textMargin)
         announcementTime.setY(announcementTimeY)
         announcementTime.setHeight(16)
         announcementTime.fillWidthWithMargin(15)
         
-        var announcementTitleY = CGRectGetMaxY(announcementTime.frame) + UIConstants.textMargin
+        let announcementTitleY = CGRectGetMaxY(announcementTime.frame) + UIConstants.textMargin
         announcementTitle.setY(announcementTitleY)
         announcementTitle.setX(announcementUserImgRight+UIConstants.textMargin)
         announcementTitle.setHeight(16)
         announcementTitle.fillWidthWithMargin(15)
         
-        var announcementMessageY = CGRectGetMaxY(announcementTitle.frame) + UIConstants.textMargin
+        let announcementMessageY = CGRectGetMaxY(announcementTitle.frame) + UIConstants.textMargin
         announcementMessage.setY(announcementMessageY)
         announcementMessage.setX(announcementUserImgRight+UIConstants.textMargin)
         announcementMessage.setHeight(40)

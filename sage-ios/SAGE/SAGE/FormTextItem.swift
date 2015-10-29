@@ -10,12 +10,15 @@ import Foundation
 
 class FormTextItem: FormItem {
     
+    static let defaultHeight: CGFloat = 150.0
+    
     var textView: UITextView = UITextView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.textView.textColor = UIColor.blackColor()
-        self.textView.font = UIFont.getDefaultFont(17)
+        self.textView.backgroundColor = UIColor.clearColor()
+        self.textView.font = UIFont.normalFont
         self.addSubview(self.textView)
     }
     
@@ -28,10 +31,11 @@ class FormTextItem: FormItem {
         self.textView.setX(CGRectGetMaxX(self.label.frame))
         self.textView.fillWidth()
         self.textView.fillHeight()
+        self.divider.alignBottomWithMargin(0)
     }
     
     //
-    // MARK:- Public Methods
+    // MARK: - Public Methods
     //
     override func changeThemeColor(color: UIColor) {
         super.changeThemeColor(color)

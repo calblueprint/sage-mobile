@@ -14,14 +14,20 @@ import Foundation
 class FormItem: UIView {
     
     var label: UILabel = UILabel()
-    var labelHeight: CGFloat = 50.0
+    var divider: UIView = UIView()
+    var labelHeight: CGFloat = 45.0
     var labelWidth: CGFloat = 100.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.label.textColor = UIColor.blackColor()
-        self.label.font = UIFont.semiboldFont
+        self.label.font = UIFont.getSemiboldFont(13)
         self.addSubview(self.label)
+        
+        self.divider.backgroundColor = UIColor.borderColor
+        self.divider.setHeight(UIConstants.dividerHeight())
+        self.addSubview(self.divider)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,9 +36,12 @@ class FormItem: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.label.setX(UIConstants.textMargin)
+        
         self.label.setWidth(self.labelWidth)
         self.label.setHeight(self.labelHeight)
+        
+        self.divider.alignBottomWithMargin(0)
+        self.divider.fillWidth()
     }
     
     //
@@ -40,5 +49,6 @@ class FormItem: UIView {
     //
     func changeThemeColor(color: UIColor) {
         self.label.textColor = color
+        self.divider.backgroundColor = color
     }
 }

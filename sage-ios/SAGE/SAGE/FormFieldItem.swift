@@ -10,12 +10,14 @@ import Foundation
 
 class FormFieldItem: FormItem {
     
+    static let defaultHeight: CGFloat = 45.0
+    
     var textField: UITextField = UITextField()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.textField.textColor = UIColor.blackColor()
-        self.textField.font = UIFont.getDefaultFont(17)
+        self.textField.font = UIFont.normalFont
         self.addSubview(self.textField)
     }
     
@@ -28,6 +30,8 @@ class FormFieldItem: FormItem {
         self.textField.setX(CGRectGetMaxX(self.label.frame))
         self.textField.fillWidth()
         self.textField.fillHeight()
+        
+        self.divider.alignBottomWithMargin(0)
     }
     
     //

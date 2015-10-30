@@ -35,7 +35,7 @@ public @Data class CheckIn {
     }
 
     private Date parseTime(String time) {
-        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.ENGLISH);
         Date date = null;
 
         try {

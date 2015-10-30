@@ -23,7 +23,8 @@
                 android:text="@string/check_in_request_start_time"/>
 
             <TextView
-                style="@style/CheckInRequestText" />
+                style="@style/CheckInRequestText"
+                android:id="@+id/check_in_request_start_field"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -47,7 +48,8 @@
                 android:text="@string/check_in_request_end_time"/>
 
             <TextView
-                style="@style/CheckInRequestText" />
+                style="@style/CheckInRequestText"
+                android:id="@+id/check_in_request_end_field"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -72,7 +74,8 @@
                 android:text="@string/check_in_request_total_time"/>
 
             <TextView
-                style="@style/CheckInRequestText" />
+                style="@style/CheckInRequestText"
+                android:id="@+id/check_in_request_total_field"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -97,7 +100,8 @@
                 android:text="@string/check_in_request_comment"/>
 
             <EditText
-                style="@style/CheckInRequestText" />
+                style="@style/CheckInRequestText"
+                android:id="@+id/check_in_request_comments_field"/>
 
         </LinearLayout>
     </RelativeLayout>

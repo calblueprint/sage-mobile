@@ -106,7 +106,7 @@ public class CheckInActivity extends AbstractActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_check_in, menu);
+        getMenuInflater().inflate(R.menu.menu_check_in_map, menu);
         return true;
     }
 

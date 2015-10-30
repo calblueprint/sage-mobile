@@ -15,8 +15,9 @@ class RequestHoursView: UIView {
     var startTimeField = FormFieldItem()
     var endTimeField = FormFieldItem()
     var commentField = FormTextItem()
-    var keyboardControls = BSKeyboardControls()
+    private var keyboardControls = BSKeyboardControls()
     private var scrollView = UIScrollView()
+    private var dateFormatter = NSDateFormatter()
 
     //
     // MARK: - Initialization
@@ -65,15 +66,21 @@ class RequestHoursView: UIView {
     // MARK: - Event handlers
     //
     @objc private func datePicked(sender: UIDatePicker!) {
-        
+        self.dateFormatter.dateStyle = .MediumStyle
+        self.dateFormatter.timeStyle = .NoStyle
+        self.dateField.textField.text = self.dateFormatter.stringFromDate(sender.date)
     }
     
     @objc private func startTimePicked(sender: UIDatePicker!) {
-        
+        self.dateFormatter.dateStyle = .NoStyle
+        self.dateFormatter.timeStyle = .ShortStyle
+        self.startTimeField.textField.text = self.dateFormatter.stringFromDate(sender.date)
     }
     
     @objc private func endTimePicked(sender: UIDatePicker!) {
-        
+        self.dateFormatter.dateStyle = .NoStyle
+        self.dateFormatter.timeStyle = .ShortStyle
+        self.endTimeField.textField.text = self.dateFormatter.stringFromDate(sender.date)
     }
     
     //
@@ -128,6 +135,7 @@ extension RequestHoursView: BSKeyboardControlsDelegate {
     
     func keyboardControlsDonePressed(keyboardControls: BSKeyboardControls!) {
         keyboardControls.activeField.resignFirstResponder()
+        self.scrollView.setContentOffset(CGPointZero, animated: true)
     }
 }
 

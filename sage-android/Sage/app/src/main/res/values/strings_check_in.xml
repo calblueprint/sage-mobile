@@ -31,4 +31,5 @@
     <string name="check_in_request_start_time">Start Time</string>
     <string name="check_in_request_end_time">End Time</string>
     <string name="check_in_request_total_time">Total Time</string>
+    <string name="check_in_request_comment">Comments</string>
 </resources>

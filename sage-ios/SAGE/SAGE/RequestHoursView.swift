@@ -44,20 +44,16 @@ class RequestHoursView: UIView {
         self.scrollView.fillWidth()
         self.scrollView.fillHeight()
         
-        self.dateField.setX(UIConstants.sideMargin)
-        self.dateField.fillWidthWithMargin(UIConstants.sideMargin)
+        self.dateField.fillWidth()
         
-        self.startTimeField.setX(UIConstants.sideMargin)
         self.startTimeField.setY(CGRectGetMaxY(self.dateField.frame))
-        self.startTimeField.fillWidthWithMargin(UIConstants.sideMargin)
+        self.startTimeField.fillWidth()
         
-        self.endTimeField.setX(UIConstants.sideMargin)
         self.endTimeField.setY(CGRectGetMaxY(self.startTimeField.frame))
-        self.endTimeField.fillWidthWithMargin(UIConstants.sideMargin)
+        self.endTimeField.fillWidth()
 
-        self.commentField.setX(UIConstants.sideMargin)
         self.commentField.setY(CGRectGetMaxY(self.endTimeField.frame))
-        self.commentField.fillWidthWithMargin(UIConstants.sideMargin)
+        self.commentField.fillWidth()
         
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.commentField.frame))
     }

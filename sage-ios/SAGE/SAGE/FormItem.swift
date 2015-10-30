@@ -37,11 +37,13 @@ class FormItem: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        self.label.setX(UIConstants.sideMargin)
         self.label.setWidth(self.labelWidth)
         self.label.setHeight(self.labelHeight)
         
+        self.divider.setX(UIConstants.sideMargin)
         self.divider.alignBottomWithMargin(0)
-        self.divider.fillWidth()
+        self.divider.fillWidthWithMargin(UIConstants.sideMargin)
     }
     
     //

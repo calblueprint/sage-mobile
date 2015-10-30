@@ -28,7 +28,7 @@ class FormFieldItem: FormItem {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.textField.setX(CGRectGetMaxX(self.label.frame))
-        self.textField.fillWidth()
+        self.textField.fillWidthWithMargin(UIConstants.sideMargin)
         self.textField.fillHeight()
         
         self.divider.alignBottomWithMargin(0)

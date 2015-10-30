@@ -31,7 +31,7 @@ class FormTextItem: FormItem {
         self.textView.setX(CGRectGetMaxX(self.label.frame))
         self.textView.moveX(-5) //Move left to adjust for padding
         self.textView.moveY(2) // Move down to adjust for padding
-        self.textView.fillWidth()
+        self.textView.fillWidthWithMargin(UIConstants.sideMargin)
         self.textView.fillHeight()
         self.divider.alignBottomWithMargin(0)
     }

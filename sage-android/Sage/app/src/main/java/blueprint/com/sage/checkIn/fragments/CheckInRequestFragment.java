@@ -69,9 +69,15 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
     }
 
     private void initializeViews() {
-        if (hasPreviousRequest()) {
-            
-        }
+        if (!hasPreviousRequest()) { return; }
+
+        SharedPreferences sharedPreferences = getParentActivity().getSharedPreferences();
+        String startString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
+        String endString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
+
+        mStartTime.setText(startString);
+        mEndTime.setText(endString);
+
     }
 
     @OnClick({ R.id.check_in_request_start_field, R.id.check_in_request_end_field})

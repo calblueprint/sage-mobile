@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import blueprint.com.sage.utility.DateUtils;
 import lombok.Data;
 
 /**
@@ -28,22 +29,9 @@ public @Data class CheckIn {
     private School school;
 
     public CheckIn(String startTime, String endTime, User user, School school) {
-        this.start = parseTime(startTime);
-        this.finish = parseTime(endTime);
+        this.start = DateUtils.stringToDate(startTime);
+        this.finish = DateUtils.stringToDate(endTime);
         this.user_id = user.getId();
         this.school_id = school.getId();
-    }
-
-    private Date parseTime(String time) {
-        DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.ENGLISH);
-        Date date = null;
-
-        try {
-            date = format.parse(time);
-        } catch (ParseException e) {
-            Log.e(getClass().toString(), e.toString());
-        }
-
-        return date;
     }
 }

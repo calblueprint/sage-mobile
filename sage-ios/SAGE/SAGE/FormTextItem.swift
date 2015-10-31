@@ -43,4 +43,9 @@ class FormTextItem: FormItem {
         super.changeThemeColor(color)
         self.textView.textColor = color
     }
+    
+    override func disable() {
+        super.disable()
+        self.textView.editable = false
+    }
 }

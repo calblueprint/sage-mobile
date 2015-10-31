@@ -80,6 +80,13 @@ class RequestHoursView: UIView {
     }
     
     //
+    // MARK: - Public methods
+    //
+    func setupWithCheckin(checkin: Checkin) {
+        
+    }
+    
+    //
     // MARK: - Private methods
     //
     private func setupSubviews() {

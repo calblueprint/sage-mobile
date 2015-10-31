@@ -17,7 +17,8 @@ class FormItem: UIView {
     var divider: UIView = UIView()
     var labelHeight: CGFloat = 45.0
     var labelWidth: CGFloat = 100.0
-    
+    var disabled: Bool = false
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -52,5 +53,15 @@ class FormItem: UIView {
     func changeThemeColor(color: UIColor) {
         self.label.textColor = color
         self.divider.backgroundColor = color
+    }
+    
+    func disable() {
+        self.disabled = true
+        self.alpha = 0.30
+    }
+    
+    func enable() {
+        self.disabled = false
+        self.alpha = 1
     }
 }

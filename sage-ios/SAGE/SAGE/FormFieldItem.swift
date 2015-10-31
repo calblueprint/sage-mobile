@@ -41,4 +41,9 @@ class FormFieldItem: FormItem {
         super.changeThemeColor(color)
         self.textField.textColor = color
     }
+    
+    override func disable() {
+        super.disable()
+        self.textField.enabled = false
+    }
 }

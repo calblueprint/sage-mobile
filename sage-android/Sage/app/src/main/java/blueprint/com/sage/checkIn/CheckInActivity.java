@@ -105,21 +105,6 @@ public class CheckInActivity extends AbstractActivity
         return true;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_check_in_map, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_request:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public GoogleApiClient getClient() { return mGoogleApiClient; }
 
     public boolean hasPreviousRequest() {

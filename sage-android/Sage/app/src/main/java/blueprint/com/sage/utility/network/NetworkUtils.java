@@ -34,7 +34,6 @@ public class NetworkUtils {
                 Context.MODE_PRIVATE);
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
-
         String userString = mapper.writeValueAsString(session.getUser());
         String schoolString = mapper.writeValueAsString(session.getSchool());
 

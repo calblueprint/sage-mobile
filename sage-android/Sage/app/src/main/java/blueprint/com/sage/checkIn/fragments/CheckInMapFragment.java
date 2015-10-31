@@ -1,10 +1,8 @@
 package blueprint.com.sage.checkIn.fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -26,13 +24,9 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtil;
@@ -59,7 +53,6 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     @Bind(R.id.check_in_map) MapView mMapView;
 
     private GoogleMap mMap;
-    private SharedPreferences mPreferences;
     private NetworkManager mManager;
 
     public static CheckInMapFragment newInstance() { return new CheckInMapFragment(); }
@@ -69,8 +62,6 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         super.onCreate(savedInstanceState);
 
         MapsInitializer.initialize(getActivity());
-        mPreferences = getActivity().getSharedPreferences(getString(R.string.preferences),
-                                                          Context.MODE_PRIVATE);
         mManager = NetworkManager.getInstance(getActivity());
     }
 
@@ -276,18 +267,21 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
     private void startCheckIn() {
-        mPreferences.edit().putString(getString(R.string.check_in_start_time),
-                                      getFormattedTimeNow()).apply();
+        getParentActivity().getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
+                                      DateUtils.getFormattedTimeNow()).commit();
         toggleButton();
     }
 
 
     private void stopCheckIn() {
-        String startTime = mPreferences.getString(getString(R.string.check_in_start_time), "");
+        String startTime = getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "");
         if (startTime.isEmpty()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
         toggleButton();
+        getParentActivity().getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
+                DateUtils.getFormattedTimeNow()).commit();
+
         FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
 
 //        User user = getParentActivity().getUser();
@@ -310,17 +304,8 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 //                });
 //
 //        mManager.getRequestQueue().add(request);
-
-        mPreferences.edit()
-                    .remove(getString(R.string.check_in_start_time))
-                    .remove(getString(R.string.check_in_end_time))
-                    .apply();
     }
 
-    private String getFormattedTimeNow() {
-        DateFormat datetime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
-        return datetime.format(new Date());
-    }
 
     /**
      * Toggles buttons.
@@ -345,6 +330,6 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
     private boolean hasStartedCheckIn() {
-        return !mPreferences.getString(getString(R.string.check_in_start_time), "").isEmpty();
+        return !getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
     }
 }

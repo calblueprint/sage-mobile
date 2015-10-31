@@ -1,17 +1,31 @@
 package blueprint.com.sage.checkIn.fragments;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.android.volley.Response;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.Calendar;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.APIError;
@@ -19,6 +33,7 @@ import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
+import blueprint.com.sage.utility.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,10 +44,14 @@ import butterknife.OnClick;
  */
 public class CheckInRequestFragment extends CheckInAbstractFragment {
 
+    @Bind(R.id.check_in_request_date_field) TextView mDate;
     @Bind(R.id.check_in_request_start_field) TextView mStartTime;
     @Bind(R.id.check_in_request_end_field) TextView mEndTime;
     @Bind(R.id.check_in_request_total_field) TextView mTotalTime;
     @Bind(R.id.check_in_request_comments_field) EditText mComments;
+
+    private static String DATE_PICKER = "datePicker";
+    private static String TIME_PICKER = "timePicker";
 
     public static CheckInRequestFragment newInstance() { return new CheckInRequestFragment(); }
 
@@ -69,29 +88,38 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
     }
 
     private void initializeViews() {
-        if (!hasPreviousRequest()) { return; }
+        if (!getParentActivity().hasPreviousRequest()) { return; }
 
         SharedPreferences sharedPreferences = getParentActivity().getSharedPreferences();
         String startString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
         String endString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
 
-        mStartTime.setText(startString);
-        mEndTime.setText(endString);
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
+        DateTime startDate = formatter.parseDateTime(startString);
+        DateTime endDate = formatter.parseDateTime(endString);
 
+        mDate.setText(DateUtils.getFormattedDate(startDate));
+        mStartTime.setText(DateUtils.getFormattedTime(startDate));
+        mEndTime.setText(DateUtils.getFormattedTime(endDate));
+        mTotalTime.setText(DateUtils.timeDiff(startDate, endDate));
     }
 
     @OnClick({ R.id.check_in_request_start_field, R.id.check_in_request_end_field})
-    private void onStartFieldClick(TextView textView) {
-        if (hasPreviousRequest()) return;
+    public void onTimeFieldClick(TextView textView) {
+        if (getParentActivity().hasPreviousRequest()) return;
+
+        TimePickerFragment picker = TimePickerFragment.newInstance(textView);
+        picker.show(getFragmentManager(), TIME_PICKER);
     }
 
+    @OnClick(R.id.check_in_request_date_field)
+    public void onDateFieldClick(TextView textView) {
+        if (getParentActivity().hasPreviousRequest()) return;
 
-
-    private boolean hasPreviousRequest() {
-        SharedPreferences preferences = getParentActivity().getSharedPreferences();
-        return preferences.contains(getString(R.string.check_in_start_time)) &&
-               preferences.contains(getString(R.string.check_in_end_time));
+        DatePickerFragment picker = new DatePickerFragment();
+        picker.show(getFragmentManager(), DATE_PICKER);
     }
+
 
     private void validateAndSubmitRequest() {
         String start = mStartTime.getText().toString();
@@ -100,8 +128,6 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         School school = getParentActivity().getSchool();
 
         boolean isValid = true;
-
-
 
         if (!isValid)
             return;
@@ -115,7 +141,10 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
                 new Response.Listener<CheckIn>() {
                     @Override
                     public void onResponse(CheckIn checkIn) {
-
+                        getParentActivity().getSharedPreferences().edit()
+                                .remove(getString(R.string.check_in_start_time))
+                                .remove(getString(R.string.check_in_end_time))
+                                .apply();
                     }
                 },
                 new Response.Listener<APIError>() {
@@ -126,5 +155,57 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
                 });
 
         getParentActivity().getNetworkManager().getRequestQueue().add(request);
+    }
+
+    public static class TimePickerFragment extends DialogFragment
+            implements TimePickerDialog.OnTimeSetListener {
+
+        private TextView mTextView;
+
+        public static TimePickerFragment newInstance(TextView textView) {
+            TimePickerFragment fragment = new TimePickerFragment();
+            fragment.setTextView(textView);
+            return fragment;
+        }
+
+        public void setTextView(TextView textView) { mTextView = textView; }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            // Create a new instance of TimePickerDialog and return it
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    DateFormat.is24HourFormat(getActivity()));
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            // Do something with the time chosen by the user
+        }
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            getTargetFragment();
+        }
     }
 }

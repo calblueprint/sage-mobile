@@ -1,5 +1,6 @@
 package blueprint.com.sage.checkIn;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -120,4 +121,10 @@ public class CheckInActivity extends AbstractActivity
     }
 
     public GoogleApiClient getClient() { return mGoogleApiClient; }
+
+    public boolean hasPreviousRequest() {
+        SharedPreferences preferences = getSharedPreferences();
+        return !preferences.getString(getString(R.string.check_in_start_time), "").isEmpty() &&
+                !preferences.getString(getString(R.string.check_in_end_time), "").isEmpty();
+    }
 }

@@ -28,6 +28,7 @@
     <string name="check_in_location_off_return">Cancel</string>
 
     <!-- Check In Request Form -->
+    <string name="check_in_request_date">Date</string>
     <string name="check_in_request_start_time">Start Time</string>
     <string name="check_in_request_end_time">End Time</string>
     <string name="check_in_request_total_time">Total Time</string>

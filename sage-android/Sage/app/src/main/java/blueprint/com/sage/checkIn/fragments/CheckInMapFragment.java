@@ -12,6 +12,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -60,7 +63,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         MapsInitializer.initialize(getActivity());
         mManager = NetworkManager.getInstance(getActivity());
     }
@@ -84,6 +87,22 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     public void onPause() {
         super.onPause();
         mMapView.onPause();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_check_in_map, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_request:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

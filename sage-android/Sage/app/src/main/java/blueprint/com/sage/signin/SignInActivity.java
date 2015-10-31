@@ -1,14 +1,13 @@
 package blueprint.com.sage.signIn;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtil;
 import io.fabric.sdk.android.Fabric;
@@ -30,9 +29,11 @@ public class SignInActivity extends FragmentActivity {
         mPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
 
         if (NetworkUtils.isVerifiedUser(this, mPreferences)) {
-            Intent intent = new Intent(this, CheckInActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            try {
+                NetworkUtils.loginUser(this);
+            } catch(Exception e) {
+                Log.e(getClass().toString(), e.toString());
+            }
         } else {
             FragUtil.replace(R.id.sign_in_container, SignInFragment.newInstance(), this);
         }

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/heather"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout">
+        style="@style/CheckInRequestRelativeLayout"
+        android:id="@+id/check_in_request_date_layout">
 
         <ImageView
             style="@style/CheckInRequestIcon"
@@ -24,13 +28,16 @@
 
             <TextView
                 style="@style/CheckInRequestText"
-                android:id="@+id/check_in_request_date_field"/>
+                android:id="@+id/check_in_request_date_field"
+                android:hint="@string/check_in_default_date"/>
 
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout">
+        style="@style/CheckInRequestRelativeLayout"
+        android:id="@+id/check_in_request_start_layout"
+        android:layout_below="@id/check_in_request_date_layout">
 
         <ImageView
             style="@style/CheckInRequestIcon"
@@ -49,13 +56,16 @@
 
             <TextView
                 style="@style/CheckInRequestText"
-                android:id="@+id/check_in_request_start_field"/>
+                android:id="@+id/check_in_request_start_field"
+                android:hint="@string/check_in_default_time"/>
 
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout">
+        style="@style/CheckInRequestRelativeLayout"
+        android:id="@+id/check_in_request_end_layout"
+        android:layout_below="@id/check_in_request_start_layout">
 
         <ImageView
             style="@style/CheckInRequestIcon"
@@ -74,40 +84,17 @@
 
             <TextView
                 style="@style/CheckInRequestText"
-                android:id="@+id/check_in_request_end_field"/>
+                android:id="@+id/check_in_request_end_field"
+                android:hint="@string/check_in_default_date"/>
 
         </LinearLayout>
     </RelativeLayout>
 
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout">
-
-        <ImageView
-            style="@style/CheckInRequestIcon"
-            android:id="@+id/check_in_request_total_icon"
-            android:src="@drawable/ic_schedule_black" />
-
-        <LinearLayout
-            style="@style/CheckInRequestLinearLayout"
-            android:layout_toRightOf="@id/check_in_request_total_icon"
-            android:layout_toEndOf="@id/check_in_request_total_icon" >
-
-            <TextView
-                style="@style/CheckInRequestLabel"
-                android:id="@+id/check_in_request_total_text"
-                android:text="@string/check_in_request_total_time"/>
-
-            <TextView
-                style="@style/CheckInRequestText"
-                android:id="@+id/check_in_request_total_field"/>
-
-        </LinearLayout>
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout">
+        style="@style/CheckInRequestRelativeLayout"
+        android:id="@+id/check_in_request_comment_layout"
+        android:layout_below="@id/check_in_request_end_layout">
 
         <ImageView
             style="@style/CheckInRequestIcon"
@@ -126,8 +113,54 @@
 
             <EditText
                 style="@style/CheckInRequestText"
-                android:id="@+id/check_in_request_comments_field"/>
+                android:id="@+id/check_in_request_comments_field"
+                android:hint="@string/optional"/>
 
         </LinearLayout>
     </RelativeLayout>
-</LinearLayout>
+
+    <RelativeLayout
+        style="@style/CheckInRequestRelativeLayout"
+        android:id="@+id/check_in_request_total_layout"
+        android:padding="0dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/check_in_request_total_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:text="@string/check_in_request_total_time"/>
+
+        <TextView
+            android:id="@+id/check_in_request_total_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/check_in_request_total_text"
+            android:layout_toEndOf="@+id/check_in_request_total_text"
+            android:text="@string/check_in_default_total"/>
+
+        <Button
+            android:id="@+id/check_in_request_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check_in_cancel_request"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="12sp"
+            android:textColor="@color/red500"
+            android:layout_marginRight="8dp"
+            android:background="@android:color/transparent"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_above="@id/check_in_request_total_layout"/>
+</RelativeLayout>

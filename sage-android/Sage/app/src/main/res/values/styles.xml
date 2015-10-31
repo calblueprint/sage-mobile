@@ -4,6 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActionBar">false</item>
         <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/amber500</item>
+        <item name="colorPrimaryDark">@color/amber700</item>
     </style>
 
     <!-- ToolBar -->

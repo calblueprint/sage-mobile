@@ -13,6 +13,7 @@
 
     <!-- General Errors -->
     <string name="cannot_be_blank">%1$s cannot be blank.</string>
+    <string name="optional">Optional</string>
 
     <!-- Log in -->
     <string name="shared_preferences">SAGE_ANDROID</string>

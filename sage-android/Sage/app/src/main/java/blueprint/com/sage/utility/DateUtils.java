@@ -48,7 +48,7 @@ public class DateUtils {
         int hours = period.getHours() + 24 * days;
         int minutes = period.getMinutes();
 
-        return String.format("%d hours, %d minutes", hours, minutes);
+        return String.format("%d hrs, %d min", hours, minutes);
     }
 
     public static String getFormattedDate(DateTime dateTime) {

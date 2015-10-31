@@ -83,7 +83,19 @@ class RequestHoursView: UIView {
     // MARK: - Public methods
     //
     func setupWithCheckin(checkin: Checkin) {
-        
+        self.endTimeField.textField.text = String(checkin.startTime)
+    }
+    
+    func exportToCheckin(verified: Bool) -> Checkin {
+        let checkin: Checkin = Checkin(
+            user: User.currentUser,
+            startTime: nil,
+            endTime: nil,
+            school: User.currentUser?.school,
+            comment: self.commentField.textView.text,
+            verified: true
+        )
+        return checkin
     }
     
     //

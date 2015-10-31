@@ -13,6 +13,7 @@ class RequestHoursViewController: UIViewController {
     var requestHoursView = RequestHoursView()
     var inSession: Bool = false
     var startTime: NSTimeInterval = 0.0
+    var verified: Bool = false
     
     //
     // MARK: - ViewController Lifecycle
@@ -36,8 +37,14 @@ class RequestHoursViewController: UIViewController {
     }
     
     @objc private func completeForm() {
+        self.requestHoursView.exportToCheckin(self.verified)
         self.dismiss()
     }
     
-    
+    //
+    // MARK: - Public Methods
+    //
+    func setupWithCheckin(checkin: Checkin) {
+        self.requestHoursView.setupWithCheckin(checkin)
+    }
 }

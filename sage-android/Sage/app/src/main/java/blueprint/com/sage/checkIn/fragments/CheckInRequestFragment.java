@@ -97,7 +97,7 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
 
         SharedPreferences sharedPreferences = getParentActivity().getSharedPreferences();
         String startString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
-        String endString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
+        String endString = sharedPreferences.getString(getString(R.string.check_in_end_time), "");
 
         DateTime startDate = DateUtils.stringToDate(startString);
         DateTime endDate = DateUtils.stringToDate(endString);

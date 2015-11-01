@@ -297,9 +297,10 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         if (startTime.isEmpty()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
+
         toggleButton();
         getParentActivity().getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
-                DateUtils.getFormattedTimeNow()).commit();
+                DateUtils.getFormattedTimeNow()).apply();
 
         FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
 

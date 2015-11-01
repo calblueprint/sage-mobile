@@ -51,7 +51,7 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
     @Bind(R.id.check_in_request_start_field) TextView mStartTime;
     @Bind(R.id.check_in_request_end_field) TextView mEndTime;
     @Bind(R.id.check_in_request_total_field) TextView mTotalTime;
-    @Bind(R.id.check_in_request_comments_field) EditText mComments;
+    @Bind(R.id.check_in_request_comments_field) EditText mComment;
     @Bind(R.id.check_in_request_cancel_button) Button mDeleteRequest;
     @Bind(R.id.check_in_request_layout) RelativeLayout mLayout;
 
@@ -150,6 +150,7 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         String start = mStartTime.getText().toString();
         String end = mEndTime.getText().toString();
         String date = mDate.getText().toString();
+        String comment = mComment.getText().toString();
 
         User user = getParentActivity().getUser();
         School school = getParentActivity().getSchool();
@@ -169,7 +170,7 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
             Snackbar.make(mLayout, R.string.check_in_request_blank, Snackbar.LENGTH_SHORT).show();
         }
 
-        CheckIn checkIn = new CheckIn(startDate.toDate(), endDate.toDate(), user, school);
+        CheckIn checkIn = new CheckIn(startDate.toDate(), endDate.toDate(), user, school, comment);
         createCheckInRequest(checkIn);
     }
 

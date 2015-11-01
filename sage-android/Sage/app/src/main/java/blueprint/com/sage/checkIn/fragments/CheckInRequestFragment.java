@@ -1,11 +1,14 @@
 package blueprint.com.sage.checkIn.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -14,16 +17,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.android.volley.Response;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Calendar;
 
@@ -49,6 +52,8 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
     @Bind(R.id.check_in_request_end_field) TextView mEndTime;
     @Bind(R.id.check_in_request_total_field) TextView mTotalTime;
     @Bind(R.id.check_in_request_comments_field) EditText mComments;
+    @Bind(R.id.check_in_request_cancel_button) Button mDeleteRequest;
+    @Bind(R.id.check_in_request_layout) RelativeLayout mLayout;
 
     private static String DATE_PICKER = "datePicker";
     private static String TIME_PICKER = "timePicker";
@@ -94,9 +99,8 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         String startString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
         String endString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
-        DateTime startDate = formatter.parseDateTime(startString);
-        DateTime endDate = formatter.parseDateTime(endString);
+        DateTime startDate = DateUtils.stringToDate(startString);
+        DateTime endDate = DateUtils.stringToDate(endString);
 
         mDate.setText(DateUtils.getFormattedDate(startDate));
         mStartTime.setText(DateUtils.getFormattedTime(startDate));
@@ -120,20 +124,69 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         picker.show(getFragmentManager(), DATE_PICKER);
     }
 
+    @OnClick(R.id.check_in_request_cancel_button)
+    public void onDeleteClick(Button button) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.check_in_request_delete_title)
+                .setMessage(R.string.check_in_request_delete_body)
+                .setPositiveButton(R.string.delete,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                resetCheckIn();
+                            }
+                        })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+        builder.show();
+    }
 
     private void validateAndSubmitRequest() {
         String start = mStartTime.getText().toString();
         String end = mEndTime.getText().toString();
+        String date = mDate.getText().toString();
+
         User user = getParentActivity().getUser();
         School school = getParentActivity().getSchool();
 
-        boolean isValid = true;
-
-        if (!isValid)
+        if (areFieldsEmpty(start, end, date)) {
+            Snackbar.make(mLayout, R.string.check_in_request_blank, Snackbar.LENGTH_SHORT).show();
             return;
+        }
 
-        CheckIn checkIn = new CheckIn(start, end, user, school);
+        String startDateString = String.format("%s %s", date, start);
+        String endDateString = String.format("%s %s", date, end);
+
+        DateTime startDate = DateUtils.stringToDate(startDateString);
+        DateTime endDate = DateUtils.stringToDate(endDateString);
+
+        if (!startDate.isBefore(endDate)) {
+            Snackbar.make(mLayout, R.string.check_in_request_blank, Snackbar.LENGTH_SHORT).show();
+        }
+
+        CheckIn checkIn = new CheckIn(startDate.toDate(), endDate.toDate(), user, school);
         createCheckInRequest(checkIn);
+    }
+
+    private boolean areFieldsEmpty(String... params) {
+        for (String param : params) {
+            if (param.isEmpty()) return true;
+        }
+        return false;
+    }
+
+    private void resetCheckIn() {
+        getParentActivity().getSharedPreferences()
+                           .edit()
+                           .remove(getString(R.string.check_in_start_time))
+                           .remove(getString(R.string.check_in_end_time))
+                           .apply();
+        getFragmentManager().popBackStack();
     }
 
     private void createCheckInRequest(CheckIn checkIn) {
@@ -141,10 +194,7 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
                 new Response.Listener<CheckIn>() {
                     @Override
                     public void onResponse(CheckIn checkIn) {
-                        getParentActivity().getSharedPreferences().edit()
-                                .remove(getString(R.string.check_in_start_time))
-                                .remove(getString(R.string.check_in_end_time))
-                                .apply();
+                        resetCheckIn();
                     }
                 },
                 new Response.Listener<APIError>() {
@@ -156,6 +206,10 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
 
         getParentActivity().getNetworkManager().getRequestQueue().add(request);
     }
+
+    /**
+     * Pickers for both date and time
+     */
 
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {

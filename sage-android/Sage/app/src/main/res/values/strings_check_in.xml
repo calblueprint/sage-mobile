@@ -36,6 +36,12 @@
     <string name="check_in_default_total">0 hrs, 0 min</string>
     <string name="check_in_default_date">Tap to pick date</string>
     <string name="check_in_default_time">Tap to pick time</string>
-    <string name="check_in_cancel_request">Cancel Request</string>
+    <string name="check_in_cancel_request">Delete Request</string>
 
+    <!-- Check In Request Errors -->
+    <string name="check_in_request_blank">Date and times cannot be blank!</string>
+    <string name="check_in_request_invalid_dates">Invalid start and end times</string>
+
+    <string name="check_in_request_delete_title">Delete Request?</string>
+    <string name="check_in_request_delete_body">Are you sure you want to delete your request? This will reset your session.</string>
 </resources>

@@ -2,7 +2,6 @@ package blueprint.com.sage.models;
 
 import java.util.Date;
 
-import blueprint.com.sage.utility.DateUtils;
 import lombok.Data;
 
 /**
@@ -22,9 +21,9 @@ public @Data class CheckIn {
     private User user;
     private School school;
 
-    public CheckIn(String startTime, String endTime, User user, School school) {
-        this.start = DateUtils.stringToDate(startTime);
-        this.finish = DateUtils.stringToDate(endTime);
+    public CheckIn(Date start, Date end, User user, School school) {
+        this.start = start;
+        this.finish = end;
         this.user_id = user.getId();
         this.school_id = school.getId();
     }

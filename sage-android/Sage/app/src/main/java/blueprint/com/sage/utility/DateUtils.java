@@ -1,17 +1,9 @@
 package blueprint.com.sage.utility;
 
-import android.util.Log;
-
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by charlesx on 10/30/15.
@@ -19,26 +11,18 @@ import java.util.Locale;
  */
 public class DateUtils {
 
-    public static String DATE_FORMAT = "yyyy/MM/dd HH:mm a";
+    public static String DATE_FORMAT = "MMM dd, yyyy HH:mm a";
     public static String TIME_FORMAT = "HH:mm a";
     public static String DAY_FORMAT = "MMM dd, yyyy";
 
-    public static Date stringToDate(String time) {
-        DateFormat format = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
-        Date date = null;
-
-        try {
-            date = format.parse(time);
-        } catch (ParseException e) {
-            Log.e("ParseException", e.toString());
-        }
-
-        return date;
+    public static DateTime stringToDate(String time) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
+        return formatter.parseDateTime(time);
     }
 
-    public static String dateToString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
-        return dateFormat.format(date);
+    public static String dateToString(DateTime date) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
+        return formatter.print(date);
     }
 
     public static String timeDiff(DateTime start, DateTime end) {

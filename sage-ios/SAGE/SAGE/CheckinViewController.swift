@@ -71,19 +71,20 @@ class CheckinViewController: UIViewController {
                 if true {
                     let alertController = UIAlertController(
                         title: "Start mentoring session?",
-                        message: "Do you want to start your mentoring session?",
-                        preferredStyle: .Alert)
-                    alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                        message: nil,
+                        preferredStyle: .ActionSheet)
+                    alertController.addAction(UIAlertAction(title: "Start Session", style: .Default, handler: { (action: UIAlertAction) -> Void in
                         //save start time locally and start timer
                         self.presentSessionMode(UIConstants.normalAnimationTime)
                         self.inSession = true
                         self.startTime = NSDate.timeIntervalSinceReferenceDate()
-                        KeychainWrapper.setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
                         self.updateSessionTime()
+                        KeychainWrapper.setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
                     }))
-                    alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: {(action: UIAlertAction) -> Void in
+                    alertController.addAction(UIAlertAction(title: "Request Hours", style: .Default, handler: { (action: UIAlertAction) -> Void in
                         self.presentRequestHoursView()
                     }))
+                    alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
                 } else {
                     let alertController = UIAlertController(
@@ -105,10 +106,13 @@ class CheckinViewController: UIViewController {
         //Verify location
         if true {
             let alertController = UIAlertController(
-                title: "End mentoring session?",
-                message: "Do you want to end your mentoring session?",
-                preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                title: "Finish mentoring session?",
+                message: nil,
+                preferredStyle: .ActionSheet)
+            alertController.addAction(UIAlertAction(title: "Finish Session", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                self.presentRequestHoursView()
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel Session", style: .Destructive, handler: { (action: UIAlertAction) -> Void in
                 // send request to make check in and present to default
                 // when finished. if failure, store locally and
                 // try again until success
@@ -117,7 +121,7 @@ class CheckinViewController: UIViewController {
                 KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
                 //make a request
             }))
-            alertController.addAction(UIAlertAction(title: "No", style: .Default, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }

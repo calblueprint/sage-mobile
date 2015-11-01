@@ -83,7 +83,18 @@ class RequestHoursView: UIView {
     // MARK: - Public methods
     //
     func setupWithCheckin(checkin: Checkin) {
-        self.endTimeField.textField.text = String(checkin.startTime)
+        self.dateFormatter.dateStyle = .MediumStyle
+        self.dateFormatter.timeStyle = .NoStyle
+        self.dateField.textField.text = self.dateFormatter.stringFromDate(checkin.startTime!)
+        
+        self.dateFormatter.dateStyle = .NoStyle
+        self.dateFormatter.timeStyle = .ShortStyle
+        self.startTimeField.textField.text = self.dateFormatter.stringFromDate(checkin.startTime!)
+        self.endTimeField.textField.text = self.dateFormatter.stringFromDate(checkin.endTime!)
+        
+        self.dateField.disable()
+        self.startTimeField.disable()
+        self.endTimeField.disable()
     }
     
     func exportToCheckin(verified: Bool) -> Checkin {

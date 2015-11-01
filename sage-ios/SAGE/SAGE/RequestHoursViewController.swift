@@ -24,7 +24,7 @@ class RequestHoursViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = inSession ? "Session Options" : "Request Hours"
+        self.setupView()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismiss")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
     }
@@ -42,9 +42,17 @@ class RequestHoursViewController: UIViewController {
     }
     
     //
-    // MARK: - Public Methods
+    // MARK: - Private Methods
     //
-    func setupWithCheckin(checkin: Checkin) {
-        self.requestHoursView.setupWithCheckin(checkin)
+    private func setupView() {
+        if inSession {
+            self.title = "Session Options"
+            let checkin: Checkin = Checkin()
+            checkin.startTime = NSDate(timeIntervalSinceReferenceDate: self.startTime)
+            checkin.endTime = NSDate()
+            self.requestHoursView.setupWithCheckin(checkin)
+        } else {
+            self.title = "Request Hours"
+        }
     }
 }

@@ -55,8 +55,10 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
     @Bind(R.id.check_in_request_cancel_button) Button mDeleteRequest;
     @Bind(R.id.check_in_request_layout) RelativeLayout mLayout;
 
-    private static String DATE_PICKER = "datePicker";
-    private static String TIME_PICKER = "timePicker";
+    private static final String DATE_PICKER = "datePicker";
+    private static final String TIME_PICKER = "timePicker";
+
+    private static final int REQUEST_CODE = 200;
 
     public static CheckInRequestFragment newInstance() { return new CheckInRequestFragment(); }
 
@@ -113,16 +115,33 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         if (getParentActivity().hasPreviousRequest()) return;
 
         TimePickerFragment picker = TimePickerFragment.newInstance(textView);
+        picker.setTargetFragment(this, REQUEST_CODE);
         picker.show(getFragmentManager(), TIME_PICKER);
+    }
+
+    public void setTime(TextView textView, int hourOfDay, int minute) {
+        String timeString = String.format("%d:%d", hourOfDay, minute);
+        DateTime dateTime = DateUtils.getDTTime(timeString);
+
+        textView.setText(DateUtils.getFormattedTime(dateTime));
     }
 
     @OnClick(R.id.check_in_request_date_field)
     public void onDateFieldClick(TextView textView) {
         if (getParentActivity().hasPreviousRequest()) return;
 
-        DatePickerFragment picker = new DatePickerFragment();
+        DatePickerFragment picker = DatePickerFragment.newInstance(textView);
+        picker.setTargetFragment(this, REQUEST_CODE);
         picker.show(getFragmentManager(), DATE_PICKER);
     }
+
+    public void setDate(TextView textView, int year, int month, int day) {
+        String timeString = String.format("%d/%d/%d", year, month, day);
+        DateTime dateTime = DateUtils.getDTDate(timeString);
+
+        textView.setText(DateUtils.getFormattedDate(dateTime));
+    }
+
 
     @OnClick(R.id.check_in_request_cancel_button)
     public void onDeleteClick(Button button) {
@@ -239,12 +258,25 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            // Do something with the time chosen by the user
+            if (getTargetFragment() instanceof CheckInRequestFragment) {
+                CheckInRequestFragment fragment = (CheckInRequestFragment) getTargetFragment();
+                fragment.setTime(mTextView, hourOfDay, minute);
+            }
         }
     }
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
+
+        private TextView mTextView;
+
+        public static DatePickerFragment newInstance(TextView textView) {
+            DatePickerFragment picker = new DatePickerFragment();
+            picker.setTextView(textView);
+            return picker;
+        }
+
+        public void setTextView(TextView textView) { mTextView = textView; }
 
         @NonNull
         @Override
@@ -260,7 +292,10 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            getTargetFragment();
+            if (getTargetFragment() instanceof CheckInRequestFragment) {
+                CheckInRequestFragment fragment = (CheckInRequestFragment) getTargetFragment();
+                fragment.setDate(mTextView, year, month + 1, day);
+            }
         }
     }
 }

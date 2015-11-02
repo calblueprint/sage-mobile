@@ -100,6 +100,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_request:
+                FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -303,27 +304,6 @@ public class CheckInMapFragment extends CheckInAbstractFragment
                 DateUtils.getFormattedTimeNow()).apply();
 
         FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
-
-//        User user = getParentActivity().getUser();
-//        School school = getParentActivity().getSchool();
-//        String endTime = getFormattedTimeNow();
-//
-//        CheckIn checkin  = new CheckIn(startTime, endTime, user, school);
-//
-//        CreateCheckInRequest request = new CreateCheckInRequest(getParentActivity(), checkin,
-//                new Response.Listener<CheckIn>() {
-//                    @Override
-//                    public void onResponse(CheckIn checkIn) {
-//                        toggleButton(true);
-//                    }
-//                },
-//                new Response.Listener() {
-//                    @Override
-//                    public void onResponse(Object o) {
-//                    }
-//                });
-//
-//        mManager.getRequestQueue().add(request);
     }
 
 

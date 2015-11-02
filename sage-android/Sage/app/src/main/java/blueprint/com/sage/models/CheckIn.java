@@ -25,6 +25,8 @@ public @Data class CheckIn {
     private User user;
     private School school;
 
+    public CheckIn() {}
+
     public CheckIn(Date start, Date end, User user, School school, String comment) {
         this.start = start;
         this.finish = end;

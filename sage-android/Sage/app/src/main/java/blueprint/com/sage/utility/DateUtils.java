@@ -15,6 +15,9 @@ public class DateUtils {
     public static String TIME_FORMAT = "HH:mm a";
     public static String DAY_FORMAT = "MMM dd, yyyy";
 
+    public static String HOUR_FORMAT = "HH:mm";
+    public static String YEAR_FORMAT = "yyyy/MM/dd";
+
     public static DateTime stringToDate(String time) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
         return formatter.parseDateTime(time);
@@ -33,6 +36,16 @@ public class DateUtils {
         int minutes = period.getMinutes();
 
         return String.format("%d hrs, %d min", hours, minutes);
+    }
+
+    public static DateTime getDTTime(String dateTimeString) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(HOUR_FORMAT);
+        return formatter.parseDateTime(dateTimeString);
+    }
+
+    public static DateTime getDTDate(String dateTimeString) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(YEAR_FORMAT);
+        return formatter.parseDateTime(dateTimeString);
     }
 
     public static String getFormattedDate(DateTime dateTime) {

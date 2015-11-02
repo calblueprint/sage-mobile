@@ -45,6 +45,8 @@ public @Data class User {
     public final static String ONE_UNIT = "one_unit";
     public final static String TWO_UNITS = "two_units";
 
+    public User() {}
+
     @JsonIgnore
     public void setTypePosition(int type) {
         switch (type) {

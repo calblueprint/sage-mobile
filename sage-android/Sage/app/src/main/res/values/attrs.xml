@@ -9,8 +9,8 @@
     </declare-styleable>
     
     <declare-styleable name="FloatingTextView">
-        <attr name="text_color" format="color" />
-        <attr name="text" format="string" />
-        <attr name="text_size" format="dimension" />
+        <attr name="android:textColor" />
+        <attr name="android:text" />
+        <attr name="android:textSize" />
     </declare-styleable>
 </resources>

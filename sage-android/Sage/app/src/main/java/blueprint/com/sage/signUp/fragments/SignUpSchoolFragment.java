@@ -31,6 +31,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBarColor(R.color.yellow500);
     }
 
     @Override

@@ -20,6 +20,7 @@
         android:layout_margin="16dp"
         android:text="@string/check_in_default_start_time"
         android:textSize="16sp"
+        android:visibility="gone"
         app:elevation="10dp"
         app:backgroundTint="@color/white"
         />

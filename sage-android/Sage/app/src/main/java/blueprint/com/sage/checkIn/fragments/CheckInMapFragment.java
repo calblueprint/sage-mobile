@@ -7,11 +7,11 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,8 +28,13 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
+
 import blueprint.com.sage.R;
+import blueprint.com.sage.checkIn.CheckInTimer;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -50,18 +55,19 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     private final static int DISTANCE = 100000;
     private final static float DEFAULT_LONG = -122.26f;
     private final static float DEFAULT_LAT = 37.87f;
+    private final static int TIMER_INTERVAL = 1000;
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
     @Bind(R.id.check_in_check_fab) FloatingActionButton mCheckButton;
     @Bind(R.id.check_in_location_fab) FloatingActionButton mLocationButton;
     @Bind(R.id.check_in_map) MapView mMapView;
+    @Bind(R.id.check_in_map_timer) FloatingTextView mTimerText;
 
     private GoogleMap mMap;
     private NetworkManager mManager;
 
-    // For the ti
-    private Handler mHandler;
-
+    private Runnable mRunnableTimer;
+    private CheckInTimer mTimer;
 
     public static CheckInMapFragment newInstance() { return new CheckInMapFragment(); }
 
@@ -71,6 +77,14 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         setHasOptionsMenu(true);
         MapsInitializer.initialize(getActivity());
         mManager = NetworkManager.getInstance(getActivity());
+        mRunnableTimer = new Runnable() {
+            @Override
+            public void run() {
+                updateTimer();
+            }
+        };
+
+        mTimer = new CheckInTimer(getParentActivity(), TIMER_INTERVAL, mRunnableTimer);
     }
 
     @Override
@@ -86,12 +100,17 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        if (hasStartedCheckIn())
+            mTimer.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
+
+        if (hasStartedCheckIn())
+            mTimer.stop();
     }
 
     @Override
@@ -140,7 +159,25 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
 
-        toggleButton();
+        toggleButtons();
+        toggleTimer(hasStartedCheckIn());
+    }
+
+
+    /**
+     * Super hacky, but whateves
+     */
+    private void updateTimer() {
+        int secondsPassed = getStartTime();
+        Log.e("asdf", "" + secondsPassed);
+        int hours = secondsPassed / 3600;
+        int minutes = (secondsPassed % 3600) / 60;
+
+        String hourString = hours < 10 ? "0" + hours : "" + hours;
+        String minutesString = minutes < 10 ? "0" + minutes : "" + minutes;
+
+        String hourMinutes = String.format("%s:%s", hourString, minutesString);
+        mTimerText.setText(hourMinutes);
     }
 
     @OnClick(R.id.check_in_location_fab)
@@ -293,7 +330,8 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     private void startCheckIn() {
         getParentActivity().getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
                                       DateUtils.getFormattedTimeNow()).commit();
-        toggleButton();
+        toggleButtons();
+        toggleTimer(true);
     }
 
 
@@ -302,9 +340,11 @@ public class CheckInMapFragment extends CheckInAbstractFragment
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
 
-        toggleButton();
         getParentActivity().getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
-                DateUtils.getFormattedTimeNow()).apply();
+                DateUtils.getFormattedTimeNow()).commit();
+
+        toggleButtons();
+        toggleTimer(false);
 
         FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
     }
@@ -312,11 +352,11 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
     /**
      * Toggles buttons.
-     * If showCheckIn is true, then we show the start icon.
-     * Else, we show the stop icon.
+     * If showCheckIn is true, then we show the start icon. And hide the timer.
+     * Else, we show the stop icon. And show the timer.
      */
     @SuppressWarnings("deprecation")
-    private void toggleButton() {
+    private void toggleButtons() {
 
         int icon = hasStartedCheckIn() ? R.drawable.ic_clear_white : R.drawable.ic_done_white;
         int color = hasStartedCheckIn() ? R.color.red500 : R.color.green500;
@@ -332,14 +372,27 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         mCheckButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(color)));
     }
 
+    private void toggleTimer(boolean shouldShow) {
+        if (shouldShow) {
+            mTimerText.setVisibility(View.VISIBLE);
+            mTimer.start();
+        } else {
+            mTimerText.setVisibility(View.GONE);
+            mTimer.stop();
+        }
+    }
+
     private boolean hasStartedCheckIn() {
         return !getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
     }
 
-//    private long getStartTime() {
-//        if (!hasStartedCheckIn())
-//            return 0;
-//
-//        return DateUtils.timeDiff()
-//    }
+    private int getStartTime() {
+        if (!hasStartedCheckIn())
+            return 0;
+
+        String startString = getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "");
+        DateTime start = DateUtils.stringToDate(startString);
+        DateTime end = DateTime.now();
+        return Seconds.secondsBetween(start, end).getSeconds();
+    }
 }

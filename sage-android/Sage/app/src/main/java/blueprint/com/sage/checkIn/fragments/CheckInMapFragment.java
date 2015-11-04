@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -57,6 +58,10 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
     private GoogleMap mMap;
     private NetworkManager mManager;
+
+    // For the ti
+    private Handler mHandler;
+
 
     public static CheckInMapFragment newInstance() { return new CheckInMapFragment(); }
 
@@ -264,7 +269,6 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         startActivity(intent);
     }
 
-
     private boolean locationInBounds() {
         Location location = getLocation();
         if (location == null)
@@ -294,8 +298,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
 
     private void stopCheckIn() {
-        String startTime = getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "");
-        if (startTime.isEmpty()) {
+        if (!hasStartedCheckIn()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
 
@@ -332,4 +335,11 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     private boolean hasStartedCheckIn() {
         return !getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
     }
+
+//    private long getStartTime() {
+//        if (!hasStartedCheckIn())
+//            return 0;
+//
+//        return DateUtils.timeDiff()
+//    }
 }

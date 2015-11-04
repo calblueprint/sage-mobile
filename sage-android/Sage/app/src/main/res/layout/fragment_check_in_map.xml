@@ -13,6 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
+    <blueprint.com.sage.shared.views.FloatingTextView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        app:elevation="10dp"
+        app:backgroundTint="@color/white"
+        />
+
     <android.support.design.widget.FloatingActionButton
         style="@style/CheckInFAB"
         android:id="@+id/check_in_check_fab"

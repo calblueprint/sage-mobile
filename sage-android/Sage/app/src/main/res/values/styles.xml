@@ -1,13 +1,32 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--<item name="circleImageViewStyle">@style/CircleImageView</item>-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/amber500</item>
+        <item name="colorPrimaryDark">@color/amber700</item>
     </style>
 
-    <style name="CircleImageView">
-        <item name="border">true</item>
-        <item name="border_color">@color/black</item>
+    <!-- ToolBar -->
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <!--<item name="android:textColorPrimary">@color/white</item>-->
+        <!--<item name="android:textColorSecondary">@color/white</item>-->
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <!-- Arrows -->
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/white</item>
+    </style>
+
+    <style name="HeaderTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <style name="LandingField">
@@ -22,6 +41,7 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:singleLine">true</item>
+        <item name="android:textCursorDrawable">@drawable/white_cursor</item>
     </style>
 
     <style name="LandingButton">

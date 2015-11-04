@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +91,7 @@ public class SignUpActivity extends FragmentActivity {
     private void logInUser(Session session) {
         try {
             NetworkUtils.loginUser(session, this);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             Toast.makeText(this, "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
         }
     }

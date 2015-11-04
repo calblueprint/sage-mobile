@@ -14,10 +14,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.http.HttpStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 
 import blueprint.com.sage.R;
@@ -50,7 +50,7 @@ public class BaseRequest extends JsonObjectRequest {
                         Toast.makeText(activity, "Something went wrong - please try again!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    if (networkResponse.statusCode == HttpStatus.SC_FORBIDDEN) {
+                    if (networkResponse.statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
                         Toast.makeText(activity, "Invalid email or password.", Toast.LENGTH_SHORT).show();
                         NetworkUtils.logoutCurrentUser(activity);
                     } else {

@@ -4,18 +4,18 @@ import android.graphics.Bitmap;
 import android.util.Base64;
 import android.util.Log;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.ByteArrayOutputStream;
 
-import blueprint.com.sage.serializers.UserSerializer;
 import lombok.Data;
 
 /**
  * Created by kelseylam on 10/11/15.
  * User model.
  */
-@JsonSerialize(using = UserSerializer.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public @Data class User {
     private int id;
     private String email;
@@ -36,13 +36,18 @@ public @Data class User {
     private String currentPassword;
     private String confirmPassword;
 
+    @JsonIgnore
     private Bitmap profile;
+
     private String imageUrl;
 
     public final static String VOLUNTEER = "volunteer";
     public final static String ONE_UNIT = "one_unit";
     public final static String TWO_UNITS = "two_units";
 
+    public User() {}
+
+    @JsonIgnore
     public void setTypePosition(int type) {
         switch (type) {
             case 0:
@@ -100,6 +105,7 @@ public @Data class User {
      * Compresses Profile Picture into a string
      * @return
      */
+    @JsonIgnore
     public String getProfileData() {
         if (profile == null) return null;
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="check_in_default_start_time">00:00</string>
+
+    <string name="menu_create_request">Create Request</string>
+
+    <string name="check_in_start_time">start</string>
+    <string name="check_in_end_time">end</string>
+    
+    <string name="check_in_oob_title">Invalid location.</string>
+    <string name="check_in_oob_body">Look\'s like your too far away from the school! Try checking in a little closer.</string>
+    <string name="check_in_oob_confirm">Return</string>
+
+    <string name="check_in_request_error">Invalid check-in request.</string>
+
+    <string name="check_in_start_title">Start Session</string>
+    <string name="check_in_start_body">Do you want to start your mentoring session?</string>
+    <string name="check_in_start_confirm">Start</string>
+    <string name="check_in_start_return">Cancel</string>
+
+    <string name="check_in_finish_title">Finish Session</string>
+    <string name="check_in_finish_body">Do you want to finish your mentoring session?</string>
+    <string name="check_in_finish_confirm">Finish</string>
+    <string name="check_in_finish_return">Back</string>
+
+    <string name="check_in_location_off_title">Location Services off</string>
+    <string name="check_in_location_off_body">Please enable location services to continue.</string>
+
+    <string name="check_in_location_off_confirm">Settings</string>
+    <string name="check_in_location_off_return">Cancel</string>
+
+    <!-- Check In Request Form -->
+    <string name="check_in_request_date">Date</string>
+    <string name="check_in_request_start_time">Start Time</string>
+    <string name="check_in_request_end_time">End Time</string>
+    <string name="check_in_request_total_time">Total Time:</string>
+    <string name="check_in_request_comment">Comments</string>
+    <string name="check_in_default_total">0 hrs, 0 min</string>
+    <string name="check_in_default_date">Tap to pick date</string>
+    <string name="check_in_default_time">Tap to pick time</string>
+    <string name="check_in_cancel_request">Delete Request</string>
+
+    <!-- Check In Request Errors -->
+    <string name="check_in_request_blank">Date and times cannot be blank!</string>
+    <string name="check_in_request_invalid_dates">Invalid start and end times</string>
+
+    <string name="check_in_request_delete_title">Delete Request?</string>
+    <string name="check_in_request_delete_body">Are you sure you want to delete your request? This will reset your session.</string>
+</resources>

@@ -17,13 +17,13 @@ repositories {
 
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "blueprint.com.sage"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -42,9 +42,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.0'
-
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    compile 'com.google.android.gms:play-services-maps:8.1.0'
+    compile 'com.google.android.gms:play-services-location:8.1.0'
     // External Libraries
+    compile 'joda-time:joda-time:2.8.2'
     compile 'com.jakewharton:butterknife:7.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.greenrobot:eventbus:2.4.0'

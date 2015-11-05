@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,25 +84,5 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     public void onRefresh() {
         AnnouncementsListActivity activity = (AnnouncementsListActivity) getActivity();
         activity.announcementsListRequest();
-    }
-
-    public void initializeViews() {
-        ArrayList<Announcement> announcements = new ArrayList<>();
-        Announcement filler = new Announcement();
-        filler.setBody("Wow, what a great announcement!");
-        filler.setTitle("I love dogs");
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        announcementsList.setLayoutManager(llm);
-        AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(announcements);
-        announcementsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        //set adapter, adapter.notifydatasetchanged, pass in arraylist to adapter
     }
 }

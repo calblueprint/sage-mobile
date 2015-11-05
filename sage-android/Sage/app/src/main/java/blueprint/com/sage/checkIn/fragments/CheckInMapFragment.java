@@ -38,7 +38,7 @@ import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
-import blueprint.com.sage.utility.view.FragUtil;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -124,7 +124,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_request:
-                FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
+                FragUtils.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -346,7 +346,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         toggleButtons();
         toggleTimer(false);
 
-        FragUtil.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
+        FragUtils.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
     }
 
 

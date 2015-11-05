@@ -9,7 +9,7 @@ import com.google.android.gms.location.LocationServices;
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.fragments.CheckInMapFragment;
 import blueprint.com.sage.shared.NavigationAbstractActivity;
-import blueprint.com.sage.utility.view.FragUtil;
+import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 10/16/15.
@@ -22,7 +22,7 @@ public class CheckInActivity extends NavigationAbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeGoogleApiClient();
-        FragUtil.replace(R.id.check_in_container, CheckInMapFragment.newInstance(), this);
+        FragUtils.replace(R.id.check_in_container, CheckInMapFragment.newInstance(), this);
     }
 
     @Override

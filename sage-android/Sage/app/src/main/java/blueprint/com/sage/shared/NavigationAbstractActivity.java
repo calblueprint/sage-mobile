@@ -20,9 +20,9 @@ import butterknife.ButterKnife;
 public class NavigationAbstractActivity extends AbstractActivity
                                         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.check_in_drawer_layout) DrawerLayout mDrawerLayout;
-    @Bind(R.id.check_in_left_drawer) NavigationView mNavigationView;
-    @Bind(R.id.check_in_toolbar) Toolbar mToolbar;
+    @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @Bind(R.id.left_drawer) NavigationView mNavigationView;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
 
     private ActionBarDrawerToggle mToggle;
 

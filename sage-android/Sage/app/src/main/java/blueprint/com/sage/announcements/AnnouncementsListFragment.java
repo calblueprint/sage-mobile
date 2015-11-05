@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.models.Announcement;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by kelseylam on 10/24/15.
@@ -41,12 +41,6 @@ public class AnnouncementsListFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.fragment_announcement)
-    public void displayAnnouncement() {
-        AnnouncementFragment announcementFragment = AnnouncementFragment.newInstance();
-
-    }
-
     public void initializeViews() {
         ArrayList<Announcement> announcements = new ArrayList<>();
         Announcement filler = new Announcement();
@@ -61,7 +55,7 @@ public class AnnouncementsListFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         announcementsList.setLayoutManager(llm);
-        AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(announcements);
+        AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(announcements, getActivity());
         announcementsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         //set adapter, adapter.notifydatasetchanged, pass in arraylist to adapter

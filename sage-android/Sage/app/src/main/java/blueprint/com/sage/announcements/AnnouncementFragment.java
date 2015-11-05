@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import blueprint.com.sage.R;
 import butterknife.ButterKnife;
 
 /**
@@ -24,7 +25,7 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_announcements_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_announcement, container, false);
         ButterKnife.bind(this, view);
         return view;
     }

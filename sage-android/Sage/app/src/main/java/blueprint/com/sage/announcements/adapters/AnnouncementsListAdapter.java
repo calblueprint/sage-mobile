@@ -1,5 +1,6 @@
 package blueprint.com.sage.announcements.adapters;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.AnnouncementFragment;
 import blueprint.com.sage.models.Announcement;
+import blueprint.com.sage.utility.view.FragUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by kelseylam on 10/24/15.
@@ -19,9 +23,16 @@ import butterknife.ButterKnife;
 public class AnnouncementsListAdapter extends RecyclerView.Adapter<AnnouncementsListAdapter.AnnouncementsListViewHolder> {
 
     private ArrayList<Announcement> announcementArrayList;
+    private FragmentActivity activity;
 
-    public AnnouncementsListAdapter(ArrayList<Announcement> announcementArrayList) {
+    public AnnouncementsListAdapter(ArrayList<Announcement> announcementArrayList, FragmentActivity activity) {
         this.announcementArrayList = announcementArrayList;
+        this.activity = activity;
+    }
+
+    @OnClick(R.id.fragment_announcement)
+    public void onAnnouncementPressed() {
+        FragUtil.replace(R.id.fragment_announcement, AnnouncementFragment.newInstance(), activity);
     }
 
     @Override

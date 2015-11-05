@@ -1,6 +1,8 @@
 package blueprint.com.sage.signUp;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -49,8 +51,17 @@ public class SignUpActivity extends FragmentActivity {
         mPreferenceTag = getString(R.string.shared_preferences);
         mPreferences = getSharedPreferences(mPreferenceTag, MODE_PRIVATE);
 
+        setStatusBarColor();
         makeSchoolRequest();
+
+
         FragUtil.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
+    }
+
+    @TargetApi(21)
+    public void setStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            this.getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
     }
 
     private void makeSchoolRequest() {

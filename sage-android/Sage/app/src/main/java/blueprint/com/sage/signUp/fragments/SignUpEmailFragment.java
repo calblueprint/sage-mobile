@@ -29,10 +29,7 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     public static SignUpEmailFragment newInstance() { return new SignUpEmailFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBarColor(R.color.red500);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {

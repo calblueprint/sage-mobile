@@ -21,10 +21,7 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     public static SignUpNameFragment newInstance() { return new SignUpNameFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBarColor(R.color.amber500);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {

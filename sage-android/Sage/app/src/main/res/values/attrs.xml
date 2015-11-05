@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageView">
+        <attr name="border" format="boolean" />
+        <attr name="background_color" format="color" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="shadow" format="boolean" />
+    </declare-styleable>
+    
+    <declare-styleable name="FloatingTextView">
+        <attr name="android:textColor" />
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+    </declare-styleable>
+</resources>

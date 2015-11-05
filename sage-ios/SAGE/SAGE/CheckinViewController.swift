@@ -202,6 +202,7 @@ class CheckinViewController: UIViewController {
     
     private func presentDefaultMode(duration: NSTimeInterval) {
         self.checkinView.presentDefaultMode(duration)
+        self.navigationItem.rightBarButtonItem?.enabled = true
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: duration != 0)
         UIView.animateWithDuration(duration) { () -> Void in
             self.defaultTitleLabel.alpha = 1
@@ -212,6 +213,7 @@ class CheckinViewController: UIViewController {
     
     private func presentSessionMode(duration: NSTimeInterval) {
         self.checkinView.presentSessionMode(duration)
+        self.navigationItem.rightBarButtonItem?.enabled = false
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: duration != 0)
         UIView.animateWithDuration(duration) { () -> Void in
             self.defaultTitleLabel.alpha = 0

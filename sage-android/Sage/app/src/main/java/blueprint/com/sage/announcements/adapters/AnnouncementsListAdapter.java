@@ -1,13 +1,15 @@
 package blueprint.com.sage.announcements.adapters;
 
-import android.support.v7.widget.RecyclerView;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.Response;
+
 import java.util.ArrayList;
 
 import blueprint.com.sage.R;

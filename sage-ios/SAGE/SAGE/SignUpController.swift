@@ -76,24 +76,10 @@ class SignUpController: UIViewController  {
         self.makeAccount(completion)
     }
     
-    func createAccountAndProceedToAppWithPicture() {
-        self.showLoadingView()
-        let completion = { (success: Bool) -> Void in
-            // switching back to main thread to ensure that UIKIT methods get called on the main thread
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if (success) {
-                    let unverifiedController = UnverifiedViewController()
-                    let signUpView = (self.view as! SignUpView)
-                    let photoView = signUpView.photoView
-                    unverifiedController.setImage(photoView.photo.image!)
-                    self.presentViewController(unverifiedController, animated: true, completion: nil)
-                } else {
-                    self.showFailureModal()
-                }
-            })
-        }
-        self.makeAccount(completion)
-    }
+    
+    //
+    // MARK: - Methods that show specific in-between views
+    //
     
     func showLoadingView() {
         let frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
@@ -117,6 +103,29 @@ class SignUpController: UIViewController  {
         }
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    //
+    // MARK: - Control flow methods that direct sign up flow
+    //
+    
+    func createAccountAndProceedToAppWithPicture() {
+        self.showLoadingView()
+        let completion = { (success: Bool) -> Void in
+            // switching back to main thread to ensure that UIKIT methods get called on the main thread
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if (success) {
+                    let unverifiedController = UnverifiedViewController()
+                    let signUpView = (self.view as! SignUpView)
+                    let photoView = signUpView.photoView
+                    unverifiedController.setImage(photoView.photo.image!)
+                    self.presentViewController(unverifiedController, animated: true, completion: nil)
+                } else {
+                    self.showFailureModal()
+                }
+            })
+        }
+        self.makeAccount(completion)
     }
     
     func makeAccount(completion: ((Bool) -> Void)) {

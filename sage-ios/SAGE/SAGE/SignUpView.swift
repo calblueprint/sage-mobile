@@ -185,7 +185,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
     }
     
     func emailPasswordValid() -> Bool {
-        return self.emailPasswordView.emailInput.text! != "" && self.emailPasswordView.passwordInput.text! != "" && self.emailPasswordView.emailInput.text!.containsString("berkeley")
+        return self.emailPasswordView.emailInput.text! != "" && self.emailPasswordView.passwordInput.text! != "" && self.emailPasswordView.emailInput.text!.containsString("berkeley") && emailPasswordView.passwordInput.text!.characters.count > 7
     }
     
     func firstLastNameValid() -> Bool {
@@ -210,12 +210,16 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.addSubview(errorView)
         self.bringSubviewToFront(errorView)
         errorView.setX(0)
-        errorView.setY(0)
+        errorView.setY(-10)
         self.currentErrorMessage = errorView
-        
-        UIView.animateWithDuration(1, delay: 3, options: .CurveLinear, animations: { () -> Void in
-            errorView.alpha = 0.0
-            }, completion: nil)
+        UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+            errorView.setY(0)
+            }) { (bool) -> Void in
+                UIView.animateWithDuration(UIView.animationTime, delay: 3, options: .CurveLinear, animations: { () -> Void in
+                    errorView.alpha = 0.0
+                    errorView.setY(-64)
+                    }, completion: nil)
+        }
     }
     
 }

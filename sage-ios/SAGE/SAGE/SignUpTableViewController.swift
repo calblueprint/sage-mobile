@@ -65,21 +65,12 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     }
     
     func loadSchoolData() {
-        let url = NSURL(string: StringConstants.kEndpointSchool)
-        let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "GET"
-        let queue = NSOperationQueue()
-        NSURLConnection.sendAsynchronousRequest(request, queue: queue) { (response, data, error) -> Void in
-            
-            if error == nil && (response! as! NSHTTPURLResponse).statusCode == 200 {
-                // success
-                let jsonDict = try! NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSDictionary
-                for schoolDict in jsonDict["schools"] as! NSArray {
-                    self.schools.append((schoolDict as! NSDictionary)["name"] as! String)
-                    self.schoolDict[(schoolDict as! NSDictionary)["name"] as! String] = ((schoolDict as! NSDictionary)["id"] as! Int)
-                }
-                self.tableView.reloadData()
+        BaseOperation.loadSchools { (schoolDict) -> Void in
+            for schoolDict in schoolDict {
+                self.schools.append((schoolDict as! NSDictionary)["name"] as! String)
+                self.schoolDict[(schoolDict as! NSDictionary)["name"] as! String] = ((schoolDict as! NSDictionary)["id"] as! Int)
             }
+            self.tableView.reloadData()
         }
     }
 

@@ -18,6 +18,7 @@ class UnverifiedViewController: UIViewController {
     
     func signOut() {
         let loginController = LoginController()
+        LoginHelper.deleteKeychainData()
         self.presentViewController(loginController, animated: true, completion: nil)
     }
     

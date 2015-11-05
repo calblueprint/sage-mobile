@@ -56,12 +56,17 @@ class LoginController: UIViewController {
         self.view.addSubview(errorView)
         self.view.bringSubviewToFront(errorView)
         errorView.setX(0)
-        errorView.setY(0)
+        errorView.setY(-10)
         self.currentErrorMessage = errorView
         
-        UIView.animateWithDuration(1, delay: 3, options: .CurveLinear, animations: { () -> Void in
-            errorView.alpha = 0.0
-            }, completion: nil)
+        UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+            errorView.setY(0)
+            }) { (bool) -> Void in
+                UIView.animateWithDuration(UIView.animationTime, delay: 3, options: .CurveLinear, animations: { () -> Void in
+                    errorView.alpha = 0.0
+                    errorView.setY(-64)
+                    }, completion: nil)
+        }
     }
     
     func attemptLogin() {

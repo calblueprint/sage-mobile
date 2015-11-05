@@ -15,4 +15,20 @@ class BaseOperation {
         let baseURL = NSURL(string: StringConstants.kBaseURL)
         return AFHTTPRequestOperationManager.init(baseURL: baseURL)
     }
+    
+    static func loadSchools(completion: ((NSMutableArray) -> Void)){
+        
+        let operationManager = AFHTTPRequestOperationManager()
+        operationManager.requestSerializer = AFJSONRequestSerializer()
+        operationManager.responseSerializer = AFJSONResponseSerializer()
+        
+        operationManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
+        operationManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        operationManager.GET(StringConstants.kEndpointSchool, parameters: nil, success: { (operation, data) -> Void in
+            
+            let schoolDict = data["schools"] as! NSMutableArray
+            completion(schoolDict)
+        }, failure: nil)
+    }
 }

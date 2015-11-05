@@ -29,10 +29,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     public static SignUpSchoolFragment newInstance() { return new SignUpSchoolFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBarColor(R.color.yellow500);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {

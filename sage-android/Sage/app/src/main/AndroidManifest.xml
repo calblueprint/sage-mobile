@@ -19,12 +19,12 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize"
-        android:screenOrientation="portrait"
-        android:launchMode="singleTop">
+        android:screenOrientation="portrait">
 
         <activity
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:name=".signIn.SignInActivity">
+            android:name=".signIn.SignInActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,13 +32,16 @@
         </activity>
 
         <activity
-            android:name=".signUp.SignUpActivity" />
+            android:name=".signUp.SignUpActivity"
+            android:launchMode="singleTop"/>
 
         <activity
-            android:name=".signUp.UnverifiedActivity" />
+            android:name=".signUp.UnverifiedActivity"
+            android:launchMode="singleTop"/>
 
         <activity
-            android:name=".checkIn.CheckInActivity"/>
+            android:name=".checkIn.CheckInActivity"
+            android:launchMode="singleTop"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

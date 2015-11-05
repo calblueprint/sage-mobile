@@ -1,7 +1,5 @@
 package blueprint.com.sage.signUp.fragments;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -39,11 +37,4 @@ public abstract class SignUpAbstractFragment extends Fragment {
         SignUpPagerFragment fragment = (SignUpPagerFragment) getParentFragment();
         fragment.goToNextPage();
     };
-
-    @TargetApi(21)
-    public void setStatusBarColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            getActivity().getWindow()
-                         .setStatusBarColor(getResources().getColor(color, getActivity().getTheme()));
-    }
 }

@@ -63,7 +63,7 @@ public class NetworkUtils {
             intent = new Intent(activity, UnverifiedActivity.class);
         }
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
 
@@ -78,7 +78,7 @@ public class NetworkUtils {
         editor.apply();
 
         Intent loginIntent = new Intent(activity, SignInActivity.class);
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(loginIntent);
     }
 

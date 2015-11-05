@@ -53,7 +53,6 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         
         if self.modalType == ContentType.School {
             self.navigationController!.navigationBar.topItem!.title = "Choose School"
-            // start loading for schools
         } else  if self.modalType == ContentType.Hours {
             self.navigationController!.navigationBar.topItem!.title = "Choose Hours"
         }

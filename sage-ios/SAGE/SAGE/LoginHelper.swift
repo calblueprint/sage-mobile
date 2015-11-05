@@ -22,7 +22,6 @@ class LoginHelper: NSObject {
     }
     
     static func userIsVerified(completion: ((Bool) -> Void)) {
-        // this returns only true for now because it hasn't been connected to the backend
         if let verified = KeychainWrapper.objectForKey(KeychainConstants.kVerified) {
             let verifiedBool = verified as! Bool
             if verifiedBool {
@@ -161,7 +160,7 @@ class LoginHelper: NSObject {
     static func getKeyChainData() -> [String: AnyObject] {
         var data: [String: AnyObject] = [String: AnyObject]()
         
-        if let email = KeychainWrapper.objectForKey(KeychainConstants.kEmail) {
+        if let email = KeychainWrapper.objectForKey(KeychainConstants.kVEmail) {
             data[UserConstants.kEmail] = email
         }
         

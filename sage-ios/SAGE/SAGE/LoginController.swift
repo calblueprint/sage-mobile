@@ -16,6 +16,7 @@ class LoginController: UIViewController {
         (self.view as! LoginView).loginEmailField.delegate = self
         (self.view as! LoginView).loginPasswordField.delegate = self
         (self.view as! LoginView).signUpLink.addTarget(self, action: "signUpLinkTapped", forControlEvents: .TouchUpInside)
+        (self.view as! LoginView).loginButton.addTarget(self, action: "attemptLogin", forControlEvents: .TouchUpInside)
     }
     
     //
@@ -69,12 +70,14 @@ class LoginController: UIViewController {
             if let password = loginView.loginPasswordField.text {
                 LoginHelper.isValidLogin(email, password: password, completion: {
                     (valid: Bool) -> Void in
-                    if (valid) {
-                        self.pushRootTabBarController()
-                    } else {
-                        // indicate bad login
-                        self.showError("Invalid login - try again!")
-                    }
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        if (valid) {
+                            self.pushRootTabBarController()
+                        } else {
+                            // indicate bad login
+                            self.showError("Invalid login - try again!")
+                        }
+                    })
                 })
             }
         }

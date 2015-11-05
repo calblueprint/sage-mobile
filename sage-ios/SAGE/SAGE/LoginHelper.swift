@@ -34,14 +34,25 @@ class LoginHelper: NSObject {
         completion(false)
     }
     
-    static func storeUserDataInKeychain(firstName: String, lastName: String, email: String, password: String, school: Int, hours: Int, verified: Bool) {
-        KeychainWrapper.setObject(firstName, forKey: KeychainConstants.kVFirstName)
-        KeychainWrapper.setObject(lastName, forKey: KeychainConstants.kVLastName)
-        KeychainWrapper.setObject(email, forKey: KeychainConstants.kVEmail)
-        KeychainWrapper.setObject(password, forKey: KeychainConstants.kVPassword)
-        KeychainWrapper.setObject(school, forKey: KeychainConstants.kVSchool)
-        KeychainWrapper.setObject(hours, forKey: KeychainConstants.kVHours)
-        KeychainWrapper.setObject(verified, forKey: KeychainConstants.kVerified)
+    static func storeUserDataInKeychain(firstName: String?, lastName: String?, email: String?, password: String?, school: Int?, hours: Int?, verified: Bool?) {
+        if let firstName = firstName {
+            KeychainWrapper.setObject(firstName, forKey: KeychainConstants.kVFirstName)
+        }
+        if let lastName = lastName {
+            KeychainWrapper.setObject(lastName, forKey: KeychainConstants.kVLastName)
+        }
+        if let email = email {
+            KeychainWrapper.setObject(email, forKey: KeychainConstants.kVEmail)
+        }
+        if let password = password {
+            KeychainWrapper.setObject(password, forKey: KeychainConstants.kVPassword)
+        }
+        if let hours = hours {
+            KeychainWrapper.setObject(hours, forKey: KeychainConstants.kVHours)
+        }
+        if let verified = verified {
+            KeychainWrapper.setObject(verified, forKey: KeychainConstants.kVerified)
+        }
     }
     
     static func createUser(firstName: String, lastName: String, email: String, password: String, school: Int, hours: Int, role: Int, photoData: String, completion: ((Bool) -> Void)) {
@@ -64,6 +75,9 @@ class LoginHelper: NSObject {
             request.HTTPBody = body
         }
         
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
         let queue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) { (urlResponse, data, error) -> Void in
             if error == nil {
@@ -77,21 +91,27 @@ class LoginHelper: NSObject {
     static func isValidLogin(email: String, password: String, completion: ((Bool) -> Void)) {
         let url = NSURL(string: StringConstants.kEndpointLogin)
         let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "GET"
-        let params = ["user":
-                        [
-                            "email": email,
-                            "password": password,
+        request.HTTPMethod = "POST"
+        let params = [ "user": [
+                        "email": email,
+                        "password": password,
                         ]
                     ]
         if let body = try? NSJSONSerialization.dataWithJSONObject(params, options: []) {
             request.HTTPBody = body
         }
         
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
         let queue = NSOperationQueue()
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) { (urlResponse, data, error) -> Void in
             // TODO: make sure to check later if the data is right (actual valid login check)
             if error == nil {
+                let userJson = try? NSJSONSerialization.JSONObjectWithData(data!, options: [])
+                let userDict = userJson!["session"]!!["user"]
+                User.currentUser = User(propertyDictionary: userDict as! [String: AnyObject])
+                LoginHelper.storeUserDataInKeychain(User.currentUser?.firstName, lastName: User.currentUser?.lastName, email: User.currentUser?.email, password: password, school: userJson!["session"]??["school"]??[SchoolConstants.kId] as? Int, hours: User.currentUser?.level?.rawValue, verified: User.currentUser?.verified)
                 completion(true)
             } else {
                 completion(false)

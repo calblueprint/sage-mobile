@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_announcement">
+
+    <blueprint.com.sage.shared.views.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/pomsky"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/announcement_user"
+        style="@style/AnnouncementRow"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="100dp"
+        android:text="User Name"
+        android:textSize="30dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/announcement_time"
+        style="@style/AnnouncementRow"
+        android:textColor="@color/date_gray"
+        android:text="2 days ago"
+        android:textSize="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="100dp"
+        android:layout_below="@id/announcement_user"/>
+
+    <TextView
+        android:id="@+id/announcement_title"
+        style="@style/AnnouncementRow"
+        android:text="Title"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/announcement_time"/>
+
+    <TextView
+        android:id="@+id/announcement_body"
+        style="@style/AnnouncementRow"
+        android:text="The actual announcement."
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"
+        android:textSize="20dp"
+        android:layout_below="@id/announcement_title"/>
+
+</RelativeLayout>

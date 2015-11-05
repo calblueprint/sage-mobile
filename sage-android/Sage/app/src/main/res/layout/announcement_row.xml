@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/announcement_user"
+            style="@style/AnnouncementRow"
+            android:layout_marginTop="10dp"
+            android:text="User Name"
+            android:textColor="@color/black"/>
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -17,13 +24,6 @@
             android:background="@drawable/pomsky"
             android:scaleType="centerCrop"
             android:layout_toLeftOf="@id/announcement_user"/>
-
-        <TextView
-            android:id="@+id/announcement_user"
-            style="@style/AnnouncementRow"
-            android:layout_marginTop="10dp"
-            android:text="User Name"
-            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/announcement_time"

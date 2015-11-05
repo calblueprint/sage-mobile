@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.models.Announcement;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by kelseylam on 10/24/15.
@@ -39,6 +39,12 @@ public class AnnouncementsListFragment extends Fragment {
         ButterKnife.bind(this, view);
         initializeViews();
         return view;
+    }
+
+    @OnClick(R.id.fragment_announcement)
+    public void displayAnnouncement() {
+        AnnouncementFragment announcementFragment = AnnouncementFragment.newInstance();
+
     }
 
     public void initializeViews() {

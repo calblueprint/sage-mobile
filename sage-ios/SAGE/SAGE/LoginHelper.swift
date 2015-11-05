@@ -13,7 +13,7 @@ class LoginHelper: NSObject {
         if let _ = User.currentUser {
             return true
         }
-        let retrievedUsername: String? = KeychainWrapper.stringForKey(KeychainConstants.kEmail)
+        let retrievedUsername: String? = KeychainWrapper.stringForKey(KeychainConstants.kVEmail)
         if let _ = retrievedUsername {
             return true
         }
@@ -42,7 +42,7 @@ class LoginHelper: NSObject {
     static func getKeyChainData() -> [String: String] {
         var data: [String: String] = [String: String]()
         
-        if let email = KeychainWrapper.stringForKey(KeychainConstants.kEmail) {
+        if let email = KeychainWrapper.stringForKey(KeychainConstants.kVEmail) {
             data[UserConstants.kEmail] = email
         }
         

@@ -113,13 +113,21 @@ class CheckinViewController: UIViewController {
                 self.presentRequestHoursView()
             }))
             alertController.addAction(UIAlertAction(title: "Cancel Session", style: .Destructive, handler: { (action: UIAlertAction) -> Void in
-                // send request to make check in and present to default
-                // when finished. if failure, store locally and
-                // try again until success
-                self.presentDefaultMode(UIConstants.normalAnimationTime)
-                self.inSession = false
-                KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
-                //make a request
+                let confirmAlert = UIAlertController(
+                    title: "Are you sure? Your session will be erased.",
+                    message: nil,
+                    preferredStyle: .ActionSheet)
+                confirmAlert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                    // send request to make check in and present to default
+                    // when finished. if failure, store locally and
+                    // try again until success
+                    self.presentDefaultMode(UIConstants.normalAnimationTime)
+                    self.inSession = false
+                    KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                    //make a request
+                }))
+                confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                self.presentViewController(confirmAlert, animated: true, completion: nil)
             }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)

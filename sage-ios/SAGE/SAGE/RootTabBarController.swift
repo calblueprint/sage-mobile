@@ -46,9 +46,9 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         var rootViewControllers = [announcementsViewController, checkInViewController, myStatsViewController, profileViewController]
         
         // User.currentUser!.role = User.UserRole.Admin
-        // comment in the above line3 to see the admin page
+        // comment in the above line to see the admin page
         if let role = User.currentUser?.role {
-            if role == User.UserRole.Admin {
+            if role == .Admin {
                 let icon = FAKIonIcons.folderIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)

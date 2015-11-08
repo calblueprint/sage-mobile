@@ -100,7 +100,9 @@ class SignUpController: UIViewController  {
     func showFailureModal() {
         let alertController = UIAlertController(title: "Sorry!", message: "We're sorry! Something went wrong. Try again?", preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            let loginController = LoginController()
+            alertController.dismissViewControllerAnimated(true, completion: nil)
+            self.presentViewController(loginController, animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
         self.presentViewController(alertController, animated: true, completion: nil)

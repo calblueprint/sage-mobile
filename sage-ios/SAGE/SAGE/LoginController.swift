@@ -64,7 +64,17 @@ class LoginController: UIViewController {
                     (valid: Bool) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if (valid) {
-                            self.pushRootTabBarController()
+                            if let verified = User.currentUser?.verified {
+                                if verified {
+                                    self.pushRootTabBarController()
+                                } else {
+                                    let unverifiedController = UnverifiedViewController()
+                                    self.presentViewController(unverifiedController, animated: true, completion: nil)
+                                }
+                            } else {
+                                let unverifiedController = UnverifiedViewController()
+                                self.presentViewController(unverifiedController, animated: true, completion: nil)
+                            }
                         } else {
                             // indicate bad login
                             self.showErrorAndSetMessage("Invalid login - try again!", size: 64)

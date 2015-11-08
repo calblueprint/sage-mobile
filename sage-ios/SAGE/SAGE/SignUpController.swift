@@ -20,6 +20,7 @@ class SignUpController: UIViewController  {
     //
     override func loadView() {
         self.view = SignUpView()
+        (self.view as! SignUpView).scrollView.delegate = self
         self.setUpTargetActionPairs()
         self.setDelegates()
     }
@@ -144,7 +145,6 @@ class SignUpController: UIViewController  {
         
         let hoursString = schoolHoursView.chooseHoursButton.titleLabel!.text!
         let hours = self.volunteerDict[hoursString] as! Int
-        let verified = false
         let role = 0
         
         var photoData: String
@@ -156,8 +156,6 @@ class SignUpController: UIViewController  {
             let personImage = personIcon.imageWithSize(CGSizeMake(200, 200))
             photoData = UIImage.encodedPhotoString(personImage)
         }
-        
-        LoginHelper.storeUserDataInKeychain(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, verified: verified)
         
         LoginHelper.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, role: role, photoData: photoData, completion: completion)
     }
@@ -219,7 +217,7 @@ class SignUpController: UIViewController  {
     }
 }
 
-extension SignUpController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+extension SignUpController: UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIScrollViewDelegate {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let signUpView = (self.view as! SignUpView)
         let photoView = signUpView.photoView
@@ -261,12 +259,12 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
                         email.becomeFirstResponder()
                 })
             } else {
-                signUpView.showError("Please fill out your first and last name!")
+                self.showErrorAndSetMessage("Please fill out your first and last name!", size: 64.0)
             }
         } else if textField == email {
             password.becomeFirstResponder()
         } else {
-            if password.text! != "" && signUpView.isValidEmail(email.text!) {
+            if password.text! != "" && self.isValidEmail(email.text!) {
             
                 UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
                     let newPoint = CGPointMake(signUpView.scrollView.contentOffset.x + screenWidth, signUpView.scrollView.contentOffset.y)
@@ -274,9 +272,135 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
                     signUpView.changeBackgroundColor(newPoint.x)
                 }, completion: nil)
             } else {
-                signUpView.showError("Please fill out your email and password!")
+                self.showErrorAndSetMessage("Please fill out your email and password!", size: 64.0)
             }
         }
         return true
+    }
+    
+    //
+    // MARK: - UIScrollViewDelegate methods
+    //
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenWidth = screenRect.size.width
+        
+        let signUpView = (self.view as! SignUpView)
+        
+        var handledCase = false
+        
+        if scrollView.contentOffset.x < 0 {
+            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+            handledCase = true
+        }
+        
+        if !handledCase && scrollView.contentOffset.x > 3 * signUpView.frame.width {
+            scrollView.setContentOffset(CGPointMake(3 * signUpView.frame.width, 0), animated: false)
+            handledCase = true
+        }
+        
+        var valid: Bool
+        var message: String
+        var tuple = self.schoolHoursValid()
+        valid = tuple.0
+        message = tuple.1
+        if !handledCase && scrollView.contentOffset.x > screenWidth * 2 && !valid {
+            scrollView.setContentOffset(CGPointMake(2 * signUpView.frame.width, 0), animated: false)
+            self.showErrorAndSetMessage(message, size: 64)
+            handledCase = true
+        }
+        
+        tuple = self.emailPasswordValid()
+        valid = tuple.0
+        message = tuple.1
+        if !handledCase && scrollView.contentOffset.x > screenWidth && !valid {
+            scrollView.setContentOffset(CGPointMake(signUpView.frame.width, 0), animated: false)
+            self.showErrorAndSetMessage(message, size: 64)
+            handledCase = true
+        }
+        
+        tuple = self.firstLastNameValid()
+        valid = tuple.0
+        message = tuple.1
+        if !handledCase && scrollView.contentOffset.x > 0 && !valid {
+            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+            self.showErrorAndSetMessage(message, size: 64)
+            handledCase = true
+        }
+        
+        if !handledCase {
+            if (signUpView.dismissKeyboard) {
+                signUpView.endEditing(true)
+                signUpView.changeBackgroundColor(scrollView.contentOffset.x)
+            } else {
+                signUpView.dismissKeyboard = true
+            }
+        }
+    }
+    
+    func showErrorAndSetMessage(message: String, size: CGFloat) {
+        let error = (self.view as! SignUpView).currentErrorMessage
+        let errorView = super.showError(message, size: size, currentError: error)
+        (self.view as! SignUpView).currentErrorMessage = errorView
+    }
+    
+    //
+    // MARK: - Validation and Errors
+    //
+    func schoolHoursValid() -> (Bool, String) {
+        let signUpView = (self.view as! SignUpView)
+        let schoolHoursView = signUpView.schoolHoursView
+        var valid = true
+        var message: String = ""
+        if schoolHoursView.chooseSchoolButton.titleLabel?.text! == "Choose School..." {
+            valid = false
+            message = "Please choose a school."
+        } else if schoolHoursView.chooseHoursButton.titleLabel?.text! == "Choose Hours..." {
+            valid = false
+            message = "Please choose your hours."
+        }
+        return (valid, message)
+    }
+    
+    func emailPasswordValid() -> (Bool, String) {
+        let signUpView = (self.view as! SignUpView)
+        let emailPasswordView = signUpView.emailPasswordView
+        var valid = true
+        var message: String = ""
+        if emailPasswordView.emailInput.text! == "" {
+            valid = false
+            message = "Please enter an email."
+        } else if !emailPasswordView.emailInput.text!.containsString("berkeley") {
+            valid = false
+            message = "Please enter a berkeley.edu email address."
+        } else if emailPasswordView.passwordInput.text!.characters.count < 8 {
+            valid = false
+            message = "Your password must be at least 8 characters."
+        }
+        return (valid, message)
+    }
+    
+    func firstLastNameValid() -> (Bool, String) {
+        let signUpView = (self.view as! SignUpView)
+        let nameView = signUpView.nameView
+        var valid = true
+        var message: String = ""
+        if nameView.firstNameInput.text! == "" {
+            valid = false
+            message = "What's your first name?"
+        } else if nameView.lastNameInput.text! == "" {
+            valid = false
+            message = "What's your last name?"
+        }
+        return (valid, message)
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr) && testStr.containsString("berkeley")
     }
 }

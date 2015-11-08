@@ -9,7 +9,7 @@
 import UIKit
 import FontAwesomeKit
 
-class SignUpView: UIView, UIScrollViewDelegate {
+class SignUpView: UIView {
     
     var pageControl: UIPageControl = UIPageControl()
     var nameView = SignUpNameView()
@@ -20,9 +20,10 @@ class SignUpView: UIView, UIScrollViewDelegate {
     var xButton: UIButton = UIButton()
     var scrollView: UIScrollView = UIScrollView()
     var dismissKeyboard: Bool = true
-    var currentErrorMessage: ErrorView?
     var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
-        
+    var currentErrorMessage: ErrorView?
+    var movedUp: Bool = false
+    
     override init(frame: CGRect) {
         let screenRect = UIScreen.mainScreen().bounds;
         let screenWidth = screenRect.size.width;
@@ -30,7 +31,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
         let newFrame = CGRectMake(0, 0, screenWidth, screenHeight)
         super.init(frame: newFrame)
         self.setUpViews()
-        self.scrollView.delegate = self
+        self.setUpKeyboardNotifications()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -147,79 +148,59 @@ class SignUpView: UIView, UIScrollViewDelegate {
     }
     
     //
-    // MARK: - UIScrollViewDelegate methods
+    // MARK: - Keyboard-related methods (to move up elements when the keyboard appears)
     //
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func setUpKeyboardNotifications() {
+        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
         let screenRect = UIScreen.mainScreen().bounds
-        let screenWidth = screenRect.size.width
+        let screenHeight = screenRect.size.height
         
-        if scrollView.contentOffset.x < 0 {
-            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-        } else if scrollView.contentOffset.x > 3 * self.frame.width {
-            scrollView.setContentOffset(CGPointMake(3 * self.frame.width, 0), animated: false)
-        } else if scrollView.contentOffset.x > screenWidth * 2 && !self.schoolHoursValid() {
-            scrollView.setContentOffset(CGPointMake(2 * self.frame.width, 0), animated: false)
-            self.showError("Please select a school and time commitment!")
-        } else if scrollView.contentOffset.x > screenWidth && !emailPasswordValid() {
-            scrollView.setContentOffset(CGPointMake(self.frame.width, 0), animated: false)
-            self.showError("Please fill out your email and password!")
-        } else if scrollView.contentOffset.x > 0 && !firstLastNameValid() {
-            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-            self.showError("Please fill out your first and last name!")
-        } else {
-            if (self.dismissKeyboard) {
-                self.endEditing(true)
-                self.changeBackgroundColor(scrollView.contentOffset.x)
-            } else {
-                self.dismissKeyboard = true
-            }
+        if (!self.movedUp) && screenHeight == 568 {
+            UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+                    self.nameView.icon.alpha = 0.0
+                    self.emailPasswordView.icon.alpha = 0.0
+                    self.pageControl.alpha = 0.0
+                    self.nameView.firstNameInput.setY(self.nameView.firstNameInput.frame.origin.y - 65)
+                    self.nameView.firstDivider.setY(self.nameView.firstDivider.frame.origin.y - 65)
+                    self.nameView.lastNameInput.setY(self.nameView.lastNameInput.frame.origin.y - 65)
+                    self.nameView.secondDivider.setY(self.nameView.secondDivider.frame.origin.y - 65)
+                    self.emailPasswordView.emailInput.setY(self.emailPasswordView.emailInput.frame.origin.y - 65)
+                    self.emailPasswordView.firstDivider.setY(self.emailPasswordView.firstDivider.frame.origin.y - 65)
+                    self.emailPasswordView.passwordInput.setY(self.emailPasswordView.passwordInput.frame.origin.y - 65)
+                    self.emailPasswordView.secondDivider.setY(self.emailPasswordView.secondDivider.frame.origin.y - 65)
+
+                }, completion: nil)
+            
+            self.movedUp = true
         }
     }
     
-    //
-    // MARK: - Validation and Errors
-    //
-    func schoolHoursValid() -> Bool {
-        return self.schoolHoursView.chooseSchoolButton.titleLabel?.text! != "Choose School..." && self.schoolHoursView.chooseHoursButton.titleLabel?.text! != "Choose Hours..."
-    }
-    
-    func emailPasswordValid() -> Bool {
-        return self.emailPasswordView.emailInput.text! != "" && self.emailPasswordView.passwordInput.text! != "" && self.emailPasswordView.emailInput.text!.containsString("berkeley") && emailPasswordView.passwordInput.text!.characters.count > 7
-    }
-    
-    func firstLastNameValid() -> Bool {
-        return self.nameView.firstNameInput.text! != "" && self.nameView.lastNameInput.text! != ""
-    }
-    
-    func isValidEmail(testStr:String) -> Bool {
-        // println("validate calendar: \(testStr)")
-        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-    
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(testStr)
-    }
-    
-    
-    func showError(message: String) {
-        if let current = self.currentErrorMessage {
-            current.removeFromSuperview()
-        }
+    func keyboardWillHide(notification: NSNotification) {
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenHeight = screenRect.size.height
         
-        let errorView = ErrorView(height: 64.0, messageString: message)
-        self.addSubview(errorView)
-        self.bringSubviewToFront(errorView)
-        errorView.setX(0)
-        errorView.setY(-10)
-        self.currentErrorMessage = errorView
-        UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
-            errorView.setY(0)
-            }) { (bool) -> Void in
-                UIView.animateWithDuration(UIView.animationTime, delay: 3, options: .CurveLinear, animations: { () -> Void in
-                    errorView.alpha = 0.0
-                    errorView.setY(-64)
-                    }, completion: nil)
+        if (self.movedUp) && screenHeight == 568 {
+            UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+                    self.nameView.firstNameInput.setY(self.nameView.firstNameInput.frame.origin.y + 65)
+                    self.nameView.firstDivider.setY(self.nameView.firstDivider.frame.origin.y + 65)
+                    self.nameView.lastNameInput.setY(self.nameView.lastNameInput.frame.origin.y + 65)
+                    self.nameView.secondDivider.setY(self.nameView.secondDivider.frame.origin.y + 65)
+                    self.emailPasswordView.emailInput.setY(self.emailPasswordView.emailInput.frame.origin.y + 65)
+                    self.emailPasswordView.firstDivider.setY(self.emailPasswordView.firstDivider.frame.origin.y + 65)
+                    self.emailPasswordView.passwordInput.setY(self.emailPasswordView.passwordInput.frame.origin.y + 65)
+                    self.emailPasswordView.secondDivider.setY(self.emailPasswordView.secondDivider.frame.origin.y + 65)
+                    self.nameView.icon.alpha = 1.0
+                    self.emailPasswordView.icon.alpha = 1.0
+                    self.pageControl.alpha = 1.0
+                }, completion: nil)
+            
+            self.movedUp = false
         }
     }
-    
 }

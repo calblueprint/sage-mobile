@@ -157,7 +157,7 @@ class LoginHelper: NSObject {
         completion(value)
     }
     
-    static func getKeyChainData() -> [String: AnyObject] {
+    static func getUserKeyChainData() -> [String: AnyObject] {
         var data: [String: AnyObject] = [String: AnyObject]()
         
         if let email = KeychainWrapper.objectForKey(KeychainConstants.kVEmail) {
@@ -171,7 +171,7 @@ class LoginHelper: NSObject {
         return data
     }
     
-    static func deleteKeychainData() {
+    static func deleteUserKeychainData() {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVFirstName)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVLastName)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVEmail)
@@ -182,7 +182,7 @@ class LoginHelper: NSObject {
     
     static func setUserSingleton() {
         // set user singleton
-        let data: [String: AnyObject] = getKeyChainData()
+        let data: [String: AnyObject] = getUserKeyChainData()
         // get some data from the backend
         User.currentUser = User(propertyDictionary: data)
     }

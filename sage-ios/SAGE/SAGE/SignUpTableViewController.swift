@@ -64,7 +64,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     }
     
     func loadSchoolData() {
-        BaseOperation.loadSchools { (schoolDict) -> Void in
+        AnnouncementsOperations.loadSchools { (schoolDict) -> Void in
             for schoolDict in schoolDict {
                 self.schools.append((schoolDict as! NSDictionary)["name"] as! String)
                 self.schoolDict[(schoolDict as! NSDictionary)["name"] as! String] = ((schoolDict as! NSDictionary)["id"] as! Int)

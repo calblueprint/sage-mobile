@@ -9,7 +9,6 @@
 import UIKit
 
 class LoginController: UIViewController {
-    var currentErrorMessage: ErrorView?
     
     override func loadView() {
         self.view = LoginView()
@@ -47,28 +46,16 @@ class LoginController: UIViewController {
         self.presentViewController(rootTabBarController, animated: false, completion: nil)
     }
     
-    func showError(message: String) {
-        if let current = self.currentErrorMessage {
-            current.removeFromSuperview()
-        }
-        
-        let errorView = ErrorView(height: 64.0, messageString: message)
-        self.view.addSubview(errorView)
-        self.view.bringSubviewToFront(errorView)
-        errorView.setX(0)
-        errorView.setY(-10)
-        self.currentErrorMessage = errorView
-        
-        UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
-            errorView.setY(0)
-            }) { (bool) -> Void in
-                UIView.animateWithDuration(UIView.animationTime, delay: 3, options: .CurveLinear, animations: { () -> Void in
-                    errorView.alpha = 0.0
-                    errorView.setY(-64)
-                    }, completion: nil)
-        }
-    }
     
+    //
+    // MARK: - Login validation and logic methods
+    //
+    
+    func showErrorAndSetMessage(message: String, size: CGFloat) {
+        let error = (self.view as! LoginView).currentErrorMessage
+        let errorView = super.showError(message, size: size, currentError: error)
+        (self.view as! LoginView).currentErrorMessage = errorView
+    }
     func attemptLogin() {
         let loginView = (self.view as! LoginView)
         if let email = loginView.loginEmailField.text {
@@ -80,7 +67,7 @@ class LoginController: UIViewController {
                             self.pushRootTabBarController()
                         } else {
                             // indicate bad login
-                            self.showError("Invalid login - try again!")
+                            self.showErrorAndSetMessage("Invalid login - try again!", size: 64)
                         }
                     })
                 })

@@ -18,6 +18,7 @@ class LoginView: UIView {
     var secondDivider: UIView = UIView()
     var loginButton: UIButton = UIButton()
     var loginButtonText: UILabel = UILabel()
+    var currentErrorMessage: ErrorView?
     
     var movedUp: Bool = false
     

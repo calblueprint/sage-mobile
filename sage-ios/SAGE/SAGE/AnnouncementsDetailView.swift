@@ -31,11 +31,16 @@ class AnnouncementsDetailView: UIView {
         super.init(coder: aDecoder)
     }
     
+    func formatDate(date:NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.LongStyle
+        return dateFormatter.stringFromDate(date)
+    }
     
     func setupWithAnnouncement(announcement: Announcement) {
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
-        self.announcementTime.text = "5 days ago"
+        self.announcementTime.text = self.formatDate((announcement.timeCreated)!)
         var announcementTo = "Everyone"
         if (announcement.school != nil) {
             announcementTo = (announcement.school?.name)!

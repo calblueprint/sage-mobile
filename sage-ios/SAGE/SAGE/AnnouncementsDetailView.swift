@@ -1,45 +1,36 @@
 //
-//  AnnouncementsTableViewCell.swift
+//  AnnouncementsDetailView.swift
 //  SAGE
 //
-//  Created by Erica Yin on 10/17/15.
+//  Created by Erica Yin on 11/7/15.
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
 import Foundation
-import UIKit
 
-class AnnouncementsTableViewCell: UITableViewCell {
+class AnnouncementsDetailView: UIView {
+    var tableView = UITableView()
     let announcementUserImg = UIImageView()
     var announcementUserName = UILabel()
     var announcementTitle = UILabel()
     var announcementTime = UILabel()
     var announcementMessage = UILabel()
     
-    struct cellHolder {
-        static var cell = AnnouncementsTableViewCell()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(announcementUserImg)
-        contentView.addSubview(announcementUserName)
-        contentView.addSubview(announcementTime)
-        contentView.addSubview(announcementTitle)
-        contentView.addSubview(announcementMessage)
-        self.selectionStyle = .None
-        setUpCellStyle()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.tableView.tableFooterView = UIView()
+        self.addSubview(announcementUserImg)
+        self.addSubview(announcementUserName)
+        self.addSubview(announcementTime)
+        self.addSubview(announcementTitle)
+        self.addSubview(announcementMessage)
+        setUpViewStyle()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
-    static func heightForAnnouncement(announcement: Announcement, width: CGFloat) -> CGFloat {
-        let cell = AnnouncementsTableViewCell.cellHolder.cell
-        cell.setupWithAnnouncement(announcement)
-        return CGRectGetHeight(cell.frame)
-    }
     
     func setupWithAnnouncement(announcement: Announcement) {
         self.announcementTitle.text = announcement.title
@@ -60,7 +51,8 @@ class AnnouncementsTableViewCell: UITableViewCell {
         layoutSubviews()
     }
     
-    func setUpCellStyle() {
+    
+    func setUpViewStyle() {
         announcementUserImg.backgroundColor = UIColor.borderColor
         announcementUserImg.setHeight(32)
         announcementUserImg.setWidth(32)
@@ -80,6 +72,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementMessage.font = UIFont(name: "Arial", size: 14)
         announcementMessage.textAlignment = NSTextAlignment.Left
     }
+
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -112,7 +105,5 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementMessage.fillWidthWithMargin(15)
         let width = CGRectGetWidth(announcementMessage.frame)
         announcementMessage.setSize(announcementMessage.sizeThatFits(CGSizeMake(width, CGFloat.max)))
-        
-        self.setHeight(CGRectGetMaxY(announcementMessage.frame)+10)
     }
 }

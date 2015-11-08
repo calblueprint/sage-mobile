@@ -11,8 +11,8 @@ import Foundation
 class AnnouncementsViewController: UIViewController {
     
     var announcements: [Announcement] = [
-        Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Same-era", text: "I'm so same right now.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Andrea", lastName: "Millwoman"), title: "I'm so high.", text: "Very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, high.", timeCreated: NSDate())]
+        Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Announcement Title", text: "Here's a short announcement.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Andrew", lastName: "Millman"), title: "Another Announcement Title", text: "Here's a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, long announcement.", timeCreated: NSDate())]
     
     override func loadView() {
         self.view = AnnouncementsView()
@@ -51,7 +51,11 @@ extension AnnouncementsViewController: UITableViewDataSource {
         let announcementsCell = cell as! AnnouncementsTableViewCell
         announcementsCell.setupWithAnnouncement(announcements[indexPath.row])
         return announcementsCell
-        
     }
     
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        NSLog("selected cell at row: \(indexPath.row)")
+        var view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
+        self.navigationController!.pushViewController(view, animated: true)
+    }
 }

@@ -16,7 +16,6 @@ import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
-
 /**
  * Created by kelseylam on 10/24/15.
  */
@@ -51,4 +50,5 @@ public class AnnouncementsListActivity extends NavigationAbstractActivity {
     public ArrayList<Announcement> getmAnnouncementsList() {
         return mAnnouncementsList;
     }
+
 }

@@ -26,6 +26,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     private ArrayList<Announcement> announcementsArrayList = new ArrayList<>();
     private AnnouncementsListAdapter adapter;
+
     @Bind(R.id.announcements_recycler) RecycleViewEmpty announcementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;

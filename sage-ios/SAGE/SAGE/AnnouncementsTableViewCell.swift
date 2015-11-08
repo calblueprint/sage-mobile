@@ -85,6 +85,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         announcementUserImg.layer.cornerRadius = 16
+        announcementUserImg.clipsToBounds = true
         announcementUserImg.setX(UIConstants.sideMargin)
         announcementUserImg.setY(UIConstants.textMargin)
         

@@ -2,4 +2,23 @@
     <string name="app_name">Sage</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Navigation Drawer -->
+    <string name="announcements">Announcements</string>
+    <string name="log_out">Log Out</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+
+    <!-- General Errors -->
+    <string name="cannot_be_blank">%1$s cannot be blank.</string>
+    <string name="optional">Optional</string>
+
+    <!-- Log in -->
+    <string name="shared_preferences">SAGE_ANDROID</string>
+    <string name="shared_preference_email">email</string>
+    <string name="shared_preference_auth_token">auth_token</string>
 </resources>

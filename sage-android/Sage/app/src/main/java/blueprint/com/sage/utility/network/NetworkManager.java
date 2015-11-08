@@ -34,7 +34,6 @@ public class NetworkManager {
 
     private static ObjectMapper mObjectMapper;
 
-
     /**
      * Returns a RequestHandler by assigning CONTEXT, an applicaiton
      * context set by the caller, to a RequestQueue object, which

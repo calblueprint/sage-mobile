@@ -12,15 +12,18 @@ import java.util.ArrayList;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
+import blueprint.com.sage.events.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by kelseylam on 10/24/15.
  */
 public class AnnouncementsListFragment extends Fragment {
 
+    private ArrayList<Announcement> announcementsArrayList = new ArrayList<>();
     @Bind(R.id.announcements_recycler) RecyclerView announcementsList;
 
     public static AnnouncementsListFragment newInstance() {
@@ -41,25 +44,25 @@ public class AnnouncementsListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    public void onEvent(AnnouncementsListEvent event) {
+        AnnouncementsListActivity activity = (AnnouncementsListActivity) getActivity();
+        announcementsArrayList = activity.getmAnnouncementsList();
+    }
+
     public void initializeViews() {
-        ArrayList<Announcement> announcements = new ArrayList<>();
-        Announcement filler = new Announcement();
-        filler.setBody("Wow, what a great announcement!");
-        filler.setTitle("I love dogs");
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
-        announcements.add(filler);
+
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         announcementsList.setLayoutManager(llm);
-        AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(announcements, getActivity());
+        AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(announcementsArrayList, getActivity());
         announcementsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         //set adapter, adapter.notifydatasetchanged, pass in arraylist to adapter
     }
-
-
 }

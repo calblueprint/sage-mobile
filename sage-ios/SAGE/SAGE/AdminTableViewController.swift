@@ -46,50 +46,52 @@ class AdminTableViewController: UITableViewController {
         // not dequeuing because there's a small, fixed number of cells
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        let iconSize: CGFloat = CGFloat(23.0)
         switch indexPath.section {
         case 0:
             cell.textLabel?.text = "Browse"
-            let icon = FAKIonIcons.clipboardIconWithSize(UIConstants.tabBarIconSize)
-                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+            let icon = FAKIonIcons.clipboardIconWithSize(iconSize)
+                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, iconSize))
             cell.imageView?.image = icon
         case 1:
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Browse"
-                let icon = FAKIonIcons.homeIconWithSize(UIConstants.tabBarIconSize)
-                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                let icon = FAKIonIcons.homeIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             } else {
                 cell.textLabel?.text = "Add"
-                let icon = FAKIonIcons.plusIconWithSize(UIConstants.tabBarIconSize)
-                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                let icon = FAKIonIcons.plusIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             }
         case 2:
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Check ins"
-                let icon = FAKIonIcons.locationIconWithSize(UIConstants.tabBarIconSize)
-                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                let icon = FAKIonIcons.locationIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             } else {
                 cell.textLabel?.text = "Sign ups"
-                let icon = FAKIonIcons.personAddIconWithSize(UIConstants.tabBarIconSize)
-                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                let icon = FAKIonIcons.personAddIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             }
         case 3:
             if indexPath.row == 0 {
                 cell.textLabel?.text = "End Fall 2015"
-                let icon = FAKIonIcons.arrowRightAIconWithSize(UIConstants.tabBarIconSize)
-                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                let icon = FAKIonIcons.logOutIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             } else {
                 cell.textLabel?.text = "Change hour requirements"
-                let icon = FAKIonIcons.clockIconWithSize(UIConstants.tabBarIconSize)
-                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                let icon = FAKIonIcons.clockIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             }
         default: break
         }
+        cell.textLabel?.font = UIFont.systemFontOfSize(cell.textLabel!.font.pointSize)
         return cell
     }
 }

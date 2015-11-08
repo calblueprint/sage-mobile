@@ -38,6 +38,8 @@ class AnnouncementsDetailView: UIView {
     }
     
     func setupWithAnnouncement(announcement: Announcement) {
+        let image = UIImage(named: "UserImage.jpg")
+        self.announcementUserImg.image = image
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
         self.announcementTime.text = self.formatDate((announcement.timeCreated)!)
@@ -58,7 +60,6 @@ class AnnouncementsDetailView: UIView {
     
     
     func setUpViewStyle() {
-        announcementUserImg.backgroundColor = UIColor.borderColor
         announcementUserImg.setHeight(32)
         announcementUserImg.setWidth(32)
         
@@ -82,6 +83,7 @@ class AnnouncementsDetailView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         announcementUserImg.layer.cornerRadius = 16
+        announcementUserImg.clipsToBounds = true
         announcementUserImg.setX(UIConstants.sideMargin)
         announcementUserImg.setY(UIConstants.textMargin)
         

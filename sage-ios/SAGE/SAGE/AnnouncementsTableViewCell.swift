@@ -42,6 +42,8 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     func setupWithAnnouncement(announcement: Announcement) {
+        let image = UIImage(named: "UserImage.jpg")
+        self.announcementUserImg.image = image
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
         self.announcementTime.text = "5 days ago"
@@ -61,7 +63,6 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     func setUpCellStyle() {
-        announcementUserImg.backgroundColor = UIColor.borderColor
         announcementUserImg.setHeight(32)
         announcementUserImg.setWidth(32)
         

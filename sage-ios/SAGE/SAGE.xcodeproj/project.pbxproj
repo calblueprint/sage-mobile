@@ -12,7 +12,6 @@
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
 		2705CC531BB927D8004FE927 /* SAGETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC521BB927D8004FE927 /* SAGETests.swift */; };
 		2705CC5E1BB927D8004FE927 /* SAGEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */; };
-		27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F990B61BBC7E0700D61DA2 /* Images.xcassets */; };
 		27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; };
 		27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; };
 		27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C31BBDD1F300D61DA2 /* UIConstants.swift */; };
@@ -74,6 +73,7 @@
 		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */; };
 		5D8AF98B1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */; };
+		5D8AF98F1BEF059D0008D2C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */; };
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */; };
@@ -108,7 +108,6 @@
 		2705CC591BB927D8004FE927 /* SAGEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAGEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAGEUITests.swift; sourceTree = "<group>"; };
 		2705CC5F1BB927D8004FE927 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27F990B61BBC7E0700D61DA2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		27F990B81BBCC3CB00D61DA2 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		27F990BF1BBCE3B300D61DA2 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		27F990C11BBDC5C200D61DA2 /* SAGE-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAGE-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -148,6 +147,7 @@
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailView.swift; sourceTree = "<group>"; };
 		5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailViewController.swift; sourceTree = "<group>"; };
+		5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewCell.swift; sourceTree = "<group>"; };
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsView.swift; sourceTree = "<group>"; };
@@ -233,7 +233,7 @@
 				2705CC3D1BB927D7004FE927 /* AppDelegate.swift */,
 				27F990C11BBDC5C200D61DA2 /* SAGE-Bridging-Header.h */,
 				2705CC491BB927D8004FE927 /* Info.plist */,
-				27F990B61BBC7E0700D61DA2 /* Images.xcassets */,
+				5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */,
 			);
 			path = SAGE;
 			sourceTree = "<group>";
@@ -515,7 +515,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27F990B71BBC7E0700D61DA2 /* Images.xcassets in Resources */,
+				5D8AF98F1BEF059D0008D2C4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

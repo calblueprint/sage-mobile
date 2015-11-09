@@ -16,7 +16,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     var announcementTime = UILabel()
     var announcementMessage = UILabel()
     
-    struct cellHolder {
+    struct DummyCellHolder {
         static var cell = AnnouncementsTableViewCell()
     }
     
@@ -36,7 +36,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     static func heightForAnnouncement(announcement: Announcement, width: CGFloat) -> CGFloat {
-        let cell = AnnouncementsTableViewCell.cellHolder.cell
+        let cell = AnnouncementsTableViewCell.DummyCellHolder.cell
         cell.setWidth(width)
         cell.setupWithAnnouncement(announcement)
         return CGRectGetHeight(cell.frame)

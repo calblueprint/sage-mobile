@@ -212,10 +212,12 @@ class SignUpController: UIViewController  {
     // MARK: - Other actions
     //
     func xButtonPressed() {
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.presentingViewController?.view.alpha = 1.0
         UIView.animateWithDuration(UIView.animationTime) { () -> Void in
             self.view.alpha = 0.0
         }
+        self.dismissViewControllerAnimated(false, completion: nil)
+
     }
 }
 

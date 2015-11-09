@@ -26,6 +26,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     var schools: [String] = []
     var schoolDict: NSMutableDictionary
     var volunteerLevelDict: NSMutableDictionary
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
     init(type: ContentType, schoolIDDict: NSMutableDictionary, volunteerlevelDict: NSMutableDictionary) {
         self.modalType = type
@@ -47,6 +48,15 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.tableFooterView = UIView()
+        
+        if self.modalType == .School {
+            self.view.addSubview(self.activityIndicator)
+            self.view.bringSubviewToFront(self.activityIndicator)
+            self.activityIndicator.centerHorizontally()
+            self.activityIndicator.centerVertically()
+            self.activityIndicator.startAnimating()
+        }
         
         let rightButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClicked")
         self.navigationItem.rightBarButtonItem = rightButton
@@ -70,6 +80,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
                 self.schoolDict[(schoolDict as! NSDictionary)["name"] as! String] = ((schoolDict as! NSDictionary)["id"] as! Int)
             }
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
     }
 

@@ -64,8 +64,8 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     func setUpCellStyle() {
-        announcementUserImg.setHeight(32)
-        announcementUserImg.setWidth(32)
+        announcementUserImg.setHeight(UIConstants.userImageSize)
+        announcementUserImg.setWidth(UIConstants.userImageSize)
         
         announcementUserName.font = UIFont.normalFont
         announcementUserName.textAlignment = NSTextAlignment.Left
@@ -94,29 +94,29 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementUserName.setX(announcementUserImgRight+UIConstants.textMargin)
         announcementUserName.setY(UIConstants.textMargin)
         announcementUserName.setHeight(16)
-        announcementUserName.fillWidthWithMargin(15)
+        announcementUserName.fillWidthWithMargin(UIConstants.sideMargin)
         
         let announcementTimeY = CGRectGetMaxY(announcementUserName.frame)
         announcementTime.setX(announcementUserImgRight+UIConstants.textMargin)
         announcementTime.setY(announcementTimeY)
         announcementTime.setHeight(16)
-        announcementTime.fillWidthWithMargin(15)
+        announcementTime.fillWidthWithMargin(UIConstants.sideMargin)
         
         let announcementTitleY = CGRectGetMaxY(announcementTime.frame) + UIConstants.textMargin
         announcementTitle.setY(announcementTitleY)
         announcementTitle.setX(announcementUserImgRight+UIConstants.textMargin)
         announcementTitle.setHeight(16)
-        announcementTitle.fillWidthWithMargin(15)
+        announcementTitle.fillWidthWithMargin(UIConstants.sideMargin)
         
         let announcementMessageY = CGRectGetMaxY(announcementTitle.frame) + UIConstants.textMargin
         announcementMessage.setY(announcementMessageY)
         announcementMessage.setX(announcementUserImgRight+UIConstants.textMargin)
-        announcementMessage.setHeight(40)
-        announcementMessage.fillWidthWithMargin(15)
+        announcementMessage.setHeight(10)
+        announcementMessage.fillWidthWithMargin(UIConstants.sideMargin)
         let width = CGRectGetWidth(announcementMessage.frame)
         announcementMessage.setSize(announcementMessage.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
-        self.setHeight(CGRectGetMaxY(announcementMessage.frame)+10)
-        self.setHeight(100)
+        self.setHeight(CGRectGetMaxY(announcementMessage.frame)+UIConstants.textMargin)
+//        self.setHeight(100)
     }
 }

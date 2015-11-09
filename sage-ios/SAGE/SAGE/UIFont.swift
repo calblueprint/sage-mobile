@@ -32,4 +32,8 @@ extension UIFont {
         return UIFont(name: ".SFUIDisplay-Semibold", size: size)!
     }
     
+    static func getRegularFont(size: CGFloat = 20) -> UIFont {
+        return UIFont(name: ".SFUIText-Regular", size: size)!
+    }
+    
 }

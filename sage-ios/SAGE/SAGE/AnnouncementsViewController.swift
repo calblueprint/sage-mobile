@@ -11,13 +11,13 @@ import Foundation
 class AnnouncementsViewController: UIViewController {
     
     var announcements: [Announcement] = [
-        Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Announcement Title", text: "I hate walking and I only wear shorts.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Andrew", lastName: "Millwoman"), title: "Announcement Title", text: "I am very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very high.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate())
+        Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Announcement 1 Title", text: "I hate walking and I only wear shorts.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Andrew", lastName: "Millwoman"), title: "Announcement 2 Title", text: "I am very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very high.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate())
     ]
     
     override func loadView() {

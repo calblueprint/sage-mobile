@@ -20,7 +20,7 @@ class AnnouncementsDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
-        self.title = "Announcement"
+        self.title = announcement.title
     }
     
     init(announcement: Announcement) {

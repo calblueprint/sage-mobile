@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.SchoolListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.schools.fragments.SchoolListFragment;
 import blueprint.com.sage.shared.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/4/15.
@@ -28,16 +30,17 @@ public class SchoolsActivity extends NavigationAbstractActivity {
 
         mSchools = new ArrayList<>();
 
-        getSchoolsList();
-        FragUtils.replace(R.id.check_in_container, SchoolListFragment.newInstance(), this);
+        getSchoolsListRequest();
+        FragUtils.replace(R.id.container, SchoolListFragment.newInstance(), this);
     }
 
-    private void getSchoolsList() {
+    public void getSchoolsListRequest() {
         SchoolListRequest request = new SchoolListRequest(this,
                 new Response.Listener<ArrayList<School>>() {
                     @Override
                     public void onResponse(ArrayList<School> schools) {
-
+                        setSchools(schools);
+                        EventBus.getDefault().post(new SchoolListEvent());
                     }
                 }, new Response.Listener<APIError>() {
                     @Override
@@ -47,4 +50,7 @@ public class SchoolsActivity extends NavigationAbstractActivity {
 
         getNetworkManager().getRequestQueue().add(request);
     }
+
+    public void setSchools(List<School> schools) { mSchools = schools; }
+    public List<School> getSchools() { return mSchools; }
 }

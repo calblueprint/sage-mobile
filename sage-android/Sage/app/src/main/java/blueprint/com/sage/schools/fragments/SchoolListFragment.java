@@ -1,11 +1,17 @@
 package blueprint.com.sage.schools.fragments;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.SchoolListEvent;
+import blueprint.com.sage.schools.adapters.SchoolsAdapter;
+import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -13,6 +19,12 @@ import butterknife.ButterKnife;
  * Shows a list of schools
  */
 public class SchoolListFragment extends SchoolAbstractFragment {
+
+    @Bind(R.id.schools_list_list) RecycleViewEmpty mSchoolsList;
+    @Bind(R.id.schools_list_empty_view) SwipeRefreshLayout mEmptyView;
+
+    private SchoolsAdapter mAdapter;
+
     public static SchoolListFragment newInstance() { return new SchoolListFragment(); }
 
     @Override
@@ -28,6 +40,14 @@ public class SchoolListFragment extends SchoolAbstractFragment {
     }
 
     private void initializeViews() {
+        mAdapter = new SchoolsAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
 
+        mSchoolsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mSchoolsList.setEmptyView(mEmptyView);
+        mSchoolsList.setAdapter(mAdapter);
+    }
+
+    private void onMessage(SchoolListEvent event) {
+        mAdapter.setSchools(getParentActivity().getSchools());
     }
 }

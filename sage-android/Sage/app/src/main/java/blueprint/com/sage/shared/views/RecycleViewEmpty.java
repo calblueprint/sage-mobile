@@ -68,8 +68,9 @@ public class RecycleViewEmpty extends RecyclerView {
         };
     }
 
-    private void setEmptyView(View view) {
+    public void setEmptyView(View view) {
         mEmptyView = view;
+        refreshLayout();
     }
 
     private void refreshLayout() {

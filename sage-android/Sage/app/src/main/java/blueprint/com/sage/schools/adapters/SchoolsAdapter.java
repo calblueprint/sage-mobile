@@ -21,6 +21,7 @@ public class SchoolsAdapter extends RecyclerView.Adapter<SchoolsAdapter.ViewHold
     private List<School> mSchools;
 
     public SchoolsAdapter(Activity activity, int layoutId, List<School> schools) {
+        super();
         mActivity = activity;
         mLayoutId = layoutId;
         mSchools = schools;
@@ -42,6 +43,11 @@ public class SchoolsAdapter extends RecyclerView.Adapter<SchoolsAdapter.ViewHold
 
     @Override
     public int getItemCount() { return mSchools.size(); }
+
+    public void setSchools(List<School> schools) {
+        mSchools = schools;
+        notifyDataSetChanged();
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View view) {

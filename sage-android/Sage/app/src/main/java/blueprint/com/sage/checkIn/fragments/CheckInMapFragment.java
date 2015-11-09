@@ -124,7 +124,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_request:
-                FragUtils.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
+                FragUtils.replaceBackStack(R.id.container, CheckInRequestFragment.newInstance(), getActivity());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -346,7 +346,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         toggleButtons();
         toggleTimer(false);
 
-        FragUtils.replaceBackStack(R.id.check_in_container, CheckInRequestFragment.newInstance(), getActivity());
+        FragUtils.replaceBackStack(R.id.container, CheckInRequestFragment.newInstance(), getActivity());
     }
 
 

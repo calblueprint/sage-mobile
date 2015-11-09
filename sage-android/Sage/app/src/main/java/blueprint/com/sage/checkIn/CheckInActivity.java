@@ -22,7 +22,7 @@ public class CheckInActivity extends NavigationAbstractActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeGoogleApiClient();
-        FragUtils.replace(R.id.check_in_container, CheckInMapFragment.newInstance(), this);
+        FragUtils.replace(R.id.container, CheckInMapFragment.newInstance(), this);
     }
 
     @Override

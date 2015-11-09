@@ -8,6 +8,8 @@
 
 import UIKit
 
+private var errorAssociationKey: UInt8 = 0
+
 extension UIView {
     
     @nonobjc static let animationTime = 0.3

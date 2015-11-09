@@ -12,6 +12,15 @@ class UnverifiedViewController: UIViewController {
     
     override func loadView() {
         self.view = UnverifiedView()
+        let unverifiedView = self.view as! UnverifiedView
+        unverifiedView.signOutButton.addTarget(self, action: "signOut", forControlEvents: .TouchUpInside)
+    }
+    
+    func signOut() {
+        let loginController = LoginController()
+        LoginHelper.deleteUserKeychainData()
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        self.presentViewController(loginController, animated: true, completion: nil)
     }
     
     //

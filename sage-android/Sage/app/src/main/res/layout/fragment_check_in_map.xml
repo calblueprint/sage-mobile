@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/check_in_coordinator"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_blue_grey_800">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/check_in_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <blueprint.com.sage.shared.views.FloatingTextView
+        android:id="@+id/check_in_map_timer"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="top|end"
+        android:layout_margin="16dp"
+        android:text="@string/check_in_default_start_time"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:elevation="10dp"
+        app:backgroundTint="@color/white"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/CheckInFAB"
+        android:id="@+id/check_in_check_fab"
+        android:src="@drawable/ic_done_white"
+        app:backgroundTint="@color/green500"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="88dp"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        style="@style/CheckInFAB"
+        android:id="@+id/check_in_location_fab"
+        android:src="@drawable/ic_my_location_black"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/white" />
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -15,6 +15,7 @@
 		278160181BC0DF7700A1DB75 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278160171BC0DF7700A1DB75 /* APIKeys.swift */; settings = {ASSET_TAGS = (); }; };
 		2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601D1BC0E26B00A1DB75 /* CheckinView.swift */; settings = {ASSET_TAGS = (); }; };
+		278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278912081BEEEC590005D46E /* CheckinOperations.swift */; settings = {ASSET_TAGS = (); }; };
 		27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67B1BE0416F00F9D026 /* RequestHoursViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67D1BE0422900F9D026 /* RequestHoursView.swift */; settings = {ASSET_TAGS = (); }; };
 		27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67F1BE1993700F9D026 /* FormItem.swift */; settings = {ASSET_TAGS = (); }; };
@@ -114,6 +115,7 @@
 		278160171BC0DF7700A1DB75 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		2781601D1BC0E26B00A1DB75 /* CheckinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinView.swift; sourceTree = "<group>"; };
+		278912081BEEEC590005D46E /* CheckinOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinOperations.swift; sourceTree = "<group>"; };
 		27D1B67B1BE0416F00F9D026 /* RequestHoursViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHoursViewController.swift; sourceTree = "<group>"; };
 		27D1B67D1BE0422900F9D026 /* RequestHoursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestHoursView.swift; sourceTree = "<group>"; };
 		27D1B67F1BE1993700F9D026 /* FormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormItem.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */,
+				278912081BEEEC590005D46E /* CheckinOperations.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */,
+				278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */,
 				42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */,

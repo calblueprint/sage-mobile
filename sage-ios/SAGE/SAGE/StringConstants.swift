@@ -13,4 +13,6 @@ struct StringConstants {
     static let kBaseURL = "SAGE"
     static let JSONdateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
+    static let kEndpointCheckin = kBaseURL + "checkin"
+    
 }

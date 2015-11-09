@@ -14,10 +14,6 @@ class AnnouncementsViewController: UIViewController {
         Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Announcement 1 Title", text: "I hate walking and I only wear shorts.", timeCreated: NSDate()),
         Announcement(sender: User(firstName: "Andrew", lastName: "Millwoman"), title: "Announcement 2 Title", text: "I am very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very high.", timeCreated: NSDate()),
         Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement 3 Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate())
     ]
     
     override func loadView() {
@@ -59,8 +55,8 @@ extension AnnouncementsViewController: UITableViewDataSource {
         return announcementsCell
     }
     
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        var view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         }

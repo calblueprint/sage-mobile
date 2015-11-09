@@ -12,7 +12,7 @@ class AnnouncementsDetailViewController: UIViewController {
     var announcement: Announcement
     
     override func loadView() {
-        var view = AnnouncementsDetailView()
+        let view = AnnouncementsDetailView()
         view.setupWithAnnouncement(announcement)
         self.view = view
     }

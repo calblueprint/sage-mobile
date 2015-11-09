@@ -37,8 +37,8 @@ class AnnouncementsTableViewCell: UITableViewCell {
     
     static func heightForAnnouncement(announcement: Announcement, width: CGFloat) -> CGFloat {
         let cell = AnnouncementsTableViewCell.cellHolder.cell
+        cell.setWidth(width)
         cell.setupWithAnnouncement(announcement)
-        print(CGRectGetHeight(cell.frame))
         return CGRectGetHeight(cell.frame)
     }
     
@@ -117,6 +117,5 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementMessage.setSize(announcementMessage.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
         self.setHeight(CGRectGetMaxY(announcementMessage.frame)+UIConstants.textMargin)
-//        self.setHeight(100)
     }
 }

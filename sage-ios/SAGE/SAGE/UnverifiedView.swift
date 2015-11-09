@@ -17,6 +17,7 @@ class UnverifiedView: UIView {
     var iconImage: UIImageView = UIImageView()
     var photo: UIImageView = UIImageView()
     var photoBorder: UIView = UIView()
+    var signOutButton: UIButton = UIButton()
     
     required override init(frame: CGRect) {
         let screenRect = UIScreen.mainScreen().bounds;
@@ -69,6 +70,10 @@ class UnverifiedView: UIView {
         self.photo.image = personImage
         self.photo.clipsToBounds = true
         self.photo.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        
+        self.containerView.addSubview(self.signOutButton)
+        self.signOutButton.setTitle("Sign out", forState: .Normal)
+        self.signOutButton.setTitleColor(UIColor.lightBlueColor, forState: .Normal)
     }
     
     override func layoutSubviews() {
@@ -102,6 +107,11 @@ class UnverifiedView: UIView {
         self.unverifiedLabel.setWidth(self.containerView.frame.width - 80)
         self.unverifiedLabel.setHeight(65)
         self.unverifiedLabel.centerHorizontally()
+        
+        self.signOutButton.sizeToFit()
+        self.signOutButton.centerHorizontally()
+        self.signOutButton.setY(CGRectGetMaxY(self.unverifiedLabel.frame) + 80)
+        
         
     }
 }

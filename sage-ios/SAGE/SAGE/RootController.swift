@@ -13,11 +13,16 @@ class RootController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if LoginHelper.userIsLoggedIn() {
-            if LoginHelper.userIsVerified() {
-                self.pushRootTabBarController()
-            } else {
-                self.pushUnverifiedViewController()
+            let completion = { (success: Bool) -> Void in
+               dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if success {
+                        self.pushRootTabBarController()
+                    } else {
+                        self.pushUnverifiedViewController()
+                    }
+               })
             }
+            LoginHelper.userIsVerified(completion)
         } else {
             self.pushLoginViewController()
         }

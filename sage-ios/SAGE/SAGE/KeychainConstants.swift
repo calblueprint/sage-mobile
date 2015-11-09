@@ -11,7 +11,6 @@ import Foundation
 struct KeychainConstants {
 
     static let kAuthToken: String = StringConstants.kBaseURL + "authToken"
-    static let kEmail: String = StringConstants.kBaseURL + "email"
     static let kVerified: String = StringConstants.kBaseURL + "verified"
     
     // string constants for stored data for request verification

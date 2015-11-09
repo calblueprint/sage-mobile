@@ -9,7 +9,7 @@
 import Foundation
 
 class AnnouncementsDetailView: UIView {
-    var tableView = UITableView()
+    var scrollView = UIScrollView()
     let announcementUserImg = UIImageView()
     var announcementUserName = UILabel()
     var announcementTitle = UILabel()
@@ -18,7 +18,7 @@ class AnnouncementsDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.tableView.tableFooterView = UIView()
+        scrollView.alwaysBounceVertical = true
         self.addSubview(announcementUserImg)
         self.addSubview(announcementUserName)
         self.addSubview(announcementTime)
@@ -63,11 +63,11 @@ class AnnouncementsDetailView: UIView {
         announcementUserImg.setHeight(32)
         announcementUserImg.setWidth(32)
         
-        announcementUserName.font = UIFont(name: "Arial", size: 14)
+        announcementUserName.font = UIFont.normalFont
         announcementUserName.textAlignment = NSTextAlignment.Left
         
         announcementTime.textColor = UIColor.secondaryTextColor
-        announcementTime.font = UIFont(name: "Arial", size: 14)
+        announcementTime.font = UIFont.normalFont
         announcementTime.textAlignment = NSTextAlignment.Left
         
         announcementTitle.font = UIFont.boldSystemFontOfSize(14)
@@ -75,7 +75,7 @@ class AnnouncementsDetailView: UIView {
         
         announcementMessage.numberOfLines = 0
         announcementMessage.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        announcementMessage.font = UIFont(name: "Arial", size: 14)
+        announcementMessage.font = UIFont.normalFont
         announcementMessage.textAlignment = NSTextAlignment.Left
     }
 

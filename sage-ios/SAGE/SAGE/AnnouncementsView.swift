@@ -24,7 +24,6 @@ class AnnouncementsView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         self.tableView.fillWidth()
         self.tableView.fillHeight()
     }

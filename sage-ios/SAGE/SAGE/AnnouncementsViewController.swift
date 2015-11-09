@@ -11,8 +11,14 @@ import Foundation
 class AnnouncementsViewController: UIViewController {
     
     var announcements: [Announcement] = [
-        Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Announcement Title", text: "Here's a short announcement.", timeCreated: NSDate()),
-        Announcement(sender: User(firstName: "Andrew", lastName: "Millwoman"), title: "Another Announcement Title", text: "I am very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very high.", timeCreated: NSDate())]
+        Announcement(sender: User(firstName: "Charles", lastName: "Xue"), title: "Announcement Title", text: "I hate walking and I only wear shorts.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Andrew", lastName: "Millwoman"), title: "Announcement Title", text: "I am very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very high.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate()),
+        Announcement(sender: User(firstName: "Same-era", lastName: "Vemulapalli"), title: "Announcement Title", text: "Don't take 188 with Russell. You will regret it.", timeCreated: NSDate())
+    ]
     
     override func loadView() {
         self.view = AnnouncementsView()
@@ -54,7 +60,6 @@ extension AnnouncementsViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        NSLog("selected cell at row: \(indexPath.row)")
         var view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)

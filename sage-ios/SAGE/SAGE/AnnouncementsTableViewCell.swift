@@ -38,6 +38,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     static func heightForAnnouncement(announcement: Announcement, width: CGFloat) -> CGFloat {
         let cell = AnnouncementsTableViewCell.cellHolder.cell
         cell.setupWithAnnouncement(announcement)
+        print(CGRectGetHeight(cell.frame))
         return CGRectGetHeight(cell.frame)
     }
     
@@ -66,11 +67,11 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementUserImg.setHeight(32)
         announcementUserImg.setWidth(32)
         
-        announcementUserName.font = UIFont(name: "Arial", size: 14)
+        announcementUserName.font = UIFont.normalFont
         announcementUserName.textAlignment = NSTextAlignment.Left
         
         announcementTime.textColor = UIColor.secondaryTextColor
-        announcementTime.font = UIFont(name: "Arial", size: 14)
+        announcementTime.font = UIFont.normalFont
         announcementTime.textAlignment = NSTextAlignment.Left
         
         announcementTitle.font = UIFont.boldSystemFontOfSize(14)
@@ -78,7 +79,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
         
         announcementMessage.numberOfLines = 0
         announcementMessage.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        announcementMessage.font = UIFont(name: "Arial", size: 14)
+        announcementMessage.font = UIFont.normalFont
         announcementMessage.textAlignment = NSTextAlignment.Left
     }
     
@@ -91,7 +92,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
         
         let announcementUserImgRight = CGRectGetMaxX(announcementUserImg.frame)
         announcementUserName.setX(announcementUserImgRight+UIConstants.textMargin)
-        announcementUserName.setY(10)
+        announcementUserName.setY(UIConstants.textMargin)
         announcementUserName.setHeight(16)
         announcementUserName.fillWidthWithMargin(15)
         
@@ -116,5 +117,6 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementMessage.setSize(announcementMessage.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
         self.setHeight(CGRectGetMaxY(announcementMessage.frame)+10)
+        self.setHeight(100)
     }
 }

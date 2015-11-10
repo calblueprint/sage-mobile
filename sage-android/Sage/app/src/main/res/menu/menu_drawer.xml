@@ -12,5 +12,11 @@
             android:checked="false"
             android:title="@string/log_out"
             android:icon="@drawable/ic_exit_to_app_black" />
+
+        <item
+            android:id="@+id/schools"
+            android:checked="false"
+            android:title="@string/log_out"
+            android:icon="@drawable/ic_exit_to_app_black" />
     </group>
 </menu>

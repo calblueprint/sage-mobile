@@ -1,5 +1,6 @@
 package blueprint.com.sage.shared;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.schools.SchoolsActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,10 +66,18 @@ public class NavigationAbstractActivity extends AbstractActivity
                 Log.e("Logging out", "yay");
                 NetworkUtils.logoutCurrentUser(this);
                 break;
+            case R.id.schools:
+                startSchoolsActivity();
+                break;
         }
 
         mDrawerLayout.closeDrawers();
         return true;
     }
 
+    private void startSchoolsActivity() {
+        Intent intent = new Intent(this, SchoolsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 }

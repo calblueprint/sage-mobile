@@ -167,7 +167,7 @@ class CheckinView: UIView {
     }
     
     private func createTimerArcWithPercentage(percentage: CGFloat) -> CGPath {
-        let pi: CGFloat = 3.1415926
+        let pi: CGFloat = CGFloat(M_PI)
         let arc = CGPathCreateMutable()
         CGPathMoveToPoint(arc, nil, timerSize/2, 0)
         CGPathAddArc(arc,

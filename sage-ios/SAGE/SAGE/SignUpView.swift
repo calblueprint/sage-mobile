@@ -9,10 +9,9 @@
 import UIKit
 import FontAwesomeKit
 
-class SignUpView: UIView, UIScrollViewDelegate {
+class SignUpView: UIView {
     
     var pageControl: UIPageControl = UIPageControl()
-    var gestureRecognizer: UISwipeGestureRecognizer = UISwipeGestureRecognizer()
     var nameView = SignUpNameView()
     var emailPasswordView = SignUpEmailPasswordView()
     var schoolHoursView = SignUpSchoolHoursView()
@@ -20,7 +19,11 @@ class SignUpView: UIView, UIScrollViewDelegate {
     var allViews = [SignUpFormView]()
     var xButton: UIButton = UIButton()
     var scrollView: UIScrollView = UIScrollView()
-        
+    var dismissKeyboard: Bool = true
+    var tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
+    var currentErrorMessage: ErrorView?
+    var movedUp: Bool = false
+    
     override init(frame: CGRect) {
         let screenRect = UIScreen.mainScreen().bounds;
         let screenWidth = screenRect.size.width;
@@ -28,7 +31,7 @@ class SignUpView: UIView, UIScrollViewDelegate {
         let newFrame = CGRectMake(0, 0, screenWidth, screenHeight)
         super.init(frame: newFrame)
         self.setUpViews()
-        self.scrollView.delegate = self
+        self.setUpKeyboardNotifications()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -89,8 +92,8 @@ class SignUpView: UIView, UIScrollViewDelegate {
         self.pageControl.centerHorizontally()
         self.pageControl.setY(225)
         
-        self.xButton.setX(10)
-        self.xButton.setY(10)
+        self.xButton.setX(8)
+        self.xButton.setY(8)
         self.xButton.setWidth(44)
         self.xButton.setHeight(66)
         let xButtonIcon = FAKIonIcons.closeRoundIconWithSize(22)
@@ -115,8 +118,8 @@ class SignUpView: UIView, UIScrollViewDelegate {
     }
     
     func changeBackgroundColor(offset: CGFloat) {
-        let screenRect = UIScreen.mainScreen().bounds;
-        let screenWidth = screenRect.size.width;
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenWidth = screenRect.size.width
         
         let colorIndex = Int(offset / screenWidth)
         let colorOffset = (offset % screenWidth) / screenWidth
@@ -139,24 +142,65 @@ class SignUpView: UIView, UIScrollViewDelegate {
     }
     
     func setUpGestureRecognizer() {
-        let recognizer = UITapGestureRecognizer()
-        recognizer.addTarget(self, action: "screenTapped")
-        self.addGestureRecognizer(recognizer)
+        self.tapRecognizer.addTarget(self, action: "screenTapped")
+        self.addGestureRecognizer(self.tapRecognizer)
         self.userInteractionEnabled = true
     }
     
     //
-    // MARK: - UIScrollViewDelegate methods
+    // MARK: - Keyboard-related methods (to move up elements when the keyboard appears)
     //
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView.contentOffset.x < 0 {
-            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-        } else if scrollView.contentOffset.x > 3 * self.frame.width {
-            scrollView.setContentOffset(CGPointMake(3 * self.frame.width, 0), animated: false)
-        } else {
-            self.endEditing(true)
-            self.changeBackgroundColor(scrollView.contentOffset.x)
+    func setUpKeyboardNotifications() {
+        let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenHeight = screenRect.size.height
+        
+        if (!self.movedUp) && screenHeight == 568 {
+            UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+                    self.nameView.icon.alpha = 0.0
+                    self.emailPasswordView.icon.alpha = 0.0
+                    self.pageControl.alpha = 0.0
+                    self.nameView.firstNameInput.setY(self.nameView.firstNameInput.frame.origin.y - 65)
+                    self.nameView.firstDivider.setY(self.nameView.firstDivider.frame.origin.y - 65)
+                    self.nameView.lastNameInput.setY(self.nameView.lastNameInput.frame.origin.y - 65)
+                    self.nameView.secondDivider.setY(self.nameView.secondDivider.frame.origin.y - 65)
+                    self.emailPasswordView.emailInput.setY(self.emailPasswordView.emailInput.frame.origin.y - 65)
+                    self.emailPasswordView.firstDivider.setY(self.emailPasswordView.firstDivider.frame.origin.y - 65)
+                    self.emailPasswordView.passwordInput.setY(self.emailPasswordView.passwordInput.frame.origin.y - 65)
+                    self.emailPasswordView.secondDivider.setY(self.emailPasswordView.secondDivider.frame.origin.y - 65)
+
+                }, completion: nil)
+            
+            self.movedUp = true
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        let screenRect = UIScreen.mainScreen().bounds
+        let screenHeight = screenRect.size.height
+        
+        if (self.movedUp) && screenHeight == 568 {
+            UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+                    self.nameView.firstNameInput.setY(self.nameView.firstNameInput.frame.origin.y + 65)
+                    self.nameView.firstDivider.setY(self.nameView.firstDivider.frame.origin.y + 65)
+                    self.nameView.lastNameInput.setY(self.nameView.lastNameInput.frame.origin.y + 65)
+                    self.nameView.secondDivider.setY(self.nameView.secondDivider.frame.origin.y + 65)
+                    self.emailPasswordView.emailInput.setY(self.emailPasswordView.emailInput.frame.origin.y + 65)
+                    self.emailPasswordView.firstDivider.setY(self.emailPasswordView.firstDivider.frame.origin.y + 65)
+                    self.emailPasswordView.passwordInput.setY(self.emailPasswordView.passwordInput.frame.origin.y + 65)
+                    self.emailPasswordView.secondDivider.setY(self.emailPasswordView.secondDivider.frame.origin.y + 65)
+                    self.nameView.icon.alpha = 1.0
+                    self.emailPasswordView.icon.alpha = 1.0
+                    self.pageControl.alpha = 1.0
+                }, completion: nil)
+            
+            self.movedUp = false
         }
     }
 }

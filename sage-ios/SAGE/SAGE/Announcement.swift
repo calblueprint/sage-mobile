@@ -41,8 +41,13 @@ class Announcement: NSObject {
             case AnnouncementConstants.kSchool:
                 let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
-            default:
-                self.setValue(value, forKey: propertyName)
+            case AnnouncementConstants.kId:
+                self.id = value as? Int
+            case AnnouncementConstants.kTitle:
+                self.title = value as? String
+            case AnnouncementConstants.kText:
+                self.title = value as? String
+            default: break
             }
         }
     }

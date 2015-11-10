@@ -25,7 +25,9 @@ class SignUpNameView: SignUpFormView {
         self.containerView.addSubview(self.secondDivider)
         
         self.firstNameInput.textColor = UIColor.whiteColor()
+        self.firstNameInput.returnKeyType = .Next
         self.lastNameInput.textColor = UIColor.whiteColor()
+        self.lastNameInput.returnKeyType = .Next
         self.firstDivider.backgroundColor = UIColor.whiteColor()
         self.secondDivider.backgroundColor = UIColor.whiteColor()
         
@@ -71,5 +73,4 @@ class SignUpNameView: SignUpFormView {
         self.secondDivider.setHeight(UIConstants.dividerHeight())
         
     }
-
 }

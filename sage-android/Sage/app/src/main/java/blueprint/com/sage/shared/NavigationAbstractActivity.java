@@ -70,6 +70,9 @@ public class NavigationAbstractActivity extends AbstractActivity
             case R.id.schools:
                 startSchoolsActivity();
                 break;
+            case R.id.requests:
+                startRequestsActivity();
+                break;
         }
 
         mDrawerLayout.closeDrawers();
@@ -77,8 +80,13 @@ public class NavigationAbstractActivity extends AbstractActivity
     }
 
     private void startSchoolsActivity() {
+        if (this instanceof SchoolsActivity) return;
+
         Intent intent = new Intent(this, SchoolsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    private void startRequestsActivity() {
     }
 }

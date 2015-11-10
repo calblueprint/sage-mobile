@@ -18,5 +18,11 @@
             android:checked="false"
             android:title="@string/schools"
             android:icon="@drawable/ic_location_city_black" />
+
+        <item
+            android:id="@+id/requests"
+            android:checked="false"
+            android:title="@string/requests"
+            android:icon="@drawable/ic_assignment_turned_in_black" />
     </group>
 </menu>

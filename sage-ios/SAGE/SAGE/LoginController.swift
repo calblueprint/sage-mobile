@@ -8,13 +8,14 @@
 
 import UIKit
 
-class LoginController: UIViewController, UITextFieldDelegate {
+class LoginController: UIViewController {
     
     override func loadView() {
         self.view = LoginView()
         (self.view as! LoginView).loginEmailField.delegate = self
         (self.view as! LoginView).loginPasswordField.delegate = self
         (self.view as! LoginView).signUpLink.addTarget(self, action: "signUpLinkTapped", forControlEvents: .TouchUpInside)
+        (self.view as! LoginView).loginButton.addTarget(self, action: "attemptLogin", forControlEvents: .TouchUpInside)
     }
     
     //
@@ -35,27 +36,6 @@ class LoginController: UIViewController, UITextFieldDelegate {
         })
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        let loginView = (self.view as! LoginView)
-        if textField == loginView.loginEmailField {
-            loginView.loginPasswordField.becomeFirstResponder()
-        } else if textField == loginView.loginPasswordField {
-            if let email = loginView.loginEmailField.text {
-                if let password = loginView.loginPasswordField.text {
-                    LoginHelper.isValidLogin(email, password: password, completion: {
-                        (valid: Bool) -> Void in
-                        if (valid) {
-                            self.pushRootTabBarController()
-                        } else {
-                            // indicate bad login
-                        }
-                    })
-                }
-            }
-        }
-        return true
-    }
-    
     //
     // MARK: - Methods to handle navigation
     //
@@ -66,4 +46,55 @@ class LoginController: UIViewController, UITextFieldDelegate {
         self.presentViewController(rootTabBarController, animated: false, completion: nil)
     }
     
+    
+    //
+    // MARK: - Login validation and logic methods
+    //
+    
+    func showErrorAndSetMessage(message: String, size: CGFloat) {
+        let error = (self.view as! LoginView).currentErrorMessage
+        let errorView = super.showError(message, size: size, currentError: error)
+        (self.view as! LoginView).currentErrorMessage = errorView
+    }
+    func attemptLogin() {
+        let loginView = (self.view as! LoginView)
+        if let email = loginView.loginEmailField.text {
+            if let password = loginView.loginPasswordField.text {
+                LoginHelper.isValidLogin(email, password: password, completion: {
+                    (valid: Bool) -> Void in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        if (valid) {
+                            if let verified = User.currentUser?.verified {
+                                if verified {
+                                    self.pushRootTabBarController()
+                                } else {
+                                    let unverifiedController = UnverifiedViewController()
+                                    self.presentViewController(unverifiedController, animated: true, completion: nil)
+                                }
+                            } else {
+                                let unverifiedController = UnverifiedViewController()
+                                self.presentViewController(unverifiedController, animated: true, completion: nil)
+                            }
+                        } else {
+                            // indicate bad login
+                            self.showErrorAndSetMessage("Invalid login - try again!", size: 64)
+                        }
+                    })
+                })
+            }
+        }
+    }
+    
+}
+
+extension LoginController: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        let loginView = (self.view as! LoginView)
+        if textField == loginView.loginEmailField {
+            loginView.loginPasswordField.becomeFirstResponder()
+        } else if textField == loginView.loginPasswordField {
+            self.attemptLogin()
+        }
+        return true
+    }
 }

@@ -25,7 +25,9 @@ class SignUpEmailPasswordView: SignUpFormView {
         self.containerView.addSubview(self.secondDivider)
         
         self.emailInput.textColor = UIColor.whiteColor()
+        self.emailInput.returnKeyType = .Next
         self.passwordInput.textColor = UIColor.whiteColor()
+        self.passwordInput.returnKeyType = .Next
         self.firstDivider.backgroundColor = UIColor.whiteColor()
         self.secondDivider.backgroundColor = UIColor.whiteColor()
         
@@ -33,7 +35,7 @@ class SignUpEmailPasswordView: SignUpFormView {
         self.passwordInput.attributedPlaceholder = NSAttributedString(string:"Password", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         self.passwordInput.secureTextEntry = true
         self.headerLabel.text = "Great!"
-        self.subHeaderLabel.text = "What's your email and password?"
+        self.subHeaderLabel.text = "What's your Berkeley email and password?"
         
         // set icon and color
         let emailIcon = FAKIonIcons.emailIconWithSize(48)

@@ -47,13 +47,12 @@ class Checkin: NSObject {
                 let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
             case CheckinConstants.kVerified:
-                if value as! Int == 0 {
-                    self.verified = false;
-                } else {
-                    self.verified = true;
-                }
-            default:
-                self.setValue(value, forKey: propertyName)
+                self.verified = value as? Bool
+            case CheckinConstants.kId:
+                self.id = value as? Int
+            case CheckinConstants.kComment:
+                self.comment = value as? String
+            default: break
             }
         }
     }

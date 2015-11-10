@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by charlesx on 11/4/15.
+ * Activity that basically adds a nav bar to your activity;
  */
 public class NavigationAbstractActivity extends AbstractActivity
                                         implements NavigationView.OnNavigationItemSelectedListener {

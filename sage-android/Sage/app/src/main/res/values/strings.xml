@@ -17,7 +17,7 @@
     <!-- General Errors -->
     <string name="cannot_be_blank">%1$s cannot be blank.</string>
     <string name="optional">Optional</string>
-    <string name="list_empty">Look\'s like there's nothing here!\nPull down to refresh.</string>
+    <string name="list_empty">Looks like there\'s nothing here!\nPull down to refresh.</string>
 
     <!-- Log in -->
     <string name="shared_preferences">SAGE_ANDROID</string>

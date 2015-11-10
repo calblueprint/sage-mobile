@@ -131,7 +131,7 @@ class CheckinView: UIView {
         self.addSubview(self.timerView)
         
         self.timerLabel.textAlignment = .Center
-        self.timerLabel.font = UIFont.systemFontOfSize(22.0)
+        self.timerLabel.font = UIFont.getDefaultFont(22.0)
         self.timerLabel.textColor = UIColor.lightRedColor
         self.timerView.addSubview(self.timerLabel)
         

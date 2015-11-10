@@ -33,12 +33,11 @@ class CheckinViewController: UIViewController {
         self.setupSessionTitleLabel()
         self.setupBarButtonItems()
         
-        self.checkinView.startButton.addTarget(self, action: "userPressedBeginSession:", forControlEvents: .TouchUpInside)
-        self.checkinView.endButton.addTarget(self, action: "userPressedEndSession:", forControlEvents: .TouchUpInside)
+        self.checkinView.startButton.addTarget(self, action: "userPressedBeginSession", forControlEvents: .TouchUpInside)
+        self.checkinView.endButton.addTarget(self, action: "userPressedEndSession", forControlEvents: .TouchUpInside)
 
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
-        // May wanna put in viewDidAppear() if we want to get the user's location every time the mapView appears
         self.startGettingCurrentLocation()
     }
     
@@ -64,7 +63,7 @@ class CheckinViewController: UIViewController {
     //
     // MARK: - Button event handling
     //
-    @objc private func userPressedBeginSession(sender: UIButton!) {
+    @objc private func userPressedBeginSession() {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .AuthorizedWhenInUse, .AuthorizedAlways:
@@ -102,7 +101,7 @@ class CheckinViewController: UIViewController {
         }
     }
     
-    @objc private func userPressedEndSession(sender: UIButton!) {
+    @objc private func userPressedEndSession() {
         //Verify location
         if true {
             let alertController = UIAlertController(
@@ -160,7 +159,7 @@ class CheckinViewController: UIViewController {
     
     private func setupDefaultTitleLabel() {
         self.defaultTitleLabel.text = "Check In"
-        self.defaultTitleLabel.font = UIFont.boldSystemFontOfSize(17.0)
+        self.defaultTitleLabel.font = UIFont.getSemiboldFont(17.0)
         self.defaultTitleLabel.textAlignment = .Center
         self.defaultTitleLabel.textColor = UIColor.whiteColor()
         self.defaultTitleLabel.alpha = 0
@@ -173,7 +172,7 @@ class CheckinViewController: UIViewController {
     
     private func setupSessionTitleLabel() {
         self.sessionTitleLabel.text = "Currently Mentoring"
-        self.sessionTitleLabel.font = UIFont.boldSystemFontOfSize(17.0)
+        self.sessionTitleLabel.font = UIFont.getSemiboldFont(17.0)
         self.sessionTitleLabel.textAlignment = .Center
         self.sessionTitleLabel.textColor = UIColor.blackColor()
         self.sessionTitleLabel.alpha = 0

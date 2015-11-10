@@ -14,6 +14,7 @@ import blueprint.com.sage.schools.adapters.SchoolsAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/4/15.
@@ -41,6 +42,18 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void initializeViews() {
         mAdapter = new SchoolsAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
 
@@ -55,7 +68,9 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     @Override
     public void onRefresh() { getParentActivity().getSchoolsListRequest(); }
 
-    public void onMessage(SchoolListEvent event) {
+    public void onEvent(SchoolListEvent event) {
         mAdapter.setSchools(getParentActivity().getSchools());
+        mEmptyView.setRefreshing(false);
+        mSchoolsRefreshView.setRefreshing(false);
     }
 }

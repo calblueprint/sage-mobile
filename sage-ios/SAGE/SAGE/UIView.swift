@@ -8,6 +8,8 @@
 
 import UIKit
 
+private var errorAssociationKey: UInt8 = 0
+
 extension UIView {
     
     @nonobjc static let animationTime = 0.3
@@ -106,5 +108,5 @@ extension UIView {
         if (self.superview != nil) {
             self.setY(CGRectGetHeight(self.superview!.frame)/2 - CGRectGetHeight(self.frame)/2)
         }
-    }
+    }    
 }

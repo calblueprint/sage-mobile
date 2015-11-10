@@ -28,6 +28,10 @@ class School: NSObject {
         super.init()
         for (propertyName, value) in propertyDictionary {
             switch propertyName {
+            case SchoolConstants.kId:
+                self.id = value as? Int
+            case SchoolConstants.kName:
+                self.name = value as? String
             case SchoolConstants.kStudents:
                 self.students = []
                 let studentsDictionaryArray = value as? [[String: AnyObject]]
@@ -43,8 +47,7 @@ class School: NSObject {
             case SchoolConstants.kDirector:
                 let directorDictionary = value as! [String: AnyObject]
                 self.director = User(propertyDictionary: directorDictionary)
-            default:
-                self.setValue(value, forKey: propertyName)
+            default: break
             }
         }
     }

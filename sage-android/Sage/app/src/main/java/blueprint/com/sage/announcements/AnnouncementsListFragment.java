@@ -50,6 +50,12 @@ public class AnnouncementsListFragment extends Fragment {
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
     public void onEvent(AnnouncementsListEvent event) {
         AnnouncementsListActivity activity = (AnnouncementsListActivity) getActivity();
         announcementsArrayList = activity.getmAnnouncementsList();

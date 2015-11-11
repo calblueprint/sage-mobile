@@ -8,7 +8,7 @@
 
 import CoreLocation
 
-class School: NSObject {
+class School: NSObject, NSCoding {
     var id: Int?
     var name: String?
     var location: CLLocation? = CLLocation(latitude: 0, longitude: 0)
@@ -50,6 +50,19 @@ class School: NSObject {
             default: break
             }
         }
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init()
+        self.id = aDecoder.decodeIntegerForKey(SchoolConstants.kId)
+        self.name = aDecoder.decodeObjectForKey(SchoolConstants.kName) as? String
+        self.location = aDecoder.decodeObjectForKey(SchoolConstants.kLocation) as? CLLocation
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeInteger(self.id!, forKey: SchoolConstants.kId)
+        aCoder.encodeObject(self.name, forKey: SchoolConstants.kName)
+        aCoder.encodeObject(self.location, forKey: SchoolConstants.kLocation)
     }
     
     func toDictionary() -> [String: AnyObject]{

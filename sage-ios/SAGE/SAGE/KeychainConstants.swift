@@ -25,10 +25,8 @@ struct KeychainConstants {
     static let kVHours: String = KeychainConstants.kVerificationBaseURL + "Hours"
     
     
-    //
-    // MARK:- Check In
-    //
     static let kSessionStartTime: String = "Session Start Time"
+    static let kSchool: String = "User School"
     
     
 }

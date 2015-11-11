@@ -1,7 +1,6 @@
 package blueprint.com.sage.schools.adapters;
 
 import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +10,21 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by charlesx on 11/4/15.
+ * Adapter for schools
  */
-public class SchoolsAdapter extends RecyclerView.Adapter<SchoolsAdapter.ViewHolder> {
+public class SchoolsListAdapter extends RecycleViewEmpty.Adapter<SchoolsListAdapter.ViewHolder> {
 
     private Activity mActivity;
     private int mLayoutId;
     private List<School> mSchools;
 
-    public SchoolsAdapter(Activity activity, int layoutId, List<School> schools) {
+    public SchoolsListAdapter(Activity activity, int layoutId, List<School> schools) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;
@@ -31,7 +32,7 @@ public class SchoolsAdapter extends RecyclerView.Adapter<SchoolsAdapter.ViewHold
     }
 
     @Override
-    public SchoolsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mActivity).inflate(mLayoutId, parent, false);
         return new ViewHolder(view);
     }
@@ -54,7 +55,7 @@ public class SchoolsAdapter extends RecyclerView.Adapter<SchoolsAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecycleViewEmpty.ViewHolder {
 
         @Bind(R.id.schools_list_item_title) TextView mSchoolTitle;
 

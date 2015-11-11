@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.schools.SchoolListEvent;
-import blueprint.com.sage.schools.adapters.SchoolsAdapter;
+import blueprint.com.sage.schools.adapters.SchoolsListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +26,7 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     @Bind(R.id.schools_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.schools_list_refresh) SwipeRefreshLayout mSchoolsRefreshView;
 
-    private SchoolsAdapter mAdapter;
+    private SchoolsListAdapter mAdapter;
 
     public static SchoolListFragment newInstance() { return new SchoolListFragment(); }
 
@@ -55,7 +55,7 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     }
 
     private void initializeViews() {
-        mAdapter = new SchoolsAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
+        mAdapter = new SchoolsListAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
 
         mSchoolsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSchoolsList.setEmptyView(mEmptyView);

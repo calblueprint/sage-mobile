@@ -37,7 +37,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
 
-        let announcementsViewController = UIViewController()
+        let announcementsViewController = AnnouncementsViewController()
         let checkInViewController = UIViewController()
         let myStatsViewController = UIViewController()
         let profileViewController = UIViewController()

@@ -44,6 +44,12 @@ extension UIView {
         self.frame = frame
     }
     
+    func setSize(size: CGSize) {
+        var frame = self.frame
+        frame.size = size
+        self.frame = frame
+    }
+    
     func alignRightWithMargin(margin: CGFloat) {
         if (self.superview != nil) {
             var frame = self.frame

@@ -19,6 +19,7 @@ struct UIConstants {
     static let barbuttonSize: CGFloat = 44.0
     static let barbuttonIconSize: CGFloat = 24.0
     static let tabBarIconSize: CGFloat = 28.0
+    static let userImageSize: CGFloat = 32.0
     
     static let fastAnimationTime: NSTimeInterval = 0.35
     static let normalAnimationTime: NSTimeInterval = 0.60

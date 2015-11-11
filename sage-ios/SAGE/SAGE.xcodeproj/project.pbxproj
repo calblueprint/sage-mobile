@@ -57,6 +57,7 @@
 		422334531BC0D8D900E863D0 /* libFontAwesomeKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */; };
 		422715451BC7359D00FD719C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422715441BC7359D00FD719C /* UIFont.swift */; };
 		4243E4DB1BF1A79100AA627A /* BrowseMentorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */; };
+		4243E4DE1BF1B2B300AA627A /* BrowseMentorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243E4DD1BF1B2B300AA627A /* BrowseMentorsTableViewCell.swift */; };
 		424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */; };
 		424A137C1BEED27300775E86 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A137B1BEED27300775E86 /* UIViewController.swift */; };
 		4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */; };
@@ -129,6 +130,7 @@
 		422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFontAwesomeKit.a; path = "Pods/../build/Debug-iphoneos/libFontAwesomeKit.a"; sourceTree = "<group>"; };
 		422715441BC7359D00FD719C /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsViewController.swift; sourceTree = "<group>"; };
+		4243E4DD1BF1B2B300AA627A /* BrowseMentorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsTableViewCell.swift; sourceTree = "<group>"; };
 		424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsOperations.swift; sourceTree = "<group>"; };
 		424A137B1BEED27300775E86 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainConstants.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 		27F990BC1BBCC58D00D61DA2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4243E4DF1BF1B2BE00AA627A /* Admin Views */,
 				42EFD6751BC9EC0D0063FD78 /* Sign Up Views */,
 				27F990BE1BBCC5A300D61DA2 /* Reusable */,
 				4254D2981BC62B4500C831C7 /* LoginView.swift */,
@@ -341,6 +344,14 @@
 				422334301BC0C97E00E863D0 /* SchoolConstants.swift */,
 			);
 			name = ModelConstants;
+			sourceTree = "<group>";
+		};
+		4243E4DF1BF1B2BE00AA627A /* Admin Views */ = {
+			isa = PBXGroup;
+			children = (
+				4243E4DD1BF1B2B300AA627A /* BrowseMentorsTableViewCell.swift */,
+			);
+			name = "Admin Views";
 			sourceTree = "<group>";
 		};
 		4254D2961BC5B19100C831C7 /* Login */ = {
@@ -610,6 +621,7 @@
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
 				42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */,
+				4243E4DE1BF1B2B300AA627A /* BrowseMentorsTableViewCell.swift in Sources */,
 				4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,

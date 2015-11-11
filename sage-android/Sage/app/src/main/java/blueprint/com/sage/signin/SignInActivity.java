@@ -9,7 +9,7 @@ import com.crashlytics.android.Crashlytics;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.utility.network.NetworkUtils;
-import blueprint.com.sage.utility.view.FragUtil;
+import blueprint.com.sage.utility.view.FragUtils;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -35,7 +35,7 @@ public class SignInActivity extends FragmentActivity {
                 Log.e(getClass().toString(), e.toString());
             }
         } else {
-            FragUtil.replace(R.id.sign_in_container, SignInFragment.newInstance(), this);
+            FragUtils.replace(R.id.sign_in_container, SignInFragment.newInstance(), this);
         }
     }
 }

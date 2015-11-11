@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.SchoolListEvent;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.schools.SchoolListRequest;

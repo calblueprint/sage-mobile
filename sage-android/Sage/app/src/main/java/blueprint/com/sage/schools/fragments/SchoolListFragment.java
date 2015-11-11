@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.SchoolListEvent;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.schools.adapters.SchoolsAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;

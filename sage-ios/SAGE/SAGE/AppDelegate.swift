@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey(APIKeys.googleMaps)
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.rootViewController = RootTabBarController()
+        window?.rootViewController = RootController()
         window?.makeKeyAndVisible()
         
         // Navigation bar appearance

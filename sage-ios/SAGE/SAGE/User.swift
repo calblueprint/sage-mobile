@@ -14,59 +14,59 @@ class User: NSObject, NSCoding {
         case ZeroUnit
         case OneUnit
         case TwoUnit
+        case Default
     }
     
     enum UserRole: Int {
         case Volunteer
         case Admin
+        case Default
+    }
+    
+    enum DefaultValues: Int {
+        case DefaultID = -1
+        case DefaultHours = -2
     }
         
-    var id: Int?
+    var id: Int
     var firstName: String?
     var lastName: String?
     var email: String?
     var school: School?
-    var level: VolunteerLevel?
-    var role: UserRole?
-    var totalHours: Int?
-    var verified: Bool?
+    var level: VolunteerLevel
+    var role: UserRole
+    var totalHours: Int
+    var verified: Bool
     
     //
     // MARK -- NSCoding
     //
     
     required init(coder aDecoder: NSCoder) {
-        super.init()
         self.id = aDecoder.decodeIntegerForKey(UserConstants.kId)
         self.firstName = aDecoder.decodeObjectForKey(UserConstants.kFirstName) as? String
         self.lastName = aDecoder.decodeObjectForKey(UserConstants.kLastName) as? String
         self.email = aDecoder.decodeObjectForKey(UserConstants.kEmail) as? String
         self.school = aDecoder.decodeObjectForKey(UserConstants.kSchool) as? School
-        self.level = VolunteerLevel(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kLevel))
-        self.role = UserRole(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kRole))
+        self.level = VolunteerLevel(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kLevel))!
+        self.role = UserRole(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kRole))!
         self.totalHours = aDecoder.decodeIntegerForKey(UserConstants.kTotalHours)
         self.verified = aDecoder.decodeBoolForKey(UserConstants.kVerified)
+        super.init()
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        if let id = self.id {
-            aCoder.encodeInteger(id, forKey: UserConstants.kId)
-        }
+        aCoder.encodeInteger(id, forKey: UserConstants.kId)
         aCoder.encodeObject(self.firstName, forKey: UserConstants.kFirstName)
         aCoder.encodeObject(self.lastName, forKey: UserConstants.kLastName)
         aCoder.encodeObject(self.email, forKey: UserConstants.kEmail)
-        if let level = self.level {
-            aCoder.encodeInteger(level.rawValue, forKey: UserConstants.kLevel)
-        }
-        if let role = self.role {
-            aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
-        }
-        aCoder.encodeObject(self.totalHours, forKey: UserConstants.kTotalHours)
-        aCoder.encodeObject(self.verified, forKey: UserConstants.kVerified)
+        aCoder.encodeInteger(level.rawValue, forKey: UserConstants.kLevel)
+        aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
+        aCoder.encodeInteger(self.totalHours, forKey: UserConstants.kTotalHours)
+        aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
     }
     
-    init(id: Int? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel? = nil, role: UserRole? = nil, totalHours: Int? = nil, verified: Bool? = nil) {
-        super.init()
+    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -76,31 +76,38 @@ class User: NSObject, NSCoding {
         self.role = role
         self.totalHours = totalHours
         self.verified = verified
+        super.init()
     }
     
     init(propertyDictionary: [String: AnyObject]) {
-        super.init()
+        // set default values
+        self.id = DefaultValues.DefaultID.rawValue
+        self.totalHours = DefaultValues.DefaultHours.rawValue
+        self.verified = false
+        self.level = .Default
+        self.role = .Default
+        
         for (propertyName, value) in propertyDictionary {
             switch propertyName {
             case UserConstants.kLevel:
                 switch value as! String {
                 case "one_unit": self.level = VolunteerLevel.OneUnit
                 case "two_units": self.level = VolunteerLevel.TwoUnit
-                default: self.level = VolunteerLevel.ZeroUnit
+                default: self.level = VolunteerLevel.Default
                 }
             case UserConstants.kRole:
                 switch value as! String {
                 case "admin": self.role = UserRole.Admin
                 case "volunteer": self.role = UserRole.Volunteer
-                default: self.role = UserRole.Volunteer
+                default: self.role = UserRole.Default
                 }
             case UserConstants.kSchool:
                 let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
             case UserConstants.kVerified:
-                self.verified = value as? Bool
+                self.verified = value as! Bool
             case UserConstants.kId:
-                self.id = value as? Int
+                self.id = value as! Int
             case UserConstants.kFirstName:
                 self.firstName = value as? String
             case UserConstants.kLastName:
@@ -110,11 +117,12 @@ class User: NSObject, NSCoding {
             default: break
             }
         }
+        super.init()
     }
     
     func toDictionary() -> [String: AnyObject]{
         var propertyDict: [String: AnyObject] = [String: AnyObject]()
-        if let id = self.id {
+        if DefaultValues.DefaultID.rawValue != self.id {
             propertyDict[UserConstants.kId] = id
         }
         if let firstName = self.firstName {
@@ -129,24 +137,16 @@ class User: NSObject, NSCoding {
         if let school = self.school {
             propertyDict[UserConstants.kSchool] = school.toDictionary()
         }
-        if let level = self.level {
+        if VolunteerLevel.Default != self.level {
             propertyDict[UserConstants.kLevel] = level.rawValue
         }
-        if let role = self.role {
+        if UserRole.Default != self.role {
             propertyDict[UserConstants.kRole] = role.rawValue
         }
-        if let totalHours = self.totalHours {
+        if DefaultValues.DefaultHours.rawValue != self.totalHours {
             propertyDict[UserConstants.kTotalHours] = totalHours
         }
-        if let verified = self.verified {
-            var value: Int
-            if (verified) {
-                value = 1
-            } else {
-                value = 0
-            }
-            propertyDict[UserConstants.kVerified] = value
-        }
+        propertyDict[UserConstants.kVerified] = verified
         return propertyDict
     }
 }

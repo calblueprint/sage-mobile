@@ -24,26 +24,22 @@ class LoginOperations: NSObject {
     
     static func userIsVerified(completion: ((Bool) -> Void)) {
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
-            if let verified = user.verified {
-                if verified {
-                    completion(true)
-                } else {
-                    let email = user.email
-                    let authToken = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
-                    if (email != nil && authToken != nil) {
-                        LoginOperations.loginWith(email!, authToken: authToken!, completion: { (success) -> Void in
-                            if success && (KeychainWrapper.objectForKey(KeychainConstants.kUser) as! User).verified! {
-                                completion(true)
-                            } else {
-                                completion(false)
-                            }
-                        })
-                    } else {
-                        completion(false)
-                    }
-                }
+            if user.verified {
+                completion(true)
             } else {
-                completion(false)
+                let email = user.email
+                let authToken = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
+                if (email != nil && authToken != nil) {
+                    LoginOperations.loginWith(email!, authToken: authToken!, completion: { (success) -> Void in
+                        if success && (KeychainWrapper.objectForKey(KeychainConstants.kUser) as! User).verified {
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
+                    })
+                } else {
+                    completion(false)
+                }
             }
         } else {
             completion(false)
@@ -52,8 +48,8 @@ class LoginOperations: NSObject {
     
     static func storeUserDataInKeychain(user: User, authToken: String? = nil) {
         if let existingUser = (KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User) {
-            if let id = user.id {
-                existingUser.id = id
+            if User.DefaultValues.DefaultID.rawValue != user.id {
+                existingUser.id = user.id
             }
             if let firstName = user.firstName {
                 existingUser.firstName = firstName
@@ -67,18 +63,16 @@ class LoginOperations: NSObject {
             if let school = user.school {
                 existingUser.school = school
             }
-            if let level = user.level {
-                existingUser.level = level
+            if User.VolunteerLevel.Default != user.level {
+                existingUser.level = user.level
             }
-            if let role = user.role {
-                existingUser.role = role
+            if User.UserRole.Default != user.role {
+                existingUser.role = user.role
             }
-            if let totalHours = user.totalHours {
-                existingUser.totalHours = totalHours
+            if User.DefaultValues.DefaultHours.rawValue != user.totalHours {
+                existingUser.totalHours = user.totalHours
             }
-            if let verified = user.verified {
-                existingUser.verified = verified
-            }
+            existingUser.verified = user.verified
             KeychainWrapper.setObject(existingUser, forKey: KeychainConstants.kUser)
         } else {
             KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)

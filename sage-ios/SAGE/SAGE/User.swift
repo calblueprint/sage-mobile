@@ -8,7 +8,7 @@
 
 import Foundation
 
-class User: NSObject {
+class User: NSObject, NSCoding {
     
     enum VolunteerLevel: Int {
         case ZeroUnit
@@ -20,9 +20,7 @@ class User: NSObject {
         case Volunteer
         case Admin
     }
-    
-    static var currentUser: User?
-    
+        
     var id: Int?
     var firstName: String?
     var lastName: String?
@@ -32,6 +30,40 @@ class User: NSObject {
     var role: UserRole?
     var totalHours: Int?
     var verified: Bool?
+    
+    //
+    // MARK -- NSCoding
+    //
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init()
+        self.id = aDecoder.decodeIntegerForKey(UserConstants.kId)
+        self.firstName = aDecoder.decodeObjectForKey(UserConstants.kFirstName) as? String
+        self.lastName = aDecoder.decodeObjectForKey(UserConstants.kLastName) as? String
+        self.email = aDecoder.decodeObjectForKey(UserConstants.kEmail) as? String
+        self.school = aDecoder.decodeObjectForKey(UserConstants.kSchool) as? School
+        self.level = VolunteerLevel(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kLevel))
+        self.role = UserRole(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kRole))
+        self.totalHours = aDecoder.decodeIntegerForKey(UserConstants.kTotalHours)
+        self.verified = aDecoder.decodeBoolForKey(UserConstants.kVerified)
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        if let id = self.id {
+            aCoder.encodeInteger(id, forKey: UserConstants.kId)
+        }
+        aCoder.encodeObject(self.firstName, forKey: UserConstants.kFirstName)
+        aCoder.encodeObject(self.lastName, forKey: UserConstants.kLastName)
+        aCoder.encodeObject(self.email, forKey: UserConstants.kEmail)
+        if let level = self.level {
+            aCoder.encodeInteger(level.rawValue, forKey: UserConstants.kLevel)
+        }
+        if let role = self.role {
+            aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
+        }
+        aCoder.encodeObject(self.totalHours, forKey: UserConstants.kTotalHours)
+        aCoder.encodeObject(self.verified, forKey: UserConstants.kVerified)
+    }
     
     init(id: Int? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel? = nil, role: UserRole? = nil, totalHours: Int? = nil, verified: Bool? = nil) {
         super.init()

@@ -48,6 +48,9 @@ public @Data class User {
     public User() {}
 
     @JsonIgnore
+    public String getName() { return String.format("%s %s", firstName, lastName); }
+
+    @JsonIgnore
     public void setTypePosition(int type) {
         switch (type) {
             case 0:

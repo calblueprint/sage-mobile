@@ -1,14 +1,17 @@
 package blueprint.com.sage.checkIn;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.List;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
@@ -17,11 +20,11 @@ import butterknife.ButterKnife;
  */
 public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdapter.ViewHolder> {
 
-    private Activity mActivity;
+    private CheckInListActivity mActivity;
     private int mLayoutId;
     private List<CheckIn> mCheckIns;
 
-    public CheckInListAdapter(Activity activity, int layoutId, List<CheckIn> checkIns) {
+    public CheckInListAdapter(CheckInListActivity activity, int layoutId, List<CheckIn> checkIns) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;
@@ -38,12 +41,43 @@ public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdap
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         if (getItemCount() > 0 && position >= 0 && position < getItemCount())
             return;
+
+        final CheckIn checkIn = mCheckIns.get(position);
+
+        viewHolder.mUser.setText(checkIn.getUser().getName());
+        viewHolder.mSchool.setText(checkIn.getSchool().getName());
+        viewHolder.mTotalTime.setText(checkIn.getTotalTime());
+
+        String comment = checkIn.getComment() == null ? "No Comment" : checkIn.getComment();
+        viewHolder.mComment.setText(comment);
+
+        viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.makeVerifyCheckInRequest(checkIn);
+            }
+        });
+
+        viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.makeDeleteCheckInRequest(checkIn);
+            }
+        });
     }
 
     @Override
     public int getItemCount() { return mCheckIns.size(); }
 
     public static class ViewHolder extends RecycleViewEmpty.ViewHolder {
+
+        @Bind(R.id.check_in_list_item_user) TextView mUser;
+        @Bind(R.id.check_in_list_item_school) TextView mSchool;
+        @Bind(R.id.check_in_list_item_total) TextView mTotalTime;
+        @Bind(R.id.check_in_list_item_comment) TextView mComment;
+        @Bind(R.id.check_in_list_item_verify) ImageButton mVerify;
+        @Bind(R.id.check_in_list_item_delete) ImageButton mDelete;
+
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

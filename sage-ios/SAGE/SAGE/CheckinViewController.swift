@@ -14,7 +14,9 @@ import SwiftKeychainWrapper
 class CheckinViewController: UIViewController {
 
     let locationManager = CLLocationManager()
+    var currentLocation = CLLocation()
     let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
+    let distanceTolerance: CLLocationDistance = 2000 // in Meters
     
     let checkinView = CheckinView()
     let defaultTitleLabel = UILabel()
@@ -72,10 +74,8 @@ class CheckinViewController: UIViewController {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .AuthorizedWhenInUse, .AuthorizedAlways:
-                //verify user's location first
-                // if verified: then do this
-                // if not: show a too far alert
-                if true {
+                // Verify location
+                if self.currentLocationIsBySchool() {
                     let alertController = UIAlertController(
                         title: "Start mentoring session?",
                         message: nil,
@@ -93,7 +93,7 @@ class CheckinViewController: UIViewController {
                 } else {
                     let alertController = UIAlertController(
                         title: "Location too far",
-                        message: "You are too far from your school. Please move closer to your school to check in.",
+                        message: "You are too far from \(school.name!). Please move closer to start mentoring.",
                         preferredStyle: .Alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
@@ -108,7 +108,7 @@ class CheckinViewController: UIViewController {
     
     @objc private func userPressedEndSession() {
         //Verify location
-        if true {
+        if self.currentLocationIsBySchool() {
             let alertController = UIAlertController(
                 title: "Finish mentoring session?",
                 message: nil,
@@ -134,6 +134,13 @@ class CheckinViewController: UIViewController {
                 self.presentViewController(confirmAlert, animated: true, completion: nil)
             }))
             alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(
+                title: "Location too far",
+                message: "You are too far from \(school.name!). Please move closer to finish mentoring.",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
@@ -204,6 +211,11 @@ class CheckinViewController: UIViewController {
         self.checkinView.mapView.settings.myLocationButton = true
     }
     
+    private func currentLocationIsBySchool() -> Bool {
+        let distance: CLLocationDistance = self.school.location!.distanceFromLocation(self.currentLocation)
+        return  distance < self.distanceTolerance
+    }
+    
     private func presentDefaultMode(duration: NSTimeInterval) {
         self.checkinView.presentDefaultMode(duration)
         self.navigationItem.rightBarButtonItem?.enabled = true
@@ -260,6 +272,7 @@ extension CheckinViewController: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         if let location = locations.first {
+            self.currentLocation = location
             self.checkinView.mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
             self.locationManager.stopUpdatingLocation()
         }

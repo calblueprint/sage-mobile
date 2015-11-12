@@ -14,15 +14,18 @@ class AdminTableViewController: UITableViewController {
         return 4
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "Admin"
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 1
+            return 2
         case 1:
             return 2
         case 2:
-            return 2
-        case 3:
             return 2
         default: return 0
         }
@@ -31,12 +34,10 @@ class AdminTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "Mentors"
+            return "Browse"
         case 1:
-            return "Schools"
-        case 2:
             return "Requests"
-        case 3:
+        case 2:
             return "SAGE Settings"
         default: return ""
         }
@@ -49,23 +50,18 @@ class AdminTableViewController: UITableViewController {
         let iconSize: CGFloat = CGFloat(23.0)
         switch indexPath.section {
         case 0:
-            cell.textLabel?.text = "Browse"
-            let icon = FAKIonIcons.clipboardIconWithSize(iconSize)
-                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, iconSize))
-            cell.imageView?.image = icon
-        case 1:
             if indexPath.row == 0 {
-                cell.textLabel?.text = "Browse"
-                let icon = FAKIonIcons.homeIconWithSize(iconSize)
+                cell.textLabel?.text = "Mentors"
+                let icon = FAKIonIcons.clipboardIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             } else {
-                cell.textLabel?.text = "Add"
-                let icon = FAKIonIcons.plusIconWithSize(iconSize)
+                cell.textLabel?.text = "Schools"
+                let icon = FAKIonIcons.homeIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             }
-        case 2:
+        case 1:
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Check ins"
                 let icon = FAKIonIcons.locationIconWithSize(iconSize)
@@ -77,7 +73,7 @@ class AdminTableViewController: UITableViewController {
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             }
-        case 3:
+        case 2:
             if indexPath.row == 0 {
                 cell.textLabel?.text = "End Fall 2015"
                 let icon = FAKIonIcons.logOutIconWithSize(iconSize)

@@ -20,11 +20,11 @@ import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
-import blueprint.com.sage.signUp.events.BackEvent;
+import blueprint.com.sage.events.BackEvent;
 import blueprint.com.sage.signUp.fragments.SignUpPagerFragment;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
-import blueprint.com.sage.utility.view.FragUtil;
+import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -55,7 +55,7 @@ public class SignUpActivity extends FragmentActivity {
         makeSchoolRequest();
 
 
-        FragUtil.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
+        FragUtils.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
     }
 
     @TargetApi(21)

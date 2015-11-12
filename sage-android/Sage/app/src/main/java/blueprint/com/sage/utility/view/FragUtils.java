@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentTransaction;
  * Created by charlesx on 10/12/15.
  * Some Fragment Utilities
  */
-public class FragUtil {
+public class FragUtils {
     public static void replace(int id, Fragment fragment, FragmentActivity activity) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(id, fragment).commit();

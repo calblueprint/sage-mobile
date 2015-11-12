@@ -50,7 +50,7 @@ class LoginHelper: NSObject {
         }
     }
     
-    static func storeUserDataInKeychain(firstName: String?, lastName: String?, email: String?, school: Int?, hours: Int?, verified: Bool?) {
+    static func storeUserDataInKeychain(firstName: String?, lastName: String?, email: String?, authToken: String?, school: Int?, hours: Int?, verified: Bool?) {
         if let firstName = firstName {
             KeychainWrapper.setObject(firstName, forKey: KeychainConstants.kVFirstName)
         }
@@ -59,6 +59,9 @@ class LoginHelper: NSObject {
         }
         if let email = email {
             KeychainWrapper.setObject(email, forKey: KeychainConstants.kVEmail)
+        }
+        if let authToken = authToken {
+            KeychainWrapper.setObject(authToken, forKey: KeychainConstants.kAuthToken)
         }
         if let hours = hours {
             KeychainWrapper.setObject(hours, forKey: KeychainConstants.kVHours)
@@ -92,6 +95,7 @@ class LoginHelper: NSObject {
         
         operationManager.POST(StringConstants.kEndpointCreateUser, parameters: params, success: { (operation, data) -> Void in
             let user = data["session"]!!["user"]!!
+            let authToken = data["session"]!![UserConstants.kAuthToken] as! String
             
             var firstName, lastName: String?
             var hours: Int?
@@ -112,7 +116,7 @@ class LoginHelper: NSObject {
                 default: break
                 }
             }
-            LoginHelper.storeUserDataInKeychain(firstName, lastName: lastName, email: email, school: nil, hours: hours, verified: nil)
+            LoginHelper.storeUserDataInKeychain(firstName, lastName: lastName, email: email, authToken: authToken, school: nil, hours: hours, verified: nil)
             let schoolDictionary = data["session"]!!["school"]!!
             let school = School(propertyDictionary: schoolDictionary as! [String : AnyObject])
             KeychainWrapper.setObject(school, forKey: KeychainConstants.kSchool)
@@ -143,7 +147,8 @@ class LoginHelper: NSObject {
             
             let userDict = data["session"]!!["user"]
             User.currentUser = User(propertyDictionary: userDict as! [String: AnyObject])
-            LoginHelper.storeUserDataInKeychain(User.currentUser?.firstName, lastName: User.currentUser?.lastName, email: User.currentUser?.email, school: data["session"]??["school"]??[SchoolConstants.kId] as? Int, hours: User.currentUser?.level?.rawValue, verified: User.currentUser?.verified)
+            let authToken = data["session"]!![UserConstants.kAuthToken] as! String
+            LoginHelper.storeUserDataInKeychain(User.currentUser?.firstName, lastName: User.currentUser?.lastName, email: User.currentUser?.email, authToken: authToken, school: data["session"]??["school"]??[SchoolConstants.kId] as? Int, hours: User.currentUser?.level?.rawValue, verified: User.currentUser?.verified)
             let schoolDictionary = data["session"]!!["school"]!!
             let school = School(propertyDictionary: schoolDictionary as! [String : AnyObject])
             KeychainWrapper.setObject(school, forKey: KeychainConstants.kSchool)
@@ -178,6 +183,7 @@ class LoginHelper: NSObject {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVFirstName)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVLastName)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVEmail)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kAuthToken)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVHours)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kVerified)
     }

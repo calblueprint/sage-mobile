@@ -14,9 +14,12 @@ import SwiftKeychainWrapper
 class CheckinViewController: UIViewController {
 
     let locationManager = CLLocationManager()
+    let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
+    
     let checkinView = CheckinView()
     let defaultTitleLabel = UILabel()
     let sessionTitleLabel = UILabel()
+    
     var startTime: NSTimeInterval = 0.0
     var inSession: Bool = false
 
@@ -39,6 +42,8 @@ class CheckinViewController: UIViewController {
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
         self.startGettingCurrentLocation()
+        let marker = GMSMarker(position: self.school.location!.coordinate)
+        marker.map = self.checkinView.mapView
     }
     
     override func viewWillAppear(animated: Bool) {

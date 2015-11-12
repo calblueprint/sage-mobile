@@ -30,8 +30,10 @@ class School: NSObject, NSCoding {
             switch propertyName {
             case SchoolConstants.kId:
                 self.id = value as? Int
+                break
             case SchoolConstants.kName:
                 self.name = value as? String
+                break
             case SchoolConstants.kStudents:
                 self.students = []
                 let studentsDictionaryArray = value as? [[String: AnyObject]]
@@ -39,14 +41,19 @@ class School: NSObject, NSCoding {
                     let student: User = User(propertyDictionary: studentDictionary)
                     self.students!.append(student)
                 }
-            case SchoolConstants.kLocation:
-                let locationDictionary = value as! [String:Double]
-                let latitude = locationDictionary[SchoolConstants.kLat]
-                let longitude = locationDictionary[SchoolConstants.kLong]
-                self.location = CLLocation(latitude: latitude!, longitude: longitude!)
+                break
+            case SchoolConstants.kLat:
+                let latitude = Double(value as! String)
+                self.location = CLLocation(latitude: latitude!, longitude: self.location!.coordinate.longitude)
+                break
+            case SchoolConstants.kLong:
+                let long = Double(value as! String)
+                self.location = CLLocation(latitude: self.location!.coordinate.latitude, longitude: long!)
+                break
             case SchoolConstants.kDirector:
                 let directorDictionary = value as! [String: AnyObject]
                 self.director = User(propertyDictionary: directorDictionary)
+                break
             default: break
             }
         }

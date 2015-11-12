@@ -1,4 +1,4 @@
-package blueprint.com.sage.signUp.events;
+package blueprint.com.sage.events;
 
 /**
  * Created by charlesx on 10/14/15.

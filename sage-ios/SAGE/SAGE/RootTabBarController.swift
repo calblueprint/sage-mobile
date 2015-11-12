@@ -38,14 +38,14 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
 
-        let announcementsViewController = UIViewController()
+        let announcementsViewController = AnnouncementsViewController()
         let checkInViewController = UIViewController()
         let myStatsViewController = UIViewController()
         let profileViewController = UIViewController()
         
         var rootViewControllers = [announcementsViewController, checkInViewController, myStatsViewController, profileViewController]
         
-        User.currentUser!.role = User.UserRole.Admin
+        // User.currentUser!.role = User.UserRole.Admin
         // comment in the above line to see the admin page
         if let role = User.currentUser?.role {
             if role == .Admin {

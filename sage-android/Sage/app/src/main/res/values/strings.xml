@@ -5,6 +5,7 @@
 
     <!-- Navigation Drawer -->
     <string name="announcements">Announcements</string>
+    <string name="schools">Schools</string>
     <string name="log_out">Log Out</string>
 
     <string name="open">Open</string>
@@ -16,6 +17,7 @@
     <!-- General Errors -->
     <string name="cannot_be_blank">%1$s cannot be blank.</string>
     <string name="optional">Optional</string>
+    <string name="list_empty">Looks like there\'s nothing here!\nPull down to refresh.</string>
 
     <!-- Log in -->
     <string name="shared_preferences">SAGE_ANDROID</string>

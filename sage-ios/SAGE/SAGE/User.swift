@@ -32,8 +32,9 @@ class User: NSObject {
     var role: UserRole?
     var totalHours: Int?
     var verified: Bool?
+    var imgURL: String?
     
-    init(id: Int? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel? = nil, role: UserRole? = nil, totalHours: Int? = nil, verified: Bool? = nil) {
+    init(id: Int? = nil, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel? = nil, role: UserRole? = nil, totalHours: Int? = nil, verified: Bool? = nil, imgURL: String? = nil) {
         super.init()
         self.id = id
         self.firstName = firstName
@@ -44,6 +45,7 @@ class User: NSObject {
         self.role = role
         self.totalHours = totalHours
         self.verified = verified
+        self.imgURL = imgURL
     }
     
     init(propertyDictionary: [String: AnyObject]) {
@@ -75,6 +77,8 @@ class User: NSObject {
                 self.lastName = value as? String
             case UserConstants.kEmail:
                 self.email = value as? String
+            case UserConstants.kImgURL:
+                self.imgURL = value as? String
             default: break
             }
         }

@@ -1,6 +1,6 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/check_in_drawer_layout"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,22 +11,22 @@
 
         <android.support.v7.widget.Toolbar
             app:theme="@style/ToolBarStyle"
-            android:id="@+id/check_in_toolbar"
+            android:id="@+id/toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@color/amber500"
             android:elevation="8dp"/>
 
         <FrameLayout
-            android:id="@+id/check_in_container"
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/check_in_toolbar"/>
+            android:layout_below="@id/toolbar"/>
     </RelativeLayout>
 
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/check_in_left_drawer"
+        android:id="@+id/left_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

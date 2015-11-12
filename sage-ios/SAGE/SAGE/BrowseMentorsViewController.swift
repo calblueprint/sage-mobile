@@ -9,10 +9,20 @@
 import UIKit
 
 class BrowseMentorsViewController: UITableViewController {
+    
+    var mentors: NSMutableArray = NSMutableArray()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Mentors"
+        // self.loadMentors()
         
+    }
+    
+    func loadMentors() {
+        AdminOperations.loadMentors { (mentorArray) -> Void in
+            self.mentors = mentorArray
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -35,10 +45,7 @@ class BrowseMentorsViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
-        cell.textLabel?.text = "Erica Lam Xue Millwoman"
-        cell.detailTextLabel?.text = "Berkeley High School"
-        cell.imageView?.image = UIImage(named: "BerkeleySunsetBlurred.jpg")
+        let cell = BrowseMentorsTableViewCell(withUser: User())
         return cell
     }
 }

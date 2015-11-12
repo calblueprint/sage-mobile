@@ -51,7 +51,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
         self.schoolName.sizeToFit()
         self.schoolName.setY(CGRectGetMaxY(self.mentorName.frame)-5)
         self.schoolName.setX(57)
-        self.schoolName.font = UIFont.getRegularFont(14)
+        self.schoolName.font = UIFont.getDefaultFont(14)
         self.schoolName.textColor = UIColor.secondaryTextColor
         
         self.contentView.addSubview(self.totalHours)
@@ -59,7 +59,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
         self.totalHours.centerVertically()
         self.totalHours.setX(self.frame.width - self.totalHours.frame.width - UIConstants.sideMargin)
         self.totalHours.textColor = UIColor.secondaryTextColor
-        self.totalHours.font = UIFont.getRegularFont(16)
+        self.totalHours.font = UIFont.getDefaultFont(16)
     }
     
     required init?(coder aDecoder: NSCoder) {

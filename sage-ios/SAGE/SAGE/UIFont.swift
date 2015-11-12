@@ -23,19 +23,27 @@ extension UIFont {
     @nonobjc static let titleFont = UIFont.getDefaultFont(17)
     
     static func getDefaultFont(size: CGFloat = 20) -> UIFont {
-        return UIFont(name: ".SFUIText-Regular", size: size)!
+        if size < 20 {
+            return UIFont(name: ".SFUIText-Regular", size: size)!
+        } else {
+            return UIFont(name: ".SFUIDisplay-Light", size: size)!
+        }
     }
     
     static func getSemiboldFont(size: CGFloat = 20) -> UIFont {
         if size > 20 {
-            return UIFont(name: ".SFUIText-Semibold", size: size)!
-        } else {
             return UIFont(name: ".SFUIDisplay-Semibold", size: size)!
+        } else {
+            return UIFont(name: ".SFUIText-Semibold", size: size)!
         }
     }
     
     static func getBoldFont(size: CGFloat = 20) -> UIFont {
-        return UIFont(name: ".SFUIText-Bold", size: size)!
+        if size > 20 {
+            return UIFont(name: ".SFUIDisplay-Bold", size: size)!
+        } else {
+            return UIFont(name: ".SFUIText-Bold", size: size)!
+        }
     }
     
     static func getTitleFont(size: CGFloat = 20) -> UIFont {
@@ -44,9 +52,5 @@ extension UIFont {
         } else {
             return UIFont(name: ".SFUIDisplay-Thin", size: size)!
         }
-    }
-    
-    static func getRegularFont(size: CGFloat = 20) -> UIFont {
-        return UIFont(name: ".SFUIText-Regular", size: size)!
     }
 }

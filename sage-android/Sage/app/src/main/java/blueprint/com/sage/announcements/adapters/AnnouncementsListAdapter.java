@@ -53,6 +53,13 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         viewHolder.vTime.setText(announcement.getTime());
         viewHolder.vTitle.setText(announcement.getTitle());
         viewHolder.vBody.setText(announcement.getBody());
+//        Picasso picasso = Picasso.with(activity);
+//        picasso.load(announcement.getUser().getImageUrl()).into(viewHolder.vPicture);
+    }
+
+    public void setAnnouncement(ArrayList<Announcement> curList) {
+        announcementArrayList = curList;
+        notifyDataSetChanged();
     }
 
     public void setAnnouncements(ArrayList<Announcement> curList) {
@@ -83,7 +90,6 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
             ButterKnife.bind(this, v);
         }
 
-        //
         @OnClick(R.id.announcement_row)
         public void onClick(View v) {
             NetworkManager networkManager = NetworkManager.getInstance(activity);

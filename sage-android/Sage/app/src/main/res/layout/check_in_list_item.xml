@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/check_in_list_item_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/check_in_list_item_school"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/check_in_list_item_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/check_in_list_item_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/check_in_list_item_verify"
+        android:src="@drawable/ic_done_white"
+        android:tint="@color/green500"
+        android:background="@android:color/transparent"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <ImageButton
+        android:id="@+id/check_in_list_item_delete"
+        android:src="@drawable/ic_clear_white"
+        android:tint="@color/red500"
+        android:background="@android:color/transparent"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 </LinearLayout>

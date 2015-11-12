@@ -24,6 +24,7 @@ import de.greenrobot.event.EventBus;
 public class AnnouncementsListFragment extends Fragment {
 
     private ArrayList<Announcement> announcementsArrayList = new ArrayList<>();
+    private AnnouncementsListAdapter adapter;
     @Bind(R.id.announcements_recycler) RecyclerView announcementsList;
 
     public static AnnouncementsListFragment newInstance() {
@@ -59,14 +60,14 @@ public class AnnouncementsListFragment extends Fragment {
     public void onEvent(AnnouncementsListEvent event) {
         AnnouncementsListActivity activity = (AnnouncementsListActivity) getActivity();
         announcementsArrayList = activity.getmAnnouncementsList();
+        adapter.setAnnouncement(announcementsArrayList);
     }
 
     public void initializeViews() {
-
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         announcementsList.setLayoutManager(llm);
-        AnnouncementsListAdapter adapter = new AnnouncementsListAdapter(announcementsArrayList, getActivity());
+        adapter = new AnnouncementsListAdapter(announcementsArrayList, getActivity());
         announcementsList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         //set adapter, adapter.notifydatasetchanged, pass in arraylist to adapter

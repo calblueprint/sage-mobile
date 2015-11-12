@@ -10,10 +10,14 @@ import lombok.Data;
 public @Data class Announcement {
     private int id;
     private Date createdAt;
-    private Date updatedAt;
     private String title;
     private String body;
     private int schoolId;
     private int userId;
     private String category;
+    private String userName;
+    private String schoolName;
+
+    private User user;
+    private String school;
 }

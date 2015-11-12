@@ -21,6 +21,7 @@
             android:layout_height="match_parent">
 
             <blueprint.com.sage.shared.views.CircleImageView
+                android:id="@+id/announcement_profile_picture"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
@@ -50,7 +51,9 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
-                android:layout_below="@id/announcement_time"/>
+                android:layout_below="@id/announcement_time"
+                android:singleLine="true"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/announcement_body"
@@ -58,7 +61,9 @@
                 android:text="The actual announcement."
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
-                android:layout_below="@id/announcement_title"/>
+                android:layout_below="@id/announcement_title"
+                android:maxLines="6"
+                android:ellipsize="end" />
 
             <View
                 android:id="@+id/announcement_divider"

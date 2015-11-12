@@ -15,6 +15,7 @@ class BrowseMentorsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Mentors"
+        self.tableView.tableFooterView = UIView()
         // self.loadMentors()
         
     }
@@ -52,5 +53,8 @@ class BrowseMentorsViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 52
+    }
     
 }

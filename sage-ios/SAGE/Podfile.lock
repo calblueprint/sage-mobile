@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - BSKeyboardControls (2.2)
   - FontAwesomeKit (2.1.9):
     - FontAwesomeKit/Core (= 2.1.9)
     - FontAwesomeKit/FontAwesome (= 2.1.9)
@@ -41,11 +42,14 @@ PODS:
     - FontAwesomeKit/Core
   - FontAwesomeKit/Zocial (2.1.9):
     - FontAwesomeKit/Core
+  - GoogleMaps (1.10.3)
   - SwiftKeychainWrapper (1.0.11)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
+  - BSKeyboardControls (~> 2.2)
   - FontAwesomeKit (from `https://github.com/PrideChung/FontAwesomeKit.git`)
+  - GoogleMaps
   - SwiftKeychainWrapper
 
 EXTERNAL SOURCES:
@@ -59,7 +63,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
+  BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
   FontAwesomeKit: 1a21b835bd74f0591bfc1dac8c5540188eab3f38
+  GoogleMaps: 945e4ac3b74bcca3ddada51df256eb7beddb474d
   SwiftKeychainWrapper: 011a6946923948ffa49708014dd691164d7621d1
 
 COCOAPODS: 0.39.0

@@ -26,16 +26,6 @@ class BrowseMentorsViewController: UITableViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        let searchBar = UISearchBar()
-        searchBar.backgroundColor = UIColor.mainColor
-        searchBar.tintColor = UIColor.mainColor
-        searchBar.barTintColor = UIColor.mainColor
-        searchBar.setHeight(44)
-        self.tableView.tableHeaderView = searchBar
-    }
-    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }

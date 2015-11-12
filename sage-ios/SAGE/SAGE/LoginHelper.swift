@@ -10,6 +10,17 @@ import SwiftKeychainWrapper
 import AFNetworking
 
 class LoginHelper: NSObject {
+    static func loadSchools(completion: ((NSMutableArray) -> Void)){
+        
+        let operationManager = BaseOperation.manager()
+        
+        operationManager.GET(StringConstants.kEndpointSchool, parameters: nil, success: { (operation, data) -> Void in
+            
+            let schoolDict = data["schools"] as! NSMutableArray
+            completion(schoolDict)
+            }, failure: nil)
+    }
+    
     static func userIsLoggedIn() -> Bool {
         if let _ = User.currentUser {
             return true

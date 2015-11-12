@@ -18,6 +18,10 @@ class LoginOperations: NSObject {
         }
     }
     
+    static func getUser() -> User? {
+        return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
+    }
+    
     static func userIsVerified(completion: ((Bool) -> Void)) {
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if let verified = user.verified {

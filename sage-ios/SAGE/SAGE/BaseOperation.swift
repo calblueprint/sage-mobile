@@ -26,7 +26,7 @@ class BaseOperation {
         manager.requestSerializer.setValue(KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String, forHTTPHeaderField: "X-AUTH-TOKEN")
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if let email = user.email {
-                 manager.requestSerializer.setValue(email as? String, forHTTPHeaderField: "X-AUTH-EMAIL")
+                 manager.requestSerializer.setValue(email, forHTTPHeaderField: "X-AUTH-EMAIL")
             }
         }
     }

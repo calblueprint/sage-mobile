@@ -18,7 +18,7 @@ class UnverifiedViewController: UIViewController {
     
     func signOut() {
         let loginController = LoginController()
-        LoginHelper.deleteUserKeychainData()
+        LoginOperations.deleteUserKeychainData()
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.presentViewController(loginController, animated: true, completion: nil)
     }

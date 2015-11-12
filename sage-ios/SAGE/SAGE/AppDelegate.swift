@@ -14,18 +14,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
         let rootViewController = RootController()
+        GMSServices.provideAPIKey(APIKeys.googleMaps)
         
-        window?.rootViewController = rootViewController
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window?.rootViewController = RootController()
         window?.makeKeyAndVisible()
         
+        // Navigation bar appearance
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         UINavigationBar.appearance().barTintColor = UIColor.mainColor
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UINavigationBar.appearance().translucent = false
+
         return true
     }
 

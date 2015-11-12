@@ -8,7 +8,7 @@
 
 import CoreLocation
 
-class School: NSObject {
+class School: NSObject, NSCoding {
     var id: Int?
     var name: String?
     var location: CLLocation? = CLLocation(latitude: 0, longitude: 0)
@@ -30,8 +30,10 @@ class School: NSObject {
             switch propertyName {
             case SchoolConstants.kId:
                 self.id = value as? Int
+                break
             case SchoolConstants.kName:
                 self.name = value as? String
+                break
             case SchoolConstants.kStudents:
                 self.students = []
                 let studentsDictionaryArray = value as? [[String: AnyObject]]
@@ -39,17 +41,35 @@ class School: NSObject {
                     let student: User = User(propertyDictionary: studentDictionary)
                     self.students!.append(student)
                 }
-            case SchoolConstants.kLocation:
-                let locationDictionary = value as! [String:Double]
-                let latitude = locationDictionary[SchoolConstants.kLat]
-                let longitude = locationDictionary[SchoolConstants.kLong]
-                self.location = CLLocation(latitude: latitude!, longitude: longitude!)
+                break
+            case SchoolConstants.kLat:
+                let latitude = Double(value as! String)
+                self.location = CLLocation(latitude: latitude!, longitude: self.location!.coordinate.longitude)
+                break
+            case SchoolConstants.kLong:
+                let long = Double(value as! String)
+                self.location = CLLocation(latitude: self.location!.coordinate.latitude, longitude: long!)
+                break
             case SchoolConstants.kDirector:
                 let directorDictionary = value as! [String: AnyObject]
                 self.director = User(propertyDictionary: directorDictionary)
+                break
             default: break
             }
         }
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init()
+        self.id = aDecoder.decodeIntegerForKey(SchoolConstants.kId)
+        self.name = aDecoder.decodeObjectForKey(SchoolConstants.kName) as? String
+        self.location = aDecoder.decodeObjectForKey(SchoolConstants.kLocation) as? CLLocation
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeInteger(self.id!, forKey: SchoolConstants.kId)
+        aCoder.encodeObject(self.name, forKey: SchoolConstants.kName)
+        aCoder.encodeObject(self.location, forKey: SchoolConstants.kLocation)
     }
     
     func toDictionary() -> [String: AnyObject]{

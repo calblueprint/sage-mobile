@@ -2,6 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
 use_frameworks!
+pod 'GoogleMaps'
 pod 'AFNetworking', '~> 2.0'
 pod 'FontAwesomeKit', :git => 'https://github.com/PrideChung/FontAwesomeKit.git'
 pod 'SwiftKeychainWrapper'
+pod 'BSKeyboardControls', '~> 2.2'

@@ -27,7 +27,6 @@ class AnnouncementsViewController: UIViewController {
         (self.view as! AnnouncementsView).tableView.delegate = self
         (self.view as! AnnouncementsView).tableView.dataSource = self
     }
-    
 }
 
 extension AnnouncementsViewController: UITableViewDelegate {

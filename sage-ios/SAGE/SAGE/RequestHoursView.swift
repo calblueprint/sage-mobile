@@ -95,6 +95,7 @@ class RequestHoursView: UIView {
         self.dateField.disable()
         self.startTimeField.disable()
         self.endTimeField.disable()
+        self.keyboardControls.fields = [self.commentField.textView]
     }
     
     func exportToCheckin(verified: Bool) -> Checkin {

@@ -14,12 +14,16 @@ class BaseOperation {
     
     class func manager() -> AFHTTPRequestOperationManager {
         let baseURL = NSURL(string: StringConstants.kBaseURL)
-        return AFHTTPRequestOperationManager.init(baseURL: baseURL)
+        let operationManager = AFHTTPRequestOperationManager.init(baseURL: baseURL)
+        if let _ = KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) {
+            BaseOperation.addAuthParams(operationManager)
+        }
+        return operationManager
     }
     
     // This should be added to every params with any request while logged in
-    class func addAuthParams(params: NSMutableDictionary) {
-        params[UserConstants.kEmail] = KeychainWrapper.objectForKey(KeychainConstants.kVEmail)
-        params[UserConstants.kAuthToken] = KeychainWrapper.objectForKey(KeychainConstants.kAuthToken)
+    class func addAuthParams(manager: AFHTTPRequestOperationManager) {
+        manager.requestSerializer.setValue(KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String, forHTTPHeaderField: "X-AUTH-TOKEN")
+        manager.requestSerializer.setValue(KeychainWrapper.objectForKey(KeychainConstants.kVEmail) as? String, forHTTPHeaderField: "X-AUTH-EMAIL")
     }
 }

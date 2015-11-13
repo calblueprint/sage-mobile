@@ -1,5 +1,5 @@
 //
-//  LoginHelper.swift
+//  LoginOperations.swift
 //  SAGE
 //
 //  Created by Sameera Vemulapalli on 10/7/15.
@@ -22,7 +22,7 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
-    static func userIsVerified(completion: ((Bool) -> Void)) {
+    static func verifyUser(completion: ((Bool) -> Void)) {
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if user.verified {
                 completion(true)
@@ -93,14 +93,14 @@ class LoginOperations: NSObject {
         
         let params = ["user":
             [
-                "first_name": firstName,
-                "last_name": lastName,
-                "email": email,
-                "password": password,
-                "role": role,
-                "volunteer_type": hours,
-                "data": photoData,
-                "school_id": school // for now
+                UserConstants.kFirstName: firstName,
+                UserConstants.kLastName: lastName,
+                UserConstants.kEmail: email,
+                UserConstants.kPassword: password,
+                UserConstants.kRole: role,
+                UserConstants.kLevel: hours,
+                UserConstants.kPhotoData: photoData,
+                UserConstants.kSchool: school
             ]
         ]
         
@@ -120,6 +120,8 @@ class LoginOperations: NSObject {
         }
     }
     
+    // This function gets called every time the rootController is allocated and updates user 
+    // keychain data as necessary
     static func loginWith(email: String, authToken: String? = nil, password: String? = nil, completion: ((Bool) -> Void)) {
         
         

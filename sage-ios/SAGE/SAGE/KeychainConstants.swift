@@ -15,7 +15,6 @@ struct KeychainConstants {
     //
     static let kAuthToken: String = StringConstants.kBaseURL + "authToken"
     static let kUser: String = StringConstants.kBaseURL + "User"
-    static let kVerificationBase = StringConstants.kBaseURL + "Verification"
     
     static let kSessionStartTime: String = "Session Start Time"
     static let kSchool: String = "User School"

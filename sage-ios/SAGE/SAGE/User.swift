@@ -20,6 +20,7 @@ class User: NSObject, NSCoding {
     enum UserRole: Int {
         case Volunteer
         case Admin
+        case Director
         case Default
     }
     
@@ -99,6 +100,7 @@ class User: NSObject, NSCoding {
                 switch value as! String {
                 case "admin": self.role = UserRole.Admin
                 case "volunteer": self.role = UserRole.Volunteer
+                case "director": self.role = UserRole.Director
                 default: self.role = UserRole.Default
                 }
             case UserConstants.kSchool:
@@ -138,10 +140,19 @@ class User: NSObject, NSCoding {
             propertyDict[UserConstants.kSchool] = school.toDictionary()
         }
         if VolunteerLevel.Default != self.level {
-            propertyDict[UserConstants.kLevel] = level.rawValue
+            switch self.level {
+            case .OneUnit: propertyDict[UserConstants.kLevel] = "one_unit"
+            case .TwoUnit: propertyDict[UserConstants.kLevel] = "two_units"
+            default: propertyDict[UserConstants.kLevel] = "zero_units"
+            }
         }
         if UserRole.Default != self.role {
-            propertyDict[UserConstants.kRole] = role.rawValue
+            switch self.role {
+            case .Admin: propertyDict[UserConstants.kRole] = "admin"
+            case .Volunteer: propertyDict[UserConstants.kRole] = "volunteer"
+            case .Director: propertyDict[UserConstants.kRole] = "director"
+            default: break
+            }
         }
         if DefaultValues.DefaultHours.rawValue != self.totalHours {
             propertyDict[UserConstants.kTotalHours] = totalHours

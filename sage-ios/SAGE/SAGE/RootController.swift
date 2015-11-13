@@ -43,7 +43,7 @@ class RootController: UIViewController {
                     }
                 })
             }
-            LoginOperations.userIsVerified(completion)
+            LoginOperations.verifyUser(completion)
         } else {
             self.pushLoginViewController()
         }

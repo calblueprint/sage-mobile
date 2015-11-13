@@ -7,12 +7,15 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+import blueprint.com.sage.R;
+import blueprint.com.sage.checkIn.fragments.CheckInListFragment;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.shared.NavigationAbstractActivity;
+import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 11/10/15.
@@ -28,6 +31,8 @@ public class CheckInListActivity extends NavigationAbstractActivity {
         mCheckIns = new ArrayList<>();
 
         makeCheckInListRequest();
+
+        FragUtils.replace(R.id.container, CheckInListFragment.newInstance(), this);
     }
 
     public void setCheckIns(List<CheckIn> checkIns) { mCheckIns = checkIns; }

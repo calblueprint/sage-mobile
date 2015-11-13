@@ -11,7 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.schools.SchoolsActivity;
+import blueprint.com.sage.checkIn.CheckInListActivity;
+import blueprint.com.sage.schools.SchoolsListActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -80,13 +81,18 @@ public class NavigationAbstractActivity extends AbstractActivity
     }
 
     private void startSchoolsActivity() {
-        if (this instanceof SchoolsActivity) return;
+        if (this instanceof SchoolsListActivity) return;
 
-        Intent intent = new Intent(this, SchoolsActivity.class);
+        Intent intent = new Intent(this, SchoolsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     private void startRequestsActivity() {
+        if (this instanceof CheckInListActivity) return;
+
+        Intent intent = new Intent(this, CheckInListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

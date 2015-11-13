@@ -44,8 +44,12 @@
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".schools.SchoolsActivity"
+            android:name=".schools.SchoolsListActivity"
             android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".checkIn.CheckInListActivity"
+            android:launchMode="singleTop" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

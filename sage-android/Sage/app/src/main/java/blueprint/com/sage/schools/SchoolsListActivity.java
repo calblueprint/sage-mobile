@@ -20,7 +20,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/4/15.
  */
-public class SchoolsActivity extends NavigationAbstractActivity {
+public class SchoolsListActivity extends NavigationAbstractActivity {
 
     private List<School> mSchools;
 

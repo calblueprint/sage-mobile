@@ -38,7 +38,7 @@ public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         if (getItemCount() > 0 && position >= 0 && position < getItemCount())
             return;
 
@@ -54,14 +54,14 @@ public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdap
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.makeVerifyCheckInRequest(checkIn);
+                mActivity.makeVerifyCheckInRequest(checkIn, position);
             }
         });
 
         viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.makeDeleteCheckInRequest(checkIn);
+                mActivity.makeDeleteCheckInRequest(checkIn, position);
             }
         });
     }

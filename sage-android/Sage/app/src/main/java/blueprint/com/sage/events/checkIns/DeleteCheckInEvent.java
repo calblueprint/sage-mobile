@@ -8,9 +8,11 @@ import lombok.Data;
  */
 public @Data class DeleteCheckInEvent {
 
-    public CheckIn checkIn;
+    private CheckIn checkIn;
+    private int position;
 
-    public DeleteCheckInEvent(CheckIn checkIn) {
+    public DeleteCheckInEvent(CheckIn checkIn, int position) {
         this.checkIn = checkIn;
+        this.position = position;
     }
 }

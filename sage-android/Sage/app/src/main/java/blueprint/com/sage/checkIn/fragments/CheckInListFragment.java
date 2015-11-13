@@ -12,7 +12,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInListAdapter;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
-import blueprint.com.sage.events.checkIns.VerifyCheckIn;
+import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
@@ -69,9 +69,10 @@ public class CheckInListFragment extends CheckInListAbstractFragment implements 
 
     public void onEvent(DeleteCheckInEvent event) {
         CheckIn checkIn = event.getCheckIn();
+
     }
 
-    public void onEvent(VerifyCheckIn event) {
+    public void onEvent(VerifyCheckInEvent event) {
         CheckIn checkIn = event.getCheckIn();
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
@@ -18,19 +19,26 @@ import blueprint.com.sage.shared.NavigationAbstractActivity;
  */
 public class CheckInListActivity extends NavigationAbstractActivity {
 
+    private List<CheckIn> mCheckIns;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mCheckIns = new ArrayList<>();
+
         makeCheckInListRequest();
     }
+
+    public void setCheckIns(List<CheckIn> checkIns) { mCheckIns = checkIns; }
+    public List<CheckIn> getCheckIns() { return mCheckIns; }
 
     public void makeCheckInListRequest() {
         CheckInListRequest request = new CheckInListRequest(this,
             new Response.Listener<ArrayList<CheckIn>>() {
                 @Override
                 public void onResponse(ArrayList<CheckIn> checkIns) {
-
+                    setCheckIns(checkIns);
                 }
             },
             new Response.Listener<APIError>() {

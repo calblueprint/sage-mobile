@@ -39,11 +39,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        style="@style/SchoolFAB"
-        android:id="@+id/check_in_list_fab"
-        android:src="@drawable/ic_add_white"
-        android:layout_margin="16dp"
-        app:backgroundTint="@color/blue500" />
-
 </android.support.design.widget.CoordinatorLayout>

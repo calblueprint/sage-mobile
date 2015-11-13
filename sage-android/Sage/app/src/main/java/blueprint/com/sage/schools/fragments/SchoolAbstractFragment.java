@@ -2,11 +2,11 @@ package blueprint.com.sage.schools.fragments;
 
 import android.support.v4.app.Fragment;
 
-import blueprint.com.sage.schools.SchoolsActivity;
+import blueprint.com.sage.schools.SchoolsListActivity;
 
 /**
  * Created by charlesx on 11/4/15.
  */
 public class SchoolAbstractFragment extends Fragment {
-    public SchoolsActivity getParentActivity() { return (SchoolsActivity) getActivity(); }
+    public SchoolsListActivity getParentActivity() { return (SchoolsListActivity) getActivity(); }
 }

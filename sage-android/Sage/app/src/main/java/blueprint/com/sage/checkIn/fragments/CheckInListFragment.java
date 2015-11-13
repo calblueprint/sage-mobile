@@ -2,6 +2,7 @@ package blueprint.com.sage.checkIn.fragments;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,10 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInListAdapter;
+import blueprint.com.sage.events.checkIns.CheckInListEvent;
+import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
+import blueprint.com.sage.events.checkIns.VerifyCheckIn;
+import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * Created by charlesx on 11/10/15.
  */
-public class CheckInListFragment extends CheckInListAbstractFragment {
+public class CheckInListFragment extends CheckInListAbstractFragment implements OnRefreshListener {
 
     @Bind(R.id.check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
     @Bind(R.id.check_in_list_list) RecycleViewEmpty mCheckInList;
@@ -40,9 +45,6 @@ public class CheckInListFragment extends CheckInListAbstractFragment {
         return view;
     }
 
-    @Override
-    public void onEvent()
-
     private void initializeViews() {
         mCheckInAdapter = new CheckInListAdapter(getParentActivity(),
                                                  R.layout.check_in_list_item,
@@ -51,5 +53,25 @@ public class CheckInListFragment extends CheckInListAbstractFragment {
         mCheckInList.setLayoutManager(new LinearLayoutManager(getParentActivity()));
         mCheckInList.setEmptyView(mEmptyView);
         mCheckInList.setAdapter(mCheckInAdapter);
+
+        mCheckInRefreshLayout.setOnRefreshListener(this);
+        mEmptyView.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onRefresh() { getParentActivity().makeCheckInListRequest(); }
+
+    public void onEvent(CheckInListEvent event) {
+        mCheckInAdapter.setCheckIns(getParentActivity().getCheckIns());
+        mCheckInRefreshLayout.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
+    }
+
+    public void onEvent(DeleteCheckInEvent event) {
+        CheckIn checkIn = event.getCheckIn();
+    }
+
+    public void onEvent(VerifyCheckIn event) {
+        CheckIn checkIn = event.getCheckIn();
     }
 }

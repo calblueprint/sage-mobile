@@ -69,6 +69,11 @@ public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdap
     @Override
     public int getItemCount() { return mCheckIns.size(); }
 
+    public void setCheckIns(List<CheckIn> checkIns) {
+        mCheckIns = checkIns;
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecycleViewEmpty.ViewHolder {
 
         @Bind(R.id.check_in_list_item_user) TextView mUser;

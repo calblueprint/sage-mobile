@@ -1,15 +1,16 @@
 package blueprint.com.sage.events.checkIns;
 
 import blueprint.com.sage.models.CheckIn;
+import lombok.Data;
 
 /**
  * Created by charlesx on 11/11/15.
  */
-public class DeleteCheckInEvent {
+public @Data class DeleteCheckInEvent {
 
-    public CheckIn mCheckIn;
+    public CheckIn checkIn;
 
     public DeleteCheckInEvent(CheckIn checkIn) {
-        mCheckIn = checkIn;
+        this.checkIn = checkIn;
     }
 }

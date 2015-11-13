@@ -65,8 +65,8 @@
 		422715451BC7359D00FD719C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422715441BC7359D00FD719C /* UIFont.swift */; };
 		424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */; };
 		424A137C1BEED27300775E86 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A137B1BEED27300775E86 /* UIViewController.swift */; };
+		424DEC001BF4B8810099CCE0 /* LoginOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */; };
 		4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */; };
-		4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */; };
 		4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2981BC62B4500C831C7 /* LoginView.swift */; };
 		42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */; };
 		427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427432EF1BC776FD00464200 /* UnverifiedView.swift */; };
@@ -150,8 +150,8 @@
 		422715441BC7359D00FD719C /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsOperations.swift; sourceTree = "<group>"; };
 		424A137B1BEED27300775E86 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginOperations.swift; sourceTree = "<group>"; };
 		4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainConstants.swift; sourceTree = "<group>"; };
-		4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginHelper.swift; sourceTree = "<group>"; };
 		4254D2981BC62B4500C831C7 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4264DFEA1BC59BE20097804D /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Pods/../build/Debug-iphoneos/AFNetworking.framework"; sourceTree = "<group>"; };
 		4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = "Pods/../build/Debug-iphoneos/FontAwesomeKit.framework"; sourceTree = "<group>"; };
@@ -377,10 +377,10 @@
 		27F990C71BBDDB6000D61DA2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				4254D2941BC5B0DC00C831C7 /* LoginHelper.swift */,
 				27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */,
 				278912081BEEEC590005D46E /* CheckinOperations.swift */,
 				424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */,
+				424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -682,7 +682,6 @@
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
 				424A137C1BEED27300775E86 /* UIViewController.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
-				4254D2951BC5B0DC00C831C7 /* LoginHelper.swift in Sources */,
 				278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */,
 				429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */,
 				42FE17C71BF447BA0029BF22 /* APIKeys.swift in Sources */,
@@ -701,6 +700,7 @@
 				4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */,
 				422334281BC09E0F00E863D0 /* School.swift in Sources */,
 				424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */,
+				424DEC001BF4B8810099CCE0 /* LoginOperations.swift in Sources */,
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,

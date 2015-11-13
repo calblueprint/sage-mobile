@@ -9,27 +9,27 @@
 import CoreLocation
 
 class School: NSObject, NSCoding {
-    var id: Int?
+    var id: Int
     var name: String?
     var location: CLLocation? = CLLocation(latitude: 0, longitude: 0)
     var students: [User]?
     var director: User?
     
-    init(id: Int? = nil, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil) {
-        super.init()
+    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil) {
         self.id = id
         self.name = name
         self.location = location
         self.students = students
         self.director = director
+        super.init()
     }
     
     init(propertyDictionary: [String: AnyObject]) {
-        super.init()
+        self.id = -1
         for (propertyName, value) in propertyDictionary {
             switch propertyName {
             case SchoolConstants.kId:
-                self.id = value as? Int
+                self.id = value as! Int
                 break
             case SchoolConstants.kName:
                 self.name = value as? String
@@ -57,25 +57,26 @@ class School: NSObject, NSCoding {
             default: break
             }
         }
+        super.init()
     }
     
     required init(coder aDecoder: NSCoder) {
-        super.init()
         self.id = aDecoder.decodeIntegerForKey(SchoolConstants.kId)
         self.name = aDecoder.decodeObjectForKey(SchoolConstants.kName) as? String
         self.location = aDecoder.decodeObjectForKey(SchoolConstants.kLocation) as? CLLocation
+        super.init()
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeInteger(self.id!, forKey: SchoolConstants.kId)
+        aCoder.encodeInteger(self.id, forKey: SchoolConstants.kId)
         aCoder.encodeObject(self.name, forKey: SchoolConstants.kName)
         aCoder.encodeObject(self.location, forKey: SchoolConstants.kLocation)
     }
     
     func toDictionary() -> [String: AnyObject]{
         var propertyDict: [String: AnyObject] = [String: AnyObject]()
-        if let id = self.id {
-            propertyDict[SchoolConstants.kId] = id
+        if -1 != self.id {
+            propertyDict[SchoolConstants.kId] = self.id
         }
         if let name = self.name {
             propertyDict[SchoolConstants.kName] = name

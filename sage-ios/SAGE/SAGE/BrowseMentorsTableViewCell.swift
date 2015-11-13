@@ -28,7 +28,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
         self.mentorPicture.image = UIImage(data: imageData!)
         self.mentorName.text = user.firstName! + " " + user.lastName!
         self.schoolName.text = user.school!.name
-        self.totalHours.text = String(user.totalHours!) + " hours"
+        self.totalHours.text = String(user.totalHours) + " hours"
         
         super.layoutSubviews()
         

@@ -33,7 +33,7 @@ class RootController: UIViewController {
         sageLabel.font = UIFont.getDefaultFont(20)
         self.view.addSubview(sageLabel)
         
-        if LoginHelper.userIsLoggedIn() {
+        if LoginOperations.userIsLoggedIn() {
             let completion = { (success: Bool) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if success {
@@ -43,7 +43,7 @@ class RootController: UIViewController {
                     }
                 })
             }
-            LoginHelper.userIsVerified(completion)
+            LoginOperations.verifyUser(completion)
         } else {
             self.pushLoginViewController()
         }
@@ -65,7 +65,6 @@ class RootController: UIViewController {
     }
     
     func pushRootTabBarController() {
-        LoginHelper.setUserSingleton()
         let rootTabBarController = RootTabBarController()
         self.view = UIView(frame: self.view.frame)
         self.addChildViewController(rootTabBarController)

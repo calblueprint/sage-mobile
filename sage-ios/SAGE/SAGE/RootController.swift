@@ -33,6 +33,10 @@ class RootController: UIViewController {
         sageLabel.font = UIFont.getDefaultFont(20)
         self.view.addSubview(sageLabel)
         
+        self.pushCorrectViewController()
+    }
+    
+    func pushCorrectViewController() {
         if LoginOperations.userIsLoggedIn() {
             let completion = { (success: Bool) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in

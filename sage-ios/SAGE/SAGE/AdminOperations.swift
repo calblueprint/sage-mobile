@@ -11,7 +11,7 @@ import AFNetworking
 
 class AdminOperations {
     
-    static func loadMentors(completion: ((NSMutableArray) -> Void)){
+    static func loadMentors(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         
     }
     

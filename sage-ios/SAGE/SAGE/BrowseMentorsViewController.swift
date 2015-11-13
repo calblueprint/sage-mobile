@@ -11,6 +11,7 @@ import UIKit
 class BrowseMentorsViewController: UITableViewController {
     
     var mentors: NSMutableArray = NSMutableArray()
+    var currentErrorMessage: ErrorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +21,17 @@ class BrowseMentorsViewController: UITableViewController {
         
     }
     
+    func showErrorAndSetMessage(message: String, size: CGFloat) {
+        let error = self.currentErrorMessage
+        let errorView = super.showError(message, size: size, currentError: error)
+        self.currentErrorMessage = errorView
+    }
+    
     func loadMentors() {
-        AdminOperations.loadMentors { (mentorArray) -> Void in
-            self.mentors = mentorArray
+        AdminOperations.loadMentors({ (mentoryArray) -> Void in
+            self.mentors = mentoryArray
+            }) { (errorMessage) -> Void in
+                self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
     }
     
@@ -39,12 +48,13 @@ class BrowseMentorsViewController: UITableViewController {
         
         let school = School(name: "Sample School")
         let user = User(firstName: "Sameera", lastName: "Vemulapalli", school: school, totalHours: 99, imgURL: "http://ia.media-imdb.com/images/M/MV5BMjA5NTE4NTE5NV5BMl5BanBnXkFtZTcwMTcyOTY5Mw@@._V1_UY317_CR20,0,214,317_AL_.jpg")
-        let cell = BrowseMentorsTableViewCell(user: user)
+        let cell = BrowseMentorsTableViewCell()
+        cell.configureWithUser(user)
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 52
+        return BrowseMentorsTableViewCell.cellHeight()
     }
     
 }

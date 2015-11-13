@@ -14,21 +14,37 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     var mentorName = UILabel()
     var schoolName = UILabel()
     var totalHours = UILabel()
-    let user: User
     
-    init(user: User) {
-        self.user = user
+    var imageRequest: NSURLRequest?
+    
+    init() {
         super.init(style: .Default, reuseIdentifier: "BrowseCell")
+    }
+    
+    func configureWithUser(user: User) {
+        let imageURL = NSURL(string: user.imgURL!)
+        let urlRequest = NSURLRequest(URL: imageURL!)
+        self.imageRequest = urlRequest
+        self.mentorPicture.setImageWithURLRequest(urlRequest, placeholderImage: nil, success: nil, failure: nil)
+        self.mentorName.text = user.firstName! + " " + user.lastName!
+        self.schoolName.text = user.school!.name
+        self.totalHours.text = String(user.totalHours) + " hours"
+    }
+    
+    static func cellHeight() -> CGFloat {
+        return 52.0
+    }
+    
+    deinit {
+        self.mentorPicture.cancelImageRequestOperation()
+    }
+    
+    override func prepareForReuse() {
+        self.mentorPicture.cancelImageRequestOperation()
     }
     
     override func layoutSubviews() {
         
-        let imageURL = NSURL(string: user.imgURL!)
-        let imageData = NSData(contentsOfURL: imageURL!)
-        self.mentorPicture.image = UIImage(data: imageData!)
-        self.mentorName.text = user.firstName! + " " + user.lastName!
-        self.schoolName.text = user.school!.name
-        self.totalHours.text = String(user.totalHours) + " hours"
         
         super.layoutSubviews()
         

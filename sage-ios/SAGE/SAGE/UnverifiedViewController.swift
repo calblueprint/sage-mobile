@@ -42,7 +42,7 @@ class UnverifiedViewController: UIViewController {
     }
     
     //
-    // MARK: - Public methods. Used by SignUpController.
+    // MARK: - Public methods
     //
     func setImage(image: UIImage) {
         (self.view as! UnverifiedView).photo.contentMode = .ScaleAspectFill

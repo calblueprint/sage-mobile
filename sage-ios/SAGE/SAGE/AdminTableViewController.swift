@@ -45,6 +45,7 @@ class AdminTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         self.navigationController!.pushViewController(BrowseMentorsViewController(), animated: true)
     }
     

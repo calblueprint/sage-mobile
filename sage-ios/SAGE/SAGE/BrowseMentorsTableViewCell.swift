@@ -15,17 +15,13 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     var schoolName = UILabel()
     var totalHours = UILabel()
     
-    var imageRequest: NSURLRequest?
-    
     init() {
         super.init(style: .Default, reuseIdentifier: "BrowseCell")
     }
     
     func configureWithUser(user: User) {
         let imageURL = NSURL(string: user.imgURL!)
-        let urlRequest = NSURLRequest(URL: imageURL!)
-        self.imageRequest = urlRequest
-        self.mentorPicture.setImageWithURLRequest(urlRequest, placeholderImage: nil, success: nil, failure: nil)
+        self.mentorPicture.setImageWithURL(imageURL!)
         self.mentorName.text = user.firstName! + " " + user.lastName!
         self.schoolName.text = user.school!.name
         self.totalHours.text = String(user.totalHours) + " hours"

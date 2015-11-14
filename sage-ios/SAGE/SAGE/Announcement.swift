@@ -39,8 +39,10 @@ class Announcement: NSObject {
                 formatter.dateFormat = StringConstants.JSONdateFormat
                 self.timeCreated = formatter.dateFromString(value as! String)
             case AnnouncementConstants.kSchool:
-                let schoolDictionary = value as! [String: AnyObject]
-                self.school = School(propertyDictionary: schoolDictionary)
+                if !(value is NSNull) {
+                    let schoolDictionary = value as! [String: AnyObject]
+                    self.school = School(propertyDictionary: schoolDictionary)
+                }
             case AnnouncementConstants.kId:
                 self.id = value as? Int
             case AnnouncementConstants.kTitle:

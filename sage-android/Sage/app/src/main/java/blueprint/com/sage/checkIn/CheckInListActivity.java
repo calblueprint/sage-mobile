@@ -46,7 +46,7 @@ public class CheckInListActivity extends NavigationAbstractActivity {
     public List<CheckIn> getCheckIns() { return mCheckIns; }
 
     public void makeCheckInListRequest() {
-        CheckInListRequest request = new CheckInListRequest(this,
+        CheckInListRequest request = new CheckInListRequest(this, false,
             new Response.Listener<ArrayList<CheckIn>>() {
                 @Override
                 public void onResponse(ArrayList<CheckIn> checkIns) {

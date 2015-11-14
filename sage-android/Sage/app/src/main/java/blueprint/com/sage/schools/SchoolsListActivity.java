@@ -13,7 +13,7 @@ import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.schools.fragments.SchoolListFragment;
-import blueprint.com.sage.shared.NavigationAbstractActivity;
+import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 

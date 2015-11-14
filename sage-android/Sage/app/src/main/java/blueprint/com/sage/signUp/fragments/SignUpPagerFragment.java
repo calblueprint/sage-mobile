@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.signUp.SignUpActivity;
-import blueprint.com.sage.signUp.adapters.SignUpPagerAdapter;
+import blueprint.com.sage.shared.adapters.PagerAdapter;
 import blueprint.com.sage.signUp.animation.SignUpPageTransformer;
 import blueprint.com.sage.events.BackEvent;
 import blueprint.com.sage.events.PhotoEvent;
@@ -28,7 +28,7 @@ public class SignUpPagerFragment extends Fragment {
 
     @Bind(R.id.sign_up_view_pager) ViewPager mViewPager;
 
-    private SignUpPagerAdapter mViewPagerAdapter;
+    private PagerAdapter mViewPagerAdapter;
 
     public static SignUpPagerFragment newInstance() { return new SignUpPagerFragment(); }
 
@@ -59,7 +59,7 @@ public class SignUpPagerFragment extends Fragment {
     }
 
     private void setUpViews(View view) {
-        mViewPagerAdapter = new SignUpPagerAdapter(getChildFragmentManager());
+        mViewPagerAdapter = new PagerAdapter(getChildFragmentManager());
 
         mViewPagerAdapter.addFragment(SignUpNameFragment.newInstance(), getString(R.string.sign_up_name));
         mViewPagerAdapter.addFragment(SignUpEmailFragment.newInstance(), getString(R.string.sign_up_email));

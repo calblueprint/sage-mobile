@@ -10,6 +10,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
+import blueprint.com.sage.requests.RequestsActivity;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,11 +21,11 @@ import butterknife.ButterKnife;
  */
 public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdapter.ViewHolder> {
 
-    private CheckInListActivity mActivity;
+    private RequestsActivity mActivity;
     private int mLayoutId;
     private List<CheckIn> mCheckIns;
 
-    public CheckInListAdapter(CheckInListActivity activity, int layoutId, List<CheckIn> checkIns) {
+    public CheckInListAdapter(RequestsActivity activity, int layoutId, List<CheckIn> checkIns) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;

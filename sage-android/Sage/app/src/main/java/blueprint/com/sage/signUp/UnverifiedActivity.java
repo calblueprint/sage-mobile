@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.squareup.picasso.Picasso;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.shared.AbstractActivity;
+import blueprint.com.sage.shared.activities.AbstractActivity;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;

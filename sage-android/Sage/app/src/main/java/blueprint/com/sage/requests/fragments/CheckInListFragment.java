@@ -1,4 +1,4 @@
-package blueprint.com.sage.checkIn.fragments;
+package blueprint.com.sage.requests.fragments;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,7 +21,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/10/15.
  */
-public class CheckInListFragment extends CheckInListAbstractFragment implements OnRefreshListener {
+public class CheckInListFragment extends RequestsAbstractFragment implements OnRefreshListener {
 
     @Bind(R.id.check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
     @Bind(R.id.check_in_list_list) RecycleViewEmpty mCheckInList;

@@ -1,4 +1,4 @@
-package blueprint.com.sage.checkIn;
+package blueprint.com.sage.requests;
 
 import android.os.Bundle;
 
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.checkIn.fragments.CheckInListFragment;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
@@ -17,14 +16,15 @@ import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
-import blueprint.com.sage.shared.NavigationAbstractActivity;
+import blueprint.com.sage.requests.fragments.CheckInListFragment;
+import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/10/15.
  */
-public class CheckInListActivity extends NavigationAbstractActivity {
+public class RequestsActivity extends NavigationAbstractActivity {
 
     private List<CheckIn> mCheckIns;
 

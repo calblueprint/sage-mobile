@@ -48,7 +48,7 @@
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".checkIn.CheckInListActivity"
+            android:name=".requests.RequestsActivity"
             android:launchMode="singleTop" />
 
         <meta-data

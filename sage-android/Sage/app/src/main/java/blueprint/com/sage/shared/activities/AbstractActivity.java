@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared;
+package blueprint.com.sage.shared.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

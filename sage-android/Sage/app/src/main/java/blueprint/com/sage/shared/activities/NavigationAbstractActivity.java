@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared;
+package blueprint.com.sage.shared.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.view.View;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInActivity;
-import blueprint.com.sage.checkIn.CheckInListActivity;
+import blueprint.com.sage.requests.RequestsActivity;
 import blueprint.com.sage.schools.SchoolsListActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
@@ -100,9 +100,9 @@ public class NavigationAbstractActivity extends AbstractActivity
     }
 
     private void startRequestsActivity() {
-        if (this instanceof CheckInListActivity) return;
+        if (this instanceof RequestsActivity) return;
 
-        Intent intent = new Intent(this, CheckInListActivity.class);
+        Intent intent = new Intent(this, RequestsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

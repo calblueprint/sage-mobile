@@ -8,7 +8,7 @@ import com.google.android.gms.location.LocationServices;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.fragments.CheckInMapFragment;
-import blueprint.com.sage.shared.NavigationAbstractActivity;
+import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**

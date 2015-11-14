@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Navigation Drawer -->
+    <string name="check_in">Check In</string>
     <string name="announcements">Announcements</string>
     <string name="schools">Schools</string>
     <string name="requests">Requests</string>

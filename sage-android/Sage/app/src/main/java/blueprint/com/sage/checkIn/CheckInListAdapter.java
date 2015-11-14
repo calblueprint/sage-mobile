@@ -39,7 +39,7 @@ public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdap
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
-        if (getItemCount() > 0 && position >= 0 && position < getItemCount())
+        if (getItemCount() == 0 || position < 0 || position >= getItemCount())
             return;
 
         final CheckIn checkIn = mCheckIns.get(position);

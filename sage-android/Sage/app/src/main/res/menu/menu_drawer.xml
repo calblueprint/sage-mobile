@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/check_in"
+            android:title="@string/check_in"
+            android:icon="@drawable/ic_place_black" />
+
         <item
             android:id="@+id/announcements"
-            android:checked="false"
             android:title="@string/announcements"
             android:icon="@drawable/ic_announcement_black" />
 
         <item
             android:id="@+id/log_out"
-            android:checked="false"
             android:title="@string/log_out"
             android:icon="@drawable/ic_exit_to_app_black" />
 
         <item
             android:id="@+id/schools"
-            android:checked="false"
             android:title="@string/schools"
             android:icon="@drawable/ic_location_city_black" />
 
         <item
             android:id="@+id/requests"
-            android:checked="false"
             android:title="@string/requests"
             android:icon="@drawable/ic_assignment_turned_in_black" />
     </group>

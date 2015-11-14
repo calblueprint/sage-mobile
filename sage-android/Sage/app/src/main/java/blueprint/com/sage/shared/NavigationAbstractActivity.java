@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.checkIn.CheckInListActivity;
 import blueprint.com.sage.schools.SchoolsListActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -61,6 +62,8 @@ public class NavigationAbstractActivity extends AbstractActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.check_in:
+                startCheckInActivity();
             case R.id.announcements:
                 Log.e("Selected announcements", "yay");
                 break;
@@ -78,6 +81,14 @@ public class NavigationAbstractActivity extends AbstractActivity
 
         mDrawerLayout.closeDrawers();
         return true;
+    }
+
+    private void startCheckInActivity() {
+        if (this instanceof CheckInActivity) return;
+
+        Intent intent = new Intent(this, CheckInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void startSchoolsActivity() {

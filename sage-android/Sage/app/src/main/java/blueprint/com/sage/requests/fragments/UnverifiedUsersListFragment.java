@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 public class UnverifiedUsersListFragment extends RequestsAbstractFragment {
 
     public static UnverifiedUsersListFragment newInstance() { return new UnverifiedUsersListFragment(); }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 

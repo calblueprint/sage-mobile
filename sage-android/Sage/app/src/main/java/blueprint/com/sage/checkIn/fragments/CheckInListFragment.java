@@ -81,11 +81,11 @@ public class CheckInListFragment extends CheckInListAbstractFragment implements 
 
     public void onEvent(DeleteCheckInEvent event) {
         int position = event.getPosition();
-        mCheckInAdapter.notifyItemRemoved(position);
+        mCheckInAdapter.removeCheckIn(position);
     }
 
     public void onEvent(VerifyCheckInEvent event) {
         int position = event.getPosition();
-        mCheckInAdapter.notifyItemRemoved(position);
+        mCheckInAdapter.removeCheckIn(position);
     }
 }

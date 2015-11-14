@@ -115,8 +115,9 @@ public class BaseRequest extends JsonObjectRequest {
         for (String path : paths)
             uri = uri.appendPath(path);
 
-        for (String queryParam : queryParams.keySet())
-            uri = uri.appendQueryParameter(queryParam, queryParams.get(queryParam));
+        if (queryParams != null)
+            for (String queryParam : queryParams.keySet())
+                uri = uri.appendQueryParameter(queryParam, queryParams.get(queryParam));
 
         return uri.build().toString();
     }

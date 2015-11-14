@@ -74,6 +74,11 @@ public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdap
         notifyDataSetChanged();
     }
 
+    public void removeCheckIn(int position) {
+        mCheckIns.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public static class ViewHolder extends RecycleViewEmpty.ViewHolder {
 
         @Bind(R.id.check_in_list_item_user) TextView mUser;

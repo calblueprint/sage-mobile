@@ -16,7 +16,7 @@ import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
-import blueprint.com.sage.requests.fragments.CheckInListFragment;
+import blueprint.com.sage.requests.fragments.UnverifiedCheckInListFragment;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
@@ -36,7 +36,7 @@ public class RequestsActivity extends NavigationAbstractActivity {
 
         makeCheckInListRequest();
 
-        FragUtils.replace(R.id.container, CheckInListFragment.newInstance(), this);
+        FragUtils.replace(R.id.container, UnverifiedCheckInListFragment.newInstance(), this);
     }
 
     public void setCheckIns(List<CheckIn> checkIns) {

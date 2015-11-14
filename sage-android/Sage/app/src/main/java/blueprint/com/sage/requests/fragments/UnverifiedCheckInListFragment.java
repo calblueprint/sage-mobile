@@ -21,7 +21,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/10/15.
  */
-public class CheckInListFragment extends RequestsAbstractFragment implements OnRefreshListener {
+public class UnverifiedCheckInListFragment extends RequestsAbstractFragment implements OnRefreshListener {
 
     @Bind(R.id.check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
     @Bind(R.id.check_in_list_list) RecycleViewEmpty mCheckInList;
@@ -29,7 +29,7 @@ public class CheckInListFragment extends RequestsAbstractFragment implements OnR
 
     private CheckInListAdapter mCheckInAdapter;
 
-    public static CheckInListFragment newInstance() { return new CheckInListFragment(); }
+    public static UnverifiedCheckInListFragment newInstance() { return new UnverifiedCheckInListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

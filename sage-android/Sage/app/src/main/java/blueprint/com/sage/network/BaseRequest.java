@@ -3,6 +3,7 @@ package blueprint.com.sage.network;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,6 +32,10 @@ import blueprint.com.sage.utility.network.NetworkUtils;
  */
 public class BaseRequest extends JsonObjectRequest {
 
+    private static final String HTTP = "http";
+    private static final String HOSTNAME = "sage-rails.herokuapp.com";
+    private static final String API = "api";
+    private static final String VERSION = "v1";
     private static final String mBaseUrl = "http://sage-rails.herokuapp.com/api/v1";
 //    private static final String mBaseUrl = "http://192.168.0.104:3000/api/v1";
     private Activity mActivity;
@@ -51,7 +56,7 @@ public class BaseRequest extends JsonObjectRequest {
                     }
                 } else {
                     if (networkResponse.statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                        Toast.makeText(activity, "Invalid email or password.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Invalid user", Toast.LENGTH_SHORT).show();
                         NetworkUtils.logoutCurrentUser(activity);
                     } else {
                         if (networkResponse.data != null) {
@@ -100,7 +105,21 @@ public class BaseRequest extends JsonObjectRequest {
         return headers;
     }
 
-    public static String makeUrl(String url) { return mBaseUrl + url; }
+    public static String makeUrl(HashMap<String, String> queryParams, String... paths) {
+        Uri.Builder uri = new Uri.Builder();
+        uri = uri.scheme(HTTP)
+                 .authority(HOSTNAME)
+                 .appendPath(API)
+                 .appendPath(VERSION);
+
+        for (String path : paths)
+            uri = uri.appendPath(path);
+
+        for (String queryParam : queryParams.keySet())
+            uri = uri.appendQueryParameter(queryParam, queryParams.get(queryParam));
+
+        return uri.build().toString();
+    }
 
     public static JSONObject convertToParams(Object object, String objString, Context context) {
         ObjectMapper mapper =  NetworkManager.getInstance(context).getObjectMapper();

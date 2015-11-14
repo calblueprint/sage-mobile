@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
@@ -22,9 +23,10 @@ import blueprint.com.sage.utility.network.NetworkManager;
 public class CheckInListRequest extends BaseRequest {
 
     public CheckInListRequest(final Activity activity,
+                              Boolean isVerified,
                               final Response.Listener<ArrayList<CheckIn>> onSuccess,
                               final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl("/check_ins"), null,
+        super(Method.GET, makeUrl(isVerified), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {
@@ -44,5 +46,14 @@ public class CheckInListRequest extends BaseRequest {
                         onFailure.onResponse(error);
                     }
                 }, activity);
+    }
+
+    private static String makeUrl(Boolean isVerified) {
+        HashMap<String, String> queryParams = new HashMap<>();
+
+        if (isVerified != null)
+            queryParams.put("verified", String.valueOf(isVerified));
+
+        return makeUrl(queryParams, "check_ins");
     }
 }

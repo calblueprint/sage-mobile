@@ -21,7 +21,7 @@ import blueprint.com.sage.models.Session;
 public class SignInRequest extends BaseRequest {
     public SignInRequest(final Activity activity, HashMap<String, String> params,
                          final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
-        super(Request.Method.POST, makeUrl("/users/sign_in"), loginRequestParams(params),
+        super(Request.Method.POST, makeUrl(null, "users", "sign_in"), loginRequestParams(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

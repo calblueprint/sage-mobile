@@ -22,7 +22,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     
     var modalType: ContentType
     var navigationBar: UINavigationBar?
-    var parentVC: SignUpController?
+    weak var parentVC: SignUpController?
     var schools: [String] = []
     var schoolDict: NSMutableDictionary
     var volunteerLevelDict: NSMutableDictionary

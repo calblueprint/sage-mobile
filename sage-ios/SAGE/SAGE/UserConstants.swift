@@ -21,4 +21,7 @@ struct UserConstants {
     static let kTotalHours: String = "total_hours"
     static let kVerified: String = "verified"
     
+    static let kPassword: String = "password"
+    static let kPhotoData: String = "data"
+    
 }

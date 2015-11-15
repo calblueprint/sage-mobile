@@ -23,10 +23,11 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
             NSLocalizedString("Announcements", comment: "Announcements"),
             NSLocalizedString("Check In", comment: "Check In"),
             NSLocalizedString("My Stats", comment: "My Stats"),
-            NSLocalizedString("Profile", comment: "Profile")
+            NSLocalizedString("Profile", comment: "Profile"),
+            NSLocalizedString("Admin", comment: "Admin")
         ];
         
-        let images = [
+        var images = [
             FAKIonIcons.radioWavesIconWithSize(UIConstants.tabBarIconSize)
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize)),
             FAKIonIcons.locationIconWithSize(UIConstants.tabBarIconSize)
@@ -42,7 +43,20 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         let myStatsViewController = UIViewController()
         let profileViewController = UIViewController()
         
-        let rootViewControllers = [announcementsViewController, checkInViewController, myStatsViewController, profileViewController]
+        var rootViewControllers = [announcementsViewController, checkInViewController, myStatsViewController, profileViewController]
+        
+        // User.currentUser!.role = User.UserRole.Admin
+        // comment in the above line to see the admin page
+        if let role = LoginOperations.getUser()?.role {
+            if role == .Admin || role == .Director {
+                let icon = FAKIonIcons.folderIconWithSize(UIConstants.tabBarIconSize)
+                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                images.append(icon)
+                
+                let adminViewController = AdminTableViewController(style: .Grouped)
+                rootViewControllers.append(adminViewController)
+            }
+        }
         
         var viewControllers = [UIViewController]()
         

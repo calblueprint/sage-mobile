@@ -27,7 +27,11 @@ extension UIFont {
     }
     
     static func getSemiboldFont(size: CGFloat = 20) -> UIFont {
-        return UIFont(name: ".SFUIText-Semibold", size: size)!
+        if size > 20 {
+            return UIFont(name: ".SFUIDisplay-Semibold", size: size)!
+        } else {
+            return UIFont(name: ".SFUIText-Semibold", size: size)!
+        }
     }
     
     static func getBoldFont(size: CGFloat = 20) -> UIFont {
@@ -40,5 +44,9 @@ extension UIFont {
         } else {
             return UIFont(name: ".SFUIDisplay-Thin", size: size)!
         }
+    }
+    
+    static func getRegularFont(size: CGFloat = 20) -> UIFont {
+        return UIFont(name: ".SFUIText-Regular", size: size)!
     }
 }

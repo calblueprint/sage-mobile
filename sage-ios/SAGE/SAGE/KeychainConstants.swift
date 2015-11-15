@@ -10,20 +10,11 @@ import Foundation
 
 struct KeychainConstants {
 
-    static let kAuthToken: String = StringConstants.kBaseURL + "authToken"
-    static let kVerified: String = StringConstants.kBaseURL + "verified"
-    
     //
     // MARK:- Verification
     //
-    static let kVerificationBaseURL = StringConstants.kBaseURL + "Verification"
-    static let kVFirstName: String = KeychainConstants.kVerificationBaseURL + "FirstName"
-    static let kVLastName: String = KeychainConstants.kVerificationBaseURL + "LastName"
-    static let kVEmail: String = KeychainConstants.kVerificationBaseURL + "Email"
-    static let kVPassword: String = KeychainConstants.kVerificationBaseURL + "Password"
-    static let kVSchool: String = KeychainConstants.kVerificationBaseURL + "School"
-    static let kVHours: String = KeychainConstants.kVerificationBaseURL + "Hours"
-    
+    static let kAuthToken: String = StringConstants.kBaseURL + "authToken"
+    static let kUser: String = StringConstants.kBaseURL + "User"
     
     static let kSessionStartTime: String = "Session Start Time"
     static let kSchool: String = "User School"

@@ -15,7 +15,7 @@ class CheckinViewController: UIViewController {
 
     let locationManager = CLLocationManager()
     var currentLocation = CLLocation()
-    let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
+    var school = School()
     let distanceTolerance: CLLocationDistance = 2000 // in Meters
     
     let checkinView = CheckinView()
@@ -34,6 +34,8 @@ class CheckinViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
+
         self.setupDefaultTitleLabel()
         self.setupSessionTitleLabel()
         self.setupBarButtonItems()

@@ -41,7 +41,6 @@ class LoginController: UIViewController {
     //
     
     func pushRootTabBarController() {
-        LoginHelper.setUserSingleton()
         let rootTabBarController = RootTabBarController()
         self.presentViewController(rootTabBarController, animated: false, completion: nil)
     }
@@ -60,11 +59,11 @@ class LoginController: UIViewController {
         let loginView = (self.view as! LoginView)
         if let email = loginView.loginEmailField.text {
             if let password = loginView.loginPasswordField.text {
-                LoginHelper.isValidLogin(email, password: password, completion: {
+                LoginOperations.loginWith(email, password: password, completion: {
                     (valid: Bool) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if (valid) {
-                            if let verified = User.currentUser?.verified {
+                            if let verified = LoginOperations.getUser()?.verified {
                                 if verified {
                                     self.pushRootTabBarController()
                                 } else {

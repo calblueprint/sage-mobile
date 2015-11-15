@@ -100,10 +100,10 @@ class RequestHoursView: UIView {
     
     func exportToCheckin(verified: Bool) -> Checkin {
         let checkin: Checkin = Checkin(
-            user: User.currentUser,
+            user: LoginOperations.getUser(),
             startTime: nil,
             endTime: nil,
-            school: User.currentUser?.school,
+            school: LoginOperations.getUser()?.school,
             comment: self.commentField.textView.text,
             verified: true
         )

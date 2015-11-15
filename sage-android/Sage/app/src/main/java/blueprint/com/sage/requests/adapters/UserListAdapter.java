@@ -42,6 +42,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         if (getItemCount() == 0 || position < 0 || position >= getItemCount())
             return;
 
+        User user = mUsers.get(position);
+
+        viewHolder.mName.setText(user.getName());
+        viewHolder.mSchool.setText(user.getSchool().getName());
+        viewHolder.mHours.setText(user.getHoursString());
+
+        user.loadUserImage(mActivity, viewHolder.mImage);
     }
 
     @Override

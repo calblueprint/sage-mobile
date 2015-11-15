@@ -2,8 +2,6 @@ package blueprint.com.sage.signUp;
 
 import android.os.Bundle;
 
-import com.squareup.picasso.Picasso;
-
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.activities.AbstractActivity;
 import blueprint.com.sage.shared.views.CircleImageView;
@@ -27,13 +25,6 @@ public class UnverifiedActivity extends AbstractActivity {
     }
 
     private void initializeProfilePhoto() {
-
-        Picasso picasso = Picasso.with(this);
-
-        if (mUser.getImageUrl() == null) {
-            picasso.load(R.drawable.default_profile).into(mImageView);
-        } else {
-            picasso.load(mUser.getImageUrl()).into(mImageView);
-        }
+        mUser.loadUserImage(this, mImageView);
     }
 }

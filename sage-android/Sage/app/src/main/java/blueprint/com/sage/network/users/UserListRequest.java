@@ -25,7 +25,7 @@ public class UserListRequest extends BaseRequest {
     public UserListRequest(final Activity activity,
                            HashMap<String, String> queryParams,
                            final Response.Listener<ArrayList<User>> onSuccess,
-                           Response.Listener<APIError> onFailure) {
+                           final Response.Listener<APIError> onFailure) {
         super(Method.GET, makeUrl(queryParams, "users"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -43,17 +43,8 @@ public class UserListRequest extends BaseRequest {
                 }, new Response.Listener<APIError>() {
                     @Override
                     public void onResponse(APIError error) {
-
+                        onFailure.onResponse(error);
                     }
         }, activity);
-    }
-
-    public static String makeUrl(Boolean verified) {
-        HashMap<String, String> queryParams = new HashMap<>();
-
-        if (verified != null)
-            queryParams.put("verified", String.valueOf(verified));
-
-        return makeUrl(queryParams, "users");
     }
 }

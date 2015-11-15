@@ -29,8 +29,10 @@ class AnnouncementsViewController: UIViewController {
     func getAnnouncements() {
         AnnouncementsOperations.loadAnnouncements({ (announcements) -> Void in
             self.announcements = announcements
+            self.announcementsView.activityView.stopAnimating()
             self.announcementsView.tableView.reloadData()
             }) { (errorMessage) -> Void in
+                self.announcementsView.activityView.stopAnimating()
                 //display error
         }
     }

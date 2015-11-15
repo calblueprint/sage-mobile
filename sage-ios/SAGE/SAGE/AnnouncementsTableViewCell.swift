@@ -47,7 +47,15 @@ class AnnouncementsTableViewCell: UITableViewCell {
         self.announcementUserImg.image = image
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
-        self.announcementTime.text = "5 days ago"
+        
+        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        let date1 = calendar.startOfDayForDate(announcement.timeCreated!)
+        let date2 = calendar.startOfDayForDate(NSDate())
+        let flags = NSCalendarUnit.Day
+        let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
+        var days = components.day
+        self.announcementTime.text = String(days) + " days ago"
+        
         var announcementTo = "Everyone"
         if (announcement.school != nil) {
             announcementTo = (announcement.school?.name)!
@@ -77,8 +85,8 @@ class AnnouncementsTableViewCell: UITableViewCell {
         announcementTitle.font = UIFont.boldSystemFontOfSize(14)
         announcementTitle.textAlignment = NSTextAlignment.Left
         
-        announcementMessage.numberOfLines = 0
-        announcementMessage.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        announcementMessage.numberOfLines = 4
+        announcementMessage.lineBreakMode = .ByTruncatingTail
         announcementMessage.font = UIFont.normalFont
         announcementMessage.textAlignment = NSTextAlignment.Left
     }

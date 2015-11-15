@@ -48,7 +48,7 @@ class Announcement: NSObject {
             case AnnouncementConstants.kTitle:
                 self.title = value as? String
             case AnnouncementConstants.kText:
-                self.title = value as? String
+                self.text = value as? String
             default: break
             }
         }

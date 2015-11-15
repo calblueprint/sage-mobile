@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.checkIn.CheckInListAdapter;
+import blueprint.com.sage.requests.adapters.CheckInListAdapter;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;

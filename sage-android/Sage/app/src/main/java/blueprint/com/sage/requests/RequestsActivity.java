@@ -12,12 +12,14 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
+import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
+import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.requests.fragments.UnverifiedCheckInListFragment;
@@ -40,7 +42,7 @@ public class RequestsActivity extends NavigationAbstractActivity {
         mCheckIns = new ArrayList<>();
 
         makeCheckInListRequest();
-
+        makeUsersListRequest();
         FragUtils.replace(R.id.container, UnverifiedCheckInListFragment.newInstance(), this);
     }
 
@@ -49,6 +51,12 @@ public class RequestsActivity extends NavigationAbstractActivity {
         EventBus.getDefault().post(new CheckInListEvent());
     }
     public List<CheckIn> getCheckIns() { return mCheckIns; }
+
+    public void setUsers(List<User> users) {
+        mUsers = users;
+        EventBus.getDefault().post(new UserListEvent());
+    }
+    public List<User> getUsers() { return mUsers; }
 
     public void makeCheckInListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -145,6 +153,18 @@ public class RequestsActivity extends NavigationAbstractActivity {
     }
 
     public void makeDeleteUserRequest(User user) {
+        DeleteUserRequest request = new DeleteUserRequest(this, user, new Response.Listener<User>() {
+            @Override
+            public void onResponse(User user) {
 
+            }
+        }, new Response.Listener<APIError>() {
+            @Override
+            public void onResponse(APIError error) {
+
+            }
+        });
+
+        getNetworkManager().getRequestQueue().add(request);
     }
 }

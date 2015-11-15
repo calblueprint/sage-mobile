@@ -1,5 +1,6 @@
-package blueprint.com.sage.checkIn;
+package blueprint.com.sage.requests.adapters;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.requests.RequestsActivity;
-import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by charlesx on 11/11/15.
  * Adapter for Check In lists
  */
-public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdapter.ViewHolder> {
+public class CheckInListAdapter extends RecyclerView.Adapter<CheckInListAdapter.ViewHolder> {
 
     private RequestsActivity mActivity;
     private int mLayoutId;
@@ -80,7 +80,7 @@ public class CheckInListAdapter extends RecycleViewEmpty.Adapter<CheckInListAdap
         notifyItemRemoved(position);
     }
 
-    public static class ViewHolder extends RecycleViewEmpty.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.check_in_list_item_user) TextView mUser;
         @Bind(R.id.check_in_list_item_school) TextView mSchool;

@@ -1,6 +1,7 @@
 package blueprint.com.sage.schools.adapters;
 
 import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
-import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by charlesx on 11/4/15.
  * Adapter for schools
  */
-public class SchoolsListAdapter extends RecycleViewEmpty.Adapter<SchoolsListAdapter.ViewHolder> {
+public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.ViewHolder> {
 
     private Activity mActivity;
     private int mLayoutId;
@@ -55,7 +55,7 @@ public class SchoolsListAdapter extends RecycleViewEmpty.Adapter<SchoolsListAdap
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecycleViewEmpty.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.schools_list_item_title) TextView mSchoolTitle;
 

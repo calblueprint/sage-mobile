@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.users.DeleteUserRequest;
+import blueprint.com.sage.events.users.UserListEvent;
+import blueprint.com.sage.events.users.VerifyUserEvent;
 import butterknife.ButterKnife;
 
 /**
@@ -24,5 +27,17 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment {
         View view = inflater.inflate(R.layout.fragment_user_list, parent, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    public void onEvent(UserListEvent userListEvent) {
+
+    }
+
+    public void onEvent(VerifyUserEvent verifyUserEvent) {
+
+    }
+
+    public void onEvent(DeleteUserRequest deleteUserRequest) {
+
     }
 }

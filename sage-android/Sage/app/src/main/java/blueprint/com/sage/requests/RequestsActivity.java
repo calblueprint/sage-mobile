@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.android.volley.Response;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
@@ -13,9 +14,12 @@ import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
+import blueprint.com.sage.network.users.UserListRequest;
+import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.requests.fragments.UnverifiedCheckInListFragment;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -27,6 +31,7 @@ import de.greenrobot.event.EventBus;
 public class RequestsActivity extends NavigationAbstractActivity {
 
     private List<CheckIn> mCheckIns;
+    private List<User> mUsers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,10 @@ public class RequestsActivity extends NavigationAbstractActivity {
     public List<CheckIn> getCheckIns() { return mCheckIns; }
 
     public void makeCheckInListRequest() {
-        CheckInListRequest request = new CheckInListRequest(this, false,
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("verified", "false");
+
+        CheckInListRequest request = new CheckInListRequest(this, queryParams,
             new Response.Listener<ArrayList<CheckIn>>() {
                 @Override
                 public void onResponse(ArrayList<CheckIn> checkIns) {
@@ -97,5 +105,46 @@ public class RequestsActivity extends NavigationAbstractActivity {
                 });
 
         getNetworkManager().getRequestQueue().add(request);
+    }
+
+    public void makeUsersListRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("verified", "false");
+
+        UserListRequest request = new UserListRequest(this, queryParams,
+                new Response.Listener<ArrayList<User>>() {
+                    @Override
+                    public void onResponse(ArrayList<User> users) {
+
+                    }
+                },
+                new Response.Listener<APIError>() {
+                    @Override
+                    public void onResponse(APIError error) {
+
+                    }
+                });
+
+        getNetworkManager().getRequestQueue().add(request);
+    }
+
+    public void makeVerifyUserRequest(User user) {
+        VerifyUserRequest request = new VerifyUserRequest(this, user, new Response.Listener<User>() {
+            @Override
+            public void onResponse(User user) {
+
+            }
+        }, new Response.Listener<APIError>() {
+            @Override
+            public void onResponse(APIError error) {
+
+            }
+        });
+
+        getNetworkManager().getRequestQueue().add(request);
+    }
+
+    public void makeDeleteUserRequest(User user) {
+
     }
 }

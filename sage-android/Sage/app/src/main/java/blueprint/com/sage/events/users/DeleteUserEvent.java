@@ -6,11 +6,11 @@ import lombok.Data;
 /**
  * Created by charlesx on 11/14/15.
  */
-public @Data class DeleteUserRequest {
+public @Data class DeleteUserEvent {
 
     private User user;
 
-    public DeleteUserRequest(User user) {
+    public DeleteUserEvent(User user) {
         this.user = user;
     }
 }

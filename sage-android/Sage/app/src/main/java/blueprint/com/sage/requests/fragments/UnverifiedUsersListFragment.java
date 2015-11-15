@@ -1,20 +1,27 @@
 package blueprint.com.sage.requests.fragments;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.users.DeleteUserRequest;
+import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
+import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by charlesx on 11/14/15.
  */
 public class UnverifiedUsersListFragment extends RequestsAbstractFragment {
+
+    @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
+    @Bind(R.id.user_list_list) RecycleViewEmpty mUserList;
+    @Bind(R.id.user_list_refresh) SwipeRefreshLayout mRefreshUser;
 
     public static UnverifiedUsersListFragment newInstance() { return new UnverifiedUsersListFragment(); }
 
@@ -37,7 +44,7 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment {
 
     }
 
-    public void onEvent(DeleteUserRequest deleteUserRequest) {
+    public void onEvent(DeleteUserEvent deleteUserRequest) {
 
     }
 }

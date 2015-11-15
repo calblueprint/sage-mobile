@@ -19,12 +19,14 @@ import blueprint.com.sage.utility.network.NetworkManager;
 
 /**
  * Created by charlesx on 11/14/15.
+ * Gets a list of users
  */
 public class UserListRequest extends BaseRequest {
-    public UserListRequest(final Activity activity, Boolean verified,
+    public UserListRequest(final Activity activity,
+                           HashMap<String, String> queryParams,
                            final Response.Listener<ArrayList<User>> onSuccess,
                            Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(verified), null,
+        super(Method.GET, makeUrl(queryParams, "users"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

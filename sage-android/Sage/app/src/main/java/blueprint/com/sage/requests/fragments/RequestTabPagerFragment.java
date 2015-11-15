@@ -11,6 +11,8 @@ public class RequestTabPagerFragment extends TabsFragment {
 
     private PagerAdapter mPagerAdapter;
 
+    public static RequestTabPagerFragment newInstance() { return new RequestTabPagerFragment();}
+
     public void initializeViews() {
         mPagerAdapter = new PagerAdapter(getChildFragmentManager());
 
@@ -18,5 +20,6 @@ public class RequestTabPagerFragment extends TabsFragment {
         mPagerAdapter.addFragment(UnverifiedUsersListFragment.newInstance(), getString(R.string.requests_users));
 
         mViewPager.setAdapter(mPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 }

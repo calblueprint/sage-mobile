@@ -12,7 +12,9 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
+import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
+import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.User;
@@ -22,7 +24,7 @@ import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
-import blueprint.com.sage.requests.fragments.UnverifiedCheckInListFragment;
+import blueprint.com.sage.requests.fragments.RequestTabPagerFragment;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
@@ -40,10 +42,11 @@ public class RequestsActivity extends NavigationAbstractActivity {
         super.onCreate(savedInstanceState);
 
         mCheckIns = new ArrayList<>();
+        mUsers = new ArrayList<>();
 
         makeCheckInListRequest();
         makeUsersListRequest();
-        FragUtils.replace(R.id.container, UnverifiedCheckInListFragment.newInstance(), this);
+        FragUtils.replace(R.id.container, RequestTabPagerFragment.newInstance(), this);
     }
 
     public void setCheckIns(List<CheckIn> checkIns) {
@@ -136,11 +139,11 @@ public class RequestsActivity extends NavigationAbstractActivity {
         getNetworkManager().getRequestQueue().add(request);
     }
 
-    public void makeVerifyUserRequest(User user) {
+    public void makeVerifyUserRequest(User user, final int position) {
         VerifyUserRequest request = new VerifyUserRequest(this, user, new Response.Listener<User>() {
             @Override
             public void onResponse(User user) {
-
+                EventBus.getDefault().post(new VerifyUserEvent(user, position));
             }
         }, new Response.Listener<APIError>() {
             @Override
@@ -152,11 +155,11 @@ public class RequestsActivity extends NavigationAbstractActivity {
         getNetworkManager().getRequestQueue().add(request);
     }
 
-    public void makeDeleteUserRequest(User user) {
+    public void makeDeleteUserRequest(User user, final int position) {
         DeleteUserRequest request = new DeleteUserRequest(this, user, new Response.Listener<User>() {
             @Override
             public void onResponse(User user) {
-
+                EventBus.getDefault().post(new DeleteUserEvent(user, position));
             }
         }, new Response.Listener<APIError>() {
             @Override

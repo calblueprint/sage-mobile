@@ -9,8 +9,10 @@ import lombok.Data;
 public @Data class VerifyUserEvent {
 
     private User user;
+    private int position;
 
-    public VerifyUserEvent(User user) {
+    public VerifyUserEvent(User user, int position) {
         this.user = user;
+        this.position = position;
     }
 }

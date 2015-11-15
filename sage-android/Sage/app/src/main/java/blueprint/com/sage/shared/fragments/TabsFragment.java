@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +32,21 @@ public abstract class TabsFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_tabs, parent, false);
         ButterKnife.bind(this, view);
-        initializeTabView();
+        setToolBarElevation(0);
         initializeViews();
         return view;
     }
 
-    public void initializeTabView() {
-        mTabLayout.setupWithViewPager(mViewPager);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        setToolBarElevation(8);
+    }
+
+    private void setToolBarElevation(int elevation) {
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setElevation(elevation);
     }
 
     public abstract void initializeViews();

@@ -3,6 +3,7 @@ package blueprint.com.sage.requests.fragments;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment implem
     private void initializeViews() {
         mUserAdapter = new UserListAdapter(getParentActivity(), R.layout.users_list_item, getParentActivity().getUsers());
 
+        mUserList.setLayoutManager(new LinearLayoutManager(getParentActivity()));
         mUserList.setEmptyView(mEmptyView);
         mUserList.setAdapter(mUserAdapter);
 
@@ -55,14 +57,14 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment implem
     public void onRefresh() { getParentActivity().makeUsersListRequest(); }
 
     public void onEvent(UserListEvent userListEvent) {
-
+        mUserAdapter.setUsers(getParentActivity().getUsers());
     }
 
     public void onEvent(VerifyUserEvent verifyUserEvent) {
-
+        mUserAdapter.removeUser(verifyUserEvent.getPosition());
     }
 
     public void onEvent(DeleteUserEvent deleteUserRequest) {
-
+        mUserAdapter.removeUser(deleteUserRequest.getPosition());
     }
 }

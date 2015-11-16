@@ -10,10 +10,25 @@ import UIKit
 
 class UnverifiedViewController: UIViewController {
     
+    
     override func loadView() {
         self.view = UnverifiedView()
         let unverifiedView = self.view as! UnverifiedView
         unverifiedView.signOutButton.addTarget(self, action: "signOut", forControlEvents: .TouchUpInside)
+    }
+    
+    override func viewDidLoad() {
+        if let imageURL = LoginOperations.getUser()?.imageURL {
+            (self.view as! UnverifiedView).photo.setImageWithURL(imageURL)
+        } else {
+            (self.view as! UnverifiedView).photo.setImageWithURL(UserConstants.defaultImageURL)
+        }
+        (self.view as! UnverifiedView).photo.contentMode = .ScaleAspectFill
+
+    }
+    
+    deinit {
+        (self.view as! UnverifiedView).photo.cancelImageRequestOperation()
     }
     
     func signOut() {

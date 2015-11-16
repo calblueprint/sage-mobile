@@ -11,7 +11,7 @@ import AFNetworking
 
 class AnnouncementsOperations {
     
-    static func loadSchools(completion: ((NSMutableArray) -> Void)){
+    static func loadSchools(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         
         let operationManager = BaseOperation.manager()
         
@@ -19,7 +19,9 @@ class AnnouncementsOperations {
             
             let schoolDict = data["schools"] as! NSMutableArray
             completion(schoolDict)
-            }, failure: nil)
+            }, failure: { (operation, error) -> Void in
+                failure("Failed to load schools. Please try again!")
+        })
     }
     
 }

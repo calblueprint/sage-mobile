@@ -30,6 +30,7 @@ class AdminTableViewController: UITableViewController {
         default: return 0
         }
     }
+
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
@@ -41,6 +42,11 @@ class AdminTableViewController: UITableViewController {
             return "SAGE Settings"
         default: return ""
         }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.navigationController!.pushViewController(BrowseMentorsViewController(), animated: true)
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -87,7 +93,7 @@ class AdminTableViewController: UITableViewController {
             }
         default: break
         }
-        cell.textLabel?.font = UIFont.getRegularFont(cell.textLabel!.font.pointSize)
+        cell.textLabel?.font = UIFont.getDefaultFont(cell.textLabel!.font.pointSize)
         return cell
     }
 }

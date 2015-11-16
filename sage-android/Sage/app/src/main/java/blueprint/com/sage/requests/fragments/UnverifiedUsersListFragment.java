@@ -16,9 +16,11 @@ import blueprint.com.sage.requests.adapters.UserListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/14/15.
+ * Shows list of unverified users
  */
 public class UnverifiedUsersListFragment extends RequestsAbstractFragment implements OnRefreshListener {
 
@@ -42,6 +44,18 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment implem
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void initializeViews() {
         mUserAdapter = new UserListAdapter(getParentActivity(), R.layout.users_list_item, getParentActivity().getUsers());
 
@@ -57,6 +71,7 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment implem
     public void onRefresh() { getParentActivity().makeUsersListRequest(); }
 
     public void onEvent(UserListEvent userListEvent) {
+        getParentActivity().setUsers(userListEvent.getUsers());
         mUserAdapter.setUsers(getParentActivity().getUsers());
         mEmptyView.setRefreshing(false);
         mRefreshUser.setRefreshing(false);

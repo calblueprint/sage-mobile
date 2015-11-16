@@ -57,7 +57,7 @@ public class RequestsActivity extends NavigationAbstractActivity {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("verified", "false");
 
-        Requests.CheckIns.with(this).makeListRequest(queryParams);
+        Requests.Users.with(this).makeListRequest(queryParams);
 
     }
 

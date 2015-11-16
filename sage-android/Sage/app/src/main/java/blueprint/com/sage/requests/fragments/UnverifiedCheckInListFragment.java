@@ -20,6 +20,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/10/15.
+ * Gets list of unverified checkins
  */
 public class UnverifiedCheckInListFragment extends RequestsAbstractFragment implements OnRefreshListener {
 
@@ -74,6 +75,7 @@ public class UnverifiedCheckInListFragment extends RequestsAbstractFragment impl
     public void onRefresh() { getParentActivity().makeCheckInListRequest(); }
 
     public void onEvent(CheckInListEvent event) {
+        getParentActivity().setCheckIns(event.getCheckIns());
         mCheckInAdapter.setCheckIns(getParentActivity().getCheckIns());
         mCheckInRefreshLayout.setRefreshing(false);
         mEmptyView.setRefreshing(false);

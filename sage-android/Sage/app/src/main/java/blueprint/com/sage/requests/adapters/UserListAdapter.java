@@ -13,7 +13,6 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.activities.AbstractActivity;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,13 +20,13 @@ import butterknife.ButterKnife;
 /**
  * Created by charlesx on 11/14/15.
  */
-public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder>{
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     private Activity mActivity;
     private int mLayoutId;
     private List<User> mUsers;
 
-    public UserListAdapter(AbstractActivity activity, int layoutId, List<User> users) {
+    public UserListAdapter(Activity activity, int layoutId, List<User> users) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;

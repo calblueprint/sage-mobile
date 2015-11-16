@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <blueprint.com.sage.shared.views.CircleImageView
         android:id="@+id/user_list_photo"
         android:layout_width="50dp"
         android:layout_height="50dp" />

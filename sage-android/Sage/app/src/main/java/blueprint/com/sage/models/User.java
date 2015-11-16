@@ -61,10 +61,13 @@ public @Data class User {
         switch (volunteerType) {
             case VOLUNTEER:
                 hours = 1;
+                break;
             case ONE_UNIT:
                 hours = 2;
+                break;
             case TWO_UNITS:
                 hours = 3;
+                break;
         }
 
         return String.format("%d hrs/week", hours);

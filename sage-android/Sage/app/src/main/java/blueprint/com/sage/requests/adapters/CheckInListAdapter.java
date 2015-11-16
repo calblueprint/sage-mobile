@@ -1,5 +1,6 @@
 package blueprint.com.sage.requests.adapters;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,6 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.requests.RequestsActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
  */
 public class CheckInListAdapter extends RecyclerView.Adapter<CheckInListAdapter.ViewHolder> {
 
-    private RequestsActivity mActivity;
+    private Activity mActivity;
     private int mLayoutId;
     private List<CheckIn> mCheckIns;
 
-    public CheckInListAdapter(RequestsActivity activity, int layoutId, List<CheckIn> checkIns) {
+    public CheckInListAdapter(Activity activity, int layoutId, List<CheckIn> checkIns) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;

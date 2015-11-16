@@ -69,6 +69,7 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     public void onRefresh() { getParentActivity().getSchoolsListRequest(); }
 
     public void onEvent(SchoolListEvent event) {
+        getParentActivity().setSchools(event.getSchools());
         mAdapter.setSchools(getParentActivity().getSchools());
         mEmptyView.setRefreshing(false);
         mSchoolsRefreshView.setRefreshing(false);

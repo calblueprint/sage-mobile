@@ -10,6 +10,10 @@ import UIKit
 
 class RootController: UIViewController {
     
+    var loginController: LoginController?
+    var unverifiedController: UnverifiedViewController?
+    var rootTabBarController: RootTabBarController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
@@ -55,23 +59,35 @@ class RootController: UIViewController {
     
     // a function that will fill in values and present the login view controller
     func pushLoginViewController() {
-        let loginController = LoginController()
-        self.view = UIView(frame: self.view.frame)
-        self.addChildViewController(loginController)
-        self.view.addSubview(loginController.view)
+        if self.loginController != nil {
+            self.view.bringSubviewToFront(self.loginController!.view)
+        } else {
+            let loginController = LoginController()
+            self.loginController = loginController
+            self.addChildViewController(loginController)
+            self.view.addSubview(loginController.view)
+        }
     }
     
     func pushUnverifiedViewController() {
-        let unverifiedController = UnverifiedViewController()
-        self.view = UIView(frame: self.view.frame)
-        self.addChildViewController(unverifiedController)
-        self.view.addSubview(unverifiedController.view)
+        if self.unverifiedController != nil {
+            self.view.bringSubviewToFront(self.unverifiedController!.view)
+        } else {
+            let unverifiedController = UnverifiedViewController()
+            self.unverifiedController = unverifiedController
+            self.addChildViewController(unverifiedController)
+            self.view.addSubview(unverifiedController.view)
+        }
     }
     
     func pushRootTabBarController() {
-        let rootTabBarController = RootTabBarController()
-        self.view = UIView(frame: self.view.frame)
-        self.addChildViewController(rootTabBarController)
-        self.view.addSubview(rootTabBarController.view)
+        if self.rootTabBarController != nil {
+            self.view.bringSubviewToFront(self.rootTabBarController!.view)
+        } else {
+            let rootTabBarController = RootTabBarController()
+            self.rootTabBarController = rootTabBarController
+            self.addChildViewController(rootTabBarController)
+            self.view.addSubview(rootTabBarController.view)
+        }
     }
 }

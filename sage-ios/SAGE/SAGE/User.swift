@@ -38,7 +38,7 @@ class User: NSObject, NSCoding {
     var role: UserRole
     var totalHours: Int
     var verified: Bool
-    var imgURL: String? = UserConstants.defaultImage
+    var imageURL: NSURL? = UserConstants.defaultImageURL
     
     
     //
@@ -69,7 +69,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
     }
     
-    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false, imgURL: String? = UserConstants.defaultImage) {
+    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false, imgURL: NSURL? = UserConstants.defaultImageURL) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -79,7 +79,7 @@ class User: NSObject, NSCoding {
         self.role = role
         self.totalHours = totalHours
         self.verified = verified
-        self.imgURL = imgURL
+        self.imageURL = imgURL
         super.init()
     }
     
@@ -120,7 +120,10 @@ class User: NSObject, NSCoding {
             case UserConstants.kEmail:
                 self.email = value as? String
             case UserConstants.kImgURL:
-                self.imgURL = value as? String
+                if let urlString = value as? String {
+                    let url = NSURL(string: urlString)
+                    self.imageURL = url
+                }
             default: break
             }
         }

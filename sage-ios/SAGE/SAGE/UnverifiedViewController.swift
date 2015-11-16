@@ -18,20 +18,17 @@ class UnverifiedViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        if let imageString = LoginOperations.getUser()?.imgURL {
-            let imageURL = NSURL(string: imageString)
-            let imageData = NSData(contentsOfURL: imageURL!)
-            let image = UIImage(data: imageData!)
-            (self.view as! UnverifiedView).photo.contentMode = .ScaleAspectFill
-            (self.view as! UnverifiedView).photo.image = image
-
+        if let imageURL = LoginOperations.getUser()?.imageURL {
+            (self.view as! UnverifiedView).photo.setImageWithURL(imageURL)
         } else {
-            let imageURL = NSURL(string: UserConstants.defaultImage)
-            let imageData = NSData(contentsOfURL: imageURL!)
-            let image = UIImage(data: imageData!)
-            (self.view as! UnverifiedView).photo.contentMode = .ScaleAspectFill
-            (self.view as! UnverifiedView).photo.image = image
+            (self.view as! UnverifiedView).photo.setImageWithURL(UserConstants.defaultImageURL)
         }
+        (self.view as! UnverifiedView).photo.contentMode = .ScaleAspectFill
+
+    }
+    
+    deinit {
+        (self.view as! UnverifiedView).photo.cancelImageRequestOperation()
     }
     
     func signOut() {

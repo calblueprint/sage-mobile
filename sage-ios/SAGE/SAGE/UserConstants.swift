@@ -24,6 +24,6 @@ struct UserConstants {
     
     static let kPassword: String = "password"
     static let kPhotoData: String = "data"
-    static let defaultImage: String = "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png"
+    static let defaultImageURL: NSURL = NSURL(string: "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png")!
     
 }

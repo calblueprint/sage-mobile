@@ -11,6 +11,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.requests.RequestsActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,14 +56,14 @@ public class CheckInListAdapter extends RecyclerView.Adapter<CheckInListAdapter.
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.makeVerifyCheckInRequest(checkIn, position);
+                Requests.CheckIns.with(mActivity).makeVerifyRequest(checkIn, position);
             }
         });
 
         viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.makeDeleteCheckInRequest(checkIn, position);
+                Requests.CheckIns.with(mActivity).makeDeleteRequest(checkIn, position);
             }
         });
     }

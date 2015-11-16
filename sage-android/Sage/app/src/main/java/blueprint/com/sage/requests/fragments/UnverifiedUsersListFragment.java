@@ -58,6 +58,8 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment implem
 
     public void onEvent(UserListEvent userListEvent) {
         mUserAdapter.setUsers(getParentActivity().getUsers());
+        mEmptyView.setRefreshing(false);
+        mRefreshUser.setRefreshing(false);
     }
 
     public void onEvent(VerifyUserEvent verifyUserEvent) {

@@ -5,12 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.activities.AbstractActivity;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +27,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     private int mLayoutId;
     private List<User> mUsers;
 
-    public UserListAdapter(Activity activity, int layoutId, List<User> users) {
+    public UserListAdapter(AbstractActivity activity, int layoutId, List<User> users) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;
@@ -38,15 +41,29 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         if (getItemCount() == 0 || position < 0 || position >= getItemCount())
             return;
 
-        User user = mUsers.get(position);
+        final User user = mUsers.get(position);
 
         viewHolder.mName.setText(user.getName());
         viewHolder.mSchool.setText(user.getSchool().getName());
         viewHolder.mHours.setText(user.getHoursString());
+
+        viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Requests.Users.with(mActivity).makeVerifyRequest(user, position);
+            }
+        });
+
+        viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Requests.Users.with(mActivity).makeDeleteRequest(user, position);
+            }
+        });
 
         user.loadUserImage(mActivity, viewHolder.mImage);
     }
@@ -70,6 +87,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
         @Bind(R.id.user_list_name) TextView mName;
         @Bind(R.id.user_list_school) TextView mSchool;
         @Bind(R.id.user_list_hours) TextView mHours;
+        @Bind(R.id.user_list_item_verify) ImageButton mVerify;
+        @Bind(R.id.user_list_item_delete) ImageButton mDelete;
 
         public ViewHolder(View v) {
             super(v);

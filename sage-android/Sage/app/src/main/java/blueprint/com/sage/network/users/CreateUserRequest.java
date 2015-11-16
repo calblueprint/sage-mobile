@@ -26,7 +26,7 @@ public class CreateUserRequest extends BaseRequest {
     public CreateUserRequest(final Activity activity, User user,
                              final Response.Listener<Session> onSuccess,
                              final Response.Listener onFailure) {
-        super(Method.POST, makeUrl("/users"), convertToUserParams(user),
+        super(Method.POST, makeUrl(null, "users"), convertToUserParams(user),
          new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject o) {

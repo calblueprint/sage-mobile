@@ -1,14 +1,18 @@
 package blueprint.com.sage.models;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.ByteArrayOutputStream;
 
+import blueprint.com.sage.R;
+import blueprint.com.sage.utility.view.ViewUtils;
 import lombok.Data;
 
 /**
@@ -27,19 +31,19 @@ public @Data class User {
     private String role;
     private String volunteerType;
     private int totalHours;
+    private String password;
+    private String currentPassword;
+    private String confirmPassword;
+    private String imageUrl;
+
+    private School school;
 
     // Used for Sign Ups
     private int schoolPosition = -1;
     private int typePosition = -1;
 
-    private String password;
-    private String currentPassword;
-    private String confirmPassword;
-
     @JsonIgnore
     private Bitmap profile;
-
-    private String imageUrl;
 
     public final static String VOLUNTEER = "volunteer";
     public final static String ONE_UNIT = "one_unit";
@@ -48,7 +52,29 @@ public @Data class User {
     public User() {}
 
     @JsonIgnore
-    public void setTypePosition(int type) {
+    public String getName() { return String.format("%s %s", firstName, lastName); }
+
+    @JsonIgnore
+    public String getHoursString() {
+
+        int hours = 0;
+        switch (volunteerType) {
+            case VOLUNTEER:
+                hours = 1;
+                break;
+            case ONE_UNIT:
+                hours = 2;
+                break;
+            case TWO_UNITS:
+                hours = 3;
+                break;
+        }
+
+        return String.format("%d hrs/week", hours);
+    }
+
+    @JsonIgnore
+    public void setVolunteerTypePosition(int type) {
         switch (type) {
             case 0:
                 volunteerType = VOLUNTEER;
@@ -112,5 +138,16 @@ public @Data class User {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         profile.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
+    }
+
+    /**
+     * Loads user image into imageview
+     */
+    public void loadUserImage(Activity activity, ImageView imageView) {
+        if (getImageUrl() == null) {
+            ViewUtils.loadImage(activity, R.drawable.default_profile, imageView);
+        } else {
+            ViewUtils.loadImage(activity, getImageUrl(), imageView);
+        }
     }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
-import butterknife.Bind;
 
 /**
  * Created by charlesx on 10/14/15.
@@ -22,7 +21,7 @@ public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
     private Context mContext;
     private int mLayoutId;
 
-    @Bind(R.id.sign_up_spinner_item_text) TextView mTextView;
+    private TextView mTextView;
 
     public SignUpSchoolSpinnerAdapter(Context context, int layoutId, List<School> schools) {
         super(context, layoutId);

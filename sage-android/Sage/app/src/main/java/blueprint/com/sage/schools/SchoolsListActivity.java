@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.SchoolListEvent;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.schools.fragments.SchoolListFragment;
-import blueprint.com.sage.shared.NavigationAbstractActivity;
+import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/4/15.
  */
-public class SchoolsActivity extends NavigationAbstractActivity {
+public class SchoolsListActivity extends NavigationAbstractActivity {
 
     private List<School> mSchools;
 

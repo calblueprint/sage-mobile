@@ -1,4 +1,4 @@
-package blueprint.com.sage.events;
+package blueprint.com.sage.events.schools;
 
 /**
  * Created by charlesx on 11/8/15.

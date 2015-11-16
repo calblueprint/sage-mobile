@@ -1,4 +1,4 @@
-package blueprint.com.sage.signUp.adapters;
+package blueprint.com.sage.shared.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Created by charlesx on 10/12/15.
  */
-public class SignUpPagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
     private List<String> mTitles;
 
-    public SignUpPagerAdapter(FragmentManager fm) {
+    public PagerAdapter(FragmentManager fm) {
         super(fm);
         mFragments = new ArrayList<>();
         mTitles = new ArrayList<>();

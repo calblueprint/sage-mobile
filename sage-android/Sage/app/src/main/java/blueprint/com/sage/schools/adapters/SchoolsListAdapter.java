@@ -16,14 +16,15 @@ import butterknife.ButterKnife;
 
 /**
  * Created by charlesx on 11/4/15.
+ * Adapter for schools
  */
-public class SchoolsAdapter extends RecyclerView.Adapter<SchoolsAdapter.ViewHolder> {
+public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.ViewHolder> {
 
     private Activity mActivity;
     private int mLayoutId;
     private List<School> mSchools;
 
-    public SchoolsAdapter(Activity activity, int layoutId, List<School> schools) {
+    public SchoolsListAdapter(Activity activity, int layoutId, List<School> schools) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;
@@ -31,7 +32,7 @@ public class SchoolsAdapter extends RecyclerView.Adapter<SchoolsAdapter.ViewHold
     }
 
     @Override
-    public SchoolsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mActivity).inflate(mLayoutId, parent, false);
         return new ViewHolder(view);
     }

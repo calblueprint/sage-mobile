@@ -39,20 +39,20 @@ class CheckinRequestTableViewCell: UITableViewCell {
     
     func configureWithCheckin(checkin: Checkin) {
         let user = checkin.user!
-        let imageURL = NSURL(string: user.imgURL!)
-        self.mentorPicture.setImageWithURL(imageURL!)
+        self.mentorPicture.setImageWithURL(user.imageURL!)
         self.mentorPicture.layer.cornerRadius = UIConstants.userImageSize/2
         self.mentorPicture.clipsToBounds = true
         
-        self.mentorName.text = user.firstName! + " " + user.lastName!
-        
+        let mentorText = user.firstName! + " " + user.lastName!
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 16
+        let attributes = [NSParagraphStyleAttributeName : style, NSFontAttributeName: UIFont.getDefaultFont(14)]
+        self.mentorName.attributedText = NSAttributedString(string: mentorText, attributes:attributes)
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = ""
-        let fullDateText = "- " + dateFormatter.stringFromDate(checkin.startTime!)
+        dateFormatter.dateFormat = "MMMM d, YYYY"
+        let fullDateText = " - " + dateFormatter.stringFromDate(checkin.startTime!)
         
-        let durationFormatter = NSDateFormatter()
-        durationFormatter.dateFormat = ""
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
         let flags = NSCalendarUnit.Hour
         let components = calendar!.components(flags, fromDate: checkin.startTime!, toDate: checkin.endTime!, options: [])
@@ -66,10 +66,11 @@ class CheckinRequestTableViewCell: UITableViewCell {
         let attributedString = NSMutableAttributedString(string: durationText + fullDateText)
         let dateRange = (fullString as NSString).rangeOfString(fullDateText)
         let durationRange = (fullString as NSString).rangeOfString(durationText)
-        let boldFont = UIFont.getBoldFont(14)
-        attributedString.addAttribute(NSFontAttributeName, value: boldFont, range: durationRange)
+        let fullRange = (fullString as NSString).rangeOfString(fullString)
+        attributedString.addAttribute(NSFontAttributeName, value: UIFont.getBoldFont(14), range: durationRange)
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: dateRange)
         attributedString.addAttribute(NSFontAttributeName, value: UIFont.getDefaultFont(14), range: dateRange)
+        attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: fullRange)
         time.attributedText = attributedString
 
 
@@ -81,7 +82,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.checkButton.imageView?.image = checkImage
         
         let xIcon = FAKIonIcons.androidCancelIconWithSize(22)
-        xIcon.setAttributes([NSForegroundColorAttributeName: UIColor.greenColor()])
+        xIcon.setAttributes([NSForegroundColorAttributeName: UIColor.redColor()])
         let xImage = xIcon.imageWithSize(CGSizeMake(22, 22))
         self.xButton.imageView?.image = xImage
         self.layoutSubviews()
@@ -93,30 +94,32 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.mentorPicture.setHeight(UIConstants.userImageSize)
         self.mentorPicture.setWidth(UIConstants.userImageSize)
         self.mentorPicture.setX(UIConstants.sideMargin)
-        self.mentorPicture.setY(UIConstants.textMargin)
+        self.mentorPicture.setY(0)
 
         self.mentorName.font = UIFont.normalFont
         self.mentorName.textAlignment = NSTextAlignment.Left
         mentorName.sizeToFit()
         self.setY(UIConstants.textMargin)
-        self.mentorName.setX(UIConstants.sideMargin + CGRectGetMaxX(self.mentorPicture.frame))
+        self.mentorName.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
         
         self.time.textAlignment = NSTextAlignment.Left
         self.time.sizeToFit()
         self.time.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
-        self.time.setY(10 + CGRectGetMaxY(self.mentorName.frame))
+        self.time.setY(CGRectGetMaxY(self.mentorName.frame))
         
         self.content.numberOfLines = 0
         self.content.lineBreakMode = NSLineBreakMode.ByWordWrapping
         self.content.font = UIFont.normalFont
         self.content.textAlignment = NSTextAlignment.Left
-        self.content.setY(10 + CGRectGetMaxY(self.time.frame))
+        self.content.setY(-5 + CGRectGetMaxY(self.time.frame))
         self.content.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
         self.content.fillWidthWithMargin(UIConstants.sideMargin)
         let width = CGRectGetWidth(self.content.frame)
         self.content.setSize(self.content.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
         self.checkButton.setHeight(22)
+        self.checkButton.setX(CGRectGetMaxX(self.content.frame) - UIConstants.textMargin - 15 - 22)
+        self.checkButton.setY(UIConstants.verticalMargin)
         self.checkButton.setWidth(22)
         
         self.xButton.setHeight(22)

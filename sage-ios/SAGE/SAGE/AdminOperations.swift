@@ -15,4 +15,8 @@ class AdminOperations {
         
     }
     
+    static func loadCheckinRequests(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
+        
+    }
+    
 }

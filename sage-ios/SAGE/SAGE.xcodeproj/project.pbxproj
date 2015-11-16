@@ -12,7 +12,6 @@
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
 		2705CC531BB927D8004FE927 /* SAGETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC521BB927D8004FE927 /* SAGETests.swift */; };
 		2705CC5E1BB927D8004FE927 /* SAGEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */; };
-		278160181BC0DF7700A1DB75 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278160171BC0DF7700A1DB75 /* APIKeys.swift */; };
 		2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */; };
 		2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601D1BC0E26B00A1DB75 /* CheckinView.swift */; };
 		278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278912081BEEEC590005D46E /* CheckinOperations.swift */; };
@@ -85,6 +84,8 @@
 		42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */; };
 		42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */; };
 		42EFD67F1BC9ED730063FD78 /* SignUpFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD67E1BC9ED730063FD78 /* SignUpFormView.swift */; };
+		42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F71DF21BF802D2004E1B3B /* CheckinRequestsViewController.swift */; };
+		42F71DF61BF80478004E1B3B /* CheckinRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F71DF51BF80478004E1B3B /* CheckinRequestTableViewCell.swift */; };
 		42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F75B211BD451DA00835595 /* SignUpTableViewController.swift */; };
 		42FE17C51BF440C00029BF22 /* BrowseMentorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */; };
 		42FE17C71BF447BA0029BF22 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C61BF447BA0029BF22 /* APIKeys.swift */; };
@@ -176,6 +177,8 @@
 		42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpSchoolHoursView.swift; sourceTree = "<group>"; };
 		42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPhotoView.swift; sourceTree = "<group>"; };
 		42EFD67E1BC9ED730063FD78 /* SignUpFormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpFormView.swift; sourceTree = "<group>"; };
+		42F71DF21BF802D2004E1B3B /* CheckinRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinRequestsViewController.swift; sourceTree = "<group>"; };
+		42F71DF51BF80478004E1B3B /* CheckinRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinRequestTableViewCell.swift; sourceTree = "<group>"; };
 		42F75B211BD451DA00835595 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsTableViewCell.swift; sourceTree = "<group>"; };
 		42FE17C61BF447BA0029BF22 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
@@ -408,6 +411,7 @@
 		4243E4DF1BF1B2BE00AA627A /* Admin Views */ = {
 			isa = PBXGroup;
 			children = (
+				42F71DF41BF80455004E1B3B /* Requests */,
 				4280CE1A1BF43F01005D1B97 /* Browse */,
 			);
 			name = "Admin Views";
@@ -426,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */,
+				42F71DF21BF802D2004E1B3B /* CheckinRequestsViewController.swift */,
 				4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */,
 			);
 			name = Admin;
@@ -459,6 +464,14 @@
 				42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */,
 			);
 			name = "Sign Up Views";
+			sourceTree = "<group>";
+		};
+		42F71DF41BF80455004E1B3B /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				42F71DF51BF80478004E1B3B /* CheckinRequestTableViewCell.swift */,
+			);
+			name = Requests;
 			sourceTree = "<group>";
 		};
 		5DD14CFF1BD33B4200B935DE /* Announcements */ = {
@@ -724,6 +737,7 @@
 				42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */,
 				5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */,
 				42C393411BC45DEC00630F93 /* RootController.swift in Sources */,
+				42F71DF61BF80478004E1B3B /* CheckinRequestTableViewCell.swift in Sources */,
 				4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */,
 				422334281BC09E0F00E863D0 /* School.swift in Sources */,
 				424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */,
@@ -733,6 +747,7 @@
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
+				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,
 				42FE17C51BF440C00029BF22 /* BrowseMentorsTableViewCell.swift in Sources */,
 				4243E4DB1BF1A79100AA627A /* BrowseMentorsViewController.swift in Sources */,

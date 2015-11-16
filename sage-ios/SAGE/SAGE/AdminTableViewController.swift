@@ -46,7 +46,24 @@ class AdminTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.navigationController!.pushViewController(BrowseMentorsViewController(), animated: true)
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0:
+                self.navigationController!.pushViewController(BrowseMentorsViewController(), animated: true)
+            case 1: break
+            default: break
+            }
+        case 1:
+            switch indexPath.row {
+            case 0:
+                self.navigationController!.pushViewController(CheckinRequestsViewController(), animated: true)
+            case 1: break
+            default: break
+            }
+        case 2: break
+        default: break
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

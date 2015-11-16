@@ -79,12 +79,17 @@ class CheckinRequestTableViewCell: UITableViewCell {
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(22)
         checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.greenColor()])
         let checkImage = checkIcon.imageWithSize(CGSizeMake(22, 22))
-        self.checkButton.imageView?.image = checkImage
+        self.checkButton.setImage(checkImage, forState: .Normal)
+        self.checkButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
+        self.checkButton.imageView!.contentMode = .Center;
         
         let xIcon = FAKIonIcons.androidCancelIconWithSize(22)
         xIcon.setAttributes([NSForegroundColorAttributeName: UIColor.redColor()])
         let xImage = xIcon.imageWithSize(CGSizeMake(22, 22))
-        self.xButton.imageView?.image = xImage
+        self.xButton.setImage(xImage, forState: .Normal)
+        self.xButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
+        self.xButton.imageView!.contentMode = .Center;
+
         self.layoutSubviews()
     }
     
@@ -107,23 +112,26 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.time.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
         self.time.setY(CGRectGetMaxY(self.mentorName.frame))
         
+        self.checkButton.setHeight(42)
+        self.checkButton.setX(self.contentView.frame.width - UIConstants.textMargin - 15 - 22)
+        self.checkButton.setY(-10)
+        self.checkButton.setWidth(42)
+        
+        self.xButton.setHeight(42)
+        self.xButton.setWidth(42)
+        self.xButton.setX(self.contentView.frame.width - UIConstants.textMargin - 15 - 22)
+        self.xButton.setY(self.contentView.frame.height - 32 - UIConstants.verticalMargin)
+        
         self.content.numberOfLines = 0
         self.content.lineBreakMode = NSLineBreakMode.ByWordWrapping
         self.content.font = UIFont.normalFont
         self.content.textAlignment = NSTextAlignment.Left
         self.content.setY(-5 + CGRectGetMaxY(self.time.frame))
-        self.content.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
+        let contentX = 10 + CGRectGetMaxX(self.mentorPicture.frame)
+        self.content.setX(contentX)
         self.content.fillWidthWithMargin(UIConstants.sideMargin)
-        let width = CGRectGetWidth(self.content.frame)
+        let width = CGRectGetMinX(self.xButton.frame) - contentX
         self.content.setSize(self.content.sizeThatFits(CGSizeMake(width, CGFloat.max)))
-        
-        self.checkButton.setHeight(22)
-        self.checkButton.setX(CGRectGetMaxX(self.content.frame) - UIConstants.textMargin - 15 - 22)
-        self.checkButton.setY(UIConstants.verticalMargin)
-        self.checkButton.setWidth(22)
-        
-        self.xButton.setHeight(22)
-        self.xButton.setWidth(22)
         
         self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)
     }

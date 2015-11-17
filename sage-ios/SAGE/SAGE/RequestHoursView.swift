@@ -8,6 +8,7 @@
 
 import Foundation
 import BSKeyboardControls
+import SwiftKeychainWrapper
 
 class RequestHoursView: UIView {
     
@@ -110,7 +111,7 @@ class RequestHoursView: UIView {
             user: LoginOperations.getUser(),
             startTime: self.startTime,
             endTime: self.endTime,
-            school: LoginOperations.getUser()?.school,
+            school: KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School,
             comment: self.commentField.textView.text,
             verified: verified
         )

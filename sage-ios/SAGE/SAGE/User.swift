@@ -61,6 +61,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeObject(self.firstName, forKey: UserConstants.kFirstName)
         aCoder.encodeObject(self.lastName, forKey: UserConstants.kLastName)
         aCoder.encodeObject(self.email, forKey: UserConstants.kEmail)
+        aCoder.encodeObject(self.school, forKey: UserConstants.kSchool)
         aCoder.encodeInteger(level.rawValue, forKey: UserConstants.kLevel)
         aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
         aCoder.encodeInteger(self.totalHours, forKey: UserConstants.kTotalHours)

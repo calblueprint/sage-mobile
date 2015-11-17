@@ -12,6 +12,7 @@ struct CheckinConstants {
     
     static let kId: String = "id"
     static let kUser: String = "user"
+    static let kUserId: String = "user_id"
     static let kStartTime: String = "start"
     static let kEndTime: String = "finish"
     static let kSchoolId: String = "school_id"

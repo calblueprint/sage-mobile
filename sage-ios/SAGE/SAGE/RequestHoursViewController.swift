@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class RequestHoursViewController: UIViewController {
     
@@ -38,6 +39,7 @@ class RequestHoursViewController: UIViewController {
     @objc private func completeForm() {
         let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
         CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
             self.dismiss()
             }) { (errorMessage) -> Void in
                 //show error

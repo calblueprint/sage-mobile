@@ -37,17 +37,26 @@ class RequestHoursViewController: UIViewController {
     }
     
     @objc private func completeForm() {
-        let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
-        CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
-            KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
-            self.dismiss()
-            }) { (errorMessage) -> Void in
-                let alertController = UIAlertController(
-                    title: "Failure",
-                    message: errorMessage as String,
-                    preferredStyle: .Alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
+        if self.requestHoursView.isValid() {
+            let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
+            CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
+                KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                self.dismiss()
+                }) { (errorMessage) -> Void in
+                    let alertController = UIAlertController(
+                        title: "Failure",
+                        message: errorMessage as String,
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        } else {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "Please fill out required fields.",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

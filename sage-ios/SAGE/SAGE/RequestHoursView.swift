@@ -118,6 +118,13 @@ class RequestHoursView: UIView {
         return checkin
     }
     
+    func isValid() -> Bool {
+        return
+            self.dateField.textField.text?.characters.count > 0 &&
+            self.startTimeField.textField.text?.characters.count > 0 &&
+            self.endTimeField.textField.text?.characters.count > 0
+    }
+    
     //
     // MARK: - Private methods
     //

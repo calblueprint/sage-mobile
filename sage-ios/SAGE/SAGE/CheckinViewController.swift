@@ -24,6 +24,7 @@ class CheckinViewController: UIViewController {
     
     var startTime: NSTimeInterval = 0.0
     var inSession: Bool = false
+    var requiredTime: NSTimeInterval = 0.0
 
     //
     // MARK: - ViewController Lifecycle
@@ -35,6 +36,7 @@ class CheckinViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
+        self.requiredTime = 3600 * 1 //LoginOperations.getUser()?.requiredHours()
 
         self.setupDefaultTitleLabel()
         self.setupSessionTitleLabel()
@@ -155,7 +157,7 @@ class CheckinViewController: UIViewController {
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
         let timePassed = currentTime - startTime
         // get the user's min hours and pass that into percentage
-        self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/3600))
+        self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/self.requiredTime))
         if (self.inSession) {
             self.performSelector("updateSessionTime", withObject: nil, afterDelay: 1)
         }

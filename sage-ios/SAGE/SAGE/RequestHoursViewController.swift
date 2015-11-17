@@ -42,7 +42,12 @@ class RequestHoursViewController: UIViewController {
             KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
             self.dismiss()
             }) { (errorMessage) -> Void in
-                //show error
+                let alertController = UIAlertController(
+                    title: "Failure",
+                    message: errorMessage as String,
+                    preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

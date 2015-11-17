@@ -77,14 +77,14 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.content.text = checkin.comment!
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(22)
-        checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.greenColor()])
+        checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
         let checkImage = checkIcon.imageWithSize(CGSizeMake(22, 22))
         self.checkButton.setImage(checkImage, forState: .Normal)
         self.checkButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
         self.checkButton.imageView!.contentMode = .Center;
         
-        let xIcon = FAKIonIcons.androidCancelIconWithSize(22)
-        xIcon.setAttributes([NSForegroundColorAttributeName: UIColor.redColor()])
+        let xIcon = FAKIonIcons.androidCloseIconWithSize(22)
+        xIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightRedColor])
         let xImage = xIcon.imageWithSize(CGSizeMake(22, 22))
         self.xButton.setImage(xImage, forState: .Normal)
         self.xButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
@@ -99,13 +99,13 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.mentorPicture.setHeight(UIConstants.userImageSize)
         self.mentorPicture.setWidth(UIConstants.userImageSize)
         self.mentorPicture.setX(UIConstants.sideMargin)
-        self.mentorPicture.setY(0)
+        self.mentorPicture.setY(UIConstants.verticalMargin)
 
         self.mentorName.font = UIFont.normalFont
         self.mentorName.textAlignment = NSTextAlignment.Left
-        mentorName.sizeToFit()
-        self.setY(UIConstants.textMargin)
+        self.mentorName.sizeToFit()
         self.mentorName.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
+        self.mentorName.setY(UIConstants.verticalMargin)
         
         self.time.textAlignment = NSTextAlignment.Left
         self.time.sizeToFit()
@@ -114,7 +114,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         
         self.checkButton.setHeight(42)
         self.checkButton.setX(self.contentView.frame.width - UIConstants.textMargin - 15 - 22)
-        self.checkButton.setY(-10)
+        self.checkButton.setY(0)
         self.checkButton.setWidth(42)
         
         self.xButton.setHeight(42)

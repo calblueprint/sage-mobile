@@ -35,7 +35,7 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -45,6 +45,9 @@ class CheckinRequestsViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let url = NSURL(string: "http://i1.wp.com/pmcdeadline2.files.wordpress.com/2014/09/matt_bomer_white_collar_wallpaper-t2.jpg?crop=0px%2C10px%2C400px%2C268px&resize=446%2C299")
         let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl", imgURL: url), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
+        if indexPath.row == 1 {
+            checkin.comment = "shsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhort"
+        }
         let cell = CheckinRequestTableViewCell()
         cell.configureWithCheckin(checkin)
         return cell
@@ -53,6 +56,9 @@ class CheckinRequestsViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let url = NSURL(string: "http://i1.wp.com/pmcdeadline2.files.wordpress.com/2014/09/matt_bomer_white_collar_wallpaper-t2.jpg?crop=0px%2C10px%2C400px%2C268px&resize=446%2C299")
         let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl", imgURL: url), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
+        if indexPath.row == 1 {
+            checkin.comment = "shsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhort"
+        }
         return CheckinRequestTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
 }

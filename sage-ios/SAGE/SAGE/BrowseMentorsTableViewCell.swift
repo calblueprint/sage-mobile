@@ -17,6 +17,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     
     init() {
         super.init(style: .Default, reuseIdentifier: "BrowseCell")
+        self.selectionStyle = .None
     }
     
     func configureWithUser(user: User) {

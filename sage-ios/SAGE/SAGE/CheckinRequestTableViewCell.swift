@@ -113,13 +113,13 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.time.setY(CGRectGetMaxY(self.mentorName.frame))
         
         self.checkButton.setHeight(42)
-        self.checkButton.setX(self.contentView.frame.width - UIConstants.textMargin - 15 - 22)
+        self.checkButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
         self.checkButton.setY(0)
         self.checkButton.setWidth(42)
         
         self.xButton.setHeight(42)
         self.xButton.setWidth(42)
-        self.xButton.setX(self.contentView.frame.width - UIConstants.textMargin - 15 - 22)
+        self.xButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
         self.xButton.setY(self.contentView.frame.height - 32 - UIConstants.verticalMargin)
         
         self.content.numberOfLines = 0

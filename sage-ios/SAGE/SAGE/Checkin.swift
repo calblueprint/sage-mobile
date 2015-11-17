@@ -9,16 +9,16 @@
 import Foundation
 
 class Checkin: NSObject {
-    var id: Int?
+    var id: Int = -1
     var user: User?
     var startTime: NSDate?
     var endTime: NSDate?
     var school: School?
     var comment: String?
-    var verified: Bool?
+    var verified: Bool = false
     
     
-    init(id: Int? = nil, user: User? = nil, startTime: NSDate? = nil, endTime: NSDate? = nil, school: School? = nil, comment: String? = nil, verified: Bool? = nil) {
+    init(id: Int = -1, user: User? = nil, startTime: NSDate? = nil, endTime: NSDate? = nil, school: School? = nil, comment: String? = nil, verified: Bool = false) {
         super.init()
         self.id = id
         self.user = user
@@ -26,6 +26,7 @@ class Checkin: NSObject {
         self.endTime = endTime
         self.school = school
         self.comment = comment
+        self.verified = verified
     }
     
     init(propertyDictionary: [String: AnyObject]) {
@@ -47,9 +48,9 @@ class Checkin: NSObject {
                 let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
             case CheckinConstants.kVerified:
-                self.verified = value as? Bool
+                self.verified = value as! Bool
             case CheckinConstants.kId:
-                self.id = value as? Int
+                self.id = value as! Int
             case CheckinConstants.kComment:
                 self.comment = value as? String
             default: break
@@ -59,9 +60,7 @@ class Checkin: NSObject {
     
     func toDictionary() -> [String: AnyObject]{
         var propertyDict: [String: AnyObject] = [String: AnyObject]()
-        if let id = self.id {
-            propertyDict[CheckinConstants.kId] = id
-        }
+        propertyDict[CheckinConstants.kId] = id
         if let user = self.user {
             propertyDict[CheckinConstants.kUser] = user.toDictionary()
         }
@@ -81,15 +80,19 @@ class Checkin: NSObject {
         if let comment = self.comment {
             propertyDict[CheckinConstants.kComment] = comment
         }
-        if let verified = self.verified {
-            var value: Int
-            if (verified) {
-                value = 1
-            } else {
-                value = 0
-            }
-            propertyDict[CheckinConstants.kVerified] = value
-        }
+        propertyDict[CheckinConstants.kVerified] = Int(self.verified)
         return propertyDict
+    }
+    
+    func stringTimeFromStartDate() -> NSString {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = StringConstants.JSONdateFormat
+        return formatter.stringFromDate(self.startTime!)
+    }
+    
+    func stringTimeFromEndDate() -> NSString {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = StringConstants.JSONdateFormat
+        return formatter.stringFromDate(self.endTime!)
     }
 }

@@ -1,6 +1,7 @@
 package blueprint.com.sage.schools.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +13,10 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.schools.adapters.SchoolsListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -25,6 +28,7 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     @Bind(R.id.schools_list_list) RecycleViewEmpty mSchoolsList;
     @Bind(R.id.schools_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.schools_list_refresh) SwipeRefreshLayout mSchoolsRefreshView;
+    @Bind(R.id.school_list_fab) FloatingActionButton mCreateButton;
 
     private SchoolsListAdapter mAdapter;
 
@@ -73,5 +77,10 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
         mAdapter.setSchools(getParentActivity().getSchools());
         mEmptyView.setRefreshing(false);
         mSchoolsRefreshView.setRefreshing(false);
+    }
+
+    @OnClick(R.id.school_list_fab)
+    public void onCreateClick(FloatingActionButton button) {
+        FragUtils.replace(R.id.container, CreateSchoolFragment.newInstance(), getParentActivity());
     }
 }

@@ -14,13 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.models.APIError;
+import blueprint.com.sage.events.BackEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.network.schools.SchoolListRequest;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.network.users.CreateUserRequest;
-import blueprint.com.sage.events.BackEvent;
 import blueprint.com.sage.signUp.fragments.SignUpPagerFragment;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -65,21 +64,7 @@ public class SignUpActivity extends FragmentActivity {
     }
 
     private void makeSchoolRequest() {
-        SchoolListRequest request = new SchoolListRequest(this,
-            new Response.Listener<ArrayList<School>>() {
-                @Override
-                public void onResponse(ArrayList<School> schools) {
-                    setSchools(schools);
-                }
-            },
-            new Response.Listener<APIError>() {
-                @Override
-                public void onResponse(APIError o) {
-                    Log.e(getClass().toString(), o.toString());
-            }
-        });
-
-        mManager.getRequestQueue().add(request);
+        Requests.Schools.with(this).makeListRequest(null);
     }
 
     public void makeUserRequest() {

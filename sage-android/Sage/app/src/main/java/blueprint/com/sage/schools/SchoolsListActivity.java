@@ -2,6 +2,8 @@ package blueprint.com.sage.schools;
 
 import android.os.Bundle;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import blueprint.com.sage.utility.view.FragUtils;
 public class SchoolsListActivity extends NavigationAbstractActivity {
 
     private List<School> mSchools;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

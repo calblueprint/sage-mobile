@@ -44,7 +44,7 @@
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".schools.SchoolsListActivity"
+            android:name=".browse.BrowseActivity"
             android:launchMode="singleTop"/>
 
         <activity

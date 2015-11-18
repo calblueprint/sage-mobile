@@ -1,9 +1,11 @@
 package blueprint.com.sage.signUp.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
@@ -20,6 +22,7 @@ import butterknife.ButterKnife;
  */
 public class SignUpSchoolFragment extends SignUpAbstractFragment {
 
+    @Bind(R.id.sign_up_school_layout) LinearLayout mLayout;
     @Bind(R.id.sign_up_school) Spinner mSchoolSpinner;
     @Bind(R.id.sign_up_volunteer_type) Spinner mVolunteerTypeSpinner;
 
@@ -63,15 +66,33 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
+        boolean hasErrors = false;
 
+        String snackBarString = "";
+
+        if (mSchoolSpinner.getSelectedItem() == null) {
+            snackBarString += "School &";
+            hasErrors = true;
+        }
+
+        if (mVolunteerTypeSpinner.getSelectedItem() == null) {
+            snackBarString += "Volunteer Type";
+            hasErrors = true;
+        }
+
+        if (hasErrors) {
+            snackBarString += "can't be blank!";
+            Snackbar.make(mLayout, snackBarString, Snackbar.LENGTH_SHORT).show();
+        }
+
+        return hasErrors;
+    }
+
+    public void setUserFields() {
         User user = getParentActivity().getUser();
-        // TODO: Change this after making seeds
-//        user.setSchoolId(1);
         user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
         user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
 
         user.setVolunteerTypePosition(mVolunteerTypeSpinner.getSelectedItemPosition());
-
-        return true;
     }
 }

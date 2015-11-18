@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.User;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -63,6 +64,12 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
         getParentActivity().getUser().setLastName(mLastName.getText().toString());
 
         return isValid;
+    }
+
+    public void setUserFields() {
+        User user = getParentActivity().getUser();
+        user.setFirstName(mFirstName.getText().toString());
+        user.setLastName(mLastName.getText().toString());
     }
 
     private boolean hasValidFirstName() {

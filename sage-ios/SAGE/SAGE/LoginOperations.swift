@@ -22,15 +22,6 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
-    static func loadSchools(completion: ((NSMutableArray) -> Void)){
-        let operationManager = BaseOperation.manager()
-        operationManager.GET(StringConstants.kEndpointSchool, parameters: nil, success: { (operation, data) -> Void in
-            
-            let schoolDict = data["schools"] as! NSMutableArray
-            completion(schoolDict)
-            }, failure: nil)
-    }
-    
     static func verifyUser(completion: ((Bool) -> Void)) {
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if user.verified {

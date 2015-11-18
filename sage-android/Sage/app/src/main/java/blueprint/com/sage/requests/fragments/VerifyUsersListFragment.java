@@ -12,7 +12,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
-import blueprint.com.sage.requests.adapters.UserListAdapter;
+import blueprint.com.sage.requests.adapters.VerifyUserListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,15 +22,15 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/14/15.
  * Shows list of unverified users
  */
-public class UnverifiedUsersListFragment extends RequestsAbstractFragment implements OnRefreshListener {
+public class VerifyUsersListFragment extends RequestsAbstractFragment implements OnRefreshListener {
 
-    @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
-    @Bind(R.id.user_list_list) RecycleViewEmpty mUserList;
-    @Bind(R.id.user_list_refresh) SwipeRefreshLayout mRefreshUser;
+    @Bind(R.id.verify_user_list_empty_view) SwipeRefreshLayout mEmptyView;
+    @Bind(R.id.verify_user_list_list) RecycleViewEmpty mUserList;
+    @Bind(R.id.verify_user_list_refresh) SwipeRefreshLayout mRefreshUser;
 
-    private UserListAdapter mUserAdapter;
+    private VerifyUserListAdapter mUserAdapter;
 
-    public static UnverifiedUsersListFragment newInstance() { return new UnverifiedUsersListFragment(); }
+    public static VerifyUsersListFragment newInstance() { return new VerifyUsersListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
@@ -38,7 +38,7 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment implem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_user_list, parent, false);
+        View view = inflater.inflate(R.layout.fragment_verify_user_list, parent, false);
         ButterKnife.bind(this, view);
         initializeViews();
         return view;
@@ -57,7 +57,7 @@ public class UnverifiedUsersListFragment extends RequestsAbstractFragment implem
     }
 
     private void initializeViews() {
-        mUserAdapter = new UserListAdapter(getParentActivity(), R.layout.users_list_item, getParentActivity().getUsers());
+        mUserAdapter = new VerifyUserListAdapter(getParentActivity(), R.layout.verify_users_list_item, getParentActivity().getUsers());
 
         mUserList.setLayoutManager(new LinearLayoutManager(getParentActivity()));
         mUserList.setEmptyView(mEmptyView);

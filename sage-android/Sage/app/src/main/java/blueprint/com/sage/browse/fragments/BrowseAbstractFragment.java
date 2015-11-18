@@ -7,6 +7,6 @@ import blueprint.com.sage.browse.BrowseActivity;
 /**
  * Created by charlesx on 11/4/15.
  */
-public class SchoolAbstractFragment extends Fragment {
+public class BrowseAbstractFragment extends Fragment {
     public BrowseActivity getParentActivity() { return (BrowseActivity) getActivity(); }
 }

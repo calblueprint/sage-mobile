@@ -38,7 +38,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/16/15.
  */
-public class CreateSchoolFragment extends SchoolAbstractFragment implements FormValidation {
+public class CreateSchoolFragment extends BrowseAbstractFragment implements FormValidation {
 
     private final int SW_LAT = 37;
     private final int SW_LNG = -123;

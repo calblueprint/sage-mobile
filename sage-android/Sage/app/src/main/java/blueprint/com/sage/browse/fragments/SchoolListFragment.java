@@ -23,7 +23,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/4/15.
  * Shows a list of schools
  */
-public class SchoolListFragment extends SchoolAbstractFragment implements OnRefreshListener {
+public class SchoolListFragment extends BrowseAbstractFragment implements OnRefreshListener {
 
     @Bind(R.id.schools_list_list) RecycleViewEmpty mSchoolsList;
     @Bind(R.id.schools_list_empty_view) SwipeRefreshLayout mEmptyView;
@@ -59,6 +59,8 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     }
 
     private void initializeViews() {
+        getParentActivity().getSchoolsListRequest();
+
         mAdapter = new SchoolsListAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
 
         mSchoolsList.setLayoutManager(new LinearLayoutManager(getActivity()));

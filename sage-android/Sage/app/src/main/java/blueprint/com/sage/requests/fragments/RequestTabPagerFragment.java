@@ -16,8 +16,8 @@ public class RequestTabPagerFragment extends TabsFragment {
     public void initializeViews() {
         mPagerAdapter = new PagerAdapter(getChildFragmentManager());
 
-        mPagerAdapter.addFragment(UnverifiedCheckInListFragment.newInstance(), getString(R.string.requests_check_in));
-        mPagerAdapter.addFragment(UnverifiedUsersListFragment.newInstance(), getString(R.string.requests_users));
+        mPagerAdapter.addFragment(VerifyCheckInListFragment.newInstance(), getString(R.string.requests_check_in));
+        mPagerAdapter.addFragment(VerifyUsersListFragment.newInstance(), getString(R.string.requests_users));
 
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

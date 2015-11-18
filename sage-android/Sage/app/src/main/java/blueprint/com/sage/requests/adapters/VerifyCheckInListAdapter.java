@@ -20,13 +20,13 @@ import butterknife.ButterKnife;
  * Created by charlesx on 11/11/15.
  * Adapter for Check In lists
  */
-public class CheckInListAdapter extends RecyclerView.Adapter<CheckInListAdapter.ViewHolder> {
+public class VerifyCheckInListAdapter extends RecyclerView.Adapter<VerifyCheckInListAdapter.ViewHolder> {
 
     private Activity mActivity;
     private int mLayoutId;
     private List<CheckIn> mCheckIns;
 
-    public CheckInListAdapter(Activity activity, int layoutId, List<CheckIn> checkIns) {
+    public VerifyCheckInListAdapter(Activity activity, int layoutId, List<CheckIn> checkIns) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;

@@ -35,6 +35,7 @@ public @Data class User {
     private String currentPassword;
     private String confirmPassword;
     private String imageUrl;
+    private boolean active;
 
     private School school;
 

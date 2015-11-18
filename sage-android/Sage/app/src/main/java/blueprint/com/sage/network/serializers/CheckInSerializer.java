@@ -1,12 +1,10 @@
 package blueprint.com.sage.network.serializers;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import java.io.IOException;
-import java.util.Date;
 
 import blueprint.com.sage.models.CheckIn;
 
@@ -17,7 +15,7 @@ public class CheckInSerializer extends JsonSerializer<CheckIn> {
 
     @Override
     public void serialize(CheckIn checkIn, JsonGenerator jgen, SerializerProvider provider)
-            throws IOException, JsonProcessingException {
+            throws IOException {
         jgen.writeStartObject();
 
         jgen.writeStringField("start", checkIn.getStart().toString());

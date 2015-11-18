@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.School;
@@ -22,9 +23,10 @@ import blueprint.com.sage.utility.network.NetworkManager;
  */
 public class SchoolListRequest extends BaseRequest {
     public SchoolListRequest(final Activity activity,
+                             HashMap<String, String> queryParams,
                              final Response.Listener<ArrayList<School>> onSuccess,
                              final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(null, "schools"), null,
+        super(Method.GET, makeUrl(queryParams, "schools"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

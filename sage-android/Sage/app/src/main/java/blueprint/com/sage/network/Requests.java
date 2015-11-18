@@ -12,15 +12,20 @@ import java.util.HashMap;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
+import blueprint.com.sage.events.schools.CreateSchoolEvent;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
+import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
+import blueprint.com.sage.network.schools.CreateSchoolRequest;
+import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
@@ -157,6 +162,53 @@ public class Requests {
                         }
                     },
                     new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+    }
+
+    public static class Schools {
+        private Activity mActivity;
+
+        public Schools(Activity activity) {
+            mActivity = activity;
+        }
+
+        public static Schools with(Activity activity) {
+            return new Schools(activity);
+        }
+
+        public void makeListRequest(HashMap<String, String> queryParams) {
+            SchoolListRequest request = new SchoolListRequest(mActivity, queryParams,
+                    new Response.Listener<ArrayList<School>>() {
+                        @Override
+                        public void onResponse(ArrayList<School> schools) {
+                            EventBus.getDefault().post(new SchoolListEvent(schools));
+                        }
+                    },
+                    new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeCreateRequest(School school) {
+            CreateSchoolRequest request = new CreateSchoolRequest(mActivity, school,
+                    new Response.Listener<School>() {
+                        @Override
+                        public void onResponse(School school) {
+                            EventBus.getDefault().post(new CreateSchoolEvent(school));
+                        }
+                    }, new Response.Listener<APIError>() {
                         @Override
                         public void onResponse(APIError error) {
 

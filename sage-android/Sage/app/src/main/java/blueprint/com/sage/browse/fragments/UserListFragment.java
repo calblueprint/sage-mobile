@@ -36,7 +36,7 @@ public class UserListFragment extends BrowseAbstractFragment implements OnRefres
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_verify_user_list, parent, false);
+        View view = inflater.inflate(R.layout.fragment_user_list, parent, false);
         ButterKnife.bind(this, view);
         initializeViews();
         return view;

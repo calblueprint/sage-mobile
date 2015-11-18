@@ -1,8 +1,10 @@
 package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -64,6 +67,7 @@ public class UserListFragment extends BrowseAbstractFragment implements OnRefres
 
         mUserListAdapter = new UserListAdapter(getParentActivity(), getParentActivity().getUsers());
 
+        mUserList.setLayoutManager(new LinearLayoutManager(getParentActivity()));
         mUserList.setEmptyView(mEmptyView);
         mUserList.setAdapter(mUserListAdapter);
 
@@ -76,5 +80,10 @@ public class UserListFragment extends BrowseAbstractFragment implements OnRefres
         mUserListAdapter.setUsers(getParentActivity().getUsers());
         mRefreshUsers.setRefreshing(false);
         mEmptyView.setRefreshing(false);
+    }
+
+    @OnClick(R.id.user_list_fab)
+    public void onCreateAdminClick(FloatingActionButton button) {
+
     }
 }

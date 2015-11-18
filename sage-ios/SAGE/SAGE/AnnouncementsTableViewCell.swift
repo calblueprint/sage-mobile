@@ -48,13 +48,17 @@ class AnnouncementsTableViewCell: UITableViewCell {
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
         
-        var calendar: NSCalendar = NSCalendar.currentCalendar()
+        let calendar: NSCalendar = NSCalendar.currentCalendar()
         let date1 = calendar.startOfDayForDate(announcement.timeCreated!)
         let date2 = calendar.startOfDayForDate(NSDate())
         let flags = NSCalendarUnit.Day
         let components = calendar.components(flags, fromDate: date1, toDate: date2, options: [])
-        var days = components.day
-        self.announcementTime.text = String(days) + " days ago"
+        let days = components.day
+        if days == 0 {
+            self.announcementTime.text = "Today"
+        } else {
+            self.announcementTime.text = String(days) + " days ago"
+        }
         
         var announcementTo = "Everyone"
         if (announcement.school != nil) {

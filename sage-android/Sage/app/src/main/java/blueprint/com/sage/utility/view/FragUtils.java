@@ -20,6 +20,7 @@ public class FragUtils {
     }
 
     public static void popBackStack(Fragment fragment) {
+        ViewUtils.hideKeyboard(fragment);
         fragment.getFragmentManager().popBackStack();
     }
 }

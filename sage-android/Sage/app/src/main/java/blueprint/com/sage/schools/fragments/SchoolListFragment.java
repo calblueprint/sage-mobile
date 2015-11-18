@@ -81,6 +81,6 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
 
     @OnClick(R.id.school_list_fab)
     public void onCreateClick(FloatingActionButton button) {
-        FragUtils.replace(R.id.container, CreateSchoolFragment.newInstance(), getParentActivity());
+        FragUtils.replaceBackStack(R.id.container, CreateSchoolFragment.newInstance(), getParentActivity());
     }
 }

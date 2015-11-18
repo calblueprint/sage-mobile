@@ -12,6 +12,7 @@ import java.util.HashMap;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
+import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
@@ -205,7 +206,7 @@ public class Requests {
                     new Response.Listener<School>() {
                         @Override
                         public void onResponse(School school) {
-
+                            EventBus.getDefault().post(new CreateSchoolEvent(school));
                         }
                     }, new Response.Listener<APIError>() {
                         @Override

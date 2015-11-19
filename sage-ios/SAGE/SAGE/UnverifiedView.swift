@@ -64,12 +64,8 @@ class UnverifiedView: UIView {
         self.photo.clipsToBounds = true
         self.photo.contentMode = .ScaleAspectFit
         
-        let personIcon = FAKIonIcons.personIconWithSize(200)
-        personIcon.setAttributes([NSForegroundColorAttributeName: UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
-        let personImage = personIcon.imageWithSize(CGSizeMake(200, 200))
-        self.photo.image = personImage
+        self.photo.image = UIImage.defaultProfileImage()
         self.photo.clipsToBounds = true
-        self.photo.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
         
         self.containerView.addSubview(self.signOutButton)
         self.signOutButton.setTitle("Sign out", forState: .Normal)

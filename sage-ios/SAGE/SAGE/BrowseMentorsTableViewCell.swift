@@ -21,11 +21,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     }
     
     func configureWithUser(user: User) {
-        if let imgUrl = user.imageURL {
-            self.mentorPicture.setImageWithURL(imgUrl)
-        } else {
-            self.mentorPicture.image = UIImage.defaultProfileImage()
-        }
+        self.mentorPicture.setImageWithUser(user)
         self.mentorName.text = user.firstName! + " " + user.lastName!
         self.schoolName.text = user.school!.name
         self.totalHours.text = String(user.totalHours) + " hours"
@@ -63,7 +59,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
         self.totalHours.textColor = UIColor.secondaryTextColor
         self.totalHours.font = UIFont.getDefaultFont(16)
         
-        let mentorSchoolX = CGRectGetMaxX(self.mentorPicture.frame) + 10;
+        let mentorSchoolX = CGRectGetMaxX(self.mentorPicture.frame) + UIConstants.textMargin;
         
         self.contentView.addSubview(self.mentorName)
         self.mentorName.sizeToFit()
@@ -75,7 +71,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.schoolName)
         self.schoolName.sizeToFit()
         self.schoolName.setY(CGRectGetMaxY(self.mentorName.frame)-5)
-        self.schoolName.setX(57)
+        self.schoolName.setX(mentorSchoolX)
         self.mentorName.setWidth(CGRectGetMinX(self.totalHours.frame) - mentorSchoolX - UIConstants.textMargin)
         self.schoolName.font = UIFont.getDefaultFont(14)
         self.schoolName.textColor = UIColor.secondaryTextColor

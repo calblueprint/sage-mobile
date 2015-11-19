@@ -1,5 +1,6 @@
 package blueprint.com.sage.browse.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,7 +12,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.adapters.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
@@ -132,8 +135,16 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
         String lastName = mLastName.getText().toString();
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
-        String confirmPassword = mConfirmPassword.getText().toString();
-        User user = new User(firstName, lastName, email, password);
+
+        int schoolId = ((School) mSchool.getSelectedItem()).getId();
+        String volunteerString = (String) mType.getSelectedItem();
+        String roleString = (String) mRole.getSelectedItem();
+
+        Bitmap profile = mPhoto.getImageBitmap();
+
+        User user = new User(firstName, lastName, email, password, schoolId, volunteerString, roleString, profile);
+
+        Requests.Users.with(getParentActivity()).
     }
 
     private boolean isValidUser() {

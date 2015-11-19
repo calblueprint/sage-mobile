@@ -20,12 +20,14 @@ import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.schools.CreateSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
+import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
@@ -102,6 +104,26 @@ public class Requests {
             });
 
             Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeCreateRequest(User user) {
+            CreateUserRequest request = new CreateUserRequest(mActivity, user, new Response.Listener<Session>() {
+                @Override
+                public void onResponse(Session session) {
+
+                }
+            }, new Response.Listener() {
+                @Override
+                public void onResponse(Object o) {
+
+                }
+            });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeAdminRequest(User user) {
+
         }
     }
 

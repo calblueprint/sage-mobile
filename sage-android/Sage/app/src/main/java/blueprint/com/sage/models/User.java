@@ -52,6 +52,19 @@ public @Data class User {
 
     public User() {}
 
+    public User(String firstName, String lastName, String email,
+                String password, int schoolId, String volunteerString,
+                String roleString, Bitmap profile) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.schoolId = schoolId;
+        this.volunteerType = volunteerString;
+        this.role = roleString;
+        this.profile = profile;
+    }
+
     @JsonIgnore
     public String getName() { return String.format("%s %s", firstName, lastName); }
 
@@ -127,7 +140,7 @@ public @Data class User {
             case ADMIN:
                 return 1;
             default:
-                Log.e(getClass().toString(), "Invalid volunteer type");
+                Log.e(getClass().toString(), "Invalid role type");
                 return 0;
         }
     }

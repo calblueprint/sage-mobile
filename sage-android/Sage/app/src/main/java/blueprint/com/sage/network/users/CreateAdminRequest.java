@@ -13,36 +13,34 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
-import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.BaseRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 
 /**
- * Created by charlesx on 10/13/15.
- * Creates a user
+ * Created by charlesx on 11/19/15.
  */
-public class CreateUserRequest extends BaseRequest {
-    public CreateUserRequest(final Activity activity, User user,
-                             final Response.Listener<Session> onSuccess,
-                             final Response.Listener onFailure) {
-        super(Method.POST, makeUrl(null, "users"), convertToUserParams(user),
-         new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject o) {
-                try {
-                    String sessionString = o.getString("session");
-                    ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
-                    Session session = mapper.readValue(sessionString, new TypeReference<Session>() {});
-                    onSuccess.onResponse(session);
-                } catch (Exception e) {
-                    Log.e(getClass().toString(), e.toString());
-                }
-            }
-        }, new Response.Listener<APIError>() {
+public class CreateAdminRequest extends BaseRequest {
+    public CreateAdminRequest(final Activity activity, User user,
+                              final Response.Listener<User> onSuccess,
+                              final Response.Listener<APIError> onFailure) {
+        super(Method.POST, makeUrl(null, "admin", "users"), convertToUserParams(user),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject o) {
+                        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+                        try {
+                            String userString = o.getString("user");
+                            User user = mapper.readValue(userString, new TypeReference<User>() {});
+                            onSuccess.onResponse(user);
+                        } catch(Exception e) {
+                            Log.e(getClass().toString(), e.toString());
+                        }
+                    }
+                }, new Response.Listener<APIError>() {
                     @Override
                     public void onResponse(APIError error) {
-                        onFailure.onResponse(error);
+                            onFailure.onResponse(error);
                     }
                 }, activity);
     }
@@ -57,7 +55,7 @@ public class CreateUserRequest extends BaseRequest {
             userObject.put("last_name", user.getLastName());
             userObject.put("password", user.getPassword());
             userObject.put("school_id", user.getSchoolId());
-            userObject.put("role", 0);
+            userObject.put("role", user.getRoleString());
             userObject.put("volunteer_type", user.getVolunteerTypeString());
             if (user.getProfileData() != null) {
                 userObject.put("data", user.getProfileData());

@@ -42,13 +42,13 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func checkButtonPressed(sender: UIButton) {
-        let cell = sender.superview as! CheckinRequestTableViewCell
+        let cell = sender.superview!.superview as! CheckinRequestTableViewCell
         self.removeCellFromDataSource(cell)
         // make a network request, remove checkin from data source, and reload table view
     }
     
     func xButtonPressed(sender: UIButton) {
-        let cell = sender.superview as! CheckinRequestTableViewCell
+        let cell = sender.superview!.superview as! CheckinRequestTableViewCell
         self.removeCellFromDataSource(cell)
         // make a network request, remove checkin from data source, and reload table view
     }
@@ -58,8 +58,7 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let url = NSURL(string: "http://i1.wp.com/pmcdeadline2.files.wordpress.com/2014/09/matt_bomer_white_collar_wallpaper-t2.jpg?crop=0px%2C10px%2C400px%2C268px&resize=446%2C299")
-        let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl", imgURL: url), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
+        let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl"), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
         if indexPath.row == 1 {
             checkin.comment = "shsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhort"
         }
@@ -71,8 +70,7 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let url = NSURL(string: "http://i1.wp.com/pmcdeadline2.files.wordpress.com/2014/09/matt_bomer_white_collar_wallpaper-t2.jpg?crop=0px%2C10px%2C400px%2C268px&resize=446%2C299")
-        let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl", imgURL: url), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
+        let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl"), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
         if indexPath.row == 1 {
             checkin.comment = "shsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhort"
         }

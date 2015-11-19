@@ -21,7 +21,7 @@ class UnverifiedViewController: UIViewController {
         if let imageURL = LoginOperations.getUser()?.imageURL {
             (self.view as! UnverifiedView).photo.setImageWithURL(imageURL)
         } else {
-            (self.view as! UnverifiedView).photo.setImageWithURL(UserConstants.defaultImageURL)
+            (self.view as! UnverifiedView).photo.image = UIImage.defaultProfileImage()
         }
         (self.view as! UnverifiedView).photo.contentMode = .ScaleAspectFill
 

@@ -39,7 +39,11 @@ class CheckinRequestTableViewCell: UITableViewCell {
     
     func configureWithCheckin(checkin: Checkin) {
         let user = checkin.user!
-        self.mentorPicture.setImageWithURL(user.imageURL!)
+        if let imgURL = user.imageURL {
+            self.mentorPicture.setImageWithURL(imgURL)
+        } else {
+            self.mentorPicture.image = UIImage.defaultProfileImage()
+        }
         self.mentorPicture.layer.cornerRadius = UIConstants.userImageSize/2
         self.mentorPicture.clipsToBounds = true
         

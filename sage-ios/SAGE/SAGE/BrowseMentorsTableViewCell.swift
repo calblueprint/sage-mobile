@@ -21,7 +21,11 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     }
     
     func configureWithUser(user: User) {
-        self.mentorPicture.setImageWithURL(user.imageURL!)
+        if let imgUrl = user.imageURL {
+            self.mentorPicture.setImageWithURL(imgUrl)
+        } else {
+            self.mentorPicture.image = UIImage.defaultProfileImage()
+        }
         self.mentorName.text = user.firstName! + " " + user.lastName!
         self.schoolName.text = user.school!.name
         self.totalHours.text = String(user.totalHours) + " hours"
@@ -59,18 +63,20 @@ class BrowseMentorsTableViewCell: UITableViewCell {
         self.totalHours.textColor = UIColor.secondaryTextColor
         self.totalHours.font = UIFont.getDefaultFont(16)
         
+        let mentorSchoolX = CGRectGetMaxX(self.mentorPicture.frame) + 10;
+        
         self.contentView.addSubview(self.mentorName)
         self.mentorName.sizeToFit()
         self.mentorName.setY(UIConstants.verticalMargin)
-        self.mentorName.setX(57)
-        self.mentorName.setWidth(CGRectGetMinX(self.totalHours.frame) - 57.0 - UIConstants.textMargin)
+        self.mentorName.setX(mentorSchoolX)
+        self.mentorName.setWidth(CGRectGetMinX(self.totalHours.frame) - mentorSchoolX - UIConstants.textMargin)
         self.mentorName.font = UIFont.getSemiboldFont(16)
         
         self.contentView.addSubview(self.schoolName)
         self.schoolName.sizeToFit()
         self.schoolName.setY(CGRectGetMaxY(self.mentorName.frame)-5)
         self.schoolName.setX(57)
-        self.mentorName.setWidth(CGRectGetMinX(self.totalHours.frame) - 57.0 - UIConstants.textMargin)
+        self.mentorName.setWidth(CGRectGetMinX(self.totalHours.frame) - mentorSchoolX - UIConstants.textMargin)
         self.schoolName.font = UIFont.getDefaultFont(14)
         self.schoolName.textColor = UIColor.secondaryTextColor
     }

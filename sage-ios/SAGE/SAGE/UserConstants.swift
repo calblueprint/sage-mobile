@@ -6,7 +6,7 @@
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct UserConstants {
     
@@ -23,7 +23,5 @@ struct UserConstants {
     static let kImgURL: String = "image_url"
     
     static let kPassword: String = "password"
-    static let kPhotoData: String = "data"
-    static let defaultImageURL: NSURL = NSURL(string: "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png")!
-    
+    static let kPhotoData: String = "data"    
 }

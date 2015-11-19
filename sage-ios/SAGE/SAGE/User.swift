@@ -29,16 +29,16 @@ class User: NSObject, NSCoding {
         case DefaultHours = -2
     }
         
-    var id: Int
+    var id: Int = DefaultValues.DefaultID.rawValue
     var firstName: String?
     var lastName: String?
     var email: String?
     var school: School?
-    var level: VolunteerLevel
-    var role: UserRole
-    var totalHours: Int
-    var verified: Bool
-    var imageURL: NSURL? = UserConstants.defaultImageURL
+    var level: VolunteerLevel = .Default
+    var role: UserRole = .Default
+    var totalHours: Int = DefaultValues.DefaultHours.rawValue
+    var verified: Bool = false
+    var imageURL: NSURL?
     
     
     //
@@ -69,7 +69,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
     }
     
-    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false, imgURL: NSURL? = UserConstants.defaultImageURL) {
+    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false, imgURL: NSURL? = nil) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -110,9 +110,13 @@ class User: NSObject, NSCoding {
                 let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
             case UserConstants.kVerified:
-                self.verified = value as! Bool
+                if let val = value as? Bool {
+                    self.verified = val
+                }
             case UserConstants.kId:
-                self.id = value as! Int
+                if let val = value as? Int {
+                    self.id = val
+                }
             case UserConstants.kFirstName:
                 self.firstName = value as? String
             case UserConstants.kLastName:

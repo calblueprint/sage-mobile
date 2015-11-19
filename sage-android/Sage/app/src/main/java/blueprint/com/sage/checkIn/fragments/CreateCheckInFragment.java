@@ -36,6 +36,7 @@ import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
+import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.utility.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,7 +46,7 @@ import butterknife.OnClick;
  * Created by charlesx on 10/27/15.
  * Fragment to make a checkin request.
  */
-public class CheckInRequestFragment extends CheckInAbstractFragment {
+public class CreateCheckInFragment extends CheckInAbstractFragment implements FormValidation {
 
     @Bind(R.id.check_in_request_date_field) TextView mDate;
     @Bind(R.id.check_in_request_start_field) TextView mStartTime;
@@ -60,7 +61,7 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
 
     private static final int REQUEST_CODE = 200;
 
-    public static CheckInRequestFragment newInstance() { return new CheckInRequestFragment(); }
+    public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -165,7 +166,7 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         builder.show();
     }
 
-    private void validateAndSubmitRequest() {
+    public void validateAndSubmitRequest() {
         String start = mStartTime.getText().toString();
         String end = mEndTime.getText().toString();
         String date = mDate.getText().toString();
@@ -258,8 +259,8 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            if (getTargetFragment() instanceof CheckInRequestFragment) {
-                CheckInRequestFragment fragment = (CheckInRequestFragment) getTargetFragment();
+            if (getTargetFragment() instanceof CreateCheckInFragment) {
+                CreateCheckInFragment fragment = (CreateCheckInFragment) getTargetFragment();
                 fragment.setTime(mTextView, hourOfDay, minute);
             }
         }
@@ -292,8 +293,8 @@ public class CheckInRequestFragment extends CheckInAbstractFragment {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            if (getTargetFragment() instanceof CheckInRequestFragment) {
-                CheckInRequestFragment fragment = (CheckInRequestFragment) getTargetFragment();
+            if (getTargetFragment() instanceof CreateCheckInFragment) {
+                CreateCheckInFragment fragment = (CreateCheckInFragment) getTargetFragment();
                 fragment.setDate(mTextView, year, month + 1, day);
             }
         }

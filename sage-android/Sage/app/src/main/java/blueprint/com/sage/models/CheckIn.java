@@ -1,10 +1,14 @@
 package blueprint.com.sage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import org.joda.time.DateTime;
 
 import java.util.Date;
 
 import blueprint.com.sage.network.serializers.CheckInSerializer;
+import blueprint.com.sage.utility.DateUtils;
 import lombok.Data;
 
 /**
@@ -33,5 +37,10 @@ public @Data class CheckIn {
         this.user_id = user.getId();
         this.school_id = school.getId();
         this.comment = comment;
+    }
+
+    @JsonIgnore
+    public String getTotalTime() {
+        return DateUtils.timeDiff(new DateTime(start), new DateTime(finish));
     }
 }

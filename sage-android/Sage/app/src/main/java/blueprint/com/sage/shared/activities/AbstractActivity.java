@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared;
+package blueprint.com.sage.shared.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
@@ -21,6 +24,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     protected SharedPreferences mPreferences;
     protected NetworkManager mNetworkManager;
+    protected GoogleApiClient mGoogleApiClient;
 
     protected User mUser;
     protected School mSchool;
@@ -30,10 +34,28 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
         mPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
         mNetworkManager = NetworkManager.getInstance(this);
-
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
         // LOGOUT USER HERE IF NO CREDENTIALS
         setUpUser();
         setUpSchool();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
+            mGoogleApiClient.disconnect();
     }
 
     private void setUpUser() {
@@ -66,4 +88,5 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public SharedPreferences getSharedPreferences() { return mPreferences; }
+    public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }
 }

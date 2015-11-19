@@ -1,24 +1,22 @@
 //
-//  BrowseSchoolsViewController.swift
+//  SignUpRequestsViewController.swift
 //  SAGE
 //
-//  Created by Sameera Vemulapalli on 11/9/15.
+//  Created by Sameera Vemulapalli on 11/19/15.
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
 import UIKit
 
-class BrowseSchoolsViewController: UITableViewController {
-    
-    var schools: NSMutableArray?
+class SignUpRequestsViewController: UITableViewController {
+    var requests: NSMutableArray?
     var currentErrorMessage: ErrorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Schools"
+        self.title = "Sign Up Requests"
         self.tableView.tableFooterView = UIView()
-        self.loadSchools()
-        
+        self.loadSignUpRequests()
     }
     
     func showErrorAndSetMessage(message: String, size: CGFloat) {
@@ -27,17 +25,18 @@ class BrowseSchoolsViewController: UITableViewController {
         self.currentErrorMessage = errorView
     }
     
-    func loadSchools() {
-        AdminOperations.loadSchools({ (schoolArray) -> Void in
-            self.schools = schoolArray
+    func loadSignUpRequests() {
+        AdminOperations.loadSignUpRequests({ (signUpRequests) -> Void in
+            self.requests = signUpRequests
+            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let schools = self.schools {
-            return schools.count
+        if let requests = self.requests {
+            return requests.count
         } else {
             return 0
         }
@@ -47,16 +46,8 @@ class BrowseSchoolsViewController: UITableViewController {
         return 1
     }
     
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let school = self.schools![indexPath.row] as! School
-        let cell = BrowseSchoolsTableViewCell()
-        cell.configureWithSchool(school)
+        let cell = UITableViewCell()
         return cell
     }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return BrowseSchoolsTableViewCell.cellHeight()
-    }
-    
 }

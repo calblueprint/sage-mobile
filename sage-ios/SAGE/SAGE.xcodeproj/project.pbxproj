@@ -67,6 +67,9 @@
 		424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */; };
 		424A137C1BEED27300775E86 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A137B1BEED27300775E86 /* UIViewController.swift */; };
 		424DEC001BF4B8810099CCE0 /* LoginOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */; };
+		4254C1EB1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254C1EA1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift */; };
+		4254C1ED1BFDCDE200D0D33E /* BrowseSchoolsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254C1EC1BFDCDE200D0D33E /* BrowseSchoolsTableViewCell.swift */; };
+		4254C1EF1BFDD6A200D0D33E /* SignUpRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254C1EE1BFDD6A200D0D33E /* SignUpRequestsViewController.swift */; };
 		4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */; };
 		4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2981BC62B4500C831C7 /* LoginView.swift */; };
 		42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */; };
@@ -157,6 +160,9 @@
 		424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsOperations.swift; sourceTree = "<group>"; };
 		424A137B1BEED27300775E86 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginOperations.swift; sourceTree = "<group>"; };
+		4254C1EA1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseSchoolsViewController.swift; sourceTree = "<group>"; };
+		4254C1EC1BFDCDE200D0D33E /* BrowseSchoolsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseSchoolsTableViewCell.swift; sourceTree = "<group>"; };
+		4254C1EE1BFDD6A200D0D33E /* SignUpRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpRequestsViewController.swift; sourceTree = "<group>"; };
 		4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainConstants.swift; sourceTree = "<group>"; };
 		4254D2981BC62B4500C831C7 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4264DFEA1BC59BE20097804D /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Pods/../build/Debug-iphoneos/AFNetworking.framework"; sourceTree = "<group>"; };
@@ -430,8 +436,10 @@
 			isa = PBXGroup;
 			children = (
 				42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */,
+				4254C1EE1BFDD6A200D0D33E /* SignUpRequestsViewController.swift */,
 				42F71DF21BF802D2004E1B3B /* CheckinRequestsViewController.swift */,
 				4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */,
+				4254C1EA1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift */,
 			);
 			name = Admin;
 			sourceTree = "<group>";
@@ -440,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */,
+				4254C1EC1BFDCDE200D0D33E /* BrowseSchoolsTableViewCell.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -718,6 +727,7 @@
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
+				4254C1ED1BFDCDE200D0D33E /* BrowseSchoolsTableViewCell.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
 				424A137C1BEED27300775E86 /* UIViewController.swift in Sources */,
@@ -729,7 +739,9 @@
 				5D8AF98B1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */,
+				4254C1EF1BFDD6A200D0D33E /* SignUpRequestsViewController.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
+				4254C1EB1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift in Sources */,
 				27D1B6841BE1C20C00F9D026 /* FormTextItem.swift in Sources */,
 				4223342D1BC0C96000E863D0 /* AnnouncementConstants.swift in Sources */,
 				5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */,

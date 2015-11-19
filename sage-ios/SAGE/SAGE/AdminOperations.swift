@@ -16,17 +16,48 @@ class AdminOperations {
         let manager = BaseOperation.manager()
         var params: [String: AnyObject] = [String: AnyObject]()
         params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
-        manager.GET(StringConstants.kEndpointMentors, parameters: params, success: { (operation, data) -> Void in
-            // handle the data and run success on an nsmutablearray
-            }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
-        }
+//        manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
+//            // handle the data and run success on an nsmutablearray
+//            }) { (operation, error) -> Void in
+//                failure(error.localizedDescription)
+//        }
         
     }
     
     static func loadCheckinRequests(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-
+        var params: [String: AnyObject] = [String: AnyObject]()
+        params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
+//        manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
+//            // handle the data and run success on an nsmutablearray
+//            }) { (operation, error) -> Void in
+//                failure(error.localizedDescription)
+//        }
+    }
+    
+    static func loadSchools(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        var params: [String: AnyObject] = [String: AnyObject]()
+        params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
+//        manager.GET(StringConstants.kEndpointGetSchools, parameters: params, success: { (operation, data) -> Void in
+//            // handle the data and run success on an nsmutablearray
+//            }) { (operation, error) -> Void in
+//                failure(error.localizedDescription)
+//        }
+        
+    }
+    
+    
+    static func loadSignUpRequests(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        var params: [String: AnyObject] = [String: AnyObject]()
+        params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
+        //        manager.GET(StringConstants.kEndpointGetSchools, parameters: params, success: { (operation, data) -> Void in
+        //            // handle the data and run success on an nsmutablearray
+        //            }) { (operation, error) -> Void in
+        //                failure(error.localizedDescription)
+        //        }
+        
     }
     
 }

@@ -20,8 +20,6 @@ public class TypeSpinnerAdapter extends ArrayAdapter<String> {
     private int mSpinnerItem;
     private int mSpinnerDropdown;
 
-    private TextView mTextView;
-
     public TypeSpinnerAdapter(Context context, String[] types, int spinnerItem, int spinnerDropdown) {
         super(context, spinnerItem);
         mTypes = types;
@@ -61,8 +59,8 @@ public class TypeSpinnerAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(layoutId, parent, false);
         }
 
-        mTextView = (TextView) convertView.findViewById(R.id.spinner_item_text);
-        mTextView.setText(getItem(position));
+        TextView textView = (TextView) convertView.findViewById(R.id.spinner_item_text);
+        textView.setText(getItem(position));
 
         return convertView;
     }

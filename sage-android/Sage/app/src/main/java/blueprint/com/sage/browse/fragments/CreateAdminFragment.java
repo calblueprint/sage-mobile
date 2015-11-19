@@ -13,11 +13,15 @@ import android.widget.Spinner;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.FormValidation;
+import blueprint.com.sage.shared.adapters.RoleSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.validators.UserValidators;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -38,6 +42,12 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
 
     private PhotoPicker mPhotoPicker;
     private UserValidators mValidator;
+    private SchoolSpinnerAdapter mSchoolAdapter;
+    private TypeSpinnerAdapter mTypeAdapter;
+    private RoleSpinnerAdapter mRoleAdapter;
+
+    private static final int DIALOG_CODE = 200;
+    private static final String DIALOG_TAG = "CreateAdminProfileFragment";
 
     public static CreateAdminFragment newInstance() { return new CreateAdminFragment(); }
 
@@ -89,7 +99,29 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     }
 
     private void initializeViews() {
+        mSchoolAdapter = new SchoolSpinnerAdapter(getParentActivity(),
+                                                  getParentActivity().getSchools(),
+                                                  R.layout.user_spinner_item, R.layout.user_spinner_item);
+        mSchool.setAdapter(mSchoolAdapter);
 
+        mTypeAdapter = new TypeSpinnerAdapter(getParentActivity(),
+                                              getResources().getStringArray(R.array.volunteer_types),
+                                              R.layout.user_spinner_item, R.layout.user_spinner_item);
+
+        mType.setAdapter(mTypeAdapter);
+
+        mRoleAdapter = new RoleSpinnerAdapter(getParentActivity(),
+                                              getResources().getStringArray(R.array.role_types),
+                                              R.layout.user_spinner_item, R.layout.user_spinner_item);
+
+        mRole.setAdapter(mRoleAdapter);
+    }
+
+    @OnClick(R.id.create_user_photo)
+    public void onPhotoClick(CircleImageView imageView) {
+        PhotoPicker.PhotoOptionDialog dialog = PhotoPicker.PhotoOptionDialog.newInstance(mPhotoPicker);
+        dialog.setTargetFragment(this, DIALOG_CODE);
+        dialog.show(getParentFragment().getFragmentManager(), DIALOG_TAG);
     }
 
     public void validateAndSubmitRequest() {
@@ -101,7 +133,7 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
         String confirmPassword = mConfirmPassword.getText().toString();
-        User user = new User(firstName, lastName, email, password, )
+        User user = new User(firstName, lastName, email, password);
     }
 
     private boolean isValidUser() {

@@ -15,6 +15,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.BackEvent;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
@@ -40,6 +41,7 @@ public class SignUpActivity extends FragmentActivity {
 
     private NetworkManager mManager;
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
@@ -57,7 +59,19 @@ public class SignUpActivity extends FragmentActivity {
         FragUtils.replace(R.id.sign_up_container, SignUpPagerFragment.newInstance(), this);
     }
 
-    @TargetApi(21)
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @TargetApi(23)
     public void setStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             this.getWindow().setStatusBarColor(getResources().getColor(R.color.black, this.getTheme()));
@@ -90,6 +104,10 @@ public class SignUpActivity extends FragmentActivity {
         } catch (Exception e) {
             Toast.makeText(this, "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onEvent(SchoolListEvent event) {
+        setSchools(event.getSchools());
     }
 
     public User getUser() {

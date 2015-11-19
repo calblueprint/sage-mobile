@@ -67,4 +67,8 @@ public class SignUpSchoolSpinnerAdapter extends ArrayAdapter<School> {
         return convertView;
     }
 
+    public void setSchools(List<School> schools) {
+        mSchools = schools;
+        notifyDataSetChanged();
+    }
 }

@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.shared.validators.UserValidators;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -46,37 +47,13 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
-        boolean isValid = true;
-
-        if (!hasValidFirstName()) {
-            mFirstName.setError(getString(R.string.cannot_be_blank,
-                                getString(R.string.sign_up_first_name)));
-            isValid = false;
-        }
-
-        if (!hasValidLastName()) {
-            mLastName.setError(getString(R.string.cannot_be_blank,
-                               getString(R.string.sign_up_last_name)));
-            isValid = false;
-        }
-
-        getParentActivity().getUser().setFirstName(mFirstName.getText().toString());
-        getParentActivity().getUser().setLastName(mLastName.getText().toString());
-
-        return isValid;
+        return UserValidators.hasNonBlankField(mFirstName, getString(R.string.cannot_be_blank, "First Name")) &
+                UserValidators.hasNonBlankField(mLastName, getString(R.string.cannot_be_blank, "Last Name"));
     }
 
     public void setUserFields() {
         User user = getParentActivity().getUser();
         user.setFirstName(mFirstName.getText().toString());
         user.setLastName(mLastName.getText().toString());
-    }
-
-    private boolean hasValidFirstName() {
-        return !mFirstName.getText().toString().isEmpty();
-    }
-
-    private boolean hasValidLastName() {
-        return !mLastName.getText().toString().isEmpty();
     }
 }

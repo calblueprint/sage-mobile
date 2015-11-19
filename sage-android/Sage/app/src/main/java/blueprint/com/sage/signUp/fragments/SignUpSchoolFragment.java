@@ -66,33 +66,33 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
-        boolean hasErrors = false;
+        boolean isValid = true;
 
         String snackBarString = "";
 
         if (mSchoolSpinner.getSelectedItem() == null) {
             snackBarString += "School &";
-            hasErrors = true;
+            isValid = false;
         }
 
         if (mVolunteerTypeSpinner.getSelectedItem() == null) {
             snackBarString += "Volunteer Type";
-            hasErrors = true;
+            isValid = false;
         }
 
-        if (hasErrors) {
+        if (!isValid) {
             snackBarString += "can't be blank!";
             Snackbar.make(mLayout, snackBarString, Snackbar.LENGTH_SHORT).show();
         }
 
-        return hasErrors;
+        return isValid ;
     }
 
     public void setUserFields() {
         User user = getParentActivity().getUser();
         user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
-        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
 
+        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
         user.setVolunteerTypePosition(mVolunteerTypeSpinner.getSelectedItemPosition());
     }
 }

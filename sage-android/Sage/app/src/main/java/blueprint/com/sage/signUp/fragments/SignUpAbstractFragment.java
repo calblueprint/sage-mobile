@@ -28,6 +28,7 @@ public abstract class SignUpAbstractFragment extends Fragment {
     @Nullable
     @OnClick(R.id.sign_up_finish)
     public void createUser() {
+        setUserFields();
         getParentActivity().makeUserRequest();
     }
 

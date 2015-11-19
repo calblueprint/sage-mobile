@@ -9,14 +9,14 @@
 import UIKit
 
 class CheckinRequestsViewController: UITableViewController {
-    var requests: NSMutableArray = NSMutableArray()
+    var requests: NSMutableArray?
     var currentErrorMessage: ErrorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Check In Requests"
         self.tableView.tableFooterView = UIView()
-        // self.loadMentors()
+        self.loadCheckinRequests()
     }
     
     func showErrorAndSetMessage(message: String, size: CGFloat) {
@@ -25,16 +25,26 @@ class CheckinRequestsViewController: UITableViewController {
         self.currentErrorMessage = errorView
     }
     
-    func loadMentors() {
+    func loadCheckinRequests() {
         AdminOperations.loadCheckinRequests({ (checkinRequests) -> Void in
+            checkinRequests.sortUsingComparator({ (checkin1id, checkin2id) -> NSComparisonResult in
+                let checkinOne = checkin1id as! Checkin
+                let checkinTwo = checkin2id as! Checkin
+                return checkinOne.startTime!.compare(checkinTwo.startTime!)
+            })
             self.requests = checkinRequests
+            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if let requests = self.requests {
+            return requests.count
+        } else {
+            return 0
+        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -43,25 +53,38 @@ class CheckinRequestsViewController: UITableViewController {
     
     func checkButtonPressed(sender: UIButton) {
         let cell = sender.superview!.superview as! CheckinRequestTableViewCell
-        self.removeCellFromDataSource(cell)
+        let alertController = UIAlertController(title: "Approve", message: "Do you want to approve this check-in request?", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            // make a network request here
+            self.removeCell(cell)
+        }))
         // make a network request, remove checkin from data source, and reload table view
     }
     
     func xButtonPressed(sender: UIButton) {
         let cell = sender.superview!.superview as! CheckinRequestTableViewCell
-        self.removeCellFromDataSource(cell)
+        self.removeCell(cell)
         // make a network request, remove checkin from data source, and reload table view
     }
     
-    func removeCellFromDataSource(cell: CheckinRequestTableViewCell) {
-        // remove the cell from the array and then reload the data
+    func removeCell(cell: CheckinRequestTableViewCell) {
+        let cellID = cell.userID!
+        var row = 0
+        if let requests = self.requests {
+            for mentor in requests {
+                let mentorID = (mentor as! User).id
+                if mentorID != User.DefaultValues.DefaultID.rawValue && mentorID == cellID {
+                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Bottom)
+                }
+                row += 1
+            }
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl"), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
-        if indexPath.row == 1 {
-            checkin.comment = "shsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhort"
-        }
+        let checkin = self.requests![indexPath.row] as! Checkin
         let cell = CheckinRequestTableViewCell()
         cell.configureWithCheckin(checkin)
         cell.checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
@@ -70,10 +93,7 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let checkin = Checkin(user: User(firstName: "Alison", lastName: "Reichl"), startTime: NSDate(timeIntervalSinceNow: 0), endTime: NSDate(timeIntervalSinceNow: 1000),comment: "some sort of excuse blah blah blah as;ldkfjals;kjf blah balh")
-        if indexPath.row == 1 {
-            checkin.comment = "shsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhsome sort of excuse blah blah blah as;ldkfjals;kjf blah balhort"
-        }
+        let checkin = self.requests![indexPath.row] as! Checkin
         return CheckinRequestTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
 }

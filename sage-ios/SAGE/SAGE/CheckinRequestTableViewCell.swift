@@ -18,6 +18,8 @@ class CheckinRequestTableViewCell: UITableViewCell {
     var checkButton = UIButton()
     var xButton = UIButton()
     
+    var userID: Int?
+    
     struct DummyCellHolder {
         static var cell = CheckinRequestTableViewCell()
     }
@@ -39,6 +41,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
     
     func configureWithCheckin(checkin: Checkin) {
         let user = checkin.user!
+        self.userID = checkin.user!.id
         if let imgURL = user.imageURL {
             self.mentorPicture.setImageWithURL(imgURL)
         } else {

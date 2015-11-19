@@ -20,10 +20,15 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_first_name) EditText mFirstName;
     @Bind(R.id.sign_up_last_name) EditText mLastName;
 
+    private UserValidators mValidator;
+
     public static SignUpNameFragment newInstance() { return new SignUpNameFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mValidator = UserValidators.newInstance(getParentActivity());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -47,8 +52,8 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
-        return UserValidators.hasNonBlankField(mFirstName, getString(R.string.cannot_be_blank, "First Name")) &
-                UserValidators.hasNonBlankField(mLastName, getString(R.string.cannot_be_blank, "Last Name"));
+        return mValidator.hasNonBlankField(mFirstName, "First Name") &
+                mValidator.hasNonBlankField(mLastName, "Last Name");
     }
 
     public void setUserFields() {

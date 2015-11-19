@@ -22,11 +22,15 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_password) EditText mPassword;
     @Bind(R.id.sign_up_password_confirm) EditText mConfirmation;
 
+    private UserValidators mValidator;
 
     public static SignUpEmailFragment newInstance() { return new SignUpEmailFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mValidator = UserValidators.newInstance(getParentActivity());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -52,10 +56,10 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
-        return UserValidators.hasValidEmail(mEmail, getString(R.string.sign_up_email_error)) &
-                (UserValidators.hasNonBlankField(mPassword, getString(R.string.cannot_be_blank, "Password")) &
-                UserValidators.hasNonBlankField(mConfirmation, getString(R.string.cannot_be_blank, "Password Confirmation"))) &&
-                UserValidators.hasMatchingPassword(mPassword, mConfirmation, getString(R.string.sign_up_password_nonmatch_error));
+        return mValidator.hasValidEmail(mEmail) &
+                (mValidator.hasNonBlankField(mPassword, "Password") &
+                        mValidator.hasNonBlankField(mConfirmation, "Password Confirmation")) &&
+                mValidator.hasMatchingPassword(mPassword, mConfirmation);
     }
 
     public void setUserFields() {

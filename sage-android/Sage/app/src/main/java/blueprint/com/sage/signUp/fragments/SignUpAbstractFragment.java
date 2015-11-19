@@ -38,5 +38,5 @@ public abstract class SignUpAbstractFragment extends Fragment {
     public void continueToNextPage() {
         SignUpPagerFragment fragment = (SignUpPagerFragment) getParentFragment();
         fragment.goToNextPage();
-    };
+    }
 }

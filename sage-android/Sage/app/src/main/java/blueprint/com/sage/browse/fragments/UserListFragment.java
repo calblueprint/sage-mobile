@@ -13,6 +13,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.UserListAdapter;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -84,6 +85,6 @@ public class UserListFragment extends BrowseAbstractFragment implements OnRefres
 
     @OnClick(R.id.user_list_fab)
     public void onCreateAdminClick(FloatingActionButton button) {
-
+        FragUtils.replaceBackStack(R.id.container, CreateAdminFragment.newInstance(), getParentActivity());
     }
 }

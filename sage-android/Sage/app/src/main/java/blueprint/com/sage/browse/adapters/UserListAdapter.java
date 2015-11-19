@@ -35,22 +35,27 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private void setUpUsers(List<User> users) {
         List<Item> allUsers = new ArrayList<>();
-        List<Item> inActiveUsers = new ArrayList<>();
+        List<Item> inactiveUsers = new ArrayList<>();
 
         for (User user : users) {
             Item item = new Item(user, null, false);
             allUsers.add(item);
 
             if (!user.isActive())
-                inActiveUsers.add(item);
+                inactiveUsers.add(item);
         }
 
         mItemList = new ArrayList<>();
 
-        mItemList.add(new Item(null, "Inactive Users", true));
-        mItemList.addAll(inActiveUsers);
-        mItemList.add(new Item(null, "All Users", true));
-        mItemList.addAll(allUsers);
+        if (inactiveUsers.size() != 0) {
+            mItemList.add(new Item(null, "Inactive Users", true));
+            mItemList.addAll(inactiveUsers);
+        }
+
+        if (allUsers.size() != 0) {
+            mItemList.add(new Item(null, "All Users", true));
+            mItemList.addAll(allUsers);
+        }
     }
 
     @Override

@@ -79,13 +79,17 @@ public @Data class User {
         switch (type) {
             case 0:
                 volunteerType = VOLUNTEER;
+                break;
             case 1:
                 volunteerType = ONE_UNIT;
+                break;
             case 2:
                 volunteerType = TWO_UNITS;
+                break;
             default:
                 Log.e(getClass().toString(), "Invalid volunteer type");
                 volunteerType = VOLUNTEER;
+                break;
         }
     }
 

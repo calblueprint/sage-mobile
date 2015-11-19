@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared;
+package blueprint.com.sage.shared.validators;
 
 import android.app.Activity;
 import android.app.AlertDialog;

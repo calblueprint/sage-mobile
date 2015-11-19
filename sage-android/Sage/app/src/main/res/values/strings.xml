@@ -21,6 +21,23 @@
     <string name="optional">Optional</string>
     <string name="list_empty">Looks like there\'s nothing here!\nPull down to refresh.</string>
 
+    <!-- Errors -->
+    <string name="email_error">Email must be a valid berkeley.edu address.</string>
+    <string name="password_blank_error">Password and Confirmation cannot be blank.</string>
+    <string name="password_nonmatch_error">Password and Confirmation must match.</string>
+    <string name="profile_blank_error">Profile picture cannot be empty.</string>
+
+    <string-array name="volunteer_types">
+        <item>Volunteer</item>
+        <item>One Unit</item>
+        <item>Two Units</item>
+    </string-array>
+
+    <string-array name="role_types">
+        <item>Admin</item>
+        <item>Volunteer</item>
+    </string-array>
+
     <!-- Log in -->
     <string name="shared_preferences">SAGE_ANDROID</string>
     <string name="shared_preference_email">email</string>

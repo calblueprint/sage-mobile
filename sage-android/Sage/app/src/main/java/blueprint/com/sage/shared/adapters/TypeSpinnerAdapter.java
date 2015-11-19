@@ -1,4 +1,4 @@
-package blueprint.com.sage.signUp.adapters;
+package blueprint.com.sage.shared.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,18 +13,21 @@ import blueprint.com.sage.R;
  * Created by charlesx on 10/14/15.
  * Spinner adapter for volunteer types.
  */
-public class SignUpTypeSpinnerAdapter extends ArrayAdapter<String> {
+public class TypeSpinnerAdapter extends ArrayAdapter<String> {
     private String[] mTypes;
     private Context mContext;
-    private int mLayoutId;
+
+    private int mSpinnerItem;
+    private int mSpinnerDropdown;
 
     private TextView mTextView;
 
-    public SignUpTypeSpinnerAdapter(Context context, int layoutId, String[] types) {
-        super(context, layoutId);
+    public TypeSpinnerAdapter(Context context, String[] types, int spinnerItem, int spinnerDropdown) {
+        super(context, spinnerItem);
         mTypes = types;
         mContext = context;
-        mLayoutId = layoutId;
+        mSpinnerItem = spinnerItem;
+        mSpinnerDropdown = spinnerDropdown;
     }
 
     @Override
@@ -44,12 +47,12 @@ public class SignUpTypeSpinnerAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return getCustomView(position, convertView, parent, R.layout.sign_in_spinner_item);
+        return getCustomView(position, convertView, parent, mSpinnerItem);
     }
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        return getCustomView(position, convertView, parent, R.layout.sign_in_spinner_drop_item);
+        return getCustomView(position, convertView, parent, mSpinnerDropdown);
     }
 
     private View getCustomView(int position, View convertView, ViewGroup parent, int layoutId) {
@@ -58,7 +61,7 @@ public class SignUpTypeSpinnerAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(layoutId, parent, false);
         }
 
-        mTextView = (TextView) convertView.findViewById(R.id.sign_up_spinner_item_text);
+        mTextView = (TextView) convertView.findViewById(R.id.spinner_item_text);
         mTextView.setText(getItem(position));
 
         return convertView;

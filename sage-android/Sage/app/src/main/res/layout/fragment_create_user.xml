@@ -2,27 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <EditText
         android:id="@+id/create_user_first_name"
         android:layout_width="240dp"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <EditText
         android:id="@+id/create_user_last_name"
         android:layout_width="240dp"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <EditText
         android:id="@+id/create_user_email"
         android:layout_width="240dp"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <EditText
         android:id="@+id/create_user_password"
         android:layout_width="240dp"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <EditText
         android:id="@+id/create_user_confirm_password"
         android:layout_width="240dp"
         android:layout_height="wrap_content" />

@@ -26,7 +26,7 @@ public class UserValidators {
     public boolean hasValidEmail(EditText email) {
         String emailString = email.getText().toString();
         if (!VALID_EMAIL_ADDRESS_REGEX.matcher(emailString).find()) {
-            email.setText(mActivity.getString(R.string.sign_up_email_error));
+            email.setText(mActivity.getString(R.string.email_error));
             return false;
         }
         return true;
@@ -45,7 +45,7 @@ public class UserValidators {
         String passwordString = password.getText().toString();
         String confirmPasswordString = confirmPassword.getText().toString();
         if (!passwordString.equals(confirmPasswordString)) {
-            password.setError(mActivity.getString(R.string.sign_up_password_nonmatch_error));
+            password.setError(mActivity.getString(R.string.password_nonmatch_error));
             return false;
         }
         return true;

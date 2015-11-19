@@ -11,8 +11,8 @@ import android.widget.Spinner;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.signUp.adapters.SignUpSchoolSpinnerAdapter;
-import blueprint.com.sage.signUp.adapters.SignUpTypeSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -26,8 +26,8 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_school) Spinner mSchoolSpinner;
     @Bind(R.id.sign_up_volunteer_type) Spinner mVolunteerTypeSpinner;
 
-    private SignUpSchoolSpinnerAdapter mSchoolAdapter;
-    private SignUpTypeSpinnerAdapter mTypeAdapter;
+    private SchoolSpinnerAdapter mSchoolAdapter;
+    private TypeSpinnerAdapter mTypeAdapter;
 
     public static SignUpSchoolFragment newInstance() { return new SignUpSchoolFragment(); }
 
@@ -45,9 +45,10 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
 
     private void initializeFields() {
         mSchoolAdapter =
-                new SignUpSchoolSpinnerAdapter(getParentActivity(),
+                new SchoolSpinnerAdapter(getParentActivity(),
+                                               getParentActivity().getSchools(),
                                                R.layout.sign_in_spinner_item,
-                                               getParentActivity().getSchools());
+                                               R.layout.sign_in_spinner_drop_item);
         mSchoolSpinner.setAdapter(mSchoolAdapter);
         int selectedSchool = getParentActivity().getUser().getSchoolPosition();
         if (selectedSchool > -1) {
@@ -55,9 +56,10 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         }
 
         mTypeAdapter =
-                new SignUpTypeSpinnerAdapter(getParentActivity(),
+                new TypeSpinnerAdapter(getParentActivity(),
+                                             getResources().getStringArray(R.array.volunteer_types),
                                              R.layout.sign_in_spinner_item,
-                                             getResources().getStringArray(R.array.sign_up_volunteer_types));
+                                             R.layout.sign_in_spinner_drop_item);
         mVolunteerTypeSpinner.setAdapter(mTypeAdapter);
         int selectedType = getParentActivity().getUser().getTypePosition();
         if (selectedType > -1) {

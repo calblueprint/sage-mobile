@@ -7,12 +7,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.validators.PhotoPicker;
+import blueprint.com.sage.shared.validators.UserValidators;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,11 +25,11 @@ import de.greenrobot.event.EventBus;
  */
 public class CreateAdminFragment extends BrowseAbstractFragment implements FormValidation {
 
-    @Bind(R.id.create_user_first_name) TextView mFirstName;
-    @Bind(R.id.create_user_last_name) TextView mLastName;
-    @Bind(R.id.create_user_email) TextView mEmail;
-    @Bind(R.id.create_user_password) TextView mPassword;
-    @Bind(R.id.create_user_confirm_password) TextView mConfirmPassword;
+    @Bind(R.id.create_user_first_name) EditText mFirstName;
+    @Bind(R.id.create_user_last_name) EditText mLastName;
+    @Bind(R.id.create_user_email) EditText mEmail;
+    @Bind(R.id.create_user_password) EditText mPassword;
+    @Bind(R.id.create_user_confirm_password) EditText mConfirmPassword;
 
     @Bind(R.id.create_user_school) Spinner mSchool;
     @Bind(R.id.create_user_type) Spinner mType;
@@ -35,8 +37,7 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     @Bind(R.id.create_user_photo) CircleImageView mPhoto;
 
     private PhotoPicker mPhotoPicker;
-
-
+    private UserValidators mValidator;
 
     public static CreateAdminFragment newInstance() { return new CreateAdminFragment(); }
 
@@ -45,6 +46,7 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mPhotoPicker = PhotoPicker.newInstance(getParentActivity(), this);
+        mValidator = UserValidators.newInstance(getParentActivity());
     }
 
     @Override
@@ -91,42 +93,29 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     }
 
     public void validateAndSubmitRequest() {
-        boolean hasErrors = false;
+        if (!isValidUser())
+            return;
 
         String firstName = mFirstName.getText().toString();
         String lastName = mLastName.getText().toString();
         String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
         String confirmPassword = mConfirmPassword.getText().toString();
+        User user = new User(firstName, lastName, email, password, )
+    }
 
-        if (firstName.isEmpty()) {
-            mFirstName.setText(getString(R.string.cannot_be_blank, "First Name"));
-            hasErrors = true;
-        }
+    private boolean isValidUser() {
+        return mValidator.hasNonBlankField(mFirstName, "First Name") &
+                mValidator.hasNonBlankField(mLastName, "Last Name") &
+                ((mValidator.hasNonBlankField(mPassword, "Password") &
+                  mValidator.hasNonBlankField(mConfirmPassword, "Confirm Password")) &&
+                  mValidator.hasMatchingPassword(mPassword, mConfirmPassword)) &
+                hasSelectedSpinnerOptions();
 
-        if (lastName.isEmpty()) {
-            mLastName.setText(getString(R.string.cannot_be_blank, "Last Name"));
-            hasErrors = true;
-        }
 
-        if (email.isEmpty()) {
-            mEmail.setText(getString(R.string.cannot_be_blank, "Email"));
-            hasErrors = true;
-        }
+    }
 
-        if (password.isEmpty()) {
-            mPassword.setText(getString(R.string.cannot_be_blank, "Password"));
-            hasErrors = true;
-        }
+    private boolean hasSelectedSpinnerOptions() {
 
-        if (confirmPassword.isEmpty()) {
-            mConfirmPassword.setText(getString(R.string.cannot_be_blank, "Confirm Password"));
-            hasErrors = true;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            mFirstName.setText("");
-            hasErrors = true;
-        }
     }
 }

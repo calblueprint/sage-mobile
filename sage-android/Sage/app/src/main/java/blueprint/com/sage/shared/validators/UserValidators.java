@@ -29,7 +29,7 @@ public class UserValidators {
     public boolean hasValidEmail(EditText email) {
         String emailString = email.getText().toString();
         if (!VALID_EMAIL_ADDRESS_REGEX.matcher(emailString).find()) {
-            email.setText(mActivity.getString(R.string.email_error));
+            email.setError(mActivity.getString(R.string.email_error));
             return false;
         }
         return true;

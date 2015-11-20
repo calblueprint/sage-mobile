@@ -129,7 +129,7 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     public void onPhotoClick(CircleImageView imageView) {
         PhotoPicker.PhotoOptionDialog dialog = PhotoPicker.PhotoOptionDialog.newInstance(mPhotoPicker);
         dialog.setTargetFragment(this, DIALOG_CODE);
-        dialog.show(getParentFragment().getFragmentManager(), DIALOG_TAG);
+        dialog.show(getFragmentManager(), DIALOG_TAG);
     }
 
     public void validateAndSubmitRequest() {
@@ -155,6 +155,8 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     private boolean isValidUser() {
         return mValidator.hasNonBlankField(mFirstName, "First Name") &
                 mValidator.hasNonBlankField(mLastName, "Last Name") &
+                (mValidator.hasNonBlankField(mEmail, "Email") &&
+                 mValidator.hasValidEmail(mEmail)) &
                 ((mValidator.hasNonBlankField(mPassword, "Password") &
                   mValidator.hasNonBlankField(mConfirmPassword, "Confirm Password")) &&
                   mValidator.hasMatchingPassword(mPassword, mConfirmPassword)) &

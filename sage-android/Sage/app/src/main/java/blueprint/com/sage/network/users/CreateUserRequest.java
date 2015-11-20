@@ -57,7 +57,6 @@ public class CreateUserRequest extends BaseRequest {
             userObject.put("last_name", user.getLastName());
             userObject.put("password", user.getPassword());
             userObject.put("school_id", user.getSchoolId());
-            userObject.put("role", 0);
             userObject.put("volunteer_type", user.getVolunteerTypeString());
             if (user.getProfileData() != null) {
                 userObject.put("data", user.getProfileData());

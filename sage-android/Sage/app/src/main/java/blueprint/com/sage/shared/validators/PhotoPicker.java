@@ -24,8 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import blueprint.com.sage.signUp.fragments.SignUpProfileFragment;
-
 /**
  * Created by charlesx on 11/18/15.
  */
@@ -138,7 +136,6 @@ public class PhotoPicker {
             PhotoOptionDialog dialog = new PhotoOptionDialog();
             dialog.setPicker(picker);
             return dialog;
-
         }
 
         public void setPicker(PhotoPicker picker) { mPicker = picker; }
@@ -151,11 +148,6 @@ public class PhotoPicker {
             builder.setItems(mOptions, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (!(getTargetFragment() instanceof SignUpProfileFragment)) {
-                        Log.e(getClass().toString(), "Can't even fragment");
-                        return;
-                    }
-
                     if (which == 0) mPicker.onSelectPhotoButton();
                     else mPicker.onTakePhotoButton();
                 }

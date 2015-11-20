@@ -11,13 +11,15 @@ import AFNetworking
 
 class SchoolOperations {
 
-    static func loadSchools(completion: ((NSMutableArray) -> Void)){
+    static func loadSchools(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         let operationManager = BaseOperation.manager()
         operationManager.GET(StringConstants.kEndpointSchool, parameters: nil, success: { (operation, data) -> Void in
             
             let schoolDict = data["schools"] as! NSMutableArray
             completion(schoolDict)
-            }, failure: nil)
+            }, failure: { (operation, error) -> Void in
+               failure("Could not load schools")
+        })
     }
     
 }

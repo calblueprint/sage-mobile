@@ -81,7 +81,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         time.attributedText = attributedString
 
 
-        self.content.text = checkin.comment!
+        self.content.text = checkin.comment
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(22)
         checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])

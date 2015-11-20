@@ -60,10 +60,13 @@ class BrowseMentorsViewController: UITableViewController {
             }
             
             for mentor in mentorArray {
-                let firstLetter = Array(arrayLiteral: (mentor as! User).firstName!)[0].lowercaseString
+                let firstName = (mentor as! User).firstName!
+                let firstLetter = String(firstName[firstName.startIndex.advancedBy(0)]).lowercaseString
                 let firstLetterIndex = charArray[firstLetter]
                 self.mentors![firstLetterIndex!].addObject(mentor)
             }
+            
+            self.tableView.reloadData()
             
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)

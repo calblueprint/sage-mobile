@@ -134,10 +134,9 @@ class LoginOperations: NSObject {
         operationManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         var params: [String: AnyObject]
-        if let auth = authToken {
+        if let _ = authToken {
             params = [
                 "user": ["email": email],
-                UserConstants.kAuthToken: auth,
             ]
         } else {
             params = [ "user": [

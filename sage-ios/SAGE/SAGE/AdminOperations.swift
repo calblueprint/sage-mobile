@@ -14,49 +14,78 @@ class AdminOperations {
     
     static func loadMentors(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        var params: [String: AnyObject] = [String: AnyObject]()
-        params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
-//        manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
-//            // handle the data and run success on an nsmutablearray
-//            }) { (operation, error) -> Void in
-//                failure(error.localizedDescription)
-//        }
+        manager.GET(StringConstants.kEndpointGetMentors, parameters: nil, success: { (operation, data) -> Void in
+            let userArray = NSMutableArray()
+            let userData = ((data as! NSMutableDictionary)["users"] as! NSMutableArray)
+            for userDict in userData {
+                let dict = userDict as! NSMutableDictionary
+                var swiftDict = [String: AnyObject]()
+                for key in dict.allKeys {
+                    swiftDict[key as! String] = dict[key as! String]
+                }
+                let user = User(propertyDictionary: swiftDict)
+                userArray.addObject(user)
+            }
+            completion(userArray)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
         
     }
     
     static func loadCheckinRequests(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        var params: [String: AnyObject] = [String: AnyObject]()
-        params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
-//        manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
-//            // handle the data and run success on an nsmutablearray
-//            }) { (operation, error) -> Void in
-//                failure(error.localizedDescription)
-//        }
+        manager.GET(StringConstants.kEndpointGetCheckins, parameters: nil, success: { (operation, data) -> Void in
+            // handle the data and run success on an nsmutablearray
+            let checkins = NSMutableArray()
+            let checkinArray = (data as! NSMutableDictionary)["check_ins"] as! NSMutableArray
+            for checkinDict in checkinArray {
+                let dict = checkinDict as! NSMutableDictionary
+                var swiftDict = [String: AnyObject]()
+                for key in dict.allKeys {
+                    swiftDict[key as! String] = dict[key as! String]
+                }
+                let checkin = Checkin(propertyDictionary: swiftDict)
+                checkins.addObject(checkin)
+
+            }
+            completion(checkins)
+
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
     }
     
     static func loadSchools(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        var params: [String: AnyObject] = [String: AnyObject]()
-        params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
-//        manager.GET(StringConstants.kEndpointGetSchools, parameters: params, success: { (operation, data) -> Void in
-//            // handle the data and run success on an nsmutablearray
-//            }) { (operation, error) -> Void in
-//                failure(error.localizedDescription)
-//        }
+        manager.GET(StringConstants.kEndpointGetSchools, parameters: nil, success: { (operation, data) -> Void in
+            let schools = NSMutableArray()
+            let schoolArray = data["schools"] as! NSMutableArray
+            for schoolDict in schoolArray {
+                let dict = schoolDict as! NSMutableDictionary
+                var swiftDict = [String: AnyObject]()
+                for key in dict.allKeys {
+                    swiftDict[key as! String] = dict[key as! String]
+                }
+                let school = School(propertyDictionary: swiftDict)
+                schools.addObject(school)
+            }
+            completion(schools)
+            // handle the data and run success on an nsmutablearray
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
         
     }
     
     
     static func loadSignUpRequests(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        var params: [String: AnyObject] = [String: AnyObject]()
-        params[UserConstants.kAuthToken] = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
-        //        manager.GET(StringConstants.kEndpointGetSchools, parameters: params, success: { (operation, data) -> Void in
-        //            // handle the data and run success on an nsmutablearray
-        //            }) { (operation, error) -> Void in
-        //                failure(error.localizedDescription)
-        //        }
+        manager.GET(StringConstants.kEndpointGetSchools, parameters: nil, success: { (operation, data) -> Void in
+            // handle the data and run success on an nsmutablearray
+        }) { (operation, error) -> Void in
+            failure(error.localizedDescription)
+        }
         
     }
     

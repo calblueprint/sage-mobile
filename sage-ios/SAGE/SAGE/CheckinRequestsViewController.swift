@@ -33,6 +33,7 @@ class CheckinRequestsViewController: UITableViewController {
                 return checkinOne.startTime!.compare(checkinTwo.startTime!)
             })
             self.requests = checkinRequests
+            self.tableView.reloadData()
             
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)

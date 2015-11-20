@@ -30,6 +30,7 @@ class BrowseSchoolsViewController: UITableViewController {
     func loadSchools() {
         AdminOperations.loadSchools({ (schoolArray) -> Void in
             self.schools = schoolArray
+            self.tableView.reloadData()
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }

@@ -1,7 +1,6 @@
 package blueprint.com.sage.signUp.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
+import blueprint.com.sage.shared.validators.UserValidators;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -29,10 +29,15 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     private SchoolSpinnerAdapter mSchoolAdapter;
     private TypeSpinnerAdapter mTypeAdapter;
 
+    private UserValidators mValidator;
+
     public static SignUpSchoolFragment newInstance() { return new SignUpSchoolFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mValidator = UserValidators.newInstance(getActivity());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -68,26 +73,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
-        boolean isValid = true;
-
-        String snackBarString = "";
-
-        if (mSchoolSpinner.getSelectedItem() == null) {
-            snackBarString += "School &";
-            isValid = false;
-        }
-
-        if (mVolunteerTypeSpinner.getSelectedItem() == null) {
-            snackBarString += "Volunteer Type";
-            isValid = false;
-        }
-
-        if (!isValid) {
-            snackBarString += "can't be blank!";
-            Snackbar.make(mLayout, snackBarString, Snackbar.LENGTH_SHORT).show();
-        }
-
-        return isValid ;
+        return mValidator.mustBePicked(mSchoolSpinner, "School", mLayout);
     }
 
     public void setUserFields() {

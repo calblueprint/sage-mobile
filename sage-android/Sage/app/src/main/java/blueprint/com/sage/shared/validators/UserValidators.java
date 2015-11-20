@@ -1,7 +1,10 @@
 package blueprint.com.sage.shared.validators;
 
 import android.app.Activity;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.util.regex.Pattern;
 
@@ -46,6 +49,14 @@ public class UserValidators {
         String confirmPasswordString = confirmPassword.getText().toString();
         if (!passwordString.equals(confirmPasswordString)) {
             password.setError(mActivity.getString(R.string.password_nonmatch_error));
+            return false;
+        }
+        return true;
+    }
+
+    public boolean mustBePicked(Spinner spinner, String error, View view) {
+        if (spinner.getSelectedItem() == null) {
+            Snackbar.make(view, mActivity.getString(R.string.cannot_be_blank, error), Snackbar.LENGTH_SHORT).show();
             return false;
         }
         return true;

@@ -5,10 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.widget.Toast;
-
-import com.android.volley.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +13,11 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.BackEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.signUp.fragments.SignUpPagerFragment;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -82,20 +79,7 @@ public class SignUpActivity extends FragmentActivity {
     }
 
     public void makeUserRequest() {
-        CreateUserRequest request = new CreateUserRequest(this, getUser(),
-                new Response.Listener<Session>() {
-                    @Override
-                    public void onResponse(Session session) {
-                        logInUser(session);
-                    }
-                },
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object o) {
-                       Log.e(getClass().toString(), o.toString());
-                    }
-                });
-        mManager.getRequestQueue().add(request);
+        Requests.Users.with(this).makeCreateUserRequest(getUser());
     }
 
     private void logInUser(Session session) {
@@ -106,6 +90,7 @@ public class SignUpActivity extends FragmentActivity {
         }
     }
 
+    public void onEvent(CreateUserEvent event) { logInUser(event.getSession()); }
     public void onEvent(SchoolListEvent event) {
         setSchools(event.getSchools());
     }

@@ -25,4 +25,8 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return compressedImage
     }
+    
+    static func defaultProfileImage() -> UIImage {
+       return UIImage(named: "profiledefault")!;
+    }
 }

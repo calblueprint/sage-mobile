@@ -56,6 +56,7 @@ public class CreateAdminRequest extends BaseRequest {
             userObject.put("password", user.getPassword());
             userObject.put("school_id", user.getSchoolId());
             userObject.put("role", user.getRoleString());
+            userObject.put("verified", "true");
             userObject.put("volunteer_type", user.getVolunteerTypeString());
             if (user.getProfileData() != null) {
                 userObject.put("data", user.getProfileData());

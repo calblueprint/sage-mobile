@@ -29,8 +29,4 @@ extension UIImage {
     static func defaultProfileImage() -> UIImage {
        return UIImage(named: "profiledefault")!;
     }
-    
-    static func setImageWithUser(user: User) {
-        
-    }
 }

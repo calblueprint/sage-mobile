@@ -11,7 +11,7 @@ import AFNetworking
 
 class AnnouncementsOperations {
     
-    static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)){
+    static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
 
         BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: nil, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]

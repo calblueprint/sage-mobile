@@ -1,6 +1,7 @@
 package blueprint.com.sage.schools.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.SchoolListEvent;
-import blueprint.com.sage.schools.adapters.SchoolsAdapter;
+import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.schools.adapters.SchoolsListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -25,8 +28,9 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     @Bind(R.id.schools_list_list) RecycleViewEmpty mSchoolsList;
     @Bind(R.id.schools_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.schools_list_refresh) SwipeRefreshLayout mSchoolsRefreshView;
+    @Bind(R.id.school_list_fab) FloatingActionButton mCreateButton;
 
-    private SchoolsAdapter mAdapter;
+    private SchoolsListAdapter mAdapter;
 
     public static SchoolListFragment newInstance() { return new SchoolListFragment(); }
 
@@ -55,7 +59,7 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     }
 
     private void initializeViews() {
-        mAdapter = new SchoolsAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
+        mAdapter = new SchoolsListAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
 
         mSchoolsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSchoolsList.setEmptyView(mEmptyView);
@@ -69,8 +73,14 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     public void onRefresh() { getParentActivity().getSchoolsListRequest(); }
 
     public void onEvent(SchoolListEvent event) {
+        getParentActivity().setSchools(event.getSchools());
         mAdapter.setSchools(getParentActivity().getSchools());
         mEmptyView.setRefreshing(false);
         mSchoolsRefreshView.setRefreshing(false);
+    }
+
+    @OnClick(R.id.school_list_fab)
+    public void onCreateClick(FloatingActionButton button) {
+        FragUtils.replaceBackStack(R.id.container, CreateSchoolFragment.newInstance(), getParentActivity());
     }
 }

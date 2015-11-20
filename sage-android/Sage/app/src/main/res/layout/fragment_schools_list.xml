@@ -40,7 +40,7 @@
 
     <android.support.design.widget.FloatingActionButton
         style="@style/SchoolFAB"
-        android:id="@+id/check_in_location_fab"
+        android:id="@+id/school_list_fab"
         android:src="@drawable/ic_add_white"
         android:layout_margin="16dp"
         app:backgroundTint="@color/blue500" />

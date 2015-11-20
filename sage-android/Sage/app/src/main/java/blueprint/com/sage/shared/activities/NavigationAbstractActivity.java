@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared;
+package blueprint.com.sage.shared.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.schools.SchoolsActivity;
+import blueprint.com.sage.checkIn.CheckInActivity;
+import blueprint.com.sage.requests.RequestsActivity;
+import blueprint.com.sage.schools.SchoolsListActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,6 +62,8 @@ public class NavigationAbstractActivity extends AbstractActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.check_in:
+                startCheckInActivity();
             case R.id.announcements:
                 Log.e("Selected announcements", "yay");
                 break;
@@ -70,14 +74,35 @@ public class NavigationAbstractActivity extends AbstractActivity
             case R.id.schools:
                 startSchoolsActivity();
                 break;
+            case R.id.requests:
+                startRequestsActivity();
+                break;
         }
 
         mDrawerLayout.closeDrawers();
         return true;
     }
 
+    private void startCheckInActivity() {
+        if (this instanceof CheckInActivity) return;
+
+        Intent intent = new Intent(this, CheckInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     private void startSchoolsActivity() {
-        Intent intent = new Intent(this, SchoolsActivity.class);
+        if (this instanceof SchoolsListActivity) return;
+
+        Intent intent = new Intent(this, SchoolsListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void startRequestsActivity() {
+        if (this instanceof RequestsActivity) return;
+
+        Intent intent = new Intent(this, RequestsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

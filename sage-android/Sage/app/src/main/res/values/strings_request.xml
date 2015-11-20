@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="requests_check_in">Check Ins</string>
+    <string name="requests_users">Users</string>
+</resources>

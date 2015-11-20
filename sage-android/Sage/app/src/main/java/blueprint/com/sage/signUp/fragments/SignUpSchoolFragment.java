@@ -70,7 +70,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
         user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
 
-        user.setTypePosition(mVolunteerTypeSpinner.getSelectedItemPosition());
+        user.setVolunteerTypePosition(mVolunteerTypeSpinner.getSelectedItemPosition());
 
         return true;
     }

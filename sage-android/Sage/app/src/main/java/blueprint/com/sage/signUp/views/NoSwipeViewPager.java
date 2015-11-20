@@ -19,5 +19,4 @@ public class NoSwipeViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) { return false; }
-
 }

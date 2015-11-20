@@ -19,7 +19,7 @@
 
     <ImageView
         style="@style/SignUpIcon"
-        android:background="@drawable/ic_mail_white"/>
+        android:src="@drawable/ic_mail_white"/>
 
     <include layout="@layout/white_dots" />
 

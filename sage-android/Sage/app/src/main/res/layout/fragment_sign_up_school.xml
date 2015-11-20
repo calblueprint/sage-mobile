@@ -20,7 +20,7 @@
 
     <ImageView
         style="@style/SignUpIcon"
-        android:background="@drawable/ic_location_city_white"/>
+        android:src="@drawable/ic_location_city_white"/>
 
     <include layout="@layout/white_dots" />
 

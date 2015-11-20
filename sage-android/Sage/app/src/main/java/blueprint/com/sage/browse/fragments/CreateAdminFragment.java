@@ -9,9 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
@@ -22,6 +24,7 @@ import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.validators.UserValidators;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,6 +34,8 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/18/15.
  */
 public class CreateAdminFragment extends BrowseAbstractFragment implements FormValidation {
+
+    @Bind(R.id.create_user_layout) LinearLayout mLayout;
 
     @Bind(R.id.create_user_first_name) EditText mFirstName;
     @Bind(R.id.create_user_last_name) EditText mLastName;
@@ -144,7 +149,7 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
 
         User user = new User(firstName, lastName, email, password, schoolId, volunteerString, roleString, profile);
 
-        Requests.Users.with(getParentActivity()).
+        Requests.Users.with(getParentActivity()).makeCreateAdminRequest(user);
     }
 
     private boolean isValidUser() {
@@ -153,12 +158,10 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
                 ((mValidator.hasNonBlankField(mPassword, "Password") &
                   mValidator.hasNonBlankField(mConfirmPassword, "Confirm Password")) &&
                   mValidator.hasMatchingPassword(mPassword, mConfirmPassword)) &
-                hasSelectedSpinnerOptions();
-
-
+                mValidator.mustBePicked(mSchool, "School", mLayout);
     }
 
-    private boolean hasSelectedSpinnerOptions() {
-
+    public void onEvent(CreateAdminEvent event) {
+        FragUtils.popBackStack(this);
     }
 }

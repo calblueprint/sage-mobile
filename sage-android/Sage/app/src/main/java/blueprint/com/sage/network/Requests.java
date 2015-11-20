@@ -14,6 +14,8 @@ import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.events.users.CreateAdminEvent;
+import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
@@ -27,6 +29,7 @@ import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.schools.CreateSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
+import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
@@ -106,11 +109,11 @@ public class Requests {
             Requests.addToRequestQueue(mActivity, request);
         }
 
-        public void makeCreateRequest(User user) {
+        public void makeCreateUserRequest(User user) {
             CreateUserRequest request = new CreateUserRequest(mActivity, user, new Response.Listener<Session>() {
                 @Override
                 public void onResponse(Session session) {
-
+                    EventBus.getDefault().post(new CreateUserEvent(session));
                 }
             }, new Response.Listener() {
                 @Override
@@ -122,8 +125,21 @@ public class Requests {
             Requests.addToRequestQueue(mActivity, request);
         }
 
-        public void makeAdminRequest(User user) {
+        public void makeCreateAdminRequest(User user) {
+            CreateAdminRequest request = new CreateAdminRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            EventBus.getDefault().post(new CreateAdminEvent(user));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError o) {
 
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
         }
     }
 

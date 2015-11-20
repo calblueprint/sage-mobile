@@ -25,6 +25,8 @@ extension UIFont {
     static func getDefaultFont(size: CGFloat = 20) -> UIFont {
         if size < 20 {
             return UIFont(name: ".SFUIText-Regular", size: size)!
+        } else if size < 45 {
+            return UIFont(name: ".SFUIDisplay-Regular", size: size)!
         } else {
             return UIFont(name: ".SFUIDisplay-Light", size: size)!
         }

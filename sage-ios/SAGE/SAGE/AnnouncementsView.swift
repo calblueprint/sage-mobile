@@ -11,11 +11,14 @@ import Foundation
 class AnnouncementsView: UIView {
   
     var tableView = UITableView()
+    var activityView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.tableView.tableFooterView = UIView()
         self.addSubview(self.tableView)
+        self.addSubview(self.activityView)
+        self.activityView.startAnimating()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -26,6 +29,7 @@ class AnnouncementsView: UIView {
         super.layoutSubviews()
         self.tableView.fillWidth()
         self.tableView.fillHeight()
+        self.activityView.centerInSuperview()
     }
     
 }

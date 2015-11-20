@@ -91,6 +91,7 @@
 		42FE17C51BF440C00029BF22 /* BrowseMentorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */; };
 		42FE17C71BF447BA0029BF22 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C61BF447BA0029BF22 /* APIKeys.swift */; };
 		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63EF111BFC86340036D478 /* SchoolOperations.swift */; };
 		5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */; };
 		5D8AF98B1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */; };
 		5D8AF98F1BEF059D0008D2C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */; };
@@ -185,6 +186,7 @@
 		42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsTableViewCell.swift; sourceTree = "<group>"; };
 		42FE17C61BF447BA0029BF22 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5D63EF111BFC86340036D478 /* SchoolOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolOperations.swift; sourceTree = "<group>"; };
 		5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailView.swift; sourceTree = "<group>"; };
 		5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailViewController.swift; sourceTree = "<group>"; };
 		5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 				424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */,
 				4280CE171BF43E5C005D1B97 /* AdminOperations.swift */,
 				424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */,
+				5D63EF111BFC86340036D478 /* SchoolOperations.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 				5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
+				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
 				424A137C1BEED27300775E86 /* UIViewController.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,

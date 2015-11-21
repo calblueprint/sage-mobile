@@ -90,10 +90,11 @@ class SignUpRequestsViewController: UITableViewController {
         let cellID = cell.userID!
         var row = 0
         if let requests = self.requests {
-            for checkin in requests {
-                let checkinID = (checkin as! Checkin).id
-                if checkinID != -1 && checkinID == cellID {
+            for user in requests {
+                let userID = (user as! User).id
+                if userID != -1 && userID == cellID {
                     let indexPath = NSIndexPath(forRow: row, inSection: 0)
+                    self.requests?.removeObjectAtIndex(row)
                     if accepted {
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
                     } else {

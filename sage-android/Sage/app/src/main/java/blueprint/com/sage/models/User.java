@@ -3,7 +3,6 @@ package blueprint.com.sage.models;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,23 +45,25 @@ public @Data class User {
     @JsonIgnore
     private Bitmap profile;
 
-    public final static String VOLUNTEER = "volunteer";
-    public final static String ONE_UNIT = "one_unit";
-    public final static String TWO_UNITS = "two_units";
+    public final static String[] VOLUNTEER_TYPES = { "volunteer", "one_unit", "two_units" };
+    public final static String[] ROLES = { "student", "admin" };
+
+    public final static String[] VOLUNTEER_SPINNER = { "Volunteer", "One Unit", "Two Units" };
+    public final static String[] ROLE_SPINNER = { "Student", "Admin" };
 
     public User() {}
 
     public User(String firstName, String lastName, String email,
-                String password, int schoolId, String volunteerString,
-                String roleString, Bitmap profile) {
+                String password, int schoolId, int volunteer,
+                int role, Bitmap profile) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.schoolId = schoolId;
-        this.volunteerType = volunteerString;
-        this.role = roleString;
         this.profile = profile;
+        setVolunteerType(volunteer);
+        setRoleType(role);
     }
 
     @JsonIgnore
@@ -70,79 +71,43 @@ public @Data class User {
 
     @JsonIgnore
     public String getHoursString() {
-
         int hours = 0;
-        switch (volunteerType) {
-            case VOLUNTEER:
-                hours = 1;
-                break;
-            case ONE_UNIT:
-                hours = 2;
-                break;
-            case TWO_UNITS:
-                hours = 3;
-                break;
+        for (int i = 0; i < VOLUNTEER_TYPES.length; i++) {
+            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
+                hours = i + 1;
         }
 
         return String.format("%d hrs/week", hours);
     }
 
     @JsonIgnore
-    public void setVolunteerTypePosition(int type) {
-        switch (type) {
-            case 0:
-                volunteerType = VOLUNTEER;
-                break;
-            case 1:
-                volunteerType = ONE_UNIT;
-                break;
-            case 2:
-                volunteerType = TWO_UNITS;
-                break;
-            default:
-                Log.e(getClass().toString(), "Invalid volunteer type");
-                volunteerType = VOLUNTEER;
-                break;
-        }
+    public void setVolunteerType(int type) {
+        volunteerType = VOLUNTEER_TYPES[type];
     }
 
     /**
      * Gets integer of volunteer type
      */
-    public int getVolunteerTypeString() {
-        if (volunteerType == null) return 0;
-
-        switch (volunteerType) {
-            case VOLUNTEER:
-                return 0;
-            case ONE_UNIT:
-                return 1;
-            case TWO_UNITS:
-                return 2;
-            default:
-                Log.e(getClass().toString(), "Invalid volunteer type");
-                return 0;
-        }
+    public int getVolunteerTypeInt() {
+        for (int i = 0; i < VOLUNTEER_TYPES.length; i++)
+            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
+                return i;
+        return 0;
     }
 
-    public final static String STUDENT = "student";
-    public final static String ADMIN = "admin";
+    @JsonIgnore
+    public void setRoleType(int type) {
+        role = ROLES[type];
+    }
 
     /**
      * Gets integer of volunteer type
      */
-    public int getRoleString() {
-        if (volunteerType == null) return 0;
-
-        switch (role) {
-            case STUDENT:
-                return 0;
-            case ADMIN:
-                return 1;
-            default:
-                Log.e(getClass().toString(), "Invalid role type");
-                return 0;
-        }
+    public int getRoleInt() {
+        for (int i = 0; i < ROLES.length; i++)
+            if (role.equals(ROLES[i]))
+                return i;
+        return 0;
     }
 
     /**

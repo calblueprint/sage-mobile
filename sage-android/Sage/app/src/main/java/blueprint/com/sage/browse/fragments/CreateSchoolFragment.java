@@ -153,6 +153,7 @@ public class CreateSchoolFragment extends BrowseAbstractFragment implements Form
         });
     }
 
+
     public void validateAndSubmitRequest() {
         boolean hasError = false;
 

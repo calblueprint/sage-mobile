@@ -142,12 +142,12 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
         String password = mPassword.getText().toString();
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
-        String volunteerString = (String) mType.getSelectedItem();
-        String roleString = (String) mRole.getSelectedItem();
+        int volunteer = mType.getSelectedItemPosition();
+        int role = mRole.getSelectedItemPosition();
 
         Bitmap profile = mPhoto.getImageBitmap();
 
-        User user = new User(firstName, lastName, email, password, schoolId, volunteerString, roleString, profile);
+        User user = new User(firstName, lastName, email, password, schoolId, volunteer, role, profile);
 
         Requests.Users.with(getParentActivity()).makeCreateAdminRequest(user);
     }

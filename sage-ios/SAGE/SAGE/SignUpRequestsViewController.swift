@@ -54,6 +54,7 @@ class SignUpRequestsViewController: UITableViewController {
             // make a network request here
             self.removeCell(cell)
         }))
+        self.presentViewController(alertController, animated: true, completion: nil)
         // make a network request, remove checkin from data source, and reload table view
     }
     
@@ -85,5 +86,9 @@ class SignUpRequestsViewController: UITableViewController {
         cell.checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
         cell.xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return SignUpRequestTableViewCell.cellHeight()
     }
 }

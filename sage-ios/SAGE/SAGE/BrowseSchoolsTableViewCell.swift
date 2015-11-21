@@ -1,5 +1,5 @@
 //
-//  BrowseMentorsTableViewCell.swift
+//  BrowseSchoolsTableViewCell.swift
 //  SAGE
 //
 //  Created by Sameera Vemulapalli on 11/9/15.
@@ -11,16 +11,14 @@ import UIKit
 class BrowseSchoolsTableViewCell: UITableViewCell {
     
     init() {
-        super.init(style: .Default, reuseIdentifier: "BrowseSchoolsCell")
+        super.init(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
         self.selectionStyle = .None
     }
     
     func configureWithSchool(school: School) {
-
-    }
-    
-    static func cellHeight() -> CGFloat {
-        return 52.0
+        self.detailTextLabel?.text = "director name" // hardcoded for now because not fetched by network request
+        self.textLabel?.text = school.name!
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

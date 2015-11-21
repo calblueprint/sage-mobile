@@ -13,23 +13,17 @@ class SignUpRequestTableViewCell: UITableViewCell {
     
     var userPicture = UIImageView()
     var userName = UILabel()
-    var school = UILabel()
-    var hours = UILabel()
+    var schoolAndHours = UILabel()
     var checkButton = UIButton()
     var xButton = UIButton()
     
     var userID: Int?
     
-    struct DummyCellHolder {
-        static var cell = CheckinRequestTableViewCell()
-    }
-    
     init() {
-        super.init(style: .Default, reuseIdentifier: "CheckinRequestCell")
+        super.init(style: .Default, reuseIdentifier: "SignUpRequestCell")
         self.contentView.addSubview(self.userPicture)
         self.contentView.addSubview(self.userName)
-        self.contentView.addSubview(self.hours)
-        self.contentView.addSubview(self.school)
+        self.contentView.addSubview(self.schoolAndHours)
         self.contentView.addSubview(self.checkButton)
         self.contentView.addSubview(self.xButton)
         self.selectionStyle = .None
@@ -39,49 +33,28 @@ class SignUpRequestTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureWithCheckin(checkin: Checkin) {
-        let user = checkin.user!
-        self.userID = checkin.user!.id
-        if let imgURL = user.imageURL {
-            self.userPicture.setImageWithURL(imgURL)
-        } else {
-            self.mentorPicture.image = UIImage.defaultProfileImage()
-        }
-        self.mentorPicture.layer.cornerRadius = UIConstants.userImageSize/2
-        self.mentorPicture.clipsToBounds = true
+    func configureWithUser(user: User) {
+        self.userID = user.id
+        self.userPicture.setImageWithUser(user)
+        self.userPicture.layer.cornerRadius = UIConstants.userImageSize/2
+        self.userPicture.clipsToBounds = true
         
         let mentorText = user.firstName! + " " + user.lastName!
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 16
         let attributes = [NSParagraphStyleAttributeName : style, NSFontAttributeName: UIFont.getDefaultFont(14)]
-        self.mentorName.attributedText = NSAttributedString(string: mentorText, attributes:attributes)
+        self.userName.attributedText = NSAttributedString(string: mentorText, attributes:attributes)
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMMM d, YYYY"
-        let fullDateText = " - " + dateFormatter.stringFromDate(checkin.startTime!)
-        
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-        let flags = NSCalendarUnit.Hour
-        let components = calendar!.components(flags, fromDate: checkin.startTime!, toDate: checkin.endTime!, options: [])
-        
-        var durationText = String(components.hour) + " hours"
-        if components.hour == 1 {
-            durationText = String(components.hour) + " hour"
+        var hoursText = ""
+        if user.level == User.VolunteerLevel.ZeroUnit {
+            hoursText = "Zero Units"
+        } else if user.level == User.VolunteerLevel.OneUnit {
+            hoursText = "One Unit"
+        } else {
+            hoursText = "Two Units"
         }
-        
-        let fullString = durationText + fullDateText
-        let attributedString = NSMutableAttributedString(string: durationText + fullDateText)
-        let dateRange = (fullString as NSString).rangeOfString(fullDateText)
-        let durationRange = (fullString as NSString).rangeOfString(durationText)
-        let fullRange = (fullString as NSString).rangeOfString(fullString)
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont.getBoldFont(14), range: durationRange)
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: dateRange)
-        attributedString.addAttribute(NSFontAttributeName, value: UIFont.getDefaultFont(14), range: dateRange)
-        attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: fullRange)
-        time.attributedText = attributedString
-        
-        
-        self.content.text = checkin.comment
+        self.schoolAndHours.text = user.school!.name! + " - " + hoursText
+        self.schoolAndHours.font = UIFont.normalFont
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(22)
         checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
@@ -96,66 +69,48 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.xButton.setImage(xImage, forState: .Normal)
         self.xButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
         self.xButton.imageView!.contentMode = .Center;
-        
-        self.layoutSubviews()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.mentorPicture.setHeight(UIConstants.userImageSize)
-        self.mentorPicture.setWidth(UIConstants.userImageSize)
-        self.mentorPicture.setX(UIConstants.sideMargin)
-        self.mentorPicture.setY(UIConstants.verticalMargin)
+        self.userPicture.setHeight(UIConstants.userImageSize)
+        self.userPicture.setWidth(UIConstants.userImageSize)
+        self.userPicture.setX(UIConstants.sideMargin)
+        self.userPicture.setY(UIConstants.verticalMargin)
         
-        self.mentorName.font = UIFont.normalFont
-        self.mentorName.textAlignment = NSTextAlignment.Left
-        self.mentorName.sizeToFit()
-        self.mentorName.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
-        self.mentorName.setY(UIConstants.verticalMargin)
+        self.userName.font = UIFont.getSemiboldFont(14)
+        self.userName.textAlignment = NSTextAlignment.Left
+        self.userName.sizeToFit()
+        self.userName.setX(10 + CGRectGetMaxX(self.userPicture.frame))
+        self.userName.setY(UIConstants.verticalMargin)
         
-        self.time.textAlignment = NSTextAlignment.Left
-        self.time.sizeToFit()
-        self.time.setX(10 + CGRectGetMaxX(self.mentorPicture.frame))
-        self.time.setY(CGRectGetMaxY(self.mentorName.frame))
+        self.schoolAndHours.textAlignment = NSTextAlignment.Left
+        self.schoolAndHours.sizeToFit()
+        self.schoolAndHours.setX(10 + CGRectGetMaxX(self.userPicture.frame))
+        self.schoolAndHours.setY(CGRectGetMaxY(self.userName.frame))
         
         self.checkButton.setHeight(42)
         self.checkButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
-        self.checkButton.setY(0)
+        self.checkButton.centerVertically()
         self.checkButton.setWidth(42)
         
         self.xButton.setHeight(42)
         self.xButton.setWidth(42)
-        self.xButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
-        self.xButton.setY(self.contentView.frame.height - 32 - UIConstants.verticalMargin)
-        
-        self.content.numberOfLines = 0
-        self.content.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        self.content.font = UIFont.normalFont
-        self.content.textAlignment = NSTextAlignment.Left
-        self.content.setY(-5 + CGRectGetMaxY(self.time.frame))
-        let contentX = 10 + CGRectGetMaxX(self.mentorPicture.frame)
-        self.content.setX(contentX)
-        self.content.fillWidthWithMargin(UIConstants.sideMargin)
-        let width = CGRectGetMinX(self.xButton.frame) - contentX
-        self.content.setSize(self.content.sizeThatFits(CGSizeMake(width, CGFloat.max)))
-        
-        self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)
-    }
-    
-    static func heightForCheckinRequest(checkin: Checkin, width: CGFloat) -> CGFloat {
-        let cell = CheckinRequestTableViewCell.DummyCellHolder.cell
-        cell.setWidth(width)
-        cell.configureWithCheckin(checkin)
-        return CGRectGetHeight(cell.frame)
+        self.xButton.setX(CGRectGetMinX(self.checkButton.frame)-42)
+        self.xButton.centerVertically()
     }
     
     deinit {
-        self.mentorPicture.cancelImageRequestOperation()
+        self.userPicture.cancelImageRequestOperation()
     }
     
     override func prepareForReuse() {
-        self.mentorPicture.cancelImageRequestOperation()
+        self.userPicture.cancelImageRequestOperation()
+    }
+    
+    static func cellHeight() -> CGFloat {
+        return 52.0
     }
     
 }

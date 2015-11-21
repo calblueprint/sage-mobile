@@ -54,10 +54,5 @@ class BrowseSchoolsViewController: UITableViewController {
         let cell = BrowseSchoolsTableViewCell()
         cell.configureWithSchool(school)
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return BrowseSchoolsTableViewCell.cellHeight()
-    }
-    
+    }    
 }

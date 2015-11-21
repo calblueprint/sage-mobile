@@ -18,7 +18,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
     var checkButton = UIButton()
     var xButton = UIButton()
     
-    var userID: Int?
+    var checkinID: Int?
     
     struct DummyCellHolder {
         static var cell = CheckinRequestTableViewCell()
@@ -41,6 +41,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
     
     func configureWithCheckin(checkin: Checkin) {
         let user = checkin.user!
+        self.checkinID = checkin.id
         self.mentorPicture.setImageWithUser(user)
         self.mentorPicture.layer.cornerRadius = UIConstants.userImageSize/2
         self.mentorPicture.clipsToBounds = true
@@ -116,13 +117,13 @@ class CheckinRequestTableViewCell: UITableViewCell {
         
         self.checkButton.setHeight(42)
         self.checkButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
-        self.checkButton.setY(0)
+        self.checkButton.centerVertically()
         self.checkButton.setWidth(42)
         
         self.xButton.setHeight(42)
         self.xButton.setWidth(42)
-        self.xButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
-        self.xButton.setY(self.contentView.frame.height - 32 - UIConstants.verticalMargin)
+        self.xButton.setX(CGRectGetMinX(self.checkButton.frame)-42)
+        self.xButton.centerVertically()
         
         self.content.numberOfLines = 0
         self.content.lineBreakMode = NSLineBreakMode.ByWordWrapping

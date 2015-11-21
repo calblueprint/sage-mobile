@@ -60,6 +60,7 @@ class CheckinRequestsViewController: UITableViewController {
             // make a network request here
             self.removeCell(cell)
         }))
+        self.presentViewController(alertController, animated: true, completion: nil)
         // make a network request, remove checkin from data source, and reload table view
     }
     
@@ -70,13 +71,14 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func removeCell(cell: CheckinRequestTableViewCell) {
-        let cellID = cell.userID!
+        let cellID = cell.checkinID!
         var row = 0
         if let requests = self.requests {
             for checkin in requests {
                 let checkinID = (checkin as! Checkin).id
                 if checkinID != -1 && checkinID == cellID {
                     let indexPath = NSIndexPath(forRow: row, inSection: 0)
+                    self.requests?.removeObjectAtIndex(row)
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Bottom)
                 }
                 row += 1

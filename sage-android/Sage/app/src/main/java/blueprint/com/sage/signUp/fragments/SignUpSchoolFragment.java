@@ -81,6 +81,6 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
 
         user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
-        user.setVolunteerTypePosition(mVolunteerTypeSpinner.getSelectedItemPosition());
+        user.setVolunteerTypeInt(mVolunteerTypeSpinner.getSelectedItemPosition());
     }
 }

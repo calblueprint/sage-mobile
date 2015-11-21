@@ -62,8 +62,8 @@ public @Data class User {
         this.password = password;
         this.schoolId = schoolId;
         this.profile = profile;
-        setVolunteerType(volunteer);
-        setRoleType(role);
+        setVolunteerTypeInt(volunteer);
+        setRoleInt(role);
     }
 
     @JsonIgnore
@@ -80,14 +80,10 @@ public @Data class User {
         return String.format("%d hrs/week", hours);
     }
 
-    @JsonIgnore
-    public void setVolunteerType(int type) {
-        volunteerType = VOLUNTEER_TYPES[type];
-    }
-
     /**
      * Gets integer of volunteer type
      */
+    @JsonIgnore
     public int getVolunteerTypeInt() {
         for (int i = 0; i < VOLUNTEER_TYPES.length; i++)
             if (volunteerType.equals(VOLUNTEER_TYPES[i]))
@@ -96,18 +92,29 @@ public @Data class User {
     }
 
     @JsonIgnore
-    public void setRoleType(int type) {
+    public void setVolunteerTypeInt(int type) {
+        volunteerType = VOLUNTEER_TYPES[type];
+    }
+
+    @JsonIgnore
+    public void setRoleInt(int type) {
         role = ROLES[type];
     }
 
-    /**
-     * Gets integer of volunteer type
-     */
+    @JsonIgnore
     public int getRoleInt() {
-        for (int i = 0; i < ROLES.length; i++)
-            if (role.equals(ROLES[i]))
+        for (int i = 0; i < VOLUNTEER_TYPES.length; i++)
+            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
                 return i;
         return 0;
+    }
+
+    @JsonIgnore
+    public String getRoleString() {
+        for (int i = 0; i < ROLES.length; i++)
+            if (role.equals(ROLES[i]))
+                return ROLE_SPINNER[i];
+        return "Student";
     }
 
     /**

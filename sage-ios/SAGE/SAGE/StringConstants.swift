@@ -11,7 +11,8 @@ import Foundation
 struct StringConstants {
     
     static let kBaseURL = "SAGE"
-    static let JSONdateFormat: String = "yyyy/MM/dd hh:mm a"
+    static let displayDateFormat = "yyyy/MM/dd hh:mm a"
+    static let JSONdateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
     static let kEndpointBaseURL = "http://sage-rails.herokuapp.com/api/v1"
     static let kEndpointCreateUser = kEndpointBaseURL + "/users"

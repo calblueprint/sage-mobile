@@ -62,6 +62,7 @@ class LoginOperations: NSObject {
             }
             if let school = user.school {
                 existingUser.school = school
+                KeychainWrapper.setObject(school, forKey: KeychainConstants.kSchool)
             }
             if User.VolunteerLevel.Default != user.level {
                 existingUser.level = user.level

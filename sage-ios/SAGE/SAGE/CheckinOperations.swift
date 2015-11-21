@@ -10,11 +10,20 @@ import Foundation
 
 class CheckinOperations {
     
-    class func createCheckin(params: [String: AnyObject?], success: (Checkin) -> Void, failure: (NSString) -> Void) {
-        BaseOperation.manager().POST(StringConstants.kEndpointCheckin, parameters: nil, success: { (operation, data) -> Void in
-            //parse json
+    class func createCheckin(checkin: Checkin, success: (Checkin) -> Void, failure: (NSString) -> Void) {
+        let checkinDict = NSMutableDictionary()
+        checkinDict[CheckinConstants.kStartTime] = checkin.stringTimeFromStartDate()
+        checkinDict[CheckinConstants.kEndTime] = checkin.stringTimeFromEndDate()
+        checkinDict[CheckinConstants.kUserId] = checkin.user!.id
+        checkinDict[CheckinConstants.kSchoolId] = checkin.school!.id
+        checkinDict[CheckinConstants.kComment] = checkin.comment
+        //checkinDict[CheckinConstants.kVerified] = checkin.verified
+        let params = NSDictionary(dictionary: ["check_in": checkinDict])
+        
+        BaseOperation.manager().POST(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
+            success(checkin)
         }, failure: { (operation, error) -> Void in
-            //just pass error message
+            failure("Could not check in")
         })
     }
 }

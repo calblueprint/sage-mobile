@@ -27,11 +27,17 @@ class BrowseMentorsViewController: UITableViewController {
         self.tableView.sectionIndexColor = UIColor.mainColor
         self.title = "Mentors"
         self.tableView.tableFooterView = UIView()
+        self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
         self.activityIndicator.startAnimating()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "loadMentors", forControlEvents: .ValueChanged)
         
         self.loadMentors()
         
@@ -76,6 +82,7 @@ class BrowseMentorsViewController: UITableViewController {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.activityIndicator.hidden = true
+            self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)

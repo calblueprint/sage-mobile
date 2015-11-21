@@ -23,6 +23,11 @@ class SignUpRequestsViewController: UITableViewController {
         self.activityIndicator.centerVertically()
         self.activityIndicator.startAnimating()
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "loadSignUpRequests", forControlEvents: .ValueChanged)
+        
         self.loadSignUpRequests()
     }
     
@@ -38,6 +43,7 @@ class SignUpRequestsViewController: UITableViewController {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.activityIndicator.hidden = true
+            self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)

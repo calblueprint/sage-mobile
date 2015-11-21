@@ -7,13 +7,13 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class RequestHoursViewController: UIViewController {
     
     var requestHoursView = RequestHoursView()
     var inSession: Bool = false
     var startTime: NSTimeInterval = 0.0
-    var verified: Bool = false
     
     //
     // MARK: - ViewController Lifecycle
@@ -37,8 +37,27 @@ class RequestHoursViewController: UIViewController {
     }
     
     @objc private func completeForm() {
-        self.requestHoursView.exportToCheckin(self.verified)
-        self.dismiss()
+        if self.requestHoursView.isValid() {
+            let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
+            CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
+                KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                self.dismiss()
+                }) { (errorMessage) -> Void in
+                    let alertController = UIAlertController(
+                        title: "Failure",
+                        message: errorMessage as String,
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        } else {
+            let alertController = UIAlertController(
+                title: "Error",
+                message: "Please fill out required fields.",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     //

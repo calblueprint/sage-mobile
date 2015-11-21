@@ -8,6 +8,7 @@
 
 import Foundation
 import BSKeyboardControls
+import SwiftKeychainWrapper
 
 class RequestHoursView: UIView {
     
@@ -15,6 +16,9 @@ class RequestHoursView: UIView {
     var startTimeField = FormFieldItem()
     var endTimeField = FormFieldItem()
     var commentField = FormTextItem()
+    
+    private var startTime = NSDate()
+    private var endTime = NSDate()
     private var keyboardControls = BSKeyboardControls()
     private var scrollView = UIScrollView()
     private var dateFormatter = NSDateFormatter()
@@ -71,12 +75,14 @@ class RequestHoursView: UIView {
         self.dateFormatter.dateStyle = .NoStyle
         self.dateFormatter.timeStyle = .ShortStyle
         self.startTimeField.textField.text = self.dateFormatter.stringFromDate(sender.date)
+        self.startTime = sender.date
     }
     
     @objc private func endTimePicked(sender: UIDatePicker!) {
         self.dateFormatter.dateStyle = .NoStyle
         self.dateFormatter.timeStyle = .ShortStyle
         self.endTimeField.textField.text = self.dateFormatter.stringFromDate(sender.date)
+        self.endTime = sender.date
     }
     
     //
@@ -90,7 +96,9 @@ class RequestHoursView: UIView {
         self.dateFormatter.dateStyle = .NoStyle
         self.dateFormatter.timeStyle = .ShortStyle
         self.startTimeField.textField.text = self.dateFormatter.stringFromDate(checkin.startTime!)
+        self.startTime = checkin.startTime!
         self.endTimeField.textField.text = self.dateFormatter.stringFromDate(checkin.endTime!)
+        self.endTime = checkin.endTime!
         
         self.dateField.disable()
         self.startTimeField.disable()
@@ -98,16 +106,23 @@ class RequestHoursView: UIView {
         self.keyboardControls.fields = [self.commentField.textView]
     }
     
-    func exportToCheckin(verified: Bool) -> Checkin {
+    func exportToCheckinVerified(verified: Bool) -> Checkin {
         let checkin: Checkin = Checkin(
             user: LoginOperations.getUser(),
-            startTime: nil,
-            endTime: nil,
-            school: LoginOperations.getUser()?.school,
+            startTime: self.startTime,
+            endTime: self.endTime,
+            school: KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School,
             comment: self.commentField.textView.text,
-            verified: true
+            verified: verified
         )
         return checkin
+    }
+    
+    func isValid() -> Bool {
+        return
+            self.dateField.textField.text?.characters.count > 0 &&
+            self.startTimeField.textField.text?.characters.count > 0 &&
+            self.endTimeField.textField.text?.characters.count > 0
     }
     
     //

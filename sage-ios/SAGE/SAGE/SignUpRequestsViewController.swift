@@ -28,7 +28,7 @@ class SignUpRequestsViewController: UITableViewController {
     func loadSignUpRequests() {
         AdminOperations.loadSignUpRequests({ (signUpRequests) -> Void in
             self.requests = signUpRequests
-            
+            self.tableView.reloadData()
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
@@ -46,8 +46,44 @@ class SignUpRequestsViewController: UITableViewController {
         return 1
     }
     
+    func checkButtonPressed(sender: UIButton) {
+        let cell = sender.superview!.superview as! SignUpRequestTableViewCell
+        let alertController = UIAlertController(title: "Approve", message: "Do you want to approve this sign up request?", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            // make a network request here
+            self.removeCell(cell)
+        }))
+        // make a network request, remove checkin from data source, and reload table view
+    }
+    
+    func xButtonPressed(sender: UIButton) {
+        let cell = sender.superview!.superview as! SignUpRequestTableViewCell
+        self.removeCell(cell)
+        // make a network request, remove checkin from data source, and reload table view
+    }
+    
+    func removeCell(cell: SignUpRequestTableViewCell) {
+        let cellID = cell.userID!
+        var row = 0
+        if let requests = self.requests {
+            for checkin in requests {
+                let checkinID = (checkin as! Checkin).id
+                if checkinID != -1 && checkinID == cellID {
+                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
+                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Bottom)
+                }
+                row += 1
+            }
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let user = self.requests![indexPath.row] as! User
+        let cell = SignUpRequestTableViewCell()
+        cell.configureWithUser(user)
+        cell.checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
+        cell.xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
         return cell
     }
 }

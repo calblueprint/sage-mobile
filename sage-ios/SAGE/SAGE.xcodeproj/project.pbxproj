@@ -72,6 +72,7 @@
 		4254C1EF1BFDD6A200D0D33E /* SignUpRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254C1EE1BFDD6A200D0D33E /* SignUpRequestsViewController.swift */; };
 		4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */; };
 		4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4254D2981BC62B4500C831C7 /* LoginView.swift */; };
+		426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426838721C00329E00A97832 /* SignUpRequestTableViewCell.swift */; };
 		42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */; };
 		427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427432EF1BC776FD00464200 /* UnverifiedView.swift */; };
 		4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4280CE171BF43E5C005D1B97 /* AdminOperations.swift */; };
@@ -168,6 +169,7 @@
 		4264DFEA1BC59BE20097804D /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "Pods/../build/Debug-iphoneos/AFNetworking.framework"; sourceTree = "<group>"; };
 		4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = "Pods/../build/Debug-iphoneos/FontAwesomeKit.framework"; sourceTree = "<group>"; };
 		4264DFEC1BC59BE20097804D /* SwiftKeychainWrapper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftKeychainWrapper.framework; path = "Pods/../build/Debug-iphoneos/SwiftKeychainWrapper.framework"; sourceTree = "<group>"; };
+		426838721C00329E00A97832 /* SignUpRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpRequestTableViewCell.swift; sourceTree = "<group>"; };
 		42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		427432EF1BC776FD00464200 /* UnverifiedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedView.swift; sourceTree = "<group>"; };
 		4280CE171BF43E5C005D1B97 /* AdminOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminOperations.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				42F71DF51BF80478004E1B3B /* CheckinRequestTableViewCell.swift */,
+				426838721C00329E00A97832 /* SignUpRequestTableViewCell.swift */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -757,6 +760,7 @@
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
+				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,

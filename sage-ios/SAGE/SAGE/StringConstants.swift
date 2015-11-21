@@ -23,4 +23,5 @@ struct StringConstants {
     static let kEndpointGetMentors = kEndpointBaseURL + "/users?role=1"
     static let kEndpointGetCheckins = kEndpointBaseURL + "/check_ins?verified=false"
     static let kEndpointGetSchools = kEndpointBaseURL + "/schools?"
+    static let kEndpointGetSignUpRequests = kEndpointBaseURL + "/users?verified=false"
 }

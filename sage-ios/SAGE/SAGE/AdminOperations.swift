@@ -81,7 +81,19 @@ class AdminOperations {
     
     static func loadSignUpRequests(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetSchools, parameters: nil, success: { (operation, data) -> Void in
+        manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: nil, success: { (operation, data) -> Void in
+            let users = NSMutableArray()
+            let userArray = data["users"] as! NSMutableArray
+            for userDict in userArray {
+                let dict = userDict as! NSMutableDictionary
+                var swiftDict = [String: AnyObject]()
+                for key in dict.allKeys {
+                    swiftDict[key as! String] = dict[key as! String]
+                }
+                let user = User(propertyDictionary: swiftDict)
+                users.addObject(user)
+            }
+            completion(users)
             // handle the data and run success on an nsmutablearray
         }) { (operation, error) -> Void in
             failure(error.localizedDescription)

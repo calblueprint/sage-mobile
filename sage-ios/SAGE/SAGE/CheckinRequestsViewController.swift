@@ -73,9 +73,9 @@ class CheckinRequestsViewController: UITableViewController {
         let cellID = cell.userID!
         var row = 0
         if let requests = self.requests {
-            for mentor in requests {
-                let mentorID = (mentor as! User).id
-                if mentorID != User.DefaultValues.DefaultID.rawValue && mentorID == cellID {
+            for checkin in requests {
+                let checkinID = (checkin as! Checkin).id
+                if checkinID != -1 && checkinID == cellID {
                     let indexPath = NSIndexPath(forRow: row, inSection: 0)
                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Bottom)
                 }

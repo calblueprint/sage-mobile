@@ -12,11 +12,18 @@ class BrowseSchoolsViewController: UITableViewController {
     
     var schools: NSMutableArray?
     var currentErrorMessage: ErrorView?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Schools"
         self.tableView.tableFooterView = UIView()
+        
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+        self.activityIndicator.startAnimating()
+        
         self.loadSchools()
         
     }
@@ -31,6 +38,8 @@ class BrowseSchoolsViewController: UITableViewController {
         AdminOperations.loadSchools({ (schoolArray) -> Void in
             self.schools = schoolArray
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.hidden = true
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
@@ -59,6 +68,9 @@ class BrowseSchoolsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row] as! School
         let vc = BrowseSchoolsDetailViewController(school: school)
+        if let topItem = self.navigationController!.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        }
         self.navigationController!.pushViewController(vc, animated: true)
     }
 }

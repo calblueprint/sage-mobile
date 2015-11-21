@@ -11,11 +11,18 @@ import UIKit
 class CheckinRequestsViewController: UITableViewController {
     var requests: NSMutableArray?
     var currentErrorMessage: ErrorView?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Check In Requests"
         self.tableView.tableFooterView = UIView()
+        
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+        self.activityIndicator.startAnimating()
+        
         self.loadCheckinRequests()
     }
     
@@ -34,6 +41,8 @@ class CheckinRequestsViewController: UITableViewController {
             })
             self.requests = checkinRequests
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.hidden = true
             
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
@@ -58,7 +67,7 @@ class CheckinRequestsViewController: UITableViewController {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             // make a network request here
-            self.removeCell(cell)
+            self.removeCell(cell, accepted: true)
         }))
         self.presentViewController(alertController, animated: true, completion: nil)
         // make a network request, remove checkin from data source, and reload table view
@@ -66,11 +75,17 @@ class CheckinRequestsViewController: UITableViewController {
     
     func xButtonPressed(sender: UIButton) {
         let cell = sender.superview!.superview as! CheckinRequestTableViewCell
-        self.removeCell(cell)
+        let alertController = UIAlertController(title: "Decline", message: "Do you want to decline this check-in request?", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+            // make a network request here
+            self.removeCell(cell, accepted: false)
+        }))
+        self.presentViewController(alertController, animated: true, completion: nil)
         // make a network request, remove checkin from data source, and reload table view
     }
     
-    func removeCell(cell: CheckinRequestTableViewCell) {
+    func removeCell(cell: CheckinRequestTableViewCell, accepted: Bool) {
         let cellID = cell.checkinID!
         var row = 0
         if let requests = self.requests {
@@ -79,7 +94,11 @@ class CheckinRequestsViewController: UITableViewController {
                 if checkinID != -1 && checkinID == cellID {
                     let indexPath = NSIndexPath(forRow: row, inSection: 0)
                     self.requests?.removeObjectAtIndex(row)
-                    self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Bottom)
+                    if accepted {
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+                    } else {
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                    }
                 }
                 row += 1
             }
@@ -103,6 +122,9 @@ class CheckinRequestsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let request = self.requests![indexPath.row] as! Checkin
         let vc = CheckinRequestsDetailViewController(checkin: request)
+        if let topItem = self.navigationController!.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        }
         self.navigationController!.pushViewController(vc, animated: true)
     }
 }

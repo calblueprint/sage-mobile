@@ -12,6 +12,7 @@ class BrowseMentorsViewController: UITableViewController {
     
     var mentors: NSMutableArray?
     var currentErrorMessage: ErrorView?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     init() {
         super.init(style: .Plain)
@@ -26,6 +27,12 @@ class BrowseMentorsViewController: UITableViewController {
         self.tableView.sectionIndexColor = UIColor.mainColor
         self.title = "Mentors"
         self.tableView.tableFooterView = UIView()
+        
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+        self.activityIndicator.startAnimating()
+        
         self.loadMentors()
         
     }
@@ -67,6 +74,8 @@ class BrowseMentorsViewController: UITableViewController {
             }
             
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.hidden = true
             
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
@@ -111,6 +120,9 @@ class BrowseMentorsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let mentor = self.mentors![indexPath.section][indexPath.row] as! User
         let vc = BrowseMentorsDetailViewController(mentor: mentor)
+        if let topItem = self.navigationController!.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        }
         self.navigationController!.pushViewController(vc, animated: true)
     }
     

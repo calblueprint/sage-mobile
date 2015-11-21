@@ -22,11 +22,12 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     
     var modalType: ContentType
     var navigationBar: UINavigationBar?
-    var parentVC: SignUpController?
+    weak var parentVC: SignUpController?
     var schools: [String] = []
     var schoolDict: NSMutableDictionary
     var volunteerLevelDict: NSMutableDictionary
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+    var currentErrorMessage: ErrorView?
     
     init(type: ContentType, schoolIDDict: NSMutableDictionary, volunteerlevelDict: NSMutableDictionary) {
         self.modalType = type
@@ -74,14 +75,23 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     }
     
     func loadSchoolData() {
-        AnnouncementsOperations.loadSchools { (schoolDict) -> Void in
+        SchoolOperations.loadSchools({ (schoolDict) -> Void in
             for schoolDict in schoolDict {
                 self.schools.append((schoolDict as! NSDictionary)["name"] as! String)
                 self.schoolDict[(schoolDict as! NSDictionary)["name"] as! String] = ((schoolDict as! NSDictionary)["id"] as! Int)
             }
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
+        }) { (errorMessage) -> Void in
+            self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
+        
+    }
+    
+    func showErrorAndSetMessage(message: String, size: CGFloat) {
+        let error = self.currentErrorMessage
+        let errorView = super.showError(message, size: size, currentError: error)
+        self.currentErrorMessage = errorView
     }
 
     //

@@ -29,15 +29,17 @@ class User: NSObject, NSCoding {
         case DefaultHours = -2
     }
         
-    var id: Int
+    var id: Int = DefaultValues.DefaultID.rawValue
     var firstName: String?
     var lastName: String?
     var email: String?
     var school: School?
-    var level: VolunteerLevel
-    var role: UserRole
-    var totalHours: Int
-    var verified: Bool
+    var level: VolunteerLevel = .Default
+    var role: UserRole = .Default
+    var totalHours: Int = DefaultValues.DefaultHours.rawValue
+    var verified: Bool = false
+    var imageURL: NSURL?
+    
     
     //
     // MARK -- NSCoding
@@ -68,7 +70,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
     }
     
-    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false) {
+    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false, imgURL: NSURL? = nil) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -78,6 +80,7 @@ class User: NSObject, NSCoding {
         self.role = role
         self.totalHours = totalHours
         self.verified = verified
+        self.imageURL = imgURL
         super.init()
     }
     
@@ -108,15 +111,24 @@ class User: NSObject, NSCoding {
                 let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
             case UserConstants.kVerified:
-                self.verified = value as! Bool
+                if let val = value as? Bool {
+                    self.verified = val
+                }
             case UserConstants.kId:
-                self.id = value as! Int
+                if let val = value as? Int {
+                    self.id = val
+                }
             case UserConstants.kFirstName:
                 self.firstName = value as? String
             case UserConstants.kLastName:
                 self.lastName = value as? String
             case UserConstants.kEmail:
                 self.email = value as? String
+            case UserConstants.kImgURL:
+                if let urlString = value as? String {
+                    let url = NSURL(string: urlString)
+                    self.imageURL = url
+                }
             default: break
             }
         }

@@ -128,7 +128,7 @@ class BrowseMentorsViewController: UITableViewController {
         let mentor = self.mentors![indexPath.section][indexPath.row] as! User
         let vc = BrowseMentorsDetailViewController(mentor: mentor)
         if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
         self.navigationController!.pushViewController(vc, animated: true)
     }

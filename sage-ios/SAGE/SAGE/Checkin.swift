@@ -48,9 +48,13 @@ class Checkin: NSObject {
                 let schoolDictionary = value as! [String: AnyObject]
                 self.school = School(propertyDictionary: schoolDictionary)
             case CheckinConstants.kVerified:
-                self.verified = value as! Bool
+                if !(value is NSNull) {
+                    self.verified = value as! Bool
+                }
             case CheckinConstants.kId:
-                self.id = value as! Int
+                if !(value is NSNull) {
+                    self.id = value as! Int
+                }
             case CheckinConstants.kComment:
                 self.comment = value as? String
             default: break
@@ -80,7 +84,7 @@ class Checkin: NSObject {
         if let comment = self.comment {
             propertyDict[CheckinConstants.kComment] = comment
         }
-        propertyDict[CheckinConstants.kVerified] = Int(self.verified)
+        propertyDict[CheckinConstants.kVerified] = self.verified
         return propertyDict
     }
     

@@ -18,12 +18,13 @@ class AnnouncementsDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        scrollView.alwaysBounceVertical = true
-        self.addSubview(announcementUserImg)
-        self.addSubview(announcementUserName)
-        self.addSubview(announcementTime)
-        self.addSubview(announcementTitle)
-        self.addSubview(announcementMessage)
+        self.scrollView.alwaysBounceVertical = true
+        self.scrollView.addSubview(announcementUserImg)
+        self.scrollView.addSubview(announcementUserName)
+        self.scrollView.addSubview(announcementTime)
+        self.scrollView.addSubview(announcementTitle)
+        self.scrollView.addSubview(announcementMessage)
+        self.addSubview(self.scrollView)
         setUpViewStyle()
     }
     
@@ -82,6 +83,10 @@ class AnnouncementsDetailView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        scrollView.fillWidth()
+        scrollView.fillHeight()
+        
         announcementUserImg.layer.cornerRadius = UIConstants.userImageSize/2
         announcementUserImg.clipsToBounds = true
         announcementUserImg.setX(UIConstants.sideMargin)
@@ -112,5 +117,7 @@ class AnnouncementsDetailView: UIView {
         announcementMessage.fillWidthWithMargin(UIConstants.sideMargin)
         let width = CGRectGetWidth(announcementMessage.frame)
         announcementMessage.setSize(announcementMessage.sizeThatFits(CGSizeMake(width, CGFloat.max)))
+        
+        scrollView.contentSize = CGSizeMake(CGRectGetWidth(scrollView.frame), CGRectGetMaxY(announcementMessage.frame)+UIConstants.textMargin)
     }
 }

@@ -11,9 +11,9 @@ import Foundation
 struct AnnouncementConstants {
     
     static let kId: String = "id"
-    static let kSender: String = "sender"
+    static let kSender: String = "user"
     static let kTitle: String = "title"
-    static let kText: String = "text"
-    static let kTimeCreated: String = "time_created"
+    static let kText: String = "body"
+    static let kTimeCreated: String = "created_at"
     static let kSchool: String = "school"
 }

@@ -11,17 +11,19 @@ import AFNetworking
 
 class AnnouncementsOperations {
     
-    static func loadSchools(completion: ((NSMutableArray) -> Void), failure: (String) -> Void){
-        
-        let operationManager = BaseOperation.manager()
-        
-        operationManager.GET(StringConstants.kEndpointSchool, parameters: nil, success: { (operation, data) -> Void in
-            
-            let schoolDict = data["schools"] as! NSMutableArray
-            completion(schoolDict)
-            }, failure: { (operation, error) -> Void in
-                failure("Failed to load schools. Please try again!")
-        })
+    static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
+
+        BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: nil, success: { (operation, data) -> Void in
+            let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
+            var announcements = [Announcement]()
+            for item in announcementsJSON {
+                let singleAnnouncement = Announcement(properties: item)
+                announcements.append(singleAnnouncement)
+            }
+            completion(announcements)
+            }) { (operation, error) -> Void in
+                failure("Cannot get announcements")
+        }
     }
     
 }

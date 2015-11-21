@@ -19,7 +19,8 @@ struct StringConstants {
     static let kEndpointLogout = kEndpointBaseURL + "/users/sign_out"
     static let kEndpointSchool = kEndpointBaseURL + "/schools"
     static let kEndpointCheckin = kEndpointBaseURL + "/checkin"
-    
+    static let kEndpointAnnouncements = kEndpointBaseURL + "/announcements"
+
     static let kEndpointGetMentors = kEndpointBaseURL + "/users?role=1"
     static let kEndpointGetCheckins = kEndpointBaseURL + "/check_ins?verified=false"
     static let kEndpointGetSchools = kEndpointBaseURL + "/schools?"

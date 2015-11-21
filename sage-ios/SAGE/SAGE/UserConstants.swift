@@ -6,8 +6,6 @@
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
-import UIKit
-
 struct UserConstants {
     
     static let kId: String = "id"

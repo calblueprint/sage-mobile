@@ -80,6 +80,7 @@
 		42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3933E1BC45DB900630F93 /* LoginController.swift */; };
 		42C393411BC45DEC00630F93 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393401BC45DEC00630F93 /* RootController.swift */; };
 		42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393421BC4607D00630F93 /* UnverifiedViewController.swift */; };
+		42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E38DC61BFE957E0048B8D4 /* UIImageView.swift */; };
 		42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EDBDED1BDF38420092D5F5 /* UIImage.swift */; };
 		42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */; };
 		42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6731BC9E6F30063FD78 /* SignUpView.swift */; };
@@ -94,6 +95,7 @@
 		42FE17C51BF440C00029BF22 /* BrowseMentorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */; };
 		42FE17C71BF447BA0029BF22 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C61BF447BA0029BF22 /* APIKeys.swift */; };
 		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63EF111BFC86340036D478 /* SchoolOperations.swift */; };
 		5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */; };
 		5D8AF98B1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */; };
 		5D8AF98F1BEF059D0008D2C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */; };
@@ -177,6 +179,7 @@
 		42C3933E1BC45DB900630F93 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		42C393401BC45DEC00630F93 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		42C393421BC4607D00630F93 /* UnverifiedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedViewController.swift; sourceTree = "<group>"; };
+		42E38DC61BFE957E0048B8D4 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		42EDBDED1BDF38420092D5F5 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		42EFD6731BC9E6F30063FD78 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -191,6 +194,7 @@
 		42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsTableViewCell.swift; sourceTree = "<group>"; };
 		42FE17C61BF447BA0029BF22 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5D63EF111BFC86340036D478 /* SchoolOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolOperations.swift; sourceTree = "<group>"; };
 		5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailView.swift; sourceTree = "<group>"; };
 		5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailViewController.swift; sourceTree = "<group>"; };
 		5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -324,6 +328,7 @@
 			children = (
 				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
 				42EDBDED1BDF38420092D5F5 /* UIImage.swift */,
+				42E38DC61BFE957E0048B8D4 /* UIImageView.swift */,
 				27F990BF1BBCE3B300D61DA2 /* UIView.swift */,
 				424A137B1BEED27300775E86 /* UIViewController.swift */,
 				422715441BC7359D00FD719C /* UIFont.swift */,
@@ -401,6 +406,7 @@
 				424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */,
 				4280CE171BF43E5C005D1B97 /* AdminOperations.swift */,
 				424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */,
+				5D63EF111BFC86340036D478 /* SchoolOperations.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -726,12 +732,14 @@
 				42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,
 				422715451BC7359D00FD719C /* UIFont.swift in Sources */,
+				42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				4254C1ED1BFDCDE200D0D33E /* BrowseSchoolsTableViewCell.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
+				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
 				424A137C1BEED27300775E86 /* UIViewController.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,

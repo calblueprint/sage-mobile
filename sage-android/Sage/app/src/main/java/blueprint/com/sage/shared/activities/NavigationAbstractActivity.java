@@ -13,7 +13,7 @@ import android.view.View;
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.requests.RequestsActivity;
-import blueprint.com.sage.schools.SchoolsListActivity;
+import blueprint.com.sage.browse.BrowseActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,9 +92,9 @@ public class NavigationAbstractActivity extends AbstractActivity
     }
 
     private void startSchoolsActivity() {
-        if (this instanceof SchoolsListActivity) return;
+        if (this instanceof BrowseActivity) return;
 
-        Intent intent = new Intent(this, SchoolsListActivity.class);
+        Intent intent = new Intent(this, BrowseActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

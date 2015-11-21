@@ -184,4 +184,6 @@ public class CircleImageView extends ImageView {
 
         return result + 2;
     }
+
+    public Bitmap getImageBitmap() { return mImage; }
 }

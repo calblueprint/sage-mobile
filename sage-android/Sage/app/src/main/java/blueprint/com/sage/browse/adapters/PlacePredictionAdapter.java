@@ -1,4 +1,4 @@
-package blueprint.com.sage.schools.adapters;
+package blueprint.com.sage.browse.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

@@ -19,7 +19,7 @@
 
     <ImageView
         style="@style/SignUpIcon"
-        android:background="@drawable/ic_person_pin_white"/>
+        android:src="@drawable/ic_person_pin_white" />
 
     <include layout="@layout/white_dots" />
 

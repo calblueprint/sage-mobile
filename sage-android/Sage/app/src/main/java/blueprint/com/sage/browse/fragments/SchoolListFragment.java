@@ -1,4 +1,4 @@
-package blueprint.com.sage.schools.fragments;
+package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.schools.SchoolListEvent;
-import blueprint.com.sage.schools.adapters.SchoolsListAdapter;
+import blueprint.com.sage.browse.adapters.SchoolsListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -23,7 +23,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/4/15.
  * Shows a list of schools
  */
-public class SchoolListFragment extends SchoolAbstractFragment implements OnRefreshListener {
+public class SchoolListFragment extends BrowseAbstractFragment implements OnRefreshListener {
 
     @Bind(R.id.schools_list_list) RecycleViewEmpty mSchoolsList;
     @Bind(R.id.schools_list_empty_view) SwipeRefreshLayout mEmptyView;
@@ -59,6 +59,8 @@ public class SchoolListFragment extends SchoolAbstractFragment implements OnRefr
     }
 
     private void initializeViews() {
+        getParentActivity().getSchoolsListRequest();
+
         mAdapter = new SchoolsListAdapter(getActivity(), R.layout.schools_list_item, getParentActivity().getSchools());
 
         mSchoolsList.setLayoutManager(new LinearLayoutManager(getActivity()));

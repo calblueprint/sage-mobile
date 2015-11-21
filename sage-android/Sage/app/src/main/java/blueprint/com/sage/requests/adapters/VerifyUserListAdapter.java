@@ -20,13 +20,13 @@ import butterknife.ButterKnife;
 /**
  * Created by charlesx on 11/14/15.
  */
-public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
+public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAdapter.ViewHolder> {
 
     private Activity mActivity;
     private int mLayoutId;
     private List<User> mUsers;
 
-    public UserListAdapter(Activity activity, int layoutId, List<User> users) {
+    public VerifyUserListAdapter(Activity activity, int layoutId, List<User> users) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;
@@ -82,12 +82,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.user_list_photo) CircleImageView mImage;
-        @Bind(R.id.user_list_name) TextView mName;
-        @Bind(R.id.user_list_school) TextView mSchool;
-        @Bind(R.id.user_list_hours) TextView mHours;
-        @Bind(R.id.user_list_item_verify) ImageButton mVerify;
-        @Bind(R.id.user_list_item_delete) ImageButton mDelete;
+        @Bind(R.id.verify_user_list_photo) CircleImageView mImage;
+        @Bind(R.id.verify_user_list_name) TextView mName;
+        @Bind(R.id.verify_user_list_school) TextView mSchool;
+        @Bind(R.id.verify_user_list_hours) TextView mHours;
+        @Bind(R.id.verify_user_list_item_verify) ImageButton mVerify;
+        @Bind(R.id.verify_user_list_item_delete) ImageButton mDelete;
 
         public ViewHolder(View v) {
             super(v);

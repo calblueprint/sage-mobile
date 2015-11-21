@@ -6,10 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.util.regex.Pattern;
-
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.shared.validators.UserValidators;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -23,13 +22,15 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_password) EditText mPassword;
     @Bind(R.id.sign_up_password_confirm) EditText mConfirmation;
 
-    public final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[a-zA-Z0-9._%+-]+@berkeley\\.edu$", Pattern.CASE_INSENSITIVE);
+    private UserValidators mValidator;
 
     public static SignUpEmailFragment newInstance() { return new SignUpEmailFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mValidator = UserValidators.newInstance(getParentActivity());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -55,39 +56,16 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
-        boolean isValid = true;
+        return mValidator.hasValidEmail(mEmail) &
+                (mValidator.hasNonBlankField(mPassword, "Password") &
+                        mValidator.hasNonBlankField(mConfirmation, "Password Confirmation")) &&
+                mValidator.hasMatchingPassword(mPassword, mConfirmation);
+    }
 
-        if (!hasValidEmail()) {
-            mEmail.setError(getString(R.string.sign_up_email_error));
-            isValid = false;
-        }
-
-        if (!hasNonBlankPassword()) {
-            mPassword.setError(getString(R.string.sign_up_password_blank_error));
-            isValid = false;
-        } else if (!hasMatchingPassword()) {
-            mConfirmation.setError(getString(R.string.sign_up_password_nonmatch_error));
-            isValid = false;
-        }
-
+    public void setUserFields() {
         User user = getParentActivity().getUser();
         user.setEmail(mEmail.getText().toString());
         user.setPassword(mPassword.getText().toString());
         user.setConfirmPassword(mConfirmation.getText().toString());
-
-        return isValid;
-    }
-
-    private boolean hasValidEmail() {
-        return VALID_EMAIL_ADDRESS_REGEX.matcher(mEmail.getText().toString()).find();
-    }
-
-    private boolean hasNonBlankPassword() {
-        return !mPassword.getText().toString().isEmpty() &&
-               !mConfirmation.getText().toString().isEmpty();
-    }
-
-    private boolean hasMatchingPassword() {
-        return mPassword.getText().toString().equals(mConfirmation.getText().toString());
     }
 }

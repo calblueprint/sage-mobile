@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.models.User;
+import blueprint.com.sage.shared.validators.UserValidators;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -18,10 +20,15 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_first_name) EditText mFirstName;
     @Bind(R.id.sign_up_last_name) EditText mLastName;
 
+    private UserValidators mValidator;
+
     public static SignUpNameFragment newInstance() { return new SignUpNameFragment(); }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mValidator = UserValidators.newInstance(getParentActivity());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -45,31 +52,13 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     }
 
     public boolean hasValidFields() {
-        boolean isValid = true;
-
-        if (!hasValidFirstName()) {
-            mFirstName.setError(getString(R.string.cannot_be_blank,
-                                getString(R.string.sign_up_first_name)));
-            isValid = false;
-        }
-
-        if (!hasValidLastName()) {
-            mLastName.setError(getString(R.string.cannot_be_blank,
-                               getString(R.string.sign_up_last_name)));
-            isValid = false;
-        }
-
-        getParentActivity().getUser().setFirstName(mFirstName.getText().toString());
-        getParentActivity().getUser().setLastName(mLastName.getText().toString());
-
-        return isValid;
+        return mValidator.hasNonBlankField(mFirstName, "First Name") &
+                mValidator.hasNonBlankField(mLastName, "Last Name");
     }
 
-    private boolean hasValidFirstName() {
-        return !mFirstName.getText().toString().isEmpty();
-    }
-
-    private boolean hasValidLastName() {
-        return !mLastName.getText().toString().isEmpty();
+    public void setUserFields() {
+        User user = getParentActivity().getUser();
+        user.setFirstName(mFirstName.getText().toString());
+        user.setLastName(mLastName.getText().toString());
     }
 }

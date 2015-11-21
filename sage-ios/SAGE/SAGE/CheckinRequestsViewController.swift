@@ -99,4 +99,10 @@ class CheckinRequestsViewController: UITableViewController {
         let checkin = self.requests![indexPath.row] as! Checkin
         return CheckinRequestTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let request = self.requests![indexPath.row] as! Checkin
+        let vc = CheckinRequestsDetailViewController(checkin: request)
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
 }

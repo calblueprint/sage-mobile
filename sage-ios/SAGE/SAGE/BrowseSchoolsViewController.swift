@@ -54,5 +54,11 @@ class BrowseSchoolsViewController: UITableViewController {
         let cell = BrowseSchoolsTableViewCell()
         cell.configureWithSchool(school)
         return cell
-    }    
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let school = self.schools![indexPath.row] as! School
+        let vc = BrowseSchoolsDetailViewController(school: school)
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
 }

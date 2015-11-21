@@ -91,4 +91,10 @@ class SignUpRequestsViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return SignUpRequestTableViewCell.cellHeight()
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let request = self.requests![indexPath.row] as! User
+        let vc = SignUpRequestsDetailViewController(user: request)
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
 }

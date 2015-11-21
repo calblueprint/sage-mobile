@@ -108,4 +108,10 @@ class BrowseMentorsViewController: UITableViewController {
         return BrowseMentorsTableViewCell.cellHeight()
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let mentor = self.mentors![indexPath.section][indexPath.row] as! User
+        let vc = BrowseMentorsDetailViewController(mentor: mentor)
+        self.navigationController!.pushViewController(vc, animated: true)
+    }
+    
 }

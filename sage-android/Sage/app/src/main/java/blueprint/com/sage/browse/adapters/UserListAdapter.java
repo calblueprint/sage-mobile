@@ -1,6 +1,6 @@
 package blueprint.com.sage.browse.adapters;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.browse.fragments.UserFragment;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -21,13 +23,13 @@ import butterknife.ButterKnife;
  */
 public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Activity mActivity;
+    private FragmentActivity mActivity;
     private List<Item> mItemList;
 
     private static final int HEADER_VIEW = 0;
     private static final int USER_VIEW = 1;
 
-    public UserListAdapter(Activity activity, List<User> users) {
+    public UserListAdapter(FragmentActivity activity, List<User> users) {
         super();
         mActivity = activity;
         setUpUsers(users);
@@ -90,11 +92,16 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void setUpUserView(UserViewHolder viewHolder, Item item) {
-        User user = item.getUser();
+        final User user = item.getUser();
         viewHolder.mName.setText(user.getName());
         viewHolder.mSchool.setText(user.getSchool().getName());
         viewHolder.mHours.setText(user.getHoursString());
-
+        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragUtils.replaceBackStack(R.id.container, UserFragment.newInstance(user), mActivity);
+            }
+        });
         user.loadUserImage(mActivity, viewHolder.mImage);
     }
 
@@ -129,8 +136,11 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Bind(R.id.user_list_photo) CircleImageView mImage;
         @Bind(R.id.user_list_hours) TextView mHours;
 
+        View mView;
+
         public UserViewHolder(View v) {
             super(v);
+            mView = v;
             ButterKnife.bind(this, v);
         }
 

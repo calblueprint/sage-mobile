@@ -39,6 +39,7 @@ import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,11 +51,6 @@ import butterknife.OnClick;
 public class CheckInMapFragment extends CheckInAbstractFragment
                                 implements OnMapReadyCallback {
 
-    private final static int ZOOM = 16;
-    // Radius of circle boundary of school (int meters)
-    private final static int DISTANCE = 100000;
-    private final static float DEFAULT_LONG = -122.26f;
-    private final static float DEFAULT_LAT = 37.87f;
     private final static int TIMER_INTERVAL = 1000;
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
@@ -136,21 +132,21 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         mMap = map;
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(ZOOM));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
 
         if (NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
             Location location = getLocation();
 
             LatLng latLng;
             if (location == null) {
-                latLng = new LatLng(DEFAULT_LAT, DEFAULT_LONG);
+                latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
             } else {
                 latLng = new LatLng(location.getLatitude(), location.getLongitude());
             }
 
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         } else {
-            LatLng latLng = new LatLng(DEFAULT_LAT, DEFAULT_LONG);
+            LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }
@@ -202,7 +198,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, ZOOM));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapUtils.ZOOM));
     }
 
     @OnClick(R.id.check_in_check_fab)
@@ -315,7 +311,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         float[] results = new float[1];
         Location.distanceBetween(location.getLatitude(), location.getLongitude(), school.getLat(), school.getLng(), results);
 
-        return results[0] <= DISTANCE;
+        return results[0] <= MapUtils.DISTANCE;
     }
 
     private Location getLocation() {

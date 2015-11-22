@@ -1,6 +1,6 @@
 package blueprint.com.sage.browse.adapters;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.browse.fragments.SchoolFragment;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -20,11 +22,11 @@ import butterknife.ButterKnife;
  */
 public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.ViewHolder> {
 
-    private Activity mActivity;
+    private FragmentActivity mActivity;
     private int mLayoutId;
     private List<School> mSchools;
 
-    public SchoolsListAdapter(Activity activity, int layoutId, List<School> schools) {
+    public SchoolsListAdapter(FragmentActivity activity, int layoutId, List<School> schools) {
         super();
         mActivity = activity;
         mLayoutId = layoutId;
@@ -42,9 +44,15 @@ public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.
         if (getItemCount() <= 0 && position < 0 && position >= mSchools.size())
             return;
 
-        School school = mSchools.get(position);
+        final School school = mSchools.get(position);
 
         holder.mSchoolTitle.setText(school.getName());
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragUtils.replaceBackStack(R.id.container, SchoolFragment.newInstance(school), mActivity);
+            }
+        });
     }
 
     @Override
@@ -59,8 +67,11 @@ public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.
 
         @Bind(R.id.schools_list_item_title) TextView mSchoolTitle;
 
+        View mView;
+
         public ViewHolder(View view) {
             super(view);
+            mView = view;
             ButterKnife.bind(this, view);
         }
     }

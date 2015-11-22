@@ -110,7 +110,6 @@
 		5D8AF98F1BEF059D0008D2C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */; };
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
-		5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,7 +217,6 @@
 		5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewCell.swift; sourceTree = "<group>"; };
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
-		5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsView.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -539,7 +537,6 @@
 			isa = PBXGroup;
 			children = (
 				5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */,
-				5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */,
 				5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */,
 			);
 			name = Announcements;
@@ -782,7 +779,6 @@
 				42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
-				5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */,
 				42828FC41C00701000ACBC7E /* BrowseMentorsDetailViewController.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				4254C1ED1BFDCDE200D0D33E /* BrowseSchoolsTableViewCell.swift in Sources */,

@@ -2,6 +2,7 @@ package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,9 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.UserListAdapter;
@@ -46,8 +47,6 @@ public class SchoolFragment extends BrowseAbstractFragment
     private UserListAdapter mAdapter;
     private GoogleMap mMap;
 
-    private List<User> mUsers;
-
     public static SchoolFragment newInstance(School school) {
         SchoolFragment fragment = new SchoolFragment();
         fragment.setSchool(school);
@@ -60,7 +59,6 @@ public class SchoolFragment extends BrowseAbstractFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MapsInitializer.initialize(getActivity());
-        mUsers = new ArrayList<>();
     }
 
     @Override
@@ -78,6 +76,12 @@ public class SchoolFragment extends BrowseAbstractFragment
 
         mName.setText(mSchool.getName());
         mAddress.setText(mSchool.getAddress());
+
+        mAdapter = new UserListAdapter(getActivity(), new ArrayList<User>());
+
+        mUserList.setEmptyView(mEmptyView);
+        mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mUserList.setAdapter(mAdapter);
     }
 
     @Override
@@ -106,13 +110,14 @@ public class SchoolFragment extends BrowseAbstractFragment
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.getUiSettings().setCompassEnabled(false);
         mMap = map;
+        mMap.getUiSettings().setCompassEnabled(false);
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
-        LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LAT);
+        LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        MarkerOptions options = new MarkerOptions();
     }
 
     private void setMapCenter() {

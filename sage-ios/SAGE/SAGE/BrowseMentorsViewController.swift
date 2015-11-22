@@ -10,7 +10,7 @@ import UIKit
 
 class BrowseMentorsViewController: UITableViewController {
     
-    var mentors: NSMutableArray?
+    var mentors: [[User]]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
@@ -64,24 +64,23 @@ class BrowseMentorsViewController: UITableViewController {
         AdminOperations.loadMentors({ (mentorArray) -> Void in
             let alphabet = "abcdefghijklmnopqrstuvwxyz"
             var charArray = [String: Int]()
-            self.mentors = NSMutableArray()
+            self.mentors = [[User]]()
             for i in 0...25 {
-                self.mentors!.addObject(NSMutableArray())
+                self.mentors!.append([User]())
                 let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
                 let letterString = String(letterChar)
                 charArray[letterString] = i
             }
             
             for mentor in mentorArray {
-                let firstName = (mentor as! User).firstName!
+                let firstName = mentor.firstName!
                 let firstLetter = String(firstName[firstName.startIndex.advancedBy(0)]).lowercaseString
                 let firstLetterIndex = charArray[firstLetter]
-                self.mentors![firstLetterIndex!].addObject(mentor)
+                self.mentors![firstLetterIndex!].append(mentor)
             }
             
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-            self.activityIndicator.hidden = true
             self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
@@ -114,10 +113,13 @@ class BrowseMentorsViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let user = self.mentors![indexPath.section][indexPath.row] as! User
-        let cell = BrowseMentorsTableViewCell()
-        cell.configureWithUser(user)
-        return cell
+        let user = self.mentors![indexPath.section][indexPath.row]
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
+        if cell == nil {
+            cell = BrowseMentorsTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
+        }
+        (cell as! BrowseMentorsTableViewCell).configureWithUser(user)
+        return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -125,7 +127,7 @@ class BrowseMentorsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let mentor = self.mentors![indexPath.section][indexPath.row] as! User
+        let mentor = self.mentors![indexPath.section][indexPath.row]
         let vc = BrowseMentorsDetailViewController(mentor: mentor)
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

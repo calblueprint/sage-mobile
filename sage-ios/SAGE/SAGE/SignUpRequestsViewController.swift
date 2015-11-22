@@ -9,7 +9,7 @@
 import UIKit
 
 class SignUpRequestsViewController: UITableViewController {
-    var requests: NSMutableArray?
+    var requests: [User]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
@@ -42,7 +42,6 @@ class SignUpRequestsViewController: UITableViewController {
             self.requests = signUpRequests
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-            self.activityIndicator.hidden = true
             self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
@@ -87,32 +86,25 @@ class SignUpRequestsViewController: UITableViewController {
     }
     
     func removeCell(cell: SignUpRequestTableViewCell, accepted: Bool) {
-        let cellID = cell.userID!
-        var row = 0
-        if let requests = self.requests {
-            for user in requests {
-                let userID = (user as! User).id
-                if userID != -1 && userID == cellID {
-                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
-                    self.requests?.removeObjectAtIndex(row)
-                    if accepted {
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
-                    } else {
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                    }
-                }
-                row += 1
-            }
+        let indexPath = self.tableView.indexPathForCell(cell)!
+        self.requests?.removeAtIndex(indexPath.row)
+        if accepted {
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+        } else {
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let user = self.requests![indexPath.row] as! User
-        let cell = SignUpRequestTableViewCell()
-        cell.configureWithUser(user)
-        cell.checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
-        cell.xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
-        return cell
+        let user = self.requests![indexPath.row]
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("SignUpRequestCell")
+        if cell == nil {
+            cell = SignUpRequestTableViewCell(style: .Default, reuseIdentifier: "SignUpRequestCell")
+        }
+        (cell as! SignUpRequestTableViewCell).configureWithUser(user)
+        (cell as! SignUpRequestTableViewCell).checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
+        (cell as! SignUpRequestTableViewCell).xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
+        return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -120,7 +112,7 @@ class SignUpRequestsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let request = self.requests![indexPath.row] as! User
+        let request = self.requests![indexPath.row]
         let vc = SignUpRequestsDetailViewController(user: request)
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

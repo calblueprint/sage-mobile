@@ -10,7 +10,7 @@ import UIKit
 
 class AddSchoolDirectorTableViewController: UITableViewController {
     
-    var directors: NSMutableArray?
+    var directors: [[User]]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
@@ -47,19 +47,19 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         AdminOperations.loadDirectors({ (directorArray) -> Void in
             let alphabet = "abcdefghijklmnopqrstuvwxyz"
             var charArray = [String: Int]()
-            self.directors = NSMutableArray()
+            self.directors = [[User]]()
             for i in 0...25 {
-                self.directors!.addObject(NSMutableArray())
+                self.directors!.append([User]())
                 let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
                 let letterString = String(letterChar)
                 charArray[letterString] = i
             }
             
             for director in directorArray {
-                let firstName = (director as! User).firstName!
+                let firstName = director.firstName!
                 let firstLetter = String(firstName[firstName.startIndex.advancedBy(0)]).lowercaseString
                 let firstLetterIndex = charArray[firstLetter]
-                self.directors![firstLetterIndex!].addObject(director)
+                self.directors![firstLetterIndex!].append(director)
             }
             
             self.tableView.reloadData()
@@ -113,7 +113,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let user = self.directors![indexPath.section][indexPath.row] as! User
+        let user = self.directors![indexPath.section][indexPath.row]
         let cell = BrowseMentorsTableViewCell()
         cell.configureWithUser(user)
         return cell
@@ -125,7 +125,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let parentVC = self.navigationController!.viewControllers[self.navigationController!.viewControllers.count - 2] as! AddSchoolController
-        parentVC.didSelectDirector(self.directors![indexPath.section][indexPath.row] as! User)
+        parentVC.didSelectDirector(self.directors![indexPath.section][indexPath.row])
         self.navigationController!.popViewControllerAnimated(true)
     }
 

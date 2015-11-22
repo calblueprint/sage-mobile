@@ -160,7 +160,6 @@ class LoginOperations: NSObject {
             completion(true)
             
             }) { (operation, error) -> Void in
-                print(error)
                 completion(false)
         }
     }

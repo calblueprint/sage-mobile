@@ -10,9 +10,9 @@ import UIKit
 
 class BrowseSchoolsTableViewCell: UITableViewCell {
     
-    init() {
-        super.init(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
-        self.selectionStyle = .None
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle  = .None
     }
     
     func configureWithSchool(school: School) {

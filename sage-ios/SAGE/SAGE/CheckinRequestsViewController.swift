@@ -9,7 +9,7 @@
 import UIKit
 
 class CheckinRequestsViewController: UITableViewController {
-    var requests: NSMutableArray?
+    var requests: [Checkin]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
@@ -38,16 +38,18 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func loadCheckinRequests() {
-        AdminOperations.loadCheckinRequests({ (checkinRequests) -> Void in
-            checkinRequests.sortUsingComparator({ (checkin1id, checkin2id) -> NSComparisonResult in
-                let checkinOne = checkin1id as! Checkin
-                let checkinTwo = checkin2id as! Checkin
-                return checkinOne.startTime!.compare(checkinTwo.startTime!)
+        AdminOperations.loadCheckinRequests({ (var checkinRequests) -> Void in
+            checkinRequests.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+                let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
+                if comparisonResult == .OrderedDescending {
+                    return true
+                } else {
+                    return false
+                }
             })
             self.requests = checkinRequests
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-            self.activityIndicator.hidden = true
             self.refreshControl?.endRefreshing()
 
             }) { (errorMessage) -> Void in
@@ -92,41 +94,35 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func removeCell(cell: CheckinRequestTableViewCell, accepted: Bool) {
-        let cellID = cell.checkinID!
-        var row = 0
-        if let requests = self.requests {
-            for checkin in requests {
-                let checkinID = (checkin as! Checkin).id
-                if checkinID != -1 && checkinID == cellID {
-                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
-                    self.requests?.removeObjectAtIndex(row)
-                    if accepted {
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
-                    } else {
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                    }
-                }
-                row += 1
-            }
+        let indexPath = self.tableView.indexPathForCell(cell)!
+        self.requests?.removeAtIndex(indexPath.row)
+        if accepted {
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+        } else {
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let checkin = self.requests![indexPath.row] as! Checkin
-        let cell = CheckinRequestTableViewCell()
-        cell.configureWithCheckin(checkin)
-        cell.checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
-        cell.xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
-        return cell
+        let checkin = self.requests![indexPath.row]
+        
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("CheckinRequestCell")
+        if cell == nil {
+            cell = CheckinRequestTableViewCell(style: .Default, reuseIdentifier: "CheckinRequestCell")
+        }
+        (cell as! CheckinRequestTableViewCell).configureWithCheckin(checkin)
+        (cell as! CheckinRequestTableViewCell).checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
+        (cell as! CheckinRequestTableViewCell).xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
+        return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let checkin = self.requests![indexPath.row] as! Checkin
+        let checkin = self.requests![indexPath.row]
         return CheckinRequestTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let request = self.requests![indexPath.row] as! Checkin
+        let request = self.requests![indexPath.row]
         let vc = CheckinRequestsDetailViewController(checkin: request)
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

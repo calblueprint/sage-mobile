@@ -35,6 +35,7 @@ import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
+import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 import de.greenrobot.event.EventBus;
@@ -140,6 +141,23 @@ public class Requests {
 
                         }
                     });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeShowRequest(User user) {
+            UserRequest request = new UserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                    }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }

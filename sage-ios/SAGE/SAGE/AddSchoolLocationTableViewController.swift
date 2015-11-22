@@ -15,7 +15,7 @@ class AddSchoolLocationTableViewController: UITableViewController {
     let placesClient: GMSPlacesClient = GMSPlacesClient.sharedClient()
     
     override func viewDidLoad() {
-        self.title = "Enter Address"
+        self.title = "Search for School"
         super.viewDidLoad()
         let searchBar = UISearchBar()
         searchBar.setHeight(44)
@@ -45,10 +45,14 @@ class AddSchoolLocationTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("DefaultTableViewCell", forIndexPath: indexPath)
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("DefaultTableViewCell")
+        if cell == nil {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: "DefaultTableViewCell")
+        }
         let result = self.autocompleteSuggestions[indexPath.row]
-        cell.textLabel?.attributedText = result.attributedFullText
-        return cell
+        cell?.textLabel?.font = UIFont.normalFont
+        cell!.textLabel?.attributedText = result.attributedFullText
+        return cell!
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -70,16 +74,21 @@ extension AddSchoolLocationTableViewController: UISearchBarDelegate {
         self.activityIndicator.hidden = false
         
         let filter = GMSAutocompleteFilter()
-        filter.type = GMSPlacesAutocompleteTypeFilter.Region
+        filter.type = GMSPlacesAutocompleteTypeFilter.Establishment
         
         self.placesClient.autocompleteQuery(searchText, bounds: nil, filter: filter, callback: { (results, error: NSError?) -> Void in
-            
-            for result in results! {
-                if let result = result as? GMSAutocompletePrediction {
-                    self.autocompleteSuggestions.append(result)
+            if error == nil {
+                self.autocompleteSuggestions = [GMSAutocompletePrediction]()
+                for result in results! {
+                    if let result = result as? GMSAutocompletePrediction {
+                        self.autocompleteSuggestions.append(result)
+                    }
                 }
+                self.tableView.reloadData()
+            } else {
+                
             }
-            self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
         })
     }
     

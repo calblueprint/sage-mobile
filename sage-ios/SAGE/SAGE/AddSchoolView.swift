@@ -15,8 +15,8 @@ class AddSchoolView: UIView {
     var location = FormFieldMultipleChoiceItem()
     var director = FormFieldMultipleChoiceItem()
     
-    var choseLocation = false
-    var choseDirector = false
+    var chosenLocation: CLLocation?
+    var chosenDirector: User?
     
     private var scrollView = UIScrollView()
     private var keyboardControls = BSKeyboardControls()
@@ -66,13 +66,13 @@ class AddSchoolView: UIView {
         self.scrollView.fillWidth()
         self.scrollView.fillHeight()
         
-        self.name.fillWidth()
-        
-        self.director.setY(CGRectGetMaxY(self.name.frame))
         self.director.fillWidth()
         
         self.location.setY(CGRectGetMaxY(self.director.frame))
         self.location.fillWidth()
+        
+        self.name.fillWidth()
+        self.name.setY(CGRectGetMaxY(self.location.frame))
         
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.name.frame))
     }
@@ -80,13 +80,16 @@ class AddSchoolView: UIView {
     func displayChosenDirector(director: User) {
         self.director.button.setTitle(director.firstName! + " " + director.lastName!, forState: .Normal)
         self.director.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        self.choseDirector = true
+        self.chosenDirector = director
     }
     
     func displayChosenPlace(place: GMSPlace) {
-        self.location.button.setTitle(place.name, forState: .Normal)
-        self.director.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        self.choseLocation = true
+        self.location.button.setTitle(place.formattedAddress, forState: .Normal)
+        if self.name.textField.text == "" {
+            self.name.textField.text = place.name
+        }
+        self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        self.chosenLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
     }
 
 }

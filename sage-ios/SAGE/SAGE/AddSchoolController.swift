@@ -41,17 +41,19 @@ class AddSchoolController: UIViewController {
     
     @objc private func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
-        if addSchoolView.name.textField.text != nil || addSchoolView.name.textField.text != "" {
+        if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
             self.showErrorAndSetMessage("What's the school's name?", size: 64.0)
-        } else if !addSchoolView.choseDirector {
+        } else if addSchoolView.chosenDirector == nil {
             self.showErrorAndSetMessage("Please choose a director", size: 64.0)
-        } else if !addSchoolView.choseLocation {
+        } else if addSchoolView.chosenLocation == nil {
             self.showErrorAndSetMessage("Please choose a location", size: 64.0)
         } else {
-            AdminOperations.createSchool(school, nil, failure: { (message) -> Void in
-                self.showErrorAndSetMessage(message, size: 64.0)
+            let school = School(name: addSchoolView.name.textField.text, location: addSchoolView.chosenLocation, director: addSchoolView.chosenDirector)
+            AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
+                }, failure: { (message) -> Void in
+                    self.showErrorAndSetMessage(message, size: 64.0)
             })
-            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     

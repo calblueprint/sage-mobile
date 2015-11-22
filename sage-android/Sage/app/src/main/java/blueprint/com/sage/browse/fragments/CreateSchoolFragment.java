@@ -104,7 +104,7 @@ public class CreateSchoolFragment extends BrowseAbstractFragment implements Form
     }
 
     private void initializeViews() {
-        mPlaceAdapter = new PlacePredictionAdapter(getParentActivity(),
+        mPlaceAdapter = new PlacePredictionAdapter(getActivity(),
                 R.layout.place_prediction_list_item, getPredictions());
         mSchoolAddress.setAdapter(mPlaceAdapter);
         mSchoolAddress.setThreshold(THRESHOLD);

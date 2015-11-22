@@ -19,6 +19,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.UserListAdapter;
+import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -117,6 +118,10 @@ public class SchoolFragment extends BrowseAbstractFragment
     private void setMapCenter() {
         LatLng latLng = new LatLng(mSchool.getLat(), mSchool.getLng());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
+    public void onEvent(SchoolEvent event) {
+
     }
 }
 

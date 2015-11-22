@@ -10,7 +10,7 @@ import UIKit
 
 class BrowseSchoolsViewController: UITableViewController {
     
-    var schools: NSMutableArray?
+    var schools: [School]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
@@ -44,7 +44,6 @@ class BrowseSchoolsViewController: UITableViewController {
             self.schools = schoolArray
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-            self.activityIndicator.hidden = true
             self.refreshControl?.endRefreshing()
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
@@ -65,17 +64,20 @@ class BrowseSchoolsViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let school = self.schools![indexPath.row] as! School
-        let cell = BrowseSchoolsTableViewCell()
-        cell.configureWithSchool(school)
-        return cell
+        let school = self.schools![indexPath.row]
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseSchoolsCell")
+        if cell == nil {
+            cell = BrowseSchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
+        }
+        (cell as! BrowseSchoolsTableViewCell).configureWithSchool(school)
+        return cell!
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let school = self.schools![indexPath.row] as! School
+        let school = self.schools![indexPath.row]
         let vc = BrowseSchoolsDetailViewController(school: school)
         if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
         self.navigationController!.pushViewController(vc, animated: true)
     }

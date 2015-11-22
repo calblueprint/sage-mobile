@@ -24,8 +24,8 @@ class CheckinRequestTableViewCell: UITableViewCell {
         static var cell = CheckinRequestTableViewCell()
     }
     
-    init() {
-        super.init(style: .Default, reuseIdentifier: "CheckinRequestCell")
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(self.mentorPicture)
         self.contentView.addSubview(self.mentorName)
         self.contentView.addSubview(self.time)
@@ -136,7 +136,12 @@ class CheckinRequestTableViewCell: UITableViewCell {
         let width = CGRectGetMinX(self.xButton.frame) - contentX
         self.content.setSize(self.content.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
-        self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)
+        if self.content.text == "" {
+            self.setHeight(CGRectGetMaxY(self.time.frame)-UIConstants.textMargin)
+        } else {
+            self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)
+        }
+
     }
     
     static func heightForCheckinRequest(checkin: Checkin, width: CGFloat) -> CGFloat {

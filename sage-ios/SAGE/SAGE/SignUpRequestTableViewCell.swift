@@ -19,8 +19,8 @@ class SignUpRequestTableViewCell: UITableViewCell {
     
     var userID: Int?
     
-    init() {
-        super.init(style: .Default, reuseIdentifier: "SignUpRequestCell")
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(self.userPicture)
         self.contentView.addSubview(self.userName)
         self.contentView.addSubview(self.schoolAndHours)

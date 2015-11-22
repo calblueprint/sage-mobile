@@ -85,13 +85,25 @@ class SignUpRequestsViewController: UITableViewController {
         // make a network request, remove checkin from data source, and reload table view
     }
     
+    
     func removeCell(cell: SignUpRequestTableViewCell, accepted: Bool) {
         let indexPath = self.tableView.indexPathForCell(cell)!
         self.requests?.removeAtIndex(indexPath.row)
+        let user = self.requests![indexPath.row]
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+            AdminOperations.verifyUser(user, completion: nil, failure: { (message) -> Void in
+                self.requests?.insert(user, atIndex: indexPath.row)
+                self.tableView.reloadData()
+                self.showErrorAndSetMessage(message, size: 64.0)
+            })
         } else {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            AdminOperations.removeUser(user, completion: nil, failure: { (message) -> Void in
+                self.requests?.insert(user, atIndex: indexPath.row)
+                self.tableView.reloadData()
+                self.showErrorAndSetMessage(message, size: 64.0)
+            })
         }
     }
     

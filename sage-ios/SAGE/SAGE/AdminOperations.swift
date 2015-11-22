@@ -119,7 +119,38 @@ class AdminOperations {
         }) { (operation, error) -> Void in
             failure(error.localizedDescription)
         }
+    }
+    
+    static func createSchool(school: School, completion: ((School) -> Void), failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        // add the right parameters based on the school
+        let params = [String: AnyObject]()
         
+        manager.POST(StringConstants.kEndpointSchool, parameters: params, success: { (operation, data) -> Void in
+            // do some stuff here
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
+    }
+    
+    static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+
+    }
+    
+    static func removeCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+
+    }
+    
+    static func verifyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+
+    }
+    
+    static func removeUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+
     }
     
 }

@@ -48,7 +48,9 @@ class AddSchoolController: UIViewController {
         } else if !addSchoolView.choseLocation {
             self.showErrorAndSetMessage("Please choose a location", size: 64.0)
         } else {
-            // make a network request here
+            AdminOperations.createSchool(school, nil, failure: { (message) -> Void in
+                self.showErrorAndSetMessage(message, size: 64.0)
+            })
             self.dismissViewControllerAnimated(true, completion: nil)
         }
     }

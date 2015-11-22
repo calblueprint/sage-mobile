@@ -96,10 +96,21 @@ class CheckinRequestsViewController: UITableViewController {
     func removeCell(cell: CheckinRequestTableViewCell, accepted: Bool) {
         let indexPath = self.tableView.indexPathForCell(cell)!
         self.requests?.removeAtIndex(indexPath.row)
+        let checkin = self.requests![indexPath.row]
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
+            AdminOperations.approveCheckin(checkin, completion: nil, failure: { (message) -> Void in
+                self.requests?.insert(checkin, atIndex: indexPath.row)
+                self.tableView.reloadData()
+                self.showErrorAndSetMessage(message, size: 64.0)
+            })
         } else {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+            AdminOperations.removeCheckin(checkin, completion: nil, failure: { (message) -> Void in
+                self.requests?.insert(checkin, atIndex: indexPath.row)
+                self.tableView.reloadData()
+                self.showErrorAndSetMessage(message, size: 64.0)
+            })
         }
     }
     

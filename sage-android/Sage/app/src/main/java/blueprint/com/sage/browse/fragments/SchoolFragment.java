@@ -138,6 +138,7 @@ public class SchoolFragment extends BrowseAbstractFragment
 
     public void onEvent(SchoolEvent event) {
         mSchool = event.getSchool();
+        mAdapter.setUsers(mSchool.getUsers());
         setMapCenter();
     }
 }

@@ -25,6 +25,7 @@ import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/20/15.
@@ -79,12 +80,41 @@ public class SchoolFragment extends BrowseAbstractFragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onMapReady(GoogleMap map) {
         map.getUiSettings().setCompassEnabled(false);
         mMap = map;
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
+        LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LAT);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    }
+
+    private void setMapCenter() {
         LatLng latLng = new LatLng(mSchool.getLat(), mSchool.getLng());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }

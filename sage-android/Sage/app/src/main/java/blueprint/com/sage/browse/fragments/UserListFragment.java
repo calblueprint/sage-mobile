@@ -67,7 +67,6 @@ public class UserListFragment extends BrowseAbstractFragment implements OnRefres
         getParentActivity().getUsersListRequest();
 
         mUserListAdapter = new UserListAdapter(getParentActivity(), getParentActivity().getUsers());
-
         mUserList.setLayoutManager(new LinearLayoutManager(getParentActivity()));
         mUserList.setEmptyView(mEmptyView);
         mUserList.setAdapter(mUserListAdapter);

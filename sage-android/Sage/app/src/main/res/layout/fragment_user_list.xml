@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include android:layout="@layout/user_list"/>
+    <include layout="@layout/user_list"/>
 
     <android.support.design.widget.FloatingActionButton
         style="@style/DefaultFAB"

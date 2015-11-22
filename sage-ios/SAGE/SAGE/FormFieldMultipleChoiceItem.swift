@@ -16,7 +16,8 @@ class FormFieldMultipleChoiceItem: FormItem {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        self.button.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
+        self.button.contentHorizontalAlignment = .Left
         self.button.titleLabel?.font = UIFont.normalFont
         self.addSubview(self.button)
     }

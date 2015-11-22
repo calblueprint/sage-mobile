@@ -13,6 +13,7 @@ import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
+import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.events.users.CreateUserEvent;
@@ -29,6 +30,7 @@ import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.schools.CreateSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
+import blueprint.com.sage.network.schools.SchoolRequest;
 import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
@@ -252,6 +254,23 @@ public class Requests {
 
                         }
                     });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeShowRequest(School school) {
+            SchoolRequest request = new SchoolRequest(mActivity, school,
+                    new Response.Listener<School>() {
+                        @Override
+                        public void onResponse(School school) {
+                            EventBus.getDefault().post(new SchoolEvent(school));
+                       }
+                    }, new Response.Listener<APIError>() {
+                    @Override
+                    public void onResponse(APIError error) {
+
+                    }
+                });
 
             Requests.addToRequestQueue(mActivity, request);
         }

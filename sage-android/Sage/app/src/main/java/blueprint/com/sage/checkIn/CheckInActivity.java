@@ -3,8 +3,6 @@ package blueprint.com.sage.checkIn;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.fragments.CheckInMapFragment;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
@@ -15,7 +13,6 @@ import blueprint.com.sage.utility.view.FragUtils;
  * Check in Activity
  */
 public class CheckInActivity extends NavigationAbstractActivity {
-    private GoogleApiClient mGoogleApiClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -63,8 +63,8 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mPhotoPicker = PhotoPicker.newInstance(getParentActivity(), this);
-        mValidator = UserValidators.newInstance(getParentActivity());
+        mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
+        mValidator = UserValidators.newInstance(getActivity());
     }
 
     @Override
@@ -107,18 +107,18 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     }
 
     private void initializeViews() {
-        mSchoolAdapter = new SchoolSpinnerAdapter(getParentActivity(),
+        mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),
                                                   getParentActivity().getSchools(),
                                                   R.layout.user_spinner_item, R.layout.user_spinner_item);
         mSchool.setAdapter(mSchoolAdapter);
 
-        mTypeAdapter = new TypeSpinnerAdapter(getParentActivity(),
+        mTypeAdapter = new TypeSpinnerAdapter(getActivity(),
                                               getResources().getStringArray(R.array.volunteer_types),
                                               R.layout.user_spinner_item, R.layout.user_spinner_item);
 
         mType.setAdapter(mTypeAdapter);
 
-        mRoleAdapter = new RoleSpinnerAdapter(getParentActivity(),
+        mRoleAdapter = new RoleSpinnerAdapter(getActivity(),
                                               getResources().getStringArray(R.array.role_types),
                                               R.layout.user_spinner_item, R.layout.user_spinner_item);
 
@@ -149,7 +149,7 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
 
         User user = new User(firstName, lastName, email, password, schoolId, volunteer, role, profile);
 
-        Requests.Users.with(getParentActivity()).makeCreateAdminRequest(user);
+        Requests.Users.with(getActivity()).makeCreateAdminRequest(user);
     }
 
     private boolean isValidUser() {

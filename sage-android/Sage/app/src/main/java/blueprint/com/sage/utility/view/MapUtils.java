@@ -15,6 +15,13 @@ import java.util.List;
  */
 public class MapUtils {
 
+    public final static int ZOOM = 16;
+
+    // Radius of circle boundary of school (int meters)
+    public final static int DISTANCE = 100000;
+    public final static float DEFAULT_LONG = -122.26f;
+    public final static float DEFAULT_LAT = 37.87f;
+
     public static LatLngBounds createBounds(int swLat, int swLng, int neLat, int neLng) {
         return new LatLngBounds(new LatLng(swLat, swLng), new LatLng(neLat, neLng));
     }

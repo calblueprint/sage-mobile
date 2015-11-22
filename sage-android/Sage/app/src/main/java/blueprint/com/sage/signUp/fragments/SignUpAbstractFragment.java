@@ -19,8 +19,8 @@ public abstract class SignUpAbstractFragment extends Fragment {
     @Nullable
     @OnClick(R.id.sign_up_continue)
     public void submitForm() {
-//        continueToNextPage();
         if (hasValidFields()) {
+            setUserFields();
             continueToNextPage();
         }
     }
@@ -28,13 +28,15 @@ public abstract class SignUpAbstractFragment extends Fragment {
     @Nullable
     @OnClick(R.id.sign_up_finish)
     public void createUser() {
+        setUserFields();
         getParentActivity().makeUserRequest();
     }
 
+    public abstract void setUserFields();
     public abstract boolean hasValidFields();
 
     public void continueToNextPage() {
         SignUpPagerFragment fragment = (SignUpPagerFragment) getParentFragment();
         fragment.goToNextPage();
-    };
+    }
 }

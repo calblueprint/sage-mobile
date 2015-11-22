@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/create_user_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/create_user_first_name"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/create_user_last_name"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/create_user_email"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/create_user_password"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/create_user_confirm_password"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/create_user_school"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/create_user_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/create_user_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <blueprint.com.sage.shared.views.CircleImageView
+        android:id="@+id/create_user_photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/default_profile"/>
+</LinearLayout>

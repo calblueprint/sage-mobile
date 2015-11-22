@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.requests.adapters.CheckInListAdapter;
+import blueprint.com.sage.requests.adapters.VerifyCheckInListAdapter;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
@@ -22,15 +22,15 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/10/15.
  * Gets list of unverified checkins
  */
-public class UnverifiedCheckInListFragment extends RequestsAbstractFragment implements OnRefreshListener {
+public class VerifyCheckInListFragment extends RequestsAbstractFragment implements OnRefreshListener {
 
-    @Bind(R.id.check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
-    @Bind(R.id.check_in_list_list) RecycleViewEmpty mCheckInList;
-    @Bind(R.id.check_in_list_empty_view) SwipeRefreshLayout mEmptyView;
+    @Bind(R.id.verify_check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
+    @Bind(R.id.verify_check_in_list_list) RecycleViewEmpty mCheckInList;
+    @Bind(R.id.verify_check_in_list_empty_view) SwipeRefreshLayout mEmptyView;
 
-    private CheckInListAdapter mCheckInAdapter;
+    private VerifyCheckInListAdapter mCheckInAdapter;
 
-    public static UnverifiedCheckInListFragment newInstance() { return new UnverifiedCheckInListFragment(); }
+    public static VerifyCheckInListFragment newInstance() { return new VerifyCheckInListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class UnverifiedCheckInListFragment extends RequestsAbstractFragment impl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_check_in_list, parent, false);
+        View view = inflater.inflate(R.layout.fragment_verify_check_in_list, parent, false);
         ButterKnife.bind(this, view);
         initializeViews();
         return view;
@@ -59,7 +59,7 @@ public class UnverifiedCheckInListFragment extends RequestsAbstractFragment impl
     }
 
     private void initializeViews() {
-        mCheckInAdapter = new CheckInListAdapter(getParentActivity(),
+        mCheckInAdapter = new VerifyCheckInListAdapter(getParentActivity(),
                                                  R.layout.check_in_list_item,
                                                  getParentActivity().getCheckIns());
 

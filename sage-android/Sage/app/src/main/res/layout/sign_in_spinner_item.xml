@@ -8,7 +8,7 @@
 
     <TextView
         style="@style/SpinnerItem"
-        android:id="@+id/sign_up_spinner_item_text"
+        android:id="@+id/spinner_item_text"
         android:layout_centerVertical="true"
         android:textColor="@color/white" />
 

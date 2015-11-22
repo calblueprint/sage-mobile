@@ -21,7 +21,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
  * Created by charlesx on 11/14/15.
  * Gets a list of users
  */
-public class UserListRequest extends BaseRequest {
+public class    UserListRequest extends BaseRequest {
     public UserListRequest(final Activity activity,
                            HashMap<String, String> queryParams,
                            final Response.Listener<ArrayList<User>> onSuccess,

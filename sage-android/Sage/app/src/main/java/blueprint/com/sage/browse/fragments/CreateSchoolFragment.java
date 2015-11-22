@@ -1,4 +1,4 @@
-package blueprint.com.sage.schools.fragments;
+package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,7 +27,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.schools.adapters.PlacePredictionAdapter;
+import blueprint.com.sage.browse.adapters.PlacePredictionAdapter;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -38,7 +38,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/16/15.
  */
-public class CreateSchoolFragment extends SchoolAbstractFragment implements FormValidation {
+public class CreateSchoolFragment extends BrowseAbstractFragment implements FormValidation {
 
     private final int SW_LAT = 37;
     private final int SW_LNG = -123;
@@ -152,6 +152,7 @@ public class CreateSchoolFragment extends SchoolAbstractFragment implements Form
             }
         });
     }
+
 
     public void validateAndSubmitRequest() {
         boolean hasError = false;

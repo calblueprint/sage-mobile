@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sign_up_school_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +20,7 @@
 
     <ImageView
         style="@style/SignUpIcon"
-        android:background="@drawable/ic_location_city_white"/>
+        android:src="@drawable/ic_location_city_white"/>
 
     <include layout="@layout/white_dots" />
 

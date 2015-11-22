@@ -23,6 +23,7 @@ import blueprint.com.sage.browse.adapters.UserListAdapter;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
@@ -59,6 +60,7 @@ public class SchoolFragment extends BrowseAbstractFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MapsInitializer.initialize(getActivity());
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     @Override
@@ -115,18 +117,28 @@ public class SchoolFragment extends BrowseAbstractFragment
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
+
         LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        MarkerOptions options = new MarkerOptions();
+
+        setMapCenter();
     }
 
     private void setMapCenter() {
+        if (mMap == null || !mSchool.hasLatLng())
+            return;
+
         LatLng latLng = new LatLng(mSchool.getLat(), mSchool.getLng());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        MarkerOptions options = new MarkerOptions();
+        options.position(latLng);
+        mMap.addMarker(options);
     }
 
     public void onEvent(SchoolEvent event) {
-
+        mSchool = event.getSchool();
+        setMapCenter();
     }
 }
 

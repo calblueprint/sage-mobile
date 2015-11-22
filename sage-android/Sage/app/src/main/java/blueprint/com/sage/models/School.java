@@ -31,4 +31,8 @@ public @Data class School {
             this.lng = (float) bounds.longitude;
         }
     }
+
+    public boolean hasLatLng() {
+        return lat != 0.0 && lng != 0.0;
+    }
 }

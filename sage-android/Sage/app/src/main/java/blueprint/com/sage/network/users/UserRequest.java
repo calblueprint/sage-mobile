@@ -16,6 +16,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
 
 /**
  * Created by charlesx on 11/22/15.
+ * Makes request for a user
  */
 public class UserRequest extends BaseRequest {
     public UserRequest(final Activity activity, User user,

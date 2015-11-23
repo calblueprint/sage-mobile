@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.Requests;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/22/15.
+ * Shows a user
  */
 public class UserFragment extends BrowseAbstractFragment {
 
@@ -28,6 +31,7 @@ public class UserFragment extends BrowseAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
 
     @Override
@@ -48,5 +52,9 @@ public class UserFragment extends BrowseAbstractFragment {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(UserEvent event) {
+        mUser = event.getUser();
     }
 }

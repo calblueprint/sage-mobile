@@ -9,12 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.browse.BrowseActivity;
+import blueprint.com.sage.browse.fragments.UserFragment;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.requests.RequestsActivity;
-import blueprint.com.sage.browse.BrowseActivity;
+import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -29,6 +33,11 @@ public class NavigationAbstractActivity extends AbstractActivity
     @Bind(R.id.left_drawer) NavigationView mNavigationView;
     @Bind(R.id.toolbar) Toolbar mToolbar;
 
+    View mHeader;
+    TextView mEmail;
+    TextView mName;
+    CircleImageView mPhoto;
+
     private ActionBarDrawerToggle mToggle;
 
     @Override
@@ -39,6 +48,7 @@ public class NavigationAbstractActivity extends AbstractActivity
 
         setSupportActionBar(mToolbar);
         initializeDrawer();
+        initializeViews();
     }
 
     private void initializeDrawer() {
@@ -57,6 +67,26 @@ public class NavigationAbstractActivity extends AbstractActivity
         mNavigationView.setNavigationItemSelectedListener(this);
         mDrawerLayout.setDrawerListener(mToggle);
         mToggle.syncState();
+    }
+
+    private void initializeViews() {
+        mHeader = mNavigationView.inflateHeaderView(R.layout.navigation_header);
+        mHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragUtils.replaceBackStack(R.id.container,
+                        UserFragment.newInstance(getUser()),
+                        NavigationAbstractActivity.this);
+            }
+        });
+
+        mEmail = ButterKnife.findById(mHeader, R.id.header_email);
+        mName = ButterKnife.findById(mHeader, R.id.header_name);
+        mPhoto = ButterKnife.findById(mHeader, R.id.header_photo);
+
+        mEmail.setText(getUser().getEmail());
+        mName.setText(getUser().getName());
+        getUser().loadUserImage(this, mPhoto);
     }
 
     @Override

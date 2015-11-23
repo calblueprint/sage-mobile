@@ -15,9 +15,9 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     var schoolName = UILabel()
     var totalHours = UILabel()
     
-    init() {
-        super.init(style: .Default, reuseIdentifier: "BrowseCell")
-        self.selectionStyle = .None
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .Default, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle  = .None
     }
     
     func configureWithUser(user: User) {

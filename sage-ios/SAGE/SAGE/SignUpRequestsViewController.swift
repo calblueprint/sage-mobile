@@ -1,21 +1,21 @@
 //
-//  CheckinRequestsViewController.swift
+//  SignUpRequestsViewController.swift
 //  SAGE
 //
-//  Created by Sameera Vemulapalli on 11/14/15.
+//  Created by Sameera Vemulapalli on 11/19/15.
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
 import UIKit
 
-class CheckinRequestsViewController: UITableViewController {
-    var requests: [Checkin]?
+class SignUpRequestsViewController: UITableViewController {
+    var requests: [User]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Check In Requests"
+        self.title = "Sign Up Requests"
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
@@ -26,9 +26,9 @@ class CheckinRequestsViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadCheckinRequests", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "loadSignUpRequests", forControlEvents: .ValueChanged)
         
-        self.loadCheckinRequests()
+        self.loadSignUpRequests()
     }
     
     func showErrorAndSetMessage(message: String, size: CGFloat) {
@@ -37,21 +37,13 @@ class CheckinRequestsViewController: UITableViewController {
         self.currentErrorMessage = errorView
     }
     
-    func loadCheckinRequests() {
-        AdminOperations.loadCheckinRequests({ (var checkinRequests) -> Void in
-            checkinRequests.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
-                let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
-                if comparisonResult == .OrderedDescending {
-                    return true
-                } else {
-                    return false
-                }
-            })
-            self.requests = checkinRequests
+    func loadSignUpRequests() {
+        AdminOperations.loadSignUpRequests({ (signUpRequests) -> Void in
+            self.requests = signUpRequests
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
-
+            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
@@ -70,8 +62,8 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func checkButtonPressed(sender: UIButton) {
-        let cell = sender.superview!.superview as! CheckinRequestTableViewCell
-        let alertController = UIAlertController(title: "Approve", message: "Do you want to approve this check-in request?", preferredStyle: .Alert)
+        let cell = sender.superview!.superview as! SignUpRequestTableViewCell
+        let alertController = UIAlertController(title: "Approve", message: "Do you want to approve this sign up request?", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             // make a network request here
@@ -82,8 +74,8 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func xButtonPressed(sender: UIButton) {
-        let cell = sender.superview!.superview as! CheckinRequestTableViewCell
-        let alertController = UIAlertController(title: "Decline", message: "Do you want to decline this check-in request?", preferredStyle: .Alert)
+        let cell = sender.superview!.superview as! SignUpRequestTableViewCell
+        let alertController = UIAlertController(title: "Decline", message: "Do you want to decline this sign up request?", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             // make a network request here
@@ -93,7 +85,7 @@ class CheckinRequestsViewController: UITableViewController {
         // make a network request, remove checkin from data source, and reload table view
     }
     
-    func removeCell(cell: CheckinRequestTableViewCell, accepted: Bool) {
+    func removeCell(cell: SignUpRequestTableViewCell, accepted: Bool) {
         let indexPath = self.tableView.indexPathForCell(cell)!
         self.requests?.removeAtIndex(indexPath.row)
         if accepted {
@@ -104,26 +96,24 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let checkin = self.requests![indexPath.row]
-        
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("CheckinRequestCell")
+        let user = self.requests![indexPath.row]
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("SignUpRequestCell")
         if cell == nil {
-            cell = CheckinRequestTableViewCell(style: .Default, reuseIdentifier: "CheckinRequestCell")
+            cell = SignUpRequestTableViewCell(style: .Default, reuseIdentifier: "SignUpRequestCell")
         }
-        (cell as! CheckinRequestTableViewCell).configureWithCheckin(checkin)
-        (cell as! CheckinRequestTableViewCell).checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
-        (cell as! CheckinRequestTableViewCell).xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
+        (cell as! SignUpRequestTableViewCell).configureWithUser(user)
+        (cell as! SignUpRequestTableViewCell).checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
+        (cell as! SignUpRequestTableViewCell).xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
         return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let checkin = self.requests![indexPath.row]
-        return CheckinRequestTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
+        return SignUpRequestTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let request = self.requests![indexPath.row]
-        let vc = CheckinRequestsDetailViewController(checkin: request)
+        let vc = SignUpRequestsDetailViewController(user: request)
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         }

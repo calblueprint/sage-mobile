@@ -18,12 +18,14 @@ class CheckinRequestTableViewCell: UITableViewCell {
     var checkButton = UIButton()
     var xButton = UIButton()
     
+    var checkinID: Int?
+    
     struct DummyCellHolder {
         static var cell = CheckinRequestTableViewCell()
     }
     
-    init() {
-        super.init(style: .Default, reuseIdentifier: "CheckinRequestCell")
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(self.mentorPicture)
         self.contentView.addSubview(self.mentorName)
         self.contentView.addSubview(self.time)
@@ -39,6 +41,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
     
     func configureWithCheckin(checkin: Checkin) {
         let user = checkin.user!
+        self.checkinID = checkin.id
         self.mentorPicture.setImageWithUser(user)
         self.mentorPicture.layer.cornerRadius = UIConstants.userImageSize/2
         self.mentorPicture.clipsToBounds = true
@@ -74,7 +77,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         time.attributedText = attributedString
 
 
-        self.content.text = checkin.comment!
+        self.content.text = checkin.comment
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(22)
         checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
@@ -114,13 +117,13 @@ class CheckinRequestTableViewCell: UITableViewCell {
         
         self.checkButton.setHeight(42)
         self.checkButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
-        self.checkButton.setY(0)
+        self.checkButton.centerVertically()
         self.checkButton.setWidth(42)
         
         self.xButton.setHeight(42)
         self.xButton.setWidth(42)
-        self.xButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
-        self.xButton.setY(self.contentView.frame.height - 32 - UIConstants.verticalMargin)
+        self.xButton.setX(CGRectGetMinX(self.checkButton.frame)-42)
+        self.xButton.centerVertically()
         
         self.content.numberOfLines = 0
         self.content.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -133,7 +136,12 @@ class CheckinRequestTableViewCell: UITableViewCell {
         let width = CGRectGetMinX(self.xButton.frame) - contentX
         self.content.setSize(self.content.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
-        self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)
+        if self.content.text == "" {
+            self.setHeight(CGRectGetMaxY(self.time.frame)-UIConstants.textMargin)
+        } else {
+            self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)
+        }
+
     }
     
     static func heightForCheckinRequest(checkin: Checkin, width: CGFloat) -> CGFloat {

@@ -7,11 +7,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.views.CircleImageView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
@@ -20,6 +23,11 @@ import de.greenrobot.event.EventBus;
  * Shows a user
  */
 public class UserFragment extends BrowseAbstractFragment {
+
+    @Bind(R.id.user_name) TextView mName;
+    @Bind(R.id.user_school) TextView mSchool;
+    @Bind(R.id.user_total_hours) TextView mHours;
+    @Bind(R.id.user_photo) CircleImageView mPhoto;
 
     private User mUser;
 
@@ -42,6 +50,7 @@ public class UserFragment extends BrowseAbstractFragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_user, parent, false);
         ButterKnife.bind(this, view);
+        initializeViews();
         return view;
     }
 
@@ -68,7 +77,6 @@ public class UserFragment extends BrowseAbstractFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_edit:
-
                 break;
             case R.id.menu_save:
                 break;
@@ -77,7 +85,17 @@ public class UserFragment extends BrowseAbstractFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private void initializeViews() {
+        mName.setText(mUser.getName());
+        mHours.setText(String.valueOf(mUser.getTotalHours()));
+        mUser.loadUserImage(getActivity(), mPhoto);
+
+        if (mSchool != null)
+            mSchool.setText(mUser.getSchool().getName());
+    }
+
     public void onEvent(UserEvent event) {
         mUser = event.getUser();
+        initializeViews();
     }
 }

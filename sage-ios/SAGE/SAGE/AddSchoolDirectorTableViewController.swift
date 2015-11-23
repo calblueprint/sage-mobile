@@ -12,7 +12,8 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     
     var directors: [[User]]?
     var currentErrorMessage: ErrorView?
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    weak var parentVC: AddSchoolController?
     
     init() {
         super.init(style: .Plain)
@@ -30,17 +31,20 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
         self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.centerHorizontally()
-        self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
-        
+
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "loadDirectors", forControlEvents: .ValueChanged)
         
         self.loadDirectors()
-        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+        self.activityIndicator.startAnimating()
     }
     
     func loadDirectors() {
@@ -61,14 +65,12 @@ class AddSchoolDirectorTableViewController: UITableViewController {
                 let firstLetterIndex = charArray[firstLetter]
                 self.directors![firstLetterIndex!].append(director)
             }
-            
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-            self.activityIndicator.hidden = true
             self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage, size: 64.0)
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     
@@ -83,9 +85,15 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         return charArray
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let letterChar = alphabet[alphabet.startIndex.advancedBy(section)]
+        return String(letterChar)
+    }
+    
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
 
@@ -124,8 +132,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let parentVC = self.navigationController!.viewControllers[self.navigationController!.viewControllers.count - 2] as! AddSchoolController
-        parentVC.didSelectDirector(self.directors![indexPath.section][indexPath.row])
+        self.parentVC!.didSelectDirector(self.directors![indexPath.section][indexPath.row])
         self.navigationController!.popViewControllerAnimated(true)
     }
 

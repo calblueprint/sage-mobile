@@ -25,6 +25,7 @@ class AddSchoolController: UIViewController {
     
     func locationButtonTapped() {
         let tableViewController = AddSchoolLocationTableViewController()
+        tableViewController.parentVC = self
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
@@ -33,6 +34,7 @@ class AddSchoolController: UIViewController {
     
     func directorButtonTapped() {
         let tableViewController = AddSchoolDirectorTableViewController()
+        tableViewController.parentVC = self
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
@@ -41,25 +43,25 @@ class AddSchoolController: UIViewController {
     
     @objc private func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
-        if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
-            self.showErrorAndSetMessage("What's the school's name?", size: 64.0)
-        } else if addSchoolView.chosenDirector == nil {
-            self.showErrorAndSetMessage("Please choose a director", size: 64.0)
+        if addSchoolView.chosenDirector == nil {
+            self.showErrorAndSetMessage("Please choose a director")
         } else if addSchoolView.chosenLocation == nil {
-            self.showErrorAndSetMessage("Please choose a location", size: 64.0)
+            self.showErrorAndSetMessage("Please choose a location")
+        } else if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
+            self.showErrorAndSetMessage("What's the school's name?")
         } else {
             let school = School(name: addSchoolView.name.textField.text, location: addSchoolView.chosenLocation, director: addSchoolView.chosenDirector)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
-                    self.showErrorAndSetMessage(message, size: 64.0)
+                    self.showErrorAndSetMessage(message)
             })
         }
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = self.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     

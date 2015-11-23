@@ -14,9 +14,11 @@ class AddSchoolLocationTableViewController: UITableViewController {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let placesClient: GMSPlacesClient = GMSPlacesClient.sharedClient()
     
+    weak var parentVC: AddSchoolController?
+    
     override func viewDidLoad() {
-        self.title = "Search for School"
         super.viewDidLoad()
+        self.title = "Search for Schools"
         let searchBar = UISearchBar()
         searchBar.setHeight(44)
         searchBar.tintColor = UIColor.whiteColor()
@@ -61,8 +63,7 @@ class AddSchoolLocationTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let parentVC = self.navigationController!.viewControllers[self.navigationController!.viewControllers.count - 2] as! AddSchoolController
-        parentVC.didSelectPlace(self.autocompleteSuggestions[indexPath.row])
+        self.parentVC!.didSelectPlace(self.autocompleteSuggestions[indexPath.row])
         self.navigationController!.popViewControllerAnimated(true)
     }
 

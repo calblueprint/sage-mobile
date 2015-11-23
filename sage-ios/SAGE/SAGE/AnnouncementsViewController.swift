@@ -18,6 +18,7 @@ class AnnouncementsViewController: UITableViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "Announcements"
+        self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.centerHorizontally()
@@ -42,13 +43,13 @@ class AnnouncementsViewController: UITableViewController {
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
-                self.showErrorAndSetMessage("Could not load announcements.", size: 64.0)
+                self.showErrorAndSetMessage("Could not load announcements.")
         }
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     

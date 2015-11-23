@@ -30,9 +30,6 @@ class BrowseMentorsViewController: UITableViewController {
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
         self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.centerHorizontally()
-        self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
@@ -43,9 +40,21 @@ class BrowseMentorsViewController: UITableViewController {
         
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let letterChar = alphabet[alphabet.startIndex.advancedBy(section)]
+        return String(letterChar)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+        self.activityIndicator.startAnimating()
+    }
+    
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
@@ -84,7 +93,7 @@ class BrowseMentorsViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage, size: 64.0)
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     

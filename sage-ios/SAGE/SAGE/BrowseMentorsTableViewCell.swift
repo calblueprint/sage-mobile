@@ -22,9 +22,11 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     
     func configureWithUser(user: User) {
         self.mentorPicture.setImageWithUser(user)
-        self.mentorName.text = user.firstName! + " " + user.lastName!
+        self.mentorName.text = user.fullName()
         self.schoolName.text = user.school!.name
-        self.totalHours.text = String(user.totalHours) + " hours"
+        if user.totalHours != User.DefaultValues.DefaultHours.rawValue {
+            self.totalHours.text = String(user.totalHours) + " hours"
+        }
     }
     
     static func cellHeight() -> CGFloat {

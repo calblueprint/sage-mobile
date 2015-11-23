@@ -78,7 +78,7 @@ class AddSchoolView: UIView {
     }
     
     func displayChosenDirector(director: User) {
-        self.director.button.setTitle(director.firstName! + " " + director.lastName!, forState: .Normal)
+        self.director.button.setTitle(director.fullName(), forState: .Normal)
         self.director.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
         self.chosenDirector = director
     }

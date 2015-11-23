@@ -19,10 +19,7 @@ class SignUpRequestsViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.centerHorizontally()
-        self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
-        
+
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
@@ -31,9 +28,15 @@ class SignUpRequestsViewController: UITableViewController {
         self.loadSignUpRequests()
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+        self.activityIndicator.startAnimating()
+    }
+    
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
@@ -45,7 +48,7 @@ class SignUpRequestsViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage, size: 64.0)
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     
@@ -95,14 +98,14 @@ class SignUpRequestsViewController: UITableViewController {
             AdminOperations.verifyUser(user, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(user, atIndex: indexPath.row)
                 self.tableView.reloadData()
-                self.showErrorAndSetMessage(message, size: 64.0)
+                self.showErrorAndSetMessage(message)
             })
         } else {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             AdminOperations.removeUser(user, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(user, atIndex: indexPath.row)
                 self.tableView.reloadData()
-                self.showErrorAndSetMessage(message, size: 64.0)
+                self.showErrorAndSetMessage(message)
             })
         }
     }

@@ -47,11 +47,16 @@ class AddSchoolLocationTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = self.tableView.dequeueReusableCellWithIdentifier("DefaultTableViewCell")
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: "DefaultTableViewCell")
+            cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultTableViewCell")
         }
         let result = self.autocompleteSuggestions[indexPath.row]
         cell?.textLabel?.font = UIFont.normalFont
         cell!.textLabel?.attributedText = result.attributedFullText
+        cell?.detailTextLabel?.font = UIFont.metaFont
+        cell?.detailTextLabel?.textColor = UIColor.secondaryTextColor
+        self.placesClient.lookUpPlaceID(result.placeID) { (place, error) -> Void in
+            cell?.detailTextLabel?.text = place?.formattedAddress
+        }
         return cell!
     }
     

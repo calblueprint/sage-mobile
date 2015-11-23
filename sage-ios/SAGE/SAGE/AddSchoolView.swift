@@ -55,7 +55,7 @@ class AddSchoolView: UIView {
         self.director.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.director)
         
-        self.location.label.text = "Location"
+        self.location.label.text = "Address"
         self.location.button.setTitle("Choose the school's location", forState: .Normal)
         self.location.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.location)

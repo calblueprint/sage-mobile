@@ -19,4 +19,13 @@ class AdminOperations {
         
     }
     
+    static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let announcementDict = announcement.toDictionary()
+        manager.POST(StringConstants.kEndpointAnnouncements, parameters: announcementDict, success: { (operation, data) -> Void in
+            completion(announcement)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
+    }
 }

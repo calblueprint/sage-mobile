@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +35,7 @@ import org.joda.time.Seconds;
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInTimer;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -48,7 +50,7 @@ import butterknife.OnClick;
  * Created by charlesx on 10/16/15.
  * Fragment for check in map.
  */
-public class CheckInMapFragment extends CheckInAbstractFragment
+public class CheckInMapFragment extends Fragment
                                 implements OnMapReadyCallback {
 
     private final static int TIMER_INTERVAL = 1000;
@@ -65,6 +67,8 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     private Runnable mRunnableTimer;
     private CheckInTimer mTimer;
 
+    private BaseInterface mBaseInterface;
+
     public static CheckInMapFragment newInstance() { return new CheckInMapFragment(); }
 
     @Override
@@ -80,7 +84,8 @@ public class CheckInMapFragment extends CheckInAbstractFragment
             }
         };
 
-        mTimer = new CheckInTimer(getParentActivity(), TIMER_INTERVAL, mRunnableTimer);
+        mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, mRunnableTimer);
+        mBaseInterface = (BaseInterface) getActivity();
     }
 
     @Override
@@ -134,7 +139,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
 
-        if (NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+        if (NetworkUtils.hasLocationServiceEnabled(getActivity())) {
             Location location = getLocation();
 
             LatLng latLng;
@@ -180,7 +185,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     public void onLocationClick(FloatingActionButton button) { checkAndMoveLocation(); }
 
     private void checkAndMoveLocation() {
-        if (!NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
             showEnableLocationDialog();
         } else {
             moveToCurrentLocation();
@@ -203,7 +208,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
 
     @OnClick(R.id.check_in_check_fab)
     public void onCheckInClick(FloatingActionButton button) {
-        if (!NetworkUtils.hasLocationServiceEnabled(getParentActivity())) {
+        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
             showEnableLocationDialog();
             return;
         }
@@ -307,7 +312,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
         if (location == null)
             return false;
 
-        School school = getParentActivity().getSchool();
+        School school = mBaseInterface.getSchool();
         float[] results = new float[1];
         Location.distanceBetween(location.getLatitude(), location.getLongitude(), school.getLat(), school.getLng(), results);
 
@@ -315,7 +320,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
     private Location getLocation() {
-        GoogleApiClient client = getParentActivity().getGoogleApiClient();
+        GoogleApiClient client = mBaseInterface.getGoogleApiClient();
 
         if (client == null)
             return null;
@@ -324,7 +329,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
     private void startCheckIn() {
-        getParentActivity().getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
+        mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
                                       DateUtils.getFormattedTimeNow()).commit();
         toggleButtons();
         toggleTimer(true);
@@ -336,7 +341,7 @@ public class CheckInMapFragment extends CheckInAbstractFragment
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
         }
 
-        getParentActivity().getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
+        mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
                 DateUtils.getFormattedTimeNow()).commit();
 
         toggleButtons();
@@ -379,14 +384,14 @@ public class CheckInMapFragment extends CheckInAbstractFragment
     }
 
     private boolean hasStartedCheckIn() {
-        return !getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
+        return !mBaseInterface.getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
     }
 
     private int getStartTime() {
         if (!hasStartedCheckIn())
             return 0;
 
-        String startString = getParentActivity().getSharedPreferences().getString(getString(R.string.check_in_start_time), "");
+        String startString = mBaseInterface.getSharedPreferences().getString(getString(R.string.check_in_start_time), "");
         DateTime start = DateUtils.stringToDate(startString);
         DateTime end = DateTime.now();
         return Seconds.secondsBetween(start, end).getSeconds();

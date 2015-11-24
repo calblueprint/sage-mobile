@@ -23,4 +23,8 @@ public class FragUtils {
         ViewUtils.hideKeyboard(fragment);
         fragment.getFragmentManager().popBackStack();
     }
+
+    public static void popBackStack(FragmentActivity activity) {
+        activity.getSupportFragmentManager().popBackStack();
+    }
 }

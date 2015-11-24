@@ -144,8 +144,8 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.parentVC!.didSelectDirector(self.directors![indexPath.section][indexPath.row])
-        self.navigationController!.popViewControllerAnimated(true)
+        self.parentVC?.didSelectDirector(self.directors![indexPath.section][indexPath.row])
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
 }

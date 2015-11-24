@@ -1,5 +1,5 @@
 //
-//  AddAnnouncementTableViewController.swift
+//  SelectAnnouncementSchoolTableViewController.swift
 //  SAGE
 //
 //  Created by Sameera Vemulapalli on 11/24/15.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-class AddAnnouncementTableViewController: UITableViewController {
+class SelectAnnouncementSchoolTableViewController: UITableViewController {
     
     var schools: [School]?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
     weak var parentVC: AddAnnouncementController?
     var currentErrorMessage: ErrorView?
     let everyoneSchool = School(id: -1, name: "Everyone", students: [User]())
-
+    
     init() {
         super.init(style: .Plain)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,11 +44,6 @@ class AddAnnouncementTableViewController: UITableViewController {
         AdminOperations.loadSchools({ (schoolArray) -> Void in
             self.schools = schoolArray
             self.schools?.insert(self.everyoneSchool, atIndex: 0)
-            for school in schoolArray {
-                if let students = school.students {
-                    self.everyoneSchool.students?.appendContentsOf(students)
-                }
-            }
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
@@ -92,9 +87,9 @@ class AddAnnouncementTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.parentVC!.didSelectSchool(self.schools![indexPath.row])
-        self.navigationController!.popViewControllerAnimated(true)
+        self.parentVC?.didSelectSchool(self.schools![indexPath.row])
+        self.navigationController?.popViewControllerAnimated(true)
     }
-
-
+    
+    
 }

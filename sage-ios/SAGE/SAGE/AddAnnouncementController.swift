@@ -27,7 +27,7 @@ class AddAnnouncementController: UIViewController {
     }
     
     @objc private func schoolButtonTapped() {
-        let tableViewController = AddAnnouncementTableViewController()
+        let tableViewController = SelectAnnouncementSchoolTableViewController()
         tableViewController.parentVC = self
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

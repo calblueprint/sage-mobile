@@ -93,7 +93,7 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
             AnnouncementRequest announcementRequest = new AnnouncementRequest(activity, announcement.getId(), new Response.Listener<Announcement>() {
                 @Override
                 public void onResponse(Announcement announcement) {
-                    FragUtils.replace(R.id.container, AnnouncementFragment.newInstance(), activity);
+                    FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(), activity);
                 }
             }, new Response.Listener<APIError>() {
                 @Override

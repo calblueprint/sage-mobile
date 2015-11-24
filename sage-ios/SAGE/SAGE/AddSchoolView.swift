@@ -12,8 +12,8 @@ import BSKeyboardControls
 class AddSchoolView: UIView {
     
     var name =  FormFieldItem()
-    var location = FormFieldMultipleChoiceItem()
-    var director = FormFieldMultipleChoiceItem()
+    var location = FormButtonItem()
+    var director = FormButtonItem()
     
     var chosenLocation: CLLocation?
     var chosenDirector: User?

@@ -12,7 +12,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     
     var directors: [[User]]?
     var currentErrorMessage: ErrorView?
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     weak var parentVC: AddSchoolController?
     
     init() {

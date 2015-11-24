@@ -1,5 +1,5 @@
 //
-//  FormFieldMultipleChoiceItem.swift
+//  FormButtonItem.swift
 //  SAGE
 //
 //  Created by Sameera Vemulapalli on 11/21/15.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class FormFieldMultipleChoiceItem: FormItem {
-
+class FormButtonItem: FormItem {
+    
     static let defaultHeight: CGFloat = 45.0
     
     var button: UIButton = UIButton()
@@ -47,5 +47,5 @@ class FormFieldMultipleChoiceItem: FormItem {
         super.disable()
         self.button.enabled = false
     }
-
+    
 }

@@ -11,6 +11,7 @@ import UIKit
 class AddAnnouncementController: UIViewController {
 
     var addAnnouncementView = AddAnnouncementView()
+    var school: School?
     //
     // MARK: - ViewController Lifecycle
     //
@@ -22,8 +23,7 @@ class AddAnnouncementController: UIViewController {
         super.viewDidLoad()
         self.title = "Create Announcement"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
-        let addAnnouncementView = self.view as! AddAnnouncementView
-        addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
+        self.addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
     }
     
     @objc private func schoolButtonTapped() {
@@ -56,5 +56,11 @@ class AddAnnouncementController: UIViewController {
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func didSelectSchool(school: School) {
+        self.school = school
+        self.addAnnouncementView.displayChosenSchool(school)
+
     }
 }

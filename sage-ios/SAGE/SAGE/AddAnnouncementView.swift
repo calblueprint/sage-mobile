@@ -91,6 +91,11 @@ class AddAnnouncementView: UIView {
         let announcement = Announcement(sender: LoginOperations.getUser(), title: self.title.textField.text, text: self.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.chosenSchool)
         return announcement
     }
+    
+    func displayChosenSchool(school: School) {
+        self.school.button.setTitle(school.name!, forState: .Normal)
+        self.school.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+    }
 
 }
 

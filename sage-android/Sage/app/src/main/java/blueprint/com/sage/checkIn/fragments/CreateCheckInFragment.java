@@ -37,7 +37,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.CheckInInterface;
+import blueprint.com.sage.shared.interfaces.CheckInActivityInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -67,7 +67,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
 
     private BaseInterface mBaseInterface;
     private NavigationInterface mNavigationInterface;
-    private CheckInInterface mCheckInInterface;
+    private CheckInActivityInterface mCheckInInterface;
 
     public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
@@ -77,7 +77,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
         setHasOptionsMenu(true);
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
-        mCheckInInterface = (CheckInInterface) getActivity();
+        mCheckInInterface = (CheckInActivityInterface) getActivity();
     }
 
     @Override

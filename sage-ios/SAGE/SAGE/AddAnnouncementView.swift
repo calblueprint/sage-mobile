@@ -12,7 +12,7 @@ import BSKeyboardControls
 class AddAnnouncementView: UIView {
 
     var title =  FormFieldItem()
-    var school = FormFieldItem()
+    var school = FormButtonItem()
     var commentField = FormTextItem()
     
     var chosenSchool: School?
@@ -55,8 +55,7 @@ class AddAnnouncementView: UIView {
         self.scrollView.addSubview(self.title)
         
         self.school.label.text = "Recipients"
-        self.school.textField.placeholder = "Select recipients (optional)"
-        self.school.textField.delegate = self
+        self.school.button.setTitle("Select recipients (optional)", forState: .Normal)
         self.school.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.school)
         
@@ -84,7 +83,7 @@ class AddAnnouncementView: UIView {
     func isValid() -> Bool {
         return
             self.title.textField.text?.characters.count > 0 &&
-            self.school.textField.text?.characters.count > 0 &&
+            self.school.button.titleLabel?.text?.characters.count > 0 &&
             self.commentField.textView.text?.characters.count > 0
     }
     

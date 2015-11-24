@@ -15,16 +15,18 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     var schoolName = UILabel()
     var totalHours = UILabel()
     
-    init() {
-        super.init(style: .Default, reuseIdentifier: "BrowseCell")
-        self.selectionStyle = .None
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .Default, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle  = .None
     }
     
     func configureWithUser(user: User) {
         self.mentorPicture.setImageWithUser(user)
-        self.mentorName.text = user.firstName! + " " + user.lastName!
+        self.mentorName.text = user.fullName()
         self.schoolName.text = user.school!.name
-        self.totalHours.text = String(user.totalHours) + " hours"
+        if user.totalHours != User.DefaultValues.DefaultHours.rawValue {
+            self.totalHours.text = String(user.totalHours) + " hours"
+        }
     }
     
     static func cellHeight() -> CGFloat {

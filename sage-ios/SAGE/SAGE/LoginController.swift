@@ -50,9 +50,9 @@ class LoginController: UIViewController {
     // MARK: - Login validation and logic methods
     //
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    func showErrorAndSetMessage(message: String) {
         let error = (self.view as! LoginView).currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error)
         (self.view as! LoginView).currentErrorMessage = errorView
     }
     func attemptLogin() {
@@ -76,7 +76,7 @@ class LoginController: UIViewController {
                             }
                         } else {
                             // indicate bad login
-                            self.showErrorAndSetMessage("Invalid login - try again!", size: 64)
+                            self.showErrorAndSetMessage("Invalid login - try again!")
                         }
                     })
                 })

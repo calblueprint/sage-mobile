@@ -22,6 +22,17 @@ class AddAnnouncementController: UIViewController {
         super.viewDidLoad()
         self.title = "Create Announcement"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        let addAnnouncementView = self.view as! AddAnnouncementView
+        addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
+    }
+    
+    @objc private func schoolButtonTapped() {
+        let tableViewController = AddAnnouncementTableViewController()
+        tableViewController.parentVC = self
+        if let topItem = self.navigationController!.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController!.pushViewController(tableViewController, animated: true)
     }
     
     @objc private func completeForm() {

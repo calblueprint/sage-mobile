@@ -70,6 +70,7 @@ public class CreateSchoolFragment extends Fragment implements FormValidation {
         setHasOptionsMenu(true);
         mPredictions = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
+        mNavigationInterface = (NavigationInterface) getActivity();
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,29 +25,32 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.android.volley.Response;
-
 import org.joda.time.DateTime;
 
 import java.util.Calendar;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.models.APIError;
+import blueprint.com.sage.events.checkIns.CheckInEvent;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.CheckInInterface;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 10/27/15.
  * Fragment to make a checkin request.
  */
-public class CreateCheckInFragment extends CheckInAbstractFragment implements FormValidation {
+public class CreateCheckInFragment extends Fragment implements FormValidation {
 
     @Bind(R.id.check_in_request_date_field) TextView mDate;
     @Bind(R.id.check_in_request_start_field) TextView mStartTime;
@@ -61,12 +65,19 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
 
     private static final int REQUEST_CODE = 200;
 
+    private BaseInterface mBaseInterface;
+    private NavigationInterface mNavigationInterface;
+    private CheckInInterface mCheckInInterface;
+
     public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mBaseInterface = (BaseInterface) getActivity();
+        mNavigationInterface = (NavigationInterface) getActivity();
+        mCheckInInterface = (CheckInInterface) getActivity();
     }
 
     @Override
@@ -76,6 +87,18 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
         ButterKnife.bind(this, view);
         initializeViews();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -96,9 +119,12 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
     }
 
     private void initializeViews() {
-        if (!getParentActivity().hasPreviousRequest()) { return; }
+        if (!mCheckInInterface.hasPreviousRequest()) {
+            getActivity().setTitle("Finish Checkin");
+            return;
+        }
 
-        SharedPreferences sharedPreferences = getParentActivity().getSharedPreferences();
+        SharedPreferences sharedPreferences = mBaseInterface.getSharedPreferences();
         String startString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
         String endString = sharedPreferences.getString(getString(R.string.check_in_end_time), "");
 
@@ -109,11 +135,14 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
         mStartTime.setText(DateUtils.getFormattedTime(startDate));
         mEndTime.setText(DateUtils.getFormattedTime(endDate));
         mTotalTime.setText(DateUtils.timeDiff(startDate, endDate));
+
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("Create Checkin");
     }
 
     @OnClick({ R.id.check_in_request_start_field, R.id.check_in_request_end_field})
     public void onTimeFieldClick(TextView textView) {
-        if (getParentActivity().hasPreviousRequest()) return;
+        if (mCheckInInterface.hasPreviousRequest()) return;
 
         TimePickerFragment picker = TimePickerFragment.newInstance(textView);
         picker.setTargetFragment(this, REQUEST_CODE);
@@ -129,7 +158,7 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
 
     @OnClick(R.id.check_in_request_date_field)
     public void onDateFieldClick(TextView textView) {
-        if (getParentActivity().hasPreviousRequest()) return;
+        if (mCheckInInterface.hasPreviousRequest()) return;
 
         DatePickerFragment picker = DatePickerFragment.newInstance(textView);
         picker.setTargetFragment(this, REQUEST_CODE);
@@ -172,8 +201,8 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
         String date = mDate.getText().toString();
         String comment = mComment.getText().toString();
 
-        User user = getParentActivity().getUser();
-        School school = getParentActivity().getSchool();
+        User user = mBaseInterface.getUser();
+        School school = mBaseInterface.getSchool();
 
         if (areFieldsEmpty(start, end, date)) {
             Snackbar.make(mLayout, R.string.check_in_request_blank, Snackbar.LENGTH_SHORT).show();
@@ -191,7 +220,7 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
         }
 
         CheckIn checkIn = new CheckIn(startDate.toDate(), endDate.toDate(), user, school, comment);
-        createCheckInRequest(checkIn);
+        Requests.CheckIns.with(getActivity()).makeCreateRequest(checkIn);
     }
 
     private boolean areFieldsEmpty(String... params) {
@@ -202,31 +231,17 @@ public class CreateCheckInFragment extends CheckInAbstractFragment implements Fo
     }
 
     private void resetCheckIn() {
-        getParentActivity().getSharedPreferences()
+        mBaseInterface.getSharedPreferences()
                            .edit()
                            .remove(getString(R.string.check_in_start_time))
                            .remove(getString(R.string.check_in_end_time))
                            .apply();
+
+        FragUtils.popBackStack(this);
         getFragmentManager().popBackStack();
     }
 
-    private void createCheckInRequest(CheckIn checkIn) {
-        CreateCheckInRequest request = new CreateCheckInRequest(getParentActivity(), checkIn,
-                new Response.Listener<CheckIn>() {
-                    @Override
-                    public void onResponse(CheckIn checkIn) {
-                        resetCheckIn();
-                    }
-                },
-                new Response.Listener<APIError>() {
-                    @Override
-                    public void onResponse(APIError error) {
-
-                    }
-                });
-
-        getParentActivity().getNetworkManager().getRequestQueue().add(request);
-    }
+    public void onEvent(CheckInEvent event) { resetCheckIn(); }
 
     /**
      * Pickers for both date and time

@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import blueprint.com.sage.events.checkIns.CheckInEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
@@ -27,6 +28,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
+import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.schools.CreateSchoolRequest;
@@ -218,6 +220,25 @@ public class Requests {
                         @Override
                         public void onResponse(CheckIn checkIn) {
                             EventBus.getDefault().post(new VerifyCheckInEvent(checkIn, position));
+                        }
+                    },
+                    new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeCreateRequest(CheckIn checkIn) {
+            CreateCheckInRequest request = new CreateCheckInRequest(mActivity, checkIn,
+                    new Response.Listener<CheckIn>() {
+                        @Override
+                        public void onResponse(CheckIn checkIn) {
+                            EventBus.getDefault().post(new CheckInEvent(checkIn));
+
                         }
                     },
                     new Response.Listener<APIError>() {

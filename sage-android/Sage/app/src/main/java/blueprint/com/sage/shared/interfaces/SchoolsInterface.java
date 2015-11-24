@@ -9,4 +9,6 @@ import blueprint.com.sage.models.School;
  */
 public interface SchoolsInterface {
     List<School> getSchools();
+    void setSchools(List<School> schools);
+    void getSchoolsListRequest();
 }

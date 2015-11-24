@@ -1,6 +1,7 @@
 package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +24,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/22/15.
  * Shows a user
  */
-public class UserFragment extends BrowseAbstractFragment {
+public class UserFragment extends Fragment {
 
     @Bind(R.id.user_name) TextView mName;
     @Bind(R.id.user_school) TextView mSchool;
@@ -93,11 +94,11 @@ public class UserFragment extends BrowseAbstractFragment {
         mHours.setText(String.valueOf(mUser.getTotalHours()));
         mUser.loadUserImage(getActivity(), mPhoto);
 
-        mNavigationInterface.toggleDrawerUse(false);
-        getActivity().setTitle("Profile");
-
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());
+
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("Profile");
     }
 
     public void onEvent(UserEvent event) {

@@ -48,8 +48,13 @@
             android:launchMode="singleTop"/>
 
         <activity
+<<<<<<< 1977d04e0acbc26323a562354216cf130d336e8e
             android:name=".requests.RequestsActivity"
             android:launchMode="singleTop" />
+=======
+            android:name=".announcements.AnnouncementsListActivity"
+            android:launchMode="singleTop"/>
+>>>>>>> done with announcements.. almost
 
         <activity
             android:name=".announcements.AnnouncementsListActivity"

@@ -57,11 +57,6 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
 //        picasso.load(announcement.getUser().getImageUrl()).into(viewHolder.vPicture);
     }
 
-    public void setAnnouncement(ArrayList<Announcement> curList) {
-        announcementArrayList = curList;
-        notifyDataSetChanged();
-    }
-
     public void setAnnouncements(ArrayList<Announcement> curList) {
         announcementArrayList = curList;
         notifyDataSetChanged();

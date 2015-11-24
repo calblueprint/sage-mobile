@@ -116,25 +116,26 @@ public class NavigationAbstractActivity extends AbstractActivity
 
     private void startCheckInActivity() {
         if (this instanceof CheckInActivity) return;
-
-        Intent intent = new Intent(this, CheckInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(CheckInActivity.class);
     }
 
     private void startSchoolsActivity() {
         if (this instanceof BrowseActivity) return;
-
-        Intent intent = new Intent(this, BrowseActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(BrowseActivity.class);
     }
 
     private void startRequestsActivity() {
         if (this instanceof RequestsActivity) return;
+        startActivity(RequestsActivity.class);
+    }
 
-        Intent intent = new Intent(this, RequestsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    private void startActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
+
+        overridePendingTransition(0, 0);
     }
 }

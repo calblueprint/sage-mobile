@@ -36,6 +36,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInTimer;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -68,6 +69,7 @@ public class CheckInMapFragment extends Fragment
     private CheckInTimer mTimer;
 
     private BaseInterface mBaseInterface;
+    private NavigationInterface mNavigationInterface;
 
     public static CheckInMapFragment newInstance() { return new CheckInMapFragment(); }
 
@@ -86,6 +88,7 @@ public class CheckInMapFragment extends Fragment
 
         mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, mRunnableTimer);
         mBaseInterface = (BaseInterface) getActivity();
+        mNavigationInterface = (NavigationInterface) getActivity();
     }
 
     @Override
@@ -159,6 +162,9 @@ public class CheckInMapFragment extends Fragment
     private void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
+
+        mNavigationInterface.toggleDrawerUse(true);
+        getActivity().setTitle("Check In");
 
         toggleButtons();
         toggleTimer(hasStartedCheckIn());

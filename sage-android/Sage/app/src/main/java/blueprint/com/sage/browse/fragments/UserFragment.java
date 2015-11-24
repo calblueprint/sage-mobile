@@ -44,9 +44,7 @@ public class UserFragment extends BrowseAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("User Profile");
         mNavigationInterface = (NavigationInterface) getActivity();
-        mNavigationInterface.toggleDrawerUse(false);
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
 
@@ -94,6 +92,9 @@ public class UserFragment extends BrowseAbstractFragment {
         mName.setText(mUser.getName());
         mHours.setText(String.valueOf(mUser.getTotalHours()));
         mUser.loadUserImage(getActivity(), mPhoto);
+
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("Profile");
 
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());

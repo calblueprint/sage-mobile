@@ -29,7 +29,7 @@ public class BrowseActivity extends NavigationAbstractActivity implements School
         mSchools = new ArrayList<>();
         mUsers = new ArrayList<>();
 
-
+        getSchoolsListRequest();
         getUsersListRequest();
         FragUtils.replace(R.id.container, BrowseTabFragment.newInstance(), this);
     }

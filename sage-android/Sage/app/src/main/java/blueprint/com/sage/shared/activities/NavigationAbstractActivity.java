@@ -77,6 +77,7 @@ public class NavigationAbstractActivity extends AbstractActivity
                 FragUtils.replaceBackStack(R.id.container,
                         UserFragment.newInstance(getUser()),
                         NavigationAbstractActivity.this);
+                mDrawerLayout.closeDrawers();
             }
         });
 

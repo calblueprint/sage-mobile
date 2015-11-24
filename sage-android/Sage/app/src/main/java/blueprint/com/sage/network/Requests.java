@@ -18,6 +18,7 @@ import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
+import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
@@ -150,7 +151,7 @@ public class Requests {
                     new Response.Listener<User>() {
                         @Override
                         public void onResponse(User user) {
-
+                            EventBus.getDefault().post(new UserEvent(user));
                         }
                     }, new Response.Listener<APIError>() {
                         @Override

@@ -19,9 +19,9 @@ class BrowseSchoolsViewController: UITableViewController {
         self.title = "Schools"
         self.tableView.tableFooterView = UIView()
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSchool")
+
         self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.centerHorizontally()
-        self.activityIndicator.centerVertically()
         self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
@@ -33,9 +33,22 @@ class BrowseSchoolsViewController: UITableViewController {
         
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+    }
+    
+    func addSchool() {
+        let addSchoolController = AddSchoolController()
+        if let topItem = self.navigationController!.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController!.pushViewController(addSchoolController, animated: true)
+    }
+    
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
@@ -46,7 +59,7 @@ class BrowseSchoolsViewController: UITableViewController {
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage, size: 64.0)
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     

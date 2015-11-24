@@ -33,6 +33,27 @@ class AdminOperations {
         
     }
     
+    static func loadDirectors(completion: (([User]) -> Void), failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        manager.GET(StringConstants.kEndpointGetUsers, parameters: nil, success: { (operation, data) -> Void in
+            var userArray = [User]()
+            let userData = ((data as! NSMutableDictionary)["users"] as! NSMutableArray)
+            for userDict in userData {
+                let dict = userDict as! NSMutableDictionary
+                var swiftDict = [String: AnyObject]()
+                for key in dict.allKeys {
+                    swiftDict[key as! String] = dict[key as! String]
+                }
+                let user = User(propertyDictionary: swiftDict)
+                userArray.append(user)
+            }
+            completion(userArray)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
+        
+    }
+    
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: nil, success: { (operation, data) -> Void in
@@ -98,7 +119,31 @@ class AdminOperations {
         }) { (operation, error) -> Void in
             failure(error.localizedDescription)
         }
-        
+    }
+    
+    static func createSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
+    }
+    
+    static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
+    }
+    
+    static func removeCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
+    }
+    
+    static func verifyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
+    }
+    
+    static func removeUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
     }
     
 }

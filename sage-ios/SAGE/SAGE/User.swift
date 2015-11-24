@@ -173,4 +173,8 @@ class User: NSObject, NSCoding {
         propertyDict[UserConstants.kVerified] = verified
         return propertyDict
     }
+    
+    func fullName() -> String {
+        return self.firstName! + " " + self.lastName!
+    }
 }

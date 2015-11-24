@@ -8,52 +8,64 @@
 
 import Foundation
 
-class AnnouncementsViewController: UIViewController {
+class AnnouncementsViewController: UITableViewController {
     
     var announcements = [Announcement]()
-    var announcementsView = AnnouncementsView()
-    
-    override func loadView() {
-        self.view = self.announcementsView
-    }
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var currentErrorMessage: ErrorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "Announcements"
-        (self.view as! AnnouncementsView).tableView.delegate = self
-        (self.view as! AnnouncementsView).tableView.dataSource = self
+        self.tableView.tableFooterView = UIView()
+        
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+        self.activityIndicator.startAnimating()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "getAnnouncements", forControlEvents: .ValueChanged)
+        
         self.getAnnouncements()
     }
     
     func getAnnouncements() {
         AnnouncementsOperations.loadAnnouncements({ (announcements) -> Void in
             self.announcements = announcements
-            self.announcementsView.activityView.stopAnimating()
-            self.announcementsView.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.refreshControl?.endRefreshing()
+            self.tableView.reloadData()
+
             }) { (errorMessage) -> Void in
-                self.announcementsView.activityView.stopAnimating()
-                //display error
+                self.activityIndicator.stopAnimating()
+                self.refreshControl?.endRefreshing()
+                self.showErrorAndSetMessage("Could not load announcements.")
         }
     }
-}
-
-extension AnnouncementsViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    
+    func showErrorAndSetMessage(message: String) {
+        let error = self.currentErrorMessage
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
+        self.currentErrorMessage = errorView
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return AnnouncementsTableViewCell.heightForAnnouncement(announcements[indexPath.row], width: CGRectGetWidth(tableView.frame))
     }
-}
-
-extension AnnouncementsViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return announcements.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("Announcement")
         if (cell == nil) {
             cell = AnnouncementsTableViewCell(style:UITableViewCellStyle.Default, reuseIdentifier:"Announcement")
@@ -63,7 +75,7 @@ extension AnnouncementsViewController: UITableViewDataSource {
         return announcementsCell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)

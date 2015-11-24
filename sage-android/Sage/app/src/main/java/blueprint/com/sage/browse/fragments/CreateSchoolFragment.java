@@ -1,6 +1,7 @@
 package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -29,6 +30,8 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.browse.adapters.PlacePredictionAdapter;
 import blueprint.com.sage.shared.FormValidation;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
@@ -38,7 +41,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/16/15.
  */
-public class CreateSchoolFragment extends BrowseAbstractFragment implements FormValidation {
+public class CreateSchoolFragment extends Fragment implements FormValidation {
 
     private final int SW_LAT = 37;
     private final int SW_LNG = -123;
@@ -50,9 +53,12 @@ public class CreateSchoolFragment extends BrowseAbstractFragment implements Form
 
     @Bind(R.id.create_school_name) EditText mSchoolName;
     @Bind(R.id.create_school_address) AutoCompleteTextView mSchoolAddress;
+
     private long mLat;
     private long mLng;
 
+    private BaseInterface mBaseInterface;
+    private NavigationInterface mNavigationInterface;
     private PlacePredictionAdapter mPlaceAdapter;
 
     public static CreateSchoolFragment newInstance() {
@@ -63,6 +69,7 @@ public class CreateSchoolFragment extends BrowseAbstractFragment implements Form
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mPredictions = new ArrayList<>();
+        mBaseInterface = (BaseInterface) getActivity();
     }
 
     @Override
@@ -130,11 +137,14 @@ public class CreateSchoolFragment extends BrowseAbstractFragment implements Form
                 mSchoolAddress.setText(prediction.getDescription());
             }
         });
+
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("Create School");
     }
 
     private void getPredictions(String address) {
         PendingResult<AutocompletePredictionBuffer> result =
-                Places.GeoDataApi.getAutocompletePredictions(getParentActivity().getGoogleApiClient(), address,
+                Places.GeoDataApi.getAutocompletePredictions(mBaseInterface.getGoogleApiClient(), address,
                         MapUtils.createBounds(SW_LAT, SW_LNG, NE_LAT, NE_LNG), null);
 
         if (result == null)
@@ -173,10 +183,10 @@ public class CreateSchoolFragment extends BrowseAbstractFragment implements Form
         if (hasError)
             return;
 
-        LatLng bounds = MapUtils.getLatLngFromAddress(getParentActivity(), address);
+        LatLng bounds = MapUtils.getLatLngFromAddress(getActivity(), address);
         School school = new School(name, address, bounds);
 
-        Requests.Schools.with(getParentActivity()).makeCreateRequest(school);
+        Requests.Schools.with(getActivity()).makeCreateRequest(school);
     }
 
     public void onEvent(CreateSchoolEvent event) {

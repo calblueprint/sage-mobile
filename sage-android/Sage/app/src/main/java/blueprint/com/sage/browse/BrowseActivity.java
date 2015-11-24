@@ -11,12 +11,13 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
+import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 11/4/15.
  */
-public class BrowseActivity extends NavigationAbstractActivity {
+public class BrowseActivity extends NavigationAbstractActivity implements SchoolsInterface {
 
     private List<School> mSchools;
     private List<User> mUsers;

@@ -13,6 +13,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,6 +31,7 @@ public class UserFragment extends BrowseAbstractFragment {
     @Bind(R.id.user_photo) CircleImageView mPhoto;
 
     private User mUser;
+    private NavigationInterface mNavigationInterface;
 
     public static UserFragment newInstance(User user) {
         UserFragment fragment = new UserFragment();
@@ -42,6 +44,9 @@ public class UserFragment extends BrowseAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("User Profile");
+        mNavigationInterface = (NavigationInterface) getActivity();
+        mNavigationInterface.toggleDrawerUse(false);
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
 

@@ -90,7 +90,7 @@ public class UserFragment extends BrowseAbstractFragment {
         mHours.setText(String.valueOf(mUser.getTotalHours()));
         mUser.loadUserImage(getActivity(), mPhoto);
 
-        if (mSchool != null)
+        if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());
     }
 

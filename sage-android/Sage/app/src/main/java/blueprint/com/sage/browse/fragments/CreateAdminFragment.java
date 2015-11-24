@@ -2,6 +2,7 @@ package blueprint.com.sage.browse.fragments;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,8 @@ import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.adapters.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
+import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.validators.UserValidators;
 import blueprint.com.sage.shared.views.CircleImageView;
@@ -33,7 +36,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/18/15.
  */
-public class CreateAdminFragment extends BrowseAbstractFragment implements FormValidation {
+public class CreateAdminFragment extends Fragment implements FormValidation {
 
     @Bind(R.id.create_user_layout) LinearLayout mLayout;
 
@@ -54,6 +57,9 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
     private TypeSpinnerAdapter mTypeAdapter;
     private RoleSpinnerAdapter mRoleAdapter;
 
+    private NavigationInterface mNavigationInterface;
+    private SchoolsInterface mSchoolsInterface;
+
     private static final int DIALOG_CODE = 200;
     private static final String DIALOG_TAG = "CreateAdminProfileFragment";
 
@@ -65,6 +71,8 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
         setHasOptionsMenu(true);
         mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
         mValidator = UserValidators.newInstance(getActivity());
+        mNavigationInterface = (NavigationInterface) getActivity();
+        mSchoolsInterface = (SchoolsInterface) getActivity();
     }
 
     @Override
@@ -108,7 +116,7 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
 
     private void initializeViews() {
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),
-                                                  getParentActivity().getSchools(),
+                                                  mSchoolsInterface.getSchools(),
                                                   R.layout.user_spinner_item, R.layout.user_spinner_item);
         mSchool.setAdapter(mSchoolAdapter);
 
@@ -123,6 +131,9 @@ public class CreateAdminFragment extends BrowseAbstractFragment implements FormV
                                               R.layout.user_spinner_item, R.layout.user_spinner_item);
 
         mRole.setAdapter(mRoleAdapter);
+
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("Create User");
     }
 
     @OnClick(R.id.create_user_photo)

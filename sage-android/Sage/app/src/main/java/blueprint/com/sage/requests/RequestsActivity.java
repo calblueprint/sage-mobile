@@ -12,12 +12,15 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.requests.fragments.RequestTabPagerFragment;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
+import blueprint.com.sage.shared.interfaces.CheckInsInterface;
+import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 11/10/15.
  */
-public class RequestsActivity extends NavigationAbstractActivity {
+public class RequestsActivity extends NavigationAbstractActivity
+                              implements CheckInsInterface, UsersInterface {
 
     private List<CheckIn> mCheckIns;
     private List<User> mUsers;
@@ -29,8 +32,8 @@ public class RequestsActivity extends NavigationAbstractActivity {
         mCheckIns = new ArrayList<>();
         mUsers = new ArrayList<>();
 
-        makeCheckInListRequest();
-        makeUsersListRequest();
+        getCheckInListRequest();
+        getUsersListRequest();
         FragUtils.replace(R.id.container, RequestTabPagerFragment.newInstance(), this);
     }
 
@@ -46,14 +49,14 @@ public class RequestsActivity extends NavigationAbstractActivity {
 
     public List<User> getUsers() { return mUsers; }
 
-    public void makeCheckInListRequest() {
+    public void getCheckInListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("verified", "false");
 
         Requests.CheckIns.with(this).makeListRequest(queryParams);
     }
 
-    public void makeUsersListRequest() {
+    public void getUsersListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("verified", "false");
 

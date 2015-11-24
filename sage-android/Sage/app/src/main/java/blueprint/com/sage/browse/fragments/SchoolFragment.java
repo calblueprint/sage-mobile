@@ -1,6 +1,7 @@
 package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
@@ -33,7 +35,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/20/15.
  */
-public class SchoolFragment extends BrowseAbstractFragment
+public class SchoolFragment extends Fragment
                             implements OnMapReadyCallback {
 
     @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
@@ -48,6 +50,8 @@ public class SchoolFragment extends BrowseAbstractFragment
     private UserListAdapter mAdapter;
     private GoogleMap mMap;
 
+    private NavigationInterface mNavigationInterface;
+
     public static SchoolFragment newInstance(School school) {
         SchoolFragment fragment = new SchoolFragment();
         fragment.setSchool(school);
@@ -59,6 +63,7 @@ public class SchoolFragment extends BrowseAbstractFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mNavigationInterface = (NavigationInterface) getActivity();
         MapsInitializer.initialize(getActivity());
         Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
@@ -84,6 +89,9 @@ public class SchoolFragment extends BrowseAbstractFragment
         mUserList.setEmptyView(mEmptyView);
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setAdapter(mAdapter);
+
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("School");
     }
 
     @Override

@@ -1,8 +1,6 @@
 package blueprint.com.sage.announcements;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 
 import com.android.volley.Response;
 
@@ -13,24 +11,24 @@ import blueprint.com.sage.events.AnnouncementsListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.network.announcements.AnnouncementsListRequest;
+import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by kelseylam on 10/24/15.
  */
-public class AnnouncementsListActivity extends FragmentActivity {
+public class AnnouncementsListActivity extends NavigationAbstractActivity {
 
    private ArrayList<Announcement> mAnnouncementsList;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_announcements);
         mAnnouncementsList = new ArrayList<>();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         announcementsListRequest();
-        transaction.replace(R.id.announcements_container, AnnouncementsListFragment.newInstance()).commit();
+        FragUtils.replace(R.id.container, AnnouncementsListFragment.newInstance(), this);
     }
 
     public void announcementsListRequest() {

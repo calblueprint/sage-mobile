@@ -11,9 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.AnnouncementsListActivity;
+import blueprint.com.sage.browse.BrowseActivity;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.requests.RequestsActivity;
-import blueprint.com.sage.browse.BrowseActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,6 +66,7 @@ public class NavigationAbstractActivity extends AbstractActivity
             case R.id.check_in:
                 startCheckInActivity();
             case R.id.announcements:
+                startAnnouncementsActivity();
                 Log.e("Selected announcements", "yay");
                 break;
             case R.id.log_out:
@@ -103,6 +105,12 @@ public class NavigationAbstractActivity extends AbstractActivity
         if (this instanceof RequestsActivity) return;
 
         Intent intent = new Intent(this, RequestsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void startAnnouncementsActivity() {
+        Intent intent = new Intent(this, AnnouncementsListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

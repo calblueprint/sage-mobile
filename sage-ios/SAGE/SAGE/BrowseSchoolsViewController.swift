@@ -22,6 +22,7 @@ class BrowseSchoolsViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSchool")
 
         self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
@@ -35,7 +36,6 @@ class BrowseSchoolsViewController: UITableViewController {
     override func viewWillLayoutSubviews() {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
     }
     
     func addSchool() {

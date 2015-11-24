@@ -19,6 +19,7 @@ class SignUpRequestsViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
 
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
@@ -31,7 +32,6 @@ class SignUpRequestsViewController: UITableViewController {
     override func viewWillLayoutSubviews() {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
     }
     
     func showErrorAndSetMessage(message: String) {

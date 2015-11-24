@@ -30,6 +30,7 @@ class BrowseMentorsViewController: UITableViewController {
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
         self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
@@ -49,7 +50,6 @@ class BrowseMentorsViewController: UITableViewController {
     override func viewWillLayoutSubviews() {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
     }
     
     func showErrorAndSetMessage(message: String) {
@@ -67,6 +67,18 @@ class BrowseMentorsViewController: UITableViewController {
             charArray.append(letterString)
         }
         return charArray
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let _ = self.mentors {
+            if self.mentors![section].count == 0 {
+                return 0.0
+            } else {
+                return 22.0
+            }
+        } else {
+            return 0.0
+        }
     }
     
     func loadMentors() {

@@ -31,6 +31,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
         self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
 
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
@@ -44,7 +45,6 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         super.viewWillLayoutSubviews()
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
     }
     
     func loadDirectors() {
@@ -95,6 +95,18 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         let error = self.currentErrorMessage
         let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let _ = self.directors {
+            if self.directors![section].count == 0 {
+                return 0.0
+            } else {
+                return 22.0
+            }
+        } else {
+            return 0.0
+        }
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

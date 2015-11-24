@@ -65,7 +65,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
             announcementTo = (announcement.school?.name)!
         }
         let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(14.0)]
-        let nameLength = announcement.sender!.fullName().characters.count + 1
+        let nameLength = announcement.sender!.fullName().characters.count
         let toIndex = nameLength + 4
         let toLength = announcementTo.characters.count
         let announcementString = NSMutableAttributedString(string: announcement.sender!.fullName() + " to " + announcementTo)

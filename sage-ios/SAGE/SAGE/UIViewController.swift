@@ -36,4 +36,13 @@ extension UIViewController {
             }
         return errorView
     }
+    
+    func showAlertControllerError(errorMessage: String) {
+        let alertController = UIAlertController(
+            title: "Failure",
+            message: errorMessage,
+            preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 }

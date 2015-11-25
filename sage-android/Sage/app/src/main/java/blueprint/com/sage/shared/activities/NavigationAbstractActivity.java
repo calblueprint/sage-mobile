@@ -1,8 +1,11 @@
 package blueprint.com.sage.shared.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -16,9 +19,11 @@ import blueprint.com.sage.browse.BrowseActivity;
 import blueprint.com.sage.browse.fragments.UserFragment;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.requests.RequestsActivity;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -27,7 +32,8 @@ import butterknife.ButterKnife;
  * Activity that basically adds a nav bar to your activity;
  */
 public class NavigationAbstractActivity extends AbstractActivity
-                                        implements NavigationView.OnNavigationItemSelectedListener {
+                                        implements NavigationView.OnNavigationItemSelectedListener,
+                                        NavigationInterface {
 
     @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @Bind(R.id.left_drawer) NavigationView mNavigationView;
@@ -90,6 +96,10 @@ public class NavigationAbstractActivity extends AbstractActivity
         getUser().loadUserImage(this, mPhoto);
     }
 
+    private void setToggleListener() {
+
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -114,27 +124,62 @@ public class NavigationAbstractActivity extends AbstractActivity
         return true;
     }
 
+    public void toggleDrawerUse(boolean useDrawer) {
+        // Enable/Disable the icon being used by the drawer
+        mToggle.setDrawerIndicatorEnabled(useDrawer);
+
+        // Switch between the listeners as necessary
+        if (useDrawer) {
+            initializeDrawer();
+        } else {
+            showBack();
+        }
+    }
+
+    public void showBack() {
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+
+        mToolbar.setNavigationIcon(drawable);
+        mToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                onBackPressed();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        ViewUtils.hideKeyboard(fragment);
+        if (mDrawerLayout.isDrawerOpen(mNavigationView)) mDrawerLayout.closeDrawers();
+        else super.onBackPressed();
+    }
+
     private void startCheckInActivity() {
         if (this instanceof CheckInActivity) return;
-
-        Intent intent = new Intent(this, CheckInActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(CheckInActivity.class);
     }
 
     private void startSchoolsActivity() {
         if (this instanceof BrowseActivity) return;
-
-        Intent intent = new Intent(this, BrowseActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(BrowseActivity.class);
     }
 
     private void startRequestsActivity() {
         if (this instanceof RequestsActivity) return;
+        startActivity(RequestsActivity.class);
+    }
 
-        Intent intent = new Intent(this, RequestsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    private void startActivity(Class<?> cls) {
+        Intent intent = new Intent(this, cls);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
         startActivity(intent);
+
+        overridePendingTransition(0, 0);
     }
 }

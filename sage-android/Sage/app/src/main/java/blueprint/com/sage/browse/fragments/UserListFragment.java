@@ -2,6 +2,7 @@ package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.UserListAdapter;
 import blueprint.com.sage.events.users.UserListEvent;
+import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -22,19 +24,21 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/17/15.
  */
-public class UserListFragment extends BrowseAbstractFragment implements OnRefreshListener{
+public class UserListFragment extends Fragment implements OnRefreshListener{
 
     @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.user_list_list) RecycleViewEmpty mUserList;
     @Bind(R.id.user_list_refresh) SwipeRefreshLayout mRefreshUsers;
 
     private UserListAdapter mUserListAdapter;
+    private UsersInterface mUsersInterface;
 
     public static UserListFragment newInstance() { return new UserListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUsersInterface = (UsersInterface) getActivity();
     }
 
     @Override
@@ -60,14 +64,13 @@ public class UserListFragment extends BrowseAbstractFragment implements OnRefres
 
     @Override
     public void onRefresh() {
-        getParentActivity().getUsersListRequest();
+        mUsersInterface.getUsersListRequest();
     }
 
     private void initializeViews() {
-        getParentActivity().getUsersListRequest();
+        mUserListAdapter = new UserListAdapter(getActivity(), mUsersInterface.getUsers());
 
-        mUserListAdapter = new UserListAdapter(getParentActivity(), getParentActivity().getUsers());
-        mUserList.setLayoutManager(new LinearLayoutManager(getParentActivity()));
+        mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setEmptyView(mEmptyView);
         mUserList.setAdapter(mUserListAdapter);
 
@@ -76,14 +79,14 @@ public class UserListFragment extends BrowseAbstractFragment implements OnRefres
     }
 
     public void onEvent(UserListEvent event) {
-        getParentActivity().setUsers(event.getUsers());
-        mUserListAdapter.setUsers(getParentActivity().getUsers());
+        mUsersInterface.setUsers(event.getUsers());
+        mUserListAdapter.setUsers(mUsersInterface.getUsers());
         mRefreshUsers.setRefreshing(false);
         mEmptyView.setRefreshing(false);
     }
 
     @OnClick(R.id.user_list_fab)
     public void onCreateAdminClick(FloatingActionButton button) {
-        FragUtils.replaceBackStack(R.id.container, CreateAdminFragment.newInstance(), getParentActivity());
+        FragUtils.replaceBackStack(R.id.container, CreateAdminFragment.newInstance(), getActivity());
     }
 }

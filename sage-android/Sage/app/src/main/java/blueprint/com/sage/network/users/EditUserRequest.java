@@ -22,7 +22,7 @@ public class EditUserRequest extends BaseRequest {
     public EditUserRequest(final Activity activity, User user,
                            final Response.Listener<User> onSuccess,
                            final Response.Listener<APIError> onFailure) {
-        super(Method.PUT, makeUrl(null, "users", String.valueOf(user.getId())), NetworkUtils.convertToUserParams(user),
+        super(Method.PUT, makeUrl(null, "users", String.valueOf(user.getId()), "edit"), NetworkUtils.convertToUserParams(user),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

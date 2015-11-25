@@ -6,6 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <blueprint.com.sage.shared.views.CircleImageView
+        android:id="@+id/create_user_photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/default_profile"/>
+
     <RelativeLayout
         style="@style/UserRelativeLayout"
         android:id="@+id/user_name_layout"
@@ -144,10 +150,4 @@
         android:id="@+id/create_user_role"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-    <blueprint.com.sage.shared.views.CircleImageView
-        android:id="@+id/create_user_photo"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/default_profile"/>
 </LinearLayout>

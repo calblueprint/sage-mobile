@@ -1,6 +1,7 @@
 package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +24,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/22/15.
  * Shows a user
  */
-public class UserFragment extends BrowseAbstractFragment {
+public class UserFragment extends Fragment {
 
     @Bind(R.id.user_name) TextView mName;
     @Bind(R.id.user_school) TextView mSchool;
@@ -30,6 +32,7 @@ public class UserFragment extends BrowseAbstractFragment {
     @Bind(R.id.user_photo) CircleImageView mPhoto;
 
     private User mUser;
+    private NavigationInterface mNavigationInterface;
 
     public static UserFragment newInstance(User user) {
         UserFragment fragment = new UserFragment();
@@ -42,6 +45,7 @@ public class UserFragment extends BrowseAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mNavigationInterface = (NavigationInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
 
@@ -92,6 +96,9 @@ public class UserFragment extends BrowseAbstractFragment {
 
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());
+
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("Profile");
     }
 
     public void onEvent(UserEvent event) {

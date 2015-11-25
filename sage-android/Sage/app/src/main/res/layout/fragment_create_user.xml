@@ -5,30 +5,130 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/create_user_first_name"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/create_user_last_name"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        style="@style/UserRelativeLayout"
+        android:id="@+id/user_name_layout"
+        android:layout_below="@id/check_in_request_date_layout">
 
-    <EditText
-        android:id="@+id/create_user_email"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content" />
+        <ImageView
+            style="@style/UserIcon"
+            android:id="@+id/user_name_icon"
+            android:src="@drawable/ic_alarm_on_black" />
 
-    <EditText
-        android:id="@+id/create_user_password"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            style="@style/UserLinearLayout"
+            android:layout_toRightOf="@id/user_name_icon"
+            android:layout_toEndOf="@id/user_name_icon" >
 
-    <EditText
-        android:id="@+id/create_user_confirm_password"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content" />
+            <TextView
+                style="@style/UserLabel"
+                android:id="@+id/user_first_name_text"
+                android:text="@string/check_in_request_start_time"/>
+
+            <EditText
+                style="@style/UserText"
+                android:id="@+id/create_user_first_name"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                style="@style/UserText"
+                android:id="@+id/create_user_last_name"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/UserRelativeLayout"
+        android:id="@+id/user_email_layout"
+        android:layout_below="@id/check_in_request_date_layout">
+
+        <ImageView
+            style="@style/UserIcon"
+            android:id="@+id/user_email_icon"
+            android:src="@drawable/ic_alarm_on_black" />
+
+        <LinearLayout
+            style="@style/UserLinearLayout"
+            android:layout_toRightOf="@id/user_email_icon"
+            android:layout_toEndOf="@id/user_email_icon" >
+
+            <TextView
+                style="@style/UserLabel"
+                android:id="@+id/user_email_text"
+                android:text="@string/check_in_request_start_time"/>
+
+            <EditText
+                style="@style/UserText"
+                android:id="@+id/create_user_email"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        style="@style/UserRelativeLayout"
+        android:id="@+id/user_password_layout"
+        android:layout_below="@id/check_in_request_date_layout">
+
+        <ImageView
+            style="@style/UserIcon"
+            android:id="@+id/user_password_icon"
+            android:src="@drawable/ic_alarm_on_black" />
+
+        <LinearLayout
+            style="@style/UserLinearLayout"
+            android:layout_toRightOf="@id/user_password_icon"
+            android:layout_toEndOf="@id/user_password_icon" >
+
+            <TextView
+                style="@style/UserLabel"
+                android:id="@+id/check_in_request_start_text"
+                android:text="@string/check_in_request_start_time"/>
+
+            <TextView
+                style="@style/UserText"
+                android:id="@+id/check_in_request_start_field"
+                android:hint="@string/check_in_default_time"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/UserRelativeLayout"
+        android:id="@+id/check_in_request_start_layout"
+        android:layout_below="@id/check_in_request_date_layout">
+
+        <ImageView
+            style="@style/UserIcon"
+            android:id="@+id/check_in_request_start_icon"
+            android:src="@drawable/ic_alarm_on_black" />
+
+        <LinearLayout
+            style="@style/UserLinearLayout"
+            android:layout_toRightOf="@id/check_in_request_start_icon"
+            android:layout_toEndOf="@id/check_in_request_start_icon" >
+
+            <EditText
+                style="@style/UserLabel"
+                android:id="@+id/create_user_password"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                style="@style/UserLabel"
+                android:id="@+id/create_user_confirm_password"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 
     <Spinner
         android:id="@+id/create_user_school"

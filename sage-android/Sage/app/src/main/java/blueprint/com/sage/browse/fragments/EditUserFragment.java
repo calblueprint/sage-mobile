@@ -35,13 +35,12 @@ public class EditUserFragment extends UserEditAbstractFragment {
         if (!isValidUser())
             return;
 
-        mUser = new User();
-
         mUser.setFirstName(mFirstName.getText().toString());
         mUser.setLastName(mLastName.getText().toString());
         mUser.setEmail(mEmail.getText().toString());
+        mUser.setCurrentPassword(mCurrentPassword.getText().toString());
 
-        if (hasMatchingPasswords()) {
+        if (!mPassword.getText().toString().isEmpty()) {
             mUser.setPassword(mPassword.getText().toString());
             mUser.setConfirmPassword(mPassword.getText().toString());
         }
@@ -60,7 +59,8 @@ public class EditUserFragment extends UserEditAbstractFragment {
                 mValidator.hasNonBlankField(mLastName, "Last Name") &
                 hasValidEmail() &
                 (hasEmptyPasswords() || hasMatchingPasswords()) &
-                mValidator.mustBePicked(mSchool, "School", mLayout);
+                mValidator.mustBePicked(mSchool, "School", mLayout) &
+                mValidator.hasNonBlankField(mCurrentPassword, "Current Password");
     }
 
     private boolean hasValidEmail() {

@@ -7,21 +7,14 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.signIn.SignInActivity;
 import blueprint.com.sage.signUp.UnverifiedActivity;
 
@@ -104,29 +97,5 @@ public class NetworkUtils {
                // TODO: replace this with getString after Kelsey merges her stuff
                !preferences.getString("user", "").isEmpty() &&
                !preferences.getString("school", "").isEmpty();
-    }
-
-    public static JSONObject convertToUserParams(User user) {
-        HashMap<String, JSONObject> params = new HashMap<>();
-        JSONObject userObject = new JSONObject();
-
-        try {
-            userObject.put("email", user.getEmail());
-            userObject.put("first_name", user.getFirstName());
-            userObject.put("last_name", user.getLastName());
-            userObject.put("password", user.getPassword());
-            userObject.put("confirm_password", user.getConfirmPassword());
-            userObject.put("school_id", user.getSchoolId());
-            userObject.put("volunteer_type", user.getVolunteerTypeInt());
-            userObject.put("current_password", user.getCurrentPassword());
-            if (user.getProfileData() != null) {
-                userObject.put("data", user.getProfileData());
-            }
-        } catch(JSONException e) {
-            Log.e(CreateUserRequest.class.toString(), e.toString());
-        }
-
-        params.put("user", userObject);
-        return new JSONObject(params);
     }
 }

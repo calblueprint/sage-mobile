@@ -217,6 +217,7 @@ class SignUpController: UIViewController  {
             self.view.alpha = 0.0
         }
         self.dismissViewControllerAnimated(false, completion: nil)
+        
         (self.presentingViewController as! RootController).pushLoginViewController()
 
     }

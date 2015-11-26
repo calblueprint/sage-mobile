@@ -16,6 +16,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -45,6 +46,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mNavigationInterface = (NavigationInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
@@ -81,8 +83,11 @@ public class UserFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_edit:
+                FragUtils.replaceBackStack(R.id.container,
+                                           EditUserFragment.newInstance(mUser),
+                                           getActivity());
                 break;
-            case R.id.menu_save:
+            case R.id.menu_delete:
                 break;
         }
 

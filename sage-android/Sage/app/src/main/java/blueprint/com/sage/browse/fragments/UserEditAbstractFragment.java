@@ -13,7 +13,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -23,7 +27,6 @@ import blueprint.com.sage.shared.adapters.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
-import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.validators.UserValidators;
 import blueprint.com.sage.shared.views.CircleImageView;
@@ -59,10 +62,10 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     private static final int DIALOG_CODE = 200;
     private static final String DIALOG_TAG = "UserEditAbstractFragment";
 
-
-    private SchoolsInterface mSchoolsInterface;
     protected NavigationInterface mNavigationInterface;
     protected User mUser;
+
+    List<School> mSchools;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,8 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
         mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
         mValidator = UserValidators.newInstance(getActivity());
         mNavigationInterface = (NavigationInterface) getActivity();
-        mSchoolsInterface = (SchoolsInterface) getActivity();
+        mSchools = new ArrayList<>();
+        Requests.Schools.with(getActivity()).makeListRequest(null);
     }
 
     @Override
@@ -116,7 +120,7 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
 
     private void initializeSpinners() {
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),
-                mSchoolsInterface.getSchools(),
+                mSchools,
                 R.layout.user_spinner_item, R.layout.user_spinner_item);
         mSchool.setAdapter(mSchoolAdapter);
 
@@ -190,5 +194,10 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
 
     public void onEvent(CreateAdminEvent event) {
         FragUtils.popBackStack(this);
+    }
+
+    public void onEvent(SchoolListEvent event) {
+        mSchools = event.getSchools();
+        mSchoolAdapter.setSchools(mSchools);
     }
 }

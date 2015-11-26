@@ -115,8 +115,10 @@ public class NetworkUtils {
             userObject.put("first_name", user.getFirstName());
             userObject.put("last_name", user.getLastName());
             userObject.put("password", user.getPassword());
+            userObject.put("confirm_password", user.getConfirmPassword());
             userObject.put("school_id", user.getSchoolId());
             userObject.put("volunteer_type", user.getVolunteerTypeInt());
+            userObject.put("current_password", user.getCurrentPassword());
             if (user.getProfileData() != null) {
                 userObject.put("data", user.getProfileData());
             }

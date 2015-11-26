@@ -47,6 +47,12 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     @Bind(R.id.create_user_email) EditText mEmail;
     @Bind(R.id.create_user_password) EditText mPassword;
     @Bind(R.id.create_user_confirm_password) EditText mConfirmPassword;
+    @Bind(R.id.create_user_current_password) EditText mCurrentPassword;
+
+    @Bind(R.id.user_role_layout) View mRoleLayout;
+    @Bind(R.id.user_school_layout) View mSchoolLayout;
+    @Bind(R.id.user_current_password_layout) View mCurrentPasswordLayout;
+    @Bind(R.id.user_type_layout) View mTypeLayout;
 
     @Bind(R.id.create_user_school) Spinner mSchool;
     @Bind(R.id.create_user_type) Spinner mType;
@@ -157,18 +163,23 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
         mUser.setLastName(mLastName.getText().toString());
         mUser.setEmail(mEmail.getText().toString());
         mUser.setPassword(mPassword.getText().toString());
+        mUser.setConfirmPassword(mPassword.getText().toString());
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
         Bitmap profile = mPhoto.getImageBitmap();
 
-        if (mRole.getVisibility() == View.VISIBLE) {
+        if (mRoleLayout.getVisibility() == View.VISIBLE) {
             int role = mRole.getSelectedItemPosition();
             mUser.setRoleInt(role);
         }
 
-        if (mType.getVisibility() == View.VISIBLE) {
+        if (mTypeLayout.getVisibility() == View.VISIBLE) {
             int volunteer = mType.getSelectedItemPosition();
             mUser.setVolunteerTypeInt(volunteer);
+        }
+
+        if (mCurrentPasswordLayout.getVisibility() == View.VISIBLE) {
+            mUser.setCurrentPassword(mCurrentPassword.getText().toString());
         }
 
         mUser.setSchoolId(schoolId);

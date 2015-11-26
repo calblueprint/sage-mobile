@@ -10,19 +10,26 @@ import UIKit
 
 class BrowseSchoolsDetailViewController: UIViewController {
 
-    var school: School
+    var schoolDetailView: SchoolDetailView = SchoolDetailView()
+    var schoolLocation:  CLLocation?
     
-    init(school: School) {
-        self.school = school
-        super.init(nibName: nil, bundle: nil)
+    override func loadView() {
+        self.view = self.schoolDetailView
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func configureWithSchool(school: School) {
+        self.title = school.name!
+        self.schoolLocation = school.location!
+        self.schoolDetailView.schoolName.text = school.name!
+        self.schoolDetailView.directorName.text = "director name"
+        self.schoolDetailView.studentsList.text = "some studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome students"
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = self.school.name!
+        let marker = GMSMarker(position: self.schoolLocation!.coordinate)
+        marker.map = self.schoolDetailView.mapView
+        self.schoolDetailView.mapView.moveCamera(GMSCameraUpdate.setTarget(self.schoolLocation!.coordinate))
         // Do any additional setup after loading the view.
     }
 

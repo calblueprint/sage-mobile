@@ -11,6 +11,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_margin="8dp"
+        android:layout_gravity="center_horizontal"
         android:src="@drawable/default_profile"/>
 
     <RelativeLayout
@@ -170,7 +171,7 @@
                 android:id="@+id/create_user_current_password"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/sign_up_password"
+                android:hint="@string/sign_up_current_password"
                 android:inputType="textPassword" />
 
         </LinearLayout>

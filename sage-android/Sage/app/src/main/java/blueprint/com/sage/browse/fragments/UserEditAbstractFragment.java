@@ -1,6 +1,5 @@
 package blueprint.com.sage.browse.fragments;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -60,7 +59,8 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     @Bind(R.id.create_user_photo) CircleImageView mPhoto;
 
     private PhotoPicker mPhotoPicker;
-    private UserValidators mValidator;
+    protected UserValidators mValidator;
+
     private SchoolSpinnerAdapter mSchoolAdapter;
     private TypeSpinnerAdapter mTypeAdapter;
     private RoleSpinnerAdapter mRoleAdapter;
@@ -121,7 +121,6 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     private void initializeSpinners() {
@@ -152,56 +151,9 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
         dialog.show(getFragmentManager(), DIALOG_TAG);
     }
 
-    public void validateAndSubmitRequest() {
-        if (!isValidUser())
-            return;
+    public abstract void validateAndSubmitRequest();
 
-        if (this instanceof CreateAdminFragment)
-            mUser = new User();
-
-        mUser.setFirstName(mFirstName.getText().toString());
-        mUser.setLastName(mLastName.getText().toString());
-        mUser.setEmail(mEmail.getText().toString());
-        mUser.setPassword(mPassword.getText().toString());
-        mUser.setConfirmPassword(mPassword.getText().toString());
-
-        int schoolId = ((School) mSchool.getSelectedItem()).getId();
-        Bitmap profile = mPhoto.getImageBitmap();
-
-        if (mRoleLayout.getVisibility() == View.VISIBLE) {
-            int role = mRole.getSelectedItemPosition();
-            mUser.setRoleInt(role);
-        }
-
-        if (mTypeLayout.getVisibility() == View.VISIBLE) {
-            int volunteer = mType.getSelectedItemPosition();
-            mUser.setVolunteerTypeInt(volunteer);
-        }
-
-        if (mCurrentPasswordLayout.getVisibility() == View.VISIBLE) {
-            mUser.setCurrentPassword(mCurrentPassword.getText().toString());
-        }
-
-        mUser.setSchoolId(schoolId);
-        mUser.setProfile(profile);
-
-        if (this instanceof CreateAdminFragment) {
-            Requests.Users.with(getActivity()).makeCreateAdminRequest(mUser);
-        } else if (this instanceof EditUserFragment) {
-            Requests.Users.with(getActivity()).makeEditRequest(mUser);
-        }
-    }
-
-    private boolean isValidUser() {
-        return mValidator.hasNonBlankField(mFirstName, "First Name") &
-                mValidator.hasNonBlankField(mLastName, "Last Name") &
-                (mValidator.hasNonBlankField(mEmail, "Email") &&
-                        mValidator.hasValidEmail(mEmail)) &
-                ((mValidator.hasNonBlankField(mPassword, "Password") &
-                        mValidator.hasNonBlankField(mConfirmPassword, "Confirm Password")) &&
-                        mValidator.hasMatchingPassword(mPassword, mConfirmPassword)) &
-                mValidator.mustBePicked(mSchool, "School", mLayout);
-    }
+    public abstract boolean isValidUser();
 
     public void onEvent(CreateAdminEvent event) {
         FragUtils.popBackStack(this);
@@ -210,5 +162,14 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     public void onEvent(SchoolListEvent event) {
         mSchools = event.getSchools();
         mSchoolAdapter.setSchools(mSchools);
+
+        if (mUser.getSchoolId() > 0)
+            setSchool(mUser.getSchoolId());
+    }
+
+    public void setSchool(int id) {
+        for (int i = 0; i < mSchools.size(); i++)
+            if (mSchools.get(i).getId() == id)
+                mSchool.setSelection(i);
     }
 }

@@ -1,11 +1,15 @@
 package blueprint.com.sage.browse.fragments;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 
+import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 11/25/15.
@@ -77,5 +81,15 @@ public class EditUserFragment extends UserEditAbstractFragment {
         return (mValidator.hasNonBlankField(mPassword, "Password") &
                 mValidator.hasNonBlankField(mConfirmPassword, "Confirm Password")) &&
                 mValidator.hasMatchingPassword(mPassword, mConfirmPassword);
+    }
+
+    public void onEvent(CreateAdminEvent event) {
+        try {
+            NetworkUtils.setUser(getActivity(), event.getUser());
+            mBaseInterface.setUser(event.getUser());
+        } catch(Exception e) {
+            Log.e(getClass().toString(), e.toString());
+        }
+        FragUtils.popBackStack(this);
     }
 }

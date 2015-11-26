@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.view.View;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 11/18/15.
@@ -60,5 +62,9 @@ public class CreateAdminFragment extends UserEditAbstractFragment {
                         mValidator.hasNonBlankField(mConfirmPassword, "Confirm Password")) &&
                         mValidator.hasMatchingPassword(mPassword, mConfirmPassword)) &
                 mValidator.mustBePicked(mSchool, "School", mLayout);
+    }
+
+    public void onEvent(CreateAdminEvent event) {
+        FragUtils.popBackStack(this);
     }
 }

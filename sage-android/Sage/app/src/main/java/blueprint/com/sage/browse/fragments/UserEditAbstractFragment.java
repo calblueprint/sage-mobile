@@ -17,7 +17,6 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.schools.SchoolListEvent;
-import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
@@ -25,11 +24,11 @@ import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.adapters.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.validators.UserValidators;
 import blueprint.com.sage.shared.views.CircleImageView;
-import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -69,6 +68,7 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     private static final String DIALOG_TAG = "UserEditAbstractFragment";
 
     protected NavigationInterface mNavigationInterface;
+    protected BaseInterface mBaseInterface;
     protected User mUser;
 
     List<School> mSchools;
@@ -154,10 +154,6 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     public abstract void validateAndSubmitRequest();
 
     public abstract boolean isValidUser();
-
-    public void onEvent(CreateAdminEvent event) {
-        FragUtils.popBackStack(this);
-    }
 
     public void onEvent(SchoolListEvent event) {
         mSchools = event.getSchools();

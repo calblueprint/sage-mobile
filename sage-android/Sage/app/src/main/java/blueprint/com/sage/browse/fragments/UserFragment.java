@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
@@ -107,6 +108,11 @@ public class UserFragment extends Fragment {
     }
 
     public void onEvent(UserEvent event) {
+        mUser = event.getUser();
+        initializeViews();
+    }
+
+    public void onEvent(EditUserEvent event) {
         mUser = event.getUser();
         initializeViews();
     }

@@ -19,8 +19,8 @@ public class CreateAdminFragment extends UserEditAbstractFragment {
 
     public void initializeViews() {
         mCurrentPasswordLayout.setVisibility(View.GONE);
-        mPassword.setText(getString(R.string.sign_up_password));
-        mConfirmPassword.setText(getString(R.string.sign_up_password_confirm));
+        mPassword.setHint(getString(R.string.sign_up_password));
+        mConfirmPassword.setHint(getString(R.string.sign_up_password_confirm));
 
         mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("Create User");

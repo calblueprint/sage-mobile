@@ -55,6 +55,7 @@ public class NavigationAbstractActivity extends AbstractActivity
         setSupportActionBar(mToolbar);
         initializeDrawer();
         initializeViews();
+        initializeUser();
     }
 
     private void initializeDrawer() {
@@ -90,14 +91,12 @@ public class NavigationAbstractActivity extends AbstractActivity
         mEmail = ButterKnife.findById(mHeader, R.id.header_email);
         mName = ButterKnife.findById(mHeader, R.id.header_name);
         mPhoto = ButterKnife.findById(mHeader, R.id.header_photo);
+    }
 
+    public void initializeUser() {
         mEmail.setText(getUser().getEmail());
         mName.setText(getUser().getName());
         getUser().loadUserImage(this, mPhoto);
-    }
-
-    private void setToggleListener() {
-
     }
 
     @Override

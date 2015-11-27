@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 
-import blueprint.com.sage.events.users.CreateAdminEvent;
+import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
@@ -83,10 +83,11 @@ public class EditUserFragment extends UserEditAbstractFragment {
                 mValidator.hasMatchingPassword(mPassword, mConfirmPassword);
     }
 
-    public void onEvent(CreateAdminEvent event) {
+    public void onEvent(EditUserEvent event) {
         try {
             NetworkUtils.setUser(getActivity(), event.getUser());
             mBaseInterface.setUser(event.getUser());
+            mNavigationInterface.initializeUser();
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }

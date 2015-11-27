@@ -5,4 +5,5 @@ package blueprint.com.sage.shared.interfaces;
  */
 public interface NavigationInterface {
     void toggleDrawerUse(boolean showDrawers);
+    void initializeUser();
 }

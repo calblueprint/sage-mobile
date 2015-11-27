@@ -1,5 +1,7 @@
 package blueprint.com.sage.browse.fragments;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.validators.UserValidators;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.signUp.SignUpActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,6 +83,7 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
         mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
         mValidator = UserValidators.newInstance(getActivity());
         mNavigationInterface = (NavigationInterface) getActivity();
+        mBaseInterface = (BaseInterface) getActivity();
         mSchools = new ArrayList<>();
         Requests.Schools.with(getActivity()).makeListRequest(null);
     }
@@ -122,6 +126,24 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @SuppressWarnings("deprecation")
+    @TargetApi(16)
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != SignUpActivity.RESULT_OK) return;
+
+        switch (requestCode) {
+            case PhotoPicker.CAMERA_REQUEST:
+                mPhotoPicker.takePhotoResult(data, mPhoto);
+                break;
+            case PhotoPicker.PICK_PHOTO_REQUEST:
+                mPhotoPicker.pickPhotoResult(data, mPhoto);
+                break;
+        }
+    }
+
 
     private void initializeSpinners() {
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),

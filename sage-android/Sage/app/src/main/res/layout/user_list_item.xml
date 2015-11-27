@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
     android:padding="8dp">
 
     <blueprint.com.sage.shared.views.CircleImageView

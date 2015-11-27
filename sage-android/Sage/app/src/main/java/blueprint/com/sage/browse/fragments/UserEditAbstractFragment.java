@@ -181,7 +181,7 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
         mSchools = event.getSchools();
         mSchoolAdapter.setSchools(mSchools);
 
-        if (mUser.getSchoolId() > 0)
+        if (mUser != null && mUser.getSchoolId() > 0)
             setSchool(mUser.getSchoolId());
     }
 

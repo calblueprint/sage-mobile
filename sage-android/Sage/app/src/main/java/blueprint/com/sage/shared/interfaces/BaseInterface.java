@@ -13,6 +13,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
  */
 public interface BaseInterface {
     public User getUser();
+    public void setUser(User user);
     public School getSchool();
     public NetworkManager getNetworkManager();
     public SharedPreferences getSharedPreferences();

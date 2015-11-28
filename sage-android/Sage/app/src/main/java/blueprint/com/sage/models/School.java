@@ -19,6 +19,7 @@ public @Data class School {
     private float lng;
     private String address;
 
+    private User director;
     private List<User> users;
 
     public School() {}

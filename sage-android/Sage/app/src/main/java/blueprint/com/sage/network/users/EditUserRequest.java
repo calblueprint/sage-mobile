@@ -13,30 +13,27 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
-import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.BaseRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 
 /**
- * Created by charlesx on 10/13/15.
- * Creates a user
+ * Created by charlesx on 11/24/15.
  */
-public class CreateUserRequest extends BaseRequest {
-    public CreateUserRequest(final Activity activity, User user,
-                             final Response.Listener<Session> onSuccess,
-                             final Response.Listener onFailure) {
-        super(Method.POST, makeUrl(null, "users"), convertToUserParams(user),
+public class EditUserRequest extends BaseRequest {
+    public EditUserRequest(final Activity activity, User user,
+                           final Response.Listener<User> onSuccess,
+                           final Response.Listener<APIError> onFailure) {
+        super(Method.PUT, makeUrl(null, "users", String.valueOf(user.getId())), convertToUserParams(user),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {
+                        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
                         try {
-                            String sessionString = o.getString("session");
-                            ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
-                            Session session = mapper.readValue(sessionString, new TypeReference<Session>() {
-                            });
-                            onSuccess.onResponse(session);
-                        } catch (Exception e) {
+                            String userString = o.getString("user");
+                            User user = mapper.readValue(userString, new TypeReference<User>() {});
+                            onSuccess.onResponse(user);
+                        } catch(Exception e) {
                             Log.e(getClass().toString(), e.toString());
                         }
                     }
@@ -56,10 +53,12 @@ public class CreateUserRequest extends BaseRequest {
             userObject.put("email", user.getEmail());
             userObject.put("first_name", user.getFirstName());
             userObject.put("last_name", user.getLastName());
-            userObject.put("password", user.getPassword());
-            userObject.put("confirm_password", user.getConfirmPassword());
+            if (user.getPassword() != null) {
+                userObject.put("password", user.getPassword());
+                userObject.put("confirm_password", user.getConfirmPassword());
+            }
             userObject.put("school_id", user.getSchoolId());
-            userObject.put("volunteer_type", user.getVolunteerTypeInt());
+            userObject.put("current_password", user.getCurrentPassword());
             if (user.getProfileData() != null) {
                 userObject.put("data", user.getProfileData());
             }

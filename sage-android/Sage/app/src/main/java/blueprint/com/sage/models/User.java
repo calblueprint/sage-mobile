@@ -53,19 +53,6 @@ public @Data class User {
 
     public User() {}
 
-    public User(String firstName, String lastName, String email,
-                String password, int schoolId, int volunteer,
-                int role, Bitmap profile) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.schoolId = schoolId;
-        this.profile = profile;
-        setVolunteerTypeInt(volunteer);
-        setRoleInt(role);
-    }
-
     @JsonIgnore
     public String getName() { return String.format("%s %s", firstName, lastName); }
 

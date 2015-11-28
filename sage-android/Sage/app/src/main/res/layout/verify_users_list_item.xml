@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="10dp">
 
     <blueprint.com.sage.shared.views.CircleImageView
         android:id="@+id/verify_user_list_photo"
@@ -41,10 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_toRightOf="@id/user_list_photo"
-        android:layout_toEndOf="@id/user_list_photo"
-        android:layout_toLeftOf="@id/verify_user_list_item_verify"
-        android:layout_toStartOf="@id/verify_user_list_item_verify"
+        android:layout_toRightOf="@id/verify_user_list_photo"
+        android:layout_toEndOf="@id/verify_user_list_photo"
         android:layout_centerVertical="true"
         android:orientation="vertical">
 

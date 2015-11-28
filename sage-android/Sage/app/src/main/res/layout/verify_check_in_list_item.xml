@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="10dp">
 
     <ImageButton
         android:id="@+id/verify_check_in_list_item_delete"

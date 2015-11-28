@@ -49,7 +49,7 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<VerifyCheckIn
         viewHolder.mUser.setText(checkIn.getUser().getName());
 
         String timeText = mActivity.getString(R.string.check_in_total_time,
-                checkIn.getSchool(), checkIn.getTotalTime());
+                checkIn.getSchool().getName(), checkIn.getTotalTime());
         viewHolder.mTotalTime.setText(timeText);
 
         String comment = checkIn.getComment() == null ? "No Comment" : checkIn.getComment();

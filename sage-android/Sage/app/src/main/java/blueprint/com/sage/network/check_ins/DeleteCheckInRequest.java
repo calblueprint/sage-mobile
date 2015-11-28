@@ -21,7 +21,7 @@ public class DeleteCheckInRequest extends BaseRequest {
     public DeleteCheckInRequest(final Activity activity, CheckIn checkIn,
                                 final Response.Listener<CheckIn> onSuccess,
                                 final Response.Listener<APIError> onFailure) {
-        super(Method.DELETE, makeUrl(null, "check_ins/", String.valueOf(checkIn.getId())), null,
+        super(Method.DELETE, makeUrl(null, "admin", "check_ins", String.valueOf(checkIn.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

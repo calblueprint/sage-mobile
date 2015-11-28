@@ -66,7 +66,7 @@ class SelectAnnouncementSchoolTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let schools = self.schools {
-            return schools.count + 1
+            return schools.count
         } else {
             return 0
         }

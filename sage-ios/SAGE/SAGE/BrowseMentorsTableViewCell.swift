@@ -23,7 +23,7 @@ class BrowseMentorsTableViewCell: UITableViewCell {
     func configureWithUser(user: User) {
         self.mentorPicture.setImageWithUser(user)
         self.mentorName.text = user.fullName()
-        self.schoolName.text = user.school!.name
+        self.schoolName.text = user.school?.name
         if user.totalHours != User.DefaultValues.DefaultHours.rawValue {
             self.totalHours.text = String(user.totalHours) + " hours"
         }
@@ -77,6 +77,10 @@ class BrowseMentorsTableViewCell: UITableViewCell {
         self.mentorName.setWidth(CGRectGetMinX(self.totalHours.frame) - mentorSchoolX - UIConstants.textMargin)
         self.schoolName.font = UIFont.getDefaultFont(14)
         self.schoolName.textColor = UIColor.secondaryTextColor
+        
+        if self.schoolName.text == nil {
+            self.mentorName.centerVertically()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

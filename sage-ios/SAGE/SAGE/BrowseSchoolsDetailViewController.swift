@@ -12,8 +12,8 @@ class BrowseSchoolsDetailViewController: UITableViewController {
 
     var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     var schoolLocation:  CLLocation?
-    var director: User?
-    var students: [User] = [User]()
+    var director: User? = User(firstName: "Test", lastName: "User")
+    var students: [User] = [User(firstName: "Testd", lastName: "User"), User( firstName: "Another", lastName: "User")]
     
     func configureWithSchool(school: School) {
         self.title = school.name!
@@ -21,7 +21,9 @@ class BrowseSchoolsDetailViewController: UITableViewController {
         self.schoolDetailHeaderView.schoolName.text = school.name!
         self.schoolDetailHeaderView.directorName.text = "director name"
         self.schoolDetailHeaderView.studentsList.text = "some studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome studentssome students"
-        self.director = school.director
+        if let director = school.director {
+            self.director = director
+        }
         if let students = school.students {
             self.students.appendContentsOf(students)
         }
@@ -53,14 +55,20 @@ class BrowseSchoolsDetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "StudentsCell")
-        if indexPath.section == 0 {
-            cell.textLabel?.text = self.director!.fullName()
-        } else {
-            cell.textLabel?.text = self.students[indexPath.row].fullName()
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
+        if cell == nil {
+            cell = BrowseMentorsTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
         }
-        cell.textLabel?.font = UIFont.getDefaultFont()
-        return cell
+        if indexPath.section == 0 {
+            (cell as! BrowseMentorsTableViewCell).configureWithUser(self.director!)
+        } else {
+            (cell as! BrowseMentorsTableViewCell).configureWithUser(self.students[indexPath.row])
+        }
+        return cell!
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return BrowseMentorsTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

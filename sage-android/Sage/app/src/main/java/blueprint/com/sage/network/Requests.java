@@ -19,6 +19,7 @@ import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
+import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
@@ -37,6 +38,7 @@ import blueprint.com.sage.network.schools.SchoolRequest;
 import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
+import blueprint.com.sage.network.users.EditUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
@@ -116,18 +118,35 @@ public class Requests {
         }
 
         public void makeCreateUserRequest(User user) {
-            CreateUserRequest request = new CreateUserRequest(mActivity, user, new Response.Listener<Session>() {
-                @Override
-                public void onResponse(Session session) {
-                    EventBus.getDefault().post(new CreateUserEvent(session));
-                }
-            }, new Response.Listener() {
-                @Override
-                public void onResponse(Object o) {
+            CreateUserRequest request = new CreateUserRequest(mActivity, user,
+                    new Response.Listener<Session>() {
+                        @Override
+                        public void onResponse(Session session) {
+                            EventBus.getDefault().post(new CreateUserEvent(session));
+                        }
+                    }, new Response.Listener() {
+                        @Override
+                        public void onResponse(Object o) {
 
-                }
-            });
+                        }
+                    });
 
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeEditRequest(User user) {
+            EditUserRequest request = new EditUserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            EventBus.getDefault().post(new EditUserEvent(user));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
             Requests.addToRequestQueue(mActivity, request);
         }
 

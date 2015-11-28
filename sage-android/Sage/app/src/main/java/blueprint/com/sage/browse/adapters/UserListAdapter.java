@@ -95,7 +95,6 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         final User user = item.getUser();
         viewHolder.mName.setText(user.getName());
         viewHolder.mSchool.setText(user.getSchool().getName());
-        viewHolder.mHours.setText(user.getHoursString());
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,7 +133,6 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Bind(R.id.user_list_name) TextView mName;
         @Bind(R.id.user_list_school) TextView mSchool;
         @Bind(R.id.user_list_photo) CircleImageView mImage;
-        @Bind(R.id.user_list_hours) TextView mHours;
 
         View mView;
 

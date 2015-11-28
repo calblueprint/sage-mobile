@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="user_name">Name</string>
+    <string name="user_email">Email</string>
+    <string name="user_school">School</string>
+    <string name="user_profile">Profile</string>
+    <string name="user_password">New Password</string>
+    <string name="user_password_confirm">Confirm New Password</string>
+    <string name="user_current_password">Current Password</string>
+    <string name="user_first_name">First Name</string>
+    <string name="user_last_name">Last Name</string>
+</resources>

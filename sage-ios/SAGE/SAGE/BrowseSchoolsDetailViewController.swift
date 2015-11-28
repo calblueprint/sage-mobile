@@ -30,8 +30,8 @@ class BrowseSchoolsDetailViewController: UITableViewController {
     }
 
     override func viewDidLoad() {
-        self.schoolDetailHeaderView.layoutSubviews()
         super.viewDidLoad()
+        self.schoolDetailHeaderView.layoutSubviews()
         self.tableView.tableHeaderView = schoolDetailHeaderView
         self.tableView.tableFooterView = UIView()
         

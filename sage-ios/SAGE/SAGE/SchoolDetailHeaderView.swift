@@ -1,5 +1,5 @@
 //
-//  SchoolDetailView.swift
+//  SchoolDetailHeaderView.swift
 //  SAGE
 //
 //  Created by Sameera Vemulapalli on 11/26/15.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class SchoolDetailView: UIView {
-
+class SchoolDetailHeaderView: UIView {
+    
     var mapView: GMSMapView = GMSMapView()
     var schoolName = UILabel()
     var directorName = UILabel()
@@ -35,10 +35,10 @@ class SchoolDetailView: UIView {
         self.directorName.font = UIFont.getDefaultFont(15)
         self.studentsList.font = UIFont.metaFont
         self.studentsList.textColor = UIColor.secondaryTextColor
-        self.studentsList.lineBreakMode = .ByTruncatingTail
+        self.studentsList.lineBreakMode = .ByWordWrapping
         self.studentsList.numberOfLines = 20
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -49,6 +49,7 @@ class SchoolDetailView: UIView {
         
         let screenRect = UIScreen.mainScreen().bounds
         let screenHeight = screenRect.size.height
+        let screenWidth = screenRect.size.width
         self.mapView.setHeight(screenHeight * 0.4)
         
         self.schoolName.sizeToFit()
@@ -58,12 +59,13 @@ class SchoolDetailView: UIView {
         self.directorName.sizeToFit()
         self.directorName.setY(CGRectGetMaxY(self.schoolName.frame))
         self.directorName.setX(UIConstants.sideMargin)
-
+        
         self.studentsList.setY(CGRectGetMaxY(self.directorName.frame))
         self.studentsList.setX(UIConstants.sideMargin)
-        self.studentsList.fillWidthWithMargin(UIConstants.sideMargin)
-        let width = CGRectGetWidth(self.studentsList.frame)
+        self.studentsList.setWidth(screenWidth - 2 * UIConstants.sideMargin)
         
-        self.studentsList.setSize(self.studentsList.sizeThatFits(CGSizeMake(width, CGFloat.max)))
+        self.studentsList.sizeToFit()
+        self.setHeight(CGRectGetMaxY(self.studentsList.frame) + UIConstants.verticalMargin)
+        
     }
 }

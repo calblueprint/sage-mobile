@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <blueprint.com.sage.shared.views.CircleImageView
-        android:id="@+id/user_list_photo"
+        android:id="@+id/verify_user_list_photo"
         android:layout_centerVertical="true"
         android:layout_width="50dp"
         android:layout_height="50dp" />
@@ -49,11 +49,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/user_list_name"
+            android:id="@+id/verify_user_list_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
-            android:id="@+id/user_list_school"
+            android:id="@+id/verify_user_list_school"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light" />

@@ -46,4 +46,7 @@
 
     <string name="check_in_request_delete_title">Delete Request?</string>
     <string name="check_in_request_delete_body">Are you sure you want to delete your request? This will reset your session.</string>
+
+    <!-- Verify Check In strings -->
+    <string name="check_in_total_time">%1$s - %2$s</string>
 </resources>

@@ -31,16 +31,14 @@ class BrowseSchoolsDetailViewController: UITableViewController {
         self.schoolDetailHeaderView.layoutSubviews()
         super.viewDidLoad()
         self.tableView.tableHeaderView = schoolDetailHeaderView
+        self.tableView.tableFooterView = UIView()
         
-        //self.tableView.tableFooterView = UIView()
         let marker = GMSMarker(position: self.schoolLocation!.coordinate)
         marker.map = self.schoolDetailHeaderView.mapView
         self.schoolDetailHeaderView.mapView.moveCamera(GMSCameraUpdate.setTarget(self.schoolLocation!.coordinate))
-        // Do any additional setup after loading the view.
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
         if self.director != nil && self.students.count > 0{
             return 2
         } else if self.director != nil || self.students.count > 0 {

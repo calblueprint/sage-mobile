@@ -24,7 +24,7 @@ public class PromoteUserRequest extends BaseRequest {
     public PromoteUserRequest(final Activity activity, User user,
                               final Response.Listener<User> onSuccess,
                               final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "admin", "user", String.valueOf(user.getId()), "promote"), convertToParams(user),
+        super(Method.POST, makeUrl(null, "admin", "users", String.valueOf(user.getId()), "promote"), convertToParams(user),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

@@ -90,8 +90,8 @@ public @Data class User {
 
     @JsonIgnore
     public int getRoleInt() {
-        for (int i = 0; i < VOLUNTEER_TYPES.length; i++)
-            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
+        for (int i = 0; i < ROLES.length; i++)
+            if (role.equals(ROLES[i]))
                 return i;
         return 0;
     }

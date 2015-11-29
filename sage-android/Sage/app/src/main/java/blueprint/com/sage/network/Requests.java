@@ -20,6 +20,7 @@ import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.EditUserEvent;
+import blueprint.com.sage.events.users.PromoteUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
@@ -39,6 +40,7 @@ import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.EditUserRequest;
+import blueprint.com.sage.network.users.PromoteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
@@ -180,6 +182,23 @@ public class Requests {
 
                     }
             });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makePromoteRequest(User user) {
+            PromoteUserRequest request = new PromoteUserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            EventBus.getDefault().post(new PromoteUserEvent(user));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
 
             Requests.addToRequestQueue(mActivity, request);
         }

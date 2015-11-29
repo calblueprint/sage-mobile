@@ -127,4 +127,8 @@ public @Data class User {
             ViewUtils.loadImage(activity, getImageUrl(), imageView);
         }
     }
+
+    public boolean isAdmin() {
+        return role.equals(ROLES[2]);
+    }
 }

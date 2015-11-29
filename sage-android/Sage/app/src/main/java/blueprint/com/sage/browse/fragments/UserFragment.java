@@ -15,6 +15,7 @@ import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -34,6 +35,8 @@ public class UserFragment extends Fragment {
     @Bind(R.id.user_photo) CircleImageView mPhoto;
 
     private User mUser;
+
+    private BaseInterface mBaseInterface;
     private NavigationInterface mNavigationInterface;
 
     public static UserFragment newInstance(User user) {
@@ -48,6 +51,7 @@ public class UserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
@@ -76,7 +80,18 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.menu_edit_delete, menu);
+
+        int layoutId = 0;
+        User currentUser = mBaseInterface.getUser();
+        if (currentUser.getId() == mUser.getId()) {
+            layoutId = R.menu.menu_edit_delete;
+        } else if (mUser.isAdmin()) {
+            layoutId = R.menu.menu_user_promote;
+        }
+
+        if (layoutId != 0)
+            inflater.inflate(R.menu.menu_edit_delete, menu);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

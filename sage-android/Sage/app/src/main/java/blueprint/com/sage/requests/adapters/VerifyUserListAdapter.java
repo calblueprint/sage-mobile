@@ -48,7 +48,6 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
 
         viewHolder.mName.setText(user.getName());
         viewHolder.mSchool.setText(user.getSchool().getName());
-        viewHolder.mHours.setText(user.getHoursString());
 
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +84,6 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
         @Bind(R.id.verify_user_list_photo) CircleImageView mImage;
         @Bind(R.id.verify_user_list_name) TextView mName;
         @Bind(R.id.verify_user_list_school) TextView mSchool;
-        @Bind(R.id.verify_user_list_hours) TextView mHours;
         @Bind(R.id.verify_user_list_item_verify) ImageButton mVerify;
         @Bind(R.id.verify_user_list_item_delete) ImageButton mDelete;
 

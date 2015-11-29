@@ -89,9 +89,13 @@ class BrowseSchoolsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row]
         let vc = BrowseSchoolsDetailViewController()
-        vc.configureWithSchool(school)
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        AdminOperations.loadSchool(school.id, completion: { (school) -> Void in
+            vc.configureWithSchool(school)
+            }) { (message) -> Void in
+                self.showErrorAndSetMessage(message)
         }
         self.navigationController!.pushViewController(vc, animated: true)
     }

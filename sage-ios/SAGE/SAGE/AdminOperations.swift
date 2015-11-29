@@ -99,6 +99,38 @@ class AdminOperations {
         
     }
     
+    static func loadSchool(id: Int, completion: ((School) -> Void), failure: (String) -> Void) {
+        let requestURL = StringConstants.kEndpointBaseURL + "/schools/" + String(id)
+        let manager = BaseOperation.manager()
+        manager.GET(requestURL, parameters: nil, success: { (operation, data) -> Void in
+            // stuff
+            let immutableSchoolDict = (data as! NSDictionary)["school"] as! NSDictionary
+            let schoolDict = immutableSchoolDict.mutableCopy()
+            let userDict = schoolDict["users"] as! NSMutableArray
+            schoolDict.removeObjectForKey("users")
+            var schoolSwiftDict = [String: AnyObject]()
+            for key in schoolDict.allKeys {
+                schoolSwiftDict[key as! String] = schoolDict[key as! String]
+            }
+            let school = School(propertyDictionary: schoolSwiftDict)
+            var students = [User]()
+            for user in userDict {
+                let userDict = user as! NSMutableDictionary
+                var userSwiftDict = [String: AnyObject]()
+                for key in userDict.allKeys {
+                    userSwiftDict[key as! String] = userDict[key as! String]
+                }
+                let user = User(propertyDictionary: userSwiftDict)
+                students.append(user)
+            }
+            school.students = students
+            completion(school)
+            
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
+    }
+    
     
     static func loadSignUpRequests(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()

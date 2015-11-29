@@ -11,10 +11,6 @@ import UIKit
 class SchoolDetailHeaderView: UIView {
     
     var mapView: GMSMapView = GMSMapView()
-    var schoolName = UILabel()
-    var directorName = UILabel()
-    var studentsList = UILabel()
-    
     
     //
     // MARK: - Initialization
@@ -22,21 +18,7 @@ class SchoolDetailHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
-        self.setUpViews()
-        
-    }
-    
-    func setUpViews() {
         self.addSubview(self.mapView)
-        self.addSubview(self.schoolName)
-        self.addSubview(self.directorName)
-        self.addSubview(self.studentsList)
-        self.schoolName.font = UIFont.titleFont
-        self.directorName.font = UIFont.getDefaultFont(15)
-        self.studentsList.font = UIFont.metaFont
-        self.studentsList.textColor = UIColor.secondaryTextColor
-        self.studentsList.lineBreakMode = .ByWordWrapping
-        self.studentsList.numberOfLines = 20
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,23 +31,8 @@ class SchoolDetailHeaderView: UIView {
         
         let screenRect = UIScreen.mainScreen().bounds
         let screenHeight = screenRect.size.height
-        let screenWidth = screenRect.size.width
         self.mapView.setHeight(screenHeight * 0.4)
-        
-        self.schoolName.sizeToFit()
-        self.schoolName.setY(CGRectGetMaxY(self.mapView.frame) + UIConstants.verticalMargin)
-        self.schoolName.setX(UIConstants.sideMargin)
-        
-        self.directorName.sizeToFit()
-        self.directorName.setY(CGRectGetMaxY(self.schoolName.frame))
-        self.directorName.setX(UIConstants.sideMargin)
-        
-        self.studentsList.setY(CGRectGetMaxY(self.directorName.frame))
-        self.studentsList.setX(UIConstants.sideMargin)
-        self.studentsList.setWidth(screenWidth - 2 * UIConstants.sideMargin)
-        
-        self.studentsList.sizeToFit()
-        self.setHeight(CGRectGetMaxY(self.studentsList.frame) + UIConstants.verticalMargin)
+        self.setHeight(CGRectGetMaxY(self.mapView.frame))
         
     }
 }

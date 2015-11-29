@@ -39,9 +39,17 @@ class BrowseSchoolsDetailViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let school = self.school {
             if section == 0 {
-                return 1
+                if let _ = self.school?.director {
+                    return 1
+                } else {
+                    return 0
+                }
             } else {
-                return school.students!.count
+                if let students = school.students {
+                    return students.count
+                } else {
+                    return 0
+                }
             }
         } else {
             return 0
@@ -78,7 +86,7 @@ class BrowseSchoolsDetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let _ = self.school {
+        if let _ = self.school?.director {
             return UITableViewAutomaticDimension
         } else {
             return 0

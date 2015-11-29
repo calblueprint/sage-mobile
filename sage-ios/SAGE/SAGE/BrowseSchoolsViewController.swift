@@ -83,7 +83,16 @@ class BrowseSchoolsViewController: UITableViewController {
             cell = BrowseSchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
         }
         (cell as! BrowseSchoolsTableViewCell).configureWithSchool(school)
+        AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
+            self.schools![indexPath.row] = updatedSchool
+            (cell as! BrowseSchoolsTableViewCell).configureWithSchool(updatedSchool)
+            cell?.setNeedsDisplay()
+            }) { (errorMessage) -> Void in }
         return cell!
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return BrowseSchoolsTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -92,11 +101,10 @@ class BrowseSchoolsViewController: UITableViewController {
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
+        vc.configureWithSchool(school)
         AdminOperations.loadSchool(school.id, completion: { (school) -> Void in
             vc.configureWithSchool(school)
-            }) { (message) -> Void in
-                self.showErrorAndSetMessage(message)
-        }
+            }) { (message) -> Void in }
         self.navigationController!.pushViewController(vc, animated: true)
     }
 }

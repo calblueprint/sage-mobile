@@ -129,6 +129,6 @@ public @Data class User {
     }
 
     public boolean isAdmin() {
-        return role.equals(ROLES[2]);
+        return role.equals(ROLES[1]);
     }
 }

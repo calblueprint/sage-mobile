@@ -9,4 +9,11 @@
     <string name="user_current_password">Current Password</string>
     <string name="user_first_name">First Name</string>
     <string name="user_last_name">Last Name</string>
+    
+    <!-- Promote user -->
+    <string name="user_promote_dialog_title">Set user as:</string>
+    <string-array name="user_promote_options">
+        <item>Student</item>
+        <item>Admin</item>
+    </string-array>
 </resources>

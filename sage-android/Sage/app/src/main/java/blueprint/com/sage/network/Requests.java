@@ -199,6 +199,8 @@ public class Requests {
 
                         }
                     });
+
+            Requests.addToRequestQueue(mActivity, request);
         }
     }
 

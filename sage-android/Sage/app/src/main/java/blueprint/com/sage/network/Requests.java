@@ -39,6 +39,7 @@ import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.EditUserRequest;
+import blueprint.com.sage.network.users.PromoteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
@@ -182,6 +183,21 @@ public class Requests {
             });
 
             Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makePromoteRequest(User user) {
+            PromoteUserRequest request = new PromoteUserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
         }
     }
 

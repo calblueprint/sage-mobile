@@ -182,6 +182,8 @@ class User: NSObject, NSCoding {
                 return "2 Units"
             default:
                 return "Volunteer"
+        }
+    }
 
     func fullName() -> String {
         return self.firstName! + " " + self.lastName!

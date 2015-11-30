@@ -19,7 +19,7 @@ class ProfileOperations: NSObject {
     }
     
     static func getUser(completion: ((User) -> Void), failure:((String) -> Void)) {
-        BaseOperation.manager().GET(StringConstants.kEndpointUser, parameters: nil, success: { (operation, data) -> Void in
+        BaseOperation.manager().GET(StringConstants.kEndpointUser(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
             let userJSON = data["user"]!! as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
             completion(user)

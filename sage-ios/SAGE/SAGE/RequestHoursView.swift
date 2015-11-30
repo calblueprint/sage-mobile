@@ -139,6 +139,11 @@ class RequestHoursView: UIView {
         self.scrollView.keyboardDismissMode = .OnDrag
         self.addSubview(self.scrollView)
         
+        // Pre-fill date only
+        self.dateFormatter.dateStyle = .MediumStyle
+        self.dateFormatter.timeStyle = .NoStyle
+        self.dateField.textField.text = self.dateFormatter.stringFromDate(self.startDate)
+
         self.dateField.label.text = "Date"
         self.dateField.textField.placeholder = "Enter a date"
         self.dateField.textField.delegate = self

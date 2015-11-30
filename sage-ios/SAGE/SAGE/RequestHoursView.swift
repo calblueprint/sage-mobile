@@ -17,6 +17,7 @@ class RequestHoursView: UIView {
     var endTimeField = FormFieldItem()
     var commentField = FormTextItem()
     
+    private var startDate = NSDate()
     private var startTime = NSDate()
     private var endTime = NSDate()
     private var keyboardControls = BSKeyboardControls()
@@ -69,6 +70,7 @@ class RequestHoursView: UIView {
         self.dateFormatter.dateStyle = .MediumStyle
         self.dateFormatter.timeStyle = .NoStyle
         self.dateField.textField.text = self.dateFormatter.stringFromDate(sender.date)
+        self.startDate = sender.date
     }
     
     @objc private func startTimePicked(sender: UIDatePicker!) {
@@ -92,6 +94,7 @@ class RequestHoursView: UIView {
         self.dateFormatter.dateStyle = .MediumStyle
         self.dateFormatter.timeStyle = .NoStyle
         self.dateField.textField.text = self.dateFormatter.stringFromDate(checkin.startTime!)
+        self.startDate = checkin.startTime!
         
         self.dateFormatter.dateStyle = .NoStyle
         self.dateFormatter.timeStyle = .ShortStyle
@@ -107,6 +110,9 @@ class RequestHoursView: UIView {
     }
     
     func exportToCheckinVerified(verified: Bool) -> Checkin {
+        if !verified {
+            self.adjustFinalDates()
+        }
         let checkin: Checkin = Checkin(
             user: LoginOperations.getUser(),
             startTime: self.startTime,
@@ -167,6 +173,25 @@ class RequestHoursView: UIView {
         self.commentField.textView.delegate = self
         self.commentField.setHeight(FormTextItem.defaultHeight)
         self.scrollView.addSubview(self.commentField)
+    }
+
+    private func adjustFinalDates() {
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        let components: NSCalendarUnit = [.Year, .Month, .Day , .Hour, .Minute, .NSTimeZoneCalendarUnit]
+
+        let dateComponents = calendar!.components(components, fromDate: self.startDate)
+        let startComponents = calendar!.components(components, fromDate: self.startTime)
+        let endComponents = calendar!.components(components, fromDate: self.endTime)
+
+        startComponents.year = dateComponents.year
+        startComponents.month = dateComponents.month
+        startComponents.day = dateComponents.day
+        self.startTime = calendar!.dateFromComponents(startComponents)!
+
+        endComponents.year = dateComponents.year
+        endComponents.month = dateComponents.month
+        endComponents.day = dateComponents.day
+        self.endTime = calendar!.dateFromComponents(endComponents)!
     }
 }
 

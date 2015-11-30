@@ -137,14 +137,14 @@ class BrowseMentorsViewController: UITableViewController {
         let user = self.mentors![indexPath.section][indexPath.row]
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
         if cell == nil {
-            cell = BrowseMentorsTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
+            cell = UsersTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
         }
-        (cell as! BrowseMentorsTableViewCell).configureWithUser(user)
+        (cell as! UsersTableViewCell).configureWithUser(user)
         return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return BrowseMentorsTableViewCell.cellHeight()
+        return UsersTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

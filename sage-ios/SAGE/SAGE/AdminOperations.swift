@@ -100,7 +100,7 @@ class AdminOperations {
     }
     
     static func loadSchool(id: Int, completion: ((School) -> Void), failure: (String) -> Void) {
-        let requestURL = StringConstants.kEndpointBaseURL + "/schools/" + String(id)
+        let requestURL = StringConstants.kSchoolDetailURL(id)
         let manager = BaseOperation.manager()
         manager.GET(requestURL, parameters: nil, success: { (operation, data) -> Void in
             // stuff

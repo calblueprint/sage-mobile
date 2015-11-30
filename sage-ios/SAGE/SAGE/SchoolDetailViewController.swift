@@ -1,5 +1,5 @@
 //
-//  BrowseSchoolsDetailViewController.swift
+//  SchoolDetailViewController
 //  SAGE
 //
 //  Created by Sameera Vemulapalli on 11/21/15.
@@ -8,21 +8,26 @@
 
 import UIKit
 
-class BrowseSchoolsDetailViewController: UITableViewController {
-
+class SchoolDetailViewController: UITableViewController {
+    
     var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     var school: School?
     
-    func configureWithSchool(school: School) {
+    func configureWithIncompleteSchool(school: School) {
         self.title = school.name!
+        AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
+            self.configureWithCompleteSchool(updatedSchool)
+            }) { (message) -> Void in }
+    }
+    
+    func configureWithCompleteSchool(school: School) {
         self.school = school
-        
         let marker = GMSMarker(position: self.school!.location!.coordinate)
         marker.map = self.schoolDetailHeaderView.mapView
-        self.schoolDetailHeaderView.mapView.moveCamera(GMSCameraUpdate.setTarget(self.school!.location!.coordinate))
+        self.schoolDetailHeaderView.mapView.camera = GMSCameraPosition(target: self.school!.location!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         self.tableView.reloadData()
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.schoolDetailHeaderView.layoutSubviews()
@@ -63,18 +68,18 @@ class BrowseSchoolsDetailViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
         if cell == nil {
-            cell = BrowseMentorsTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
+            cell = UsersTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
         }
         if indexPath.section == 0 {
-            (cell as! BrowseMentorsTableViewCell).configureWithUser(self.school!.director!)
+            (cell as! UsersTableViewCell).configureWithUser(self.school!.director!)
         } else {
-            (cell as! BrowseMentorsTableViewCell).configureWithUser(self.school!.students![indexPath.row])
+            (cell as! UsersTableViewCell).configureWithUser(self.school!.students![indexPath.row])
         }
         return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return BrowseMentorsTableViewCell.cellHeight()
+        return UsersTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -92,5 +97,5 @@ class BrowseSchoolsDetailViewController: UITableViewController {
             return 0
         }
     }
-
+    
 }

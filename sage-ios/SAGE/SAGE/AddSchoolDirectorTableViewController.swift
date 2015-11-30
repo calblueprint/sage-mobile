@@ -134,13 +134,13 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let user = self.directors![indexPath.section][indexPath.row]
-        let cell = BrowseMentorsTableViewCell()
+        let cell = UsersTableViewCell()
         cell.configureWithUser(user)
         return cell
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return BrowseMentorsTableViewCell.cellHeight()
+        return UsersTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

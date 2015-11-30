@@ -1,5 +1,5 @@
 //
-//  BrowseSchoolsTableViewCell.swift
+//  SchoolsTableViewCell
 //  SAGE
 //
 //  Created by Sameera Vemulapalli on 11/9/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseSchoolsTableViewCell: UITableViewCell {
+class SchoolsTableViewCell: UITableViewCell {
     
     var schoolName = UILabel()
     var directorName = UILabel()
@@ -17,6 +17,20 @@ class BrowseSchoolsTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .Default, reuseIdentifier: reuseIdentifier)
         self.selectionStyle  = .None
+        self.setUpSubviews()
+    }
+    
+    func setUpSubviews() {
+        self.contentView.addSubview(self.numStudents)
+        self.numStudents.textColor = UIColor.secondaryTextColor
+        self.numStudents.font = UIFont.getDefaultFont(16)
+        
+        self.contentView.addSubview(self.schoolName)
+        self.schoolName.font = UIFont.getSemiboldFont(16)
+        
+        self.contentView.addSubview(self.directorName)
+        self.directorName.font = UIFont.getDefaultFont(14)
+        self.directorName.textColor = UIColor.secondaryTextColor
     }
     
     func configureWithSchool(school: School) {
@@ -42,27 +56,19 @@ class BrowseSchoolsTableViewCell: UITableViewCell {
         
         super.layoutSubviews()
         
-        self.contentView.addSubview(self.numStudents)
         self.numStudents.sizeToFit()
         self.numStudents.centerVertically()
         self.numStudents.setX(self.frame.width - self.numStudents.frame.width - UIConstants.sideMargin)
-        self.numStudents.textColor = UIColor.secondaryTextColor
-        self.numStudents.font = UIFont.getDefaultFont(16)
         
-        self.contentView.addSubview(self.schoolName)
         self.schoolName.sizeToFit()
         self.schoolName.setY(UIConstants.verticalMargin)
         self.schoolName.setX(UIConstants.sideMargin)
         self.schoolName.setWidth(CGRectGetMinX(self.numStudents.frame) - UIConstants.sideMargin)
-        self.schoolName.font = UIFont.getSemiboldFont(16)
         
-        self.contentView.addSubview(self.directorName)
         self.directorName.sizeToFit()
         self.directorName.setY(CGRectGetMaxY(self.schoolName.frame))
         self.directorName.setX(UIConstants.sideMargin)
         self.directorName.setWidth(CGRectGetMinX(self.numStudents.frame) - UIConstants.sideMargin)
-        self.directorName.font = UIFont.getDefaultFont(14)
-        self.directorName.textColor = UIColor.secondaryTextColor
     }
     
     required init?(coder aDecoder: NSCoder) {

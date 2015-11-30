@@ -100,6 +100,7 @@
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DEC6C501BCA02B30085BF07 /* AnnouncementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */; };
+		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,6 +198,7 @@
 		5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewCell.swift; sourceTree = "<group>"; };
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DEC6C4F1BCA02B30085BF07 /* AnnouncementsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsView.swift; sourceTree = "<group>"; };
+		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -405,6 +407,7 @@
 				4280CE171BF43E5C005D1B97 /* AdminOperations.swift */,
 				424DEBFF1BF4B8810099CCE0 /* LoginOperations.swift */,
 				5D63EF111BFC86340036D478 /* SchoolOperations.swift */,
+				5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -601,7 +604,7 @@
 				TargetAttributes = {
 					2705CC391BB927D7004FE927 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = Y635P4CS27;
+						DevelopmentTeam = 3K4C854L78;
 					};
 					2705CC4D1BB927D8004FE927 = {
 						CreatedOnToolsVersion = 7.0;
@@ -757,6 +760,7 @@
 				429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */,
 				42FE17C71BF447BA0029BF22 /* APIKeys.swift in Sources */,
 				42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */,
+				5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */,
 				5D8AF98B1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */,

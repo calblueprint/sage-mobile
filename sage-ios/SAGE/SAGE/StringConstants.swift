@@ -21,4 +21,5 @@ struct StringConstants {
     static let kEndpointSchool = kEndpointBaseURL + "/schools"
     static let kEndpointCheckin = kEndpointBaseURL + "/check_ins"
     static let kEndpointAnnouncements = kEndpointBaseURL + "/announcements"
+    static let kEndpointUser = kEndpointBaseURL + "/users/1"
 }

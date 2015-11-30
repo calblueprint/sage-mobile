@@ -173,4 +173,15 @@ class User: NSObject, NSCoding {
         propertyDict[UserConstants.kVerified] = verified
         return propertyDict
     }
+    
+    func volunteerLevelToString(level: VolunteerLevel) -> String {
+        switch level {
+            case .OneUnit:
+                return "1 Unit"
+            case .TwoUnit:
+                return "2 Units"
+            default:
+                return "Volunteer"
+        }
+    }
 }

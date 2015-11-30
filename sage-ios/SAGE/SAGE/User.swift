@@ -177,4 +177,13 @@ class User: NSObject, NSCoding {
     func fullName() -> String {
         return self.firstName! + " " + self.lastName!
     }
+    
+    func getRequiredHours() -> Int {
+        switch self.level {
+        case .ZeroUnit: return 1
+        case .OneUnit: return 2
+        case .TwoUnit: return 3
+        default: return 0
+        }
+    }
 }

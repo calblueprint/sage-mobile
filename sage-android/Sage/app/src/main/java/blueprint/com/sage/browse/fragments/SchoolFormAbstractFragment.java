@@ -42,6 +42,7 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
+import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
@@ -62,6 +63,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private List<AutocompletePrediction> mPredictions;
 
+    @Bind(R.id.create_school_layout) View mLayout;
     @Bind(R.id.create_school_name) EditText mSchoolName;
     @Bind(R.id.create_school_address) AutoCompleteTextView mSchoolAddress;
     @Bind(R.id.create_school_map) MapView mMapView;
@@ -75,6 +77,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     protected NavigationInterface mNavigationInterface;
     private BaseInterface mBaseInterface;
     private PlacePredictionAdapter mPlaceAdapter;
+    private FormValidator mValidator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         mPredictions = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
+        mValidator = FormValidator.newInstance(getActivity());
         makeUserListRequest();
     }
 
@@ -141,10 +145,9 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private void makeUserListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
-        queryParams.put("admin", "true");
-        queryParams.put("director_id", null);
+        queryParams.put("role", "1");
 
-        Requests.Schools.with(getActivity()).makeListRequest(queryParams);
+        Requests.Users.with(getActivity()).makeListRequest(queryParams);
     }
 
     private void initializeViews(Bundle savedInstanceState) {
@@ -183,6 +186,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers,
                 R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+        mDirector.setAdapter(mUserAdapter);
     }
 
     public abstract void initializeSchool();
@@ -231,31 +235,31 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     }
 
     public void validateAndSubmitRequest() {
-        boolean hasError = false;
+        if (!isValid())
+            return;
 
         if (mSchool == null)
             mSchool = new School();
 
         String name = mSchoolName.getText().toString();
         String address = mSchoolAddress.getText().toString();
-
-        if (name.isEmpty()) {
-            mSchoolName.setError(getString(R.string.cannot_be_blank, "Name"));
-            hasError = true;
-        }
-
-        if (address.isEmpty()) {
-            mSchoolAddress.setError(getString(R.string.cannot_be_blank, "Address"));
-            hasError = true;
-        }
-
-        if (hasError)
-            return;
-
         LatLng bounds = MapUtils.getLatLngFromAddress(getActivity(), address);
-        School school = new School(name, address, bounds);
+        User director = (User) mDirector.getSelectedItem();
 
-        Requests.Schools.with(getActivity()).makeCreateRequest(school);
+        mSchool.setName(name);
+        mSchool.setAddress(address);
+        mSchool.setDirectorId(director.getId());
+        if (bounds != null)
+            mSchool.setLat((float) bounds.latitude);
+            mSchool.setLng((float) bounds.longitude);
+
+        Requests.Schools.with(getActivity()).makeCreateRequest(mSchool);
+    }
+
+    private boolean isValid() {
+        return mValidator.hasNonBlankField(mSchoolName, "Name") &
+                mValidator.hasNonBlankField(mSchoolAddress, "Address") &
+                mValidator.mustBePicked(mDirector, "Director", mLayout);
     }
 
     public void onEvent(CreateSchoolEvent event) {

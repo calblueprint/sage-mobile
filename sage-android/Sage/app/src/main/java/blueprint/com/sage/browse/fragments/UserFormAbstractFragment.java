@@ -29,7 +29,7 @@ import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.validators.PhotoPicker;
-import blueprint.com.sage.shared.validators.UserValidators;
+import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.signUp.SignUpActivity;
 import butterknife.Bind;
@@ -61,7 +61,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     @Bind(R.id.create_user_photo) CircleImageView mPhoto;
 
     private PhotoPicker mPhotoPicker;
-    protected UserValidators mValidator;
+    protected FormValidator mValidator;
 
     private SchoolSpinnerAdapter mSchoolAdapter;
     private TypeSpinnerAdapter mTypeAdapter;
@@ -81,7 +81,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
-        mValidator = UserValidators.newInstance(getActivity());
+        mValidator = FormValidator.newInstance(getActivity());
         mNavigationInterface = (NavigationInterface) getActivity();
         mBaseInterface = (BaseInterface) getActivity();
         mSchools = new ArrayList<>();

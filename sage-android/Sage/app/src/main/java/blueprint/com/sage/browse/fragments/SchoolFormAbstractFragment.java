@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -27,12 +28,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.PlacePredictionAdapter;
+import blueprint.com.sage.browse.adapters.UserSpinnerAdapter;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
+import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
@@ -59,7 +64,11 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     @Bind(R.id.create_school_name) EditText mSchoolName;
     @Bind(R.id.create_school_address) AutoCompleteTextView mSchoolAddress;
-    @Bind(R.id.create_school_name) MapView mMapView;
+    @Bind(R.id.create_school_map) MapView mMapView;
+    @Bind(R.id.create_school_director) Spinner mDirector;
+
+    private List<User> mUsers;
+    private UserSpinnerAdapter mUserAdapter;
 
     private GoogleMap mMap;
     protected School mSchool;
@@ -75,6 +84,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         mPredictions = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
+        makeUserListRequest();
     }
 
     @Override
@@ -128,6 +138,14 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         EventBus.getDefault().unregister(this);
     }
 
+    private void makeUserListRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("admin", "true");
+        queryParams.put("director_id", null);
+
+        Requests.Schools.with(getActivity()).makeListRequest(queryParams);
+    }
+
     private void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
@@ -161,6 +179,8 @@ public abstract class SchoolFormAbstractFragment extends Fragment
                     moveMapToLatLng(bounds);
             }
         });
+
+        mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
     }
 
     public abstract void initializeSchool();
@@ -238,6 +258,15 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     public void onEvent(CreateSchoolEvent event) {
         FragUtils.popBackStack(this);
+    }
+
+    public void onEvent(UserListEvent event) {
+        FragUtils.popBackStack(this);
+    }
+
+    private void setUsers(List<User> users) {
+        mUsers = users;
+
     }
 
     private void setPredictions(List<AutocompletePrediction> predictions) {

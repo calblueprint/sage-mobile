@@ -34,14 +34,12 @@
                 <EditText
                     style="@style/UserText"
                     android:id="@+id/create_user_first_name"
-                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/sign_up_first_name"/>
 
                 <EditText
                     style="@style/UserText"
                     android:id="@+id/create_user_last_name"
-                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/sign_up_last_name"/>
 
@@ -65,7 +63,6 @@
                 <EditText
                     style="@style/UserText"
                     android:id="@+id/create_user_email"
-                    android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/sign_in_email"
                     android:inputType="textEmailAddress"/>
@@ -90,16 +87,12 @@
                 <EditText
                     style="@style/UserText"
                     android:id="@+id/create_user_password"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
                     android:hint="@string/sign_up_password"
                     android:inputType="textPassword" />
 
                 <EditText
                     style="@style/UserText"
                     android:id="@+id/create_user_confirm_password"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
                     android:hint="@string/sign_up_password_confirm"
                     android:inputType="textPassword"/>
 

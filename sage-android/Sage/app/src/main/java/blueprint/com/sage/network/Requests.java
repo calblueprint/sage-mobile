@@ -9,25 +9,40 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import blueprint.com.sage.events.checkIns.CheckInEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
+import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.events.users.CreateAdminEvent;
+import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
+import blueprint.com.sage.events.users.EditUserEvent;
+import blueprint.com.sage.events.users.PromoteUserEvent;
+import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
+import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.schools.CreateSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
+import blueprint.com.sage.network.schools.SchoolRequest;
+import blueprint.com.sage.network.users.CreateAdminRequest;
+import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
+import blueprint.com.sage.network.users.EditUserRequest;
+import blueprint.com.sage.network.users.PromoteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
+import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 import de.greenrobot.event.EventBus;
@@ -103,6 +118,90 @@ public class Requests {
 
             Requests.addToRequestQueue(mActivity, request);
         }
+
+        public void makeCreateUserRequest(User user) {
+            CreateUserRequest request = new CreateUserRequest(mActivity, user,
+                    new Response.Listener<Session>() {
+                        @Override
+                        public void onResponse(Session session) {
+                            EventBus.getDefault().post(new CreateUserEvent(session));
+                        }
+                    }, new Response.Listener() {
+                        @Override
+                        public void onResponse(Object o) {
+
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeEditRequest(User user) {
+            EditUserRequest request = new EditUserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            EventBus.getDefault().post(new EditUserEvent(user));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeCreateAdminRequest(User user) {
+            CreateAdminRequest request = new CreateAdminRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            EventBus.getDefault().post(new CreateAdminEvent(user));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError o) {
+
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeShowRequest(User user) {
+            UserRequest request = new UserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            EventBus.getDefault().post(new UserEvent(user));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                    }
+            });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makePromoteRequest(User user) {
+            PromoteUserRequest request = new PromoteUserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            EventBus.getDefault().post(new PromoteUserEvent(user));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
     }
 
     public static class CheckIns {
@@ -170,6 +269,25 @@ public class Requests {
 
             Requests.addToRequestQueue(mActivity, request);
         }
+
+        public void makeCreateRequest(CheckIn checkIn) {
+            CreateCheckInRequest request = new CreateCheckInRequest(mActivity, checkIn,
+                    new Response.Listener<CheckIn>() {
+                        @Override
+                        public void onResponse(CheckIn checkIn) {
+                            EventBus.getDefault().post(new CheckInEvent(checkIn));
+
+                        }
+                    },
+                    new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError error) {
+
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
     }
 
     public static class Schools {
@@ -214,6 +332,23 @@ public class Requests {
 
                         }
                     });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeShowRequest(School school) {
+            SchoolRequest request = new SchoolRequest(mActivity, school,
+                    new Response.Listener<School>() {
+                        @Override
+                        public void onResponse(School school) {
+                            EventBus.getDefault().post(new SchoolEvent(school));
+                       }
+                    }, new Response.Listener<APIError>() {
+                    @Override
+                    public void onResponse(APIError error) {
+
+                    }
+                });
 
             Requests.addToRequestQueue(mActivity, request);
         }

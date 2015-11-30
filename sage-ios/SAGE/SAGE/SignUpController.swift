@@ -217,6 +217,7 @@ class SignUpController: UIViewController  {
             self.view.alpha = 0.0
         }
         self.dismissViewControllerAnimated(false, completion: nil)
+        
         (self.presentingViewController as! RootController).pushLoginViewController()
 
     }
@@ -264,7 +265,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
                         email.becomeFirstResponder()
                 })
             } else {
-                self.showErrorAndSetMessage("Please fill out your first and last name!", size: 64.0)
+                self.showErrorAndSetMessage("Please fill out your first and last name!")
             }
         } else if textField == email {
             password.becomeFirstResponder()
@@ -277,7 +278,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
                     signUpView.changeBackgroundColor(newPoint.x)
                 }, completion: nil)
             } else {
-                self.showErrorAndSetMessage("Please fill out your email and password!", size: 64.0)
+                self.showErrorAndSetMessage("Please fill out your email and password!")
             }
         }
         return true
@@ -312,7 +313,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         message = tuple.1
         if !handledCase && scrollView.contentOffset.x > screenWidth * 2 && !valid {
             scrollView.setContentOffset(CGPointMake(2 * signUpView.frame.width, 0), animated: false)
-            self.showErrorAndSetMessage(message, size: 64)
+            self.showErrorAndSetMessage(message)
             handledCase = true
         }
         
@@ -321,7 +322,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         message = tuple.1
         if !handledCase && scrollView.contentOffset.x > screenWidth && !valid {
             scrollView.setContentOffset(CGPointMake(signUpView.frame.width, 0), animated: false)
-            self.showErrorAndSetMessage(message, size: 64)
+            self.showErrorAndSetMessage(message)
             handledCase = true
         }
         
@@ -330,7 +331,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         message = tuple.1
         if !handledCase && scrollView.contentOffset.x > 0 && !valid {
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-            self.showErrorAndSetMessage(message, size: 64)
+            self.showErrorAndSetMessage(message)
             handledCase = true
         }
         
@@ -344,9 +345,9 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         }
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    func showErrorAndSetMessage(message: String) {
         let error = (self.view as! SignUpView).currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error)
         (self.view as! SignUpView).currentErrorMessage = errorView
     }
     

@@ -17,14 +17,14 @@ class ErrorView: UIView {
         super.init(frame: frame)
     }
     
-    convenience init(height: CGFloat, messageString: String) {
+    convenience init(height: CGFloat, messageString: String, color: UIColor = UIColor.whiteColor()) {
         let screenRect = UIScreen.mainScreen().bounds;
         let screenWidth = screenRect.size.width;
         let newFrame = CGRectMake(0, 0, screenWidth, height)
         self.init(frame: newFrame)
         
         self.addSubview(self.background)
-        self.background.backgroundColor = UIColor.whiteColor()
+        self.background.backgroundColor = color
         self.background.alpha = 0.4
         
         self.addSubview(self.message)

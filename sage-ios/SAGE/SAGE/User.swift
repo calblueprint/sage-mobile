@@ -182,6 +182,17 @@ class User: NSObject, NSCoding {
                 return "2 Units"
             default:
                 return "Volunteer"
+
+    func fullName() -> String {
+        return self.firstName! + " " + self.lastName!
+    }
+    
+    func getRequiredHours() -> Int {
+        switch self.level {
+        case .ZeroUnit: return 1
+        case .OneUnit: return 2
+        case .TwoUnit: return 3
+        default: return 0
         }
     }
 }

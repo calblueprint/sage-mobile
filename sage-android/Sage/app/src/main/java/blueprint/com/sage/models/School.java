@@ -19,6 +19,7 @@ public @Data class School {
     private float lng;
     private String address;
 
+    private User director;
     private List<User> users;
 
     public School() {}
@@ -30,5 +31,9 @@ public @Data class School {
             this.lat = (float) bounds.latitude;
             this.lng = (float) bounds.longitude;
         }
+    }
+
+    public boolean hasLatLng() {
+        return lat != 0.0 && lng != 0.0;
     }
 }

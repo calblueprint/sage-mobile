@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/create_user_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <blueprint.com.sage.shared.views.CircleImageView
+            android:id="@+id/create_user_photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="8dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/default_profile"/>
+
+        <RelativeLayout
+            style="@style/UserRelativeLayout"
+            android:id="@+id/user_name_layout">
+
+            <ImageView
+                style="@style/UserIcon"
+                android:id="@+id/user_name_icon"
+                android:src="@drawable/ic_person_pin_white" />
+
+            <LinearLayout
+                style="@style/UserLinearLayout"
+                android:layout_toRightOf="@id/user_name_icon"
+                android:layout_toEndOf="@id/user_name_icon" >
+
+                <EditText
+                    style="@style/UserText"
+                    android:id="@+id/create_user_first_name"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_up_first_name"/>
+
+                <EditText
+                    style="@style/UserText"
+                    android:id="@+id/create_user_last_name"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_up_last_name"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/UserRelativeLayout"
+            android:id="@+id/user_email_layout">
+
+            <ImageView
+                style="@style/UserIcon"
+                android:id="@+id/user_email_icon"
+                android:src="@drawable/ic_mail_white" />
+
+            <LinearLayout
+                style="@style/UserLinearLayout"
+                android:layout_toRightOf="@id/user_email_icon"
+                android:layout_toEndOf="@id/user_email_icon" >
+
+                <EditText
+                    style="@style/UserText"
+                    android:id="@+id/create_user_email"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_in_email"
+                    android:inputType="textEmailAddress"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/UserRelativeLayout"
+            android:id="@+id/create_user_password_layout">
+
+            <ImageView
+                style="@style/UserIcon"
+                android:id="@+id/create_user_password_icon"
+                android:src="@drawable/ic_alarm_on_black" />
+
+            <LinearLayout
+                style="@style/UserLinearLayout"
+                android:layout_toRightOf="@id/create_user_password_icon"
+                android:layout_toEndOf="@id/create_user_password_icon" >
+
+                <EditText
+                    style="@style/UserText"
+                    android:id="@+id/create_user_password"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_up_password"
+                    android:inputType="textPassword" />
+
+                <EditText
+                    style="@style/UserText"
+                    android:id="@+id/create_user_confirm_password"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_up_password_confirm"
+                    android:inputType="textPassword"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/UserRelativeLayout"
+            android:id="@+id/user_school_layout">
+
+            <ImageView
+                style="@style/UserIcon"
+                android:id="@+id/user_school_icon"
+                android:src="@drawable/ic_location_city_black" />
+
+            <Spinner
+                style="@style/UserSpinner"
+                android:id="@+id/create_user_school"
+                android:layout_toRightOf="@id/user_school_icon"
+                android:layout_toEndOf="@id/user_school_icon"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/UserRelativeLayout"
+            android:id="@+id/user_type_layout">
+
+            <ImageView
+                style="@style/UserIcon"
+                android:id="@+id/user_type_icon"
+                android:src="@drawable/ic_alarm_on_black" />
+
+            <Spinner
+                style="@style/UserSpinner"
+                android:id="@+id/create_user_type"
+                android:layout_toRightOf="@id/user_type_icon"
+                android:layout_toEndOf="@id/user_type_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/UserRelativeLayout"
+            android:id="@+id/user_role_layout">
+
+            <ImageView
+                style="@style/UserIcon"
+                android:id="@+id/user_role_icon"
+                android:src="@drawable/ic_alarm_on_black" />
+
+            <Spinner
+                style="@style/UserSpinner"
+                android:id="@+id/create_user_role"
+                android:layout_toRightOf="@id/user_role_icon"
+                android:layout_toEndOf="@id/user_role_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            style="@style/UserRelativeLayout"
+            android:id="@+id/user_current_password_layout">
+
+            <ImageView
+                style="@style/UserIcon"
+                android:id="@+id/user_current_password_icon"
+                android:src="@drawable/ic_alarm_on_black" />
+
+            <LinearLayout
+                style="@style/UserLinearLayout"
+                android:layout_toRightOf="@id/user_current_password_icon"
+                android:layout_toEndOf="@id/user_current_password_icon" >
+
+                <EditText
+                    style="@style/UserText"
+                    android:id="@+id/create_user_current_password"
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sign_up_current_password"
+                    android:inputType="textPassword" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

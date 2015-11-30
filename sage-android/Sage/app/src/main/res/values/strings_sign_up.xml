@@ -6,6 +6,7 @@
     <string name="sign_up_profile">Profile</string>
     <string name="sign_up_password">Password</string>
     <string name="sign_up_password_confirm">Confirm Password</string>
+    <string name="sign_up_current_password">Current Password</string>
     <string name="sign_up_first_name">First Name</string>
     <string name="sign_up_last_name">Last Name</string>
 
@@ -23,18 +24,6 @@
 
     <string name="sign_up_profile_title">One last step!</string>
     <string name="sign_up_profile_subtitle">Let\'s put a face to you!</string>
-
-    <!-- Errors -->
-    <string name="sign_up_email_error">Email must be a valid berkeley.edu address.</string>
-    <string name="sign_up_password_blank_error">Password and Confirmation cannot be blank.</string>
-    <string name="sign_up_password_nonmatch_error">Password and Confirmation must match.</string>
-    <string name="sign_up_profile_blank_error">Profile picture cannot be empty.</string>
-
-    <string-array name="sign_up_volunteer_types">
-        <item>Volunteer</item>
-        <item>One Unit</item>
-        <item>Two Units</item>
-    </string-array>
 
     <!-- Unverified Activity -->
     <string name="unverified_body">Thanks for signing up! A request has been sent to SAGE for approval.</string>

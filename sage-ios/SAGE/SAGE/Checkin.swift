@@ -38,11 +38,11 @@ class Checkin: NSObject {
                 self.user = User(propertyDictionary: userDictionary)
             case CheckinConstants.kStartTime:
                 let formatter = NSDateFormatter()
-                formatter.dateFormat = StringConstants.displayDateFormat
+                formatter.dateFormat = StringConstants.JSONdateFormat
                 self.startTime = formatter.dateFromString(value as! String)
             case CheckinConstants.kEndTime:
                 let formatter = NSDateFormatter()
-                formatter.dateFormat = StringConstants.displayDateFormat
+                formatter.dateFormat = StringConstants.JSONdateFormat
                 self.endTime = formatter.dateFromString(value as! String)
             case CheckinConstants.kSchool:
                 let schoolDictionary = value as! [String: AnyObject]
@@ -70,12 +70,12 @@ class Checkin: NSObject {
         }
         if let startTime = self.startTime {
             let formatter = NSDateFormatter()
-            formatter.dateFormat = StringConstants.displayDateFormat
+            formatter.dateFormat = StringConstants.JSONdateFormat
             propertyDict[CheckinConstants.kStartTime] = formatter.stringFromDate(startTime)
         }
         if let endTime = self.endTime {
             let formatter = NSDateFormatter()
-            formatter.dateFormat = StringConstants.displayDateFormat
+            formatter.dateFormat = StringConstants.JSONdateFormat
             propertyDict[CheckinConstants.kEndTime] = formatter.stringFromDate(endTime)
         }
         if let school = self.school {

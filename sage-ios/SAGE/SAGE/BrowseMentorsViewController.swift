@@ -10,51 +10,150 @@ import UIKit
 
 class BrowseMentorsViewController: UITableViewController {
     
-    var mentors: NSMutableArray = NSMutableArray()
+    var mentors: [[User]]?
     var currentErrorMessage: ErrorView?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    
+    init() {
+        super.init(style: .Plain)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.sectionIndexColor = UIColor.mainColor
         self.title = "Mentors"
         self.tableView.tableFooterView = UIView()
-        // self.loadMentors()
+        self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
+        
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "loadMentors", forControlEvents: .ValueChanged)
+        
+        self.loadMentors()
         
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let letterChar = alphabet[alphabet.startIndex.advancedBy(section)]
+        return String(letterChar)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+    }
+    
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
+    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        var charArray = [String]()
+        for i in 0...25 {
+            let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
+            let letterString = String(letterChar)
+            charArray.append(letterString)
+        }
+        return charArray
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let _ = self.mentors {
+            if self.mentors![section].count == 0 {
+                return 0.0
+            } else {
+                return 22.0
+            }
+        } else {
+            return 0.0
+        }
+    }
+    
     func loadMentors() {
-        AdminOperations.loadMentors({ (mentoryArray) -> Void in
-            self.mentors = mentoryArray
+        AdminOperations.loadMentors({ (mentorArray) -> Void in
+            let alphabet = "abcdefghijklmnopqrstuvwxyz"
+            var charArray = [String: Int]()
+            self.mentors = [[User]]()
+            for i in 0...25 {
+                self.mentors!.append([User]())
+                let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
+                let letterString = String(letterChar)
+                charArray[letterString] = i
+            }
+            
+            for mentor in mentorArray {
+                let firstName = mentor.firstName!
+                let firstLetter = String(firstName[firstName.startIndex.advancedBy(0)]).lowercaseString
+                let firstLetterIndex = charArray[firstLetter]
+                self.mentors![firstLetterIndex!].append(mentor)
+            }
+            
+            self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.refreshControl?.endRefreshing()
+            
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage, size: 64.0)
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if let mentors = self.mentors {
+            return mentors[section].count
+        } else {
+            return 0
+        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 26
+    }
+    
+    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
+        let alphabet = "abcdefghijklmnopqrstuvwxyz"
+        var charArray = [String: Int]()
+        for i in 0...25 {
+            let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
+            let letterString = String(letterChar)
+            charArray[letterString] = i
+        }
+        return charArray[title.lowercaseString]!
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let school = School(name: "Sample School")
-        let user = User(firstName: "Sameera", lastName: "Vemulapalli", school: school, totalHours: 99)
-        let cell = BrowseMentorsTableViewCell()
-        cell.configureWithUser(user)
-        return cell
+        let user = self.mentors![indexPath.section][indexPath.row]
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
+        if cell == nil {
+            cell = UsersTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
+        }
+        (cell as! UsersTableViewCell).configureWithUser(user)
+        return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return BrowseMentorsTableViewCell.cellHeight()
+        return UsersTableViewCell.cellHeight()
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let mentor = self.mentors![indexPath.section][indexPath.row]
+        let vc = BrowseMentorsDetailViewController(mentor: mentor)
+        if let topItem = self.navigationController!.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController!.pushViewController(vc, animated: true)
     }
     
 }

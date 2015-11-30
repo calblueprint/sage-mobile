@@ -8,13 +8,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.fragments.CheckInMapFragment;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
+import blueprint.com.sage.shared.interfaces.CheckInActivityInterface;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 10/16/15.
  * Check in Activity
  */
-public class CheckInActivity extends NavigationAbstractActivity {
+public class CheckInActivity extends NavigationAbstractActivity implements CheckInActivityInterface {
     private GoogleApiClient mGoogleApiClient;
 
     @Override

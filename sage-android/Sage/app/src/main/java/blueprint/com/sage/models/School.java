@@ -1,6 +1,5 @@
 package blueprint.com.sage.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
@@ -18,12 +17,10 @@ public @Data class School {
     private float lat;
     private float lng;
     private String address;
+    private int directorId;
 
     private User director;
     private List<User> users;
-
-    @JsonIgnore
-    private int directorId;
 
     public School() {}
 

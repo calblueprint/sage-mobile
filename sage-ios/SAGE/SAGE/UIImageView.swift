@@ -11,6 +11,7 @@ import UIKit
 extension UIImageView {
     
     func setImageWithUser(user: User) {
+        self.contentMode = UIViewContentMode.ScaleAspectFill
         self.image = UIImage.defaultProfileImage()
         if let url = user.imageURL {
             self.setImageWithURL(url)

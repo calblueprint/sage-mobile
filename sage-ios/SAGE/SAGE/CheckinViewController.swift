@@ -36,7 +36,11 @@ class CheckinViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
-        self.requiredTime = 3600 * 1 //LoginOperations.getUser()?.requiredHours()
+        if let user = LoginOperations.getUser() {
+            self.requiredTime = 3600 * Double(user.getRequiredHours())
+        } else {
+            self.requiredTime = 3600
+        }
 
         self.setupDefaultTitleLabel()
         self.setupSessionTitleLabel()

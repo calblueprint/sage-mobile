@@ -44,6 +44,6 @@ public class VerifyCheckInRequest extends BaseRequest {
     }
 
     private static String makeUrl(CheckIn checkIn) {
-        return makeUrl(null, "check_ins", String.valueOf(checkIn.getId()), "verify");
+        return makeUrl(null, "admin", "check_ins", String.valueOf(checkIn.getId()), "verify");
     }
 }

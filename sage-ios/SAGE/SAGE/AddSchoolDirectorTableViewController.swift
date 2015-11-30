@@ -12,7 +12,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     
     var directors: [[User]]?
     var currentErrorMessage: ErrorView?
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
     weak var parentVC: AddSchoolController?
     
     init() {
@@ -144,8 +144,8 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.parentVC!.didSelectDirector(self.directors![indexPath.section][indexPath.row])
-        self.navigationController!.popViewControllerAnimated(true)
+        self.parentVC?.didSelectDirector(self.directors![indexPath.section][indexPath.row])
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
 }

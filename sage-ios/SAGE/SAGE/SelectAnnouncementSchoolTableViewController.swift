@@ -80,9 +80,9 @@ class SelectAnnouncementSchoolTableViewController: UITableViewController {
         let school = self.schools![indexPath.row]
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseSchoolsCell")
         if cell == nil {
-            cell = BrowseSchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
+            cell = SchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
         }
-        (cell as! BrowseSchoolsTableViewCell).configureWithSchool(school)
+        (cell as! SchoolsTableViewCell).configureWithSchool(school)
         return cell!
     }
     

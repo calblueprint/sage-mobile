@@ -60,6 +60,7 @@ class RootController: UIViewController {
     // a function that will fill in values and present the login view controller
     func pushLoginViewController() {
         if self.loginController != nil {
+            self.loginController?.view.alpha = 1.0
             self.view.bringSubviewToFront(self.loginController!.view)
         } else {
             let loginController = LoginController()

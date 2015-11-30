@@ -80,18 +80,23 @@ class BrowseSchoolsViewController: UITableViewController {
         let school = self.schools![indexPath.row]
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseSchoolsCell")
         if cell == nil {
-            cell = BrowseSchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
+            cell = SchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
         }
-        (cell as! BrowseSchoolsTableViewCell).configureWithSchool(school)
+        (cell as! SchoolsTableViewCell).configureWithSchool(school)
         return cell!
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return SchoolsTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row]
-        let vc = BrowseSchoolsDetailViewController(school: school)
+        let vc = SchoolDetailViewController()
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
+        vc.configureWithSchool(school)
         self.navigationController!.pushViewController(vc, animated: true)
     }
 }

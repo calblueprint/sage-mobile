@@ -40,7 +40,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/25/15.
  */
-public abstract class UserEditAbstractFragment extends Fragment implements FormValidation {
+public abstract class UserFormAbstractFragment extends Fragment implements FormValidation {
     @Bind(R.id.create_user_layout) LinearLayout mLayout;
 
     @Bind(R.id.create_user_first_name) EditText mFirstName;
@@ -68,7 +68,7 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     private RoleSpinnerAdapter mRoleAdapter;
 
     private static final int DIALOG_CODE = 200;
-    private static final String DIALOG_TAG = "UserEditAbstractFragment";
+    private static final String DIALOG_TAG = "UserFormAbstractFragment";
 
     protected NavigationInterface mNavigationInterface;
     protected BaseInterface mBaseInterface;

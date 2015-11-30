@@ -14,7 +14,7 @@ import blueprint.com.sage.utility.view.FragUtils;
 /**
  * Created by charlesx on 11/25/15.
  */
-public class EditUserFragment extends UserEditAbstractFragment {
+public class EditUserFragment extends UserFormAbstractFragment {
 
     public static EditUserFragment newInstance(User user) {
         EditUserFragment fragment = new EditUserFragment();

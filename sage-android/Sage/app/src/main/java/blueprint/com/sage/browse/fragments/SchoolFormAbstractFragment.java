@@ -81,6 +81,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         MapsInitializer.initialize(getActivity());
+        mUsers = new ArrayList<>();
         mPredictions = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
@@ -180,7 +181,8 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             }
         });
 
-        mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+        mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers,
+                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
     }
 
     public abstract void initializeSchool();
@@ -261,12 +263,18 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     }
 
     public void onEvent(UserListEvent event) {
-        FragUtils.popBackStack(this);
+        mUsers = event.getUsers();
+        mUserAdapter.setUsers(mUsers);
+
+        if (mSchool != null)
+            setUserSpinner();
     }
 
-    private void setUsers(List<User> users) {
-        mUsers = users;
-
+    public void setUserSpinner() {
+        User director = mSchool.getDirector();
+        for (int i = 0; i < mUsers.size(); i++)
+            if (mUsers.get(i).getId() == director.getId())
+                mDirector.setSelection(i);
     }
 
     private void setPredictions(List<AutocompletePrediction> predictions) {

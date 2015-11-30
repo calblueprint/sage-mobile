@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -116,6 +120,25 @@ public class SchoolFragment extends Fragment
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_edit_delete, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_edit:
+                FragUtils.replaceBackStack(R.id.container, EditSchoolFragment.newInstance(mSchool), getActivity());
+                break;
+            case R.id.menu_delete:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

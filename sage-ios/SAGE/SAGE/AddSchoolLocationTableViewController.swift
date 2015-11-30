@@ -63,8 +63,8 @@ class AddSchoolLocationTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.parentVC!.didSelectPlace(self.autocompleteSuggestions[indexPath.row])
-        self.navigationController!.popViewControllerAnimated(true)
+        self.parentVC?.didSelectPlace(self.autocompleteSuggestions[indexPath.row])
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
 }

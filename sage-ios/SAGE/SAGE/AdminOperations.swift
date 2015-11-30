@@ -54,6 +54,12 @@ class AdminOperations {
         
     }
     
+    static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let announcementDict = announcement.toDictionary()
+        // TODO: Create Announcement
+    }
+            
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: nil, success: { (operation, data) -> Void in
@@ -76,6 +82,7 @@ class AdminOperations {
                 failure(error.localizedDescription)
         }
     }
+
     
     static func loadSchools(completion: (([School]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()

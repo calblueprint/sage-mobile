@@ -96,7 +96,7 @@ class BrowseSchoolsViewController: UITableViewController {
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        vc.configureWithIncompleteSchool(school)
+        vc.configureWithSchool(school)
         self.navigationController!.pushViewController(vc, animated: true)
     }
 }

@@ -16,14 +16,9 @@ class AdminOperations {
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetMentors, parameters: nil, success: { (operation, data) -> Void in
             var userArray = [User]()
-            let userData = ((data as! NSMutableDictionary)["users"] as! NSMutableArray)
+            let userData = data["users"] as! [AnyObject]
             for userDict in userData {
-                let dict = userDict as! NSMutableDictionary
-                var swiftDict = [String: AnyObject]()
-                for key in dict.allKeys {
-                    swiftDict[key as! String] = dict[key as! String]
-                }
-                let user = User(propertyDictionary: swiftDict)
+                let user = User(propertyDictionary: userDict as! [String: AnyObject])
                 userArray.append(user)
             }
             completion(userArray)
@@ -37,14 +32,9 @@ class AdminOperations {
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetUsers, parameters: nil, success: { (operation, data) -> Void in
             var userArray = [User]()
-            let userData = ((data as! NSMutableDictionary)["users"] as! NSMutableArray)
+            let userData = data["users"] as! [AnyObject]
             for userDict in userData {
-                let dict = userDict as! NSMutableDictionary
-                var swiftDict = [String: AnyObject]()
-                for key in dict.allKeys {
-                    swiftDict[key as! String] = dict[key as! String]
-                }
-                let user = User(propertyDictionary: swiftDict)
+                let user = User(propertyDictionary: userDict as! [String: AnyObject])
                 userArray.append(user)
             }
             completion(userArray)
@@ -63,18 +53,11 @@ class AdminOperations {
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: nil, success: { (operation, data) -> Void in
-            // handle the data and run success on an nsmutablearray
             var checkins = [Checkin]()
-            let checkinArray = (data as! NSMutableDictionary)["check_ins"] as! NSMutableArray
+            let checkinArray = data["check_ins"] as! [AnyObject]
             for checkinDict in checkinArray {
-                let dict = checkinDict as! NSMutableDictionary
-                var swiftDict = [String: AnyObject]()
-                for key in dict.allKeys {
-                    swiftDict[key as! String] = dict[key as! String]
-                }
-                let checkin = Checkin(propertyDictionary: swiftDict)
+                let checkin = Checkin(propertyDictionary: checkinDict as! [String : AnyObject])
                 checkins.append(checkin)
-
             }
             completion(checkins)
 
@@ -88,18 +71,12 @@ class AdminOperations {
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetSchools, parameters: nil, success: { (operation, data) -> Void in
             var schools = [School]()
-            let schoolArray = data["schools"] as! NSMutableArray
+            let schoolArray = data["schools"] as! [AnyObject]
             for schoolDict in schoolArray {
-                let dict = schoolDict as! NSMutableDictionary
-                var swiftDict = [String: AnyObject]()
-                for key in dict.allKeys {
-                    swiftDict[key as! String] = dict[key as! String]
-                }
-                let school = School(propertyDictionary: swiftDict)
+                let school = School(propertyDictionary: schoolDict as! [String: AnyObject])
                 schools.append(school)
             }
             completion(schools)
-            // handle the data and run success on an nsmutablearray
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
         }
@@ -110,24 +87,13 @@ class AdminOperations {
         let requestURL = StringConstants.kSchoolDetailURL(id)
         let manager = BaseOperation.manager()
         manager.GET(requestURL, parameters: nil, success: { (operation, data) -> Void in
-            // stuff
-            let immutableSchoolDict = (data as! NSDictionary)["school"] as! NSDictionary
-            let schoolDict = immutableSchoolDict.mutableCopy()
-            let userDict = schoolDict["users"] as! NSMutableArray
-            schoolDict.removeObjectForKey("users")
-            var schoolSwiftDict = [String: AnyObject]()
-            for key in schoolDict.allKeys {
-                schoolSwiftDict[key as! String] = schoolDict[key as! String]
-            }
-            let school = School(propertyDictionary: schoolSwiftDict)
+            var schoolDict = data["school"] as! [String: AnyObject]
+            let userDict = schoolDict["users"] as! [AnyObject]
+            schoolDict.removeValueForKey("users")
+            let school = School(propertyDictionary: schoolDict)
             var students = [User]()
             for user in userDict {
-                let userDict = user as! NSMutableDictionary
-                var userSwiftDict = [String: AnyObject]()
-                for key in userDict.allKeys {
-                    userSwiftDict[key as! String] = userDict[key as! String]
-                }
-                let user = User(propertyDictionary: userSwiftDict)
+                let user = User(propertyDictionary: user as! [String: AnyObject])
                 students.append(user)
             }
             school.students = students
@@ -143,18 +109,12 @@ class AdminOperations {
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: nil, success: { (operation, data) -> Void in
             var users = [User]()
-            let userArray = data["users"] as! NSMutableArray
+            let userArray = data["users"] as! [AnyObject]
             for userDict in userArray {
-                let dict = userDict as! NSMutableDictionary
-                var swiftDict = [String: AnyObject]()
-                for key in dict.allKeys {
-                    swiftDict[key as! String] = dict[key as! String]
-                }
-                let user = User(propertyDictionary: swiftDict)
+                let user = User(propertyDictionary: userDict as! [String : AnyObject])
                 users.append(user)
             }
             completion(users)
-            // handle the data and run success on an nsmutablearray
         }) { (operation, error) -> Void in
             failure(error.localizedDescription)
         }

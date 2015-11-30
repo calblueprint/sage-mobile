@@ -10,17 +10,17 @@ import UIKit
 
 class SchoolDetailViewController: UITableViewController {
     
-    var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
-    var school: School?
+    private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
+    private var school: School?
     
-    func configureWithIncompleteSchool(school: School) {
+    func configureWithSchool(school: School) {
         self.title = school.name!
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
             self.configureWithCompleteSchool(updatedSchool)
             }) { (message) -> Void in }
     }
     
-    func configureWithCompleteSchool(school: School) {
+    private func configureWithCompleteSchool(school: School) {
         self.school = school
         let marker = GMSMarker(position: self.school!.location!.coordinate)
         marker.map = self.schoolDetailHeaderView.mapView

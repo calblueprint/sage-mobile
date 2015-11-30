@@ -83,11 +83,6 @@ class BrowseSchoolsViewController: UITableViewController {
             cell = BrowseSchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
         }
         (cell as! BrowseSchoolsTableViewCell).configureWithSchool(school)
-        AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
-            self.schools![indexPath.row] = updatedSchool
-            (cell as! BrowseSchoolsTableViewCell).configureWithSchool(updatedSchool)
-            cell?.setNeedsDisplay()
-            }) { (errorMessage) -> Void in }
         return cell!
     }
     

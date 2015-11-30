@@ -18,10 +18,6 @@ class ProfileOperations: NSObject {
         }
     }
     
-//    static func getUser() -> User? {
-//        return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
-//    }
-    
     static func getUser(completion: ((User) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUser, parameters: nil, success: { (operation, data) -> Void in
             let userJSON = data["user"]!! as! [String: AnyObject]

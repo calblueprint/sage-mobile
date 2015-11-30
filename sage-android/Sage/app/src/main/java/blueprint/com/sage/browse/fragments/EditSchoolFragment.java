@@ -1,6 +1,9 @@
 package blueprint.com.sage.browse.fragments;
 
+import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 11/29/15.
@@ -22,5 +25,13 @@ public class EditSchoolFragment extends SchoolFormAbstractFragment {
 
         mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("Edit School");
+    }
+
+    public void makeRequest() {
+        Requests.Schools.with(getActivity()).makeEditRequest(mSchool);
+    }
+
+    public void onEvent(EditSchoolEvent event) {
+        FragUtils.popBackStack(this);
     }
 }

@@ -34,7 +34,6 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.PlacePredictionAdapter;
 import blueprint.com.sage.browse.adapters.UserSpinnerAdapter;
-import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -43,7 +42,6 @@ import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
-import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -253,17 +251,15 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             mSchool.setLat((float) bounds.latitude);
             mSchool.setLng((float) bounds.longitude);
 
-        Requests.Schools.with(getActivity()).makeCreateRequest(mSchool);
+        makeRequest();
     }
+
+    public abstract void makeRequest();
 
     private boolean isValid() {
         return mValidator.hasNonBlankField(mSchoolName, "Name") &
                 mValidator.hasNonBlankField(mSchoolAddress, "Address") &
                 mValidator.mustBePicked(mDirector, "Director", mLayout);
-    }
-
-    public void onEvent(CreateSchoolEvent event) {
-        FragUtils.popBackStack(this);
     }
 
     public void onEvent(UserListEvent event) {

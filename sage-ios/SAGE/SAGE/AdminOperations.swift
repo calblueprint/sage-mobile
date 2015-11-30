@@ -28,9 +28,9 @@ class AdminOperations {
         
     }
     
-    static func loadDirectors(completion: (([User]) -> Void), failure: (String) -> Void){
+    static func loadAdmins(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetUsers, parameters: nil, success: { (operation, data) -> Void in
+        manager.GET(StringConstants.kEndpointGetAdmins, parameters: nil, success: { (operation, data) -> Void in
             var userArray = [User]()
             let userData = data["users"] as! [AnyObject]
             for userDict in userData {

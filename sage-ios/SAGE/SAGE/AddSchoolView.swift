@@ -91,6 +91,17 @@ class AddSchoolView: UIView {
         self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
         self.chosenLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
     }
+    
+    func displayAddressText(text: String?) {
+        if let addressText = text {
+            self.location.button.setTitle(addressText, forState: .Normal)
+            self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        }
+    }
+    
+    func displaySchoolName(name: String?) {
+        self.name.textField.text = name
+    }
 
 }
 

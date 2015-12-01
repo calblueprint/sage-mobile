@@ -15,13 +15,14 @@ import blueprint.com.sage.network.BaseRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 
 /**
- * Created by charlesx on 11/16/15.
+ * Created by charlesx on 11/29/15.
  */
-public class CreateSchoolRequest extends BaseRequest {
-    public CreateSchoolRequest(final Activity activity, School school,
+public class EditSchoolRequest extends BaseRequest {
+    public EditSchoolRequest(final Activity activity, School school,
                                final Response.Listener<School> onSuccess,
                                final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "admin", "schools"), convertToParams(school, "school", activity),
+        super(Method.PUT, makeUrl(null, "admin", "schools", String.valueOf(school.getId())),
+                convertToParams(school, "school", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {
@@ -41,4 +42,5 @@ public class CreateSchoolRequest extends BaseRequest {
                     }
                 }, activity);
     }
+
 }

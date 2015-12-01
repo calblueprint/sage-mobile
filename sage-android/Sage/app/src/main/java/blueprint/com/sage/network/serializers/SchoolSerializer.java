@@ -21,6 +21,7 @@ public class SchoolSerializer extends JsonSerializer<School> {
         jgen.writeStringField("address", school.getAddress());
         jgen.writeNumberField("lat", school.getLat());
         jgen.writeNumberField("lng", school.getLng());
+        jgen.writeNumberField("director_id", school.getDirectorId());
         jgen.writeEndObject();
     }
 }

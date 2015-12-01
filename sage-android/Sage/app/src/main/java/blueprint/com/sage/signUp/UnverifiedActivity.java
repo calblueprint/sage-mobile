@@ -5,6 +5,7 @@ import android.os.Bundle;
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.activities.AbstractActivity;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -21,7 +22,12 @@ public class UnverifiedActivity extends AbstractActivity {
         setContentView(R.layout.activity_unverified);
         ButterKnife.bind(this);
 
+        initializeViews();
         initializeProfilePhoto();
+    }
+
+    private void initializeViews() {
+        ViewUtils.setStatusBarColor(this, R.color.white);
     }
 
     private void initializeProfilePhoto() {

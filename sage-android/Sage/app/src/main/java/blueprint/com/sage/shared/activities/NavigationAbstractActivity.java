@@ -87,7 +87,7 @@ public class NavigationAbstractActivity extends AbstractActivity
                 mDrawerLayout.closeDrawers();
             }
         });
-        
+
         mEmail = ButterKnife.findById(mHeader, R.id.header_email);
         mName = ButterKnife.findById(mHeader, R.id.header_name);
         mPhoto = ButterKnife.findById(mHeader, R.id.header_photo);

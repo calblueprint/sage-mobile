@@ -26,6 +26,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -213,6 +214,10 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private void moveMapToLatLng(LatLng latLng) {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        MarkerOptions options = new MarkerOptions();
+        options.position(latLng);
+        mMap.addMarker(options);
     }
 
     private void getPredictions(String address) {

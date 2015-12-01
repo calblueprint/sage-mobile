@@ -95,7 +95,7 @@ public class SchoolFragment extends Fragment
         mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("School");
     }
-    
+
     private void initializeSchool() {
         mName.setText(mSchool.getName());
         mAddress.setText(mSchool.getAddress());

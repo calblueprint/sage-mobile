@@ -14,11 +14,17 @@ class SGButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.loadingView.color = UIColor.redColor()
+        self.addSubview(self.loadingView)
+        self.setThemeColor(UIColor.whiteColor())
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.loadingView.centerInSuperview()
     }
 
     //
@@ -31,12 +37,14 @@ class SGButton: UIButton {
     func startLoading() {
         self.titleLabel?.alpha = 0
         self.imageView?.alpha = 0
+        self.enabled = false
         self.loadingView.startAnimating()
     }
 
     func stopLoading() {
         self.titleLabel?.alpha = 1
         self.imageView?.alpha = 1
+        self.enabled = true
         self.loadingView.stopAnimating()
     }
 

@@ -10,12 +10,14 @@ import UIKit
 
 class LoginController: UIViewController {
     
+    var loginView = LoginView()
+
     override func loadView() {
-        self.view = LoginView()
-        (self.view as! LoginView).loginEmailField.delegate = self
-        (self.view as! LoginView).loginPasswordField.delegate = self
-        (self.view as! LoginView).signUpLink.addTarget(self, action: "signUpLinkTapped", forControlEvents: .TouchUpInside)
-        (self.view as! LoginView).loginButton.addTarget(self, action: "attemptLogin", forControlEvents: .TouchUpInside)
+        self.view = self.loginView
+        self.loginView.loginEmailField.delegate = self
+        self.loginView.loginPasswordField.delegate = self
+        self.loginView.signUpLink.addTarget(self, action: "signUpLinkTapped", forControlEvents: .TouchUpInside)
+        self.loginView.loginButton.addTarget(self, action: "attemptLogin", forControlEvents: .TouchUpInside)
     }
     
     //
@@ -51,16 +53,18 @@ class LoginController: UIViewController {
     //
     
     func showErrorAndSetMessage(message: String) {
-        let error = (self.view as! LoginView).currentErrorMessage
+        let error = self.loginView.currentErrorMessage
         let errorView = super.showError(message, currentError: error)
-        (self.view as! LoginView).currentErrorMessage = errorView
+        self.loginView.currentErrorMessage = errorView
     }
+
     func attemptLogin() {
-        let loginView = (self.view as! LoginView)
-        if let email = loginView.loginEmailField.text {
-            if let password = loginView.loginPasswordField.text {
+        if let email = self.loginView.loginEmailField.text {
+            if let password = self.loginView.loginPasswordField.text {
+                self.loginView.loginButton.startLoading()
                 LoginOperations.loginWith(email, password: password, completion: {
                     (valid: Bool) -> Void in
+                    self.loginView.loginButton.stopLoading()
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if (valid) {
                             if let verified = LoginOperations.getUser()?.verified {
@@ -75,7 +79,7 @@ class LoginController: UIViewController {
                                 self.presentViewController(unverifiedController, animated: true, completion: nil)
                             }
                         } else {
-                            // indicate bad login
+                            self.loginView.loginButton.stopLoading()
                             self.showErrorAndSetMessage("Invalid login - try again!")
                         }
                     })

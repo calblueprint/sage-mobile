@@ -16,6 +16,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
  * Created by charlesx on 10/24/15.
@@ -40,7 +41,10 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .build();
-        // LOGOUT USER HERE IF NO CREDENTIALS
+
+        if (!NetworkUtils.isVerifiedUser(this, mPreferences))
+            NetworkUtils.logoutCurrentUser(this);
+
         setUpUser();
         setUpSchool();
     }

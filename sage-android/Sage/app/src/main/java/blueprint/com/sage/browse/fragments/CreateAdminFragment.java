@@ -13,7 +13,7 @@ import blueprint.com.sage.utility.view.FragUtils;
 /**
  * Created by charlesx on 11/18/15.
  */
-public class CreateAdminFragment extends UserEditAbstractFragment {
+public class CreateAdminFragment extends UserFormAbstractFragment {
 
     public static CreateAdminFragment newInstance() { return new CreateAdminFragment(); }
 

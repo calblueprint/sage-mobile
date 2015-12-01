@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -63,6 +67,7 @@ public class SchoolFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mNavigationInterface = (NavigationInterface) getActivity();
         MapsInitializer.initialize(getActivity());
         Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
@@ -81,9 +86,6 @@ public class SchoolFragment extends Fragment
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
 
-        mName.setText(mSchool.getName());
-        mAddress.setText(mSchool.getAddress());
-
         mAdapter = new UserListAdapter(getActivity(), new ArrayList<User>());
 
         mUserList.setEmptyView(mEmptyView);
@@ -92,6 +94,11 @@ public class SchoolFragment extends Fragment
 
         mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("School");
+    }
+
+    private void initializeSchool() {
+        mName.setText(mSchool.getName());
+        mAddress.setText(mSchool.getAddress());
     }
 
     @Override
@@ -116,6 +123,25 @@ public class SchoolFragment extends Fragment
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_edit_delete, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_edit:
+                FragUtils.replaceBackStack(R.id.container, EditSchoolFragment.newInstance(mSchool), getActivity());
+                break;
+            case R.id.menu_delete:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -147,7 +173,7 @@ public class SchoolFragment extends Fragment
     public void onEvent(SchoolEvent event) {
         mSchool = event.getSchool();
         mAdapter.setUsers(mSchool.getUsers());
-        setMapCenter();
+        initializeSchool();
     }
 }
 

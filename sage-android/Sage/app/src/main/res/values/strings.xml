@@ -35,8 +35,8 @@
     </string-array>
 
     <string-array name="role_types">
-        <item>Admin</item>
         <item>Volunteer</item>
+        <item>Admin</item>
     </string-array>
 
     <!-- Log in -->

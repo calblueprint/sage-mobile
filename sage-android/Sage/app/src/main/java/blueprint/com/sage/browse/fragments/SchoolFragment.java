@@ -67,6 +67,7 @@ public class SchoolFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mNavigationInterface = (NavigationInterface) getActivity();
         MapsInitializer.initialize(getActivity());
         Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
@@ -85,9 +86,6 @@ public class SchoolFragment extends Fragment
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
 
-        mName.setText(mSchool.getName());
-        mAddress.setText(mSchool.getAddress());
-
         mAdapter = new UserListAdapter(getActivity(), new ArrayList<User>());
 
         mUserList.setEmptyView(mEmptyView);
@@ -96,6 +94,11 @@ public class SchoolFragment extends Fragment
 
         mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("School");
+    }
+    
+    private void initializeSchool() {
+        mName.setText(mSchool.getName());
+        mAddress.setText(mSchool.getAddress());
     }
 
     @Override
@@ -170,7 +173,7 @@ public class SchoolFragment extends Fragment
     public void onEvent(SchoolEvent event) {
         mSchool = event.getSchool();
         mAdapter.setUsers(mSchool.getUsers());
-        setMapCenter();
+        initializeSchool();
     }
 }
 

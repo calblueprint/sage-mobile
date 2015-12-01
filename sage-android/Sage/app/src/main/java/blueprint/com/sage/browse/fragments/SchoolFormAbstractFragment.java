@@ -82,7 +82,11 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         MapsInitializer.initialize(getActivity());
+
         mUsers = new ArrayList<>();
+        if (mSchool != null)
+            mUsers.add(0, mSchool.getDirector());
+
         mPredictions = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
@@ -143,7 +147,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private void makeUserListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
-        queryParams.put("role", "1");
+        queryParams.put("non_director", "true");
 
         Requests.Users.with(getActivity()).makeListRequest(queryParams);
     }
@@ -264,6 +268,10 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     public void onEvent(UserListEvent event) {
         mUsers = event.getUsers();
+
+        if (mSchool != null)
+            mUsers.add(0, mSchool.getDirector());
+
         mUserAdapter.setUsers(mUsers);
 
         if (mSchool != null)

@@ -10,20 +10,5 @@
             android:id="@+id/announcements"
             android:title="@string/announcements"
             android:icon="@drawable/ic_announcement_black" />
-
-        <item
-            android:id="@+id/log_out"
-            android:title="@string/log_out"
-            android:icon="@drawable/ic_exit_to_app_black" />
-
-        <item
-            android:id="@+id/schools"
-            android:title="@string/schools"
-            android:icon="@drawable/ic_location_city_black" />
-
-        <item
-            android:id="@+id/requests"
-            android:title="@string/requests"
-            android:icon="@drawable/ic_assignment_turned_in_black" />
     </group>
 </menu>

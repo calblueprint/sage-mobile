@@ -31,13 +31,18 @@ public class UnverifiedActivity extends AbstractActivity {
 
         initializeViews();
         initializeProfilePhoto();
-        refreshUser();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshUser();
     }
 
     @Override

@@ -11,9 +11,6 @@ import UIKit
 class EditSchoolController: AddSchoolController {
     
     var school: School?
-    var chosenName: String?
-    var chosenDirector: User?
-    var chosenLocation: CLLocation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +33,25 @@ class EditSchoolController: AddSchoolController {
                 }
             })
         }
-        
-        
+    }
+    
+    override func completeForm() {
+        let addSchoolView = (self.view as! AddSchoolView)
+        if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
+            self.showAlertControllerError("Please enter a name.")
+        } else {
+            self.school?.name = addSchoolView.name.textField.text
+            if let director = self.director {
+                self.school?.director = director
+            }
+            if let location = self.location {
+                self.school?.location = location
+            }
+            AdminOperations.editSchool(self.school!, completion: { (createdSchool) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
+                }, failure: { (message) -> Void in
+                    self.showAlertControllerError(message)
+            })
+        }
     }
 }

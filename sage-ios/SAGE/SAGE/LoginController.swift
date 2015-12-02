@@ -64,7 +64,6 @@ class LoginController: UIViewController {
                 self.loginView.loginButton.startLoading()
                 LoginOperations.loginWith(email, password: password, completion: {
                     (valid: Bool) -> Void in
-                    self.loginView.loginButton.stopLoading()
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if (valid) {
                             if let verified = LoginOperations.getUser()?.verified {

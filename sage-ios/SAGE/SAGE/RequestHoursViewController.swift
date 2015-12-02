@@ -26,7 +26,7 @@ class RequestHoursViewController: UIViewController {
         super.viewDidLoad()
         self.setupView()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismiss")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.navigationItem.rightBarButtonItem = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
     }
     
     //

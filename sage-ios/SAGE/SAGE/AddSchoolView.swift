@@ -15,9 +15,6 @@ class AddSchoolView: UIView {
     var location = FormButtonItem()
     var director = FormButtonItem()
     
-    var chosenLocation: CLLocation?
-    var chosenDirector: User?
-    
     private var scrollView = UIScrollView()
     private var keyboardControls = BSKeyboardControls()
     
@@ -80,7 +77,6 @@ class AddSchoolView: UIView {
     func displayChosenDirector(director: User) {
         self.director.button.setTitle(director.fullName(), forState: .Normal)
         self.director.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        self.chosenDirector = director
     }
     
     func displayChosenPlace(place: GMSPlace) {
@@ -89,7 +85,17 @@ class AddSchoolView: UIView {
             self.name.textField.text = place.name
         }
         self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        self.chosenLocation = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+    }
+    
+    func displayAddressText(text: String?) {
+        if let addressText = text {
+            self.location.button.setTitle(addressText, forState: .Normal)
+            self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        }
+    }
+    
+    func displaySchoolName(name: String?) {
+        self.name.textField.text = name
     }
 
 }

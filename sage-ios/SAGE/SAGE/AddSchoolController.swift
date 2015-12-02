@@ -11,7 +11,7 @@ import UIKit
 class AddSchoolController: UIViewController {
     
     var director: User?
-    var place: GMSPlace?
+    var location: CLLocation?
     var currentErrorMessage: ErrorView?
 
     override func viewDidLoad() {
@@ -41,16 +41,16 @@ class AddSchoolController: UIViewController {
         self.navigationController!.pushViewController(tableViewController, animated: true)
     }
     
-    @objc private func completeForm() {
+    func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
-        if addSchoolView.chosenDirector == nil {
+        if self.director == nil {
             self.showAlertControllerError("Please choose a director.")
-        } else if addSchoolView.chosenLocation == nil {
+        } else if self.location == nil {
             self.showAlertControllerError("Please choose a location.")
         } else if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
             self.showAlertControllerError("What's the school's name?")
         } else {
-            let school = School(name: addSchoolView.name.textField.text, location: addSchoolView.chosenLocation, director: addSchoolView.chosenDirector)
+            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
@@ -75,7 +75,7 @@ class AddSchoolController: UIViewController {
         let placeClient = GMSPlacesClient.sharedClient()
         placeClient.lookUpPlaceID(placeID) { (predictedPlace, error) -> Void in
             if let place = predictedPlace {
-                self.place = place
+                self.location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
                 (self.view as! AddSchoolView).displayChosenPlace(place)
             }
         }

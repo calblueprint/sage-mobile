@@ -75,16 +75,17 @@
 		426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426838721C00329E00A97832 /* SignUpRequestTableViewCell.swift */; };
 		42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */; };
 		427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427432EF1BC776FD00464200 /* UnverifiedView.swift */; };
+		427B72461C0C4C5B00A32DF5 /* EditSchoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */; };
 		4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4280CE171BF43E5C005D1B97 /* AdminOperations.swift */; };
 		42828FC41C00701000ACBC7E /* BrowseMentorsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42828FC31C00701000ACBC7E /* BrowseMentorsDetailViewController.swift */; };
 		42828FC81C00718000ACBC7E /* CheckinRequestsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42828FC71C00718000ACBC7E /* CheckinRequestsDetailViewController.swift */; };
 		42828FCA1C00718B00ACBC7E /* SignUpRequestsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42828FC91C00718B00ACBC7E /* SignUpRequestsDetailViewController.swift */; };
 		429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429B1D131BDC881F006AADF6 /* ErrorView.swift */; };
+		42A2E00F1C02943E00033577 /* AddAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */; };
+		42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E0101C0294C500033577 /* AddAnnouncementView.swift */; };
 		42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */; };
 		42A6CE641C0BDFC700F97CFF /* SchoolsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6CE631C0BDFC700F97CFF /* SchoolsTableViewCell.swift */; };
 		42A6CE661C0BDFFD00F97CFF /* UsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6CE651C0BDFFD00F97CFF /* UsersTableViewCell.swift */; };
-		42A2E00F1C02943E00033577 /* AddAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */; };
-		42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E0101C0294C500033577 /* AddAnnouncementView.swift */; };
 		42B82B451C0478630076892A /* FormButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B82B441C0478630076892A /* FormButtonItem.swift */; };
 		42C1D1C51C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1D1C41C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift */; };
 		42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3933E1BC45DB900630F93 /* LoginController.swift */; };
@@ -186,16 +187,17 @@
 		426838721C00329E00A97832 /* SignUpRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpRequestTableViewCell.swift; sourceTree = "<group>"; };
 		42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		427432EF1BC776FD00464200 /* UnverifiedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedView.swift; sourceTree = "<group>"; };
+		427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSchoolController.swift; sourceTree = "<group>"; };
 		4280CE171BF43E5C005D1B97 /* AdminOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminOperations.swift; sourceTree = "<group>"; };
 		42828FC31C00701000ACBC7E /* BrowseMentorsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsDetailViewController.swift; sourceTree = "<group>"; };
 		42828FC71C00718000ACBC7E /* CheckinRequestsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinRequestsDetailViewController.swift; sourceTree = "<group>"; };
 		42828FC91C00718B00ACBC7E /* SignUpRequestsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpRequestsDetailViewController.swift; sourceTree = "<group>"; };
 		429B1D131BDC881F006AADF6 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnouncementController.swift; sourceTree = "<group>"; };
+		42A2E0101C0294C500033577 /* AddAnnouncementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnouncementView.swift; sourceTree = "<group>"; };
 		42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolDetailViewController.swift; sourceTree = "<group>"; };
 		42A6CE631C0BDFC700F97CFF /* SchoolsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolsTableViewCell.swift; sourceTree = "<group>"; };
 		42A6CE651C0BDFFD00F97CFF /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
-		42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnouncementController.swift; sourceTree = "<group>"; };
-		42A2E0101C0294C500033577 /* AddAnnouncementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnouncementView.swift; sourceTree = "<group>"; };
 		42B82B441C0478630076892A /* FormButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormButtonItem.swift; sourceTree = "<group>"; };
 		42C1D1C41C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAnnouncementSchoolTableViewController.swift; sourceTree = "<group>"; };
 		42C3933E1BC45DB900630F93 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */,
 				42828FC31C00701000ACBC7E /* BrowseMentorsDetailViewController.swift */,
 				4254C1EA1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift */,
+				427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */,
 				42C435291C013F8D000F6671 /* AddSchoolLocationTableViewController.swift */,
 				42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */,
 				42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */,
@@ -837,6 +840,7 @@
 				4216872D1C09286A00C29DEF /* SchoolDetailHeaderView.swift in Sources */,
 				5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */,
 				42C1D1C51C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift in Sources */,
+				427B72461C0C4C5B00A32DF5 /* EditSchoolController.swift in Sources */,
 				42A2E00F1C02943E00033577 /* AddAnnouncementController.swift in Sources */,
 				42C393411BC45DEC00630F93 /* RootController.swift in Sources */,
 				42F71DF61BF80478004E1B3B /* CheckinRequestTableViewCell.swift in Sources */,

@@ -12,6 +12,9 @@ class AddAnnouncementController: UIViewController {
 
     var addAnnouncementView = AddAnnouncementView()
     var school: School?
+
+    private var finishButton: SGBarButtonItem?
+
     //
     // MARK: - ViewController Lifecycle
     //
@@ -22,7 +25,8 @@ class AddAnnouncementController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Create Announcement"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.navigationItem.rightBarButtonItem = self.finishButton
         self.addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
     }
     
@@ -37,10 +41,12 @@ class AddAnnouncementController: UIViewController {
     
     @objc private func completeForm() {
         if self.addAnnouncementView.isValid() {
+            self.finishButton?.startLoading()
             let finalAnnouncement = self.addAnnouncementView.exportToAnnouncement()
             AdminOperations.createAnnouncement(finalAnnouncement, completion: { (announcement) -> Void in
                 self.navigationController!.popViewControllerAnimated(true)
                 }) { (errorMessage) -> Void in
+                    self.finishButton?.stopLoading()
                     let alertController = UIAlertController(
                         title: "Failure",
                         message: errorMessage as String,

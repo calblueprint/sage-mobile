@@ -88,6 +88,7 @@ public class NavigationAbstractActivity extends AbstractActivity
             }
         });
 
+        mNavigationView.getMenu().clear();
         mNavigationView.inflateMenu(R.menu.menu_student);
 
         if (getUser().isAdmin())

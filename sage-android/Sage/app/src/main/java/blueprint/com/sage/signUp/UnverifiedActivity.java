@@ -1,6 +1,7 @@
 package blueprint.com.sage.signUp;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
 import blueprint.com.sage.R;
@@ -19,9 +20,10 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 10/24/15.
  * Activity shown when a user isn't verified yet.
  */
-public class UnverifiedActivity extends AbstractActivity {
+public class UnverifiedActivity extends AbstractActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     @Bind(R.id.unverified_photo_circle) CircleImageView mImageView;
+    @Bind(R.id.unverified_refresh) SwipeRefreshLayout mRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class UnverifiedActivity extends AbstractActivity {
     @Override
     public void onResume() {
         super.onResume();
-        refreshUser();
+        onRefresh();
     }
 
     @Override
@@ -52,18 +54,21 @@ public class UnverifiedActivity extends AbstractActivity {
     }
 
     private void initializeViews() {
-        ViewUtils.setStatusBarColor(this, R.color.white);
+        ViewUtils.setStatusBarColor(this, R.color.black);
+        mRefreshLayout.setOnRefreshListener(this);
     }
 
     private void initializeProfilePhoto() {
         mUser.loadUserImage(this, mImageView);
     }
 
-    public void refreshUser() {
-        Requests.Users.with(this).makeShowRequest(mUser);
-    }
+    @Override
+    public void onRefresh() { Requests.Users.with(this).makeShowRequest(mUser); }
 
-    public void onEvent(UserEvent event) { checkUser(event.getUser()); }
+    public void onEvent(UserEvent event) {
+        mRefreshLayout.setRefreshing(false);
+        checkUser(event.getUser());
+    }
 
     private void checkUser(User user) {
         if (user.isVerified()) {

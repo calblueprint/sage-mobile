@@ -12,8 +12,6 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import blueprint.com.sage.R;
-
 /**
  * Created by charlesx on 11/3/15.
  */
@@ -29,7 +27,7 @@ public class ViewUtils {
     public static void setStatusBarColor(Activity activity, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             activity.getWindow().setStatusBarColor(activity.getResources()
-                                                       .getColor(R.color.black, activity.getTheme()));
+                                                       .getColor(color, activity.getTheme()));
     }
 
     public static void loadImage(Activity activity, String url, ImageView imageView) {

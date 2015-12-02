@@ -88,6 +88,14 @@ public class NavigationAbstractActivity extends AbstractActivity
             }
         });
 
+        mNavigationView.getMenu().clear();
+        mNavigationView.inflateMenu(R.menu.menu_student);
+
+        if (getUser().isAdmin())
+            mNavigationView.inflateMenu(R.menu.menu_admin);
+
+        mNavigationView.inflateMenu(R.menu.menu_logout);
+
         mEmail = ButterKnife.findById(mHeader, R.id.header_email);
         mName = ButterKnife.findById(mHeader, R.id.header_name);
         mPhoto = ButterKnife.findById(mHeader, R.id.header_photo);

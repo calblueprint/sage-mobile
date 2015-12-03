@@ -16,8 +16,8 @@ class BrowseSchoolsViewController: UITableViewController {
     
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addSchool:", name: NotificationConstants.addSchoolKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editSchool:", name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolAdded:", name: NotificationConstants.addSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
     }
     
     deinit {
@@ -28,9 +28,10 @@ class BrowseSchoolsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //
     // MARK: - NSNotificationCenter selectors
-
-    func addSchool(notification: NSNotification) {
+    //
+    func schoolAdded(notification: NSNotification) {
         let school = notification.object as! School
         if let _ = self.schools {
             self.schools!.insert(school, atIndex: 0)
@@ -39,7 +40,7 @@ class BrowseSchoolsViewController: UITableViewController {
         }
     }
     
-    func editSchool(notification: NSNotification) {
+    func schoolEdited(notification: NSNotification) {
         let school = notification.object as! School
         if let _ = self.schools {
             for i in 0...(self.schools!.count-1) {

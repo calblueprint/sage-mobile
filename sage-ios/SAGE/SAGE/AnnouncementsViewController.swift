@@ -17,8 +17,8 @@ class AnnouncementsViewController: UITableViewController {
     
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addAnnouncement:", name: NotificationConstants.addAnnouncementKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editAnnouncement:", name: NotificationConstants.editAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
     }
     
     deinit {
@@ -29,14 +29,17 @@ class AnnouncementsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addAnnouncement(notification: NSNotification) {
+    //
+    // MARK: - NSNotificationCenter selectors
+    //
+    func announcementAdded(notification: NSNotification) {
         let announcement = notification.object as! Announcement
         self.announcements.insert(announcement, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
-    func editAnnouncement(notification: NSNotification) {
+    func announcementEdited(notification: NSNotification) {
         let announcement = notification.object as! Announcement
         for i in 0...(self.announcements.count-1) {
             let oldAnnouncement = self.announcements[i]

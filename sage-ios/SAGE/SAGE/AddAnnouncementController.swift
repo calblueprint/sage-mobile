@@ -40,7 +40,7 @@ class AddAnnouncementController: UIViewController {
             let finalAnnouncement = self.addAnnouncementView.exportToAnnouncement()
             AdminOperations.createAnnouncement(finalAnnouncement, completion: { (announcement) -> Void in
                 self.navigationController!.popViewControllerAnimated(true)
-                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: finalAnnouncement)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
                 }) { (errorMessage) -> Void in
                     let alertController = UIAlertController(
                         title: "Failure",

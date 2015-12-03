@@ -24,7 +24,7 @@ class AnnouncementsDetailViewController: UIViewController {
     }
     
     init(announcement: Announcement) {
-        self.announcement = announcement
+        self.announcement = announcement.copy() as! Announcement
         super.init(nibName: nil, bundle: nil)
     }
     

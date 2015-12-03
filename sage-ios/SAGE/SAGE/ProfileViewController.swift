@@ -8,19 +8,23 @@
 
 import Foundation
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UITableViewController {
 
     var currentUser = User()
     var profileView = ProfileView()
     
-    override func loadView() {
-        self.view = self.profileView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
         self.getUser()
+        self.tableView.tableHeaderView = self.profileView
+        let headerOffset = self.profileView.viewHeight + CGFloat(40)
+        var headerFrame = self.tableView.tableHeaderView!.frame
+        headerFrame.size.height = headerOffset
+        self.profileView.frame = headerFrame
+        self.tableView.tableHeaderView = self.profileView
+        
+        self.tableView.tableFooterView = UIView()
     }
     
     func getUser() {
@@ -31,4 +35,42 @@ class ProfileViewController: UIViewController {
                 //display error
         }
     }
+        
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 44.0
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = UITableViewCell()
+        cell.selectionStyle = .None
+        cell.textLabel!.font = UIFont.normalFont
+        if indexPath.section == 0 {
+            cell.textLabel!.text = "All Check Ins"
+            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        } else if indexPath.section == 1 {
+            cell.textLabel!.text = "Log Out"
+            cell.textLabel!.textAlignment = NSTextAlignment.Center
+        }
+        return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 0 {
+            let view = AnnouncementsViewController()
+            self.navigationController!.pushViewController(view, animated: true)
+        } else if indexPath.section == 1 {
+            LoginOperations.deleteUserKeychainData()
+            let view = RootController()
+            self.presentViewController(view, animated: true, completion: nil)
+        }
+    }
+    
 }

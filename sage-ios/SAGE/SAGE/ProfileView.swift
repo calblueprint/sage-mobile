@@ -31,6 +31,8 @@ class ProfileView: UIView {
     let allCheckInsLabel = UILabel()
     
     // profile page constants
+    let viewHeight = CGFloat(351.1)
+    let headerOffset = CGFloat(500)
     let leftMargin = CGFloat(30)
     let headerHeight = CGFloat(120)
     let titleFontSize = CGFloat(22)
@@ -55,10 +57,10 @@ class ProfileView: UIView {
         self.userStatusContainer.addSubview(self.userStatusLabel)
         self.profileContent.addSubview(self.userCommitmentContainer)
         self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
-        self.addSubview(self.logoutButton)
-        self.logoutButton.addSubview(self.logoutButtonLabel)
-        self.addSubview(self.allCheckIns)
-        self.allCheckIns.addSubview(self.allCheckInsLabel)
+//        self.addSubview(self.logoutButton)
+//        self.logoutButton.addSubview(self.logoutButtonLabel)
+//        self.addSubview(self.allCheckIns)
+//        self.allCheckIns.addSubview(self.allCheckInsLabel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -93,11 +95,12 @@ class ProfileView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.profileContent.fillHeight()
+        self.backgroundColor = UIColor.whiteColor()
         self.profileContent.fillWidth()
         
         // set up header
-        self.header.setHeight(self.headerHeight)
+        self.header.setY(-500)
+        self.header.setHeight(self.headerHeight+self.headerOffset)
         self.header.fillWidth()
         self.header.backgroundColor = UIColor.mainColor
         
@@ -215,6 +218,10 @@ class ProfileView: UIView {
         self.logoutButtonLabel.sizeToFit()
         self.logoutButtonLabel.fillWidthWithMargin(30)
         self.logoutButtonLabel.centerInSuperview()
+        
+        let height = CGRectGetMaxY(self.bottomBorder.frame)
+        self.profileContent.setHeight(height)
+        self.setHeight(height)
     }
     
     

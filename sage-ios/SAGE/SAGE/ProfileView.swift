@@ -25,6 +25,10 @@ class ProfileView: UIView {
     let userStatusLabel = UILabel()
     let userCommitmentContainer = UIView()
     let userCommitmentLabel = UILabel()
+    let logoutButton = UITableViewCell()
+    let logoutButtonLabel = UILabel()
+    let allCheckIns = UITableViewCell()
+    let allCheckInsLabel = UILabel()
     
     // profile page constants
     let leftMargin = CGFloat(30)
@@ -44,13 +48,17 @@ class ProfileView: UIView {
         self.profileContent.addSubview(self.userName)
         self.profileContent.addSubview(self.userSchool)
         self.profileContent.addSubview(self.userVolunteerLevel)
-        self.addSubview(self.topBorder)
-        self.addSubview(self.bottomBorder)
-        self.addSubview(self.centerBorder)
-        self.addSubview(self.userStatusContainer)
+        self.profileContent.addSubview(self.topBorder)
+        self.profileContent.addSubview(self.bottomBorder)
+        self.profileContent.addSubview(self.centerBorder)
+        self.profileContent.addSubview(self.userStatusContainer)
         self.userStatusContainer.addSubview(self.userStatusLabel)
-        self.addSubview(self.userCommitmentContainer)
+        self.profileContent.addSubview(self.userCommitmentContainer)
         self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
+        self.addSubview(self.logoutButton)
+        self.logoutButton.addSubview(self.logoutButtonLabel)
+        self.addSubview(self.allCheckIns)
+        self.allCheckIns.addSubview(self.allCheckInsLabel)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -180,6 +188,33 @@ class ProfileView: UIView {
         self.userCommitmentLabel.font = UIFont.normalFont
         self.userCommitmentLabel.numberOfLines = 0
         self.userCommitmentLabel.textAlignment = NSTextAlignment.Center
+        
+        // set up checkins button
+        self.allCheckIns.setY(432)
+        self.allCheckIns.fillWidth()
+        self.allCheckIns.setHeight(44.0)
+        self.allCheckIns.layer.borderColor = UIColor.borderColor.CGColor
+        self.allCheckIns.layer.borderWidth = UIConstants.dividerHeight()
+        self.allCheckIns.accessoryType = .DisclosureIndicator
+        
+        self.allCheckInsLabel.text = "All Check-Ins"
+        self.allCheckInsLabel.font = UIFont.normalFont
+        self.allCheckInsLabel.sizeToFit()
+        self.allCheckInsLabel.fillWidthWithMargin(30)
+        self.allCheckInsLabel.centerInSuperview()
+        
+        // set up logout
+        self.logoutButton.setY(475)
+        self.logoutButton.fillWidth()
+        self.logoutButton.setHeight(44.0)
+        self.logoutButton.layer.borderColor = UIColor.borderColor.CGColor
+        self.logoutButton.layer.borderWidth = UIConstants.dividerHeight()
+        
+        self.logoutButtonLabel.text = "Logout"
+        self.logoutButtonLabel.font = UIFont.normalFont
+        self.logoutButtonLabel.sizeToFit()
+        self.logoutButtonLabel.fillWidthWithMargin(30)
+        self.logoutButtonLabel.centerInSuperview()
     }
     
     

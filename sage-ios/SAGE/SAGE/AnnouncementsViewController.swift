@@ -17,7 +17,7 @@ class AnnouncementsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
-         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
         self.title = "Announcements"
         self.tableView.tableFooterView = UIView()
         

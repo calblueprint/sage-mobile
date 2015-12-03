@@ -72,8 +72,9 @@ class AnnouncementsViewController: UITableViewController {
         self.getAnnouncements()
     }
     
+    //
     // MARK: - NSNotificationCenter selectors
-    
+    //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
         if let topItem = self.navigationController!.navigationBar.topItem {

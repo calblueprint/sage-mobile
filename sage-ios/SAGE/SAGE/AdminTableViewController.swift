@@ -52,7 +52,7 @@ class AdminTableViewController: UITableViewController {
             case 0:
                 self.navigationController!.pushViewController(BrowseMentorsViewController(), animated: true)
             case 1:
-                self.navigationController!.pushViewController(BrowseSchoolsViewController(), animated: true)
+                self.navigationController!.pushViewController(BrowseSchoolsViewController(style: .Plain), animated: true)
             default: break
             }
         case 1:

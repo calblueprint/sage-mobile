@@ -43,12 +43,6 @@ class AdminOperations {
         }
         
     }
-    
-    static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
-        let manager = BaseOperation.manager()
-        let announcementDict = announcement.toDictionary()
-        // TODO: Create Announcement
-    }
             
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
@@ -153,6 +147,12 @@ class AdminOperations {
     static func removeUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         // TODO: make a network request
+    }
+    
+    static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let announcementDict = announcement.toDictionary()
+        // TODO: Create Announcement
     }
     
 }

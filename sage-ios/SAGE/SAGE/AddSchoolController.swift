@@ -14,11 +14,14 @@ class AddSchoolController: UIViewController {
     var location: CLLocation?
     var currentErrorMessage: ErrorView?
 
+    private var finishButton: SGBarButtonItem?
+
     override func viewDidLoad() {
         let addSchoolView = AddSchoolView(frame: self.view.frame)
         self.view = addSchoolView
         self.title = "Add School"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.navigationItem.rightBarButtonItem = self.finishButton
         addSchoolView.location.button.addTarget(self, action: "locationButtonTapped", forControlEvents: .TouchUpInside)
         addSchoolView.director.button.addTarget(self, action: "directorButtonTapped", forControlEvents: .TouchUpInside)
     }
@@ -50,10 +53,12 @@ class AddSchoolController: UIViewController {
         } else if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
             self.showAlertControllerError("What's the school's name?")
         } else {
+            self.finishButton?.startLoading()
             let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
+                    self.finishButton?.stopLoading()
                     self.showAlertControllerError(message)
             })
         }

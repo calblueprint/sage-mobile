@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +30,12 @@ public class ViewUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             activity.getWindow().setStatusBarColor(activity.getResources()
                                                        .getColor(color, activity.getTheme()));
+    }
+
+    public static void setToolBarElevation(Activity activity, int elevation) {
+        ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setElevation(elevation);
     }
 
     public static void loadImage(Activity activity, String url, ImageView imageView) {

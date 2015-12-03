@@ -91,7 +91,7 @@ class BrowseSchoolsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let school = self.schools![indexPath.row]
+        let school = self.schools![indexPath.row].copy() as! School
         let vc = SchoolDetailViewController()
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

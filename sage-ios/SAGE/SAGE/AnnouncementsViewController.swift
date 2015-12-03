@@ -85,7 +85,8 @@ class AnnouncementsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
+        let announcement = self.announcements[indexPath.row].copy() as! Announcement
+        let view = AnnouncementsDetailViewController(announcement: announcement)
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         }

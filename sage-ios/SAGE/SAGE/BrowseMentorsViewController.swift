@@ -148,7 +148,7 @@ class BrowseMentorsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let mentor = self.mentors![indexPath.section][indexPath.row]
+        let mentor = (self.mentors![indexPath.section][indexPath.row]).copy() as! User
         let vc = BrowseMentorsDetailViewController(mentor: mentor)
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

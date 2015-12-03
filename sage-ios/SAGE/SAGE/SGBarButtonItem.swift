@@ -17,7 +17,7 @@ class SGBarButtonItem: UIBarButtonItem {
 
     init(title: String?, style: UIBarButtonItemStyle, target: AnyObject?, action: Selector) {
         super.init()
-        if style == UIBarButtonItemStyle.Done {
+        if style == .Done {
             self.customButton.titleLabel?.font = boldFont
         } else {
             self.customButton.titleLabel?.font = defaultFont

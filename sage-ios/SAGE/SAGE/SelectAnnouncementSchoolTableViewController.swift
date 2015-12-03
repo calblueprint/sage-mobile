@@ -91,5 +91,7 @@ class SelectAnnouncementSchoolTableViewController: UITableViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return SchoolsTableViewCell.cellHeight()
+    }
 }

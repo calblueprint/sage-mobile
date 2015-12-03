@@ -87,7 +87,7 @@ class LoginOperations: NSObject {
         }
     }
     
-    static func createUser(firstName: String, lastName: String, email: String, password: String, school: Int, hours: Int, role: Int, photoData: String, completion: ((Bool) -> Void)) {
+    static func createUser(firstName: String, lastName: String, email: String, password: String, school: Int, hours: Int, photoData: String, completion: ((Bool) -> Void)) {
         
         let operationManager = AFHTTPRequestOperationManager()
         operationManager.requestSerializer = AFJSONRequestSerializer()
@@ -102,10 +102,9 @@ class LoginOperations: NSObject {
                 UserConstants.kLastName: lastName,
                 UserConstants.kEmail: email,
                 UserConstants.kPassword: password,
-                UserConstants.kRole: role,
                 UserConstants.kLevel: hours,
                 UserConstants.kPhotoData: photoData,
-                UserConstants.kSchool: school
+                UserConstants.kSchoolID: school
             ]
         ]
         

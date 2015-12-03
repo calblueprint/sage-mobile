@@ -157,7 +157,7 @@ class SignUpController: UIViewController  {
             photoData = UIImage.encodedPhotoString(personImage)
         }
         
-        LoginOperations.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, role: role, photoData: photoData, completion: completion)
+        LoginOperations.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, photoData: photoData, completion: completion)
     }
     
     func choosePhoto() {

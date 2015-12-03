@@ -70,28 +70,11 @@ public @Data class User {
     public String getName() { return String.format("%s %s", firstName, lastName); }
 
     @JsonIgnore
-<<<<<<< 1977d04e0acbc26323a562354216cf130d336e8e
     public String getHoursString() {
         int hours = 0;
         for (int i = 0; i < VOLUNTEER_TYPES.length; i++) {
             if (volunteerType.equals(VOLUNTEER_TYPES[i]))
                 hours = i + 1;
-=======
-    public String getName() { return String.format("%s %s", firstName, lastName); }
-
-    @JsonIgnore
-    public void setTypePosition(int type) {
-        switch (type) {
-            case 0:
-                volunteerType = VOLUNTEER;
-            case 1:
-                volunteerType = ONE_UNIT;
-            case 2:
-                volunteerType = TWO_UNITS;
-            default:
-                Log.e(getClass().toString(), "Invalid volunteer type");
-                volunteerType = VOLUNTEER;
->>>>>>> done with announcements.. almost
         }
         return String.format("%d hrs/week", hours);
     }

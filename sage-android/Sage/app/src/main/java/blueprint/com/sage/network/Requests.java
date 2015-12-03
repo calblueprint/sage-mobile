@@ -9,6 +9,8 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import blueprint.com.sage.announcements.AnnouncementsListActivity;
+import blueprint.com.sage.events.AnnouncementsListEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
@@ -21,10 +23,12 @@ import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
+import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.announcements.AnnouncementsListRequest;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
@@ -274,5 +278,31 @@ public class Requests {
 
             Requests.addToRequestQueue(mActivity, request);
         }
+    }
+
+    public static class Announcements {
+        private Activity mActivity;
+
+        public Announcements(Activity activity) { mActivity = activity;}
+
+        public static Announcements with(Activity activity) { return new Announcements(activity);}
+
+        public void makeListRequest() {
+            AnnouncementsListRequest announcementsRequest = new AnnouncementsListRequest(mActivity, null, new Response.Listener<ArrayList<Announcement>>() {
+                @Override
+                public void onResponse(ArrayList<Announcement> announcementsArrayList) {
+                    AnnouncementsListActivity activity = (AnnouncementsListActivity) mActivity;
+                    mActivity.setmAnnouncementsList(announcementsArrayList);
+                    EventBus.getDefault().post(new AnnouncementsListEvent());
+                }
+            }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+                }
+            });
+            Requests.addToRequestQueue(mActivity, announcementsRequest);
+        }
+
+
     }
 }

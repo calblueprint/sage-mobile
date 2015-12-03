@@ -47,6 +47,10 @@ public class AnnouncementsListActivity extends NavigationAbstractActivity {
         networkManager.getRequestQueue().add(announcementsRequest);
     }
 
+    public void setmAnnouncementsList(ArrayList<Announcement> announcementsList) {
+        mAnnouncementsList = announcementsList;
+    }
+
     public ArrayList<Announcement> getmAnnouncementsList() {
         return mAnnouncementsList;
     }

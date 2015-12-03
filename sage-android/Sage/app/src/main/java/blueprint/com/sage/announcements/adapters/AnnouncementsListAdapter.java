@@ -53,8 +53,7 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         viewHolder.vTime.setText(announcement.getTime());
         viewHolder.vTitle.setText(announcement.getTitle());
         viewHolder.vBody.setText(announcement.getBody());
-//        Picasso picasso = Picasso.with(activity);
-//        picasso.load(announcement.getUser().getImageUrl()).into(viewHolder.vPicture);
+        user.loadUserImage(activity, viewHolder.vPicture);
     }
 
     public void setAnnouncements(ArrayList<Announcement> curList) {

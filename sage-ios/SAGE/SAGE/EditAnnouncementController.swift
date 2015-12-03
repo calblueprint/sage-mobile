@@ -41,6 +41,7 @@ class EditAnnouncementController: AddAnnouncementController {
             self.announcement?.text = editView.commentField.textView.text
             AdminOperations.editAnnouncement(self.announcement!, completion: { (editedAnnouncement) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editAnnouncementKey, object: editedAnnouncement)
                 }, failure: { (message) -> Void in
                     self.showAlertControllerError(message)
             })

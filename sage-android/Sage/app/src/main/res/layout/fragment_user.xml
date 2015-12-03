@@ -6,24 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <blueprint.com.sage.shared.views.CircleImageView
-        android:id="@+id/user_photo"
-        android:layout_width="70dp"
-        android:layout_height="70dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="196dp">
+
+        <View
+            android:id="@+id/user_profile_background"
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:background="@color/amber500"
+            android:elevation="8dp"/>
+
+        <blueprint.com.sage.shared.views.CircleImageView
+            android:id="@+id/user_photo"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginLeft="32dp"
+            android:layout_alignParentBottom="true"
+            android:elevation="16dp"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/user_school"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/UserProfileText"
+        android:id="@+id/user_school" />
 
     <TextView
-        android:id="@+id/user_total_hours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/UserProfileText"
+        android:id="@+id/user_total_hours" />
 
 </LinearLayout>

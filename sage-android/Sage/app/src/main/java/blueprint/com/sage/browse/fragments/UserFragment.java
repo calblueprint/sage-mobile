@@ -26,6 +26,7 @@ import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.interfaces.PromoteInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -65,6 +66,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
+        ViewUtils.setToolBarElevation(getActivity(), 0);
     }
 
     @Override
@@ -86,6 +88,12 @@ public class UserFragment extends Fragment implements PromoteInterface {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ViewUtils.setToolBarElevation(getActivity(), 8);
     }
 
     @Override

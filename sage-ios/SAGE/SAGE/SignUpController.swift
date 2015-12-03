@@ -147,7 +147,6 @@ class SignUpController: UIViewController  {
         
         let hoursString = schoolHoursView.chooseHoursButton.titleLabel!.text!
         let hours = self.volunteerDict[hoursString] as! Int
-        let role = 0
         
         var photoData: String
         if let image = photoView.photo.image {
@@ -159,7 +158,7 @@ class SignUpController: UIViewController  {
             photoData = UIImage.encodedPhotoString(personImage)
         }
         
-        LoginOperations.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, role: role, photoData: photoData, completion: completion)
+        LoginOperations.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, photoData: photoData, completion: completion)
     }
     
     func choosePhoto() {

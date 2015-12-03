@@ -81,9 +81,7 @@ class AddSchoolView: UIView {
     
     func displayChosenPlace(place: GMSPlace) {
         self.location.button.setTitle(place.formattedAddress, forState: .Normal)
-        if self.name.textField.text == "" {
-            self.name.textField.text = place.name
-        }
+        self.name.textField.text = place.name
         self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }
     

@@ -12,6 +12,9 @@ class AddAnnouncementController: UIViewController {
 
     var addAnnouncementView = AddAnnouncementView()
     var school: School?
+
+    private var finishButton: SGBarButtonItem?
+
     //
     // MARK: - ViewController Lifecycle
     //
@@ -22,7 +25,8 @@ class AddAnnouncementController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Create Announcement"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.navigationItem.rightBarButtonItem = self.finishButton
         self.addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
     }
     
@@ -35,13 +39,15 @@ class AddAnnouncementController: UIViewController {
         self.navigationController!.pushViewController(tableViewController, animated: true)
     }
     
-    @objc private func completeForm() {
+    func completeForm() {
         if self.addAnnouncementView.isValid() {
-            let finalAnnouncement = self.addAnnouncementView.exportToAnnouncement()
+            let finalAnnouncement = self.exportToAnnouncement()
+            self.finishButton?.startLoading()
             AdminOperations.createAnnouncement(finalAnnouncement, completion: { (announcement) -> Void in
                 self.navigationController!.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
                 }) { (errorMessage) -> Void in
+                    self.finishButton?.stopLoading()
                     let alertController = UIAlertController(
                         title: "Failure",
                         message: errorMessage as String,
@@ -57,6 +63,12 @@ class AddAnnouncementController: UIViewController {
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    private func exportToAnnouncement() -> Announcement {
+        let addView = self.view as! AddAnnouncementView
+        let announcement = Announcement(sender: LoginOperations.getUser(), title: addView.title.textField.text, text: addView.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.school)
+        return announcement
     }
     
     func didSelectSchool(school: School) {

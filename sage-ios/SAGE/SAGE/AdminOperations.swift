@@ -124,6 +124,11 @@ class AdminOperations {
         // TODO: make a network request
     }
     
+    static func editAnnouncement(announcement: Announcement, completion: ((Announcement) -> Void)?, failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
+    }
+    
     static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         // TODO: make a network request

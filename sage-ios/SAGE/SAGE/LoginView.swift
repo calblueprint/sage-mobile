@@ -16,8 +16,7 @@ class LoginView: UIView {
     var containerView: UIView = UIView()
     var firstDivider: UIView = UIView()
     var secondDivider: UIView = UIView()
-    var loginButton: UIButton = UIButton()
-    var loginButtonText: UILabel = UILabel()
+    var loginButton: SGButton = SGButton()
     var currentErrorMessage: ErrorView?
     
     var movedUp: Bool = false
@@ -83,16 +82,11 @@ class LoginView: UIView {
         self.signUpLink.titleLabel!.textColor = UIColor.whiteColor()
         self.containerView.addSubview(self.signUpLink)
         
-        self.loginButton.backgroundColor = UIColor.whiteColor()
-        self.loginButton.alpha = 0.45
+        self.loginButton.backgroundColor = UIColor(white: 1, alpha: 0.45)
+        self.loginButton.setTitle("Log in", forState: .Normal)
         self.loginButton.layer.cornerRadius = 5
         self.loginButton.clipsToBounds = true
         self.containerView.addSubview(self.loginButton)
-        
-        self.loginButtonText.textColor = UIColor.whiteColor()
-        self.loginButtonText.text = "Log in"
-        self.loginButtonText.textAlignment = NSTextAlignment.Center
-        self.containerView.addSubview(self.loginButtonText)
         
     }
    
@@ -148,8 +142,6 @@ class LoginView: UIView {
         self.loginButton.setWidth(self.containerView.frame.width - 2 * dividerMargin)
         self.loginButton.setHeight(40)
         self.loginButton.setY(self.containerView.frame.height * 0.48 + 65)
-        
-        self.loginButtonText.frame = self.loginButton.frame
         
         self.signUpLink.setX(0)
         self.signUpLink.setY(CGRectGetMaxY(self.loginButton.frame) + 20)

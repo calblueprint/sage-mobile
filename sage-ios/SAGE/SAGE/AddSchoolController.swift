@@ -29,19 +29,19 @@ class AddSchoolController: UIViewController {
     func locationButtonTapped() {
         let tableViewController = AddSchoolLocationTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(tableViewController, animated: true)
+        self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
     func directorButtonTapped() {
         let tableViewController = AddSchoolDirectorTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(tableViewController, animated: true)
+        self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
     func completeForm() {

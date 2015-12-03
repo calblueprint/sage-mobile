@@ -40,10 +40,10 @@ class BrowseSchoolsViewController: UITableViewController {
     
     func addSchool() {
         let addSchoolController = AddSchoolController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(addSchoolController, animated: true)
+        self.navigationController?.pushViewController(addSchoolController, animated: true)
     }
     
     func showErrorAndSetMessage(message: String) {
@@ -93,10 +93,10 @@ class BrowseSchoolsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row]
         let vc = SchoolDetailViewController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
         vc.configureWithSchool(school)
-        self.navigationController!.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

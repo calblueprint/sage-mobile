@@ -36,10 +36,10 @@ class AnnouncementsViewController: UITableViewController {
     
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(addAnnouncementController, animated: true)
+        self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
     
     func getAnnouncements() {
@@ -86,9 +86,9 @@ class AnnouncementsViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(view, animated: true)
+        self.navigationController?.pushViewController(view, animated: true)
     }
 }

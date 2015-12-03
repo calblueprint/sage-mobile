@@ -79,3 +79,9 @@ class Announcement: NSObject {
         return propertyDict
     }
 }
+
+extension Announcement: NSCopying {
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return Announcement(id: self.id, sender: self.sender?.copy() as? User, title: self.title?.copy() as? String, text: self.text?.copy() as? String, timeCreated: self.timeCreated?.copy() as? NSDate, school: self.school?.copy() as? School)
+    }
+}

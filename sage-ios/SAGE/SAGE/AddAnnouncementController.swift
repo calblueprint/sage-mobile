@@ -33,10 +33,10 @@ class AddAnnouncementController: UIViewController {
     @objc private func schoolButtonTapped() {
         let tableViewController = SelectAnnouncementSchoolTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(tableViewController, animated: true)
+        self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
     @objc private func completeForm() {
@@ -44,7 +44,7 @@ class AddAnnouncementController: UIViewController {
             self.finishButton?.startLoading()
             let finalAnnouncement = self.addAnnouncementView.exportToAnnouncement()
             AdminOperations.createAnnouncement(finalAnnouncement, completion: { (announcement) -> Void in
-                self.navigationController!.popViewControllerAnimated(true)
+                self.navigationController?.popViewControllerAnimated(true)
                 }) { (errorMessage) -> Void in
                     self.finishButton?.stopLoading()
                     let alertController = UIAlertController(

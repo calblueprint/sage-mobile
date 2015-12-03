@@ -172,5 +172,6 @@ class LoginOperations: NSObject {
     static func deleteUserKeychainData() {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kUser)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kAuthToken)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kSchool)
     }
 }

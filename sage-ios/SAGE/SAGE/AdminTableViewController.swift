@@ -50,17 +50,17 @@ class AdminTableViewController: UITableViewController {
         case 0:
             switch indexPath.row {
             case 0:
-                self.navigationController!.pushViewController(BrowseMentorsViewController(), animated: true)
+                self.navigationController?.pushViewController(BrowseMentorsViewController(), animated: true)
             case 1:
-                self.navigationController!.pushViewController(BrowseSchoolsViewController(), animated: true)
+                self.navigationController?.pushViewController(BrowseSchoolsViewController(), animated: true)
             default: break
             }
         case 1:
             switch indexPath.row {
             case 0:
-                self.navigationController!.pushViewController(CheckinRequestsViewController(), animated: true)
+                self.navigationController?.pushViewController(CheckinRequestsViewController(), animated: true)
             case 1:
-                self.navigationController!.pushViewController(SignUpRequestsViewController(), animated: true)
+                self.navigationController?.pushViewController(SignUpRequestsViewController(), animated: true)
             default: break
             }
         case 2: break

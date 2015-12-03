@@ -63,9 +63,9 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         self.navigationItem.rightBarButtonItem = rightButton
         
         if self.modalType == ContentType.School {
-            self.navigationController!.navigationBar.topItem!.title = "Choose School"
+            self.navigationController?.navigationBar.topItem!.title = "Choose School"
         } else  if self.modalType == ContentType.Hours {
-            self.navigationController!.navigationBar.topItem!.title = "Choose Hours"
+            self.navigationController?.navigationBar.topItem!.title = "Choose Hours"
         }
 
     }

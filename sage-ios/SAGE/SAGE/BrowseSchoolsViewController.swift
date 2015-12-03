@@ -14,6 +14,45 @@ class BrowseSchoolsViewController: UITableViewController {
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addSchool:", name: NotificationConstants.addSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editSchool:", name: NotificationConstants.editSchoolKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - NSNotificationCenter selectors
+
+    func addSchool(notification: NSNotification) {
+        let school = notification.object as! School
+        if let _ = self.schools {
+            self.schools!.insert(school, atIndex: 0)
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
+    func editSchool(notification: NSNotification) {
+        let school = notification.object as! School
+        if let _ = self.schools {
+            for i in 0...(self.schools!.count-1) {
+                let oldSchool = self.schools![i]
+                if school.id == oldSchool.id {
+                    self.schools![i] = school
+                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Schools"

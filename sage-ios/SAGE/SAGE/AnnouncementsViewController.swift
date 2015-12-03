@@ -14,6 +14,41 @@ class AnnouncementsViewController: UITableViewController {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
     
+    
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addAnnouncement:", name: NotificationConstants.addAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editAnnouncement:", name: NotificationConstants.editAnnouncementKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addAnnouncement(notification: NSNotification) {
+        let announcement = notification.object as! Announcement
+        self.announcements.insert(announcement, atIndex: 0)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func editAnnouncement(notification: NSNotification) {
+        let announcement = notification.object as! Announcement
+        for i in 0...(self.announcements.count-1) {
+            let oldAnnouncement = self.announcements[i]
+            if announcement.id == oldAnnouncement.id {
+                self.announcements[i] = announcement
+                let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        }
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -33,6 +68,8 @@ class AnnouncementsViewController: UITableViewController {
         
         self.getAnnouncements()
     }
+    
+    // MARK: - NSNotificationCenter selectors
     
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()

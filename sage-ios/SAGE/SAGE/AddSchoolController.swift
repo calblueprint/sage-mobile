@@ -53,6 +53,7 @@ class AddSchoolController: UIViewController {
             let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addSchoolKey, object: createdSchool)
                 }, failure: { (message) -> Void in
                     self.showAlertControllerError(message)
             })

@@ -185,5 +185,5 @@ class User: NSObject, NSCoding {
         case .TwoUnit: return 3
         default: return 0
         }
-    }
+    }    
 }

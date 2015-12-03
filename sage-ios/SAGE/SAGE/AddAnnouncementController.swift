@@ -39,10 +39,10 @@ class AddAnnouncementController: UIViewController {
         self.navigationController!.pushViewController(tableViewController, animated: true)
     }
     
-    @objc private func completeForm() {
+    func completeForm() {
         if self.addAnnouncementView.isValid() {
+            let finalAnnouncement = self.exportToAnnouncement()
             self.finishButton?.startLoading()
-            let finalAnnouncement = self.addAnnouncementView.exportToAnnouncement()
             AdminOperations.createAnnouncement(finalAnnouncement, completion: { (announcement) -> Void in
                 self.navigationController!.popViewControllerAnimated(true)
                 }) { (errorMessage) -> Void in
@@ -62,6 +62,12 @@ class AddAnnouncementController: UIViewController {
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    private func exportToAnnouncement() -> Announcement {
+        let addView = self.view as! AddAnnouncementView
+        let announcement = Announcement(sender: LoginOperations.getUser(), title: addView.title.textField.text, text: addView.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.school)
+        return announcement
     }
     
     func didSelectSchool(school: School) {

@@ -5,6 +5,7 @@
     android:id="@+id/fragment_announcement">
 
     <blueprint.com.sage.shared.views.CircleImageView
+        android:id="@+id/announcement_pf_pic_single"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
@@ -13,7 +14,7 @@
         android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/announcement_user"
+        android:id="@+id/announcement_user_single"
         style="@style/AnnouncementRow"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="100dp"
@@ -22,17 +23,17 @@
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/announcement_time"
+        android:id="@+id/announcement_time_single"
         style="@style/AnnouncementRow"
         android:textColor="@color/date_gray"
         android:text="2 days ago"
         android:textSize="20dp"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="100dp"
-        android:layout_below="@id/announcement_user"/>
+        android:layout_below="@id/announcement_user_single"/>
 
     <TextView
-        android:id="@+id/announcement_title"
+        android:id="@+id/announcement_title_single"
         style="@style/AnnouncementRow"
         android:text="Title"
         android:textStyle="bold"
@@ -40,16 +41,16 @@
         android:layout_marginBottom="10dp"
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
-        android:layout_below="@id/announcement_time"/>
+        android:layout_below="@id/announcement_time_single"/>
 
     <TextView
-        android:id="@+id/announcement_body"
+        android:id="@+id/announcement_body_single"
         style="@style/AnnouncementRow"
         android:text="The actual announcement."
         android:layout_marginBottom="10dp"
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
         android:textSize="20dp"
-        android:layout_below="@id/announcement_title"/>
+        android:layout_below="@id/announcement_title_single"/>
 
 </RelativeLayout>

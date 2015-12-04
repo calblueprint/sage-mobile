@@ -10,6 +10,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.events.AnnouncementsListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Announcement;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.network.announcements.AnnouncementsListRequest;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -26,8 +27,9 @@ public class AnnouncementsListActivity extends NavigationAbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAnnouncementsList = new ArrayList<>();
-        announcementsListRequest();
+//        mAnnouncementsList = new ArrayList<>();
+        Requests.Announcements request = new Requests.Announcements(this);
+        request.makeListRequest();
         FragUtils.replace(R.id.container, AnnouncementsListFragment.newInstance(), this);
     }
 
@@ -54,5 +56,4 @@ public class AnnouncementsListActivity extends NavigationAbstractActivity {
     public ArrayList<Announcement> getmAnnouncementsList() {
         return mAnnouncementsList;
     }
-
 }

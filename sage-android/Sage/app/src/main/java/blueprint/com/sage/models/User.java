@@ -78,6 +78,7 @@ public @Data class User {
         }
         return String.format("%d hrs/week", hours);
     }
+
     /**
      * Gets integer of volunteer type
      */

@@ -14,6 +14,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,8 +63,8 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     public void onEvent(AnnouncementsListEvent event) {
-        AnnouncementsListActivity activity = (AnnouncementsListActivity) getActivity();
-        announcementsArrayList = activity.getmAnnouncementsList();
+//        AnnouncementsListActivity activity = (AnnouncementsListActivity) getActivity();
+        announcementsArrayList = event.getAnnouncements();
         adapter.setAnnouncements(announcementsArrayList);
         mEmptyView.setRefreshing(false);
         mAnnouncementsRefreshView.setRefreshing(false);
@@ -85,6 +86,8 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Override
     public void onRefresh() {
         AnnouncementsListActivity activity = (AnnouncementsListActivity) getActivity();
-        activity.announcementsListRequest();
+        Requests.Announcements request = new Requests.Announcements(activity);
+        request.makeListRequest();
+//        activity.announcementsListRequest();
     }
 }

@@ -6,21 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Response;
 
 import java.util.ArrayList;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.announcements.AnnouncementFragment;
-import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.network.announcements.AnnouncementRequest;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.CircleImageView;
-import blueprint.com.sage.utility.network.NetworkManager;
-import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -86,21 +79,22 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
 
         @OnClick(R.id.announcement_row)
         public void onClick(View v) {
-            NetworkManager networkManager = NetworkManager.getInstance(activity);
+//            NetworkManager networkManager = NetworkManager.getInstance(activity);
             Announcement announcement = announcementArrayList.get(getAdapterPosition());
-            Toast.makeText(activity, "id:" + getAdapterPosition(), Toast.LENGTH_SHORT);
-            AnnouncementRequest announcementRequest = new AnnouncementRequest(activity, announcement.getId(), new Response.Listener<Announcement>() {
-                @Override
-                public void onResponse(Announcement announcement) {
-                    FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(), activity);
-                }
-            }, new Response.Listener<APIError>() {
-                @Override
-                public void onResponse(APIError apiError) {
-
-                }
-            });
-            networkManager.getRequestQueue().add(announcementRequest);
+            Requests.Announcements request = new Requests.Announcements(activity);
+            request.makeShowRequest(announcement);
+//            AnnouncementRequest announcementRequest = new AnnouncementRequest(activity, announcement.getId(), new Response.Listener<Announcement>() {
+//                @Override
+//                public void onResponse(Announcement announcement) {
+//                    FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(), activity);
+//                }
+//            }, new Response.Listener<APIError>() {
+//                @Override
+//                public void onResponse(APIError apiError) {
+//
+//                }
+//            });
+//            networkManager.getRequestQueue().add(announcementRequest);
         }
     }
 }

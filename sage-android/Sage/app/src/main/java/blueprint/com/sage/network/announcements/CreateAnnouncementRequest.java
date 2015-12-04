@@ -25,7 +25,7 @@ public class CreateAnnouncementRequest extends BaseRequest {
 
     public CreateAnnouncementRequest(final Activity activity, Announcement announcement,
                                     final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
-        super(Request.Method.POST, makeUrl("/announcements"), createAnnouncementParams(announcement),
+        super(Request.Method.POST, makeUrl(null, "announcements"), createAnnouncementParams(announcement),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

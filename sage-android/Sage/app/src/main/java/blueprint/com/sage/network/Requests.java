@@ -1,6 +1,7 @@
 package blueprint.com.sage.network;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.content.Context;
 
 import com.android.volley.Request;
@@ -9,6 +10,8 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.AnnouncementFragment;
 import blueprint.com.sage.announcements.AnnouncementsListActivity;
 import blueprint.com.sage.events.AnnouncementsListEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
@@ -28,6 +31,7 @@ import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.announcements.AnnouncementRequest;
 import blueprint.com.sage.network.announcements.AnnouncementsListRequest;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
@@ -41,6 +45,7 @@ import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -281,19 +286,22 @@ public class Requests {
     }
 
     public static class Announcements {
-        private Activity mActivity;
+        private FragmentActivity mActivity;
 
-        public Announcements(Activity activity) { mActivity = activity;}
+        public Announcements(FragmentActivity activity) {
+            mActivity = activity;
+        }
 
-        public static Announcements with(Activity activity) { return new Announcements(activity);}
+        public static Announcements with(FragmentActivity activity) {
+            return new Announcements(activity);
+        }
 
         public void makeListRequest() {
             AnnouncementsListRequest announcementsRequest = new AnnouncementsListRequest(mActivity, null, new Response.Listener<ArrayList<Announcement>>() {
                 @Override
                 public void onResponse(ArrayList<Announcement> announcementsArrayList) {
                     AnnouncementsListActivity activity = (AnnouncementsListActivity) mActivity;
-                    mActivity.setmAnnouncementsList(announcementsArrayList);
-                    EventBus.getDefault().post(new AnnouncementsListEvent());
+                    EventBus.getDefault().post(new AnnouncementsListEvent(announcementsArrayList));
                 }
             }, new Response.Listener<APIError>() {
                 @Override
@@ -303,6 +311,22 @@ public class Requests {
             Requests.addToRequestQueue(mActivity, announcementsRequest);
         }
 
+        public void makeShowRequest(Announcement announcement) {
+            AnnouncementRequest request = new AnnouncementRequest(mActivity, announcement.getId(),
+                    new Response.Listener<Announcement>() {
+                        @Override
+                        public void onResponse(Announcement announcement) {
+                            FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(announcement), mActivity);
+//                            EventBus.getDefault().post(new SchoolEvent(school));
+                        }
+                    }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError error) {
 
+                }
+            });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
     }
 }

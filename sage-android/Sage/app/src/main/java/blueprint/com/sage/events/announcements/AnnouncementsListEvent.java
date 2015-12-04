@@ -1,4 +1,4 @@
-package blueprint.com.sage.events;
+package blueprint.com.sage.events.announcements;
 
 import java.util.ArrayList;
 

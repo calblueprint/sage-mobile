@@ -81,8 +81,7 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         public void onClick(View v) {
 //            NetworkManager networkManager = NetworkManager.getInstance(activity);
             Announcement announcement = announcementArrayList.get(getAdapterPosition());
-            Requests.Announcements request = new Requests.Announcements(activity);
-            request.makeShowRequest(announcement);
+            Requests.Announcements.with(activity).makeShowRequest(announcement);
 //            AnnouncementRequest announcementRequest = new AnnouncementRequest(activity, announcement.getId(), new Response.Listener<Announcement>() {
 //                @Override
 //                public void onResponse(Announcement announcement) {

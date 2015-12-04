@@ -1,8 +1,10 @@
 package blueprint.com.sage.network;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.AnnouncementFragment;
 import blueprint.com.sage.announcements.AnnouncementsListActivity;
-import blueprint.com.sage.events.AnnouncementsListEvent;
+import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
@@ -45,6 +47,7 @@ import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
@@ -327,6 +330,42 @@ public class Requests {
             });
 
             Requests.addToRequestQueue(mActivity, request);
+        }
+    }
+
+    public static class SignIn {
+        private FragmentActivity mActivity;
+
+        public SignIn(FragmentActivity activity) {
+            mActivity = activity;
+        }
+
+        public static SignIn with(FragmentActivity activity) {
+            return new SignIn(activity);
+        }
+
+        public void makeSignInRequest(HashMap<String, String> params) {
+            SignInRequest loginRequest = new SignInRequest(mActivity, params, new Response.Listener<Session>() {
+                @Override
+                public void onResponse(Session session) {
+                    loginUser(session);
+                }
+            }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+
+                }
+            });
+            Requests.addToRequestQueue(mActivity, loginRequest);
+        }
+
+        private void loginUser(Session session) {
+            try {
+                NetworkUtils.loginUser(session, mActivity);
+            } catch(Exception e) {
+                Log.e(getClass().toString(), e.toString());
+                Toast.makeText(mActivity, "Something went wrong, try again!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

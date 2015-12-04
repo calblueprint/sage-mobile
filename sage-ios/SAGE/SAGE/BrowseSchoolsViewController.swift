@@ -32,7 +32,7 @@ class BrowseSchoolsViewController: UITableViewController {
     // MARK: - NSNotificationCenter selectors
     //
     func schoolAdded(notification: NSNotification) {
-        let school = notification.object as! School
+        let school = notification.object!.copy() as! School
         if let _ = self.schools {
             self.schools!.insert(school, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
@@ -41,7 +41,7 @@ class BrowseSchoolsViewController: UITableViewController {
     }
     
     func schoolEdited(notification: NSNotification) {
-        let school = notification.object as! School
+        let school = notification.object!.copy() as! School
         if let _ = self.schools {
             for i in 0...(self.schools!.count-1) {
                 let oldSchool = self.schools![i]

@@ -33,14 +33,14 @@ class AnnouncementsViewController: UITableViewController {
     // MARK: - NSNotificationCenter selectors
     //
     func announcementAdded(notification: NSNotification) {
-        let announcement = notification.object as! Announcement
+        let announcement = notification.object!.copy() as! Announcement
         self.announcements.insert(announcement, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
     func announcementEdited(notification: NSNotification) {
-        let announcement = notification.object as! Announcement
+        let announcement = notification.object!.copy() as! Announcement
         for i in 0...(self.announcements.count-1) {
             let oldAnnouncement = self.announcements[i]
             if announcement.id == oldAnnouncement.id {
@@ -76,9 +76,6 @@ class AnnouncementsViewController: UITableViewController {
         self.getAnnouncements()
     }
     
-    //
-    // MARK: - NSNotificationCenter selectors
-    //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
         if let topItem = self.navigationController?.navigationBar.topItem {

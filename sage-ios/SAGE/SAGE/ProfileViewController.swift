@@ -10,9 +10,19 @@ import Foundation
 
 class ProfileViewController: UITableViewController {
 
-    var currentUser = User()
+    var user: User?
     var profileView = ProfileView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        self.user = User()
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,14 +44,12 @@ class ProfileViewController: UITableViewController {
     }
     
     func getUser() {
-        ProfileOperations.getUser({ (user) -> Void in
-            self.currentUser = user
+        ProfileOperations.getUser(self.user!, completion: { (user) -> Void in
             self.profileView.setupWithUser(user)
             self.activityIndicator.stopAnimating()
             self.tableView.reloadData()
-
             }) { (errorMessage) -> Void in
-                //display error
+                // display error
         }
     }
         

@@ -41,7 +41,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         let announcementsViewController = AnnouncementsViewController()
         let checkInViewController = CheckinViewController()
         let myStatsViewController = UIViewController()
-        let profileViewController = ProfileViewController()
+        let profileViewController = ProfileViewController(user: LoginOperations.getUser()!)
         
         var rootViewControllers = [announcementsViewController, checkInViewController, myStatsViewController, profileViewController]
         

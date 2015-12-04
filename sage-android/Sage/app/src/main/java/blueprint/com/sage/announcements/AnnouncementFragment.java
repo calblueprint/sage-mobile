@@ -52,7 +52,7 @@ public class AnnouncementFragment extends Fragment {
         if (user != null) {
             vUser.setText(user.getName());
         }
-        vTime.setText(announcement.getTime());
+        vTime.setText(announcement.getDate());
         vTitle.setText(announcement.getTitle());
         vBody.setText(announcement.getBody());
         user.loadUserImage(getActivity(), vPicture);

@@ -6,20 +6,18 @@
 
     <blueprint.com.sage.shared.views.CircleImageView
         android:id="@+id/announcement_pf_pic_single"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/pomsky"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/white_circle"
         android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/announcement_user_single"
         style="@style/AnnouncementRow"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
         android:text="User Name"
-        android:textSize="30dp"
         android:textColor="@color/black" />
 
     <TextView
@@ -27,9 +25,7 @@
         style="@style/AnnouncementRow"
         android:textColor="@color/date_gray"
         android:text="2 days ago"
-        android:textSize="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="10dp"
         android:layout_below="@id/announcement_user_single"/>
 
     <TextView
@@ -37,10 +33,8 @@
         style="@style/AnnouncementRow"
         android:text="Title"
         android:textStyle="bold"
-        android:textSize="30dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/black"
-        android:layout_marginLeft="20dp"
         android:layout_below="@id/announcement_time_single"/>
 
     <TextView
@@ -49,8 +43,6 @@
         android:text="The actual announcement."
         android:layout_marginBottom="10dp"
         android:textColor="@color/black"
-        android:layout_marginLeft="20dp"
-        android:textSize="20dp"
         android:layout_below="@id/announcement_title_single"/>
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package blueprint.com.sage.models;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Data;
@@ -23,6 +24,11 @@ public @Data class Announcement {
 
     private User user;
     private School school;
+
+    public String getDate() {
+        SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy");
+        return format.format(createdAt);
+    }
 
     public String getTime() {
         DateTime dateTime = new DateTime(getCreatedAt());

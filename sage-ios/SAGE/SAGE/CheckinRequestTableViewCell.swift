@@ -56,7 +56,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.mentorName.attributedText = NSAttributedString(string: mentorText, attributes:attributes)
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMMM d, YYYY"
+        dateFormatter.dateFormat = "MMMM d"
         let fullDateText = " - " + dateFormatter.stringFromDate(checkin.startTime!)
         
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)

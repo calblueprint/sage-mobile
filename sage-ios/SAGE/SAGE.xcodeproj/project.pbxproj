@@ -27,6 +27,7 @@
 		27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C31BBDD1F300D61DA2 /* UIConstants.swift */; };
 		27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C51BBDD76800D61DA2 /* StringConstants.swift */; };
 		27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */; };
+		4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */; };
 		4216872D1C09286A00C29DEF /* SchoolDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */; };
 		4223341E1BC090E900E863D0 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223341D1BC090E900E863D0 /* Announcement.swift */; };
 		422334241BC099D400E863D0 /* Checkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422334231BC099D400E863D0 /* Checkin.swift */; };
@@ -95,6 +96,7 @@
 		42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393421BC4607D00630F93 /* UnverifiedViewController.swift */; };
 		42C4352A1C013F8D000F6671 /* AddSchoolLocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C435291C013F8D000F6671 /* AddSchoolLocationTableViewController.swift */; };
 		42C4352C1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */; };
+		42DE22161C0F92BE00071879 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE22151C0F92BE00071879 /* NotificationConstants.swift */; };
 		42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E38DC61BFE957E0048B8D4 /* UIImageView.swift */; };
 		42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EDBDED1BDF38420092D5F5 /* UIImage.swift */; };
 		42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */; };
@@ -164,6 +166,7 @@
 		27F990C31BBDD1F300D61DA2 /* UIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		27F990C51BBDD76800D61DA2 /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAnnouncementController.swift; sourceTree = "<group>"; };
 		4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolDetailHeaderView.swift; sourceTree = "<group>"; };
 		4223341D1BC090E900E863D0 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		422334231BC099D400E863D0 /* Checkin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkin.swift; sourceTree = "<group>"; };
@@ -209,6 +212,7 @@
 		42C393421BC4607D00630F93 /* UnverifiedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedViewController.swift; sourceTree = "<group>"; };
 		42C435291C013F8D000F6671 /* AddSchoolLocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolLocationTableViewController.swift; sourceTree = "<group>"; };
 		42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolDirectorTableViewController.swift; sourceTree = "<group>"; };
+		42DE22151C0F92BE00071879 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
 		42E38DC61BFE957E0048B8D4 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		42EDBDED1BDF38420092D5F5 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
@@ -422,6 +426,7 @@
 			children = (
 				422334291BC0C91B00E863D0 /* ModelConstants */,
 				27F990C31BBDD1F300D61DA2 /* UIConstants.swift */,
+				42DE22151C0F92BE00071879 /* NotificationConstants.swift */,
 				4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */,
 				27F990C51BBDD76800D61DA2 /* StringConstants.swift */,
 				42FE17C61BF447BA0029BF22 /* APIKeys.swift */,
@@ -583,6 +588,7 @@
 				5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */,
 				42C1D1C41C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift */,
 				42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */,
+				4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */,
 				5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */,
 			);
 			name = Announcements;
@@ -796,6 +802,7 @@
 				42EFD67F1BC9ED730063FD78 /* SignUpFormView.swift in Sources */,
 				27D1B6821BE1A62E00F9D026 /* FormFieldItem.swift in Sources */,
 				42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */,
+				42DE22161C0F92BE00071879 /* NotificationConstants.swift in Sources */,
 				42F85ED81C01328700F62C37 /* AddSchoolController.swift in Sources */,
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
@@ -813,6 +820,7 @@
 				42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,
 				422715451BC7359D00FD719C /* UIFont.swift in Sources */,
+				4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */,
 				42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,

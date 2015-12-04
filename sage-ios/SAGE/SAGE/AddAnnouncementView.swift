@@ -15,8 +15,6 @@ class AddAnnouncementView: UIView {
     var school = FormButtonItem()
     var commentField = FormTextItem()
     
-    var chosenSchool: School?
-    
     private var keyboardControls = BSKeyboardControls()
     private var scrollView = UIScrollView()
     
@@ -85,11 +83,6 @@ class AddAnnouncementView: UIView {
             self.title.textField.text?.characters.count > 0 &&
             self.school.button.titleLabel?.text?.characters.count > 0 &&
             self.commentField.textView.text?.characters.count > 0
-    }
-    
-    func exportToAnnouncement() -> Announcement {
-        let announcement = Announcement(sender: LoginOperations.getUser(), title: self.title.textField.text, text: self.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.chosenSchool)
-        return announcement
     }
     
     func displayChosenSchool(school: School) {

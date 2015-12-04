@@ -80,6 +80,10 @@ class LoginOperations: NSObject {
             if let auth = authToken {
                 KeychainWrapper.setObject(auth, forKey: KeychainConstants.kAuthToken)
             }
+            if let school = user.school {
+                user.school = school
+                KeychainWrapper.setObject(school, forKey: KeychainConstants.kSchool)
+            }
         }
     }
     

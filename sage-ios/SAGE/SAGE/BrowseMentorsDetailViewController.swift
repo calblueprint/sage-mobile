@@ -13,7 +13,7 @@ class BrowseMentorsDetailViewController: UIViewController {
     var mentor: User
     
     init(mentor: User) {
-        self.mentor = mentor
+        self.mentor = mentor.copy() as! User
         super.init(nibName: nil, bundle: nil)
     }
 

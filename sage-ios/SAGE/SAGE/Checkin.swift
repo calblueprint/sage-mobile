@@ -100,3 +100,9 @@ class Checkin: NSObject {
         return formatter.stringFromDate(self.endTime!)
     }
 }
+
+extension Checkin: NSCopying {
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return Checkin(id: self.id, user: self.user?.copy() as? User, startTime: self.startTime?.copy() as? NSDate, endTime: self.endTime?.copy() as? NSDate, school: self.school?.copy() as? School, comment: self.comment?.copy() as? String, verified: self.verified)
+    }
+}

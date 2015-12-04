@@ -187,3 +187,9 @@ class User: NSObject, NSCoding {
         }
     }    
 }
+
+extension User: NSCopying {
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return User(id: self.id, firstName: self.firstName?.copy() as? String, lastName: self.lastName?.copy() as? String, email: self.email?.copy() as? String, school: self.school?.copy() as? School, level: self.level, role: self.role, totalHours: self.totalHours, verified: self.verified, imgURL: self.imageURL?.copy() as? NSURL)
+    }
+}

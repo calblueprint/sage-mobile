@@ -18,7 +18,7 @@ class EditSchoolController: AddSchoolController {
     }
     
     func configureWithSchool(school: School?) {
-        self.school = school
+        self.school = school?.copy() as? School
         (self.view as! AddSchoolView).displaySchoolName(school?.name)
         if let director = self.school?.director {
             self.didSelectDirector(director)

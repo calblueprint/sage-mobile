@@ -18,7 +18,7 @@ class EditAnnouncementController: AddAnnouncementController {
     }
 
     func configureWithAnnouncement(announcement: Announcement) {
-        self.announcement = announcement
+        self.announcement = announcement.copy() as? Announcement
         let editView = self.view as! AddAnnouncementView
         editView.displayChosenSchool(self.announcement!.school!)
         editView.title.textField.text = self.announcement?.title

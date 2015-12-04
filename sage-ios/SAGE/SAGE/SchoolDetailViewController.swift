@@ -51,10 +51,10 @@ class SchoolDetailViewController: UITableViewController {
     func editSchool() {
         let editSchoolController = EditSchoolController()
         editSchoolController.configureWithSchool(self.school)
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(editSchoolController, animated: true)
+        self.navigationController?.pushViewController(editSchoolController, animated: true)
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

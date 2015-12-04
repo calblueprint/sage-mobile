@@ -33,14 +33,14 @@ class AnnouncementsViewController: UITableViewController {
     // MARK: - NSNotificationCenter selectors
     //
     func announcementAdded(notification: NSNotification) {
-        let announcement = notification.object as! Announcement
+        let announcement = notification.object!.copy() as! Announcement
         self.announcements.insert(announcement, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
     func announcementEdited(notification: NSNotification) {
-        let announcement = notification.object as! Announcement
+        let announcement = notification.object!.copy() as! Announcement
         for i in 0...(self.announcements.count-1) {
             let oldAnnouncement = self.announcements[i]
             if announcement.id == oldAnnouncement.id {
@@ -76,15 +76,12 @@ class AnnouncementsViewController: UITableViewController {
         self.getAnnouncements()
     }
     
-    //
-    // MARK: - NSNotificationCenter selectors
-    //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(addAnnouncementController, animated: true)
+        self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
     
     func getAnnouncements() {
@@ -130,10 +127,11 @@ class AnnouncementsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        let announcement = self.announcements[indexPath.row]
+        let view = AnnouncementsDetailViewController(announcement: announcement)
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(view, animated: true)
+        self.navigationController?.pushViewController(view, animated: true)
     }
 }

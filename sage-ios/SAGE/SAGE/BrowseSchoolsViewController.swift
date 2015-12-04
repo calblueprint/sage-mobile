@@ -32,7 +32,7 @@ class BrowseSchoolsViewController: UITableViewController {
     // MARK: - NSNotificationCenter selectors
     //
     func schoolAdded(notification: NSNotification) {
-        let school = notification.object as! School
+        let school = notification.object!.copy() as! School
         if let _ = self.schools {
             self.schools!.insert(school, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
@@ -41,7 +41,7 @@ class BrowseSchoolsViewController: UITableViewController {
     }
     
     func schoolEdited(notification: NSNotification) {
-        let school = notification.object as! School
+        let school = notification.object!.copy() as! School
         if let _ = self.schools {
             for i in 0...(self.schools!.count-1) {
                 let oldSchool = self.schools![i]
@@ -80,10 +80,10 @@ class BrowseSchoolsViewController: UITableViewController {
     
     func addSchool() {
         let addSchoolController = AddSchoolController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(addSchoolController, animated: true)
+        self.navigationController?.pushViewController(addSchoolController, animated: true)
     }
     
     func showErrorAndSetMessage(message: String) {
@@ -133,10 +133,10 @@ class BrowseSchoolsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row]
         let vc = SchoolDetailViewController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
         vc.configureWithSchool(school)
-        self.navigationController!.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

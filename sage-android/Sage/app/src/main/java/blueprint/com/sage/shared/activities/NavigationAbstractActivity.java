@@ -119,8 +119,8 @@ public class NavigationAbstractActivity extends AbstractActivity
                 Log.e("Logging out", "yay");
                 NetworkUtils.logoutCurrentUser(this);
                 break;
-            case R.id.schools:
-                startSchoolsActivity();
+            case R.id.browse:
+                startBrowseActivity();
                 break;
             case R.id.requests:
                 startRequestsActivity();
@@ -169,7 +169,7 @@ public class NavigationAbstractActivity extends AbstractActivity
         startActivity(CheckInActivity.class);
     }
 
-    private void startSchoolsActivity() {
+    private void startBrowseActivity() {
         if (this instanceof BrowseActivity) return;
         startActivity(BrowseActivity.class);
     }

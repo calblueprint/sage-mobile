@@ -12,7 +12,7 @@ import FontAwesomeKit
 class SchoolDetailViewController: UITableViewController {
     
     private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
-    private var school = School()
+    private var school: School?
     
     
     // MARK: - Initialization
@@ -42,9 +42,9 @@ class SchoolDetailViewController: UITableViewController {
     
     private func configureWithCompleteSchool(school: School) {
         self.school = school
-        let marker = GMSMarker(position: self.school.location!.coordinate)
+        let marker = GMSMarker(position: self.school!.location!.coordinate)
         marker.map = self.schoolDetailHeaderView.mapView
-        self.schoolDetailHeaderView.mapView.camera = GMSCameraPosition(target: self.school.location!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        self.schoolDetailHeaderView.mapView.camera = GMSCameraPosition(target: self.school!.location!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         self.tableView.reloadData()
     }
     
@@ -60,7 +60,7 @@ class SchoolDetailViewController: UITableViewController {
         let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: "editSchool")
         self.navigationItem.rightBarButtonItem = rightButton
         
-        if let coordinate = self.school.location?.coordinate {
+        if let coordinate = self.school?.location?.coordinate {
             let marker = GMSMarker(position: coordinate)
             marker.map = self.schoolDetailHeaderView.mapView
             self.schoolDetailHeaderView.mapView.moveCamera(GMSCameraUpdate.setTarget(coordinate))
@@ -81,9 +81,9 @@ class SchoolDetailViewController: UITableViewController {
     //
     func schoolEdited(notification: NSNotification) {
         let newSchool = notification.object!.copy() as! School
-        if newSchool.id == self.school.id {
+        if newSchool.id == self.school!.id {
             self.school = newSchool
-            self.configureWithCompleteSchool(school)
+            self.configureWithCompleteSchool(newSchool)
         }
     }
     
@@ -91,18 +91,22 @@ class SchoolDetailViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            if let _ = self.school.director {
-                return 1
+        if let school = self.school {
+            if section == 0 {
+                if let _ = self.school?.director {
+                    return 1
+                } else {
+                    return 0
+                }
             } else {
-                return 0
+                if let students = school.students {
+                    return students.count
+                } else {
+                    return 0
+                }
             }
         } else {
-            if let students = school.students {
-                return students.count
-            } else {
-                return 0
-            }
+            return 0
         }
     }
     
@@ -116,9 +120,9 @@ class SchoolDetailViewController: UITableViewController {
             cell = UsersTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
         }
         if indexPath.section == 0 {
-            (cell as! UsersTableViewCell).configureWithUser(self.school.director!)
+            (cell as! UsersTableViewCell).configureWithUser(self.school!.director!)
         } else {
-            (cell as! UsersTableViewCell).configureWithUser(self.school.students![indexPath.row])
+            (cell as! UsersTableViewCell).configureWithUser(self.school!.students![indexPath.row])
         }
         return cell!
     }
@@ -136,7 +140,7 @@ class SchoolDetailViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if let _ = self.school.director {
+        if let _ = self.school?.director {
             return UITableViewAutomaticDimension
         } else {
             return 0

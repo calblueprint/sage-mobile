@@ -48,7 +48,7 @@ class EditSchoolController: AddSchoolController {
                 self.school?.location = location
             }
             AdminOperations.editSchool(self.school!, completion: { (editedSchool) -> Void in
-                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editSchoolKey, object: editedSchool)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editSchoolKey, object: editedSchool.copy())
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
                     self.showAlertControllerError(message)

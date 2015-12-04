@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		22E8AFA2C4807E582FFD7452 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3B940583EC03D3C82EAAD0 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */; settings = {ASSET_TAGS = (); }; };
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
 		2705CC531BB927D8004FE927 /* SAGETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC521BB927D8004FE927 /* SAGETests.swift */; };
 		2705CC5E1BB927D8004FE927 /* SAGEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */; };
+		27561FCE1C0D2E0E00DAB74A /* SGButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27561FCD1C0D2E0E00DAB74A /* SGButton.swift */; settings = {ASSET_TAGS = (); }; };
 		2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */; };
 		2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781601D1BC0E26B00A1DB75 /* CheckinView.swift */; };
 		278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278912081BEEEC590005D46E /* CheckinOperations.swift */; };
@@ -25,6 +27,7 @@
 		27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C31BBDD1F300D61DA2 /* UIConstants.swift */; };
 		27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C51BBDD76800D61DA2 /* StringConstants.swift */; };
 		27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */; };
+		4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */; };
 		4216872D1C09286A00C29DEF /* SchoolDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */; };
 		4223341E1BC090E900E863D0 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223341D1BC090E900E863D0 /* Announcement.swift */; };
 		422334241BC099D400E863D0 /* Checkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422334231BC099D400E863D0 /* Checkin.swift */; };
@@ -75,6 +78,7 @@
 		426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426838721C00329E00A97832 /* SignUpRequestTableViewCell.swift */; };
 		42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */; };
 		427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427432EF1BC776FD00464200 /* UnverifiedView.swift */; };
+		427B72461C0C4C5B00A32DF5 /* EditSchoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */; };
 		4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4280CE171BF43E5C005D1B97 /* AdminOperations.swift */; };
 		42828FC41C00701000ACBC7E /* BrowseMentorsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42828FC31C00701000ACBC7E /* BrowseMentorsDetailViewController.swift */; };
 		42828FC81C00718000ACBC7E /* CheckinRequestsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42828FC71C00718000ACBC7E /* CheckinRequestsDetailViewController.swift */; };
@@ -92,6 +96,7 @@
 		42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C393421BC4607D00630F93 /* UnverifiedViewController.swift */; };
 		42C4352A1C013F8D000F6671 /* AddSchoolLocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C435291C013F8D000F6671 /* AddSchoolLocationTableViewController.swift */; };
 		42C4352C1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */; };
+		42DE22161C0F92BE00071879 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE22151C0F92BE00071879 /* NotificationConstants.swift */; };
 		42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E38DC61BFE957E0048B8D4 /* UIImageView.swift */; };
 		42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EDBDED1BDF38420092D5F5 /* UIImage.swift */; };
 		42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */; };
@@ -140,6 +145,7 @@
 
 /* Begin PBXFileReference section */
 		038E557A8664D96BC0F724A9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGBarButtonItem.swift; sourceTree = "<group>"; };
 		2705CC3A1BB927D7004FE927 /* SAGE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAGE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC3D1BB927D7004FE927 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 		2705CC591BB927D8004FE927 /* SAGEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SAGEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC5D1BB927D8004FE927 /* SAGEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAGEUITests.swift; sourceTree = "<group>"; };
 		2705CC5F1BB927D8004FE927 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27561FCD1C0D2E0E00DAB74A /* SGButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGButton.swift; sourceTree = "<group>"; };
 		2781601B1BC0E25B00A1DB75 /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
 		2781601D1BC0E26B00A1DB75 /* CheckinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinView.swift; sourceTree = "<group>"; };
 		278912081BEEEC590005D46E /* CheckinOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinOperations.swift; sourceTree = "<group>"; };
@@ -164,6 +171,7 @@
 		27F990C31BBDD1F300D61DA2 /* UIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		27F990C51BBDD76800D61DA2 /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAnnouncementController.swift; sourceTree = "<group>"; };
 		4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolDetailHeaderView.swift; sourceTree = "<group>"; };
 		4223341D1BC090E900E863D0 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		422334231BC099D400E863D0 /* Checkin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkin.swift; sourceTree = "<group>"; };
@@ -191,6 +199,7 @@
 		426838721C00329E00A97832 /* SignUpRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpRequestTableViewCell.swift; sourceTree = "<group>"; };
 		42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminTableViewController.swift; sourceTree = "<group>"; };
 		427432EF1BC776FD00464200 /* UnverifiedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedView.swift; sourceTree = "<group>"; };
+		427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSchoolController.swift; sourceTree = "<group>"; };
 		4280CE171BF43E5C005D1B97 /* AdminOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminOperations.swift; sourceTree = "<group>"; };
 		42828FC31C00701000ACBC7E /* BrowseMentorsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsDetailViewController.swift; sourceTree = "<group>"; };
 		42828FC71C00718000ACBC7E /* CheckinRequestsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinRequestsDetailViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +217,7 @@
 		42C393421BC4607D00630F93 /* UnverifiedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnverifiedViewController.swift; sourceTree = "<group>"; };
 		42C435291C013F8D000F6671 /* AddSchoolLocationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolLocationTableViewController.swift; sourceTree = "<group>"; };
 		42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolDirectorTableViewController.swift; sourceTree = "<group>"; };
+		42DE22151C0F92BE00071879 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
 		42E38DC61BFE957E0048B8D4 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		42EDBDED1BDF38420092D5F5 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
@@ -417,6 +427,8 @@
 				42A6CE681C0BE03300F97CFF /* Table View Cells */,
 				42A6CE671C0BE02700F97CFF /* Form */,
 				429B1D131BDC881F006AADF6 /* ErrorView.swift */,
+				27561FCD1C0D2E0E00DAB74A /* SGButton.swift */,
+				27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -426,6 +438,7 @@
 			children = (
 				422334291BC0C91B00E863D0 /* ModelConstants */,
 				27F990C31BBDD1F300D61DA2 /* UIConstants.swift */,
+				42DE22151C0F92BE00071879 /* NotificationConstants.swift */,
 				4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */,
 				27F990C51BBDD76800D61DA2 /* StringConstants.swift */,
 				42FE17C61BF447BA0029BF22 /* APIKeys.swift */,
@@ -501,6 +514,7 @@
 				4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */,
 				42828FC31C00701000ACBC7E /* BrowseMentorsDetailViewController.swift */,
 				4254C1EA1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift */,
+				427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */,
 				42C435291C013F8D000F6671 /* AddSchoolLocationTableViewController.swift */,
 				42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */,
 				42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */,
@@ -605,6 +619,7 @@
 				5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */,
 				42C1D1C41C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift */,
 				42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */,
+				4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */,
 				5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */,
 			);
 			name = Announcements;
@@ -818,6 +833,7 @@
 				42EFD67F1BC9ED730063FD78 /* SignUpFormView.swift in Sources */,
 				27D1B6821BE1A62E00F9D026 /* FormFieldItem.swift in Sources */,
 				42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */,
+				42DE22161C0F92BE00071879 /* NotificationConstants.swift in Sources */,
 				42F85ED81C01328700F62C37 /* AddSchoolController.swift in Sources */,
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
@@ -826,6 +842,7 @@
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
 				42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */,
 				4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */,
+				27561FCE1C0D2E0E00DAB74A /* SGButton.swift in Sources */,
 				27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */,
 				42C4352A1C013F8D000F6671 /* AddSchoolLocationTableViewController.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
@@ -834,7 +851,11 @@
 				42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,
 				422715451BC7359D00FD719C /* UIFont.swift in Sources */,
+<<<<<<< HEAD
 				5D916A1D1C01353D003959CE /* ProfileView.swift in Sources */,
+=======
+				4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */,
+>>>>>>> master
 				42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
@@ -844,7 +865,11 @@
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
+<<<<<<< HEAD
 				5D757DB51C12381200BDAE61 /* ProfileCheckinViewController.swift in Sources */,
+=======
+				27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */,
+>>>>>>> master
 				424A137C1BEED27300775E86 /* UIViewController.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */,
@@ -872,6 +897,7 @@
 				4216872D1C09286A00C29DEF /* SchoolDetailHeaderView.swift in Sources */,
 				5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */,
 				42C1D1C51C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift in Sources */,
+				427B72461C0C4C5B00A32DF5 /* EditSchoolController.swift in Sources */,
 				42A2E00F1C02943E00033577 /* AddAnnouncementController.swift in Sources */,
 				42C393411BC45DEC00630F93 /* RootController.swift in Sources */,
 				42F71DF61BF80478004E1B3B /* CheckinRequestTableViewCell.swift in Sources */,

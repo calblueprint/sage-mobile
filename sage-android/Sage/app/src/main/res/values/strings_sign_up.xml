@@ -26,5 +26,5 @@
     <string name="sign_up_profile_subtitle">Let\'s put a face to you!</string>
 
     <!-- Unverified Activity -->
-    <string name="unverified_body">Thanks for signing up! A request has been sent to SAGE for approval.</string>
+    <string name="unverified_body">Thanks for signing up! A request has been sent to SAGE for approval. Pull down to refresh this page.</string>
 </resources>

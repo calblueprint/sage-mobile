@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class SchoolDetailViewController: UITableViewController {
     
@@ -34,11 +35,26 @@ class SchoolDetailViewController: UITableViewController {
         self.tableView.tableHeaderView = schoolDetailHeaderView
         self.tableView.tableFooterView = UIView()
         
+        let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
+        editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
+        let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: "editSchool")
+        self.navigationItem.rightBarButtonItem = rightButton
+        
         if let coordinate = self.school?.location?.coordinate {
             let marker = GMSMarker(position: coordinate)
             marker.map = self.schoolDetailHeaderView.mapView
             self.schoolDetailHeaderView.mapView.moveCamera(GMSCameraUpdate.setTarget(coordinate))
         }
+    }
+    
+    func editSchool() {
+        let editSchoolController = EditSchoolController()
+        editSchoolController.configureWithSchool(self.school)
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController?.pushViewController(editSchoolController, animated: true)
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -29,7 +29,7 @@ import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.validators.PhotoPicker;
-import blueprint.com.sage.shared.validators.UserValidators;
+import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.signUp.SignUpActivity;
 import butterknife.Bind;
@@ -40,7 +40,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/25/15.
  */
-public abstract class UserEditAbstractFragment extends Fragment implements FormValidation {
+public abstract class UserFormAbstractFragment extends Fragment implements FormValidation {
     @Bind(R.id.create_user_layout) LinearLayout mLayout;
 
     @Bind(R.id.create_user_first_name) EditText mFirstName;
@@ -61,14 +61,14 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     @Bind(R.id.create_user_photo) CircleImageView mPhoto;
 
     private PhotoPicker mPhotoPicker;
-    protected UserValidators mValidator;
+    protected FormValidator mValidator;
 
     private SchoolSpinnerAdapter mSchoolAdapter;
     private TypeSpinnerAdapter mTypeAdapter;
     private RoleSpinnerAdapter mRoleAdapter;
 
     private static final int DIALOG_CODE = 200;
-    private static final String DIALOG_TAG = "UserEditAbstractFragment";
+    private static final String DIALOG_TAG = "UserFormAbstractFragment";
 
     protected NavigationInterface mNavigationInterface;
     protected BaseInterface mBaseInterface;
@@ -81,7 +81,7 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
-        mValidator = UserValidators.newInstance(getActivity());
+        mValidator = FormValidator.newInstance(getActivity());
         mNavigationInterface = (NavigationInterface) getActivity();
         mBaseInterface = (BaseInterface) getActivity();
         mSchools = new ArrayList<>();
@@ -148,18 +148,18 @@ public abstract class UserEditAbstractFragment extends Fragment implements FormV
     private void initializeSpinners() {
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),
                 mSchools,
-                R.layout.user_spinner_item, R.layout.user_spinner_item);
+                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
         mSchool.setAdapter(mSchoolAdapter);
 
         mTypeAdapter = new TypeSpinnerAdapter(getActivity(),
                 getResources().getStringArray(R.array.volunteer_types),
-                R.layout.user_spinner_item, R.layout.user_spinner_item);
+                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
 
         mType.setAdapter(mTypeAdapter);
 
         mRoleAdapter = new RoleSpinnerAdapter(getActivity(),
                 getResources().getStringArray(R.array.role_types),
-                R.layout.user_spinner_item, R.layout.user_spinner_item);
+                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
 
         mRole.setAdapter(mRoleAdapter);
     }

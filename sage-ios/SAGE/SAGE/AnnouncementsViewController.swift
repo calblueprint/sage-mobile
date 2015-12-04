@@ -14,10 +14,54 @@ class AnnouncementsViewController: UITableViewController {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
     
+    
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //
+    // MARK: - NSNotificationCenter selectors
+    //
+    func announcementAdded(notification: NSNotification) {
+        let announcement = notification.object!.copy() as! Announcement
+        self.announcements.insert(announcement, atIndex: 0)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func announcementEdited(notification: NSNotification) {
+        let announcement = notification.object!.copy() as! Announcement
+        for i in 0...(self.announcements.count-1) {
+            let oldAnnouncement = self.announcements[i]
+            if announcement.id == oldAnnouncement.id {
+                self.announcements[i] = announcement
+                let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            }
+        }
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
+
+        if let role = LoginOperations.getUser()?.role {
+            if role == .Admin || role == .Director {
+                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
+            }
+        }
+        
         self.title = "Announcements"
         self.tableView.tableFooterView = UIView()
         
@@ -36,10 +80,10 @@ class AnnouncementsViewController: UITableViewController {
     
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(addAnnouncementController, animated: true)
+        self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
     
     func getAnnouncements() {
@@ -85,10 +129,11 @@ class AnnouncementsViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let view = AnnouncementsDetailViewController(announcement: self.announcements[indexPath.row])
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        let announcement = self.announcements[indexPath.row]
+        let view = AnnouncementsDetailViewController(announcement: announcement)
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(view, animated: true)
+        self.navigationController?.pushViewController(view, animated: true)
     }
 }

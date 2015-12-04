@@ -14,6 +14,46 @@ class BrowseSchoolsViewController: UITableViewController {
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolAdded:", name: NotificationConstants.addSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //
+    // MARK: - NSNotificationCenter selectors
+    //
+    func schoolAdded(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if let _ = self.schools {
+            self.schools!.insert(school, atIndex: 0)
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
+    func schoolEdited(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if let _ = self.schools {
+            for i in 0...(self.schools!.count-1) {
+                let oldSchool = self.schools![i]
+                if school.id == oldSchool.id {
+                    self.schools![i] = school
+                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Schools"
@@ -40,10 +80,10 @@ class BrowseSchoolsViewController: UITableViewController {
     
     func addSchool() {
         let addSchoolController = AddSchoolController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(addSchoolController, animated: true)
+        self.navigationController?.pushViewController(addSchoolController, animated: true)
     }
     
     func showErrorAndSetMessage(message: String) {
@@ -93,10 +133,10 @@ class BrowseSchoolsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row]
         let vc = SchoolDetailViewController()
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
         vc.configureWithSchool(school)
-        self.navigationController!.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

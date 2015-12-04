@@ -81,7 +81,7 @@ class UsersTableViewCell: UITableViewCell {
         self.mentorName.setWidth(CGRectGetMinX(self.totalHours.frame) - mentorSchoolX - UIConstants.textMargin)
         
         self.schoolName.sizeToFit()
-        self.schoolName.setY(CGRectGetMaxY(self.mentorName.frame)-5)
+        self.schoolName.setY(CGRectGetMaxY(self.mentorName.frame))
         self.schoolName.setX(mentorSchoolX)
         self.schoolName.setWidth(CGRectGetMinX(self.totalHours.frame) - mentorSchoolX - UIConstants.textMargin)
         

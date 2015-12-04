@@ -48,7 +48,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     }
     
     func loadDirectors() {
-        AdminOperations.loadDirectors({ (directorArray) -> Void in
+        AdminOperations.loadAdmins({ (directorArray) -> Void in
             let alphabet = "abcdefghijklmnopqrstuvwxyz"
             var charArray = [String: Int]()
             self.directors = [[User]]()

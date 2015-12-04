@@ -11,14 +11,17 @@ import UIKit
 class AddSchoolController: UIViewController {
     
     var director: User?
-    var place: GMSPlace?
+    var location: CLLocation?
     var currentErrorMessage: ErrorView?
+
+    private var finishButton: SGBarButtonItem?
 
     override func viewDidLoad() {
         let addSchoolView = AddSchoolView(frame: self.view.frame)
         self.view = addSchoolView
         self.title = "Add School"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.navigationItem.rightBarButtonItem = self.finishButton
         addSchoolView.location.button.addTarget(self, action: "locationButtonTapped", forControlEvents: .TouchUpInside)
         addSchoolView.director.button.addTarget(self, action: "directorButtonTapped", forControlEvents: .TouchUpInside)
     }
@@ -26,34 +29,37 @@ class AddSchoolController: UIViewController {
     func locationButtonTapped() {
         let tableViewController = AddSchoolLocationTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(tableViewController, animated: true)
+        self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
     func directorButtonTapped() {
         let tableViewController = AddSchoolDirectorTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(tableViewController, animated: true)
+        self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
-    @objc private func completeForm() {
+    func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
-        if addSchoolView.chosenDirector == nil {
+        if self.director == nil {
             self.showAlertControllerError("Please choose a director.")
-        } else if addSchoolView.chosenLocation == nil {
+        } else if self.location == nil {
             self.showAlertControllerError("Please choose a location.")
         } else if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
             self.showAlertControllerError("What's the school's name?")
         } else {
-            let school = School(name: addSchoolView.name.textField.text, location: addSchoolView.chosenLocation, director: addSchoolView.chosenDirector)
+            self.finishButton?.startLoading()
+            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addSchoolKey, object: createdSchool)
                 }, failure: { (message) -> Void in
+                    self.finishButton?.stopLoading()
                     self.showAlertControllerError(message)
             })
         }
@@ -75,7 +81,7 @@ class AddSchoolController: UIViewController {
         let placeClient = GMSPlacesClient.sharedClient()
         placeClient.lookUpPlaceID(placeID) { (predictedPlace, error) -> Void in
             if let place = predictedPlace {
-                self.place = place
+                self.location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
                 (self.view as! AddSchoolView).displayChosenPlace(place)
             }
         }

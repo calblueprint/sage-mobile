@@ -23,19 +23,16 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     var modalType: ContentType
     var navigationBar: UINavigationBar?
     weak var parentVC: SignUpController?
-    var schools: [String] = []
-    var schoolDict: NSMutableDictionary
-    var volunteerLevelDict: NSMutableDictionary
+    var schools: [School] = []
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     var currentErrorMessage: ErrorView?
+    var volunteerLevelDict = NSMutableDictionary()
     
-    init(type: ContentType, schoolIDDict: NSMutableDictionary, volunteerlevelDict: NSMutableDictionary) {
+    init(type: ContentType) {
         self.modalType = type
-        volunteerlevelDict[VolunteerLevelStrings.ZeroUnits.rawValue] = User.VolunteerLevel.ZeroUnit.rawValue
-        volunteerlevelDict[VolunteerLevelStrings.OneUnit.rawValue] = User.VolunteerLevel.OneUnit.rawValue
-        volunteerlevelDict[VolunteerLevelStrings.TwoUnits.rawValue] = User.VolunteerLevel.TwoUnit.rawValue
-        self.volunteerLevelDict = volunteerlevelDict
-        self.schoolDict = schoolIDDict
+        volunteerLevelDict[VolunteerLevelStrings.ZeroUnits.rawValue] = User.VolunteerLevel.ZeroUnit.rawValue
+        volunteerLevelDict[VolunteerLevelStrings.OneUnit.rawValue] = User.VolunteerLevel.OneUnit.rawValue
+        volunteerLevelDict[VolunteerLevelStrings.TwoUnits.rawValue] = User.VolunteerLevel.TwoUnit.rawValue
         super.init(style: .Plain)
         if self.modalType == ContentType.School {
             self.loadSchoolData()
@@ -63,9 +60,9 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         self.navigationItem.rightBarButtonItem = rightButton
         
         if self.modalType == ContentType.School {
-            self.navigationController!.navigationBar.topItem!.title = "Choose School"
+            self.navigationController?.navigationBar.topItem!.title = "Choose School"
         } else  if self.modalType == ContentType.Hours {
-            self.navigationController!.navigationBar.topItem!.title = "Choose Hours"
+            self.navigationController?.navigationBar.topItem!.title = "Choose Hours"
         }
 
     }
@@ -75,17 +72,15 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     }
     
     func loadSchoolData() {
-        SchoolOperations.loadSchools({ (schoolDict) -> Void in
-            for schoolDict in schoolDict {
-                self.schools.append((schoolDict as! NSDictionary)["name"] as! String)
-                self.schoolDict[(schoolDict as! NSDictionary)["name"] as! String] = ((schoolDict as! NSDictionary)["id"] as! Int)
+        AdminOperations.loadSchools({ (schoolArray) -> Void in
+            for school in schoolArray {
+                self.schools.append(school as! School)
             }
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
-        }) { (errorMessage) -> Void in
-            self.showErrorAndSetMessage(errorMessage, size: 64.0)
+            }) { (errorMessage) -> Void in
+                self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
-        
     }
     
     func showErrorAndSetMessage(message: String, size: CGFloat) {
@@ -112,26 +107,35 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        
         if self.modalType == ContentType.School {
-            cell.textLabel?.text = self.schools[indexPath.row]
-        } else if self.modalType == ContentType.Hours {
+            let school = self.schools[indexPath.row]
+            var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseSchoolsCell")
+            if cell == nil {
+                cell = SchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
+            }
+            (cell as! SchoolsTableViewCell).configureWithSchool(school)
+            return cell!
+
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
             switch indexPath.row {
             case 0: cell.textLabel?.text = VolunteerLevelStrings.ZeroUnits.rawValue
             case 1: cell.textLabel?.text = VolunteerLevelStrings.OneUnit.rawValue
             case 2: cell.textLabel?.text = VolunteerLevelStrings.TwoUnits.rawValue
             default: cell.textLabel?.text = VolunteerLevelStrings.ZeroUnits.rawValue
             }
+            return cell
         }
-        return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let _ = self.parentVC {
             let schoolHoursView = (self.parentVC!.view as! SignUpView).schoolHoursView
             if (self.modalType == ContentType.School) {
-                let title = self.schools[indexPath.row]
-                schoolHoursView.chooseSchoolButton.setTitle(title, forState: .Normal)
+                let school = self.schools[indexPath.row]
+                schoolHoursView.chooseSchoolButton.setTitle(school.name!, forState: .Normal)
+                self.parentVC?.school = school
             } else if (self.modalType == ContentType.Hours) {
                 switch indexPath.row{
                 case 0: schoolHoursView.chooseHoursButton.setTitle(VolunteerLevelStrings.ZeroUnits.rawValue, forState: .Normal)
@@ -139,9 +143,19 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
                 case 2: schoolHoursView.chooseHoursButton.setTitle(VolunteerLevelStrings.TwoUnits.rawValue, forState: .Normal)
                 default: schoolHoursView.chooseHoursButton.setTitle(VolunteerLevelStrings.ZeroUnits.rawValue, forState: .Normal)
                 }
+                let levelString = schoolHoursView.chooseHoursButton.titleLabel!.text!
+                self.parentVC?.level = self.volunteerLevelDict[levelString] as? Int
             }
         }
         self.cancelClicked()
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if self.modalType == ContentType.School {
+            return SchoolsTableViewCell.cellHeight()
+        } else {
+            return UITableViewAutomaticDimension
+        }
     }
 
 }

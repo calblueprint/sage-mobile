@@ -15,6 +15,8 @@ class RequestHoursViewController: UIViewController {
     var inSession: Bool = false
     var startTime: NSTimeInterval = 0.0
     
+    private var finishButton: SGBarButtonItem?
+
     //
     // MARK: - ViewController Lifecycle
     //
@@ -26,7 +28,8 @@ class RequestHoursViewController: UIViewController {
         super.viewDidLoad()
         self.setupView()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismiss")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.navigationItem.rightBarButtonItem = self.finishButton
     }
     
     //
@@ -38,11 +41,13 @@ class RequestHoursViewController: UIViewController {
     
     @objc private func completeForm() {
         if self.requestHoursView.isValid() {
+            self.finishButton?.startLoading()
             let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
             CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
                 KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
                 self.dismiss()
                 }) { (errorMessage) -> Void in
+                    self.finishButton?.stopLoading()
                     let alertController = UIAlertController(
                         title: "Failure",
                         message: errorMessage as String,

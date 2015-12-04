@@ -28,9 +28,9 @@ class AdminOperations {
         
     }
     
-    static func loadDirectors(completion: (([User]) -> Void), failure: (String) -> Void){
+    static func loadAdmins(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetUsers, parameters: nil, success: { (operation, data) -> Void in
+        manager.GET(StringConstants.kEndpointGetAdmins, parameters: nil, success: { (operation, data) -> Void in
             var userArray = [User]()
             let userData = data["users"] as! [AnyObject]
             for userDict in userData {
@@ -42,12 +42,6 @@ class AdminOperations {
                 failure(error.localizedDescription)
         }
         
-    }
-    
-    static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
-        let manager = BaseOperation.manager()
-        let announcementDict = announcement.toDictionary()
-        // TODO: Create Announcement
     }
             
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
@@ -125,6 +119,16 @@ class AdminOperations {
         // TODO: make a network request
     }
     
+    static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
+    }
+    
+    static func editAnnouncement(announcement: Announcement, completion: ((Announcement) -> Void)?, failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        // TODO: make a network request
+    }
+    
     static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         // TODO: make a network request
@@ -143,6 +147,12 @@ class AdminOperations {
     static func removeUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         // TODO: make a network request
+    }
+    
+    static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let announcementDict = announcement.toDictionary()
+        // TODO: Create Announcement
     }
     
 }

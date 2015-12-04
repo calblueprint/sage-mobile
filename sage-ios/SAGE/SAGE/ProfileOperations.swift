@@ -9,15 +9,7 @@
 import SwiftKeychainWrapper
 import AFNetworking
 
-class ProfileOperations: NSObject {
-    static func userIsLoggedIn() -> Bool {
-        if let _ = KeychainWrapper.objectForKey(KeychainConstants.kUser) {
-            return true
-        } else {
-            return false
-        }
-    }
-    
+class ProfileOperations: NSObject { 
     static func getUser(user: User, completion: ((User) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUser(user), parameters: nil, success: { (operation, data) -> Void in
             let userJSON = data["user"]!! as! [String: AnyObject]

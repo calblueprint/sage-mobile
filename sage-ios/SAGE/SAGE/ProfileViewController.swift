@@ -58,7 +58,10 @@ class ProfileViewController: UITableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        if LoginOperations.getUser()!.id == self.user!.id {
+            return 2
+        }
+        return 0
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

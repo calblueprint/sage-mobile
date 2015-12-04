@@ -74,7 +74,7 @@ class ProfileCheckinViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let checkin = self.requests![indexPath.row]
-        
+    
         var cell = self.tableView.dequeueReusableCellWithIdentifier("CheckinRequestCell")
         if cell == nil {
             cell = ProfileCheckinTableViewCell(style: .Default, reuseIdentifier: "CheckinRequestCell")

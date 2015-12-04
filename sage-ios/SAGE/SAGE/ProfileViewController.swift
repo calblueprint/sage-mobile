@@ -74,7 +74,7 @@ class ProfileViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            let view = AnnouncementsViewController()
+            let view = ProfileCheckinViewController()
             self.navigationController!.pushViewController(view, animated: true)
         } else if indexPath.section == 1 {
             LoginOperations.deleteUserKeychainData()

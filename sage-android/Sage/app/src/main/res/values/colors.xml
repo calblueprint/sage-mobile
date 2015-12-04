@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
+    <color name="whiteAA">#AAFFFFFF</color>
     <color name="white72">#72FFFFFF</color>
     <color name="white50">#50FFFFFF</color>
     <color name="background_white">#EEEEEE</color>

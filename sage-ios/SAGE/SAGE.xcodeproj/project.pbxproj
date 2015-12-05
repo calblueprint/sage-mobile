@@ -851,11 +851,8 @@
 				42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,
 				422715451BC7359D00FD719C /* UIFont.swift in Sources */,
-<<<<<<< HEAD
 				5D916A1D1C01353D003959CE /* ProfileView.swift in Sources */,
-=======
 				4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */,
->>>>>>> master
 				42E38DC71BFE957E0048B8D4 /* UIImageView.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
@@ -865,11 +862,8 @@
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
-<<<<<<< HEAD
 				5D757DB51C12381200BDAE61 /* ProfileCheckinViewController.swift in Sources */,
-=======
 				27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */,
->>>>>>> master
 				424A137C1BEED27300775E86 /* UIViewController.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */,

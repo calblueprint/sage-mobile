@@ -24,6 +24,16 @@ class ProfileViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupHeader() {
+        self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
+        self.tableView.tableHeaderView = self.profileView
+        let headerOffset = self.profileView.viewHeight + CGFloat(40)
+        var headerFrame = self.tableView.tableHeaderView!.frame
+        headerFrame.size.height = headerOffset
+        self.profileView.frame = headerFrame
+        self.tableView.tableHeaderView = self.profileView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)

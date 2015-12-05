@@ -18,5 +18,6 @@ struct SchoolConstants {
     static let kDirectorID: String = "director_id"
     static let kLat: String = "lat"
     static let kLong: String = "lng"
+    static let kAddress: String = "address"
     
 }

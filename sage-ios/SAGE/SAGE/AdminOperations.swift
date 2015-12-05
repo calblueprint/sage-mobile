@@ -115,8 +115,30 @@ class AdminOperations {
     }
     
     static func createSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
+        let params = ["school":
+            [
+                SchoolConstants.kName: school.name!,
+                SchoolConstants.kLat: school.location!.coordinate.latitude,
+                SchoolConstants.kLong: school.location!.coordinate.longitude,
+                SchoolConstants.kAddress: "some address text",
+                //SchoolConstants.kDirectorID: school.director!.directorID
+            ]
+        ]
+        
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        
+        
+        let theJSONData = try? NSJSONSerialization.dataWithJSONObject(
+                    params ,
+                    options: [])
+        let theJSONText = NSString(data: theJSONData!,
+                    encoding: NSASCIIStringEncoding)
+        
+        manager.POST(StringConstants.kEndpointCreateSchool, parameters: params, success: { (operation, data) -> Void in
+            let _ = 1
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
     }
     
     static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
@@ -151,8 +173,23 @@ class AdminOperations {
     
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        let announcementDict = announcement.toDictionary()
-        // TODO: Create Announcement
+        let params = ["announcement":
+            [
+                AnnouncementConstants.kTitle: announcement.title!,
+                AnnouncementConstants.kText: announcement.text!,
+                AnnouncementConstants.kSchoolID: announcement.school!.id,
+                AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
+                AnnouncementConstants.kCategory: "school"
+            ]
+        ]
+        
+        manager.POST(StringConstants.kEndpointCreateAnnouncement, parameters: params, success: { (operation, data) -> Void in
+            let announcementDict = (data as! [String: AnyObject])["announcement"] as! [String: AnyObject]
+            let createdAnnouncement = Announcement(properties: announcementDict)
+            completion(createdAnnouncement)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
     }
     
 }

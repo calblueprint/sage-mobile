@@ -18,6 +18,7 @@ public @Data class School {
     private float lat;
     private float lng;
     private String address;
+    private User director;
 
     private List<User> users;
 

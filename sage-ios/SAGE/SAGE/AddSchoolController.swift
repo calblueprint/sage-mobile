@@ -12,6 +12,7 @@ class AddSchoolController: UIViewController {
     
     var director: User?
     var location: CLLocation?
+    var address: String?
     var currentErrorMessage: ErrorView?
 
     private var finishButton: SGBarButtonItem?
@@ -54,7 +55,7 @@ class AddSchoolController: UIViewController {
             self.showAlertControllerError("What's the school's name?")
         } else {
             self.finishButton?.startLoading()
-            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director)
+            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director, address: self.address)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addSchoolKey, object: createdSchool)
@@ -82,6 +83,7 @@ class AddSchoolController: UIViewController {
         placeClient.lookUpPlaceID(placeID) { (predictedPlace, error) -> Void in
             if let place = predictedPlace {
                 self.location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+                self.address = place.formattedAddress
                 (self.view as! AddSchoolView).displayChosenPlace(place)
             }
         }

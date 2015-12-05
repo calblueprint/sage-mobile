@@ -98,8 +98,8 @@ class CheckinRequestsViewController: UITableViewController {
     
     func removeCell(cell: CheckinRequestTableViewCell, accepted: Bool) {
         let indexPath = self.tableView.indexPathForCell(cell)!
-        self.requests?.removeAtIndex(indexPath.row)
         let checkin = self.requests![indexPath.row]
+        self.requests?.removeAtIndex(indexPath.row)
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             AdminOperations.approveCheckin(checkin, completion: nil, failure: { (message) -> Void in

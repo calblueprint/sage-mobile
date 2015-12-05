@@ -14,13 +14,15 @@ class School: NSObject, NSCoding {
     var location: CLLocation? = CLLocation(latitude: 0, longitude: 0)
     var students: [User]?
     var director: User?
+    var address: String?
     
-    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil) {
+    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil) {
         self.id = id
         self.name = name
         self.location = location
         self.students = students
         self.director = director
+        self.address = address
         super.init()
     }
     
@@ -51,9 +53,13 @@ class School: NSObject, NSCoding {
                 self.location = CLLocation(latitude: self.location!.coordinate.latitude, longitude: long!)
                 break
             case SchoolConstants.kDirector:
-                let directorDictionary = value as! [String: AnyObject]
-                self.director = User(propertyDictionary: directorDictionary)
+                if let dict = value as? [String: AnyObject] {
+                    let directorDictionary = dict
+                    self.director = User(propertyDictionary: directorDictionary)
+                }
                 break
+            case SchoolConstants.kAddress:
+                self.address = value as? String
             default: break
             }
         }
@@ -64,6 +70,7 @@ class School: NSObject, NSCoding {
         self.id = aDecoder.decodeIntegerForKey(SchoolConstants.kId)
         self.name = aDecoder.decodeObjectForKey(SchoolConstants.kName) as? String
         self.location = aDecoder.decodeObjectForKey(SchoolConstants.kLocation) as? CLLocation
+        self.address = aDecoder.decodeObjectForKey(SchoolConstants.kAddress) as? String
         super.init()
     }
     
@@ -71,6 +78,7 @@ class School: NSObject, NSCoding {
         aCoder.encodeInteger(self.id, forKey: SchoolConstants.kId)
         aCoder.encodeObject(self.name, forKey: SchoolConstants.kName)
         aCoder.encodeObject(self.location, forKey: SchoolConstants.kLocation)
+        aCoder.encodeObject(self.address, forKey: SchoolConstants.kAddress)
     }
     
     func toDictionary() -> [String: AnyObject]{
@@ -94,6 +102,9 @@ class School: NSObject, NSCoding {
         }
         if let director = self.director {
             propertyDict[SchoolConstants.kDirector] = director.toDictionary()
+        }
+        if let address = self.address {
+            propertyDict[SchoolConstants.kAddress] = address
         }
         return propertyDict
     }

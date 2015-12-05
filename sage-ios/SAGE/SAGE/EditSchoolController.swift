@@ -23,15 +23,8 @@ class EditSchoolController: AddSchoolController {
         if let director = self.school?.director {
             self.didSelectDirector(director)
         }
-        if let location = self.school?.location {
-            let geocoder = GMSGeocoder()
-            geocoder.reverseGeocodeCoordinate(location.coordinate, completionHandler: { (callback, error) -> Void in
-                if error == nil {
-                    let address = callback.firstResult()
-                    let addressText = address.lines[0] as? String
-                    (self.view as! AddSchoolView).displayAddressText(addressText)
-                }
-            })
+        if let address = self.school?.address {
+            (self.view as! AddSchoolView).displayAddressText(address)
         }
     }
     
@@ -46,6 +39,9 @@ class EditSchoolController: AddSchoolController {
             }
             if let location = self.location {
                 self.school?.location = location
+            }
+            if let address = self.address {
+                self.school?.address = address
             }
             AdminOperations.editSchool(self.school!, completion: { (editedSchool) -> Void in
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editSchoolKey, object: editedSchool)

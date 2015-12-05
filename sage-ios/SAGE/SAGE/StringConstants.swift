@@ -35,4 +35,16 @@ struct StringConstants {
     static func kSchoolDetailURL(id: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/schools/" + String(id)
     }
+    
+    static func kCheckinDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/check_ins/" + String(id)
+    }
+    
+    static func kUserDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/users/" + String(id)
+    }
+    
+    static func kAnnouncementDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/announcements/" + String(id)
+    }
 }

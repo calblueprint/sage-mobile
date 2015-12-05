@@ -135,7 +135,9 @@ class User: NSObject, NSCoding {
                     self.imageURL = url
                 }
             case UserConstants.kDirectorID:
-                self.directorID = value as! Int
+                if let intValue = value as? Int {
+                    self.directorID = intValue
+                }
             default: break
             }
         }

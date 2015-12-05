@@ -120,22 +120,17 @@ class AdminOperations {
                 SchoolConstants.kName: school.name!,
                 SchoolConstants.kLat: school.location!.coordinate.latitude,
                 SchoolConstants.kLong: school.location!.coordinate.longitude,
-                SchoolConstants.kAddress: "some address text",
-                //SchoolConstants.kDirectorID: school.director!.directorID
+                SchoolConstants.kAddress: school.address!,
+                SchoolConstants.kDirectorID: school.director!.directorID
             ]
         ]
         
         let manager = BaseOperation.manager()
         
-        
-        let theJSONData = try? NSJSONSerialization.dataWithJSONObject(
-                    params ,
-                    options: [])
-        let theJSONText = NSString(data: theJSONData!,
-                    encoding: NSASCIIStringEncoding)
-        
         manager.POST(StringConstants.kEndpointCreateSchool, parameters: params, success: { (operation, data) -> Void in
-            let _ = 1
+            let schoolDict = data["school"] as! [String: AnyObject]
+            let school = School(propertyDictionary: schoolDict)
+            completion!(school)
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
         }
@@ -143,32 +138,81 @@ class AdminOperations {
     
     static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        
+        let params = [
+            SchoolConstants.kLat: school.location!.coordinate.latitude,
+            SchoolConstants.kLong: school.location!.coordinate.longitude,
+            SchoolConstants.kAddress: school.address!,
+            SchoolConstants.kName: school.name!,
+            SchoolConstants.kDirectorID: school.director!.id
+        ]
+        let schoolURLString = StringConstants.kSchoolDetailURL(school.id)
+        
+        manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
+            completion!(school)
+            }) { (operation, error) -> Void in
+                failure("Could not edit school.")
+        }
     }
     
     static func editAnnouncement(announcement: Announcement, completion: ((Announcement) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        let params = [
+                AnnouncementConstants.kTitle: announcement.title!,
+                AnnouncementConstants.kText: announcement.text!,
+                AnnouncementConstants.kSchoolID: announcement.school!.id,
+        ]
+        let announcementURLString = StringConstants.kAnnouncementDetailURL(announcement.id!)
+        manager.PATCH(announcementURLString, parameters: params, success: { (operation, data) -> Void in
+            completion!(announcement)
+            }) { (operation, error) -> Void in
+                failure("Could not edit announcement.")
+        }
     }
     
     static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        
+        let params = [CheckinConstants.kVerified: true]
+        let checkinURLString = StringConstants.kCheckinDetailURL(checkin.id)
+        
+        manager.PATCH(checkinURLString, parameters: params, success: { (operation, data) -> Void in
+            completion!()
+            }) { (operation, error) -> Void in
+                failure("Could not approve checkin.")
+        }
     }
     
     static func removeCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        let checkinURLString = StringConstants.kCheckinDetailURL(checkin.id)
+        manager.DELETE(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
+            completion!()
+            }) { (operation, error) -> Void in
+                failure("Could not remove checkin.")
+        }
+
     }
     
     static func verifyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        let params = [UserConstants.kVerified: true]
+        let userURLString = StringConstants.kUserDetailURL(user.id)
+        manager.PATCH(userURLString, parameters: params, success: { (operation, data) -> Void in
+            completion!()
+            }) { (operation, error) -> Void in
+                failure("Couldn't verify user.")
+        }
     }
     
     static func removeUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        let userURLString = StringConstants.kUserDetailURL(user.id)
+        manager.DELETE(userURLString, parameters: nil, success: { (operation, data) -> Void in
+            completion!()
+            }) { (operation, error) -> Void in
+                failure("Could not remove user.")
+        }
     }
     
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {

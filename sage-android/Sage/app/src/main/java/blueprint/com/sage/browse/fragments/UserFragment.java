@@ -71,7 +71,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
-        ViewUtils.setToolBarElevation(getActivity(), 0);
     }
 
     @Override
@@ -88,6 +87,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        ViewUtils.setToolBarElevation(getActivity(), 0);
     }
 
     @Override

@@ -31,10 +31,16 @@ public abstract class TabsFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_tabs, parent, false);
         ButterKnife.bind(this, view);
-        ViewUtils.setToolBarElevation(getActivity(), 0);
         initializeViews();
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewUtils.setToolBarElevation(getActivity(), 0);
+    }
+
 
     @Override
     public void onDestroyView() {

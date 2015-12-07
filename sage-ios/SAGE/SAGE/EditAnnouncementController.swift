@@ -15,8 +15,6 @@ class EditAnnouncementController: AddAnnouncementController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Edit Announcement"
-        let editView = self.view as! AddAnnouncementView
-        editView.school.disable()
     }
 
     func configureWithAnnouncement(announcement: Announcement) {

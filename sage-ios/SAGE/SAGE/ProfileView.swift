@@ -57,10 +57,6 @@ class ProfileView: UIView {
         self.userStatusContainer.addSubview(self.userStatusLabel)
         self.profileContent.addSubview(self.userCommitmentContainer)
         self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
-//        self.addSubview(self.logoutButton)
-//        self.logoutButton.addSubview(self.logoutButtonLabel)
-//        self.addSubview(self.allCheckIns)
-//        self.allCheckIns.addSubview(self.allCheckInsLabel)
     }
 
     required init?(coder aDecoder: NSCoder) {

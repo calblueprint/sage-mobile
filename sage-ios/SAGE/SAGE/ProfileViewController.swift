@@ -36,13 +36,7 @@ class ProfileViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
-        self.tableView.tableHeaderView = self.profileView
-        let headerOffset = self.profileView.viewHeight + CGFloat(40)
-        var headerFrame = self.tableView.tableHeaderView!.frame
-        headerFrame.size.height = headerOffset
-        self.profileView.frame = headerFrame
-        self.tableView.tableHeaderView = self.profileView
+        self.setupHeader()
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
@@ -79,7 +73,7 @@ class ProfileViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
+        let cell = UITableViewCell()
         cell.selectionStyle = .None
         cell.textLabel!.font = UIFont.normalFont
         if indexPath.section == 0 {

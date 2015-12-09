@@ -25,6 +25,18 @@ class EditSchoolController: AddSchoolController {
         }
         if let address = self.school?.address {
             (self.view as! AddSchoolView).displayAddressText(address)
+        } else {
+            if let location = self.school?.location {
+                let geocoder = GMSGeocoder()
+                geocoder.reverseGeocodeCoordinate(location.coordinate, completionHandler: { (callback, error) -> Void in
+                    if error == nil {
+                        let address = callback.firstResult()
+                        let addressText = address.lines[0] as? String
+                        school!.address = addressText
+                        (self.view as! AddSchoolView).displayAddressText(addressText)
+                    }
+                })
+            }
         }
     }
     

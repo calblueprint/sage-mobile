@@ -21,6 +21,9 @@ class AdminOperations {
                 let user = User(propertyDictionary: userDict as! [String: AnyObject])
                 userArray.append(user)
             }
+            userArray.sortInPlace({ (user1, user2) -> Bool in
+                user1.firstName < user2.firstName
+            })
             completion(userArray)
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
@@ -37,13 +40,38 @@ class AdminOperations {
                 let user = User(propertyDictionary: userDict as! [String: AnyObject])
                 userArray.append(user)
             }
+            userArray.sortInPlace({ (user1, user2) -> Bool in
+                user1.firstName < user2.firstName
+            })
             completion(userArray)
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
         }
         
     }
-            
+
+    static func loadNonDirectorAdmins(completion: (([User]) -> Void), failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: nil, success: { (operation, data) -> Void in
+            var userArray = [User]()
+            let userData = data["users"] as! [AnyObject]
+            for userDict in userData {
+                let user = User(propertyDictionary: userDict as! [String: AnyObject])
+                // this endpoint is not returning non director admins -- I think this is a rails bug but this is just an iOS workaround
+                if user.directorID == User.DefaultValues.DefaultDirectorID.rawValue {
+                    userArray.append(user)
+                }
+            }
+            userArray.sortInPlace({ (user1, user2) -> Bool in
+                user1.firstName < user2.firstName
+            })
+            completion(userArray)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
+        
+    }
+    
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: nil, success: { (operation, data) -> Void in
@@ -70,6 +98,9 @@ class AdminOperations {
                 let school = School(propertyDictionary: schoolDict as! [String: AnyObject])
                 schools.append(school)
             }
+            schools.sortInPlace({ (school1, school2) -> Bool in
+                school1.name < school2.name
+            })
             completion(schools)
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
@@ -121,7 +152,7 @@ class AdminOperations {
                 SchoolConstants.kLat: school.location!.coordinate.latitude,
                 SchoolConstants.kLong: school.location!.coordinate.longitude,
                 SchoolConstants.kAddress: school.address!,
-                SchoolConstants.kDirectorID: school.director!.directorID
+                SchoolConstants.kDirectorID: school.director!.id
             ]
         ]
         
@@ -142,7 +173,6 @@ class AdminOperations {
         let params = [
             SchoolConstants.kLat: school.location!.coordinate.latitude,
             SchoolConstants.kLong: school.location!.coordinate.longitude,
-            SchoolConstants.kAddress: school.address!,
             SchoolConstants.kName: school.name!,
             SchoolConstants.kDirectorID: school.director!.id
         ]
@@ -186,6 +216,7 @@ class AdminOperations {
     static func removeCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         let checkinURLString = StringConstants.kCheckinDetailURL(checkin.id)
+        
         manager.DELETE(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
             completion!()
             }) { (operation, error) -> Void in

@@ -20,7 +20,11 @@ class EditAnnouncementController: AddAnnouncementController {
     func configureWithAnnouncement(announcement: Announcement) {
         self.announcement = announcement.copy() as? Announcement
         let editView = self.view as! AddAnnouncementView
-        editView.displayChosenSchool(self.announcement!.school!)
+        if let school = self.announcement?.school {
+            editView.displayChosenSchool(school)
+        } else {
+            editView.school.button.setTitle("Everyone", forState: .Normal)
+        }
         editView.title.textField.text = self.announcement?.title
         editView.commentField.textView.text = self.announcement?.text
     }

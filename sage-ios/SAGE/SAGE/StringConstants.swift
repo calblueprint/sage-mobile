@@ -14,8 +14,8 @@ struct StringConstants {
     static let displayDateFormat = "yyyy/MM/dd hh:mm a"
     static let JSONdateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
-    //static let kEndpointBaseURL = "http://sage-rails.herokuapp.com/api/v1"
-    static let kEndpointBaseURL = "http://localhost:3000/api/v1"
+    static let kEndpointBaseURL = "http://sage-rails.herokuapp.com/api/v1"
+    //static let kEndpointBaseURL = "http://localhost:3000/api/v1"
     static let kEndpointCreateUser = kEndpointBaseURL + "/users"
     static let kEndpointLogin = kEndpointBaseURL + "/users/sign_in"
     static let kEndpointLogout = kEndpointBaseURL + "/users/sign_out"
@@ -37,15 +37,35 @@ struct StringConstants {
         return StringConstants.kEndpointBaseURL + "/schools/" + String(id)
     }
     
+    static func kSchoolAdminDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/admin/schools/" + String(id)
+    }
+    
     static func kCheckinDetailURL(id: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/check_ins/" + String(id)
+    }
+    
+    static func kCheckinAdminDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/admin/check_ins/" + String(id)
+    }
+    
+    static func kCheckinAdminVerifyURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/admin/check_ins/" + String(id) + "/verify"
     }
     
     static func kUserDetailURL(id: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/users/" + String(id)
     }
     
+    static func kUserAdminDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/admin/users/" + String(id)
+    }
+    
     static func kAnnouncementDetailURL(id: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/announcements/" + String(id)
+    }
+    
+    static func kAnnouncementAdminDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/admin/announcements/" + String(id)
     }
 }

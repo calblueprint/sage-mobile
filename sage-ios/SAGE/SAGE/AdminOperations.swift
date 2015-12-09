@@ -170,13 +170,14 @@ class AdminOperations {
     static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
         
-        let params = [
-            SchoolConstants.kLat: school.location!.coordinate.latitude,
-            SchoolConstants.kLong: school.location!.coordinate.longitude,
-            SchoolConstants.kName: school.name!,
-            SchoolConstants.kDirectorID: school.director!.id
+        let params = ["school": [
+                SchoolConstants.kLat: school.location!.coordinate.latitude,
+                SchoolConstants.kLong: school.location!.coordinate.longitude,
+                SchoolConstants.kName: school.name!,
+                SchoolConstants.kDirectorID: school.director!.id
+            ]
         ]
-        let schoolURLString = StringConstants.kSchoolDetailURL(school.id)
+        let schoolURLString = StringConstants.kSchoolAdminDetailURL(school.id)
         
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(school)
@@ -192,7 +193,7 @@ class AdminOperations {
                 AnnouncementConstants.kText: announcement.text!,
                 AnnouncementConstants.kSchoolID: announcement.school!.id,
         ]
-        let announcementURLString = StringConstants.kAnnouncementDetailURL(announcement.id!)
+        let announcementURLString = StringConstants.kAnnouncementAdminDetailURL(announcement.id!)
         manager.PATCH(announcementURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(announcement)
             }) { (operation, error) -> Void in
@@ -203,11 +204,10 @@ class AdminOperations {
     static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         
-        let params = [CheckinConstants.kVerified: true]
-        let checkinURLString = StringConstants.kCheckinDetailURL(checkin.id)
+        let checkinURLString = StringConstants.kCheckinAdminVerifyURL(checkin.id)
         
-        manager.PATCH(checkinURLString, parameters: params, success: { (operation, data) -> Void in
-            completion!()
+        manager.POST(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
+            completion?()
             }) { (operation, error) -> Void in
                 failure("Could not approve checkin.")
         }
@@ -215,10 +215,10 @@ class AdminOperations {
     
     static func removeCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        let checkinURLString = StringConstants.kCheckinDetailURL(checkin.id)
+        let checkinURLString = StringConstants.kCheckinAdminDetailURL(checkin.id)
         
         manager.DELETE(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
-            completion!()
+            completion?()
             }) { (operation, error) -> Void in
                 failure("Could not remove checkin.")
         }
@@ -227,10 +227,13 @@ class AdminOperations {
     
     static func verifyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        let params = [UserConstants.kVerified: true]
+        let params = ["user": [
+                UserConstants.kVerified: true
+            ]
+        ]
         let userURLString = StringConstants.kUserDetailURL(user.id)
         manager.PATCH(userURLString, parameters: params, success: { (operation, data) -> Void in
-            completion!()
+            completion?()
             }) { (operation, error) -> Void in
                 failure("Couldn't verify user.")
         }
@@ -240,7 +243,7 @@ class AdminOperations {
         let manager = BaseOperation.manager()
         let userURLString = StringConstants.kUserDetailURL(user.id)
         manager.DELETE(userURLString, parameters: nil, success: { (operation, data) -> Void in
-            completion!()
+            completion?()
             }) { (operation, error) -> Void in
                 failure("Could not remove user.")
         }

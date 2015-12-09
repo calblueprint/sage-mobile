@@ -77,15 +77,15 @@ class ProfileCheckinViewController: UITableViewController {
     
         var cell = self.tableView.dequeueReusableCellWithIdentifier("CheckinRequestCell")
         if cell == nil {
-            cell = ProfileCheckinTableViewCell(style: .Default, reuseIdentifier: "CheckinRequestCell")
+            cell = CheckinTableViewCell(style: .Default, reuseIdentifier: "CheckinRequestCell")
         }
-        (cell as! ProfileCheckinTableViewCell).configureWithCheckin(checkin)
+        (cell as! CheckinTableViewCell).configureWithCheckin(checkin)
         return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let checkin = self.requests![indexPath.row]
-        return ProfileCheckinTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
+        return CheckinTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
 }
 

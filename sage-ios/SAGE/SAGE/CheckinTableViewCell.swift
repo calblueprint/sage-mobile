@@ -1,26 +1,25 @@
 //
-//  ProfileCheckinTableViewCell.swift
+//  CheckinTableViewCell.swift
 //  SAGE
 //
-//  Created by Erica Yin on 12/4/15.
+//  Created by Erica Yin on 12/9/15.
 //  Copyright © 2015 Cal Blueprint. All rights reserved.
 //
 
 import Foundation
 
-
 import UIKit
 
-class ProfileCheckinTableViewCell: UITableViewCell {
+class CheckinTableViewCell: UITableViewCell {
     
     var userPicture = UIImageView()
     var userName = UILabel()
     var time = UILabel()
     
-    var checkinID: Int?
+    var checkinID = -1
     
     struct DummyCellHolder {
-        static var cell = CheckinRequestTableViewCell()
+        static var cell = CheckinTableViewCell()
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -97,7 +96,7 @@ class ProfileCheckinTableViewCell: UITableViewCell {
     }
     
     static func heightForCheckinRequest(checkin: Checkin, width: CGFloat) -> CGFloat {
-        let cell = CheckinRequestTableViewCell.DummyCellHolder.cell
+        let cell = CheckinTableViewCell.DummyCellHolder.cell
         cell.setWidth(width)
         cell.configureWithCheckin(checkin)
         return CGRectGetHeight(cell.frame)
@@ -108,6 +107,7 @@ class ProfileCheckinTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         self.userPicture.cancelImageRequestOperation()
     }
     

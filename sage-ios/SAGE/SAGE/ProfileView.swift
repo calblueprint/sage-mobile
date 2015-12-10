@@ -84,15 +84,12 @@ class ProfileView: UIView {
         let userStatusString = NSMutableAttributedString(string: String(hoursCompleted) + " / 60 \nhours") // ask charles about the 60
         styleAttributedString("userStatusString", string: userStatusString)
         self.userStatusLabel.attributedText = userStatusString
-        self.userStatusLabel.sizeToFit()
-        self.userStatusLabel.centerInSuperview()
         
         let weeklyHoursRequired = user.getRequiredHours()
         let userCommitmentString = NSMutableAttributedString(string: String(weeklyHoursRequired) + " \nhours/week")
         styleAttributedString("userCommitmentString", string: userCommitmentString)
         self.userCommitmentLabel.attributedText = userCommitmentString
-        self.userCommitmentLabel.sizeToFit()
-        self.userCommitmentLabel.centerInSuperview()
+        layoutSubviews()
     }
     
     func setupViewStyle() {
@@ -127,7 +124,7 @@ class ProfileView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         self.profileContent.fillWidth()
         
         // set up header
@@ -202,6 +199,12 @@ class ProfileView: UIView {
         self.userCommitmentContainer.setY(topBorderY+1)
         self.userCommitmentContainer.setWidth(middle)
         self.userCommitmentContainer.setHeight(self.boxHeight-1)
+        
+        self.userCommitmentLabel.sizeToFit()
+        self.userCommitmentLabel.centerInSuperview()
+        
+        self.userStatusLabel.sizeToFit()
+        self.userStatusLabel.centerInSuperview()
         
         let height = CGRectGetMaxY(self.bottomBorder.frame)
         self.profileContent.setHeight(height)

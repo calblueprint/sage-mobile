@@ -59,27 +59,36 @@ class ProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func styleAttributedString(name: String, string: NSMutableAttributedString) {
+        let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(30)]
+
+        if name == "userStatusString" {
+            string.addAttributes(boldString, range: NSRange(location: 0, length: 2))
+            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: 8, length: 6))
+        }
+        
+        if name == "userCommitmentString" {
+            string.addAttributes(boldString, range: NSRange(location: 0, length: 2))
+            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: 3, length: 10))
+        }
+    }
+    
     func setupWithUser(user: User) {
         self.profileUserImg.setImageWithUser(user)
-        
         self.userName.text = user.fullName()
         self.userSchool.text = user.school?.name
         self.userVolunteerLevel.text = user.volunteerLevelToString(user.level)
         
-        let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(30)]
-        
         let hoursCompleted = user.totalHours
         let userStatusString = NSMutableAttributedString(string: String(hoursCompleted) + " / 60 \nhours") // ask charles about the 60
-        userStatusString.addAttributes(boldString, range: NSRange(location: 0, length: 2))
-        userStatusString.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: 8, length: 6))
+        styleAttributedString("userStatusString", string: userStatusString)
         self.userStatusLabel.attributedText = userStatusString
         self.userStatusLabel.sizeToFit()
         self.userStatusLabel.centerInSuperview()
         
         let weeklyHoursRequired = user.getRequiredHours()
         let userCommitmentString = NSMutableAttributedString(string: String(weeklyHoursRequired) + " \nhours/week")
-        userCommitmentString.addAttributes(boldString, range: NSRange(location: 0, length: 2))
-        userCommitmentString.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: 3, length: 10))
+        styleAttributedString("userCommitmentString", string: userCommitmentString)
         self.userCommitmentLabel.attributedText = userCommitmentString
         self.userCommitmentLabel.sizeToFit()
         self.userCommitmentLabel.centerInSuperview()
@@ -87,6 +96,7 @@ class ProfileView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
         self.backgroundColor = UIColor.whiteColor()
         self.profileContent.fillWidth()
         

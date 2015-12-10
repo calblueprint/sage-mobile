@@ -55,7 +55,6 @@ public class EditUserRequest extends BaseRequest {
             userObject.put("last_name", user.getLastName());
             if (user.getPassword() != null) {
                 userObject.put("password", user.getPassword());
-                userObject.put("confirm_password", user.getConfirmPassword());
             }
             userObject.put("school_id", user.getSchoolId());
             userObject.put("current_password", user.getCurrentPassword());

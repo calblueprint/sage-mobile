@@ -43,8 +43,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     func setupWithAnnouncement(announcement: Announcement) {
-        let image = UIImage(named: "UserImage.jpg")
-        self.announcementUserImg.image = image
+        self.announcementUserImg.setImageWithUser(announcement.sender!)
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
         
@@ -65,10 +64,10 @@ class AnnouncementsTableViewCell: UITableViewCell {
             announcementTo = (announcement.school?.name)!
         }
         let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(14.0)]
-        let nameLength = (announcement.sender?.firstName)!.characters.count + (announcement.sender?.lastName)!.characters.count + 1
+        let nameLength = announcement.sender!.fullName().characters.count
         let toIndex = nameLength + 4
         let toLength = announcementTo.characters.count
-        let announcementString = NSMutableAttributedString(string: (announcement.sender?.firstName)! + " " + (announcement.sender?.lastName)! + " to " + announcementTo)
+        let announcementString = NSMutableAttributedString(string: announcement.sender!.fullName() + " to " + announcementTo)
         announcementString.addAttributes(boldString, range: NSRange(location: 0, length: nameLength))
         announcementString.addAttributes(boldString, range: NSRange(location: toIndex, length: toLength))
         self.announcementUserName.attributedText = announcementString

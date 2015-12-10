@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/student_menu"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/check_in"
+            android:title="@string/check_in"
+            android:icon="@drawable/ic_place_black" />
+
+        <item
+            android:id="@+id/announcements"
+            android:title="@string/announcements"
+            android:icon="@drawable/ic_announcement_black" />
+    </group>
+</menu>

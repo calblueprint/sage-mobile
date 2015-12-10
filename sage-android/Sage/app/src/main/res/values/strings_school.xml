@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="school_name">Name</string>
+    <string name="school_address">Address</string>
+    <string name="school_director">Director</string>
+</resources>

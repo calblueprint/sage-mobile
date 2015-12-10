@@ -12,7 +12,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
-import blueprint.com.sage.shared.validators.UserValidators;
+import blueprint.com.sage.shared.validators.FormValidator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -29,14 +29,14 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     private SchoolSpinnerAdapter mSchoolAdapter;
     private TypeSpinnerAdapter mTypeAdapter;
 
-    private UserValidators mValidator;
+    private FormValidator mValidator;
 
     public static SignUpSchoolFragment newInstance() { return new SignUpSchoolFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mValidator = UserValidators.newInstance(getActivity());
+        mValidator = FormValidator.newInstance(getActivity());
     }
 
     @Override

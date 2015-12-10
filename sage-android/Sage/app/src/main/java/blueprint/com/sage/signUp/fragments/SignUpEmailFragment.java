@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.shared.validators.UserValidators;
+import blueprint.com.sage.shared.validators.FormValidator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -22,14 +22,14 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_password) EditText mPassword;
     @Bind(R.id.sign_up_password_confirm) EditText mConfirmation;
 
-    private UserValidators mValidator;
+    private FormValidator mValidator;
 
     public static SignUpEmailFragment newInstance() { return new SignUpEmailFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mValidator = UserValidators.newInstance(getParentActivity());
+        mValidator = FormValidator.newInstance(getParentActivity());
     }
 
     @Override

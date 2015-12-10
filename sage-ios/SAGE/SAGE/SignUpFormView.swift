@@ -38,6 +38,12 @@ class SignUpFormView: UIView {
         self.headerLabel.textColor = UIColor.whiteColor()
         self.headerLabel.font = UIFont.getTitleFont(36)
         self.subHeaderLabel.textColor = UIColor.whiteColor()
+        let screenRect = UIScreen.mainScreen().bounds;
+        let screenWidth = screenRect.size.width
+        if screenWidth <= 320.0 {
+            self.headerLabel.font = UIFont.getTitleFont(24)
+            self.subHeaderLabel.font = UIFont.getDefaultFont(14)
+        }
         self.backgroundColor = UIColor.whiteColor()
     }
     

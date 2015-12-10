@@ -98,3 +98,16 @@ class School: NSObject, NSCoding {
         return propertyDict
     }
 }
+
+extension School: NSCopying {
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        var copiedArray: [User]? = nil
+        if let students = self.students {
+            copiedArray = [User]()
+            for student in students {
+                copiedArray?.append((student.copy() as? User)!)
+            }
+        }
+        return School(id: self.id, name: self.name?.copy() as? String, location: self.location?.copy() as? CLLocation, students: copiedArray, director: self.director?.copy() as? User)
+    }
+}

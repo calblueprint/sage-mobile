@@ -9,6 +9,9 @@
 import UIKit
 import FontAwesomeKit
 
+private let buttonSize: CGFloat = 22.0
+private let buttonInset: CGFloat = 10.0
+
 class SignUpRequestTableViewCell: UITableViewCell {
     
     var userPicture = UIImageView()
@@ -16,9 +19,8 @@ class SignUpRequestTableViewCell: UITableViewCell {
     var schoolAndHours = UILabel()
     var checkButton = UIButton()
     var xButton = UIButton()
-    
     var userID: Int?
-    
+        
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(self.userPicture)
@@ -56,18 +58,18 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.schoolAndHours.text = user.school!.name! + " - " + hoursText
         self.schoolAndHours.font = UIFont.normalFont
         
-        let checkIcon = FAKIonIcons.androidDoneIconWithSize(22)
+        let checkIcon = FAKIonIcons.androidDoneIconWithSize(buttonSize)
         checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
-        let checkImage = checkIcon.imageWithSize(CGSizeMake(22, 22))
+        let checkImage = checkIcon.imageWithSize(CGSizeMake(buttonSize, buttonSize))
         self.checkButton.setImage(checkImage, forState: .Normal)
-        self.checkButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
+        self.checkButton.imageEdgeInsets = UIEdgeInsets(top: -buttonInset, left: -buttonInset, bottom: -buttonInset, right: -buttonInset)
         self.checkButton.imageView!.contentMode = .Center;
         
-        let xIcon = FAKIonIcons.androidCloseIconWithSize(22)
+        let xIcon = FAKIonIcons.androidCloseIconWithSize(buttonSize)
         xIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightRedColor])
-        let xImage = xIcon.imageWithSize(CGSizeMake(22, 22))
+        let xImage = xIcon.imageWithSize(CGSizeMake(buttonSize, buttonSize))
         self.xButton.setImage(xImage, forState: .Normal)
-        self.xButton.imageEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
+        self.xButton.imageEdgeInsets = UIEdgeInsets(top: -buttonInset, left: -buttonInset, bottom: -buttonInset, right: -buttonInset)
         self.xButton.imageView!.contentMode = .Center;
     }
     
@@ -90,14 +92,14 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.schoolAndHours.setX(10 + CGRectGetMaxX(self.userPicture.frame))
         self.schoolAndHours.setY(CGRectGetMaxY(self.userName.frame))
         
-        self.checkButton.setHeight(42)
-        self.checkButton.setX(self.contentView.frame.width - UIConstants.sideMargin - 32)
+        self.checkButton.setHeight(buttonSize + buttonInset + buttonInset)
+        self.checkButton.setX(self.contentView.frame.width - UIConstants.sideMargin - buttonSize - buttonInset)
         self.checkButton.centerVertically()
-        self.checkButton.setWidth(42)
+        self.checkButton.setWidth(buttonSize + buttonInset + buttonInset)
         
-        self.xButton.setHeight(42)
-        self.xButton.setWidth(42)
-        self.xButton.setX(CGRectGetMinX(self.checkButton.frame)-42)
+        self.xButton.setHeight(buttonSize + buttonInset + buttonInset)
+        self.xButton.setWidth(buttonSize + buttonInset + buttonInset)
+        self.xButton.setX(CGRectGetMinX(self.checkButton.frame) - buttonSize - buttonInset - buttonInset)
         self.xButton.centerVertically()
     }
     

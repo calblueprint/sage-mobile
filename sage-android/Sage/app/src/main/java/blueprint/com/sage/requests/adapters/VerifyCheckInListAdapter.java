@@ -47,10 +47,13 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<VerifyCheckIn
         final CheckIn checkIn = mCheckIns.get(position);
 
         viewHolder.mUser.setText(checkIn.getUser().getName());
-        viewHolder.mSchool.setText(checkIn.getSchool().getName());
-        viewHolder.mTotalTime.setText(checkIn.getTotalTime());
 
-        String comment = checkIn.getComment() == null ? "No Comment" : checkIn.getComment();
+        String timeText = mActivity.getString(R.string.check_in_total_time,
+                checkIn.getSchool().getName(), checkIn.getTotalTime());
+        viewHolder.mTotalTime.setText(timeText);
+
+        String comment = checkIn.getComment() == null || checkIn.getComment().isEmpty() ?
+                "No Comment" : checkIn.getComment();
         viewHolder.mComment.setText(comment);
 
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
@@ -83,12 +86,11 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<VerifyCheckIn
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.check_in_list_item_user) TextView mUser;
-        @Bind(R.id.check_in_list_item_school) TextView mSchool;
-        @Bind(R.id.check_in_list_item_total) TextView mTotalTime;
-        @Bind(R.id.check_in_list_item_comment) TextView mComment;
-        @Bind(R.id.check_in_list_item_verify) ImageButton mVerify;
-        @Bind(R.id.check_in_list_item_delete) ImageButton mDelete;
+        @Bind(R.id.verify_check_in_list_item_user) TextView mUser;
+        @Bind(R.id.verify_check_in_list_item_total) TextView mTotalTime;
+        @Bind(R.id.verify_check_in_list_item_comment) TextView mComment;
+        @Bind(R.id.verify_check_in_list_item_verify) ImageButton mVerify;
+        @Bind(R.id.verify_check_in_list_item_delete) ImageButton mDelete;
 
         public ViewHolder(View view) {
             super(view);

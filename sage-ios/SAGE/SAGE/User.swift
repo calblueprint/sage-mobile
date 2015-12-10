@@ -173,4 +173,23 @@ class User: NSObject, NSCoding {
         propertyDict[UserConstants.kVerified] = verified
         return propertyDict
     }
+    
+    func fullName() -> String {
+        return self.firstName! + " " + self.lastName!
+    }
+    
+    func getRequiredHours() -> Int {
+        switch self.level {
+        case .ZeroUnit: return 1
+        case .OneUnit: return 2
+        case .TwoUnit: return 3
+        default: return 0
+        }
+    }    
+}
+
+extension User: NSCopying {
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return User(id: self.id, firstName: self.firstName?.copy() as? String, lastName: self.lastName?.copy() as? String, email: self.email?.copy() as? String, school: self.school?.copy() as? School, level: self.level, role: self.role, totalHours: self.totalHours, verified: self.verified, imgURL: self.imageURL?.copy() as? NSURL)
+    }
 }

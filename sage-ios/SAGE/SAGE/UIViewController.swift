@@ -10,12 +10,17 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    func showError(message: String, size: CGFloat, currentError: ErrorView?) -> ErrorView {
+    func showError(message: String, currentError: ErrorView?, color: UIColor = UIColor.whiteColor()) -> ErrorView {
         if currentError != nil {
             currentError?.removeFromSuperview()
         }
-
-        let errorView = ErrorView(height: size, messageString: message)
+        var size: CGFloat
+        if let _ = self.navigationController {
+            size = 44.0
+        } else {
+            size = 64.0
+        }
+        let errorView = ErrorView(height: size, messageString: message, color: color)
         self.view.addSubview(errorView)
         self.view.bringSubviewToFront(errorView)
         errorView.setX(0)
@@ -30,5 +35,14 @@ extension UIViewController {
                     }, completion: nil)
             }
         return errorView
+    }
+    
+    func showAlertControllerError(errorMessage: String) {
+        let alertController = UIAlertController(
+            title: "Failure",
+            message: errorMessage,
+            preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 }

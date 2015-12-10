@@ -1,6 +1,7 @@
 package blueprint.com.sage.requests.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.requests.adapters.VerifyCheckInListAdapter;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
+import blueprint.com.sage.requests.adapters.VerifyCheckInListAdapter;
+import blueprint.com.sage.shared.interfaces.CheckInsInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +24,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/10/15.
  * Gets list of unverified checkins
  */
-public class VerifyCheckInListFragment extends RequestsAbstractFragment implements OnRefreshListener {
+public class VerifyCheckInListFragment extends Fragment implements OnRefreshListener {
 
     @Bind(R.id.verify_check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
     @Bind(R.id.verify_check_in_list_list) RecycleViewEmpty mCheckInList;
@@ -30,11 +32,14 @@ public class VerifyCheckInListFragment extends RequestsAbstractFragment implemen
 
     private VerifyCheckInListAdapter mCheckInAdapter;
 
+    private CheckInsInterface mCheckInInterface;
+
     public static VerifyCheckInListFragment newInstance() { return new VerifyCheckInListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCheckInInterface = (CheckInsInterface) getActivity();
     }
 
     @Override
@@ -59,11 +64,11 @@ public class VerifyCheckInListFragment extends RequestsAbstractFragment implemen
     }
 
     private void initializeViews() {
-        mCheckInAdapter = new VerifyCheckInListAdapter(getParentActivity(),
-                                                 R.layout.check_in_list_item,
-                                                 getParentActivity().getCheckIns());
+        mCheckInAdapter = new VerifyCheckInListAdapter(getActivity(),
+                                                 R.layout.verify_check_in_list_item,
+                                                 mCheckInInterface.getCheckIns());
 
-        mCheckInList.setLayoutManager(new LinearLayoutManager(getParentActivity()));
+        mCheckInList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCheckInList.setEmptyView(mEmptyView);
         mCheckInList.setAdapter(mCheckInAdapter);
 
@@ -72,11 +77,11 @@ public class VerifyCheckInListFragment extends RequestsAbstractFragment implemen
     }
 
     @Override
-    public void onRefresh() { getParentActivity().makeCheckInListRequest(); }
+    public void onRefresh() { mCheckInInterface.getCheckInListRequest(); }
 
     public void onEvent(CheckInListEvent event) {
-        getParentActivity().setCheckIns(event.getCheckIns());
-        mCheckInAdapter.setCheckIns(getParentActivity().getCheckIns());
+        mCheckInInterface.setCheckIns(event.getCheckIns());
+        mCheckInAdapter.setCheckIns(mCheckInInterface.getCheckIns());
         mCheckInRefreshLayout.setRefreshing(false);
         mEmptyView.setRefreshing(false);
     }

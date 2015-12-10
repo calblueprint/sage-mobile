@@ -1,7 +1,6 @@
 package blueprint.com.sage.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -18,19 +17,12 @@ public @Data class School {
     private float lat;
     private float lng;
     private String address;
+    private int directorId;
 
+    private User director;
     private List<User> users;
 
     public School() {}
-
-    public School(String name, String address, LatLng bounds) {
-        this.name = name;
-        this.address = address;
-        if (bounds != null) {
-            this.lat = (float) bounds.latitude;
-            this.lng = (float) bounds.longitude;
-        }
-    }
 
     public boolean hasLatLng() {
         return lat != 0.0 && lng != 0.0;

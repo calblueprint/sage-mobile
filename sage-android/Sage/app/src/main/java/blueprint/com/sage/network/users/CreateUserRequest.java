@@ -27,19 +27,20 @@ public class CreateUserRequest extends BaseRequest {
                              final Response.Listener<Session> onSuccess,
                              final Response.Listener onFailure) {
         super(Method.POST, makeUrl(null, "users"), convertToUserParams(user),
-         new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject o) {
-                try {
-                    String sessionString = o.getString("session");
-                    ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
-                    Session session = mapper.readValue(sessionString, new TypeReference<Session>() {});
-                    onSuccess.onResponse(session);
-                } catch (Exception e) {
-                    Log.e(getClass().toString(), e.toString());
-                }
-            }
-        }, new Response.Listener<APIError>() {
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject o) {
+                        try {
+                            String sessionString = o.getString("session");
+                            ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+                            Session session = mapper.readValue(sessionString, new TypeReference<Session>() {
+                            });
+                            onSuccess.onResponse(session);
+                        } catch (Exception e) {
+                            Log.e(getClass().toString(), e.toString());
+                        }
+                    }
+                }, new Response.Listener<APIError>() {
                     @Override
                     public void onResponse(APIError error) {
                         onFailure.onResponse(error);
@@ -56,6 +57,7 @@ public class CreateUserRequest extends BaseRequest {
             userObject.put("first_name", user.getFirstName());
             userObject.put("last_name", user.getLastName());
             userObject.put("password", user.getPassword());
+            userObject.put("confirm_password", user.getConfirmPassword());
             userObject.put("school_id", user.getSchoolId());
             userObject.put("volunteer_type", user.getVolunteerTypeInt());
             if (user.getProfileData() != null) {

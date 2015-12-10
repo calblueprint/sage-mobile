@@ -1,17 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/create_school_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/create_school_name"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content" />
+    <com.google.android.gms.maps.MapView
+        style="@style/DefaultMapWindow"
+        android:id="@+id/create_school_map" />
 
-    <AutoCompleteTextView
-        android:id="@+id/create_school_address"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        style="@style/SchoolLinearLayout">
+
+        <ImageView
+            style="@style/SchoolIcon"
+            android:src="@drawable/ic_mail_white" />
+
+        <EditText
+            style="@style/SchoolText"
+            android:id="@+id/create_school_name"
+            android:hint="@string/school_name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SchoolLinearLayout">
+
+        <ImageView
+            style="@style/SchoolIcon"
+            android:src="@drawable/ic_mail_white" />
+
+        <AutoCompleteTextView
+            style="@style/SchoolText"
+            android:id="@+id/create_school_address"
+            android:hint="@string/school_address" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SchoolLinearLayout">
+
+        <ImageView
+            style="@style/SchoolIcon"
+            android:src="@drawable/ic_mail_white" />
+
+        <Spinner
+            style="@style/SchoolSpinner"
+            android:id="@+id/create_school_director"
+            android:hint="@string/school_address" />
+
+    </LinearLayout>
+
 </LinearLayout>

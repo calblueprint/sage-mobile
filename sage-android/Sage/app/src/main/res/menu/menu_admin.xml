@@ -4,8 +4,8 @@
         android:id="@+id/admin_menu"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/schools"
-            android:title="@string/schools"
+            android:id="@+id/browse"
+            android:title="@string/browse"
             android:icon="@drawable/ic_location_city_black" />
 
         <item

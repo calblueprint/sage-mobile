@@ -53,6 +53,10 @@ struct StringConstants {
         return StringConstants.kEndpointBaseURL + "/admin/check_ins/" + String(id) + "/verify"
     }
     
+    static func kUserAdminVerifyURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/admin/users/" + String(id) + "/verify"
+    }
+    
     static func kUserDetailURL(id: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/users/" + String(id)
     }

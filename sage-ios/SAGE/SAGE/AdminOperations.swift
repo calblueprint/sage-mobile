@@ -226,13 +226,11 @@ class AdminOperations {
     }
     
     static func verifyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        // TODO: fix, currently doesn't verify
         let manager = BaseOperation.manager()
-        let params = ["user": [
-                UserConstants.kVerified: true
-            ]
-        ]
-        let userURLString = StringConstants.kUserDetailURL(user.id)
-        manager.PATCH(userURLString, parameters: params, success: { (operation, data) -> Void in
+
+        let userURLString = StringConstants.kUserAdminVerifyURL(user.id)
+        manager.POST(userURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
                 failure("Couldn't verify user.")

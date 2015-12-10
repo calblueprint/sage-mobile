@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		114953511C190CAA00A74845 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114953501C190CAA00A74845 /* APIKeys.swift */; };
 		22E8AFA2C4807E582FFD7452 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3B940583EC03D3C82EAAD0 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
@@ -97,7 +98,6 @@
 		42F71DF61BF80478004E1B3B /* CheckinRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F71DF51BF80478004E1B3B /* CheckinRequestTableViewCell.swift */; };
 		42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F75B211BD451DA00835595 /* SignUpTableViewController.swift */; };
 		42FE17C51BF440C00029BF22 /* BrowseMentorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */; };
-		42FE17C71BF447BA0029BF22 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE17C61BF447BA0029BF22 /* APIKeys.swift */; };
 		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63EF111BFC86340036D478 /* SchoolOperations.swift */; };
 		5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */; };
@@ -127,6 +127,7 @@
 
 /* Begin PBXFileReference section */
 		038E557A8664D96BC0F724A9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		114953501C190CAA00A74845 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		2705CC3A1BB927D7004FE927 /* SAGE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAGE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC3D1BB927D7004FE927 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
@@ -200,7 +201,6 @@
 		42F71DF51BF80478004E1B3B /* CheckinRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinRequestTableViewCell.swift; sourceTree = "<group>"; };
 		42F75B211BD451DA00835595 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		42FE17C41BF440C00029BF22 /* BrowseMentorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsTableViewCell.swift; sourceTree = "<group>"; };
-		42FE17C61BF447BA0029BF22 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5D63EF111BFC86340036D478 /* SchoolOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolOperations.swift; sourceTree = "<group>"; };
 		5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailView.swift; sourceTree = "<group>"; };
@@ -401,7 +401,6 @@
 				27F990C31BBDD1F300D61DA2 /* UIConstants.swift */,
 				4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */,
 				27F990C51BBDD76800D61DA2 /* StringConstants.swift */,
-				42FE17C61BF447BA0029BF22 /* APIKeys.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -426,6 +425,7 @@
 				4223342C1BC0C96000E863D0 /* AnnouncementConstants.swift */,
 				4223342E1BC0C97000E863D0 /* CheckinConstants.swift */,
 				422334301BC0C97E00E863D0 /* SchoolConstants.swift */,
+				114953501C190CAA00A74845 /* APIKeys.swift */,
 			);
 			name = ModelConstants;
 			sourceTree = "<group>";
@@ -775,7 +775,6 @@
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */,
 				429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */,
-				42FE17C71BF447BA0029BF22 /* APIKeys.swift in Sources */,
 				42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */,
 				5D8AF98B1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
@@ -786,6 +785,7 @@
 				42828FC81C00718000ACBC7E /* CheckinRequestsDetailViewController.swift in Sources */,
 				27D1B6841BE1C20C00F9D026 /* FormTextItem.swift in Sources */,
 				4223342D1BC0C96000E863D0 /* AnnouncementConstants.swift in Sources */,
+				114953511C190CAA00A74845 /* APIKeys.swift in Sources */,
 				5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */,
 				27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */,
 				42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */,

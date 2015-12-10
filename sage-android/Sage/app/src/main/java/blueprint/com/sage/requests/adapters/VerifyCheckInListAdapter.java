@@ -59,6 +59,7 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<VerifyCheckIn
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position = mCheckIns.indexOf(checkIn);
                 Requests.CheckIns.with(mActivity).makeVerifyRequest(checkIn, position);
             }
         });
@@ -66,6 +67,7 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<VerifyCheckIn
         viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position = mCheckIns.indexOf(checkIn);
                 Requests.CheckIns.with(mActivity).makeDeleteRequest(checkIn, position);
             }
         });

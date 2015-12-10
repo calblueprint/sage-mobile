@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
-import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -34,7 +33,7 @@ public class CreateAnnouncementFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_create_announcement, parent, false);
         ButterKnife.bind(this, view);
-        initializeViews();
+//        initializeViews();
         return view;
     }
 
@@ -73,7 +72,7 @@ public class CreateAnnouncementFragment extends Fragment {
 
     private void submitRequest() {
 
-        Requests.Announcements.with(getActivity()).makeCreateRequest(   );
+//        Requests.Announcements.with(getActivity()).makeCreateRequest(   );
     }
 
     public void onEvent(CreateAnnouncementEvent event) {

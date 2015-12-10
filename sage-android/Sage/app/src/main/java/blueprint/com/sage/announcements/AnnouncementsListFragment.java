@@ -17,7 +17,6 @@ import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
-import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -92,6 +91,6 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     @OnClick(R.id.add_announcement_fab)
     public void newAnnouncement() {
-        FragUtils.replaceBackStack(R.id.container, CreateAnnouncementFragment.newInstance(), getActivity());
+//        FragUtils.replaceBackStack(R.id.container, CreateAnnouncementFragment.newInstance(), getActivity());
     }
 }

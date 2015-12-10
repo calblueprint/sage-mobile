@@ -6,6 +6,7 @@
     <string name="sign_up_profile">Profile</string>
     <string name="sign_up_password">Password</string>
     <string name="sign_up_password_confirm">Confirm Password</string>
+    <string name="sign_up_current_password">Current Password</string>
     <string name="sign_up_first_name">First Name</string>
     <string name="sign_up_last_name">Last Name</string>
 
@@ -25,5 +26,5 @@
     <string name="sign_up_profile_subtitle">Let\'s put a face to you!</string>
 
     <!-- Unverified Activity -->
-    <string name="unverified_body">Thanks for signing up! A request has been sent to SAGE for approval.</string>
+    <string name="unverified_body">Thanks for signing up! A request has been sent to SAGE for approval. Pull down to refresh this page.</string>
 </resources>

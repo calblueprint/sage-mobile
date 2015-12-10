@@ -30,8 +30,6 @@ class BrowseMentorsViewController: UITableViewController {
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
         self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.centerHorizontally()
-        self.activityIndicator.centerVertically()
         self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
@@ -43,9 +41,20 @@ class BrowseMentorsViewController: UITableViewController {
         
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let letterChar = alphabet[alphabet.startIndex.advancedBy(section)]
+        return String(letterChar)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+    }
+    
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
@@ -58,6 +67,18 @@ class BrowseMentorsViewController: UITableViewController {
             charArray.append(letterString)
         }
         return charArray
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let _ = self.mentors {
+            if self.mentors![section].count == 0 {
+                return 0.0
+            } else {
+                return 22.0
+            }
+        } else {
+            return 0.0
+        }
     }
     
     func loadMentors() {
@@ -84,7 +105,7 @@ class BrowseMentorsViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage, size: 64.0)
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     
@@ -116,23 +137,23 @@ class BrowseMentorsViewController: UITableViewController {
         let user = self.mentors![indexPath.section][indexPath.row]
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
         if cell == nil {
-            cell = BrowseMentorsTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
+            cell = UsersTableViewCell(style: .Default, reuseIdentifier: "BrowseMentorsCell")
         }
-        (cell as! BrowseMentorsTableViewCell).configureWithUser(user)
+        (cell as! UsersTableViewCell).configureWithUser(user)
         return cell!
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return BrowseMentorsTableViewCell.cellHeight()
+        return UsersTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let mentor = self.mentors![indexPath.section][indexPath.row]
         let vc = BrowseMentorsDetailViewController(mentor: mentor)
-        if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

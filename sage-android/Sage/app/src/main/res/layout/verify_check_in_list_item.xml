@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageButton
+        android:id="@+id/verify_check_in_list_item_delete"
+        android:src="@drawable/ic_clear_white"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+        android:tint="@color/red500"
+        android:background="@android:color/transparent"
+        android:layout_centerVertical="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <ImageButton
+        android:id="@+id/verify_check_in_list_item_verify"
+        android:layout_toLeftOf="@id/verify_check_in_list_item_delete"
+        android:src="@drawable/ic_done_white"
+        android:gravity="right"
+        android:tint="@color/green500"
+        android:background="@android:color/transparent"
+        android:layout_centerVertical="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <LinearLayout
+        android:id="@+id/user_list_info_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/verify_check_in_list_item_verify"
+        android:layout_toStartOf="@id/verify_check_in_list_item_verify"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/verify_check_in_list_item_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/verify_check_in_list_item_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/verify_check_in_list_item_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</RelativeLayout>

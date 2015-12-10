@@ -14,14 +14,54 @@ class BrowseSchoolsViewController: UITableViewController {
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolAdded:", name: NotificationConstants.addSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //
+    // MARK: - NSNotificationCenter selectors
+    //
+    func schoolAdded(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if let _ = self.schools {
+            self.schools!.insert(school, atIndex: 0)
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
+    func schoolEdited(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if let _ = self.schools {
+            for i in 0...(self.schools!.count-1) {
+                let oldSchool = self.schools![i]
+                if school.id == oldSchool.id {
+                    self.schools![i] = school
+                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Schools"
         self.tableView.tableFooterView = UIView()
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSchool")
+
         self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.centerHorizontally()
-        self.activityIndicator.centerVertically()
         self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
@@ -33,9 +73,22 @@ class BrowseSchoolsViewController: UITableViewController {
         
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+    }
+    
+    func addSchool() {
+        let addSchoolController = AddSchoolController()
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController?.pushViewController(addSchoolController, animated: true)
+    }
+    
+    func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
@@ -46,7 +99,7 @@ class BrowseSchoolsViewController: UITableViewController {
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage, size: 64.0)
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     
@@ -67,18 +120,23 @@ class BrowseSchoolsViewController: UITableViewController {
         let school = self.schools![indexPath.row]
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseSchoolsCell")
         if cell == nil {
-            cell = BrowseSchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
+            cell = SchoolsTableViewCell(style: .Subtitle, reuseIdentifier: "BrowseSchoolsCell")
         }
-        (cell as! BrowseSchoolsTableViewCell).configureWithSchool(school)
+        (cell as! SchoolsTableViewCell).configureWithSchool(school)
         return cell!
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return SchoolsTableViewCell.cellHeight()
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row]
-        let vc = BrowseSchoolsDetailViewController(school: school)
-        if let topItem = self.navigationController!.navigationBar.topItem {
+        let vc = SchoolDetailViewController()
+        if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController!.pushViewController(vc, animated: true)
+        vc.configureWithSchool(school)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

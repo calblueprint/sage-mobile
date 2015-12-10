@@ -39,8 +39,7 @@ class AnnouncementsDetailView: UIView {
     }
     
     func setupWithAnnouncement(announcement: Announcement) {
-        let image = UIImage(named: "UserImage.jpg")
-        self.announcementUserImg.image = image
+        self.announcementUserImg.setImageWithUser(announcement.sender!)
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
         self.announcementTime.text = self.formatDate((announcement.timeCreated)!)

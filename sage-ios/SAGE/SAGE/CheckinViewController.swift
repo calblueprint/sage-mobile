@@ -36,11 +36,15 @@ class CheckinViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
-        self.requiredTime = 3600 * 1 //LoginOperations.getUser()?.requiredHours()
+        if let user = LoginOperations.getUser() {
+            self.requiredTime = 3600 * Double(user.getRequiredHours())
+        } else {
+            self.requiredTime = 3600
+        }
 
         self.setupDefaultTitleLabel()
         self.setupSessionTitleLabel()
-        self.setupBarButtonItems()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "presentRequestHoursView")
         
         self.checkinView.startButton.addTarget(self, action: "userPressedBeginSession", forControlEvents: .TouchUpInside)
         self.checkinView.endButton.addTarget(self, action: "userPressedEndSession", forControlEvents: .TouchUpInside)
@@ -197,16 +201,6 @@ class CheckinViewController: UIViewController {
         self.sessionTitleLabel.sizeToFit()
         self.sessionTitleLabel.frame = CGRectIntegral(self.sessionTitleLabel.frame) // Done to prevent fuzzy text
         self.sessionTitleLabel.centerInSuperview()
-    }
-    
-    private func setupBarButtonItems() {
-        let increase: CGFloat = 2.0
-        let requestIcon = FAKMaterialIcons.plusIconWithSize(UIConstants.barbuttonIconSize + increase)
-        let requestImage = requestIcon.imageWithSize(CGSizeMake(
-            UIConstants.barbuttonIconSize + increase,
-            UIConstants.barbuttonIconSize + increase))
-        let requestHoursItem = UIBarButtonItem(image: requestImage!, style: .Plain, target: self, action: "presentRequestHoursView")
-        self.navigationItem.rightBarButtonItem = requestHoursItem
     }
     
     private func startGettingCurrentLocation() {

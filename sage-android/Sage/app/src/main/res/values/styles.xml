@@ -10,8 +10,6 @@
 
     <!-- ToolBar -->
     <style name="ToolBarStyle" parent="Theme.AppCompat">
-        <!--<item name="android:textColorPrimary">@color/white</item>-->
-        <!--<item name="android:textColorSecondary">@color/white</item>-->
         <item name="actionMenuTextColor">@color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
@@ -83,6 +81,7 @@
         <item name="elevation">10dp</item>
         <item name="fabSize">normal</item>
     </style>
+<<<<<<< HEAD
     
     <style name="AnnouncementRow">
         <item name="android:layout_width">wrap_content</item>
@@ -90,5 +89,11 @@
         <item name="android:layout_marginLeft">60dp</item>
         <item name="android:textSize">15sp</item>
         <item name="android:layout_marginRight">20dp</item>
+=======
+
+    <style name="DefaultMapWindow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">300dp</item>
+>>>>>>> master
     </style>
 </resources>

@@ -7,8 +7,10 @@
     <string name="check_in">Check In</string>
     <string name="announcements">Announcements</string>
     <string name="schools">Schools</string>
+    <string name="browse">Browse</string>
     <string name="requests">Requests</string>
     <string name="log_out">Log Out</string>
+    <string name="promote">Promote</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -34,8 +36,8 @@
     </string-array>
 
     <string-array name="role_types">
-        <item>Admin</item>
         <item>Volunteer</item>
+        <item>Admin</item>
     </string-array>
 
     <!-- Log in -->

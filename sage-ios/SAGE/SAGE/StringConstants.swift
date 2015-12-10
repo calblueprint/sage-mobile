@@ -22,8 +22,13 @@ struct StringConstants {
     static let kEndpointCheckin = kEndpointBaseURL + "/check_ins"
     static let kEndpointAnnouncements = kEndpointBaseURL + "/announcements"
 
-    static let kEndpointGetMentors = kEndpointBaseURL + "/users?role=1"
+    static let kEndpointGetMentors = kEndpointBaseURL + "/users?verified=true"
+    static let kEndpointGetAdmins = kEndpointBaseURL + "/users?role=1"
     static let kEndpointGetCheckins = kEndpointBaseURL + "/check_ins?verified=false"
     static let kEndpointGetSchools = kEndpointBaseURL + "/schools?"
     static let kEndpointGetSignUpRequests = kEndpointBaseURL + "/users?verified=false"
+    
+    static func kSchoolDetailURL(id: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/schools/" + String(id)
+    }
 }

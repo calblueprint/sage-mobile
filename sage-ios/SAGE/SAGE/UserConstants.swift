@@ -14,6 +14,7 @@ struct UserConstants {
     static let kEmail: String = "email"
     static let kAuthToken: String = "authentication_token"
     static let kSchool: String = "school"
+    static let kSchoolID: String = "school_id"
     static let kLevel: String = "volunteer_type"
     static let kRole: String = "role"
     static let kTotalHours: String = "total_hours"

@@ -12,8 +12,8 @@ import FontAwesomeKit
 class SignUpController: UIViewController  {
     
     // using nsmutable dictionaries so we can pass them by reference instead of by value
-    var schoolDict = NSMutableDictionary()
-    var volunteerDict = NSMutableDictionary()
+    var school: School?
+    var level: Int?
     
     //
     // MARK: - Overridden UIViewController methods
@@ -135,7 +135,6 @@ class SignUpController: UIViewController  {
         let signUpView = (self.view as! SignUpView)
         let nameView = signUpView.nameView
         let emailPasswordView = signUpView.emailPasswordView
-        let schoolHoursView = signUpView.schoolHoursView
         let photoView = signUpView.photoView
         
         let firstName = nameView.firstNameInput.text!
@@ -143,10 +142,9 @@ class SignUpController: UIViewController  {
         let email = emailPasswordView.emailInput.text!
         let password = emailPasswordView.passwordInput.text!
         
-        let school = self.schoolDict[schoolHoursView.chooseSchoolButton.titleLabel!.text!] as! Int
+        let school = self.school!.id
         
-        let hoursString = schoolHoursView.chooseHoursButton.titleLabel!.text!
-        let hours = self.volunteerDict[hoursString] as! Int
+        let hours = self.level!
         let role = 0
         
         var photoData: String
@@ -159,7 +157,7 @@ class SignUpController: UIViewController  {
             photoData = UIImage.encodedPhotoString(personImage)
         }
         
-        LoginOperations.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, role: role, photoData: photoData, completion: completion)
+        LoginOperations.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, photoData: photoData, completion: completion)
     }
     
     func choosePhoto() {
@@ -194,14 +192,14 @@ class SignUpController: UIViewController  {
     //
     
     func presentSchoolModal() {
-        let tableViewController = SignUpTableViewController(type: SignUpTableViewController.ContentType.School, schoolIDDict: self.schoolDict, volunteerlevelDict: self.volunteerDict)
+        let tableViewController = SignUpTableViewController(type: SignUpTableViewController.ContentType.School)
         let navigationController = UINavigationController(rootViewController: tableViewController)
         tableViewController.parentVC = self
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     func presentHoursModal() {
-        let tableViewController = SignUpTableViewController(type: SignUpTableViewController.ContentType.Hours, schoolIDDict: self.schoolDict, volunteerlevelDict: self.volunteerDict)
+        let tableViewController = SignUpTableViewController(type: SignUpTableViewController.ContentType.Hours)
         let navigationController = UINavigationController(rootViewController: tableViewController)
         tableViewController.parentVC = self
         self.presentViewController(navigationController, animated: true, completion: nil)
@@ -217,6 +215,7 @@ class SignUpController: UIViewController  {
             self.view.alpha = 0.0
         }
         self.dismissViewControllerAnimated(false, completion: nil)
+        
         (self.presentingViewController as! RootController).pushLoginViewController()
 
     }
@@ -264,7 +263,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
                         email.becomeFirstResponder()
                 })
             } else {
-                self.showErrorAndSetMessage("Please fill out your first and last name!", size: 64.0)
+                self.showErrorAndSetMessage("Please fill out your first and last name!")
             }
         } else if textField == email {
             password.becomeFirstResponder()
@@ -277,7 +276,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
                     signUpView.changeBackgroundColor(newPoint.x)
                 }, completion: nil)
             } else {
-                self.showErrorAndSetMessage("Please fill out your email and password!", size: 64.0)
+                self.showErrorAndSetMessage("Please fill out your email and password!")
             }
         }
         return true
@@ -312,7 +311,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         message = tuple.1
         if !handledCase && scrollView.contentOffset.x > screenWidth * 2 && !valid {
             scrollView.setContentOffset(CGPointMake(2 * signUpView.frame.width, 0), animated: false)
-            self.showErrorAndSetMessage(message, size: 64)
+            self.showErrorAndSetMessage(message)
             handledCase = true
         }
         
@@ -321,7 +320,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         message = tuple.1
         if !handledCase && scrollView.contentOffset.x > screenWidth && !valid {
             scrollView.setContentOffset(CGPointMake(signUpView.frame.width, 0), animated: false)
-            self.showErrorAndSetMessage(message, size: 64)
+            self.showErrorAndSetMessage(message)
             handledCase = true
         }
         
@@ -330,7 +329,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         message = tuple.1
         if !handledCase && scrollView.contentOffset.x > 0 && !valid {
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-            self.showErrorAndSetMessage(message, size: 64)
+            self.showErrorAndSetMessage(message)
             handledCase = true
         }
         
@@ -344,9 +343,9 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         }
     }
     
-    func showErrorAndSetMessage(message: String, size: CGFloat) {
+    func showErrorAndSetMessage(message: String) {
         let error = (self.view as! SignUpView).currentErrorMessage
-        let errorView = super.showError(message, size: size, currentError: error)
+        let errorView = super.showError(message, currentError: error)
         (self.view as! SignUpView).currentErrorMessage = errorView
     }
     

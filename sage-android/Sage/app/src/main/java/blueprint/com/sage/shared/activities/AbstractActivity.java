@@ -14,13 +14,15 @@ import com.google.android.gms.location.places.Places;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
  * Created by charlesx on 10/24/15.
  * Application activity that most activities inherit from
  */
-public abstract class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractActivity extends AppCompatActivity implements BaseInterface {
 
     protected SharedPreferences mPreferences;
     protected NetworkManager mNetworkManager;
@@ -39,7 +41,10 @@ public abstract class AbstractActivity extends AppCompatActivity {
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .build();
-        // LOGOUT USER HERE IF NO CREDENTIALS
+
+        if (!NetworkUtils.isVerifiedUser(this, mPreferences))
+            NetworkUtils.logoutCurrentUser(this);
+
         setUpUser();
         setUpSchool();
     }
@@ -82,10 +87,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     public User getUser() { return mUser; }
     public void setUser(User user) { mUser = user; }
-
     public School getSchool() { return mSchool; }
-    public void setSchool(School school) { mSchool = school; }
-
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public SharedPreferences getSharedPreferences() { return mPreferences; }
     public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }

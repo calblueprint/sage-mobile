@@ -13,17 +13,17 @@ import blueprint.com.sage.R;
 /**
  * Created by charlesx on 11/18/15.
  */
-public class UserValidators {
+public class FormValidator {
 
     private Activity mActivity;
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[a-zA-Z0-9._%+-]+@berkeley\\.edu$", Pattern.CASE_INSENSITIVE);
 
-    private UserValidators(Activity activity) { mActivity = activity; }
+    private FormValidator(Activity activity) { mActivity = activity; }
 
-    public static UserValidators newInstance(Activity activity) {
-        return new UserValidators(activity);
+    public static FormValidator newInstance(Activity activity) {
+        return new FormValidator(activity);
     }
 
     public boolean hasValidEmail(EditText email) {

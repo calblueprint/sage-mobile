@@ -34,17 +34,28 @@ public class NetworkUtils {
                 Context.MODE_PRIVATE);
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
-        String userString = mapper.writeValueAsString(session.getUser());
         String schoolString = mapper.writeValueAsString(session.getSchool());
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(activity.getString(R.string.email), session.getEmail());
         editor.putString(activity.getString(R.string.auth_token), session.getAuthenticationToken());
-        editor.putString(activity.getString(R.string.user), userString);
         editor.putString(activity.getString(R.string.school), schoolString);
         editor.apply();
 
+        setUser(activity, session.getUser());
+
         loginUser(activity);
+    }
+
+    public static void setUser(Activity activity, User user) throws Exception {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
+                Context.MODE_PRIVATE);
+
+        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+        String userString = mapper.writeValueAsString(user);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(activity.getString(R.string.user), userString).apply();
     }
 
     public static void loginUser(Activity activity) throws Exception {
@@ -55,7 +66,8 @@ public class NetworkUtils {
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
         String userString = sharedPreferences.getString(activity.getString(R.string.user), "");
-        User user = mapper.readValue(userString, new TypeReference<User>() {});
+        User user = mapper.readValue(userString, new TypeReference<User>() {
+        });
 
         if (user.isVerified()) {
             intent = new Intent(activity, CheckInActivity.class);

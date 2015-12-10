@@ -13,6 +13,7 @@ class ProfileViewController: UITableViewController {
     var user: User?
     var profileView = ProfileView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var currentErrorMessage: ErrorView?
     
     init(user: User) {
         self.user = user
@@ -53,10 +54,18 @@ class ProfileViewController: UITableViewController {
             self.activityIndicator.stopAnimating()
             self.tableView.reloadData()
             }) { (errorMessage) -> Void in
-                // display error
+                self.activityIndicator.stopAnimating()
+                self.refreshControl?.endRefreshing()
+                self.showErrorAndSetMessage("Could not load announcements.")
         }
     }
-        
+    
+    func showErrorAndSetMessage(message: String) {
+        let error = self.currentErrorMessage
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
+        self.currentErrorMessage = errorView
+    }
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44.0
     }
@@ -82,7 +91,7 @@ class ProfileViewController: UITableViewController {
         } else if indexPath.section == 1 {
             cell.textLabel!.text = "Log Out"
             cell.textLabel?.textColor = UIColor.redColor()
-            cell.textLabel!.textAlignment = NSTextAlignment.Center
+            cell.textLabel!.textAlignment = .Center
         }
         return cell
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 class ProfileCheckinViewController: UITableViewController {
-    var requests: [Checkin]?
+    var checkins: [Checkin]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
@@ -41,8 +41,8 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     func loadCheckins() {
-        ProfileOperations.loadCheckinRequests({ (var checkinRequests) -> Void in
-            checkinRequests.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+        ProfileOperations.loadCheckins({ (var checkins) -> Void in
+            checkins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
                 let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
                 if comparisonResult == .OrderedDescending {
                     return true
@@ -50,7 +50,7 @@ class ProfileCheckinViewController: UITableViewController {
                     return false
                 }
             })
-            self.requests = checkinRequests
+            self.checkins = checkins
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
@@ -61,8 +61,8 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let requests = self.requests {
-            return requests.count
+        if let checkins = self.checkins {
+            return checkins.count
         } else {
             return 0
         }
@@ -73,7 +73,7 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let checkin = self.requests![indexPath.row]
+        let checkin = self.checkins![indexPath.row]
     
         var cell = self.tableView.dequeueReusableCellWithIdentifier("CheckinRequestCell")
         if cell == nil {
@@ -84,7 +84,7 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let checkin = self.requests![indexPath.row]
+        let checkin = self.checkins![indexPath.row]
         return CheckinTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
 }

@@ -13,7 +13,7 @@ class ProfileView: UIView {
     let profileContent = UIView()
     let header = UIView()
     let profileUserImg = UIImageView()
-    let profileUserImgBorder = UIImageView()
+    let profileUserImgBorder = UIView()
     let profileEditButton = UILabel()
     let userName = UILabel()
     let userVolunteerLevel = UILabel()
@@ -25,13 +25,9 @@ class ProfileView: UIView {
     let userStatusLabel = UILabel()
     let userCommitmentContainer = UIView()
     let userCommitmentLabel = UILabel()
-    let logoutButton = UITableViewCell()
-    let logoutButtonLabel = UILabel()
-    let allCheckIns = UITableViewCell()
-    let allCheckInsLabel = UILabel()
     
     // profile page constants
-    let viewHeight = CGFloat(351.1)
+    let viewHeight = CGFloat(351.5)
     let headerOffset = CGFloat(500)
     let leftMargin = CGFloat(30)
     let headerHeight = CGFloat(120)
@@ -188,37 +184,13 @@ class ProfileView: UIView {
         self.userCommitmentLabel.numberOfLines = 0
         self.userCommitmentLabel.textAlignment = NSTextAlignment.Center
         
-        // set up checkins button
-        self.allCheckIns.setY(432)
-        self.allCheckIns.fillWidth()
-        self.allCheckIns.setHeight(44.0)
-        self.allCheckIns.layer.borderColor = UIColor.borderColor.CGColor
-        self.allCheckIns.layer.borderWidth = UIConstants.dividerHeight()
-        self.allCheckIns.accessoryType = .DisclosureIndicator
-        
-        self.allCheckInsLabel.text = "All Check-Ins"
-        self.allCheckInsLabel.font = UIFont.normalFont
-        self.allCheckInsLabel.sizeToFit()
-        self.allCheckInsLabel.fillWidthWithMargin(30)
-        self.allCheckInsLabel.centerInSuperview()
-        
-        // set up logout
-        self.logoutButton.setY(475)
-        self.logoutButton.fillWidth()
-        self.logoutButton.setHeight(44.0)
-        self.logoutButton.layer.borderColor = UIColor.borderColor.CGColor
-        self.logoutButton.layer.borderWidth = UIConstants.dividerHeight()
-        
-        self.logoutButtonLabel.text = "Logout"
-        self.logoutButtonLabel.font = UIFont.normalFont
-        self.logoutButtonLabel.sizeToFit()
-        self.logoutButtonLabel.fillWidthWithMargin(30)
-        self.logoutButtonLabel.centerInSuperview()
-        
         let height = CGRectGetMaxY(self.bottomBorder.frame)
         self.profileContent.setHeight(height)
         self.setHeight(height)
     }
     
+    deinit {
+        self.profileUserImg.cancelImageRequestOperation()
+    }
     
 }

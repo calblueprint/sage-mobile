@@ -20,7 +20,7 @@ class ProfileOperations: NSObject {
         }
     }
     
-    static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
+    static func loadCheckins(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointUserCheckins(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
             var checkins = [Checkin]()

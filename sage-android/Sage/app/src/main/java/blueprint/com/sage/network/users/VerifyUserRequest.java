@@ -22,7 +22,7 @@ public class VerifyUserRequest extends BaseRequest {
     public VerifyUserRequest(final Activity activity, User user,
                            final Response.Listener<User> onSuccess,
                            final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "users", String.valueOf(user.getId()), "verify"), null,
+        super(Method.POST, makeUrl(null,"admin", "users", String.valueOf(user.getId()), "verify"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

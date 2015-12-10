@@ -53,6 +53,7 @@ class ProfileView: UIView {
         self.userStatusContainer.addSubview(self.userStatusLabel)
         self.profileContent.addSubview(self.userCommitmentContainer)
         self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
+        setupViewStyle()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -94,34 +95,58 @@ class ProfileView: UIView {
         self.userCommitmentLabel.centerInSuperview()
     }
     
+    func setupViewStyle() {
+        self.backgroundColor = UIColor.whiteColor()
+        self.header.backgroundColor = UIColor.mainColor
+        
+        self.profileEditButton.font = UIFont.normalFont
+        self.profileEditButton.textColor = UIColor.secondaryTextColor
+        
+        self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
+        self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
+        
+        self.profileUserImg.layer.cornerRadius = self.profileImageSize/2
+        self.profileUserImg.clipsToBounds = true
+        
+        self.userName.font = UIFont.getSemiboldFont(20)
+        self.userSchool.font = UIFont.normalFont
+        self.userVolunteerLevel.font = UIFont.normalFont
+        
+        self.topBorder.backgroundColor = UIColor.borderColor
+        self.bottomBorder.backgroundColor = UIColor.borderColor
+        self.centerBorder.backgroundColor = UIColor.borderColor
+        
+        self.userStatusLabel.font = UIFont.normalFont
+        self.userStatusLabel.numberOfLines = 0
+        self.userStatusLabel.textAlignment = NSTextAlignment.Center
+        
+        self.userCommitmentLabel.font = UIFont.normalFont
+        self.userCommitmentLabel.numberOfLines = 0
+        self.userCommitmentLabel.textAlignment = NSTextAlignment.Center
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.backgroundColor = UIColor.whiteColor()
         self.profileContent.fillWidth()
         
         // set up header
         self.header.setY(-500)
-        self.header.setHeight(self.headerHeight+self.headerOffset)
         self.header.fillWidth()
-        self.header.backgroundColor = UIColor.mainColor
+        self.header.setHeight(self.headerHeight+self.headerOffset)
         
         // position edit button
         self.profileEditButton.text = "Edit Profile"
-        self.profileEditButton.font = UIFont.normalFont
-        self.profileEditButton.textColor = UIColor.secondaryTextColor
         self.profileEditButton.sizeToFit()
+        self.profileEditButton.setY(self.headerHeight + 15)
         let profileEditButtonX = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.profileEditButton.frame)
         self.profileEditButton.setX(profileEditButtonX)
-        self.profileEditButton.setY(self.headerHeight + 15)
         
         // set up image
         self.profileUserImgBorder.setHeight(self.profileImageSize + self.profileImageBorder)
         self.profileUserImgBorder.setWidth(self.profileImageSize + self.profileImageBorder)
         self.profileUserImgBorder.setY(self.headerHeight/2)
         self.profileUserImgBorder.setX(self.leftMargin)
-        self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
-        self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
         
         self.profileUserImg.setHeight(self.profileImageSize)
         self.profileUserImg.setWidth(self.profileImageSize)
@@ -129,25 +154,20 @@ class ProfileView: UIView {
         let profileUserImgX = CGRectGetMinX(profileUserImgBorder.frame)
         self.profileUserImg.setY(profileUserImgY + self.profileImageBorder/2)
         self.profileUserImg.setX(profileUserImgX + self.profileImageBorder/2)
-        self.profileUserImg.layer.cornerRadius = self.profileImageSize/2
-        self.profileUserImg.clipsToBounds = true
         
         // set up basic user information
-        self.userName.font = UIFont.getSemiboldFont(20)
         self.userName.fillWidth()
         self.userName.setHeight(20)
         self.userName.setX(self.leftMargin)
         let userNameY = CGRectGetMaxY(profileUserImg.frame) + 20
         self.userName.setY(userNameY)
         
-        self.userSchool.font = UIFont.normalFont
         self.userSchool.fillWidth()
         self.userSchool.setHeight(12)
         self.userSchool.setX(self.leftMargin)
         let userSchoolY = CGRectGetMaxY(userName.frame) + 7
         self.userSchool.setY(userSchoolY)
         
-        self.userVolunteerLevel.font = UIFont.normalFont
         self.userVolunteerLevel.fillWidth()
         self.userVolunteerLevel.setHeight(12)
         self.userVolunteerLevel.setX(self.leftMargin)
@@ -157,20 +177,17 @@ class ProfileView: UIView {
         // set up lines
         self.topBorder.setHeight(UIConstants.dividerHeight())
         self.topBorder.fillWidth()
-        self.topBorder.backgroundColor = UIColor.borderColor
         self.topBorder.setX(0)
         let topBorderY = CGRectGetMaxY(userVolunteerLevel.frame) + 20
         self.topBorder.setY(topBorderY)
         
         self.bottomBorder.setHeight(UIConstants.dividerHeight())
         self.bottomBorder.fillWidth()
-        self.bottomBorder.backgroundColor = UIColor.borderColor
         self.bottomBorder.setX(0)
         self.bottomBorder.setY(topBorderY + self.boxHeight)
         
         self.centerBorder.setHeight(self.boxHeight)
         self.centerBorder.setWidth(UIConstants.dividerHeight())
-        self.centerBorder.backgroundColor = UIColor.borderColor
         let middle = CGRectGetWidth(topBorder.frame)/2
         self.centerBorder.setX(middle)
         self.centerBorder.setY(topBorderY)
@@ -181,18 +198,10 @@ class ProfileView: UIView {
         self.userStatusContainer.setHeight(self.boxHeight-1)
         self.userStatusContainer.setWidth(middle)
         
-        self.userStatusLabel.font = UIFont.normalFont
-        self.userStatusLabel.numberOfLines = 0
-        self.userStatusLabel.textAlignment = NSTextAlignment.Center
-        
         self.userCommitmentContainer.setX(middle+1)
         self.userCommitmentContainer.setY(topBorderY+1)
         self.userCommitmentContainer.setWidth(middle)
         self.userCommitmentContainer.setHeight(self.boxHeight-1)
-        
-        self.userCommitmentLabel.font = UIFont.normalFont
-        self.userCommitmentLabel.numberOfLines = 0
-        self.userCommitmentLabel.textAlignment = NSTextAlignment.Center
         
         let height = CGRectGetMaxY(self.bottomBorder.frame)
         self.profileContent.setHeight(height)

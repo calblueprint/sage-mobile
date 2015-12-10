@@ -2,6 +2,9 @@ package blueprint.com.sage.network;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -9,6 +12,11 @@ import com.android.volley.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.AnnouncementFragment;
+import blueprint.com.sage.announcements.AnnouncementsListActivity;
+import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
+import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.events.checkIns.CheckInEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
@@ -26,10 +34,14 @@ import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
+import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.announcements.AnnouncementRequest;
+import blueprint.com.sage.network.announcements.AnnouncementsListRequest;
+import blueprint.com.sage.network.announcements.CreateAnnouncementRequest;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
@@ -47,6 +59,8 @@ import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
+import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -370,6 +384,103 @@ public class Requests {
                     });
 
             Requests.addToRequestQueue(mActivity, request);
+        }
+    }
+
+    public static class Announcements {
+        private FragmentActivity mActivity;
+
+        public Announcements(FragmentActivity activity) {
+            mActivity = activity;
+        }
+
+        public static Announcements with(FragmentActivity activity) {
+            return new Announcements(activity);
+        }
+
+        public void makeListRequest() {
+            AnnouncementsListRequest announcementsRequest = new AnnouncementsListRequest(mActivity, null, new Response.Listener<ArrayList<Announcement>>() {
+                @Override
+                public void onResponse(ArrayList<Announcement> announcementsArrayList) {
+                    AnnouncementsListActivity activity = (AnnouncementsListActivity) mActivity;
+                    EventBus.getDefault().post(new AnnouncementsListEvent(announcementsArrayList));
+                }
+            }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+                }
+            });
+            Requests.addToRequestQueue(mActivity, announcementsRequest);
+        }
+
+        public void makeShowRequest(Announcement announcement) {
+            AnnouncementRequest request = new AnnouncementRequest(mActivity, announcement.getId(),
+                    new Response.Listener<Announcement>() {
+                        @Override
+                        public void onResponse(Announcement announcement) {
+                            FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(announcement), mActivity);
+//                            EventBus.getDefault().post(new SchoolEvent(school));
+                        }
+                    }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError error) {
+
+                }
+            });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeCreateRequest(Announcement announcement) {
+            CreateAnnouncementRequest request = new CreateAnnouncementRequest(mActivity, announcement,
+                    new Response.Listener<Announcement>() {
+                        @Override
+                        public void onResponse(Announcement announcement) {
+                            EventBus.getDefault().post(new CreateAnnouncementEvent(announcement));
+                        }
+                    }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError error) {
+
+                }
+            });
+            Requests.addToRequestQueue(mActivity, request);
+        }
+    }
+
+    public static class SignIn {
+        private FragmentActivity mActivity;
+
+        public SignIn(FragmentActivity activity) {
+            mActivity = activity;
+        }
+
+        public static SignIn with(FragmentActivity activity) {
+            return new SignIn(activity);
+        }
+
+        public void makeSignInRequest(HashMap<String, String> params) {
+            SignInRequest loginRequest = new SignInRequest(mActivity, params, new Response.Listener<Session>() {
+                @Override
+                public void onResponse(Session session) {
+                    loginUser(session);
+                }
+            }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+
+                }
+            });
+            Requests.addToRequestQueue(mActivity, loginRequest);
+        }
+
+        private void loginUser(Session session) {
+            try {
+                NetworkUtils.loginUser(session, mActivity);
+            } catch(Exception e) {
+                Log.e(getClass().toString(), e.toString());
+                Toast.makeText(mActivity, "Something went wrong, try again!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

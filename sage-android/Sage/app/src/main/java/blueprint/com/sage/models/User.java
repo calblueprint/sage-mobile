@@ -61,7 +61,6 @@ public @Data class User {
             if (volunteerType.equals(VOLUNTEER_TYPES[i]))
                 hours = i + 1;
         }
-
         return String.format("%d hrs/week", hours);
     }
 

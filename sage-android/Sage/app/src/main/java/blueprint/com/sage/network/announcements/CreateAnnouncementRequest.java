@@ -15,7 +15,6 @@ import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Announcement;
-import blueprint.com.sage.models.Session;
 import blueprint.com.sage.network.BaseRequest;
 
 /**
@@ -24,17 +23,17 @@ import blueprint.com.sage.network.BaseRequest;
 public class CreateAnnouncementRequest extends BaseRequest {
 
     public CreateAnnouncementRequest(final Activity activity, Announcement announcement,
-                                    final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
+                                    final Response.Listener<Announcement> listener, final Response.Listener<APIError> errorListener) {
         super(Request.Method.POST, makeUrl(null, "announcements"), createAnnouncementParams(announcement),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
-                            String sessionString = jsonObject.get("string").toString();
+                            String string = jsonObject.get("string").toString();
                             ObjectMapper mapper = getNetworkManager(activity.getApplicationContext()).getObjectMapper();
-                            Session session = mapper.readValue(sessionString, new TypeReference<Session>() {
+                            Announcement announcement = mapper.readValue(string, new TypeReference<Announcement>() {
                             });
-                            listener.onResponse(session);
+                            listener.onResponse(announcement);
                         } catch (Exception e) {
                             Log.e(getClass().toString(), e.toString());
                         }

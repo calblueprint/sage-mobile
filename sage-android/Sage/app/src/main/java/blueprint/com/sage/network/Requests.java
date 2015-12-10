@@ -16,6 +16,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.AnnouncementFragment;
 import blueprint.com.sage.announcements.AnnouncementsListActivity;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
+import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
@@ -35,6 +36,7 @@ import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.announcements.AnnouncementRequest;
 import blueprint.com.sage.network.announcements.AnnouncementsListRequest;
+import blueprint.com.sage.network.announcements.CreateAnnouncementRequest;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
@@ -329,6 +331,22 @@ public class Requests {
                 }
             });
 
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeCreateRequest(Announcement announcement) {
+            CreateAnnouncementRequest request = new CreateAnnouncementRequest(mActivity, announcement,
+                    new Response.Listener<Announcement>() {
+                        @Override
+                        public void onResponse(Announcement announcement) {
+                            EventBus.getDefault().post(new CreateAnnouncementEvent(announcement));
+                        }
+                    }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError error) {
+
+                }
+            });
             Requests.addToRequestQueue(mActivity, request);
         }
     }

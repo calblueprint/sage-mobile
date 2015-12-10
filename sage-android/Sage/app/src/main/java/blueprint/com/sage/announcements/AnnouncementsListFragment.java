@@ -1,6 +1,7 @@
 package blueprint.com.sage.announcements;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +17,10 @@ import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -31,6 +34,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Bind(R.id.announcements_recycler) RecycleViewEmpty announcementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;
+    @Bind(R.id.add_announcement_fab) FloatingActionButton addAnnouncementButton;
 
     public static AnnouncementsListFragment newInstance() {
         return new AnnouncementsListFragment();
@@ -79,11 +83,15 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         adapter.notifyDataSetChanged();
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
-        //set adapter, adapter.notifydatasetchanged, pass in arraylist to adapter
     }
 
     @Override
     public void onRefresh() {
         Requests.Announcements.with(getActivity()).makeListRequest();
+    }
+
+    @OnClick(R.id.add_announcement_fab)
+    public void newAnnouncement() {
+        FragUtils.replaceBackStack(R.id.container, CreateAnnouncementFragment.newInstance(), getActivity());
     }
 }

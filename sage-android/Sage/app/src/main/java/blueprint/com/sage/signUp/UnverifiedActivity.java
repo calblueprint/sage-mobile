@@ -14,6 +14,7 @@ import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -64,6 +65,10 @@ public class UnverifiedActivity extends AbstractActivity implements SwipeRefresh
 
     @Override
     public void onRefresh() { Requests.Users.with(this).makeShowRequest(mUser); }
+
+
+    @OnClick(R.id.unverified_log_out)
+    public void onLogOut() { NetworkUtils.logoutCurrentUser(this); }
 
     public void onEvent(UserEvent event) {
         mRefreshLayout.setRefreshing(false);

@@ -172,7 +172,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
         textView.setText(DateUtils.getFormattedDate(dateTime));
     }
 
-
     @OnClick(R.id.check_in_request_cancel_button)
     public void onDeleteClick(Button button) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())

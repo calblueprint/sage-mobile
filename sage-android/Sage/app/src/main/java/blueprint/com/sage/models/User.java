@@ -52,8 +52,10 @@ public @Data class User {
 
     public User() {}
 
+    @JsonIgnore
     public String getName() { return String.format("%s %s", firstName, lastName); }
 
+    @JsonIgnore
     public String getHoursString() {
         return String.format("%d hrs/week", volunteerType + 1);
     }

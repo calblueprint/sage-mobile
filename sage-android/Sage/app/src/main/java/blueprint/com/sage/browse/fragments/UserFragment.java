@@ -147,10 +147,10 @@ public class UserFragment extends Fragment implements PromoteInterface {
         mUser.loadUserImage(getActivity(), mPhoto);
         mName.setText(mUser.getName());
 
-        mVolunteer.setText(mUser.getVolunteerTypeString());
+        mVolunteer.setText(User.VOLUNTEER_SPINNER[mUser.getVolunteerType()]);
         mTotalHours.setText(mUser.getTimeString());
         mTotalSemester.setText(String.valueOf(60));
-        mTotalWeek.setText(String.valueOf(mUser.getVolunteerTypeInt() + 1));
+        mTotalWeek.setText(String.valueOf(mUser.getVolunteerType() + 1));
 
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());

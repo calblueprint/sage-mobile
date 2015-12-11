@@ -60,6 +60,7 @@ public @Data class User {
         return String.format("%d hrs/week", volunteerType + 1);
     }
 
+    @JsonIgnore
     public String getTimeString() {
         return String.valueOf(getTotalTime() / 60);
     }

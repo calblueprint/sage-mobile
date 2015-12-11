@@ -63,7 +63,7 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     }
 
     public void setUserFields() {
-        User user = getParentActivity().getUser();[]
+        User user = getParentActivity().getUser();
         user.setEmail(mEmail.getText().toString());
         user.setPassword(mPassword.getText().toString());
         user.setPasswordConfirmation(mConfirmation.getText().toString());

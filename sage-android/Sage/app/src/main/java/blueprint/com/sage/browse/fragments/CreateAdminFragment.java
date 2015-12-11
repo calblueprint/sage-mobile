@@ -37,12 +37,12 @@ public class CreateAdminFragment extends UserFormAbstractFragment {
         mUser.setEmail(mEmail.getText().toString());
         mUser.setPassword(mPassword.getText().toString());
         mUser.setPasswordConfirmation(mPassword.getText().toString());
+        mUser.setVerified(true);
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
         Bitmap profile = mPhoto.getImageBitmap();
 
         mUser.setRole(mRole.getSelectedItemPosition());
-
         mUser.setVolunteerType(mType.getSelectedItemPosition());
 
         mUser.setSchoolId(schoolId);

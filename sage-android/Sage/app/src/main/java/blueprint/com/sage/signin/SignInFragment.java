@@ -3,26 +3,18 @@ package blueprint.com.sage.signIn;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Response;
 
 import java.util.HashMap;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.models.APIError;
-import blueprint.com.sage.models.Session;
-import blueprint.com.sage.network.SignInRequest;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.signUp.SignUpActivity;
-import blueprint.com.sage.utility.network.NetworkManager;
-import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,29 +68,7 @@ public class SignInFragment extends Fragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
-
-        NetworkManager networkManager = NetworkManager.getInstance(getActivity());
-        SignInRequest loginRequest = new SignInRequest(getActivity(), params, new Response.Listener<Session>() {
-            @Override
-            public void onResponse(Session session) {
-                loginUser(session);
-            }
-        }, new Response.Listener<APIError>() {
-            @Override
-            public void onResponse(APIError apiError) {
-
-            }
-        });
-        networkManager.getRequestQueue().add(loginRequest);
-    }
-
-    private void loginUser(Session session) {
-        try {
-            NetworkUtils.loginUser(session, getActivity());
-        } catch(Exception e) {
-            Log.e(getClass().toString(), e.toString());
-            Toast.makeText(getActivity(), "Something went wrong, try again!", Toast.LENGTH_SHORT).show();
-        }
+        Requests.SignIn.with(getActivity()).makeSignInRequest(params);
     }
 
     @OnClick(R.id.sign_in_sign_up)

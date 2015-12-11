@@ -14,6 +14,25 @@ class SchoolDetailViewController: UITableViewController {
     private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     private var school: School?
     
+    
+    // MARK: - Initialization
+    //
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    //
+    // MARK: - Configuration
+    //
     func configureWithSchool(school: School) {
         self.title = school.name!
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
@@ -57,6 +76,20 @@ class SchoolDetailViewController: UITableViewController {
         self.navigationController?.pushViewController(editSchoolController, animated: true)
     }
     
+    //
+    // MARK: - Notifications
+    //
+    func schoolEdited(notification: NSNotification) {
+        let newSchool = notification.object!.copy() as! School
+        if newSchool.id == self.school!.id {
+            self.school = newSchool
+            self.configureWithCompleteSchool(newSchool)
+        }
+    }
+    
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let school = self.school {
             if section == 0 {

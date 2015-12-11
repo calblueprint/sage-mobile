@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.AnnouncementsListActivity;
 import blueprint.com.sage.browse.BrowseActivity;
 import blueprint.com.sage.browse.fragments.UserFragment;
 import blueprint.com.sage.checkIn.CheckInActivity;
@@ -113,14 +114,15 @@ public class NavigationAbstractActivity extends AbstractActivity
             case R.id.check_in:
                 startCheckInActivity();
             case R.id.announcements:
+                startAnnouncementsActivity();
                 Log.e("Selected announcements", "yay");
                 break;
             case R.id.log_out:
                 Log.e("Logging out", "yay");
                 NetworkUtils.logoutCurrentUser(this);
                 break;
-            case R.id.schools:
-                startSchoolsActivity();
+            case R.id.browse:
+                startBrowseActivity();
                 break;
             case R.id.requests:
                 startRequestsActivity();
@@ -169,7 +171,7 @@ public class NavigationAbstractActivity extends AbstractActivity
         startActivity(CheckInActivity.class);
     }
 
-    private void startSchoolsActivity() {
+    private void startBrowseActivity() {
         if (this instanceof BrowseActivity) return;
         startActivity(BrowseActivity.class);
     }
@@ -188,5 +190,11 @@ public class NavigationAbstractActivity extends AbstractActivity
         startActivity(intent);
 
         overridePendingTransition(0, 0);
+    }
+
+    private void startAnnouncementsActivity() {
+        Intent intent = new Intent(this, AnnouncementsListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

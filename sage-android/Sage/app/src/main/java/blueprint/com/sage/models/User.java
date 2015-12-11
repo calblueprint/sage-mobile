@@ -29,7 +29,7 @@ public @Data class User {
     private int directorId;
     private String role;
     private String volunteerType;
-    private int totalHours;
+    private int totalTime;
     private String password;
     private String currentPassword;
     private String confirmPassword;
@@ -53,24 +53,20 @@ public @Data class User {
 
     public User() {}
 
-    @JsonIgnore
     public String getName() { return String.format("%s %s", firstName, lastName); }
 
-    @JsonIgnore
     public String getHoursString() {
         int hours = 0;
         for (int i = 0; i < VOLUNTEER_TYPES.length; i++) {
             if (volunteerType.equals(VOLUNTEER_TYPES[i]))
                 hours = i + 1;
         }
-
         return String.format("%d hrs/week", hours);
     }
 
     /**
      * Gets integer of volunteer type
      */
-    @JsonIgnore
     public int getVolunteerTypeInt() {
         for (int i = 0; i < VOLUNTEER_TYPES.length; i++)
             if (volunteerType.equals(VOLUNTEER_TYPES[i]))
@@ -78,17 +74,27 @@ public @Data class User {
         return 0;
     }
 
-    @JsonIgnore
+    public String getVolunteerTypeString() {
+        switch (getVolunteerType()) {
+            case "volunteer":
+                return "Volunteer";
+            case "one_unit":
+                return "One Unit Volunteer";
+            case "two_units":
+                return "Two Unit Volunteer";
+            default:
+                return "Volunteer";
+        }
+    }
+
     public void setVolunteerTypeInt(int type) {
         volunteerType = VOLUNTEER_TYPES[type];
     }
 
-    @JsonIgnore
     public void setRoleInt(int type) {
         role = ROLES[type];
     }
 
-    @JsonIgnore
     public int getRoleInt() {
         for (int i = 0; i < ROLES.length; i++)
             if (role.equals(ROLES[i]))
@@ -96,12 +102,15 @@ public @Data class User {
         return 0;
     }
 
-    @JsonIgnore
     public String getRoleString() {
         for (int i = 0; i < ROLES.length; i++)
             if (role.equals(ROLES[i]))
                 return ROLE_SPINNER[i];
         return "Student";
+    }
+
+    public String getTimeString() {
+        return String.valueOf(getTotalTime() / 60);
     }
 
     /**

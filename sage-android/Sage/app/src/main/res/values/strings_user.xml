@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- User form -->
     <string name="user_name">Name</string>
     <string name="user_email">Email</string>
     <string name="user_school">School</string>
@@ -16,4 +17,11 @@
         <item>Student</item>
         <item>Admin</item>
     </string-array>
+
+
+    <!-- Profile -->
+    <string name="user_zero">0</string>
+    <string name="user_slash">/</string>
+    <string name="user_hours">hours</string>
+    <string name="user_hours_week">hours/week</string>
 </resources>

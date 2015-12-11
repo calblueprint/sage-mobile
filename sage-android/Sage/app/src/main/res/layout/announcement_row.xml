@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--android:paddingLeft="8dp"-->
+    <!--android:paddingRight="8dp"-->
+    <!--android:background="@color/divider_gray">-->
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/announcement_row"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="0dp">
+        <!--card_view:cardUseCompatPadding="true"-->
+        <!--card_view:cardElevation="4dp"-->
+        <!--card_view:cardCornerRadius="3dp">-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <blueprint.com.sage.shared.views.CircleImageView
+                android:id="@+id/announcement_profile_picture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/white_circle"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/announcement_user"
+                style="@style/AnnouncementRow"
+                android:layout_marginTop="10dp"
+                android:text="User Name"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/announcement_time"
+                style="@style/AnnouncementRow"
+                android:textColor="@color/date_gray"
+                android:text="2 days ago"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/announcement_user"/>
+
+            <TextView
+                android:id="@+id/announcement_title"
+                style="@style/AnnouncementRow"
+                android:text="Title"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:layout_below="@id/announcement_time"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/announcement_body"
+                style="@style/AnnouncementRow"
+                android:text="The actual announcement."
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:layout_below="@id/announcement_title"
+                android:maxLines="6"
+                android:ellipsize="end" />
+
+            <View
+                android:id="@+id/announcement_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_gray"
+                android:layout_below="@id/announcement_body"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

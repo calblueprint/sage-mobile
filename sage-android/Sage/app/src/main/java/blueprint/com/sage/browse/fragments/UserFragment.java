@@ -26,6 +26,7 @@ import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.interfaces.PromoteInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -39,7 +40,12 @@ public class UserFragment extends Fragment implements PromoteInterface {
     @Bind(R.id.user_layout) View mLayout;
     @Bind(R.id.user_name) TextView mName;
     @Bind(R.id.user_school) TextView mSchool;
-    @Bind(R.id.user_total_hours) TextView mHours;
+    @Bind(R.id.user_volunteer) TextView mVolunteer;
+
+    @Bind(R.id.user_total_time) TextView mTotalHours;
+    @Bind(R.id.user_total_semester) TextView mTotalSemester;
+    @Bind(R.id.user_hours_week) TextView mTotalWeek;
+
     @Bind(R.id.user_photo) CircleImageView mPhoto;
 
     private User mUser;
@@ -73,6 +79,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
         View view = inflater.inflate(R.layout.fragment_user, parent, false);
         ButterKnife.bind(this, view);
         initializeViews();
+        initializeUser();
         return view;
     }
 
@@ -80,12 +87,19 @@ public class UserFragment extends Fragment implements PromoteInterface {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        ViewUtils.setToolBarElevation(getActivity(), 0);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ViewUtils.setToolBarElevation(getActivity(), 8);
     }
 
     @Override
@@ -125,15 +139,21 @@ public class UserFragment extends Fragment implements PromoteInterface {
     }
 
     private void initializeViews() {
-        mName.setText(mUser.getName());
-        mHours.setText(String.valueOf(mUser.getTotalHours()));
+        mNavigationInterface.toggleDrawerUse(false);
+        getActivity().setTitle("Profile");
+    }
+
+    private void initializeUser() {
         mUser.loadUserImage(getActivity(), mPhoto);
+        mName.setText(mUser.getName());
+
+        mVolunteer.setText(mUser.getVolunteerTypeString());
+        mTotalHours.setText(mUser.getTimeString());
+        mTotalSemester.setText(String.valueOf(60));
+        mTotalWeek.setText(String.valueOf(mUser.getVolunteerTypeInt() + 1));
 
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());
-
-        mNavigationInterface.toggleDrawerUse(false);
-        getActivity().setTitle("Profile");
     }
 
     private void openPromoteDialog() {
@@ -144,12 +164,12 @@ public class UserFragment extends Fragment implements PromoteInterface {
 
     public void onEvent(UserEvent event) {
         mUser = event.getUser();
-        initializeViews();
+        initializeUser();
     }
 
     public void onEvent(EditUserEvent event) {
         mUser = event.getUser();
-        initializeViews();
+        initializeUser();
     }
 
     public void onEvent(PromoteUserEvent event) {

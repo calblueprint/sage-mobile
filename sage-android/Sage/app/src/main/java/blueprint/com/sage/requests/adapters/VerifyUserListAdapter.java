@@ -52,6 +52,7 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position = mUsers.indexOf(user);
                 Requests.Users.with(mActivity).makeVerifyRequest(user, position);
             }
         });
@@ -59,6 +60,7 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
         viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position = mUsers.indexOf(user);
                 Requests.Users.with(mActivity).makeDeleteRequest(user, position);
             }
         });

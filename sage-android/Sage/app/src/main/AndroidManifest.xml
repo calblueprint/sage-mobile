@@ -41,7 +41,7 @@
 
         <activity
             android:name=".checkIn.CheckInActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".browse.BrowseActivity"
@@ -50,6 +50,14 @@
         <activity
             android:name=".requests.RequestsActivity"
             android:launchMode="singleTop" />
+
+        <activity
+            android:name=".announcements.AnnouncementsListActivity"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".announcements.AnnouncementsListActivity"
+            android:launchMode="singleTop"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

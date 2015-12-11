@@ -53,7 +53,7 @@ class ProfileView: UIView {
         self.userStatusContainer.addSubview(self.userStatusLabel)
         self.profileContent.addSubview(self.userCommitmentContainer)
         self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
-        setupViewStyle()
+        setupSubviews()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -92,7 +92,7 @@ class ProfileView: UIView {
         layoutSubviews()
     }
     
-    func setupViewStyle() {
+    func setupSubviews() {
         self.backgroundColor = UIColor.whiteColor()
         self.header.backgroundColor = UIColor.mainColor
         

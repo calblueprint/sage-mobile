@@ -144,7 +144,6 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
         }
     }
 
-
     private void initializeSpinners() {
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),
                 mSchools,
@@ -152,14 +151,16 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
         mSchool.setAdapter(mSchoolAdapter);
 
         mTypeAdapter = new TypeSpinnerAdapter(getActivity(),
-                getResources().getStringArray(R.array.volunteer_types),
-                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+                                              User.VOLUNTEER_SPINNER,
+                                              R.layout.simple_spinner_item,
+                                              R.layout.simple_spinner_item);
 
         mType.setAdapter(mTypeAdapter);
 
         mRoleAdapter = new RoleSpinnerAdapter(getActivity(),
-                getResources().getStringArray(R.array.role_types),
-                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+                                              User.ROLE_SPINNER,
+                                              R.layout.simple_spinner_item,
+                                              R.layout.simple_spinner_item);
 
         mRole.setAdapter(mRoleAdapter);
     }

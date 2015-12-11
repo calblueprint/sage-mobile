@@ -176,18 +176,8 @@ public class UserFragment extends Fragment implements PromoteInterface {
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 
-    public void selectedRole(String selection) {
-        String role = "student";
-        switch (selection) {
-            case "Admin":
-                role = "admin";
-                break;
-            case "Student":
-                role = "student";
-                break;
-        }
-        mUser.setRole(role);
-
+    public void selectedRole(int selection) {
+        mUser.setRole(selection);
         Requests.Users.with(getActivity()).makePromoteRequest(mUser);
     }
 
@@ -215,7 +205,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            mPromoteInterface.selectedRole(roles[i]);
+                            mPromoteInterface.selectedRole(i);
                             dialogInterface.dismiss();
                         }
                     });

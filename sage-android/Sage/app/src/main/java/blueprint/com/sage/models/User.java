@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.ByteArrayOutputStream;
 
@@ -27,26 +28,24 @@ public @Data class User {
     private String lastName;
     private int schoolId;
     private int directorId;
-    private String role;
-    private String volunteerType;
+    private int role;
+    private int volunteerType;
     private int totalTime;
     private String password;
     private String currentPassword;
-    private String confirmPassword;
+    private String passwordConfirmation;
     private String imageUrl;
     private boolean active;
 
+    @JsonIgnore
+    private int schoolSelected = -1;
     private School school;
-
-    // Used for Sign Ups
-    private int schoolPosition = -1;
-    private int typePosition = -1;
 
     @JsonIgnore
     private Bitmap profile;
 
-    public final static String[] VOLUNTEER_TYPES = { "volunteer", "one_unit", "two_units" };
-    public final static String[] ROLES = { "student", "admin" };
+    public final static int STUDENT = 0;
+    public final static int ADMIN = 1;
 
     public final static String[] VOLUNTEER_SPINNER = { "Volunteer", "One Unit", "Two Units" };
     public final static String[] ROLE_SPINNER = { "Student", "Admin" };
@@ -56,57 +55,7 @@ public @Data class User {
     public String getName() { return String.format("%s %s", firstName, lastName); }
 
     public String getHoursString() {
-        int hours = 0;
-        for (int i = 0; i < VOLUNTEER_TYPES.length; i++) {
-            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
-                hours = i + 1;
-        }
-        return String.format("%d hrs/week", hours);
-    }
-
-    /**
-     * Gets integer of volunteer type
-     */
-    public int getVolunteerTypeInt() {
-        for (int i = 0; i < VOLUNTEER_TYPES.length; i++)
-            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
-                return i;
-        return 0;
-    }
-
-    public String getVolunteerTypeString() {
-        switch (getVolunteerType()) {
-            case "volunteer":
-                return "Volunteer";
-            case "one_unit":
-                return "One Unit Volunteer";
-            case "two_units":
-                return "Two Unit Volunteer";
-            default:
-                return "Volunteer";
-        }
-    }
-
-    public void setVolunteerTypeInt(int type) {
-        volunteerType = VOLUNTEER_TYPES[type];
-    }
-
-    public void setRoleInt(int type) {
-        role = ROLES[type];
-    }
-
-    public int getRoleInt() {
-        for (int i = 0; i < ROLES.length; i++)
-            if (role.equals(ROLES[i]))
-                return i;
-        return 0;
-    }
-
-    public String getRoleString() {
-        for (int i = 0; i < ROLES.length; i++)
-            if (role.equals(ROLES[i]))
-                return ROLE_SPINNER[i];
-        return "Student";
+        return String.format("%d hrs/week", volunteerType + 1);
     }
 
     public String getTimeString() {
@@ -117,7 +66,7 @@ public @Data class User {
      * Compresses Profile Picture into a string
      * @return
      */
-    @JsonIgnore
+    @JsonProperty("data")
     public String getProfileData() {
         if (profile == null) return null;
 
@@ -137,7 +86,6 @@ public @Data class User {
         }
     }
 
-    public boolean isAdmin() {
-        return role.equals(ROLES[1]);
-    }
+    @JsonIgnore
+    public boolean isAdmin() { return role == ADMIN; }
 }

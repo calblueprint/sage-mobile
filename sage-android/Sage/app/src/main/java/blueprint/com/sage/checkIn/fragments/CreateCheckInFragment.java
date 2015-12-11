@@ -120,7 +120,8 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
 
     private void initializeViews() {
         if (!mCheckInInterface.hasPreviousRequest()) {
-            getActivity().setTitle("Finish Checkin");
+            mNavigationInterface.toggleDrawerUse(false);
+            getActivity().setTitle("Create Checkin");
             return;
         }
 
@@ -137,7 +138,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
         mTotalTime.setText(DateUtils.timeDiff(startDate, endDate));
 
         mNavigationInterface.toggleDrawerUse(false);
-        getActivity().setTitle("Create Checkin");
+        getActivity().setTitle("Finish Checkin");
     }
 
     @OnClick({ R.id.check_in_request_start_field, R.id.check_in_request_end_field})

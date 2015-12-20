@@ -7,7 +7,6 @@ import android.widget.ImageView;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.ByteArrayOutputStream;
 
@@ -39,6 +38,8 @@ public @Data class User {
 
     @JsonIgnore
     private int schoolSelected = -1;
+
+    @JsonIgnore
     private School school;
 
     @JsonIgnore
@@ -69,8 +70,7 @@ public @Data class User {
      * Compresses Profile Picture into a string
      * @return
      */
-    @JsonProperty("data")
-    public String getProfileData() {
+    public String getData() {
         if (profile == null) return null;
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

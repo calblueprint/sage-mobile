@@ -42,7 +42,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
         mUser.setFirstName(mFirstName.getText().toString());
         mUser.setLastName(mLastName.getText().toString());
         mUser.setEmail(mEmail.getText().toString());
-        mUser.setPasswordConfirmation(mCurrentPassword.getText().toString());
+        mUser.setCurrentPassword(mCurrentPassword.getText().toString());
 
         if (!mPassword.getText().toString().isEmpty()) {
             mUser.setPassword(mPassword.getText().toString());

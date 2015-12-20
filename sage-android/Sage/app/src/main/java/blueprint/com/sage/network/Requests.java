@@ -25,6 +25,7 @@ import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.events.sessions.SignInEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
@@ -463,7 +464,7 @@ public class Requests {
             SignInRequest loginRequest = new SignInRequest(mActivity, params, new Response.Listener<Session>() {
                 @Override
                 public void onResponse(Session session) {
-                    loginUser(session);
+                    EventBus.getDefault().post(new SignInEvent(session));
                 }
             }, new Response.Listener<APIError>() {
                 @Override
@@ -472,15 +473,6 @@ public class Requests {
                 }
             });
             Requests.addToRequestQueue(mActivity, loginRequest);
-        }
-
-        private void loginUser(Session session) {
-            try {
-                NetworkUtils.loginUser(session, mActivity);
-            } catch(Exception e) {
-                Log.e(getClass().toString(), e.toString());
-                Toast.makeText(mActivity, "Something went wrong, try again!", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 }

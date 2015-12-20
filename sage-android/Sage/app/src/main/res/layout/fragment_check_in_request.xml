@@ -86,7 +86,7 @@
             <TextView
                 style="@style/CheckInRequestText"
                 android:id="@+id/check_in_request_end_field"
-                android:hint="@string/check_in_default_date"/>
+                android:hint="@string/check_in_default_time"/>
 
         </LinearLayout>
     </RelativeLayout>

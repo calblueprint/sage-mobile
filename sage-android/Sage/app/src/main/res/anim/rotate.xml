@@ -5,4 +5,6 @@
     android:toDegrees="360"
     android:pivotX="50%"
     android:pivotY="50%"
-    android:repeatCount="infinite" />
+    android:duration="500"
+    android:repeatCount="infinite"
+    android:interpolator="@android:anim/linear_interpolator" />

@@ -15,9 +15,8 @@
     </declare-styleable>
 
     <declare-styleable name="SimpleLoadingLayout">
-        <attr name="android:textColor" />
-        <attr name="android:text" />
+        <attr name="textColor" format="color" />
+        <attr name="text" format="string" />
         <attr name="android:textSize" />
-        <attr name="android:src" />
     </declare-styleable>
 </resources>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/berkeleybackgroundblurred"
     android:orientation="vertical"
     android:gravity="center">
@@ -28,14 +29,14 @@
         style="@style/LandingField"
         android:id="@+id/sign_in_password"
         android:hint="@string/sign_in_password"
-        android:inputType="textPassword"
-        />
+        android:inputType="textPassword" />
 
     <blueprint.com.sage.shared.views.SimpleLoadingLayout
-        style="@style/LandingButton"
+        style="@style/LandingDefaultButton"
         android:id="@+id/sign_in_button"
-        android:text="@string/log_in_button"
-        android:src="@drawable/spin"/>
+        android:textSize="14sp"
+        app:text="@string/log_in_button"
+        app:textColor="@color/white" />
 
     <LinearLayout
         android:layout_width="wrap_content"

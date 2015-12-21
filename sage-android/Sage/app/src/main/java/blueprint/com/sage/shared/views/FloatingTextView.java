@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.utility.view.ViewUtils;
 
 /**
  * Created by charlesx on 11/3/15.

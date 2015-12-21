@@ -1,13 +1,14 @@
 package blueprint.com.sage.shared.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
+import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -21,8 +22,8 @@ import blueprint.com.sage.utility.view.ViewUtils;
  * Created by charlesx on 12/20/15.
  * A simple button that shows a loading spin after being clicked
  */
-public class SimpleLoadingLayout extends LinearLayout implements View.OnClickListener {
-    private static final int DEFAULT_SPIN_TIME = 1000;
+public class SimpleLoadingLayout extends LinearLayout {
+    private static final int DEFAULT_SPIN_TIME = 500;
     // Add this as a xml attribute later;
     private static final int TEXT_SIZE_DP = 14;
 
@@ -44,38 +45,33 @@ public class SimpleLoadingLayout extends LinearLayout implements View.OnClickLis
     }
 
     public SimpleLoadingLayout(Context context, AttributeSet attrSet) {
-        this(context, attrSet, 0);
+        super(context, attrSet);
         initializeView(context, attrSet);
     }
 
-    public SimpleLoadingLayout(Context context, AttributeSet attrSet, int defAttrStyle) {
-        super(context, attrSet, defAttrStyle);
-        initializeView(context, attrSet);
-    }
-
+    @TargetApi(23)
     private void initializeView(Context context, AttributeSet attrSet) {
         setGravity(Gravity.CENTER);
 
         TypedArray attributes =
-                context.getTheme().obtainStyledAttributes(attrSet, R.styleable.FloatingTextView, 0, 0);
+                context.getTheme().obtainStyledAttributes(attrSet, R.styleable.SimpleLoadingLayout, 0, 0);
 
-        mTextColor = attributes.getColor(R.styleable.SimpleLoadingLayout_android_textColor, Color.BLACK);
+        mTextColor = attributes.getColor(R.styleable.SimpleLoadingLayout_textColor, Color.BLACK);
         mTextSize = attributes.getDimensionPixelSize(R.styleable.SimpleLoadingLayout_android_textSize, TEXT_SIZE_DP);
-        mText = attributes.getString(R.styleable.SimpleLoadingLayout_android_text);
+        mText = attributes.getString(R.styleable.SimpleLoadingLayout_text);
 
         mIsLoading = false;
-        mLoadingImage = context.getResources().getDrawable(R.drawable.spin, context.getTheme());
+
+        mLoadingImage = context.getResources().getDrawable(R.drawable.spinner, context.getTheme());
 
         attributes.recycle();
 
         mAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
-        mAnimation.setDuration(1000);
 
         setButton();
         setImageView();
 
         addView(mButton);
-        addView(mImageView);
     }
 
     private void setButton() {
@@ -85,9 +81,11 @@ public class SimpleLoadingLayout extends LinearLayout implements View.OnClickLis
                     LinearLayout.LayoutParams.WRAP_CONTENT);
 
         mButton.setText(mText);
-        mButton.setTextSize(mTextSize);
+        mButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
         mButton.setTextColor(mTextColor);
         mButton.setAllCaps(false);
+        mButton.setClickable(false);
+
         mButton.setBackgroundColor(getResources().getColor(R.color.transparent, getContext().getTheme()));
         mButton.setLayoutParams(params);
     }
@@ -103,32 +101,24 @@ public class SimpleLoadingLayout extends LinearLayout implements View.OnClickLis
         mImageView.setLayoutParams(params);
     }
 
-    @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (isSpinning()) {
-            toggleView(true, mImageView);
-            toggleView(false, mButton);
-            showAnimation(true);
-        } else {
-            toggleView(false, mImageView);
-            toggleView(true, mButton);
-            showAnimation(false);
-        }
-    }
-
-    private void toggleView(boolean shouldShow, View view) {
-        int visibility = shouldShow ? View.VISIBLE : View.GONE;
-        view.setVisibility(visibility);
-    }
-
     public void startSpinning() {
         mIsLoading = true;
+
+        removeAllViews();
+        addView(mImageView);
+        mImageView.startAnimation(mAnimation);
+        setEnabled(false);
+
         invalidate();
     }
 
     public void stopSpinning() {
         mIsLoading = false;
+
+        removeAllViews();
+        addView(mButton);
+        setEnabled(true);
+        
         invalidate();
     }
 
@@ -136,17 +126,14 @@ public class SimpleLoadingLayout extends LinearLayout implements View.OnClickLis
         return mIsLoading;
     }
 
-    private void showAnimation(boolean shouldSpin) {
-        if (shouldSpin) {
-            mImageView.startAnimation(mAnimation);
-        } else {
-            mImageView.clearAnimation();
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (!isSpinning()) {
+                startSpinning();
+            }
         }
+        return super.onTouchEvent(event);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (isSpinning()) return;
-        startSpinning();
-    }
 }

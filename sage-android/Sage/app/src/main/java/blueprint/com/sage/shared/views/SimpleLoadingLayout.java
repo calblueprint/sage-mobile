@@ -1,10 +1,10 @@
 package blueprint.com.sage.shared.views;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -49,7 +49,6 @@ public class SimpleLoadingLayout extends LinearLayout {
         initializeView(context, attrSet);
     }
 
-    @TargetApi(23)
     private void initializeView(Context context, AttributeSet attrSet) {
         setGravity(Gravity.CENTER);
 
@@ -62,7 +61,7 @@ public class SimpleLoadingLayout extends LinearLayout {
 
         mIsLoading = false;
 
-        mLoadingImage = context.getResources().getDrawable(R.drawable.spinner, context.getTheme());
+        mLoadingImage = ContextCompat.getDrawable(context, R.drawable.spinner);
 
         attributes.recycle();
 
@@ -86,7 +85,7 @@ public class SimpleLoadingLayout extends LinearLayout {
         mButton.setAllCaps(false);
         mButton.setClickable(false);
 
-        mButton.setBackgroundColor(getResources().getColor(R.color.transparent, getContext().getTheme()));
+        mButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.transparent));
         mButton.setLayoutParams(params);
     }
 
@@ -107,8 +106,7 @@ public class SimpleLoadingLayout extends LinearLayout {
         removeAllViews();
         addView(mImageView);
         mImageView.startAnimation(mAnimation);
-        setEnabled(false);
-
+        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.translucent_button_unpressed));
         invalidate();
     }
 
@@ -117,8 +115,8 @@ public class SimpleLoadingLayout extends LinearLayout {
 
         removeAllViews();
         addView(mButton);
-        setEnabled(true);
-        
+
+        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.translucent_button));
         invalidate();
     }
 
@@ -135,5 +133,4 @@ public class SimpleLoadingLayout extends LinearLayout {
         }
         return super.onTouchEvent(event);
     }
-
 }

@@ -31,8 +31,7 @@ public class SignInFragment extends Fragment {
 
     @Bind(R.id.sign_in_email) EditText mUserField;
     @Bind(R.id.sign_in_password) EditText mPasswordField;
-    @Bind(R.id.sign_in_button)
-    SimpleLoadingLayout mLoginButton;
+    @Bind(R.id.sign_in_button) SimpleLoadingLayout mLoginButton;
     @Bind(R.id.sign_in_sign_up) TextView mSignUpTextView;
 
     public static SignInFragment newInstance() {

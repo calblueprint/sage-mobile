@@ -14,9 +14,10 @@
         <attr name="android:textSize" />
     </declare-styleable>
 
-    <declare-styleable name="SimpleLoadingButton">
+    <declare-styleable name="SimpleLoadingLayout">
         <attr name="android:textColor" />
         <attr name="android:text" />
         <attr name="android:textSize" />
+        <attr name="android:src" />
     </declare-styleable>
 </resources>

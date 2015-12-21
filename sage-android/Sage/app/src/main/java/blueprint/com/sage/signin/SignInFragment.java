@@ -16,7 +16,7 @@ import java.util.HashMap;
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.sessions.SignInEvent;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.views.SimpleLoadingButton;
+import blueprint.com.sage.shared.views.SimpleLoadingLayout;
 import blueprint.com.sage.signUp.SignUpActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
@@ -31,7 +31,8 @@ public class SignInFragment extends Fragment {
 
     @Bind(R.id.sign_in_email) EditText mUserField;
     @Bind(R.id.sign_in_password) EditText mPasswordField;
-    @Bind(R.id.sign_in_button) SimpleLoadingButton mLoginButton;
+    @Bind(R.id.sign_in_button)
+    SimpleLoadingLayout mLoginButton;
     @Bind(R.id.sign_in_sign_up) TextView mSignUpTextView;
 
     public static SignInFragment newInstance() {

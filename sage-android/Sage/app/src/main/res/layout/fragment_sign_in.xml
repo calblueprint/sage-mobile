@@ -31,7 +31,7 @@
         android:inputType="textPassword"
         />
 
-    <blueprint.com.sage.shared.views.SimpleLoadingButton
+    <blueprint.com.sage.shared.views.SimpleLoadingLayout
         style="@style/LandingButton"
         android:id="@+id/sign_in_button"
         android:text="@string/log_in_button"

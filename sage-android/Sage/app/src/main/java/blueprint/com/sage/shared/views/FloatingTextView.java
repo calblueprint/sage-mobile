@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import blueprint.com.sage.R;
 
@@ -22,7 +25,7 @@ public class FloatingTextView extends FloatingActionButton {
     private Paint mTextPaint;
     private String mText;
     private int mTextColor;
-    private int mTextSize;
+    private int mTextSize;d
 
     public FloatingTextView(Context context) { super(context); }
 
@@ -72,5 +75,27 @@ public class FloatingTextView extends FloatingActionButton {
     public void setText(String text) {
         mText = text;
         invalidate();
+    }
+
+    @Override
+    public void setVisibility(int visibility) {
+        super.setVisibility(visibility);
+
+        int animationId;
+
+        switch (visibility) {
+            case View.GONE:
+                animationId = R.anim.deflate;
+                break;
+            case View.VISIBLE:
+                animationId = R.anim.inflate;
+                break;
+            default:
+                animationId = R.anim.deflate;
+                break;
+        }
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), animationId);
+        startAnimation(animation);
     }
 }

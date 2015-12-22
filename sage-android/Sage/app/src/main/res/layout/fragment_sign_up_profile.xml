@@ -29,8 +29,13 @@
 
     <include layout="@layout/white_dots" />
 
-    <Button
-        style="@style/LandingButton"
+    <blueprint.com.sage.shared.views.SimpleLoadingLayout
+        style="@style/LandingDefaultButton"
         android:id="@+id/sign_up_finish"
-        android:text="@string/sign_up_finish"/>
+        app:text="@string/sign_up_finish"
+        app:textSize="16sp"
+        app:textColor="@color/white"
+        app:pressed="@drawable/translucent_button_unpressed"
+        app:unpressed="@drawable/translucent_button" />
+
 </LinearLayout>

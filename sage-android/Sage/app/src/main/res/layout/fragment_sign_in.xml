@@ -34,7 +34,7 @@
     <blueprint.com.sage.shared.views.SimpleLoadingLayout
         style="@style/LandingDefaultButton"
         android:id="@+id/sign_in_button"
-        app:textSize="14sp"
+        app:textSize="16sp"
         app:text="@string/log_in_button"
         app:textColor="@color/white"
         app:pressed="@drawable/translucent_button_unpressed"

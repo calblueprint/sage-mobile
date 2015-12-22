@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.AnnouncementFragment;
-import blueprint.com.sage.announcements.AnnouncementsListActivity;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
@@ -64,11 +63,16 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/15/15.
+ * All the requests we make!
  */
 public class Requests {
 
     public static void addToRequestQueue(Context context, Request request) {
         NetworkManager.getInstance(context).getRequestQueue().add(request);
+    }
+
+    public static void postError(APIError error) {
+        EventBus.getDefault().post(new APIErrorEvent(error));
     }
 
     public static class Users {
@@ -401,7 +405,6 @@ public class Requests {
             AnnouncementsListRequest announcementsRequest = new AnnouncementsListRequest(mActivity, null, new Response.Listener<ArrayList<Announcement>>() {
                 @Override
                 public void onResponse(ArrayList<Announcement> announcementsArrayList) {
-                    AnnouncementsListActivity activity = (AnnouncementsListActivity) mActivity;
                     EventBus.getDefault().post(new AnnouncementsListEvent(announcementsArrayList));
                 }
             }, new Response.Listener<APIError>() {
@@ -473,9 +476,5 @@ public class Requests {
             });
             Requests.addToRequestQueue(mActivity, loginRequest);
         }
-    }
-
-    public static void postError(APIError error) {
-        EventBus.getDefault().post(new APIErrorEvent(error));
     }
 }

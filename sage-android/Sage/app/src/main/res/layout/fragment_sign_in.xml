@@ -34,9 +34,11 @@
     <blueprint.com.sage.shared.views.SimpleLoadingLayout
         style="@style/LandingDefaultButton"
         android:id="@+id/sign_in_button"
-        android:textSize="14sp"
+        app:textSize="14sp"
         app:text="@string/log_in_button"
-        app:textColor="@color/white" />
+        app:textColor="@color/white"
+        app:pressed="@drawable/translucent_button_unpressed"
+        app:unpressed="@drawable/translucent_button" />
 
     <LinearLayout
         android:layout_width="wrap_content"

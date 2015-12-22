@@ -34,6 +34,8 @@ public class SimpleLoadingLayout extends LinearLayout {
 
     private boolean mIsLoading;
     private Drawable mLoadingImage;
+    private int mPressedDrawableId;
+    private int mUnpressedDrawableId;
 
     private Button mButton;
     private ImageView mImageView;
@@ -56,8 +58,14 @@ public class SimpleLoadingLayout extends LinearLayout {
                 context.getTheme().obtainStyledAttributes(attrSet, R.styleable.SimpleLoadingLayout, 0, 0);
 
         mTextColor = attributes.getColor(R.styleable.SimpleLoadingLayout_textColor, Color.BLACK);
-        mTextSize = attributes.getDimensionPixelSize(R.styleable.SimpleLoadingLayout_android_textSize, TEXT_SIZE_DP);
+        mTextSize = attributes.getDimensionPixelSize(R.styleable.SimpleLoadingLayout_textSize, TEXT_SIZE_DP);
         mText = attributes.getString(R.styleable.SimpleLoadingLayout_text);
+
+        mPressedDrawableId = attributes.getResourceId(R.styleable.SimpleLoadingLayout_pressed,
+                R.drawable.translucent_button_unpressed);
+
+        mUnpressedDrawableId = attributes.getResourceId(R.styleable.SimpleLoadingLayout_unpressed,
+                R.drawable.translucent_button);
 
         mIsLoading = false;
 
@@ -106,7 +114,7 @@ public class SimpleLoadingLayout extends LinearLayout {
         removeAllViews();
         addView(mImageView);
         mImageView.startAnimation(mAnimation);
-        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.translucent_button_unpressed));
+        setBackground(ContextCompat.getDrawable(getContext(), mPressedDrawableId));
         invalidate();
     }
 
@@ -116,7 +124,7 @@ public class SimpleLoadingLayout extends LinearLayout {
         removeAllViews();
         addView(mButton);
 
-        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.translucent_button));
+        setBackground(ContextCompat.getDrawable(getContext(), mUnpressedDrawableId));
         invalidate();
     }
 

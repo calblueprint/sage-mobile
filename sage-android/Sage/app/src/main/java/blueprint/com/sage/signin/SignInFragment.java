@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.sessions.SignInEvent;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.SimpleLoadingLayout;
@@ -96,10 +97,15 @@ public class SignInFragment extends Fragment {
 
     public void onEvent(SignInEvent event) {
         try {
+            mLoginButton.stopSpinning();
             NetworkUtils.loginUser(event.getSession(), getActivity());
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
             Toast.makeText(getActivity(), "Something went wrong, try again!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onEvent(APIErrorEvent event) {
+        mLoginButton.stopSpinning();
     }
 }

@@ -17,6 +17,8 @@
     <declare-styleable name="SimpleLoadingLayout">
         <attr name="textColor" format="color" />
         <attr name="text" format="string" />
-        <attr name="android:textSize" />
+        <attr name="textSize" format="dimension" />
+        <attr name="unpressed" format="reference" />
+        <attr name="pressed" format="reference" />
     </declare-styleable>
 </resources>

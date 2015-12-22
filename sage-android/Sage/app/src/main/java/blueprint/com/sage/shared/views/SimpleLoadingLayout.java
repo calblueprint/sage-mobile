@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -121,6 +120,7 @@ public class SimpleLoadingLayout extends LinearLayout {
     public void stopSpinning() {
         mIsLoading = false;
 
+        mImageView.clearAnimation();
         removeAllViews();
         addView(mButton);
 
@@ -130,15 +130,5 @@ public class SimpleLoadingLayout extends LinearLayout {
 
     public boolean isSpinning() {
         return mIsLoading;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (!isSpinning()) {
-                startSpinning();
-            }
-        }
-        return super.onTouchEvent(event);
     }
 }

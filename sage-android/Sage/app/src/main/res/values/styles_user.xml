@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="UserRelativeLayout">
+    <style name="CreateUserRelativeLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">8dp</item>
@@ -8,7 +8,7 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
-    <style name="UserLinearLayout">
+    <style name="CreateUserLinearLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">16dp</item>
@@ -16,7 +16,7 @@
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="UserIcon">
+    <style name="CreateUserIcon">
         <item name="android:layout_width">24dp</item>
         <item name="android:layout_height">24dp</item>
         <item name="android:layout_margin">16dp</item>
@@ -24,7 +24,7 @@
         <item name="android:tint">@color/gray</item>
     </style>
 
-    <style name="UserText">
+    <style name="CreateUserText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_vertical</item>
@@ -33,10 +33,26 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="UserSpinner">
+    <style name="CreateUserSpinner">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:layout_centerVertical">true</item>
+    </style>
+
+
+    <style name="UserProfileText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginLeft">24dp</item>
+    </style>
+
+    <style name="UserProfileGrid">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/background_white</item>
     </style>
 </resources>

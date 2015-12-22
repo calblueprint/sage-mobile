@@ -27,26 +27,26 @@ public @Data class User {
     private String lastName;
     private int schoolId;
     private int directorId;
-    private String role;
-    private String volunteerType;
-    private int totalHours;
+    private int role;
+    private int volunteerType;
+    private int totalTime;
     private String password;
     private String currentPassword;
-    private String confirmPassword;
+    private String passwordConfirmation;
     private String imageUrl;
     private boolean active;
 
-    private School school;
+    @JsonIgnore
+    private int schoolSelected = -1;
 
-    // Used for Sign Ups
-    private int schoolPosition = -1;
-    private int typePosition = -1;
+    @JsonIgnore
+    private School school;
 
     @JsonIgnore
     private Bitmap profile;
 
-    public final static String[] VOLUNTEER_TYPES = { "volunteer", "one_unit", "two_units" };
-    public final static String[] ROLES = { "student", "admin" };
+    public final static int STUDENT = 0;
+    public final static int ADMIN = 1;
 
     public final static String[] VOLUNTEER_SPINNER = { "Volunteer", "One Unit", "Two Units" };
     public final static String[] ROLE_SPINNER = { "Student", "Admin" };
@@ -58,58 +58,19 @@ public @Data class User {
 
     @JsonIgnore
     public String getHoursString() {
-        int hours = 0;
-        for (int i = 0; i < VOLUNTEER_TYPES.length; i++) {
-            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
-                hours = i + 1;
-        }
-
-        return String.format("%d hrs/week", hours);
-    }
-
-    /**
-     * Gets integer of volunteer type
-     */
-    @JsonIgnore
-    public int getVolunteerTypeInt() {
-        for (int i = 0; i < VOLUNTEER_TYPES.length; i++)
-            if (volunteerType.equals(VOLUNTEER_TYPES[i]))
-                return i;
-        return 0;
+        return String.format("%d hrs/week", volunteerType + 1);
     }
 
     @JsonIgnore
-    public void setVolunteerTypeInt(int type) {
-        volunteerType = VOLUNTEER_TYPES[type];
-    }
-
-    @JsonIgnore
-    public void setRoleInt(int type) {
-        role = ROLES[type];
-    }
-
-    @JsonIgnore
-    public int getRoleInt() {
-        for (int i = 0; i < ROLES.length; i++)
-            if (role.equals(ROLES[i]))
-                return i;
-        return 0;
-    }
-
-    @JsonIgnore
-    public String getRoleString() {
-        for (int i = 0; i < ROLES.length; i++)
-            if (role.equals(ROLES[i]))
-                return ROLE_SPINNER[i];
-        return "Student";
+    public String getTimeString() {
+        return String.valueOf(getTotalTime() / 60);
     }
 
     /**
      * Compresses Profile Picture into a string
      * @return
      */
-    @JsonIgnore
-    public String getProfileData() {
+    public String getData() {
         if (profile == null) return null;
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -128,7 +89,6 @@ public @Data class User {
         }
     }
 
-    public boolean isAdmin() {
-        return role.equals(ROLES[1]);
-    }
+    @JsonIgnore
+    public boolean isAdmin() { return role == ADMIN; }
 }

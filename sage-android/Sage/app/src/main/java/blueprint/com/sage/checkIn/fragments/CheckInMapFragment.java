@@ -118,9 +118,20 @@ public class CheckInMapFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.menu_check_in_map, menu);
+        inflateMenu(menu, inflater);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        inflateMenu(menu, getActivity().getMenuInflater());
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    private void inflateMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        int menuId = hasStartedCheckIn() ? R.menu.menu_empty : R.menu.menu_check_in_map;
+        inflater.inflate(menuId, menu);
     }
 
     @Override
@@ -337,8 +348,8 @@ public class CheckInMapFragment extends Fragment
                                       DateUtils.getFormattedTimeNow()).commit();
         toggleButtons();
         toggleTimer(true);
+        getActivity().invalidateOptionsMenu();
     }
-
 
     private void stopCheckIn() {
         if (!hasStartedCheckIn()) {
@@ -350,7 +361,6 @@ public class CheckInMapFragment extends Fragment
 
         toggleButtons();
         toggleTimer(false);
-
         FragUtils.replaceBackStack(R.id.container, CreateCheckInFragment.newInstance(), getActivity());
     }
 

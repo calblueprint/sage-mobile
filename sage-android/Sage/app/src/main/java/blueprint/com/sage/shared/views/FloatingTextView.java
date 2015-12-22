@@ -25,7 +25,7 @@ public class FloatingTextView extends FloatingActionButton {
     private Paint mTextPaint;
     private String mText;
     private int mTextColor;
-    private int mTextSize;d
+    private int mTextSize;
 
     public FloatingTextView(Context context) { super(context); }
 
@@ -79,7 +79,7 @@ public class FloatingTextView extends FloatingActionButton {
 
     @Override
     public void setVisibility(int visibility) {
-        super.setVisibility(visibility);
+        if (getVisibility() == visibility) return;
 
         int animationId;
 
@@ -97,5 +97,6 @@ public class FloatingTextView extends FloatingActionButton {
 
         Animation animation = AnimationUtils.loadAnimation(getContext(), animationId);
         startAnimation(animation);
+        super.setVisibility(visibility);
     }
 }

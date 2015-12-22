@@ -100,17 +100,21 @@ class User: NSObject, NSCoding {
         for (propertyName, value) in propertyDictionary {
             switch propertyName {
             case UserConstants.kLevel:
-                switch value as! String {
-                case "one_unit": self.level = VolunteerLevel.OneUnit
-                case "two_units": self.level = VolunteerLevel.TwoUnit
-                default: self.level = VolunteerLevel.Default
+                if let val = value as? Int {
+                    switch val {
+                    case 0: self.level = VolunteerLevel.ZeroUnit
+                    case 1: self.level = VolunteerLevel.OneUnit
+                    case 2: self.level = VolunteerLevel.TwoUnit
+                    default: break
+                }
                 }
             case UserConstants.kRole:
-                switch value as! String {
-                case "admin": self.role = UserRole.Admin
-                case "volunteer": self.role = UserRole.Volunteer
-                case "director": self.role = UserRole.Director
-                default: self.role = UserRole.Default
+                if let val = value as? Int {
+                    switch val {
+                    case 0: self.role = UserRole.Volunteer
+                    case 1: self.role = UserRole.Admin
+                    default: break
+                    }
                 }
             case UserConstants.kSchool:
                 let schoolDictionary = value as! [String: AnyObject]

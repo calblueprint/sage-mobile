@@ -45,8 +45,10 @@ class Checkin: NSObject {
                 formatter.dateFormat = StringConstants.JSONdateFormat
                 self.endTime = formatter.dateFromString(value as! String)
             case CheckinConstants.kSchool:
-                let schoolDictionary = value as! [String: AnyObject]
-                self.school = School(propertyDictionary: schoolDictionary)
+                let schoolDictionary = value as? [String: AnyObject]
+                if let dict = schoolDictionary {
+                    self.school = School(propertyDictionary: dict)
+                }
             case CheckinConstants.kVerified:
                 if !(value is NSNull) {
                     self.verified = value as! Bool

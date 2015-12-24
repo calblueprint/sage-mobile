@@ -23,7 +23,6 @@ public class EditSchoolFragment extends SchoolFormAbstractFragment {
         mSchoolAddress.setText(mSchool.getAddress());
         setUserSpinner();
 
-        mBackInterface.toggleDrawerUse(false);
         getActivity().setTitle("Edit School");
     }
 

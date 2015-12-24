@@ -30,13 +30,13 @@ public class FragUtils {
         activity.getSupportFragmentManager().popBackStack();
     }
 
-    public static void startActivity(Activity activity, Class<?> cls) {
+    public static void startActivityBackStack(Activity activity, Class<?> cls) {
         Intent intent = new Intent(activity, cls);
         activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void startActivityBackStack(Activity activity, Class<?> cls) {
+    public static void startActivity(Activity activity, Class<?> cls) {
         Intent intent = new Intent(activity, cls);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_CLEAR_TASK |

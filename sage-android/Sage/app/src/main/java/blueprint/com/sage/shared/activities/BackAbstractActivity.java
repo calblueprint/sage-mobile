@@ -3,6 +3,7 @@ package blueprint.com.sage.shared.activities;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.utility.view.ViewUtils;
@@ -33,6 +34,13 @@ public class BackAbstractActivity extends AbstractActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
     }
 
     @Override

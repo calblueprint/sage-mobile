@@ -31,7 +31,6 @@ import org.joda.time.Seconds;
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.checkIn.CheckInTimer;
-import blueprint.com.sage.checkIn.fragments.CreateCheckInFragment;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
@@ -98,6 +97,8 @@ public class CheckInMapFragment extends Fragment
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        toggleButtons();
+        toggleTimer(hasStartedCheckIn());
         if (hasStartedCheckIn())
             mTimer.start();
     }
@@ -330,7 +331,8 @@ public class CheckInMapFragment extends Fragment
 
         toggleButtons();
         toggleTimer(false);
-        FragUtils.replaceBackStack(R.id.container, CreateCheckInFragment.newInstance(), getActivity());
+
+        FragUtils.startActivityBackStack(getActivity(), CheckInActivity.class);
     }
 
 

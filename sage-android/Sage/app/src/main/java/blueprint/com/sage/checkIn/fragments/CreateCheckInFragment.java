@@ -38,7 +38,6 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.DateUtils;
-import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -229,9 +228,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
                            .remove(getString(R.string.check_in_start_time))
                            .remove(getString(R.string.check_in_end_time))
                            .apply();
-
-        FragUtils.popBackStack(this);
-        getFragmentManager().popBackStack();
+        getActivity().onBackPressed();
     }
 
     public void onEvent(CheckInEvent event) { resetCheckIn(); }

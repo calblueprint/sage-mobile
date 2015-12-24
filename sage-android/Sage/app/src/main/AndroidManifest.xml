@@ -59,10 +59,6 @@
             android:name=".announcements.AnnouncementsListActivity"
             android:launchMode="singleTop"/>
 
-        <activity
-            android:name=".announcements.AnnouncementsListActivity"
-            android:launchMode="singleTop"/>
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />

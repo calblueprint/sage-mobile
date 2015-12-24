@@ -2,7 +2,7 @@ package blueprint.com.sage.browse.fragments;
 
 import android.os.Bundle;
 
-import blueprint.com.sage.shared.adapters.PagerAdapter;
+import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
 import blueprint.com.sage.shared.fragments.TabsFragment;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 
@@ -11,7 +11,7 @@ import blueprint.com.sage.shared.interfaces.NavigationInterface;
  */
 public class BrowseTabFragment extends TabsFragment {
 
-    private PagerAdapter mAdapter;
+    private SimplePagerAdapter mAdapter;
 
     private NavigationInterface mNavigationInterface;
 
@@ -24,7 +24,7 @@ public class BrowseTabFragment extends TabsFragment {
     public static BrowseTabFragment newInstance() { return new BrowseTabFragment(); }
 
     public void initializeViews() {
-        mAdapter = new PagerAdapter(getChildFragmentManager());
+        mAdapter = new SimplePagerAdapter(getChildFragmentManager());
 
         mAdapter.addFragment(SchoolListFragment.newInstance(), "Schools");
         mAdapter.addFragment(UserListFragment.newInstance(), "Users");

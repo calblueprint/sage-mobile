@@ -17,7 +17,7 @@ import android.widget.TextView;
 import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.AnnouncementsListActivity;
 import blueprint.com.sage.browse.BrowseActivity;
-import blueprint.com.sage.browse.fragments.UserFragment;
+import blueprint.com.sage.main.fragments.UserFragment;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.requests.RequestsActivity;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;

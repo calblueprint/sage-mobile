@@ -3,7 +3,7 @@ package blueprint.com.sage.requests.fragments;
 import android.os.Bundle;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.shared.adapters.PagerAdapter;
+import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
 import blueprint.com.sage.shared.fragments.TabsFragment;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 
@@ -12,7 +12,7 @@ import blueprint.com.sage.shared.interfaces.NavigationInterface;
  */
 public class RequestTabPagerFragment extends TabsFragment {
 
-    private PagerAdapter mPagerAdapter;
+    private SimplePagerAdapter mPagerAdapter;
 
     private NavigationInterface mNavigationInterface;
 
@@ -25,7 +25,7 @@ public class RequestTabPagerFragment extends TabsFragment {
     public static RequestTabPagerFragment newInstance() { return new RequestTabPagerFragment();}
 
     public void initializeViews() {
-        mPagerAdapter = new PagerAdapter(getChildFragmentManager());
+        mPagerAdapter = new SimplePagerAdapter(getChildFragmentManager());
 
         mPagerAdapter.addFragment(VerifyCheckInListFragment.newInstance(), getString(R.string.requests_check_in));
         mPagerAdapter.addFragment(VerifyUsersListFragment.newInstance(), getString(R.string.requests_users));

@@ -37,10 +37,10 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.CheckInActivityInterface;
 import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,7 +67,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
 
     private BaseInterface mBaseInterface;
     private NavigationInterface mNavigationInterface;
-    private CheckInActivityInterface mCheckInInterface;
 
     public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
@@ -77,7 +76,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
         setHasOptionsMenu(true);
         mBaseInterface = (BaseInterface) getActivity();
         mNavigationInterface = (NavigationInterface) getActivity();
-        mCheckInInterface = (CheckInActivityInterface) getActivity();
     }
 
     @Override
@@ -119,7 +117,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
     }
 
     private void initializeViews() {
-        if (!mCheckInInterface.hasPreviousRequest()) {
+        if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
             mNavigationInterface.toggleDrawerUse(false);
             getActivity().setTitle("Create Checkin");
             return;
@@ -143,7 +141,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
 
     @OnClick({ R.id.check_in_request_start_field, R.id.check_in_request_end_field})
     public void onTimeFieldClick(TextView textView) {
-        if (mCheckInInterface.hasPreviousRequest()) return;
+        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) return;
 
         TimePickerFragment picker = TimePickerFragment.newInstance(textView);
         picker.setTargetFragment(this, REQUEST_CODE);
@@ -159,7 +157,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
 
     @OnClick(R.id.check_in_request_date_field)
     public void onDateFieldClick(TextView textView) {
-        if (mCheckInInterface.hasPreviousRequest()) return;
+        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) return;
 
         DatePickerFragment picker = DatePickerFragment.newInstance(textView);
         picker.setTargetFragment(this, REQUEST_CODE);

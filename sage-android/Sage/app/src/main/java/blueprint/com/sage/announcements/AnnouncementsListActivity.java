@@ -3,6 +3,7 @@ package blueprint.com.sage.announcements;
 import android.os.Bundle;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.main.fragments.AnnouncementsListFragment;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;

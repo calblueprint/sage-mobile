@@ -186,16 +186,6 @@ public class CheckInMapFragment extends Fragment
 
     @OnClick(R.id.check_in_check_fab)
     public void onCheckInClick(FloatingActionButton button) {
-        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
-            showEnableLocationDialog();
-            return;
-        }
-
-        if (!locationInBounds()) {
-            showOutOfBoundsDialog();
-            return;
-        }
-
         if (hasStartedCheckIn()) {
             showStopCheckInDialog();
         } else {
@@ -228,13 +218,13 @@ public class CheckInMapFragment extends Fragment
                                 startCheckIn();
                             }
                         })
-                .setNegativeButton(R.string.check_in_start_return,
+                .setNegativeButton(R.string.check_in_request,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 FragUtils.replaceBackStack(R.id.container,
-                                                           CreateCheckInFragment.newInstance(),
-                                                           getActivity());
+                                        CreateCheckInFragment.newInstance(),
+                                        getActivity());
                             }
                         });
         builder.show();
@@ -309,6 +299,14 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void startCheckIn() {
+        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
+            showEnableLocationDialog();
+            return;
+        } else if (!locationInBounds()) {
+            showOutOfBoundsDialog();
+            return;
+        }
+
         mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
                                       DateUtils.getFormattedTimeNow()).commit();
         toggleButtons();
@@ -317,8 +315,15 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void stopCheckIn() {
-        if (!hasStartedCheckIn()) {
+        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
+            showEnableLocationDialog();
+            return;
+        } else if (!locationInBounds()) {
+            showOutOfBoundsDialog();
+            return;
+        } else if (!hasStartedCheckIn()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
+            return;
         }
 
         mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),

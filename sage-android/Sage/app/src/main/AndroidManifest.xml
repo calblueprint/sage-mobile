@@ -32,6 +32,10 @@
         </activity>
 
         <activity
+            android:name=".main.MainActivity"
+            android:launchMode="singleTop"/>
+
+        <activity
             android:name=".signUp.SignUpActivity"
             android:launchMode="singleTop"/>
 

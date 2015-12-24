@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.ImageSpan;
 
 import java.util.ArrayList;
@@ -37,12 +37,11 @@ public class IconPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        Drawable drawable = ContextCompat.getDrawable(mContext, mDrawables.get(position));
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        Drawable icon = ContextCompat.getDrawable(mContext, mDrawables.get(position));
+        icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
         SpannableString sb = new SpannableString(" ");
-        ImageSpan imageSpan = new ImageSpan(drawable, ImageSpan.ALIGN_BOTTOM);
-        sb.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        ImageSpan iconSpan = new ImageSpan(icon, ImageSpan.ALIGN_BOTTOM);
+        sb.setSpan(iconSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return sb;
     }
 

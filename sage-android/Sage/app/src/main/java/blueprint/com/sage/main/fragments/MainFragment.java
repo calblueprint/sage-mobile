@@ -38,19 +38,20 @@ public class MainFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_main, parent, false);
         ButterKnife.bind(this, view);
+        initializeViews();
         return view;
     }
 
     public void initializeViews() {
         mAdapter = new IconPagerAdapter(getChildFragmentManager(), getActivity());
 
-        mAdapter.addFragment(CheckInMapFragment.newInstance(), R.drawable.ic_place_black);
-        mAdapter.addFragment(AnnouncementsListFragment.newInstance(), R.drawable.ic_announcement_black);
+        mAdapter.addFragment(CheckInMapFragment.newInstance(), R.drawable.ic_place_white_24dp);
+        mAdapter.addFragment(AnnouncementsListFragment.newInstance(), R.drawable.ic_announcement_white_24dp);
 
         if (mBaseInterface.getUser().isAdmin())
-            mAdapter.addFragment(AdminPanelFragment.newInstance(), R.drawable.ic_location_city_white);
+            mAdapter.addFragment(AdminPanelFragment.newInstance(), R.drawable.ic_assignment_white_24dp);
 
-        mAdapter.addFragment(UserFragment.newInstance(mBaseInterface.getUser()), R.drawable.ic_person_pin_white);
+        mAdapter.addFragment(UserFragment.newInstance(mBaseInterface.getUser()), R.drawable.ic_account_circle_white_24dp);
 
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

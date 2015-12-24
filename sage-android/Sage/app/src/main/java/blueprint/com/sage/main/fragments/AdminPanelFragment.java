@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
  */
 public class AdminPanelFragment extends Fragment {
 
-    public static AdminPanelFragment newInstance() { return AdminPanelFragment.newInstance(); }
+    public static AdminPanelFragment newInstance() { return new AdminPanelFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,11 +26,11 @@ public class AdminPanelFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_admin_panel, parent, false);
         ButterKnife.bind(this, view);
-        initializeView();
+        initializeViews();
         return view;
     }
 
-    private void initializeView() {
+    private void initializeViews() {
 
     }
 }

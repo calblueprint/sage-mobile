@@ -4,15 +4,14 @@ import android.os.Bundle;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.fragments.CreateCheckInFragment;
-import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
+import blueprint.com.sage.shared.activities.BackAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 10/16/15.
  * Check in Activity
  */
-public class CheckInActivity extends NavigationAbstractActivity {
-
+public class CheckInActivity extends BackAbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

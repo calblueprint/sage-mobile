@@ -29,6 +29,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.checkIn.CheckInTimer;
 import blueprint.com.sage.checkIn.fragments.CreateCheckInFragment;
 import blueprint.com.sage.models.School;
@@ -222,9 +223,7 @@ public class CheckInMapFragment extends Fragment
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                FragUtils.replaceBackStack(R.id.container,
-                                        CreateCheckInFragment.newInstance(),
-                                        getActivity());
+                                FragUtils.startActivityBackStack(getActivity(), CheckInActivity.class);
                             }
                         });
         builder.show();

@@ -33,7 +33,6 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
     private VerifyUserListAdapter mUserAdapter;
     private UsersInterface mUsersInterface;
 
-
     public static VerifyUsersListFragment newInstance() { return new VerifyUsersListFragment(); }
 
     @Override

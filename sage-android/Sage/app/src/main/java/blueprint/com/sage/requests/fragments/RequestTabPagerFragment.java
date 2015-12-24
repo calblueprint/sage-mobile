@@ -5,7 +5,6 @@ import android.os.Bundle;
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
 import blueprint.com.sage.shared.fragments.TabsFragment;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
 
 /**
  * Created by charlesx on 11/14/15.
@@ -14,13 +13,8 @@ public class RequestTabPagerFragment extends TabsFragment {
 
     private SimplePagerAdapter mPagerAdapter;
 
-    private NavigationInterface mNavigationInterface;
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mNavigationInterface = (NavigationInterface) getActivity();
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     public static RequestTabPagerFragment newInstance() { return new RequestTabPagerFragment();}
 
@@ -33,7 +27,6 @@ public class RequestTabPagerFragment extends TabsFragment {
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        mNavigationInterface.toggleDrawerUse(true);
         getActivity().setTitle("Requests");
     }
 }

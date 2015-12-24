@@ -37,7 +37,6 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -66,7 +65,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
     private static final int REQUEST_CODE = 200;
 
     private BaseInterface mBaseInterface;
-    private NavigationInterface mNavigationInterface;
 
     public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
@@ -75,7 +73,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mBaseInterface = (BaseInterface) getActivity();
-        mNavigationInterface = (NavigationInterface) getActivity();
     }
 
     @Override
@@ -118,7 +115,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
 
     private void initializeViews() {
         if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
-            mNavigationInterface.toggleDrawerUse(false);
             getActivity().setTitle("Create Checkin");
             return;
         }
@@ -135,7 +131,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
         mEndTime.setText(DateUtils.getFormattedTime(endDate));
         mTotalTime.setText(DateUtils.timeDiff(startDate, endDate));
 
-        mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("Finish Checkin");
     }
 

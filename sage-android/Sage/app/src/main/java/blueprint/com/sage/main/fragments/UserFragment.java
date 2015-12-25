@@ -1,4 +1,4 @@
-package blueprint.com.sage.browse.fragments;
+package blueprint.com.sage.main.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,13 +16,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.browse.fragments.EditUserFragment;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.interfaces.PromoteInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -51,7 +51,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
     private User mUser;
 
     private BaseInterface mBaseInterface;
-    private NavigationInterface mNavigationInterface;
 
     private static final int DIALOG_CODE = 200;
     private static final String DIALOG_TAG = "UserFragment";
@@ -69,7 +68,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mBaseInterface = (BaseInterface) getActivity();
-        mNavigationInterface = (NavigationInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
 
@@ -78,7 +76,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_user, parent, false);
         ButterKnife.bind(this, view);
-        initializeViews();
         initializeUser();
         return view;
     }
@@ -136,11 +133,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void initializeViews() {
-        mNavigationInterface.toggleDrawerUse(false);
-        getActivity().setTitle("Profile");
     }
 
     private void initializeUser() {

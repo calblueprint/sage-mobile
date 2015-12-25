@@ -41,7 +41,6 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
@@ -73,7 +72,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private GoogleMap mMap;
     protected School mSchool;
-    protected NavigationInterface mNavigationInterface;
     private BaseInterface mBaseInterface;
     private PlacePredictionAdapter mPlaceAdapter;
     private FormValidator mValidator;
@@ -90,7 +88,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         mPredictions = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
-        mNavigationInterface = (NavigationInterface) getActivity();
         mValidator = FormValidator.newInstance(getActivity());
         makeUserListRequest();
     }

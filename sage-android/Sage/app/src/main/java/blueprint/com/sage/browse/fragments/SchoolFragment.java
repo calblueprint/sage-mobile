@@ -28,7 +28,6 @@ import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -54,8 +53,6 @@ public class SchoolFragment extends Fragment
     private UserListAdapter mAdapter;
     private GoogleMap mMap;
 
-    private NavigationInterface mNavigationInterface;
-
     public static SchoolFragment newInstance(School school) {
         SchoolFragment fragment = new SchoolFragment();
         fragment.setSchool(school);
@@ -68,7 +65,6 @@ public class SchoolFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mNavigationInterface = (NavigationInterface) getActivity();
         MapsInitializer.initialize(getActivity());
         Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
@@ -92,7 +88,6 @@ public class SchoolFragment extends Fragment
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setAdapter(mAdapter);
 
-        mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("School");
     }
 

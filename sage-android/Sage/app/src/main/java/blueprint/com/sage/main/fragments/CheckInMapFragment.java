@@ -1,4 +1,4 @@
-package blueprint.com.sage.checkIn.fragments;
+package blueprint.com.sage.main.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,9 +13,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,10 +29,10 @@ import org.joda.time.DateTime;
 import org.joda.time.Seconds;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.checkIn.CheckInTimer;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -68,14 +65,12 @@ public class CheckInMapFragment extends Fragment
     private CheckInTimer mTimer;
 
     private BaseInterface mBaseInterface;
-    private NavigationInterface mNavigationInterface;
 
     public static CheckInMapFragment newInstance() { return new CheckInMapFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         MapsInitializer.initialize(getActivity());
         mManager = NetworkManager.getInstance(getActivity());
         mRunnableTimer = new Runnable() {
@@ -87,7 +82,6 @@ public class CheckInMapFragment extends Fragment
 
         mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, mRunnableTimer);
         mBaseInterface = (BaseInterface) getActivity();
-        mNavigationInterface = (NavigationInterface) getActivity();
     }
 
     @Override
@@ -103,6 +97,8 @@ public class CheckInMapFragment extends Fragment
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        toggleButtons();
+        toggleTimer(hasStartedCheckIn());
         if (hasStartedCheckIn())
             mTimer.start();
     }
@@ -114,34 +110,6 @@ public class CheckInMapFragment extends Fragment
 
         if (hasStartedCheckIn())
             mTimer.stop();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflateMenu(menu, inflater);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        inflateMenu(menu, getActivity().getMenuInflater());
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    private void inflateMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        int menuId = hasStartedCheckIn() ? R.menu.menu_empty : R.menu.menu_check_in_map;
-        inflater.inflate(menuId, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_request:
-                FragUtils.replaceBackStack(R.id.container, CreateCheckInFragment.newInstance(), getActivity());
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -172,9 +140,6 @@ public class CheckInMapFragment extends Fragment
     private void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
-
-        mNavigationInterface.toggleDrawerUse(true);
-        getActivity().setTitle("Check In");
 
         toggleButtons();
         toggleTimer(hasStartedCheckIn());
@@ -223,16 +188,6 @@ public class CheckInMapFragment extends Fragment
 
     @OnClick(R.id.check_in_check_fab)
     public void onCheckInClick(FloatingActionButton button) {
-        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
-            showEnableLocationDialog();
-            return;
-        }
-
-        if (!locationInBounds()) {
-            showOutOfBoundsDialog();
-            return;
-        }
-
         if (hasStartedCheckIn()) {
             showStopCheckInDialog();
         } else {
@@ -265,11 +220,11 @@ public class CheckInMapFragment extends Fragment
                                 startCheckIn();
                             }
                         })
-                .setNegativeButton(R.string.check_in_start_return,
+                .setNegativeButton(R.string.check_in_request,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
+                                FragUtils.startActivityBackStack(getActivity(), CheckInActivity.class);
                             }
                         });
         builder.show();
@@ -344,6 +299,14 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void startCheckIn() {
+        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
+            showEnableLocationDialog();
+            return;
+        } else if (!locationInBounds()) {
+            showOutOfBoundsDialog();
+            return;
+        }
+
         mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
                                       DateUtils.getFormattedTimeNow()).commit();
         toggleButtons();
@@ -352,8 +315,15 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void stopCheckIn() {
-        if (!hasStartedCheckIn()) {
+        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
+            showEnableLocationDialog();
+            return;
+        } else if (!locationInBounds()) {
+            showOutOfBoundsDialog();
+            return;
+        } else if (!hasStartedCheckIn()) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
+            return;
         }
 
         mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
@@ -361,7 +331,8 @@ public class CheckInMapFragment extends Fragment
 
         toggleButtons();
         toggleTimer(false);
-        FragUtils.replaceBackStack(R.id.container, CreateCheckInFragment.newInstance(), getActivity());
+
+        FragUtils.startActivityBackStack(getActivity(), CheckInActivity.class);
     }
 
 

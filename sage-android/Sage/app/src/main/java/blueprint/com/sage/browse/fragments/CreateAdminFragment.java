@@ -22,7 +22,6 @@ public class CreateAdminFragment extends UserFormAbstractFragment {
         mPassword.setHint(getString(R.string.sign_up_password));
         mConfirmPassword.setHint(getString(R.string.sign_up_password_confirm));
 
-        mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("Create User");
     }
 

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.checkIn.CheckInActivity;
+import blueprint.com.sage.main.MainActivity;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.signIn.SignInActivity;
@@ -70,7 +70,8 @@ public class NetworkUtils {
         });
 
         if (user.isVerified()) {
-            intent = new Intent(activity, CheckInActivity.class);
+            intent = new Intent(activity, MainActivity.class);
+//            intent = new Intent(activity, CheckInActivity.class);
         } else {
             intent = new Intent(activity, UnverifiedActivity.class);
         }

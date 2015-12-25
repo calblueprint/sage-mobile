@@ -13,10 +13,10 @@
 
     <string name="check_in_request_error">Invalid check-in request.</string>
 
-    <string name="check_in_start_title">Start Session</string>
-    <string name="check_in_start_body">Do you want to start your mentoring session?</string>
-    <string name="check_in_start_confirm">Start</string>
-    <string name="check_in_start_return">Cancel</string>
+    <string name="check_in_start_title">Choose an option</string>
+    <string name="check_in_start_body">Click start session to begin your session, or submit a check in request.</string>
+    <string name="check_in_start_confirm">Start session</string>
+    <string name="check_in_request">Create Request</string>
 
     <string name="check_in_finish_title">Finish Session</string>
     <string name="check_in_finish_body">Do you want to finish your mentoring session?</string>

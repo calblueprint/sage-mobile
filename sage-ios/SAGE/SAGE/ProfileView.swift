@@ -36,6 +36,9 @@ class ProfileView: UIView {
     let profileImageBorder = CGFloat(6)
     let boxHeight = CGFloat(100)
     
+    let userStatusString = "User Status String"
+    let userCommitmentString = "User Commitment String"
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(self.profileContent)
@@ -63,12 +66,12 @@ class ProfileView: UIView {
     func styleAttributedString(name: String, string: NSMutableAttributedString, length: Int) {
         let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(30)]
 
-        if name == "userStatusString" {
+        if name == self.userStatusString {
             string.addAttributes(boldString, range: NSRange(location: 0, length: length))
             string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: length+6, length: 6))
         }
         
-        if name == "userCommitmentString" {
+        if name == self.userCommitmentString {
             string.addAttributes(boldString, range: NSRange(location: 0, length: length))
             string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: 3, length: 10))
         }
@@ -82,12 +85,12 @@ class ProfileView: UIView {
         
         let hoursCompletedString = String(user.totalHours)
         let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / 60 \nhours") // ask charles about the 60
-        styleAttributedString("userStatusString", string: userStatusString, length: hoursCompletedString.characters.count)
+        styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
         self.userStatusLabel.attributedText = userStatusString
         
         let weeklyHoursRequiredString = String(user.getRequiredHours())
         let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")
-        styleAttributedString("userCommitmentString", string: userCommitmentString, length: weeklyHoursRequiredString.characters.count)
+        styleAttributedString(self.userCommitmentString, string: userCommitmentString, length: weeklyHoursRequiredString.characters.count)
         self.userCommitmentLabel.attributedText = userCommitmentString
         layoutSubviews()
     }

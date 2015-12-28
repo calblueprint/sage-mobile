@@ -49,7 +49,7 @@ class User: NSObject, NSCoding {
         self.school = aDecoder.decodeObjectForKey(UserConstants.kSchool) as? School
         self.level = VolunteerLevel(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kLevel))!
         self.role = UserRole(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kRole))!
-        self.totalHours = aDecoder.decodeIntegerForKey(UserConstants.kTotalHours)
+        self.totalHours = aDecoder.decodeIntegerForKey(UserConstants.kTotalTime)
         self.verified = aDecoder.decodeBoolForKey(UserConstants.kVerified)
         self.directorID = aDecoder.decodeIntegerForKey(UserConstants.kDirectorID)
         super.init()
@@ -63,7 +63,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeObject(self.school, forKey: UserConstants.kSchool)
         aCoder.encodeInteger(level.rawValue, forKey: UserConstants.kLevel)
         aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
-        aCoder.encodeInteger(self.totalHours, forKey: UserConstants.kTotalHours)
+        aCoder.encodeInteger(self.totalHours, forKey: UserConstants.kTotalTime)
         aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
         aCoder.encodeInteger(self.directorID, forKey: UserConstants.kDirectorID)
     }
@@ -136,6 +136,10 @@ class User: NSObject, NSCoding {
                 if let intValue = value as? Int {
                     self.directorID = intValue
                 }
+            case UserConstants.kTotalTime:
+                if let val = value as? Int {
+                    self.totalHours = val / 60 // Value is passed in minutes
+                }
             default: break
             }
         }
@@ -175,7 +179,7 @@ class User: NSObject, NSCoding {
             }
         }
         if -1 != self.totalHours {
-            propertyDict[UserConstants.kTotalHours] = self.totalHours
+            propertyDict[UserConstants.kTotalTime] = self.totalHours * 60
         }
         if -1 != self.directorID {
             propertyDict[UserConstants.kDirectorID] = self.directorID

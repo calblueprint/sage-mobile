@@ -15,7 +15,9 @@
             style="@style/AdminPanelHeader"
             android:text="@string/admin_browse" />
 
-        <LinearLayout style="@style/AdminPanelLayout">
+        <LinearLayout
+            style="@style/AdminPanelLayout"
+            android:id="@+id/admin_browse_schools">
 
             <ImageView
                 style="@style/AdminPanelIcon"
@@ -27,7 +29,9 @@
 
         </LinearLayout>
 
-        <LinearLayout style="@style/AdminPanelLayout">
+        <LinearLayout
+            style="@style/AdminPanelLayout"
+            android:id="@+id/admin_browse_users">
 
             <ImageView
                 style="@style/AdminPanelIcon"
@@ -45,7 +49,9 @@
             style="@style/AdminPanelHeader"
             android:text="@string/admin_requests" />
 
-        <LinearLayout style="@style/AdminPanelLayout">
+        <LinearLayout
+            style="@style/AdminPanelLayout"
+            android:id="@+id/admin_request_check_ins">
 
             <ImageView
                 style="@style/AdminPanelIcon"
@@ -57,7 +63,9 @@
 
         </LinearLayout>
 
-        <LinearLayout style="@style/AdminPanelLayout">
+        <LinearLayout
+            style="@style/AdminPanelLayout"
+            android:id="@+id/admin_request_users">
 
             <ImageView
                 style="@style/AdminPanelIcon"
@@ -75,7 +83,9 @@
             style="@style/AdminPanelHeader"
             android:text="@string/admin_settings" />
 
-        <LinearLayout style="@style/AdminPanelLayout">
+        <LinearLayout
+            style="@style/AdminPanelLayout"
+            android:id="@+id/admin_settings_semester">
 
             <ImageView
                 style="@style/AdminPanelIcon"

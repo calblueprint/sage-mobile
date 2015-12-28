@@ -74,6 +74,8 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
 
         mCheckInRefreshLayout.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
+
+        getActivity().setTitle("Check Ins");
     }
 
     @Override

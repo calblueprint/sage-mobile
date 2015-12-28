@@ -73,6 +73,8 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
 
         mEmptyView.setOnRefreshListener(this);
         mSchoolsRefreshView.setOnRefreshListener(this);
+
+        getActivity().setTitle("Schools");
     }
 
     @Override

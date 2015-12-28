@@ -100,7 +100,7 @@ class User: NSObject, NSCoding {
                     case 1: self.level = VolunteerLevel.OneUnit
                     case 2: self.level = VolunteerLevel.TwoUnit
                     default: break
-                }
+                    }
                 }
             case UserConstants.kRole:
                 if let val = value as? Int {

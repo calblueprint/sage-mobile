@@ -248,15 +248,27 @@ class AdminOperations {
     
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        let params = ["announcement":
-            [
-                AnnouncementConstants.kTitle: announcement.title!,
-                AnnouncementConstants.kText: announcement.text!,
-                AnnouncementConstants.kSchoolID: announcement.school!.id,
-                AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                AnnouncementConstants.kCategory: "school"
+        var params = [String: AnyObject]()
+        if announcement.school!.id != -1 {
+            params = ["announcement":
+                [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: announcement.school!.id,
+                    AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
+                    AnnouncementConstants.kCategory: "school"
+                ]
             ]
-        ]
+        } else {
+            params = ["announcement":
+                [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
+                    AnnouncementConstants.kCategory: "general"
+                ]
+            ]
+        }
         
         manager.POST(StringConstants.kEndpointCreateAnnouncement, parameters: params, success: { (operation, data) -> Void in
             let announcementDict = (data as! [String: AnyObject])["announcement"] as! [String: AnyObject]

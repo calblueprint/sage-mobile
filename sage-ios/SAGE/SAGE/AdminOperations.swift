@@ -57,10 +57,7 @@ class AdminOperations {
             let userData = data["users"] as! [AnyObject]
             for userDict in userData {
                 let user = User(propertyDictionary: userDict as! [String: AnyObject])
-                // this endpoint is not returning non director admins -- I think this is a rails bug but this is just an iOS workaround
-                if user.directorID == -1 {
-                    userArray.append(user)
-                }
+                userArray.append(user)
             }
             userArray.sortInPlace({ (user1, user2) -> Bool in
                 user1.isBefore(user2)

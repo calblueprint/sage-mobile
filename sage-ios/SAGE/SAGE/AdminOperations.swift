@@ -22,7 +22,7 @@ class AdminOperations {
                 userArray.append(user)
             }
             userArray.sortInPlace({ (user1, user2) -> Bool in
-                user1.firstName < user2.firstName
+                user1.isBefore(user2)
             })
             completion(userArray)
             }) { (operation, error) -> Void in
@@ -41,7 +41,7 @@ class AdminOperations {
                 userArray.append(user)
             }
             userArray.sortInPlace({ (user1, user2) -> Bool in
-                user1.firstName < user2.firstName
+                user1.isBefore(user2)
             })
             completion(userArray)
             }) { (operation, error) -> Void in
@@ -58,12 +58,12 @@ class AdminOperations {
             for userDict in userData {
                 let user = User(propertyDictionary: userDict as! [String: AnyObject])
                 // this endpoint is not returning non director admins -- I think this is a rails bug but this is just an iOS workaround
-                if user.directorID == User.DefaultValues.DefaultDirectorID.rawValue {
+                if user.directorID == -1 {
                     userArray.append(user)
                 }
             }
             userArray.sortInPlace({ (user1, user2) -> Bool in
-                user1.firstName < user2.firstName
+                user1.isBefore(user2)
             })
             completion(userArray)
             }) { (operation, error) -> Void in
@@ -99,7 +99,7 @@ class AdminOperations {
                 schools.append(school)
             }
             schools.sortInPlace({ (school1, school2) -> Bool in
-                school1.name < school2.name
+                school1.isBefore(school2)
             })
             completion(schools)
             }) { (operation, error) -> Void in
@@ -213,7 +213,7 @@ class AdminOperations {
         }
     }
     
-    static func removeCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func denyCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         let checkinURLString = StringConstants.kCheckinAdminDetailURL(checkin.id)
         
@@ -226,7 +226,6 @@ class AdminOperations {
     }
     
     static func verifyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
-        // TODO: fix, currently doesn't verify
         let manager = BaseOperation.manager()
 
         let userURLString = StringConstants.kUserAdminVerifyURL(user.id)
@@ -237,7 +236,7 @@ class AdminOperations {
         }
     }
     
-    static func removeUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func denyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         let userURLString = StringConstants.kUserDetailURL(user.id)
         manager.DELETE(userURLString, parameters: nil, success: { (operation, data) -> Void in

@@ -108,6 +108,10 @@ class School: NSObject, NSCoding {
         }
         return propertyDict
     }
+    
+    func isBefore(otherSchool: School) -> Bool {
+        return self.name < otherSchool.name
+    }
 }
 
 extension School: NSCopying {

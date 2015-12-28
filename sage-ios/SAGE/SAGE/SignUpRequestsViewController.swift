@@ -102,7 +102,7 @@ class SignUpRequestsViewController: UITableViewController {
             })
         } else {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-            AdminOperations.removeUser(user, completion: nil, failure: { (message) -> Void in
+            AdminOperations.denyUser(user, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(user, atIndex: indexPath.row)
                 self.tableView.reloadData()
                 self.showErrorAndSetMessage(message)

@@ -109,7 +109,7 @@ class CheckinRequestsViewController: UITableViewController {
             })
         } else {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-            AdminOperations.removeCheckin(checkin, completion: nil, failure: { (message) -> Void in
+            AdminOperations.denyCheckin(checkin, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(checkin, atIndex: indexPath.row)
                 self.tableView.reloadData()
                 self.showErrorAndSetMessage(message)

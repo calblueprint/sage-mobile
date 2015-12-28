@@ -78,6 +78,14 @@ class Announcement: NSObject {
         }
         return propertyDict
     }
+    
+    func isBefore(otherAnnouncement: Announcement) -> Bool {
+        if (self.timeCreated!.compare(otherAnnouncement.timeCreated!) == NSComparisonResult.OrderedAscending) {
+            return false
+        } else {
+            return true
+        }
+    }
 }
 
 extension Announcement: NSCopying {

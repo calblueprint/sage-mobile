@@ -11,36 +11,30 @@ import Foundation
 class User: NSObject, NSCoding {
     
     enum VolunteerLevel: Int {
-        case ZeroUnit
-        case OneUnit
-        case TwoUnit
-        case Default
+        case Default = -1
+        case ZeroUnit = 0
+        case OneUnit = 1
+        case TwoUnit = 2
     }
     
     enum UserRole: Int {
-        case Volunteer
-        case Admin
-        case Director
-        case Default
-    }
-    
-    enum DefaultValues: Int {
-        case DefaultID = -1
-        case DefaultHours = -2
-        case DefaultDirectorID = -3
+        case Default = -1
+        case Volunteer = 0
+        case Admin = 1
+        case Director = 2
     }
         
-    var id: Int = DefaultValues.DefaultID.rawValue
+    var id: Int = -1
     var firstName: String?
     var lastName: String?
     var email: String?
     var school: School?
     var level: VolunteerLevel = .Default
     var role: UserRole = .Default
-    var totalHours: Int = DefaultValues.DefaultHours.rawValue
+    var totalHours: Int = -1
     var verified: Bool = false
     var imageURL: NSURL?
-    var directorID: Int = DefaultValues.DefaultDirectorID.rawValue
+    var directorID: Int = -1
     
     
     //
@@ -74,7 +68,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeInteger(self.directorID, forKey: UserConstants.kDirectorID)
     }
     
-    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false, imgURL: NSURL? = nil, directorID: Int = DefaultValues.DefaultDirectorID.rawValue) {
+    init(id: Int = -1, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = -1, verified: Bool = false, imgURL: NSURL? = nil, directorID: Int = -1) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -91,8 +85,8 @@ class User: NSObject, NSCoding {
     
     init(propertyDictionary: [String: AnyObject]) {
         // set default values
-        self.id = DefaultValues.DefaultID.rawValue
-        self.totalHours = DefaultValues.DefaultHours.rawValue
+        self.id = -1
+        self.totalHours = -1
         self.verified = false
         self.level = .Default
         self.role = .Default
@@ -150,7 +144,7 @@ class User: NSObject, NSCoding {
     
     func toDictionary() -> [String: AnyObject]{
         var propertyDict: [String: AnyObject] = [String: AnyObject]()
-        if DefaultValues.DefaultID.rawValue != self.id {
+        if -1 != self.id {
             propertyDict[UserConstants.kId] = id
         }
         if let firstName = self.firstName {
@@ -180,10 +174,10 @@ class User: NSObject, NSCoding {
             default: break
             }
         }
-        if DefaultValues.DefaultHours.rawValue != self.totalHours {
+        if -1 != self.totalHours {
             propertyDict[UserConstants.kTotalHours] = self.totalHours
         }
-        if DefaultValues.DefaultDirectorID.rawValue != self.directorID {
+        if -1 != self.directorID {
             propertyDict[UserConstants.kDirectorID] = self.directorID
         }
         propertyDict[UserConstants.kVerified] = verified
@@ -201,7 +195,11 @@ class User: NSObject, NSCoding {
         case .TwoUnit: return 3
         default: return 0
         }
-    }    
+    }
+    
+    func isBefore(otherUser: User) -> Bool {
+        return self.firstName < otherUser.firstName
+    }
 }
 
 extension User: NSCopying {

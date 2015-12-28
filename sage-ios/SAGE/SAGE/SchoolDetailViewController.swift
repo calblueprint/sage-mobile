@@ -84,6 +84,7 @@ class SchoolDetailViewController: UITableViewController {
         if newSchool.id == self.school!.id {
             self.school = newSchool
             self.configureWithCompleteSchool(newSchool)
+            self.title = newSchool.name
         }
     }
     

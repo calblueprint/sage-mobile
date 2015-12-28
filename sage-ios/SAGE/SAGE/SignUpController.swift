@@ -145,7 +145,6 @@ class SignUpController: UIViewController  {
         let school = self.school!.id
         
         let hours = self.level!
-        let role = 0
         
         var photoData: String
         if let image = photoView.photo.image {

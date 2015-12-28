@@ -22,5 +22,6 @@ struct UserConstants {
     static let kImgURL: String = "image_url"
     
     static let kPassword: String = "password"
-    static let kPhotoData: String = "data"    
+    static let kPhotoData: String = "data"
+    static let kDirectorID: String = "director_id"
 }

@@ -20,6 +20,9 @@ class AnnouncementsOperations {
                 let singleAnnouncement = Announcement(properties: item)
                 announcements.append(singleAnnouncement)
             }
+            announcements.sortInPlace({ (announcement1, announcement2) -> Bool in
+                announcement1.isBefore(announcement2)
+            })
             completion(announcements)
             }) { (operation, error) -> Void in
                 failure("Cannot get announcements")

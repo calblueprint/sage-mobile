@@ -36,9 +36,16 @@ class SchoolsTableViewCell: UITableViewCell {
     func configureWithSchool(school: School) {
         self.schoolName.text = school.name
         self.directorName.text = school.director?.fullName()
-        if let students = school.students {
-            self.numStudents.text = String(students.count) + " students"
+        if let studentsNum = school.students?.count {
+            var labelText = String(studentsNum)
+            if studentsNum == 1 {
+                labelText += " student"
+            } else {
+                labelText += " students"
+            }
+            self.numStudents.text = labelText
         }
+
         self.layoutSubviews()
     }
     

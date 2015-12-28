@@ -36,9 +36,9 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadDirectors", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "loadPotentialDirectors", forControlEvents: .ValueChanged)
         
-        self.loadDirectors()
+        self.loadPotentialDirectors()
     }
     
     override func viewWillLayoutSubviews() {
@@ -47,8 +47,8 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         self.activityIndicator.centerVertically()
     }
     
-    func loadDirectors() {
-        AdminOperations.loadAdmins({ (directorArray) -> Void in
+    func loadPotentialDirectors() {
+        AdminOperations.loadNonDirectorAdmins({ (directorArray) -> Void in
             let alphabet = "abcdefghijklmnopqrstuvwxyz"
             var charArray = [String: Int]()
             self.directors = [[User]]()

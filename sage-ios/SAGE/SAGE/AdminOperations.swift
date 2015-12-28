@@ -21,6 +21,9 @@ class AdminOperations {
                 let user = User(propertyDictionary: userDict as! [String: AnyObject])
                 userArray.append(user)
             }
+            userArray.sortInPlace({ (user1, user2) -> Bool in
+                user1.isBefore(user2)
+            })
             completion(userArray)
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
@@ -37,13 +40,35 @@ class AdminOperations {
                 let user = User(propertyDictionary: userDict as! [String: AnyObject])
                 userArray.append(user)
             }
+            userArray.sortInPlace({ (user1, user2) -> Bool in
+                user1.isBefore(user2)
+            })
             completion(userArray)
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
         }
         
     }
-            
+
+    static func loadNonDirectorAdmins(completion: (([User]) -> Void), failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: nil, success: { (operation, data) -> Void in
+            var userArray = [User]()
+            let userData = data["users"] as! [AnyObject]
+            for userDict in userData {
+                let user = User(propertyDictionary: userDict as! [String: AnyObject])
+                userArray.append(user)
+            }
+            userArray.sortInPlace({ (user1, user2) -> Bool in
+                user1.isBefore(user2)
+            })
+            completion(userArray)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
+        
+    }
+    
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: nil, success: { (operation, data) -> Void in
@@ -70,6 +95,9 @@ class AdminOperations {
                 let school = School(propertyDictionary: schoolDict as! [String: AnyObject])
                 schools.append(school)
             }
+            schools.sortInPlace({ (school1, school2) -> Bool in
+                school1.isBefore(school2)
+            })
             completion(schools)
             }) { (operation, error) -> Void in
                 failure(error.localizedDescription)
@@ -115,44 +143,137 @@ class AdminOperations {
     }
     
     static func createSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
+        let params = ["school":
+            [
+                SchoolConstants.kName: school.name!,
+                SchoolConstants.kLat: school.location!.coordinate.latitude,
+                SchoolConstants.kLong: school.location!.coordinate.longitude,
+                SchoolConstants.kAddress: school.address!,
+                SchoolConstants.kDirectorID: school.director!.id
+            ]
+        ]
+        
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        
+        manager.POST(StringConstants.kEndpointCreateSchool, parameters: params, success: { (operation, data) -> Void in
+            let schoolDict = data["school"] as! [String: AnyObject]
+            let school = School(propertyDictionary: schoolDict)
+            completion!(school)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
     }
     
     static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        
+        let params = ["school": [
+                SchoolConstants.kLat: school.location!.coordinate.latitude,
+                SchoolConstants.kLong: school.location!.coordinate.longitude,
+                SchoolConstants.kName: school.name!,
+                SchoolConstants.kDirectorID: school.director!.id
+            ]
+        ]
+        let schoolURLString = StringConstants.kSchoolAdminDetailURL(school.id)
+        
+        manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
+            completion!(school)
+            }) { (operation, error) -> Void in
+                failure("Could not edit school.")
+        }
     }
     
     static func editAnnouncement(announcement: Announcement, completion: ((Announcement) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        let params = [
+                AnnouncementConstants.kTitle: announcement.title!,
+                AnnouncementConstants.kText: announcement.text!,
+                AnnouncementConstants.kSchoolID: announcement.school!.id,
+        ]
+        let announcementURLString = StringConstants.kAnnouncementAdminDetailURL(announcement.id!)
+        manager.PATCH(announcementURLString, parameters: params, success: { (operation, data) -> Void in
+            completion!(announcement)
+            }) { (operation, error) -> Void in
+                failure("Could not edit announcement.")
+        }
     }
     
     static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        
+        let checkinURLString = StringConstants.kCheckinAdminVerifyURL(checkin.id)
+        
+        manager.POST(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not approve checkin.")
+        }
     }
     
-    static func removeCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func denyCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        let checkinURLString = StringConstants.kCheckinAdminDetailURL(checkin.id)
+        
+        manager.DELETE(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not remove checkin.")
+        }
+
     }
     
     static func verifyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+
+        let userURLString = StringConstants.kUserAdminVerifyURL(user.id)
+        manager.POST(userURLString, parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Couldn't verify user.")
+        }
     }
     
-    static func removeUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func denyUser(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        // TODO: make a network request
+        let userURLString = StringConstants.kUserDetailURL(user.id)
+        manager.DELETE(userURLString, parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not remove user.")
+        }
     }
     
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        let announcementDict = announcement.toDictionary()
-        // TODO: Create Announcement
+        var params = [String: AnyObject]()
+        if announcement.school!.id != -1 {
+            params = ["announcement":
+                [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: announcement.school!.id,
+                    AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
+                    AnnouncementConstants.kCategory: "school"
+                ]
+            ]
+        } else {
+            params = ["announcement":
+                [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
+                    AnnouncementConstants.kCategory: "general"
+                ]
+            ]
+        }
+        
+        manager.POST(StringConstants.kEndpointCreateAnnouncement, parameters: params, success: { (operation, data) -> Void in
+            let announcementDict = (data as! [String: AnyObject])["announcement"] as! [String: AnyObject]
+            let createdAnnouncement = Announcement(properties: announcementDict)
+            completion(createdAnnouncement)
+            }) { (operation, error) -> Void in
+                failure(error.localizedDescription)
+        }
     }
     
 }

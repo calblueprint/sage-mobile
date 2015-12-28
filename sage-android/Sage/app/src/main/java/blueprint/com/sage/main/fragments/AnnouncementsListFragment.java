@@ -1,4 +1,4 @@
-package blueprint.com.sage.announcements;
+package blueprint.com.sage.main.fragments;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,21 +27,20 @@ import de.greenrobot.event.EventBus;
  */
 public class AnnouncementsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ArrayList<Announcement> announcementsArrayList = new ArrayList<>();
-    private AnnouncementsListAdapter adapter;
+    private ArrayList<Announcement> mAnnouncements;
+    private AnnouncementsListAdapter mAdapter;
 
     @Bind(R.id.announcements_recycler) RecycleViewEmpty announcementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;
-    @Bind(R.id.add_announcement_fab) FloatingActionButton addAnnouncementButton;
+    @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
 
-    public static AnnouncementsListFragment newInstance() {
-        return new AnnouncementsListFragment();
-    }
+    public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAnnouncements = new ArrayList<>();
     }
 
     @Override
@@ -66,8 +65,8 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     public void onEvent(AnnouncementsListEvent event) {
-        announcementsArrayList = event.getAnnouncements();
-        adapter.setAnnouncements(announcementsArrayList);
+        mAnnouncements = event.getAnnouncements();
+        mAdapter.setAnnouncements(mAnnouncements);
         mEmptyView.setRefreshing(false);
         mAnnouncementsRefreshView.setRefreshing(false);
     }
@@ -77,9 +76,9 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         announcementsList.setLayoutManager(llm);
         announcementsList.setEmptyView(mEmptyView);
-        adapter = new AnnouncementsListAdapter(announcementsArrayList, getActivity());
-        announcementsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity());
+        announcementsList.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
     }

@@ -24,7 +24,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     var navigationBar: UINavigationBar?
     weak var parentVC: SignUpController?
     var schools: [School] = []
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
     var volunteerLevelDict = NSMutableDictionary()
     
@@ -74,7 +74,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     func loadSchoolData() {
         AdminOperations.loadSchools({ (schoolArray) -> Void in
             for school in schoolArray {
-                self.schools.append(school as! School)
+                self.schools.append(school)
             }
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()

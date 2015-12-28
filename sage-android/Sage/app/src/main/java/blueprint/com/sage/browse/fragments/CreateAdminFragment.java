@@ -22,7 +22,6 @@ public class CreateAdminFragment extends UserFormAbstractFragment {
         mPassword.setHint(getString(R.string.sign_up_password));
         mConfirmPassword.setHint(getString(R.string.sign_up_password_confirm));
 
-        mNavigationInterface.toggleDrawerUse(false);
         getActivity().setTitle("Create User");
     }
 
@@ -36,16 +35,14 @@ public class CreateAdminFragment extends UserFormAbstractFragment {
         mUser.setLastName(mLastName.getText().toString());
         mUser.setEmail(mEmail.getText().toString());
         mUser.setPassword(mPassword.getText().toString());
-        mUser.setConfirmPassword(mPassword.getText().toString());
+        mUser.setPasswordConfirmation(mPassword.getText().toString());
+        mUser.setVerified(true);
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
         Bitmap profile = mPhoto.getImageBitmap();
 
-        int role = mRole.getSelectedItemPosition();
-        mUser.setRoleInt(role);
-
-        int volunteer = mType.getSelectedItemPosition();
-        mUser.setVolunteerTypeInt(volunteer);
+        mUser.setRole(mRole.getSelectedItemPosition());
+        mUser.setVolunteerType(mType.getSelectedItemPosition());
 
         mUser.setSchoolId(schoolId);
         mUser.setProfile(profile);

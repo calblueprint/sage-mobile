@@ -48,7 +48,7 @@ class LoginOperations: NSObject {
     
     static func storeUserDataInKeychain(user: User, authToken: String? = nil) {
         if let existingUser = (KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User) {
-            if User.DefaultValues.DefaultID.rawValue != user.id {
+            if -1 != user.id {
                 existingUser.id = user.id
             }
             if let firstName = user.firstName {
@@ -70,7 +70,7 @@ class LoginOperations: NSObject {
             if User.UserRole.Default != user.role {
                 existingUser.role = user.role
             }
-            if User.DefaultValues.DefaultHours.rawValue != user.totalHours {
+            if -1 != user.totalHours {
                 existingUser.totalHours = user.totalHours
             }
             existingUser.verified = user.verified

@@ -91,8 +91,8 @@ class SignUpRequestsViewController: UITableViewController {
     
     func removeCell(cell: SignUpRequestTableViewCell, accepted: Bool) {
         let indexPath = self.tableView.indexPathForCell(cell)!
-        self.requests?.removeAtIndex(indexPath.row)
         let user = self.requests![indexPath.row]
+        self.requests?.removeAtIndex(indexPath.row)
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             AdminOperations.verifyUser(user, completion: nil, failure: { (message) -> Void in
@@ -102,7 +102,7 @@ class SignUpRequestsViewController: UITableViewController {
             })
         } else {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-            AdminOperations.removeUser(user, completion: nil, failure: { (message) -> Void in
+            AdminOperations.denyUser(user, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(user, atIndex: indexPath.row)
                 self.tableView.reloadData()
                 self.showErrorAndSetMessage(message)

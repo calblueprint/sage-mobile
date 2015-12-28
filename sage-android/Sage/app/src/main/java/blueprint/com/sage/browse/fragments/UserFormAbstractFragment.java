@@ -27,9 +27,8 @@ import blueprint.com.sage.shared.adapters.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
-import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.validators.FormValidator;
+import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.signUp.SignUpActivity;
 import butterknife.Bind;
@@ -70,7 +69,6 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     private static final int DIALOG_CODE = 200;
     private static final String DIALOG_TAG = "UserFormAbstractFragment";
 
-    protected NavigationInterface mNavigationInterface;
     protected BaseInterface mBaseInterface;
     protected User mUser;
 
@@ -82,7 +80,6 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
         setHasOptionsMenu(true);
         mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
         mValidator = FormValidator.newInstance(getActivity());
-        mNavigationInterface = (NavigationInterface) getActivity();
         mBaseInterface = (BaseInterface) getActivity();
         mSchools = new ArrayList<>();
         Requests.Schools.with(getActivity()).makeListRequest(null);
@@ -144,7 +141,6 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
         }
     }
 
-
     private void initializeSpinners() {
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),
                 mSchools,
@@ -152,14 +148,16 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
         mSchool.setAdapter(mSchoolAdapter);
 
         mTypeAdapter = new TypeSpinnerAdapter(getActivity(),
-                getResources().getStringArray(R.array.volunteer_types),
-                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+                                              User.VOLUNTEER_SPINNER,
+                                              R.layout.simple_spinner_item,
+                                              R.layout.simple_spinner_item);
 
         mType.setAdapter(mTypeAdapter);
 
         mRoleAdapter = new RoleSpinnerAdapter(getActivity(),
-                getResources().getStringArray(R.array.role_types),
-                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+                                              User.ROLE_SPINNER,
+                                              R.layout.simple_spinner_item,
+                                              R.layout.simple_spinner_item);
 
         mRole.setAdapter(mRoleAdapter);
     }

@@ -46,7 +46,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
 
         if (!mPassword.getText().toString().isEmpty()) {
             mUser.setPassword(mPassword.getText().toString());
-            mUser.setConfirmPassword(mPassword.getText().toString());
+            mUser.setPasswordConfirmation(mPassword.getText().toString());
         }
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
@@ -87,7 +87,6 @@ public class EditUserFragment extends UserFormAbstractFragment {
         try {
             NetworkUtils.setUser(getActivity(), event.getUser());
             mBaseInterface.setUser(event.getUser());
-            mNavigationInterface.initializeUser();
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }

@@ -50,7 +50,7 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
         if (password != null && !password.isEmpty())
             mPassword.setText(password);
 
-        String passwordConfirm = getParentActivity().getUser().getConfirmPassword();
+        String passwordConfirm = getParentActivity().getUser().getPasswordConfirmation();
         if (passwordConfirm != null && !passwordConfirm.isEmpty())
             mConfirmation.setText(passwordConfirm);
     }
@@ -66,6 +66,6 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
         User user = getParentActivity().getUser();
         user.setEmail(mEmail.getText().toString());
         user.setPassword(mPassword.getText().toString());
-        user.setConfirmPassword(mConfirmation.getText().toString());
+        user.setPasswordConfirmation(mConfirmation.getText().toString());
     }
 }

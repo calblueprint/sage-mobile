@@ -41,7 +41,6 @@ public abstract class TabsFragment extends Fragment {
         ViewUtils.setToolBarElevation(getActivity(), 0);
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

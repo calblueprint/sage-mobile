@@ -55,21 +55,19 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
                                                R.layout.sign_in_spinner_item,
                                                R.layout.sign_in_spinner_drop_item);
         mSchoolSpinner.setAdapter(mSchoolAdapter);
-        int selectedSchool = getParentActivity().getUser().getSchoolPosition();
+
+        int selectedSchool = getParentActivity().getUser().getSchoolSelected();
         if (selectedSchool > -1) {
             mSchoolSpinner.setSelection(selectedSchool);
         }
 
         mTypeAdapter =
                 new TypeSpinnerAdapter(getParentActivity(),
-                                             getResources().getStringArray(R.array.volunteer_types),
-                                             R.layout.sign_in_spinner_item,
-                                             R.layout.sign_in_spinner_drop_item);
+                                       User.VOLUNTEER_SPINNER,
+                                       R.layout.sign_in_spinner_item,
+                                       R.layout.sign_in_spinner_drop_item);
         mVolunteerTypeSpinner.setAdapter(mTypeAdapter);
-        int selectedType = getParentActivity().getUser().getTypePosition();
-        if (selectedType > -1) {
-            mVolunteerTypeSpinner.setSelection(selectedType);
-        }
+        mVolunteerTypeSpinner.setSelection(getParentActivity().getUser().getVolunteerType());
     }
 
     public boolean hasValidFields() {
@@ -80,7 +78,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         User user = getParentActivity().getUser();
         user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
 
-        user.setSchoolPosition(mSchoolSpinner.getSelectedItemPosition());
-        user.setVolunteerTypeInt(mVolunteerTypeSpinner.getSelectedItemPosition());
+        user.setSchoolSelected(mSchoolSpinner.getSelectedItemPosition());
+        user.setVolunteerType(mVolunteerTypeSpinner.getSelectedItemPosition());
     }
 }

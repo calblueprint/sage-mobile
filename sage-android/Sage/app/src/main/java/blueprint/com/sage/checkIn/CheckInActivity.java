@@ -1,29 +1,20 @@
 package blueprint.com.sage.checkIn;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.checkIn.fragments.CheckInMapFragment;
-import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
-import blueprint.com.sage.shared.interfaces.CheckInActivityInterface;
+import blueprint.com.sage.checkIn.fragments.CreateCheckInFragment;
+import blueprint.com.sage.shared.activities.BackAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 10/16/15.
  * Check in Activity
  */
-public class CheckInActivity extends NavigationAbstractActivity implements CheckInActivityInterface {
-
+public class CheckInActivity extends BackAbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragUtils.replace(R.id.container, CheckInMapFragment.newInstance(), this);
-    }
-
-    public boolean hasPreviousRequest() {
-        SharedPreferences preferences = getSharedPreferences();
-        return !preferences.getString(getString(R.string.check_in_start_time), "").isEmpty() &&
-                !preferences.getString(getString(R.string.check_in_end_time), "").isEmpty();
+        FragUtils.replace(R.id.container, CreateCheckInFragment.newInstance(), this);
     }
 }

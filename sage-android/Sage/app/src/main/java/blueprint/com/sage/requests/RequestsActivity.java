@@ -11,7 +11,7 @@ import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.requests.fragments.RequestTabPagerFragment;
-import blueprint.com.sage.shared.activities.NavigationAbstractActivity;
+import blueprint.com.sage.shared.activities.BackAbstractActivity;
 import blueprint.com.sage.shared.interfaces.CheckInsInterface;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -19,7 +19,7 @@ import blueprint.com.sage.utility.view.FragUtils;
 /**
  * Created by charlesx on 11/10/15.
  */
-public class RequestsActivity extends NavigationAbstractActivity
+public class RequestsActivity extends BackAbstractActivity
                               implements CheckInsInterface, UsersInterface {
 
     private List<CheckIn> mCheckIns;

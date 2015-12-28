@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.browse.adapters.SchoolsListAdapter;
-import blueprint.com.sage.shared.interfaces.NavigationInterface;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -35,7 +34,6 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
 
     private SchoolsListAdapter mAdapter;
     private SchoolsInterface mSchoolsInterface;
-    private NavigationInterface mNavigationInterface;
 
     public static SchoolListFragment newInstance() { return new SchoolListFragment(); }
 

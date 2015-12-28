@@ -12,11 +12,11 @@ import blueprint.com.sage.models.School;
  * Created by charlesx on 11/17/15.
  */
 public class SchoolSerializer extends JsonSerializer<School> {
-
     @Override
     public void serialize(School school, JsonGenerator jgen, SerializerProvider provider)
             throws IOException {
         jgen.writeStartObject();
+        jgen.writeNumberField("id", school.getId());
         jgen.writeStringField("name", school.getName());
         jgen.writeStringField("address", school.getAddress());
         jgen.writeNumberField("lat", school.getLat());

@@ -11,34 +11,30 @@ import Foundation
 class User: NSObject, NSCoding {
     
     enum VolunteerLevel: Int {
-        case ZeroUnit
-        case OneUnit
-        case TwoUnit
-        case Default
+        case Default = -1
+        case ZeroUnit = 0
+        case OneUnit = 1
+        case TwoUnit = 2
     }
     
     enum UserRole: Int {
-        case Volunteer
-        case Admin
-        case Director
-        case Default
-    }
-    
-    enum DefaultValues: Int {
-        case DefaultID = -1
-        case DefaultHours = -2
+        case Default = -1
+        case Volunteer = 0
+        case Admin = 1
+        case Director = 2
     }
         
-    var id: Int = DefaultValues.DefaultID.rawValue
+    var id: Int = -1
     var firstName: String?
     var lastName: String?
     var email: String?
     var school: School?
     var level: VolunteerLevel = .Default
     var role: UserRole = .Default
-    var totalHours: Int = DefaultValues.DefaultHours.rawValue
+    var totalHours: Int = -1
     var verified: Bool = false
     var imageURL: NSURL?
+    var directorID: Int = -1
     
     
     //
@@ -55,6 +51,7 @@ class User: NSObject, NSCoding {
         self.role = UserRole(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kRole))!
         self.totalHours = aDecoder.decodeIntegerForKey(UserConstants.kTotalHours)
         self.verified = aDecoder.decodeBoolForKey(UserConstants.kVerified)
+        self.directorID = aDecoder.decodeIntegerForKey(UserConstants.kDirectorID)
         super.init()
     }
     
@@ -68,9 +65,10 @@ class User: NSObject, NSCoding {
         aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
         aCoder.encodeInteger(self.totalHours, forKey: UserConstants.kTotalHours)
         aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
+        aCoder.encodeInteger(self.directorID, forKey: UserConstants.kDirectorID)
     }
     
-    init(id: Int = DefaultValues.DefaultID.rawValue, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = DefaultValues.DefaultHours.rawValue, verified: Bool = false, imgURL: NSURL? = nil) {
+    init(id: Int = -1, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = -1, verified: Bool = false, imgURL: NSURL? = nil, directorID: Int = -1) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -81,13 +79,14 @@ class User: NSObject, NSCoding {
         self.totalHours = totalHours
         self.verified = verified
         self.imageURL = imgURL
+        self.directorID = directorID
         super.init()
     }
     
     init(propertyDictionary: [String: AnyObject]) {
         // set default values
-        self.id = DefaultValues.DefaultID.rawValue
-        self.totalHours = DefaultValues.DefaultHours.rawValue
+        self.id = -1
+        self.totalHours = -1
         self.verified = false
         self.level = .Default
         self.role = .Default
@@ -95,17 +94,21 @@ class User: NSObject, NSCoding {
         for (propertyName, value) in propertyDictionary {
             switch propertyName {
             case UserConstants.kLevel:
-                switch value as! String {
-                case "one_unit": self.level = VolunteerLevel.OneUnit
-                case "two_units": self.level = VolunteerLevel.TwoUnit
-                default: self.level = VolunteerLevel.Default
+                if let val = value as? Int {
+                    switch val {
+                    case 0: self.level = VolunteerLevel.ZeroUnit
+                    case 1: self.level = VolunteerLevel.OneUnit
+                    case 2: self.level = VolunteerLevel.TwoUnit
+                    default: break
+                    }
                 }
             case UserConstants.kRole:
-                switch value as! String {
-                case "admin": self.role = UserRole.Admin
-                case "volunteer": self.role = UserRole.Volunteer
-                case "director": self.role = UserRole.Director
-                default: self.role = UserRole.Default
+                if let val = value as? Int {
+                    switch val {
+                    case 0: self.role = UserRole.Volunteer
+                    case 1: self.role = UserRole.Admin
+                    default: break
+                    }
                 }
             case UserConstants.kSchool:
                 let schoolDictionary = value as! [String: AnyObject]
@@ -129,6 +132,10 @@ class User: NSObject, NSCoding {
                     let url = NSURL(string: urlString)
                     self.imageURL = url
                 }
+            case UserConstants.kDirectorID:
+                if let intValue = value as? Int {
+                    self.directorID = intValue
+                }
             default: break
             }
         }
@@ -137,7 +144,7 @@ class User: NSObject, NSCoding {
     
     func toDictionary() -> [String: AnyObject]{
         var propertyDict: [String: AnyObject] = [String: AnyObject]()
-        if DefaultValues.DefaultID.rawValue != self.id {
+        if -1 != self.id {
             propertyDict[UserConstants.kId] = id
         }
         if let firstName = self.firstName {
@@ -167,8 +174,11 @@ class User: NSObject, NSCoding {
             default: break
             }
         }
-        if DefaultValues.DefaultHours.rawValue != self.totalHours {
-            propertyDict[UserConstants.kTotalHours] = totalHours
+        if -1 != self.totalHours {
+            propertyDict[UserConstants.kTotalHours] = self.totalHours
+        }
+        if -1 != self.directorID {
+            propertyDict[UserConstants.kDirectorID] = self.directorID
         }
         propertyDict[UserConstants.kVerified] = verified
         return propertyDict
@@ -196,11 +206,15 @@ class User: NSObject, NSCoding {
         case .TwoUnit: return 3
         default: return 0
         }
-    }    
+    }
+    
+    func isBefore(otherUser: User) -> Bool {
+        return self.firstName < otherUser.firstName
+    }
 }
 
 extension User: NSCopying {
     func copyWithZone(zone: NSZone) -> AnyObject {
-        return User(id: self.id, firstName: self.firstName?.copy() as? String, lastName: self.lastName?.copy() as? String, email: self.email?.copy() as? String, school: self.school?.copy() as? School, level: self.level, role: self.role, totalHours: self.totalHours, verified: self.verified, imgURL: self.imageURL?.copy() as? NSURL)
+        return User(id: self.id, firstName: self.firstName?.copy() as? String, lastName: self.lastName?.copy() as? String, email: self.email?.copy() as? String, school: self.school?.copy() as? School, level: self.level, role: self.role, totalHours: self.totalHours, verified: self.verified, imgURL: self.imageURL?.copy() as? NSURL, directorID: self.directorID)
     }
 }

@@ -79,7 +79,6 @@ class CheckinRequestTableViewCell: UITableViewCell {
         attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: fullRange)
         time.attributedText = attributedString
 
-
         self.content.text = checkin.comment
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(buttonSize)
@@ -139,7 +138,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         let width = CGRectGetMinX(self.xButton.frame) - contentX
         self.content.setSize(self.content.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
-        if self.content.text == "" {
+        if self.content.text == "" || self.content.text == nil {
             self.setHeight(CGRectGetMaxY(self.time.frame)-UIConstants.textMargin)
         } else {
             self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)

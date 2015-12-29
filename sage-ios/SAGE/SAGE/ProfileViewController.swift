@@ -101,19 +101,36 @@ class ProfileViewController: UITableViewController {
             let view = ProfileCheckinViewController()
             self.navigationController!.pushViewController(view, animated: true)
         } else if indexPath.section == 1 {
-            let confirmLogoutAlert = UIAlertController(title: "Logout", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
+//            let confirmLogoutAlert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
+//            
+//            confirmLogoutAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+//                // do nothing
+//            }))
+//            
+//            confirmLogoutAlert.addAction(UIAlertAction(title: "Log Out", style: .Cancel, handler: { (action: UIAlertAction!) in
+//                LoginOperations.deleteUserKeychainData()
+//                let view = RootController()
+//                self.presentViewController(view, animated: true, completion: nil)
+//            }))
+//            
+//            self.presentViewController(confirmLogoutAlert, animated: true, completion: nil)
             
-            confirmLogoutAlert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { (action: UIAlertAction!) in
-                LoginOperations.deleteUserKeychainData()
-                let view = RootController()
-                self.presentViewController(view, animated: true, completion: nil)
-            }))
-    
-            confirmLogoutAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
-                // do nothing
-            }))
+
+            let optionMenu = UIAlertController(title: nil, message: "Are you sure you want to log out?", preferredStyle: .ActionSheet)
             
-            self.presentViewController(confirmLogoutAlert, animated: true, completion: nil)
+            let logoutAction = UIAlertAction(title: "Log Out", style: .Destructive, handler: {
+                (alert: UIAlertAction!) -> Void in
+            })
+                
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+                (alert: UIAlertAction!) -> Void in
+            })
+            
+            optionMenu.addAction(logoutAction)
+            optionMenu.addAction(cancelAction)
+            
+            self.presentViewController(optionMenu, animated: true, completion: nil)
+                
         }
     }
     

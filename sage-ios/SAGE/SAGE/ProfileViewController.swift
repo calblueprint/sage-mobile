@@ -50,6 +50,13 @@ class ProfileViewController: UITableViewController {
     
     func getUser() {
         ProfileOperations.getUser(self.user!, completion: { (user) -> Void in
+            
+            if LoginOperations.getUser()!.id == user.id {
+                self.profileView.currentUserProfile = Bool(true)
+            } else {
+                self.profileView.currentUserProfile = Bool(false)
+            }
+            
             self.profileView.setupWithUser(user)
             self.activityIndicator.stopAnimating()
             self.tableView.reloadData()
@@ -101,22 +108,8 @@ class ProfileViewController: UITableViewController {
             let view = ProfileCheckinViewController()
             self.navigationController!.pushViewController(view, animated: true)
         } else if indexPath.section == 1 {
-//            let confirmLogoutAlert = UIAlertController(title: "Log Out", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
-//            
-//            confirmLogoutAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
-//                // do nothing
-//            }))
-//            
-//            confirmLogoutAlert.addAction(UIAlertAction(title: "Log Out", style: .Cancel, handler: { (action: UIAlertAction!) in
-//                LoginOperations.deleteUserKeychainData()
-//                let view = RootController()
-//                self.presentViewController(view, animated: true, completion: nil)
-//            }))
-//            
-//            self.presentViewController(confirmLogoutAlert, animated: true, completion: nil)
-            
 
-            let optionMenu = UIAlertController(title: nil, message: "Are you sure you want to log out?", preferredStyle: .ActionSheet)
+            let logoutAlert = UIAlertController(title: nil, message: "Are you sure you want to log out?", preferredStyle: .ActionSheet)
             
             let logoutAction = UIAlertAction(title: "Log Out", style: .Destructive, handler: {
                 (alert: UIAlertAction!) -> Void in
@@ -126,10 +119,10 @@ class ProfileViewController: UITableViewController {
                 (alert: UIAlertAction!) -> Void in
             })
             
-            optionMenu.addAction(logoutAction)
-            optionMenu.addAction(cancelAction)
+            logoutAlert.addAction(logoutAction)
+            logoutAlert.addAction(cancelAction)
             
-            self.presentViewController(optionMenu, animated: true, completion: nil)
+            self.presentViewController(logoutAlert, animated: true, completion: nil)
                 
         }
     }

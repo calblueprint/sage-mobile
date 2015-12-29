@@ -38,7 +38,19 @@ class ProfileView: UIView {
     
     let userStatusString = "User Status String"
     let userCommitmentString = "User Commitment String"
-    var currentUserProfile = false
+    
+    var currentUserProfile: Bool {
+        get {
+            return self.currentUserProfile
+        }
+        set(isCurrentUser) {
+            if isCurrentUser {
+                self.profileEditButton.alpha = 1
+            } else {
+                self.profileEditButton.alpha = 0
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,10 +91,6 @@ class ProfileView: UIView {
     }
     
     func setupWithUser(user: User) {
-        if LoginOperations.getUser()!.id == user.id {
-            self.currentUserProfile = true
-        }
-        
         self.profileUserImg.setImageWithUser(user)
         self.userName.text = user.fullName()
         self.userSchool.text = user.school?.name
@@ -106,6 +114,9 @@ class ProfileView: UIView {
         
         self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
         self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
+        
+        self.profileEditButton.font = UIFont.normalFont
+        self.profileEditButton.textColor = UIColor.secondaryTextColor
         
         self.profileUserImg.layer.cornerRadius = self.profileImageSize/2
         self.profileUserImg.clipsToBounds = true
@@ -138,16 +149,12 @@ class ProfileView: UIView {
         self.header.setHeight(self.headerHeight+self.headerOffset)
         
         // position edit button
-        if self.currentUserProfile {
-            self.profileEditButton.text = "Edit Profile"
-            self.profileEditButton.sizeToFit()
-            self.profileEditButton.setY(self.headerHeight + 15)
-            let profileEditButtonX = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.profileEditButton.frame)
-            self.profileEditButton.setX(profileEditButtonX)
-            self.profileEditButton.font = UIFont.normalFont
-            self.profileEditButton.textColor = UIColor.secondaryTextColor
-        }
-        
+        self.profileEditButton.text = "Edit Profile"
+        self.profileEditButton.sizeToFit()
+        self.profileEditButton.setY(self.headerHeight + 15)
+        let profileEditButtonX = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.profileEditButton.frame)
+        self.profileEditButton.setX(profileEditButtonX)
+
         // set up image
         self.profileUserImgBorder.setHeight(self.profileImageSize + self.profileImageBorder)
         self.profileUserImgBorder.setWidth(self.profileImageSize + self.profileImageBorder)

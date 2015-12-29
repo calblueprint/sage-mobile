@@ -77,8 +77,10 @@ class ProfileView: UIView {
     }
     
     func adjustToScroll(offset: CGFloat) {
-        self.profileUserImg.alpha = 3/offset
-        self.profileUserImgBorder.alpha = 3/offset
+        if (offset > 0) {
+            self.profileUserImg.alpha = 3/offset
+            self.profileUserImgBorder.alpha = 3/offset
+        }
     }
     
     func styleAttributedString(name: String, string: NSMutableAttributedString, length: Int) {

@@ -101,9 +101,19 @@ class ProfileViewController: UITableViewController {
             let view = ProfileCheckinViewController()
             self.navigationController!.pushViewController(view, animated: true)
         } else if indexPath.section == 1 {
-            LoginOperations.deleteUserKeychainData()
-            let view = RootController()
-            self.presentViewController(view, animated: true, completion: nil)
+            let confirmLogoutAlert = UIAlertController(title: "Logout", message: "Are you sure you want to log out?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            confirmLogoutAlert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { (action: UIAlertAction!) in
+                LoginOperations.deleteUserKeychainData()
+                let view = RootController()
+                self.presentViewController(view, animated: true, completion: nil)
+            }))
+    
+            confirmLogoutAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                // do nothing
+            }))
+            
+            self.presentViewController(confirmLogoutAlert, animated: true, completion: nil)
         }
     }
     

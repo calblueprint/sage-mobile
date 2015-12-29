@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@color/green500">
 
-    <TextView
-        style="@style/SignUpTitle"
-        android:id="@+id/sign_up_email_title"
-        android:text="@string/sign_up_profile_title" />
+    <LinearLayout style="@style/SignUpLinearLayout">
+        <TextView
+            style="@style/SignUpTitle"
+            android:id="@+id/sign_up_email_title"
+            android:text="@string/sign_up_profile_title" />
 
-    <TextView
-        style="@style/SignUpSubTitle"
-        android:id="@+id/sign_up_email_subtitle"
-        android:text="@string/sign_up_profile_subtitle" />
+        <TextView
+            style="@style/SignUpSubTitle"
+            android:id="@+id/sign_up_email_subtitle"
+            android:text="@string/sign_up_profile_subtitle" />
 
-    <blueprint.com.sage.shared.views.CircleImageView
-        android:id="@+id/sign_up_profile_picture"
-        android:layout_height="70dp"
-        android:layout_width="70dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_profile"
-        app:border_color="@color/white"
-        app:border="true"/>
+        <blueprint.com.sage.shared.views.CircleImageView
+            android:id="@+id/sign_up_profile_picture"
+            android:layout_height="70dp"
+            android:layout_width="70dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_profile"
+            app:border_color="@color/white"
+            app:border="true"/>
 
-    <include layout="@layout/white_dots" />
+        <blueprint.com.sage.shared.views.SimpleLoadingLayout
+            style="@style/LandingDefaultButton"
+            android:id="@+id/sign_up_finish"
+            app:text="@string/sign_up_finish"
+            app:textSize="16sp"
+            app:textColor="@color/white"
+            app:pressed="@drawable/translucent_button_unpressed"
+            app:unpressed="@drawable/translucent_button" />
+    </LinearLayout>
 
-    <blueprint.com.sage.shared.views.SimpleLoadingLayout
-        style="@style/LandingDefaultButton"
-        android:id="@+id/sign_up_finish"
-        app:text="@string/sign_up_finish"
-        app:textSize="16sp"
-        app:textColor="@color/white"
-        app:pressed="@drawable/translucent_button_unpressed"
-        app:unpressed="@drawable/translucent_button" />
+    <include
+        layout="@layout/white_dots"
+        style="@style/SignUpCircleLayout" />
 
-</LinearLayout>
+</RelativeLayout>

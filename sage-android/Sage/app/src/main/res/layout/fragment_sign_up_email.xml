@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@color/amber500">
 
-    <TextView
-        style="@style/SignUpTitle"
-        android:id="@+id/sign_up_email_title"
-        android:text="@string/sign_up_email_title" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <TextView
-        style="@style/SignUpSubTitle"
-        android:id="@+id/sign_up_email_subtitle"
-        android:text="@string/sign_up_email_subtitle" />
+        <TextView
+            style="@style/SignUpTitle"
+            android:id="@+id/sign_up_email_title"
+            android:text="@string/sign_up_email_title" />
 
-    <ImageView
-        style="@style/SignUpIcon"
-        android:src="@drawable/ic_mail_white"/>
+        <TextView
+            style="@style/SignUpSubTitle"
+            android:id="@+id/sign_up_email_subtitle"
+            android:text="@string/sign_up_email_subtitle" />
 
-    <include layout="@layout/white_dots" />
+        <ImageView
+            style="@style/SignUpIcon"
+            android:src="@drawable/ic_mail_white" />
 
-    <EditText
-        style="@style/LandingField"
-        android:id="@+id/sign_up_email"
-        android:hint="@string/sign_up_email"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="10dp"/>
+        <EditText
+            style="@style/LandingField"
+            android:id="@+id/sign_up_email"
+            android:hint="@string/sign_up_email"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="10dp"/>
 
-    <EditText
-        style="@style/LandingField"
-        android:id="@+id/sign_up_password"
-        android:hint="@string/sign_up_password"
-        android:inputType="textPassword" />
+        <EditText
+            style="@style/LandingField"
+            android:id="@+id/sign_up_password"
+            android:hint="@string/sign_up_password"
+            android:inputType="textPassword" />
 
-    <EditText
-        style="@style/LandingField"
-        android:id="@+id/sign_up_password_confirm"
-        android:hint="@string/sign_up_password_confirm"
-        android:inputType="textPassword" />
+        <EditText
+            style="@style/LandingField"
+            android:id="@+id/sign_up_password_confirm"
+            android:hint="@string/sign_up_password_confirm"
+            android:inputType="textPassword" />
 
-    <Button
-        style="@style/LandingButton"
-        android:id="@+id/sign_up_continue"
-        android:text="@string/sign_up_continue"/>
+        <Button
+            style="@style/LandingButton"
+            android:id="@+id/sign_up_continue"
+            android:text="@string/sign_up_continue"/>
+    </LinearLayout>
 
-</LinearLayout>
+
+    <include
+        layout="@layout/white_dots"
+        style="@style/SignUpCircleLayout" />
+
+</RelativeLayout>

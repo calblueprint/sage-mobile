@@ -39,7 +39,6 @@ public @Data class User {
     @JsonIgnore
     private int schoolSelected = -1;
 
-    @JsonIgnore
     private School school;
 
     @JsonIgnore

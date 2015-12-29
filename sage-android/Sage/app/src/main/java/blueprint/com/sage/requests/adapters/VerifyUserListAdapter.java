@@ -47,7 +47,10 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
         final User user = mUsers.get(position);
 
         viewHolder.mName.setText(user.getName());
-        viewHolder.mSchool.setText(user.getSchool().getName());
+
+        if (user.getSchool() != null) {
+            viewHolder.mSchool.setText(user.getSchool().getName());
+        }
 
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override

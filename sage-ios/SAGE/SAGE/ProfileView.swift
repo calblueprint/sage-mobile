@@ -76,6 +76,11 @@ class ProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func adjustToScroll(offset: CGFloat) {
+        self.profileUserImg.alpha = 3/offset
+        self.profileUserImgBorder.alpha = 3/offset
+    }
+    
     func styleAttributedString(name: String, string: NSMutableAttributedString, length: Int) {
         let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(30)]
 

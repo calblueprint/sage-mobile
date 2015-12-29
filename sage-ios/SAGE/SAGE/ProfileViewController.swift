@@ -83,6 +83,11 @@ class ProfileViewController: UITableViewController {
         }
         return 0
     }
+
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        let viewOffset = scrollView.contentOffset.y
+        self.profileView.adjustToScroll(viewOffset)
+    }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1

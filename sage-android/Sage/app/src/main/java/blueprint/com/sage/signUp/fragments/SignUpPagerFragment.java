@@ -11,12 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.shared.validators.PhotoPicker;
-import blueprint.com.sage.signUp.SignUpActivity;
-import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
-import blueprint.com.sage.signUp.animation.SignUpPageTransformer;
 import blueprint.com.sage.events.BackEvent;
 import blueprint.com.sage.events.PhotoEvent;
+import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
+import blueprint.com.sage.shared.validators.PhotoPicker;
+import blueprint.com.sage.signUp.SignUpActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -68,12 +67,7 @@ public class SignUpPagerFragment extends Fragment {
         mViewPagerAdapter.addFragment(SignUpProfileFragment.newInstance(), getString(R.string.sign_up_profile));
 
         mViewPager.setAdapter(mViewPagerAdapter);
-        mViewPager.setPageTransformer(true, new SignUpPageTransformer());
-    }
-
-    public void onEvent(PhotoEvent event) {
-        Log.w("Got here", "wtatwatawat");
-        if (event == null) return;
+//        mViewPager.setPageTransformer(true, new SignUpPageTransformer());
     }
 
     public void onEvent(BackEvent event) {

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import blueprint.com.sage.R;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  */
 public class SignUpSchoolFragment extends SignUpAbstractFragment {
 
-    @Bind(R.id.sign_up_school_layout) LinearLayout mLayout;
+    @Bind(R.id.sign_up_school_container) RelativeLayout mLayout;
     @Bind(R.id.sign_up_school) Spinner mSchoolSpinner;
     @Bind(R.id.sign_up_volunteer_type) Spinner mVolunteerTypeSpinner;
 

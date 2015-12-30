@@ -21,4 +21,8 @@
         <attr name="unpressed" format="reference" />
         <attr name="pressed" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="NoSwipeViewPager">
+        <attr name="scrollFactor" format="float" />
+    </declare-styleable>
 </resources>

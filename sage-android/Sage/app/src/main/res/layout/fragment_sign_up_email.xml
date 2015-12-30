@@ -7,11 +7,7 @@
     android:background="@color/amber500">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        style="@style/SignUpLinearLayout">
 
         <TextView
             style="@style/SignUpTitle"

@@ -2,7 +2,6 @@ package blueprint.com.sage.signUp.animation;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -32,28 +31,22 @@ public class SignUpPageTransformer implements ViewPager.PageTransformer {
         int pageWidth = view.getWidth();
         int id = view.getId();
 
-        // Counteract moving motion
-//        view.setTranslationX(-position * pageWidth);
-//        view.setAlpha(position);
+        // Counteract default motion
 
-        View dotLayout = view.findViewById(R.id.white_dots_container);
-        dotLayout.setTranslationX(-position * pageWidth);
+        view.setTranslationX(-position * pageWidth);
+        view.setAlpha((1 - Math.abs(position)));
 
         switch (id) {
             case R.id.sign_up_name_container:
-                Log.e("position", "Name position    " + String.valueOf(position));
                 transformName(view, position);
                 break;
             case R.id.sign_up_email_container:
-                Log.e("position", "Email position   " + String.valueOf(position));
                 transformEmail(view, position);
                 break;
             case R.id.sign_up_school_container:
-                Log.e("position", "School position  " + String.valueOf(position));
                 transformSchool(view, position);
                 break;
             case R.id.sign_up_profile_container:
-                Log.e("position", "Profile position " + String.valueOf(position));
                 transformProfile(view, position);
                 break;
         }
@@ -80,10 +73,6 @@ public class SignUpPageTransformer implements ViewPager.PageTransformer {
         int id = mContext.getResources().getIdentifier(image, "id", mContext.getPackageName());
         View dotView = view.findViewById(id);
 
-        dotView.setAlpha(calculateAlpha(position));
-    }
-
-    private float calculateAlpha(float position) {
-        return (1- Math.abs(position)) * (1 - mMinAlpha) + mMinAlpha;
+        dotView.setAlpha((1 - Math.abs(position)) * (1 - mMinAlpha) + mMinAlpha);
     }
 }

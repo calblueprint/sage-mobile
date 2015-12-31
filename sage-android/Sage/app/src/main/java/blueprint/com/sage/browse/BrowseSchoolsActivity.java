@@ -6,44 +6,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.browse.fragments.BrowseTabFragment;
+import blueprint.com.sage.browse.fragments.SchoolListFragment;
 import blueprint.com.sage.models.School;
-import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.activities.BackAbstractActivity;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
-import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**
- * Created by charlesx on 11/4/15.
+ * Created by charlesx on 12/28/15.
+ * Shows a list of schools
  */
-public class BrowseActivity extends BackAbstractActivity implements SchoolsInterface, UsersInterface {
+public class BrowseSchoolsActivity extends BackAbstractActivity implements SchoolsInterface {
 
     private List<School> mSchools;
-    private List<User> mUsers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mSchools = new ArrayList<>();
-        mUsers = new ArrayList<>();
 
         getSchoolsListRequest();
-        getUsersListRequest();
-        FragUtils.replace(R.id.container, BrowseTabFragment.newInstance(), this);
+        FragUtils.replace(R.id.container, SchoolListFragment.newInstance(), this);
     }
 
     public void getSchoolsListRequest() {
         Requests.Schools.with(this).makeListRequest(null);
     }
-    public void getUsersListRequest() {
-        Requests.Users.with(this).makeListRequest(null);
-    }
 
-    public void setUsers(List<User> users) { mUsers = users; }
-    public List<User> getUsers() { return mUsers; }
     public void setSchools(List<School> schools) { mSchools = schools; }
     public List<School> getSchools() { return mSchools; }
 }

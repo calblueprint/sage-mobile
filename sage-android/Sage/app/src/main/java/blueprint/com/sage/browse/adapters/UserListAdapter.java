@@ -94,7 +94,11 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void setUpUserView(UserViewHolder viewHolder, Item item) {
         final User user = item.getUser();
         viewHolder.mName.setText(user.getName());
-        viewHolder.mSchool.setText(user.getSchool().getName());
+
+        if (user.getSchool() != null) {
+            viewHolder.mSchool.setText(user.getSchool().getName());
+        }
+
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

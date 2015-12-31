@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="admin_browse">Browse</string>
+    <string name="admin_schools">Schools</string>
+    <string name="admin_users">Users</string>
+
+    <string name="admin_requests">Requests</string>
+    <string name="admin_check_ins">Check Ins</string>
+
+    <string name="admin_settings">SAGE settings</string>
+    <string name="admin_end_semester">End Semester</string>
+    <string name="admin_start_semester">Start Semester</string>
+</resources>

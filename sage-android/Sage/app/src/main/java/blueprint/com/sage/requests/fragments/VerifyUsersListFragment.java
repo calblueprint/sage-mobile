@@ -71,6 +71,8 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
 
         mRefreshUser.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
+
+        getActivity().setTitle("Sign Ups");
     }
 
     @Override

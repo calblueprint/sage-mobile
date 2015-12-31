@@ -48,16 +48,20 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".browse.BrowseActivity"
+            android:name=".browse.BrowseMentorsActivity"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".requests.RequestsActivity"
+            android:name=".browse.BrowseSchoolsActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".announcements.AnnouncementsListActivity"
-            android:launchMode="singleTop"/>
+            android:name=".requests.CheckInRequestsActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".requests.SignUpRequestsActivity"
+            android:launchMode="singleTop" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

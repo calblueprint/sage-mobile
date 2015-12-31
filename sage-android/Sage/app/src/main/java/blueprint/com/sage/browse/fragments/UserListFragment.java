@@ -76,6 +76,8 @@ public class UserListFragment extends Fragment implements OnRefreshListener{
 
         mRefreshUsers.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
+
+        getActivity().setTitle("Users");
     }
 
     public void onEvent(UserListEvent event) {

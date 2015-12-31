@@ -5,18 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.BackEvent;
+import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.signUp.SignUpActivity;
-import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
 import blueprint.com.sage.signUp.animation.SignUpPageTransformer;
-import blueprint.com.sage.events.BackEvent;
-import blueprint.com.sage.events.PhotoEvent;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -69,11 +67,6 @@ public class SignUpPagerFragment extends Fragment {
 
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setPageTransformer(true, new SignUpPageTransformer());
-    }
-
-    public void onEvent(PhotoEvent event) {
-        Log.w("Got here", "wtatwatawat");
-        if (event == null) return;
     }
 
     public void onEvent(BackEvent event) {

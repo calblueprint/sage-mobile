@@ -22,13 +22,16 @@ import blueprint.com.sage.events.users.PromoteUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.requests.CheckInRequestsActivity;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.PromoteInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -152,6 +155,26 @@ public class UserFragment extends Fragment implements PromoteInterface {
         PromoteDialog dialog = PromoteDialog.newInstance(this);
         dialog.setTargetFragment(this, DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
+    }
+
+    @OnClick(R.id.user_check_ins)
+    public void onCheckInClick(View view) {
+        // TODO: add check in fragment
+    }
+
+    @OnClick(R.id.user_edit_profile)
+    public void onEditProfileClick(View view) {
+        FragUtils.startActivityBackStack(getActivity(), CheckInRequestsActivity.class);
+    }
+
+    @OnClick(R.id.user_about)
+    public void onAboutClick(View view) {
+        // TODO: add about fragment
+    }
+
+    @OnClick(R.id.user_log_out)
+    public void onLogOutClick(View view) {
+        NetworkUtils.logoutCurrentUser(getActivity());
     }
 
     public void onEvent(UserEvent event) {

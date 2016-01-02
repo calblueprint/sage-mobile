@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.BrowseMentorsActivity;
@@ -13,7 +12,6 @@ import blueprint.com.sage.browse.BrowseSchoolsActivity;
 import blueprint.com.sage.requests.CheckInRequestsActivity;
 import blueprint.com.sage.requests.SignUpRequestsActivity;
 import blueprint.com.sage.utility.view.FragUtils;
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,12 +19,6 @@ import butterknife.OnClick;
  * Created by charlesx on 12/24/15.
  */
 public class AdminPanelFragment extends Fragment {
-
-    @Bind(R.id.admin_browse_schools) LinearLayout mBrowseSchools;
-    @Bind(R.id.admin_browse_users) LinearLayout mBrowseUsers;
-    @Bind(R.id.admin_request_check_ins) LinearLayout mRequestCheckIns;
-    @Bind(R.id.admin_request_users) LinearLayout mRequestUsers;
-    @Bind(R.id.admin_settings_semester) LinearLayout mSettingsSemester;
 
     public static AdminPanelFragment newInstance() { return new AdminPanelFragment(); }
 

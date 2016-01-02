@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/PanelHeader"
-            android:text="@string/admin_browse" />
+            android:text="@string/user_log_out" />
 
         <LinearLayout
             style="@style/PanelLayout"

@@ -18,10 +18,19 @@
         <item>Admin</item>
     </string-array>
 
-
     <!-- Profile -->
     <string name="user_zero">0</string>
     <string name="user_slash">/</string>
     <string name="user_hours">hours</string>
     <string name="user_hours_week">hours/week</string>
+
+    <string name="user_info">Info</string>
+    <string name="user_check_ins">Check ins</string>
+
+    <string name="user_edit">Edit profile</string>
+
+    <string name="user_general_settings">General</string>
+    <string name="user_about">About</string>
+    <string name="user_log_out">Log Out</string>
+
 </resources>

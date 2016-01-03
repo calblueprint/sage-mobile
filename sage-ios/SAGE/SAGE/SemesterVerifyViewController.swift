@@ -19,6 +19,11 @@ class SemesterVerifyViewController: UIViewController {
         self.view = self.verifyView
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.verifyView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+    }
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
@@ -27,5 +32,12 @@ class SemesterVerifyViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.sharedApplication().statusBarStyle = .LightContent
+    }
+
+    //
+    // MARK: - Event Handling
+    //
+    @objc private func cancelPressed() {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

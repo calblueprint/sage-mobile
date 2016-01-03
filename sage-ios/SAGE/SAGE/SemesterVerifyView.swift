@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class SemesterVerifyView: UIView {
 
-    private let firstButton = UIView()
+    let cancelButton = UIButton()
+
     private let firstButtonRipple = UIView()
+    private let firstButton = UIView()
     private let firstButtonLabel = UILabel()
 
-    private let secondButton = UIView()
     private let secondButtonRipple = UIView()
+    private let secondButton = UIView()
     private let secondButtonLabel = UILabel()
 
     private let buttonSize: CGFloat = 70.0
@@ -61,6 +64,14 @@ class SemesterVerifyView: UIView {
         self.secondButton.setSize(width: self.buttonSize, height: self.buttonSize)
         self.secondButton.layer.cornerRadius = self.buttonSize/2
         self.addSubview(self.secondButton)
+
+        self.cancelButton.setWidth(UIConstants.barbuttonSize)
+        self.cancelButton.setHeight(UIConstants.barbuttonSize)
+        let cancelButtonIcon = FAKIonIcons.closeRoundIconWithSize(UIConstants.barbuttonIconSize)
+        cancelButtonIcon.setAttributes([NSForegroundColorAttributeName: UIColor.blackColor()])
+        let cancelButtonImage = cancelButtonIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        self.cancelButton.setImage(cancelButtonImage, forState: UIControlState.Normal)
+        self.addSubview(self.cancelButton)
     }
 
     private func setupActions() {
@@ -89,6 +100,8 @@ class SemesterVerifyView: UIView {
 
         self.secondButtonRipple.center = self.secondButton.center
 
+        self.cancelButton.setX(8)
+        self.cancelButton.setY(UIConstants.statusBarHeight)
     }
 
     //

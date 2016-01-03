@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/PanelHeader"
+        android:text="@string/admin_user_settings"
+        android:textColor="@color/red500"/>
+
+    <LinearLayout
+        style="@style/PanelLayout"
+        android:id="@+id/admin_user_change_role">
+
+        <ImageView
+            style="@style/PanelIcon"
+            android:src="@drawable/ic_edit_black_24dp"/>
+
+        <TextView
+            style="@style/PanelTitle"
+            android:text="@string/admin_user_promote" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/PanelLayout"
+        android:id="@+id/admin_user_change_status">
+
+        <ImageView
+            style="@style/PanelIcon"
+            android:src="@drawable/ic_edit_black_24dp"/>
+
+        <TextView
+            style="@style/PanelTitle"
+            android:text="@string/admin_user_status" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/PanelLayout"
+        android:id="@+id/admin_user_delete">
+
+        <ImageView
+            style="@style/PanelIcon"
+            android:src="@drawable/ic_edit_black_24dp"/>
+
+        <TextView
+            style="@style/PanelTitle"
+            android:text="@string/admin_user_delete" />
+
+    </LinearLayout>
+</LinearLayout>

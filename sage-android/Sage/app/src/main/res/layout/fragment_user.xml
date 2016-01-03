@@ -150,56 +150,10 @@
 
         <View style="@style/PanelDivider" />
 
-        <TextView
-            style="@style/PanelHeader"
-            android:text="@string/user_profile" />
+        <include layout="@layout/user_settings"
+            android:id="@+id/user_settings_layout" />
 
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/user_edit_profile">
-
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_edit_black_24dp"/>
-
-            <TextView
-                style="@style/PanelTitle"
-                android:text="@string/user_edit" />
-
-        </LinearLayout>
-
-        <View style="@style/PanelDivider" />
-
-        <TextView
-            style="@style/PanelHeader"
-            android:text="@string/user_general_settings" />
-
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/user_about">
-
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_cell_black_24dp"/>
-
-            <TextView
-                style="@style/PanelTitle"
-                android:text="@string/user_about" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/user_log_out">
-
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_exit_to_app_black"/>
-
-            <TextView
-                style="@style/PanelTitle"
-                android:text="@string/user_log_out" />
-
-        </LinearLayout>
+        <include layout="@layout/admin_settings"
+            android:id="@+id/admin_settings_layout" />
     </LinearLayout>
 </ScrollView>

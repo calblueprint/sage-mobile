@@ -118,6 +118,9 @@ class ProfileViewController: UITableViewController {
             
             let logoutAction = UIAlertAction(title: "Log Out", style: .Destructive, handler: {
                 (alert: UIAlertAction!) -> Void in
+                let rootController = RootController()
+                LoginOperations.deleteUserKeychainData()
+                self.presentViewController(rootController, animated: true, completion: nil)
             })
                 
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {

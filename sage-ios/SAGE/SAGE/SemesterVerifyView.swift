@@ -32,9 +32,13 @@ class SemesterVerifyView: UIView {
     private func setupSubviews() {
         self.firstButton.backgroundColor = UIColor.lightRedColor
         self.firstButton.setSize(width: self.buttonSize, height: self.buttonSize)
+        self.firstButton.layer.cornerRadius = self.buttonSize/2
+        self.addSubview(self.firstButton)
 
         self.secondButton.backgroundColor = UIColor.lightBlueColor
         self.secondButton.setSize(width: self.buttonSize, height: self.buttonSize)
+        self.secondButton.layer.cornerRadius = self.buttonSize/2
+        self.addSubview(self.secondButton)
     }
 
     private func setupActions() {

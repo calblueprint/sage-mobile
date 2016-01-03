@@ -18,4 +18,14 @@ class SemesterVerifyViewController: UIViewController {
     override func loadView() {
         self.view = self.verifyView
     }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+    }
 }

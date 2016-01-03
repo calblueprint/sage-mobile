@@ -63,7 +63,12 @@ class AdminTableViewController: UITableViewController {
                 self.navigationController?.pushViewController(SignUpRequestsViewController(), animated: true)
             default: break
             }
-        case 2: break
+        case 2:
+            switch indexPath.row {
+            case 0:
+                self.presentViewController(SemesterVerifyViewController(), animated: true, completion: nil)
+            default: break
+            }
         default: break
         }
     }

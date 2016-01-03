@@ -63,6 +63,10 @@
             android:name=".requests.SignUpRequestsActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".users.EditUserActivity"
+            android:launchMode="singleTop" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />

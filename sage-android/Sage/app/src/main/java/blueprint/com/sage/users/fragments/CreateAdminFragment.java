@@ -1,4 +1,4 @@
-package blueprint.com.sage.browse.fragments;
+package blueprint.com.sage.users.fragments;
 
 import android.graphics.Bitmap;
 import android.view.View;

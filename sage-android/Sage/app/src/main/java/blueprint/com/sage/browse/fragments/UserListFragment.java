@@ -15,6 +15,7 @@ import blueprint.com.sage.browse.adapters.UserListAdapter;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.users.fragments.CreateAdminFragment;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +25,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/17/15.
  */
-public class UserListFragment extends Fragment implements OnRefreshListener{
+public class UserListFragment extends Fragment implements OnRefreshListener {
 
     @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.user_list_list) RecycleViewEmpty mUserList;

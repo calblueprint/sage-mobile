@@ -51,7 +51,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="@string/log_out"
+                android:text="@string/user_log_out"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:fontFamily="sans-serif-light" />

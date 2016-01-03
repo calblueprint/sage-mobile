@@ -8,24 +8,20 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.browse.fragments.EditUserFragment;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.requests.CheckInRequestsActivity;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.PromoteInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.users.EditUserActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.ViewUtils;
@@ -69,7 +65,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         mBaseInterface = (BaseInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
@@ -102,41 +97,41 @@ public class UserFragment extends Fragment implements PromoteInterface {
         ViewUtils.setToolBarElevation(getActivity(), 8);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        menu.clear();
+//
+//        int layoutId = 0;
+//        User currentUser = mBaseInterface.getUser();
+//        if (currentUser.getId() == mUser.getId()) {
+//            layoutId = R.menu.menu_edit_delete;
+//        } else if (currentUser.isAdmin()) {
+//            layoutId = R.menu.menu_user_promote;
+//        }
+//
+//        if (layoutId != 0)
+//            inflater.inflate(layoutId, menu);
+//
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
 
-        int layoutId = 0;
-        User currentUser = mBaseInterface.getUser();
-        if (currentUser.getId() == mUser.getId()) {
-            layoutId = R.menu.menu_edit_delete;
-        } else if (currentUser.isAdmin()) {
-            layoutId = R.menu.menu_user_promote;
-        }
-
-        if (layoutId != 0)
-            inflater.inflate(layoutId, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_edit:
-                FragUtils.replaceBackStack(R.id.container,
-                                           EditUserFragment.newInstance(mUser),
-                                           getActivity());
-                break;
-            case R.id.menu_delete:
-                break;
-            case R.id.user_promote:
-                openPromoteDialog();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.menu_edit:
+//                FragUtils.replaceBackStack(R.id.container,
+//                                           EditUserFragment.newInstance(mUser),
+//                                           getActivity());
+//                break;
+//            case R.id.menu_delete:
+//                break;
+//            case R.id.user_promote:
+//                openPromoteDialog();
+//                break;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void initializeUser() {
         mUser.loadUserImage(getActivity(), mPhoto);
@@ -164,7 +159,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
 
     @OnClick(R.id.user_edit_profile)
     public void onEditProfileClick(View view) {
-        FragUtils.startActivityBackStack(getActivity(), CheckInRequestsActivity.class);
+        FragUtils.startActivityBackStack(getActivity(), EditUserActivity.class);
     }
 
     @OnClick(R.id.user_about)

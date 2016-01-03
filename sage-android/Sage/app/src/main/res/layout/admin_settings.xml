@@ -16,7 +16,7 @@
 
         <ImageView
             style="@style/PanelIcon"
-            android:src="@drawable/ic_edit_black_24dp"/>
+            android:src="@drawable/ic_role_black_24dp"/>
 
         <TextView
             style="@style/PanelTitle"
@@ -30,7 +30,7 @@
 
         <ImageView
             style="@style/PanelIcon"
-            android:src="@drawable/ic_edit_black_24dp"/>
+            android:src="@drawable/ic_status_black_24dp"/>
 
         <TextView
             style="@style/PanelTitle"
@@ -44,7 +44,7 @@
 
         <ImageView
             style="@style/PanelIcon"
-            android:src="@drawable/ic_edit_black_24dp"/>
+            android:src="@drawable/ic_delete_black_24dp"/>
 
         <TextView
             style="@style/PanelTitle"

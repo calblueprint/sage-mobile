@@ -31,7 +31,7 @@ class SemesterVerifyView: UIView {
     private let buttonSize: CGFloat = 70.0
     private let buttonMargin: CGFloat = 50.0
     private let rippleSize: CGFloat =
-        sqrt(2*UIConstants.screenWidth*UIConstants.screenWidth + 2*UIConstants.screenHeight*UIConstants.screenHeight)
+        2 * sqrt(UIConstants.screenWidth*UIConstants.screenWidth + UIConstants.screenHeight*UIConstants.screenHeight)
     private let labelHeight: CGFloat = 100.0
 
     private let labelMoveDistance: CGFloat = 25.0
@@ -151,7 +151,7 @@ class SemesterVerifyView: UIView {
         self.secondButtonLabel.fillWidth()
         self.secondButtonLabel.setHeight(self.labelHeight)
 
-        self.progressBar.setY(CGRectGetMaxY(self.firstButtonLabel.frame) + UIConstants.textMargin)
+        self.progressBar.setY(CGRectGetMaxY(self.firstButtonLabel.frame) + 15)
 
         self.finalButton.centerInSuperview()
     }

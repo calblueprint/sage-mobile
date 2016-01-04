@@ -26,12 +26,15 @@ class SemesterVerifyView: UIView {
 
     private let progressBar = UIView()
 
+    private let finalButton = SGButton()
+
     private let buttonSize: CGFloat = 70.0
     private let buttonMargin: CGFloat = 50.0
     private let rippleSize: CGFloat =
         sqrt(2*UIConstants.screenWidth*UIConstants.screenWidth + 2*UIConstants.screenHeight*UIConstants.screenHeight)
     private let labelHeight: CGFloat = 100.0
 
+    private let labelMoveDistance: CGFloat = 25.0
     private let minimumDuration: NSTimeInterval = 4.0
 
     //
@@ -70,10 +73,12 @@ class SemesterVerifyView: UIView {
         self.addSubview(self.firstButton)
 
         self.firstButtonLabel.font = UIFont.getTitleFont(40)
+        self.firstButtonLabel.alpha = 0
         self.firstButtonLabel.textAlignment = .Center
         self.firstButtonLabel.numberOfLines = 0
-        let firstAttributedText = "First, press the \nred button."
-        self.firstButtonLabel.text = firstAttributedText
+        let firstAttributedText = NSMutableAttributedString(string: "First, press the \nred button.")
+        firstAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightRedColor, range: NSMakeRange(18, 3))
+        self.firstButtonLabel.attributedText = firstAttributedText
         self.addSubview(firstButtonLabel)
 
         self.secondButtonRipple.backgroundColor = UIColor.lightBlueColor
@@ -88,14 +93,23 @@ class SemesterVerifyView: UIView {
         self.addSubview(self.secondButton)
 
         self.secondButtonLabel.font = UIFont.getTitleFont(40)
+        self.secondButtonLabel.alpha = 0
         self.secondButtonLabel.textAlignment = .Center
         self.secondButtonLabel.numberOfLines = 0
-        let secondAttributedText = "Now, press the \nblue button."
-        self.secondButtonLabel.text = secondAttributedText
+        let secondAttributedText = NSMutableAttributedString(string: "Now, press the \nblue button.")
+        secondAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightBlueColor, range: NSMakeRange(16, 4))
+        self.secondButtonLabel.attributedText = secondAttributedText
         self.addSubview(secondButtonLabel)
 
         self.progressBar.setHeight(5)
         self.addSubview(self.progressBar)
+
+        self.finalButton.setWidth(100)
+        self.finalButton.setHeight(50)
+        self.finalButton.setTitle("Proceed!", forState: .Normal)
+        self.finalButton.backgroundColor = UIColor.lightGreenColor
+        self.finalButton.layer.cornerRadius = 5
+        self.finalButton.alpha = 0
     }
 
     private func setupActions() {
@@ -136,6 +150,8 @@ class SemesterVerifyView: UIView {
         self.secondButtonLabel.setHeight(self.labelHeight)
 
         self.progressBar.setY(CGRectGetMaxY(self.firstButtonLabel.frame) + UIConstants.textMargin)
+
+        self.finalButton.centerInSuperview()
     }
 
     //
@@ -164,6 +180,13 @@ class SemesterVerifyView: UIView {
     }
 
     //
+    // MARK: - Public Methods
+    //
+    func showFirstLabel() {
+        self.showLabel(self.firstButtonLabel)
+    }
+
+    //
     // MARK: - Private Methods
     //
     private func animateProgress(ripple: UIView, button: UIView) {
@@ -178,8 +201,10 @@ class SemesterVerifyView: UIView {
                     self.cancelProgressBar()
                     if button == self.firstButton {
                         self.firstButtonDone = true
+                        self.hideLabel(self.firstButtonLabel)
                     } else {
                         self.secondButtonDone = true
+                        self.hideLabel(self.secondButtonLabel)
                     }
                 }
         }
@@ -191,8 +216,28 @@ class SemesterVerifyView: UIView {
         UIView.animateWithDuration(self.minimumDuration, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
             ripple.transform = CGAffineTransformIdentity
             ripple.alpha = 0
-        }, completion: nil)
+            }) { (completed) -> Void in
+                if button == self.firstButton {
+                    self.showLabel(self.secondButtonLabel)
+                }
+        }
     }
+
+    private func showLabel(label: UILabel) {
+        label.alpha = 0
+        label.moveY(-self.labelMoveDistance)
+        UIView.animateWithDuration(UIConstants.normalAnimationTime, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
+            label.alpha = 1
+            label.moveY(self.labelMoveDistance)
+            }, completion: nil)
+    }
+
+    private func hideLabel(label: UILabel) {
+        UIView.animateWithDuration(UIConstants.normalAnimationTime, delay: 0, options: .CurveEaseIn, animations: { () -> Void in
+            label.alpha = 0
+            }, completion: nil)
+    }
+
 
     private func cancelProgressBar() {
         self.progressBar.frame = self.progressBar.layer.presentationLayer()!.frame // Preserve the current frame in the animation

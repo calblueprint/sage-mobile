@@ -76,8 +76,8 @@ class SemesterVerifyView: UIView {
         self.firstButtonLabel.alpha = 0
         self.firstButtonLabel.textAlignment = .Center
         self.firstButtonLabel.numberOfLines = 0
-        let firstAttributedText = NSMutableAttributedString(string: "First, press the \nred button.")
-        firstAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightRedColor, range: NSMakeRange(18, 3))
+        let firstAttributedText = NSMutableAttributedString(string: "First, hold the \nred button.")
+        firstAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightRedColor, range: NSMakeRange(17, 3))
         self.firstButtonLabel.attributedText = firstAttributedText
         self.addSubview(self.firstButtonLabel)
 
@@ -96,8 +96,8 @@ class SemesterVerifyView: UIView {
         self.secondButtonLabel.alpha = 0
         self.secondButtonLabel.textAlignment = .Center
         self.secondButtonLabel.numberOfLines = 0
-        let secondAttributedText = NSMutableAttributedString(string: "Now, press the \nblue button.")
-        secondAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightBlueColor, range: NSMakeRange(16, 4))
+        let secondAttributedText = NSMutableAttributedString(string: "Now, hold the \nblue button.")
+        secondAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightBlueColor, range: NSMakeRange(15, 4))
         self.secondButtonLabel.attributedText = secondAttributedText
         self.addSubview(self.secondButtonLabel)
 

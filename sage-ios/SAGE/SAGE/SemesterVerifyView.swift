@@ -13,6 +13,7 @@ import FontAwesomeKit
 class SemesterVerifyView: UIView {
 
     let cancelButton = UIButton()
+    let finalButton = SGButton()
 
     private let firstButtonRipple = UIView()
     private let firstButton = UIView()
@@ -26,7 +27,6 @@ class SemesterVerifyView: UIView {
 
     private let progressBar = UIView()
 
-    private let finalButton = SGButton()
 
     private let buttonSize: CGFloat = 70.0
     private let buttonMargin: CGFloat = 50.0

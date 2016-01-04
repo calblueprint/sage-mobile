@@ -38,7 +38,7 @@ public class ViewUtils {
             actionBar.setElevation(elevation);
     }
 
-    public static void setElevation(View view, int elevation) {
+    public static void setElevation(View view, float elevation) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             view.setElevation(elevation);
     }

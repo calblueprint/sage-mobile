@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.adapters.IconPagerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -26,7 +26,9 @@ public class MainFragment extends Fragment {
 
     private IconPagerAdapter mAdapter;
     private BaseInterface mBaseInterface;
+
     private float mMinAlpha;
+    private float mMinElevation;
 
     public static MainFragment newInstance() { return new MainFragment(); }
 
@@ -38,6 +40,7 @@ public class MainFragment extends Fragment {
         TypedValue value = new TypedValue();
         getResources().getValue(R.dimen.tabs_alpha, value, true);
         mMinAlpha = value.getFloat();
+        mMinElevation = getResources().getDimensionPixelSize(R.dimen.tab_layout_elevation);
     }
 
     @Override
@@ -77,22 +80,15 @@ public class MainFragment extends Fragment {
                 float toAlpha = (1 - positionOffset) * (1 - mMinAlpha) + mMinAlpha;
                 float fromAlpha = (1 - toAlpha) + mMinAlpha;
 
-                Log.e("test", "position: " + position);
-                Log.e("test", "toalpha: " + toAlpha);
-                Log.e("test", "fromAlpha: " + fromAlpha);
-
                 mAdapter.getTabView(position).setImageAlpha(toAlpha);
 
                 if (position + 1 < mAdapter.getCount()) {
-
-                    Log.e("test", "position: " + (position + 1));
-                    Log.e("test", "toalpha: " + toAlpha);
-                    Log.e("test", "fromAlpha: " + fromAlpha);
-
                     mAdapter.getTabView(position + 1).setImageAlpha(fromAlpha);
                 }
 
-                Log.e("test", "done");
+                if (mAdapter.getItem(position) instanceof AdminPanelFragment) {
+                    ViewUtils.setElevation(mTabLayout, mMinElevation * (1 - positionOffset));
+                }
             }
 
             @Override

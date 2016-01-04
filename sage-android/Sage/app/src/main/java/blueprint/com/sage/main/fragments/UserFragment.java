@@ -21,6 +21,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.PromoteInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.users.EditUserActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -53,6 +54,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
     private User mUser;
 
     private BaseInterface mBaseInterface;
+    private ToolbarInterface mToolbarInterface;
 
     private static final int DIALOG_CODE = 200;
     private static final String DIALOG_TAG = "UserFragment";
@@ -69,6 +71,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBaseInterface = (BaseInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
 
@@ -86,12 +89,19 @@ public class UserFragment extends Fragment implements PromoteInterface {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        mToolbarInterface.setToolbarElevation(0);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mToolbarInterface.setToolbarElevation(getResources().getDimensionPixelSize(R.dimen.tab_layout_elevation));
     }
 
 //    @Override

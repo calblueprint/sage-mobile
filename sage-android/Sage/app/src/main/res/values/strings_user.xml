@@ -13,19 +13,8 @@
 
     <!-- Promote user -->
     <string name="user_promote_dialog_title">Set user role as:</string>
-
-    <string-array name="user_promote_options">
-        <item>Student</item>
-        <item>Admin</item>
-    </string-array>
-
     <string name="user_status_dialog_title">Set user status as:</string>
 
-    <string-array name="user_status_options">
-        <item>Inactive</item>
-        <item>Archive</item>
-        <item>Active</item>
-    </string-array>
 
     <!-- Profile -->
     <string name="user_zero">0</string>

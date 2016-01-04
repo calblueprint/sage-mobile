@@ -8,19 +8,32 @@ import android.support.v4.app.DialogFragment;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.interfaces.ListDialogInterface;
-import lombok.Data;
+import lombok.Setter;
 
 /**
  * Created by charlesx on 1/4/16.
  * Shows a dialog where user can choose between a list of items
  */
-public @Data class ListDialog extends DialogFragment {
+public class ListDialog extends DialogFragment {
 
+    @Setter
     private ListDialogInterface listInterface;
-    private int list;
+
+    @Setter
+    private String[] list;
+
+    @Setter
     private int title;
 
     public static ListDialog newInstance(ListDialogInterface listInterface, int title, int list) {
+        ListDialog dialog = new ListDialog();
+        dialog.setListInterface(listInterface);
+        dialog.setList(dialog.getResources().getStringArray(list));
+        dialog.setTitle(title);
+        return dialog;
+    }
+
+    public static ListDialog newInstance(ListDialogInterface listInterface, int title, String[] list) {
         ListDialog dialog = new ListDialog();
         dialog.setListInterface(listInterface);
         dialog.setList(list);
@@ -32,9 +45,7 @@ public @Data class ListDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        final String[] roles = getResources().getStringArray(R.array.user_promote_options);
-
-        builder.setTitle(title).setItems(roles,
+        builder.setTitle(title).setItems(list,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

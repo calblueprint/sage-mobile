@@ -150,7 +150,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     public void onPromoteClick(View view) {
         ListDialog dialog = ListDialog.newInstance(this,
                 R.string.user_promote_dialog_title,
-                R.array.user_promote_options);
+                User.ROLE_SPINNER);
         dialog.setTargetFragment(this, PROMOTE_DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
     }
@@ -159,7 +159,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     public void onStatusClick(View view) {
         ListDialog dialog = ListDialog.newInstance(this,
                 R.string.user_status_dialog_title,
-                R.array.user_status_options);
+                User.STATUS_SPINNER);
         dialog.setTargetFragment(this, STATUS_DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
     }

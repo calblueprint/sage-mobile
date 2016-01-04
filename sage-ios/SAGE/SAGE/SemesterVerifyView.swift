@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Darwin
 import FontAwesomeKit
 
 class SemesterVerifyView: UIView {
@@ -23,7 +24,8 @@ class SemesterVerifyView: UIView {
 
     private let buttonSize: CGFloat = 70.0
     private let buttonMargin: CGFloat = 50.0
-    private let rippleSize: CGFloat = UIScreen.mainScreen().bounds.height * 2 * 1.5
+    private let rippleSize: CGFloat =
+        sqrt(2*UIConstants.screenWidth*UIConstants.screenWidth + 2*UIConstants.screenHeight*UIConstants.screenHeight)
 
     private let minimumDuration: NSTimeInterval = 4.0
 
@@ -77,10 +79,12 @@ class SemesterVerifyView: UIView {
     private func setupActions() {
         let firstGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "firstButtonPressed:")
         firstGestureRecognizer.minimumPressDuration = self.minimumDuration
+        firstGestureRecognizer.allowableMovement = buttonSize
         self.firstButton.addGestureRecognizer(firstGestureRecognizer)
 
         let secondGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "secondButtonPressed:")
         secondGestureRecognizer.minimumPressDuration = self.minimumDuration
+        secondGestureRecognizer.allowableMovement = buttonSize
         self.secondButton.addGestureRecognizer(secondGestureRecognizer)
     }
 

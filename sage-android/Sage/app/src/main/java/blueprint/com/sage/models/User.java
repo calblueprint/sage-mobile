@@ -28,13 +28,13 @@ public @Data class User {
     private int schoolId;
     private int directorId;
     private int role;
+    private int status;
     private int volunteerType;
     private int totalTime;
     private String password;
     private String currentPassword;
     private String passwordConfirmation;
     private String imageUrl;
-    private boolean active;
 
     @JsonIgnore
     private int schoolSelected = -1;

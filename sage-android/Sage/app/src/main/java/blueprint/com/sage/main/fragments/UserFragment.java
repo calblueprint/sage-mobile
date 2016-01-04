@@ -1,11 +1,7 @@
 package blueprint.com.sage.main.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -186,12 +182,16 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 
-    public void selectedRole(int selection) {
-        mUser.setRole(selection);
-        Requests.Users.with(getActivity()).makePromoteRequest(mUser);
-    }
-
-    public void selectedStatus(int selection, int requestCode) {
-
+    public void selectedItem(int selection, int requestCode) {
+        switch (requestCode) {
+            case PROMOTE_DIALOG_CODE:
+                mUser.setRole(selection);
+                Requests.Users.with(getActivity()).makePromoteRequest(mUser);
+                break;
+            case STATUS_DIALOG_CODE:
+                mUser.setStatus(selection);
+                Requests.Users.with(getActivity()).makeStatusRequest(mUser);
+                break;
+        }
     }
 }

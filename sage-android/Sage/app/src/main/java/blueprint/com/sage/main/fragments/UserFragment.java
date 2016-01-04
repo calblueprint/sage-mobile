@@ -12,6 +12,7 @@ import android.widget.TextView;
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
+import blueprint.com.sage.events.users.StatusUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
@@ -180,6 +181,10 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     public void onEvent(PromoteUserEvent event) {
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(StatusUserEvent event) {
+        Snackbar.make(mLayout, "You've change this user's status!", Snackbar.LENGTH_SHORT).show();
     }
 
     public void selectedItem(int selection, int requestCode) {

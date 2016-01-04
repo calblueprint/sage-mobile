@@ -4,14 +4,11 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import blueprint.com.sage.R;
+import blueprint.com.sage.shared.views.ImageTabView;
 
 /**
  * Created by charlesx on 12/23/15.
@@ -20,7 +17,7 @@ public class IconPagerAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> mFragments;
     private List<Integer> mDrawables;
-    private List<View> mTabViews;
+    private List<ImageTabView> mTabViews;
     private Context mContext;
 
     public IconPagerAdapter(FragmentManager fm, Context context) {
@@ -37,7 +34,7 @@ public class IconPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() { return mFragments.size(); }
 
-    public View getTabView(int position) {
+    public ImageTabView getTabView(int position) {
         return mTabViews.get(position);
     }
 
@@ -45,11 +42,8 @@ public class IconPagerAdapter extends FragmentPagerAdapter {
         mFragments.add(fragment);
         mDrawables.add(drawableId);
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.tab_view, null);
-
-        ImageView imageView = (ImageView) view.findViewById(R.id.tab_view_image);
-        imageView.setImageResource(drawableId);
-
-        mTabViews.add(view);
+        ImageTabView tabView = new ImageTabView(mContext);
+        tabView.setImage(drawableId);
+        mTabViews.add(tabView);
     }
 }

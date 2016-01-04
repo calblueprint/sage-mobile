@@ -75,14 +75,16 @@ public class MainFragment extends Fragment {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 float toAlpha = (1 - positionOffset) * (1 - mMinAlpha) + mMinAlpha;
-                float fromAlpha = Math.min(1 - toAlpha, mMinAlpha);
+                float fromAlpha = Math.max(1 - toAlpha, mMinAlpha);
 
-                Log.e("test", "done");
+                Log.e("test", "position: " + position);
+                Log.e("test", "toalpha: " + toAlpha);
+                Log.e("test", "fromAlpha: " + fromAlpha);
 
-                mAdapter.getTabView(position).setAlpha(toAlpha);
+                mAdapter.getTabView(position).setImageAlpha(toAlpha);
 
                 if (position + 1 < mAdapter.getCount()) {
-                    mAdapter.getTabView(position + 1).setAlpha(fromAlpha);
+                    mAdapter.getTabView(position + 1).setImageAlpha(fromAlpha);
                 }
 
                 Log.e("test", "done");

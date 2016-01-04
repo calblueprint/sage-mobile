@@ -17,15 +17,20 @@ class SemesterVerifyView: UIView {
     private let firstButtonRipple = UIView()
     private let firstButton = UIView()
     private let firstButtonLabel = UILabel()
+    private var firstButtonDone = false
 
     private let secondButtonRipple = UIView()
     private let secondButton = UIView()
     private let secondButtonLabel = UILabel()
+    private var secondButtonDone = false
+
+    private let progressBar = UIView()
 
     private let buttonSize: CGFloat = 70.0
     private let buttonMargin: CGFloat = 50.0
     private let rippleSize: CGFloat =
         sqrt(2*UIConstants.screenWidth*UIConstants.screenWidth + 2*UIConstants.screenHeight*UIConstants.screenHeight)
+    private let labelHeight: CGFloat = 100.0
 
     private let minimumDuration: NSTimeInterval = 4.0
 
@@ -45,6 +50,14 @@ class SemesterVerifyView: UIView {
 
     private func setupSubviews() {
 
+        self.cancelButton.setWidth(UIConstants.barbuttonSize)
+        self.cancelButton.setHeight(UIConstants.barbuttonSize)
+        let cancelButtonIcon = FAKIonIcons.closeRoundIconWithSize(UIConstants.barbuttonIconSize)
+        cancelButtonIcon.setAttributes([NSForegroundColorAttributeName: UIColor.blackColor()])
+        let cancelButtonImage = cancelButtonIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        self.cancelButton.setImage(cancelButtonImage, forState: UIControlState.Normal)
+        self.addSubview(self.cancelButton)
+
         self.firstButtonRipple.backgroundColor = UIColor.lightRedColor
         self.firstButtonRipple.setSize(width: self.rippleSize, height: self.rippleSize)
         self.firstButtonRipple.layer.cornerRadius = self.rippleSize/2
@@ -55,6 +68,13 @@ class SemesterVerifyView: UIView {
         self.firstButton.setSize(width: self.buttonSize, height: self.buttonSize)
         self.firstButton.layer.cornerRadius = self.buttonSize/2
         self.addSubview(self.firstButton)
+
+        self.firstButtonLabel.font = UIFont.getTitleFont(40)
+        self.firstButtonLabel.textAlignment = .Center
+        self.firstButtonLabel.numberOfLines = 0
+        let firstAttributedText = "First, press the \nred button."
+        self.firstButtonLabel.text = firstAttributedText
+        self.addSubview(firstButtonLabel)
 
         self.secondButtonRipple.backgroundColor = UIColor.lightBlueColor
         self.secondButtonRipple.setSize(width: self.rippleSize, height: self.rippleSize)
@@ -67,25 +87,25 @@ class SemesterVerifyView: UIView {
         self.secondButton.layer.cornerRadius = self.buttonSize/2
         self.addSubview(self.secondButton)
 
-        self.cancelButton.setWidth(UIConstants.barbuttonSize)
-        self.cancelButton.setHeight(UIConstants.barbuttonSize)
-        let cancelButtonIcon = FAKIonIcons.closeRoundIconWithSize(UIConstants.barbuttonIconSize)
-        cancelButtonIcon.setAttributes([NSForegroundColorAttributeName: UIColor.blackColor()])
-        let cancelButtonImage = cancelButtonIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-        self.cancelButton.setImage(cancelButtonImage, forState: UIControlState.Normal)
-        self.addSubview(self.cancelButton)
+        self.secondButtonLabel.font = UIFont.getTitleFont(40)
+        self.secondButtonLabel.textAlignment = .Center
+        self.secondButtonLabel.numberOfLines = 0
+        let secondAttributedText = "Now, press the \nblue button."
+        self.secondButtonLabel.text = secondAttributedText
+        self.addSubview(secondButtonLabel)
+
+        self.progressBar.setHeight(5)
+        self.addSubview(self.progressBar)
     }
 
     private func setupActions() {
-        let firstGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "firstButtonPressed:")
-        firstGestureRecognizer.minimumPressDuration = self.minimumDuration
-        firstGestureRecognizer.allowableMovement = buttonSize
-        self.firstButton.addGestureRecognizer(firstGestureRecognizer)
+        let firstBeginRecognizer = UILongPressGestureRecognizer(target: self, action: "firstButtonPressed:")
+        firstBeginRecognizer.minimumPressDuration = 0.01
+        self.firstButton.addGestureRecognizer(firstBeginRecognizer)
 
-        let secondGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "secondButtonPressed:")
-        secondGestureRecognizer.minimumPressDuration = self.minimumDuration
-        secondGestureRecognizer.allowableMovement = buttonSize
-        self.secondButton.addGestureRecognizer(secondGestureRecognizer)
+        let secondBeginRecognizer = UILongPressGestureRecognizer(target: self, action: "secondButtonPressed:")
+        secondBeginRecognizer.minimumPressDuration = 0.01
+        self.secondButton.addGestureRecognizer(secondBeginRecognizer)
     }
 
     //
@@ -94,48 +114,91 @@ class SemesterVerifyView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
+        self.cancelButton.setX(8)
+        self.cancelButton.setY(UIConstants.statusBarHeight)
+
         self.firstButton.setX(self.buttonMargin)
         self.firstButton.alignBottomWithMargin(self.buttonMargin)
 
         self.firstButtonRipple.center = self.firstButton.center
+
+        self.firstButtonLabel.setY(UIConstants.navbarHeight)
+        self.firstButtonLabel.fillWidth()
+        self.firstButtonLabel.setHeight(self.labelHeight)
 
         self.secondButton.alignRightWithMargin(self.buttonMargin)
         self.secondButton.alignBottomWithMargin(self.buttonMargin)
 
         self.secondButtonRipple.center = self.secondButton.center
 
-        self.cancelButton.setX(8)
-        self.cancelButton.setY(UIConstants.statusBarHeight)
+        self.secondButtonLabel.setY(UIConstants.navbarHeight)
+        self.secondButtonLabel.fillWidth()
+        self.secondButtonLabel.setHeight(self.labelHeight)
+
+        self.progressBar.setY(CGRectGetMaxY(self.firstButtonLabel.frame) + UIConstants.textMargin)
     }
 
     //
     // MARK: - Gesture Recognizers
     //
-    @objc private func firstButtonPressed(sender: UIGestureRecognizer!) {
+    @objc private func firstButtonPressed(sender: UIGestureRecognizer!) { // Begin long pressing
         if sender.state == .Began {
-            self.rippleView(self.firstButtonRipple, button: self.firstButton)
+            self.animateProgress(self.firstButtonRipple, button: self.firstButton)
+        } else if sender.state == .Ended {
+            if !self.firstButtonDone {
+                self.cancelProgressBar()
+            }
         }
     }
 
-    @objc private func secondButtonPressed(sender: UIGestureRecognizer!) {
-        if sender.state == .Began {
-            self.rippleView(self.secondButtonRipple, button: self.secondButton)
+    @objc private func secondButtonPressed(sender: UIGestureRecognizer!) { // Begin long pressing
+        if self.firstButtonDone {
+            if sender.state == .Began {
+                self.animateProgress(self.secondButtonRipple, button: self.secondButton)
+            }  else if sender.state == .Ended {
+                if !self.secondButtonDone {
+                    self.cancelProgressBar()
+                }
+            }
         }
     }
 
     //
     // MARK: - Private Methods
     //
+    private func animateProgress(ripple: UIView, button: UIView) {
+        self.progressBar.backgroundColor = button.backgroundColor
+        self.progressBar.setWidth(0)
+        self.progressBar.alpha = 1
+        UIView.animateWithDuration(self.minimumDuration, delay: 0, options: .CurveLinear, animations: { () -> Void in
+            self.progressBar.fillWidth()
+            }) { (completed) -> Void in
+                if completed {
+                    self.rippleView(ripple, button: button)
+                    self.cancelProgressBar()
+                    if button == self.firstButton {
+                        self.firstButtonDone = true
+                    } else {
+                        self.secondButtonDone = true
+                    }
+                }
+        }
+    }
+
     private func rippleView(ripple: UIView, button: UIView) {
         button.alpha = 0
         ripple.transform = CGAffineTransformMakeScale(buttonSize/rippleSize, buttonSize/rippleSize)
         UIView.animateWithDuration(self.minimumDuration, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
             ripple.transform = CGAffineTransformIdentity
             ripple.alpha = 0
-            }) { (completed) -> Void in
-                if completed {
+        }, completion: nil)
+    }
 
-                }
-        }
+    private func cancelProgressBar() {
+        self.progressBar.frame = self.progressBar.layer.presentationLayer()!.frame // Preserve the current frame in the animation
+        self.progressBar.layer.removeAllAnimations()
+        UIView.animateWithDuration(UIConstants.normalAnimationTime, animations: { () -> Void in
+            self.progressBar.alpha = 0
+        })
     }
 }

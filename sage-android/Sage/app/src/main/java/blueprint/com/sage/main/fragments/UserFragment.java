@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
@@ -24,7 +25,6 @@ import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.users.EditUserActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
-import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,6 +46,9 @@ public class UserFragment extends Fragment implements PromoteInterface {
     @Bind(R.id.user_hours_week) TextView mTotalWeek;
 
     @Bind(R.id.user_photo) CircleImageView mPhoto;
+
+    @Bind(R.id.user_settings_layout) LinearLayout mUserSettingsLayout;
+    @Bind(R.id.admin_settings_layout) LinearLayout mAdminSettingsLayout;
 
     private User mUser;
 
@@ -75,6 +78,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
         View view = inflater.inflate(R.layout.fragment_user, parent, false);
         ButterKnife.bind(this, view);
         initializeUser();
+        initializeSettings();
         return view;
     }
 
@@ -82,7 +86,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        ViewUtils.setToolBarElevation(getActivity(), 0);
     }
 
     @Override
@@ -90,30 +93,6 @@ public class UserFragment extends Fragment implements PromoteInterface {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ViewUtils.setToolBarElevation(getActivity(), 8);
-    }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        menu.clear();
-//
-//        int layoutId = 0;
-//        User currentUser = mBaseInterface.getUser();
-//        if (currentUser.getId() == mUser.getId()) {
-//            layoutId = R.menu.menu_edit_delete;
-//        } else if (currentUser.isAdmin()) {
-//            layoutId = R.menu.menu_user_promote;
-//        }
-//
-//        if (layoutId != 0)
-//            inflater.inflate(layoutId, menu);
-//
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
@@ -144,6 +123,16 @@ public class UserFragment extends Fragment implements PromoteInterface {
 
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());
+    }
+
+    private void initializeSettings() {
+        if (mBaseInterface.getUser().getId() == mUser.getId()) {
+            mAdminSettingsLayout.setVisibility(View.GONE);
+            mUserSettingsLayout.setVisibility(View.VISIBLE);
+        } else if (mBaseInterface.getUser().isAdmin()) {
+            mAdminSettingsLayout.setVisibility(View.VISIBLE);
+            mUserSettingsLayout.setVisibility(View.GONE);
+        }
     }
 
     private void openPromoteDialog() {

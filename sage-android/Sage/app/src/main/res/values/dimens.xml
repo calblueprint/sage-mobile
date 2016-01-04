@@ -3,6 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <!-- Sign up....fraction? -->
+    <!-- Sign up alpha-->
     <item format="float" name="white_dots_alpha" type="dimen">0.5</item>
+
+    <!-- Tab Fragment -->
+    <item format="float" name="tabs_alpha" type="dimen">0.5</item>
+
+    <dimen name="tab_layout_elevation">8dp</dimen>
+    <dimen name="tab_layout_image">24dp</dimen>
 </resources>

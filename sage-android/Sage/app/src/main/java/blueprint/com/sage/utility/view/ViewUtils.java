@@ -38,6 +38,11 @@ public class ViewUtils {
             actionBar.setElevation(elevation);
     }
 
+    public static void setElevation(View view, int elevation) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            view.setElevation(elevation);
+    }
+
     public static void loadImage(Activity activity, String url, ImageView imageView) {
         Picasso.with(activity).load(url).into(imageView);
     }

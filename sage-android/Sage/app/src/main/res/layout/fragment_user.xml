@@ -151,9 +151,11 @@
         <View style="@style/PanelDivider" />
 
         <include layout="@layout/user_settings"
-            android:id="@+id/user_settings_layout" />
+            android:id="@+id/user_settings_layout"
+            android:visibility="gone" />
 
         <include layout="@layout/admin_settings"
-            android:id="@+id/admin_settings_layout" />
+            android:id="@+id/admin_settings_layout"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class MainFragment extends Fragment {
 
     private IconPagerAdapter mAdapter;
     private BaseInterface mBaseInterface;
+    private float mMinAlpha;
 
     public static MainFragment newInstance() { return new MainFragment(); }
 
@@ -31,6 +34,10 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBaseInterface = (BaseInterface) getActivity();
+
+        TypedValue value = new TypedValue();
+        getResources().getValue(R.dimen.tabs_alpha, value, true);
+        mMinAlpha = value.getFloat();
     }
 
     @Override
@@ -55,5 +62,37 @@ public class MainFragment extends Fragment {
 
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setSelectedTabIndicatorHeight(0);
+
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            TabLayout.Tab tab = mTabLayout.getTabAt(i);
+            if (tab != null) {
+                tab.setCustomView(mAdapter.getTabView(i));
+            }
+        }
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                float toAlpha = (1 - positionOffset) * (1 - mMinAlpha) + mMinAlpha;
+                float fromAlpha = Math.min(1 - toAlpha, mMinAlpha);
+
+                Log.e("test", "done");
+
+                mAdapter.getTabView(position).setAlpha(toAlpha);
+
+                if (position + 1 < mAdapter.getCount()) {
+                    mAdapter.getTabView(position + 1).setAlpha(fromAlpha);
+                }
+
+                Log.e("test", "done");
+            }
+
+            @Override
+            public void onPageSelected(int position) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
     }
 }

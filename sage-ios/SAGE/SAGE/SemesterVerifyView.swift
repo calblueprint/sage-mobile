@@ -79,7 +79,7 @@ class SemesterVerifyView: UIView {
         let firstAttributedText = NSMutableAttributedString(string: "First, press the \nred button.")
         firstAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightRedColor, range: NSMakeRange(18, 3))
         self.firstButtonLabel.attributedText = firstAttributedText
-        self.addSubview(firstButtonLabel)
+        self.addSubview(self.firstButtonLabel)
 
         self.secondButtonRipple.backgroundColor = UIColor.lightBlueColor
         self.secondButtonRipple.setSize(width: self.rippleSize, height: self.rippleSize)
@@ -99,17 +99,19 @@ class SemesterVerifyView: UIView {
         let secondAttributedText = NSMutableAttributedString(string: "Now, press the \nblue button.")
         secondAttributedText.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightBlueColor, range: NSMakeRange(16, 4))
         self.secondButtonLabel.attributedText = secondAttributedText
-        self.addSubview(secondButtonLabel)
+        self.addSubview(self.secondButtonLabel)
 
         self.progressBar.setHeight(5)
         self.addSubview(self.progressBar)
 
         self.finalButton.setWidth(100)
-        self.finalButton.setHeight(50)
+        self.finalButton.setHeight(44)
         self.finalButton.setTitle("Proceed!", forState: .Normal)
+        self.finalButton.titleLabel!.font = UIFont.getSemiboldFont(17)
         self.finalButton.backgroundColor = UIColor.lightGreenColor
         self.finalButton.layer.cornerRadius = 5
         self.finalButton.alpha = 0
+        self.addSubview(self.finalButton)
     }
 
     private func setupActions() {
@@ -219,6 +221,8 @@ class SemesterVerifyView: UIView {
             }) { (completed) -> Void in
                 if button == self.firstButton {
                     self.showLabel(self.secondButtonLabel)
+                } else {
+                    self.showFinalButton()
                 }
         }
     }
@@ -245,5 +249,13 @@ class SemesterVerifyView: UIView {
         UIView.animateWithDuration(UIConstants.normalAnimationTime, animations: { () -> Void in
             self.progressBar.alpha = 0
         })
+    }
+
+    private func showFinalButton() {
+        self.finalButton.alpha = 1
+        self.finalButton.transform = CGAffineTransformMakeScale(0.05, 0.05)
+        UIView.animateWithDuration(UIConstants.normalAnimationTime, delay: 0, usingSpringWithDamping: UIConstants.defaultSpringDampening, initialSpringVelocity: UIConstants.defaultSpringVelocity, options: [], animations: { () -> Void in
+            self.finalButton.transform = CGAffineTransformIdentity
+            }, completion: nil)
     }
 }

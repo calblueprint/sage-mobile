@@ -10,13 +10,10 @@
     <string name="user_current_password">Current Password</string>
     <string name="user_first_name">First Name</string>
     <string name="user_last_name">Last Name</string>
-    
+
     <!-- Promote user -->
-    <string name="user_promote_dialog_title">Set user as:</string>
-    <string-array name="user_promote_options">
-        <item>Student</item>
-        <item>Admin</item>
-    </string-array>
+    <string name="user_promote_dialog_title">Set user role as:</string>
+    <string name="user_status_dialog_title">Set user status as:</string>
 
 
     <!-- Profile -->
@@ -24,4 +21,14 @@
     <string name="user_slash">/</string>
     <string name="user_hours">hours</string>
     <string name="user_hours_week">hours/week</string>
+
+    <string name="user_info">Info</string>
+    <string name="user_check_ins">Check ins</string>
+
+    <string name="user_edit">Edit profile</string>
+
+    <string name="user_general_settings">General</string>
+    <string name="user_about">About</string>
+    <string name="user_log_out">Log Out</string>
+
 </resources>

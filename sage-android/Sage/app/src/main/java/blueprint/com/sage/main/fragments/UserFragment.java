@@ -1,41 +1,39 @@
 package blueprint.com.sage.main.fragments;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.browse.fragments.EditUserFragment;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
+import blueprint.com.sage.events.users.StatusUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.fragments.ListDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.shared.interfaces.PromoteInterface;
+import blueprint.com.sage.shared.interfaces.ListDialogInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.users.EditUserActivity;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
-import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/22/15.
  * Shows a user
  */
-public class UserFragment extends Fragment implements PromoteInterface {
+public class UserFragment extends Fragment implements ListDialogInterface {
 
     @Bind(R.id.user_layout) View mLayout;
     @Bind(R.id.user_name) TextView mName;
@@ -48,11 +46,16 @@ public class UserFragment extends Fragment implements PromoteInterface {
 
     @Bind(R.id.user_photo) CircleImageView mPhoto;
 
+    @Bind(R.id.user_settings_layout) LinearLayout mUserSettingsLayout;
+    @Bind(R.id.admin_settings_layout) LinearLayout mAdminSettingsLayout;
+
     private User mUser;
 
     private BaseInterface mBaseInterface;
+    private ToolbarInterface mToolbarInterface;
 
-    private static final int DIALOG_CODE = 200;
+    private static final int PROMOTE_DIALOG_CODE = 200;
+    private static final int STATUS_DIALOG_CODE = 300;
     private static final String DIALOG_TAG = "UserFragment";
 
     public static UserFragment newInstance(User user) {
@@ -66,8 +69,8 @@ public class UserFragment extends Fragment implements PromoteInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         mBaseInterface = (BaseInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
         Requests.Users.with(getActivity()).makeShowRequest(mUser);
     }
 
@@ -77,6 +80,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
         View view = inflater.inflate(R.layout.fragment_user, parent, false);
         ButterKnife.bind(this, view);
         initializeUser();
+        initializeSettings();
         return view;
     }
 
@@ -84,7 +88,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        ViewUtils.setToolBarElevation(getActivity(), 0);
+        mToolbarInterface.setToolbarElevation(0);
     }
 
     @Override
@@ -96,43 +100,7 @@ public class UserFragment extends Fragment implements PromoteInterface {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ViewUtils.setToolBarElevation(getActivity(), 8);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-
-        int layoutId = 0;
-        User currentUser = mBaseInterface.getUser();
-        if (currentUser.getId() == mUser.getId()) {
-            layoutId = R.menu.menu_edit_delete;
-        } else if (currentUser.isAdmin()) {
-            layoutId = R.menu.menu_user_promote;
-        }
-
-        if (layoutId != 0)
-            inflater.inflate(layoutId, menu);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_edit:
-                FragUtils.replaceBackStack(R.id.container,
-                                           EditUserFragment.newInstance(mUser),
-                                           getActivity());
-                break;
-            case R.id.menu_delete:
-                break;
-            case R.id.user_promote:
-                openPromoteDialog();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
+        mToolbarInterface.setToolbarElevation(getResources().getDimensionPixelSize(R.dimen.tab_layout_elevation));
     }
 
     private void initializeUser() {
@@ -148,10 +116,57 @@ public class UserFragment extends Fragment implements PromoteInterface {
             mSchool.setText(mUser.getSchool().getName());
     }
 
-    private void openPromoteDialog() {
-        PromoteDialog dialog = PromoteDialog.newInstance(this);
-        dialog.setTargetFragment(this, DIALOG_CODE);
+    private void initializeSettings() {
+        if (mBaseInterface.getUser().getId() == mUser.getId()) {
+            mAdminSettingsLayout.setVisibility(View.GONE);
+            mUserSettingsLayout.setVisibility(View.VISIBLE);
+        } else if (mBaseInterface.getUser().isAdmin()) {
+            mAdminSettingsLayout.setVisibility(View.VISIBLE);
+            mUserSettingsLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.user_check_ins)
+    public void onCheckInClick(View view) {
+        // TODO: add check in fragment
+    }
+
+    @OnClick(R.id.user_edit_profile)
+    public void onEditProfileClick(View view) {
+        FragUtils.startActivityBackStack(getActivity(), EditUserActivity.class);
+    }
+
+    @OnClick(R.id.user_about)
+    public void onAboutClick(View view) {
+        // TODO: add about fragment
+    }
+
+    @OnClick(R.id.user_log_out)
+    public void onLogOutClick(View view) {
+        NetworkUtils.logoutCurrentUser(getActivity());
+    }
+
+    @OnClick(R.id.admin_user_change_role)
+    public void onPromoteClick(View view) {
+        ListDialog dialog = ListDialog.newInstance(this,
+                R.string.user_promote_dialog_title,
+                User.ROLE_SPINNER);
+        dialog.setTargetFragment(this, PROMOTE_DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
+    }
+
+    @OnClick(R.id.admin_user_change_status)
+    public void onStatusClick(View view) {
+        ListDialog dialog = ListDialog.newInstance(this,
+                R.string.user_status_dialog_title,
+                User.STATUS_SPINNER);
+        dialog.setTargetFragment(this, STATUS_DIALOG_CODE);
+        dialog.show(getFragmentManager(), DIALOG_TAG);
+    }
+
+    @OnClick(R.id.admin_user_delete)
+    public void onDeleteClick(View view) {
+        NetworkUtils.logoutCurrentUser(getActivity());
     }
 
     public void onEvent(UserEvent event) {
@@ -168,41 +183,20 @@ public class UserFragment extends Fragment implements PromoteInterface {
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 
-    public void selectedRole(int selection) {
-        mUser.setRole(selection);
-        Requests.Users.with(getActivity()).makePromoteRequest(mUser);
+    public void onEvent(StatusUserEvent event) {
+        Snackbar.make(mLayout, "You've change this user's status!", Snackbar.LENGTH_SHORT).show();
     }
 
-    public static class PromoteDialog extends DialogFragment {
-
-        private PromoteInterface mPromoteInterface;
-
-        public static PromoteDialog newInstance(PromoteInterface promoteInterface) {
-            PromoteDialog dialog = new PromoteDialog();
-            dialog.setInterface(promoteInterface);
-            return dialog;
-        }
-
-        public void setInterface(PromoteInterface promoteInterface) {
-            mPromoteInterface = promoteInterface;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-            final String[] roles = getResources().getStringArray(R.array.user_promote_options);
-
-            builder.setTitle(getString(R.string.user_promote_dialog_title)).setItems(roles,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            mPromoteInterface.selectedRole(i);
-                            dialogInterface.dismiss();
-                        }
-                    });
-
-            return builder.show();
+    public void selectedItem(int selection, int requestCode) {
+        switch (requestCode) {
+            case PROMOTE_DIALOG_CODE:
+                mUser.setRole(selection);
+                Requests.Users.with(getActivity()).makePromoteRequest(mUser);
+                break;
+            case STATUS_DIALOG_CODE:
+                mUser.setStatus(selection);
+                Requests.Users.with(getActivity()).makeStatusRequest(mUser);
+                break;
         }
     }
 }

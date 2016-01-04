@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -14,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by charlesx on 11/4/15.
  * Activity that basically adds a nav bar to your activity;
  */
-public class BackAbstractActivity extends AbstractActivity {
+public class BackAbstractActivity extends AbstractActivity implements ToolbarInterface {
 
     @Bind(R.id.toolbar) Toolbar mToolbar;
 
@@ -48,5 +49,9 @@ public class BackAbstractActivity extends AbstractActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
         ViewUtils.hideKeyboard(fragment);
         super.onBackPressed();
+    }
+
+    public void setToolbarElevation(float elevation) {
+        ViewUtils.setElevation(mToolbar, elevation);
     }
 }

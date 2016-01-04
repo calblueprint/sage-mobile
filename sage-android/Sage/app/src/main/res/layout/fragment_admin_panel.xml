@@ -12,87 +12,87 @@
         android:layout_height="match_parent">
 
         <TextView
-            style="@style/AdminPanelHeader"
-            android:text="@string/admin_browse" />
+            style="@style/PanelHeader"
+            android:text="@string/user_log_out" />
 
         <LinearLayout
-            style="@style/AdminPanelLayout"
+            style="@style/PanelLayout"
             android:id="@+id/admin_browse_schools">
 
             <ImageView
-                style="@style/AdminPanelIcon"
+                style="@style/PanelIcon"
                 android:src="@drawable/ic_location_city_black"/>
 
             <TextView
-                style="@style/AdminPanelTitle"
+                style="@style/PanelTitle"
                 android:text="@string/admin_schools" />
 
         </LinearLayout>
 
         <LinearLayout
-            style="@style/AdminPanelLayout"
+            style="@style/PanelLayout"
             android:id="@+id/admin_browse_users">
 
             <ImageView
-                style="@style/AdminPanelIcon"
+                style="@style/PanelIcon"
                 android:src="@drawable/ic_face_black"/>
 
             <TextView
-                style="@style/AdminPanelTitle"
+                style="@style/PanelTitle"
                 android:text="@string/admin_users" />
 
         </LinearLayout>
 
-        <View style="@style/AdminPanelDivider" />
+        <View style="@style/PanelDivider" />
 
         <TextView
-            style="@style/AdminPanelHeader"
+            style="@style/PanelHeader"
             android:text="@string/admin_requests" />
 
         <LinearLayout
-            style="@style/AdminPanelLayout"
+            style="@style/PanelLayout"
             android:id="@+id/admin_request_check_ins">
 
             <ImageView
-                style="@style/AdminPanelIcon"
+                style="@style/PanelIcon"
                 android:src="@drawable/ic_schedule_black"/>
 
             <TextView
-                style="@style/AdminPanelTitle"
+                style="@style/PanelTitle"
                 android:text="@string/admin_check_ins" />
 
         </LinearLayout>
 
         <LinearLayout
-            style="@style/AdminPanelLayout"
+            style="@style/PanelLayout"
             android:id="@+id/admin_request_users">
 
             <ImageView
-                style="@style/AdminPanelIcon"
+                style="@style/PanelIcon"
                 android:src="@drawable/ic_face_black"/>
 
             <TextView
-                style="@style/AdminPanelTitle"
+                style="@style/PanelTitle"
                 android:text="@string/admin_users" />
 
         </LinearLayout>
 
-        <View style="@style/AdminPanelDivider" />
+        <View style="@style/PanelDivider" />
 
         <TextView
-            style="@style/AdminPanelHeader"
+            style="@style/PanelHeader"
             android:text="@string/admin_settings" />
 
         <LinearLayout
-            style="@style/AdminPanelLayout"
+            style="@style/PanelLayout"
             android:id="@+id/admin_settings_semester">
 
             <ImageView
-                style="@style/AdminPanelIcon"
+                style="@style/PanelIcon"
                 android:src="@drawable/ic_alarm_on_black"/>
 
             <TextView
-                style="@style/AdminPanelTitle"
+                style="@style/PanelTitle"
                 android:text="@string/admin_start_semester" />
 
         </LinearLayout>

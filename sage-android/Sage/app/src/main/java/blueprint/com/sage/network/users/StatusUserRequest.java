@@ -15,13 +15,13 @@ import blueprint.com.sage.network.BaseRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 
 /**
- * Created by charlesx on 11/28/15.
+ * Created by charlesx on 1/4/16.
  */
-public class PromoteUserRequest extends BaseRequest {
-    public PromoteUserRequest(final Activity activity, User user,
+public class StatusUserRequest extends BaseRequest {
+    public StatusUserRequest(final Activity activity, User user,
                               final Response.Listener<User> onSuccess,
                               final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "admin", "users", String.valueOf(user.getId()), "promote"),
+        super(Method.POST, makeUrl(null, "admin", "users", String.valueOf(user.getId()), "status"),
                 convertToParams(user, "user", activity),
                 new Response.Listener<JSONObject>() {
                     @Override

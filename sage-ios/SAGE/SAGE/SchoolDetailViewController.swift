@@ -148,4 +148,19 @@ class SchoolDetailViewController: UITableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var userProfile: User
+        if indexPath.section == 0 {
+            userProfile = self.school!.director!
+        } else {
+            userProfile = self.school!.students![indexPath.row]
+        }
+        let viewController = ProfileViewController(user: userProfile)
+        if let topItem = self.navigationController!.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController!.pushViewController(viewController, animated: true)
+    }
+
+    
 }

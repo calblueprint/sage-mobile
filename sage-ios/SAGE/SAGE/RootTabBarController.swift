@@ -22,7 +22,6 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         let titles = [
             NSLocalizedString("Announcements", comment: "Announcements"),
             NSLocalizedString("Check In", comment: "Check In"),
-            NSLocalizedString("My Stats", comment: "My Stats"),
             NSLocalizedString("Profile", comment: "Profile"),
             NSLocalizedString("Admin", comment: "Admin")
         ];
@@ -32,18 +31,15 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize)),
             FAKIonIcons.locationIconWithSize(UIConstants.tabBarIconSize)
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize)),
-            FAKIonIcons.statsBarsIconWithSize(UIConstants.tabBarIconSize)
-                .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize)),
             FAKIonIcons.personIconWithSize(UIConstants.tabBarIconSize)
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
 
         let announcementsViewController = AnnouncementsViewController(style: .Plain)
         let checkInViewController = CheckinViewController()
-        let myStatsViewController = UIViewController()
-        let profileViewController = UIViewController()
+        let profileViewController = ProfileViewController(user: LoginOperations.getUser()!)
         
-        var rootViewControllers = [announcementsViewController, checkInViewController, myStatsViewController, profileViewController]
+        var rootViewControllers = [announcementsViewController, checkInViewController, profileViewController]
         
         // User.currentUser!.role = User.UserRole.Admin
         // comment in the above line to see the admin page

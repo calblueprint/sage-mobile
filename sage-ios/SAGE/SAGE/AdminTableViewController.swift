@@ -112,7 +112,7 @@ class AdminTableViewController: UITableViewController {
             }
         default: break
         }
-        cell.textLabel?.font = UIFont.getDefaultFont(cell.textLabel!.font.pointSize)
+        cell.textLabel?.font = UIFont.normalFont
         return cell
     }
 }

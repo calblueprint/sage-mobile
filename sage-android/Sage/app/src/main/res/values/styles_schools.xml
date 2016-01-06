@@ -31,4 +31,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">16dp</item>
     </style>
+
+    <style name="SchoolMap" parent="DefaultMapWindow">
+        <item name="android:layout_height">200dp</item>
+    </style>
 </resources>

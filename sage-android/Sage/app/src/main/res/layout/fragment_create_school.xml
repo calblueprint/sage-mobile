@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.gms.maps.MapView
-        style="@style/DefaultMapWindow"
+        style="@style/SchoolMap"
         android:id="@+id/create_school_map" />
 
     <LinearLayout

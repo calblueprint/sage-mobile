@@ -11,26 +11,19 @@
 
     <!-- General Errors -->
     <string name="cannot_be_blank">%1$s cannot be blank.</string>
+    <string name="list_empty">Looks like there\'s nothing here!\nPull down to refresh.</string>
+
+    <!-- General Form -->
     <string name="required">Required</string>
     <string name="optional">Optional</string>
-    <string name="list_empty">Looks like there\'s nothing here!\nPull down to refresh.</string>
+    <string name="default_date">Tap to pick date</string>
+    <string name="default_time">Tap to pick time</string>
 
     <!-- Errors -->
     <string name="email_error">Email must be a valid berkeley.edu address.</string>
     <string name="password_blank_error">Password and Confirmation cannot be blank.</string>
     <string name="password_nonmatch_error">Password and Confirmation must match.</string>
     <string name="profile_blank_error">Profile picture cannot be empty.</string>
-
-    <string-array name="volunteer_types">
-        <item>Volunteer</item>
-        <item>One Unit</item>
-        <item>Two Units</item>
-    </string-array>
-
-    <string-array name="role_types">
-        <item>Volunteer</item>
-        <item>Admin</item>
-    </string-array>
 
     <!-- Log in -->
     <string name="shared_preferences">SAGE_ANDROID</string>

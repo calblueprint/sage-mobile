@@ -36,8 +36,6 @@
     <string name="check_in_request_total_time">Total Time:</string>
     <string name="check_in_request_comment">Comments</string>
     <string name="check_in_default_total">0 hrs, 0 min</string>
-    <string name="check_in_default_date">Tap to pick date</string>
-    <string name="check_in_default_time">Tap to pick time</string>
     <string name="check_in_cancel_request">Delete Request</string>
 
     <!-- Check In Request Errors -->

@@ -10,8 +10,7 @@
         style="@style/SchoolMap"
         android:id="@+id/create_school_map" />
 
-    <RelativeLayout
-        style="@style/FormRelativeLayout">
+    <RelativeLayout style="@style/FormRelativeLayout">
 
         <ImageView
             style="@style/FormIcon"
@@ -35,8 +34,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        style="@style/FormRelativeLayout">
+    <RelativeLayout style="@style/FormRelativeLayout">
 
         <ImageView
             style="@style/FormIcon"
@@ -60,8 +58,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <RelativeLayout
-        style="@style/FormRelativeLayout">
+    <RelativeLayout style="@style/FormRelativeLayout">
 
         <ImageView
             style="@style/FormIcon"

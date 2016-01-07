@@ -30,7 +30,7 @@
             <TextView
                 style="@style/FormText"
                 android:id="@+id/check_in_request_date_field"
-                android:hint="@string/check_in_default_date"/>
+                android:hint="@string/default_date"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -58,7 +58,7 @@
             <TextView
                 style="@style/FormText"
                 android:id="@+id/check_in_request_start_field"
-                android:hint="@string/check_in_default_time"/>
+                android:hint="@string/default_time"/>
 
         </LinearLayout>
     </RelativeLayout>
@@ -86,7 +86,7 @@
             <TextView
                 style="@style/FormText"
                 android:id="@+id/check_in_request_end_field"
-                android:hint="@string/check_in_default_time"/>
+                android:hint="@string/default_time"/>
 
         </LinearLayout>
     </RelativeLayout>

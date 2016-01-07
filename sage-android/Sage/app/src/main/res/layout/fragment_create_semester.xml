@@ -6,30 +6,50 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        style="@style/FormRelativeLayout"
-        android:id="@+id/check_in_request_date_layout">
+        style="@style/FormRelativeLayout">
 
         <ImageView
             style="@style/FormIcon"
-            android:id="@+id/check_in_request_date"
+            android:id="@+id/create_semester_start"
             android:src="@drawable/ic_today_black" />
 
         <LinearLayout
             style="@style/FormLinearLayout"
-            android:layout_toRightOf="@id/check_in_request_date"
-            android:layout_toEndOf="@id/check_in_request_date" >
+            android:layout_toRightOf="@id/create_semester_start"
+            android:layout_toEndOf="@id/create_semester_start" >
 
             <TextView
                 style="@style/FormLabel"
-                android:id="@+id/check_in_request_date_label"
-                android:text="@string/check_in_request_date"/>
+                android:text="@string/semester_start_date"/>
 
             <TextView
                 style="@style/FormText"
-                android:id="@+id/check_in_request_date_field"
-                android:hint="@string/check_in_default_date"/>
+                android:id="@+id/create_semester_date"
+                android:hint="@string/default_date"/>
 
         </LinearLayout>
     </RelativeLayout>
 
+    <RelativeLayout style="@style/FormRelativeLayout">
+
+        <ImageView
+            style="@style/FormIcon"
+            android:id="@+id/create_school_director_icon"
+            android:src="@drawable/ic_mail_white" />
+
+        <LinearLayout
+            style="@style/FormLinearLayout"
+            android:layout_toRightOf="@id/create_school_director_icon"
+            android:layout_toEndOf="@id/create_school_director_icon" >
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/semester_season" />
+
+            <Spinner
+                style="@style/FormSpinner"
+                android:id="@+id/create_semester_season" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

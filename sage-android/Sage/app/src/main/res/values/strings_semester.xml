@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="semester_start_date">Start Date</string>
+    <string name="semester_season">Season</string>
+</resources>

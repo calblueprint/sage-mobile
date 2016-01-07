@@ -3,6 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <TextView
+        style="@style/SemesterHeader"
+        android:text="@string/semester_finish_title"/>
+
+    <TextView
+        style="@style/DefaultHeader"
+        android:layout_marginTop="20dp"
+        android:text="@string/semester_finish_subtitle"/>
+
+    <EditText
+        style="@style/SemesterText"
+        android:id="@+id/finish_semester_email"
+        android:layout_marginTop="10dp"
+        android:text="@string/semester_finish_email"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        style="@style/DefaultButton"
+        android:id="@+id/finish_semester_continue"
+        android:layout_marginTop="20dp"
+        android:text="@string/continue_confirm"/>
 
 </LinearLayout>

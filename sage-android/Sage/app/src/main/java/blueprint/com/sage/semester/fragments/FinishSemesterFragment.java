@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  */
 public class FinishSemesterFragment extends Fragment {
 
-    public static FinishSemesterFragment newInstance() { new FinishSemesterFragment(); }
+    public static FinishSemesterFragment newInstance() { return new FinishSemesterFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

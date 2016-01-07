@@ -3,6 +3,14 @@
     <string name="semester_start_date">Start Date</string>
     <string name="semester_season">Season</string>
 
-    <string name="semester_confirm_title">Confirm Request</string>
-    <string name="semester_confirm_message">Are you sure you want to continue? You won\'t be able to modify this date once the semester has started.</string>
+    <!-- Starting semester -->
+    <string name="semester_start_confirm_title">Confirm Request</string>
+    <string name="semester_start_confirm_message">Are you sure you want to continue? You won\'t be able to modify this date once the semester has started.</string>
+
+    <!-- Finishing semester -->
+    <string name="semester_finish_email">Email</string>
+    <string name="semester_finish_title">Finish semester?</string>
+    <string name="semester_finish_subtitle">Please enter your email to proceed.</string>
+    <string name="semester_finish_confirm_title">Confirm Request</string>
+    <string name="semester_finish_confirm_message">Are you sure you want to finish the semester? This action cannot be undone.</string>
 </resources>

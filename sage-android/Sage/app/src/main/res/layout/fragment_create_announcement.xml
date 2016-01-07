@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/create_announcement_layout">
+
+    <LinearLayout
+        style="@style/SchoolLinearLayout">
+
+        <ImageView
+            style="@style/SchoolIcon"
+            android:src="@drawable/ic_announcement_white_24dp" />
+
+        <EditText
+            style="@style/SchoolText"
+            android:id="@+id/create_announcement_title"
+            android:inputType="textMultiLine"
+            android:hint="@string/announcement_title" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SchoolLinearLayout">
+
+        <ImageView
+            style="@style/SchoolIcon"
+            android:src="@drawable/ic_location_city_white"
+            android:layout_gravity="top"/>
+
+        <Spinner
+            style="@style/SchoolSpinner"
+            android:id="@+id/announcement_category"
+            android:hint="@string/announcement_category" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/SchoolLinearLayout">
+
+        <Spinner
+            style="@style/SchoolSpinner"
+            android:id="@+id/announcement_school_list"
+            android:hint="@string/announcement_category"
+            android:visibility="gone"
+            android:layout_marginLeft="56dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/SchoolLinearLayout">
+
+        <ImageView
+            style="@style/SchoolIcon"
+            android:src="@drawable/ic_mail_white"
+            android:layout_gravity="top"/>
+
+        <EditText
+            style="@style/SchoolText"
+            android:id="@+id/create_announcement_body"
+            android:inputType="textMultiLine"
+            android:hint="@string/announcement_body" />
+
+    </LinearLayout>
 
 </LinearLayout>

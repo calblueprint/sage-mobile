@@ -1,5 +1,6 @@
 package blueprint.com.sage.main.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,12 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +32,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     private ArrayList<Announcement> mAnnouncements;
     private AnnouncementsListAdapter mAdapter;
+    private BaseInterface mBaseInterface;
 
     @Bind(R.id.announcements_recycler) RecycleViewEmpty announcementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
@@ -37,10 +41,15 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
 
+    public void initializeAnnouncementsList() {
+        getActivity().setTitle("Announcements");
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAnnouncements = new ArrayList<>();
+        mBaseInterface = (BaseInterface) getActivity();
     }
 
     @Override
@@ -48,6 +57,9 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_announcements_list, container, false);
         ButterKnife.bind(this, view);
+        if (!mBaseInterface.getUser().isAdmin()) {
+            mAddAnnouncementButton.setVisibility(View.GONE);
+        }
         initializeViews();
         return view;
     }
@@ -90,6 +102,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     @OnClick(R.id.add_announcement_fab)
     public void newAnnouncement() {
-//        FragUtils.replaceBackStack(R.id.container, CreateAnnouncementFragment.newInstance(), getActivity());
+        Intent intent = new Intent(getActivity(), CreateAnnouncementActivity.class);
+        startActivity(intent);
     }
 }

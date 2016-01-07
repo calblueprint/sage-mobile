@@ -15,8 +15,7 @@ public class AnnouncementsListActivity extends BackAbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Requests.Announcements request = new Requests.Announcements(this);
-        request.makeListRequest();
+        Requests.Announcements.with(this).makeListRequest();
         FragUtils.replace(R.id.container, AnnouncementsListFragment.newInstance(), this);
     }
 }

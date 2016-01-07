@@ -11,9 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import blueprint.com.sage.R;
-import blueprint.com.sage.announcements.AnnouncementFragment;
 import blueprint.com.sage.events.APIErrorEvent;
+import blueprint.com.sage.events.announcements.AnnouncementEvent;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.events.checkIns.CheckInEvent;
@@ -67,7 +66,6 @@ import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
-import blueprint.com.sage.utility.view.FragUtils;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -447,8 +445,8 @@ public class Requests {
                     new Response.Listener<Announcement>() {
                         @Override
                         public void onResponse(Announcement announcement) {
-                            FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(announcement), mActivity);
-//                            EventBus.getDefault().post(new SchoolEvent(school));
+//                            FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(), mActivity);
+                            EventBus.getDefault().post(new AnnouncementEvent(announcement));
                         }
                     }, new Response.Listener<APIError>() {
                 @Override

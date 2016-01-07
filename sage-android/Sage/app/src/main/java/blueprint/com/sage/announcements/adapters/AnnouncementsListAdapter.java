@@ -1,5 +1,6 @@
 package blueprint.com.sage.announcements.adapters;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.ArrayList;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.AnnouncementActivity;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -80,7 +84,21 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         @OnClick(R.id.announcement_row)
         public void onClick(View v) {
             Announcement announcement = announcementArrayList.get(getAdapterPosition());
-            Requests.Announcements.with(activity).makeShowRequest(announcement);
+//            FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(announcement), activity);
+//            Requests.Announcements.with(activity).makeShowRequest(announcement);
+            Intent intent = new Intent(activity, AnnouncementActivity.class);
+            intent.putExtra("Announcement", announcementToString(announcement));
+            activity.startActivity(intent);
+        }
+
+        public String announcementToString(Announcement announcement) {
+            ObjectMapper mapper = new ObjectMapper();
+            String string = null;
+            try {
+                string = mapper.writeValueAsString(announcement);
+            } catch (JsonProcessingException exception) {
+            }
+            return string;
         }
     }
 }

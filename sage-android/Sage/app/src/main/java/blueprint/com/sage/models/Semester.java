@@ -15,4 +15,7 @@ public @Data class Semester {
     private int season;
 
     public static final String[] SEASONS = { "Fall", "Spring" };
+
+    public String getStart() { return start == null ? null : start.toString(); }
+    public String getFinish() { return finish == null ? null : finish.toString(); }
 }

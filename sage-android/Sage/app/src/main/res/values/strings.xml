@@ -6,6 +6,8 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="save">Save</string>
+    <string name="confirm">Confirm</string>
+    <string name="continue_confirm">Continue</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
 

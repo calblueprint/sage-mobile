@@ -2,4 +2,7 @@
 <resources>
     <string name="semester_start_date">Start Date</string>
     <string name="semester_season">Season</string>
+
+    <string name="semester_confirm_title">Confirm Request</string>
+    <string name="semester_confirm_message">Are you sure you want to continue? You won't be able to modify this date once the semester has started</string>
 </resources>

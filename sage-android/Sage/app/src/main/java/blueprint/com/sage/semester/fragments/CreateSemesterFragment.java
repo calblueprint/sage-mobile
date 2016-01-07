@@ -1,5 +1,7 @@
 package blueprint.com.sage.semester.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -23,7 +25,6 @@ import blueprint.com.sage.shared.fragments.DateDialog;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.utility.DateUtils;
-import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -74,7 +75,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
-                validateAndSubmitRequest();
+                showConfirmDialog();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -100,6 +101,27 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
         mSpinner.setAdapter(mAdapter);
     }
 
+    private void showConfirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.check_in_oob_title)
+                .setMessage(R.string.check_in_oob_body)
+                .setPositiveButton(R.string.continue_confirm,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                validateAndSubmitRequest();
+                            }
+                        })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+        builder.show();
+    }
+
     @OnClick(R.id.create_semester_date)
     public void onDateClick(TextView textView) {
         DateDialog dateDialog = DateDialog.newInstance(textView, this);
@@ -123,7 +145,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
         Semester semester = new Semester();
 
         String startDate = mStartDate.getText().toString();
-        semester.setStart(DateUtils.getDateTime(startDate, DateUtils.YEAR_FORMAT).toDate());
+        semester.setStart(DateUtils.getDateTime(startDate, DateUtils.DAY_FORMAT).toDate());
         semester.setSeason(mSpinner.getSelectedItemPosition());
 
         Requests.Semesters.with(getActivity()).makeStartRequest(semester);
@@ -134,6 +156,6 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
     }
 
     public void onEvent(StartSemesterEvent event) {
-        FragUtils.popBackStack(this);
+        getActivity().onBackPressed();
     }
 }

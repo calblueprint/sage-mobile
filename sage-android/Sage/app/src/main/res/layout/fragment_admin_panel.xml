@@ -1,128 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="UseCompoundDrawables">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            style="@style/PanelHeader"
-            android:text="@string/admin_browse" />
-
         <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/admin_browse_schools">
-
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_location_city_black"/>
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
-                style="@style/PanelTitle"
-                android:text="@string/admin_schools" />
+                style="@style/PanelHeader"
+                android:text="@string/admin_browse" />
 
-        </LinearLayout>
+            <LinearLayout
+                style="@style/PanelLayout"
+                android:id="@+id/admin_browse_schools">
 
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/admin_browse_users">
+                <ImageView
+                    style="@style/PanelIcon"
+                    android:src="@drawable/ic_location_city_black"/>
 
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_face_black"/>
+                <TextView
+                    style="@style/PanelTitle"
+                    android:text="@string/admin_schools" />
 
-            <TextView
-                style="@style/PanelTitle"
-                android:text="@string/admin_users" />
+            </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                style="@style/PanelLayout"
+                android:id="@+id/admin_browse_users">
 
-        <View style="@style/PanelDivider" />
+                <ImageView
+                    style="@style/PanelIcon"
+                    android:src="@drawable/ic_face_black"/>
 
-        <TextView
-            style="@style/PanelHeader"
-            android:text="@string/admin_requests" />
+                <TextView
+                    style="@style/PanelTitle"
+                    android:text="@string/admin_users" />
 
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/admin_request_check_ins">
+            </LinearLayout>
 
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_schedule_black"/>
-
-            <TextView
-                style="@style/PanelTitle"
-                android:text="@string/admin_check_ins" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/admin_request_users">
-
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_face_black"/>
+            <View style="@style/PanelDivider" />
 
             <TextView
-                style="@style/PanelTitle"
-                android:text="@string/admin_users" />
+                style="@style/PanelHeader"
+                android:text="@string/admin_requests" />
 
-        </LinearLayout>
+            <LinearLayout
+                style="@style/PanelLayout"
+                android:id="@+id/admin_request_check_ins">
 
-        <View style="@style/PanelDivider" />
+                <ImageView
+                    style="@style/PanelIcon"
+                    android:src="@drawable/ic_schedule_black"/>
 
-        <TextView
-            style="@style/PanelHeader"
-            android:text="@string/admin_settings" />
+                <TextView
+                    style="@style/PanelTitle"
+                    android:text="@string/admin_check_ins" />
 
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/admin_settings_start_semester">
+            </LinearLayout>
 
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_alarm_on_black"/>
+            <LinearLayout
+                style="@style/PanelLayout"
+                android:id="@+id/admin_request_users">
 
-            <TextView
-                style="@style/PanelTitle"
-                android:text="@string/admin_start_semester" />
+                <ImageView
+                    style="@style/PanelIcon"
+                    android:src="@drawable/ic_face_black"/>
 
-        </LinearLayout>
+                <TextView
+                    style="@style/PanelTitle"
+                    android:text="@string/admin_users" />
 
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/admin_settings_end_semester">
+            </LinearLayout>
 
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_alarm_on_black"/>
-
-            <TextView
-                style="@style/PanelTitle"
-                android:text="@string/admin_end_semester" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/PanelLayout"
-            android:id="@+id/admin_settings_browse_semesters">
-
-            <ImageView
-                style="@style/PanelIcon"
-                android:src="@drawable/ic_alarm_on_black"/>
+            <View style="@style/PanelDivider" />
 
             <TextView
-                style="@style/PanelTitle"
-                android:text="@string/admin_browse_semesters" />
+                style="@style/PanelHeader"
+                android:text="@string/admin_settings" />
 
+            <LinearLayout
+                style="@style/PanelLayout"
+                android:id="@+id/admin_settings_start_semester"
+                android:visibility="gone">
+
+                <ImageView
+                    style="@style/PanelIcon"
+                    android:src="@drawable/ic_alarm_on_black"/>
+
+                <TextView
+                    style="@style/PanelTitle"
+                    android:text="@string/admin_start_semester" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/PanelLayout"
+                android:id="@+id/admin_settings_end_semester"
+                android:visibility="gone">
+
+                <ImageView
+                    style="@style/PanelIcon"
+                    android:src="@drawable/ic_alarm_on_black"/>
+
+                <TextView
+                    style="@style/PanelTitle"
+                    android:text="@string/admin_end_semester" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/PanelLayout"
+                android:id="@+id/admin_settings_browse_semesters">
+
+                <ImageView
+                    style="@style/PanelIcon"
+                    android:src="@drawable/ic_alarm_on_black"/>
+
+                <TextView
+                    style="@style/PanelTitle"
+                    android:text="@string/admin_browse_semesters" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

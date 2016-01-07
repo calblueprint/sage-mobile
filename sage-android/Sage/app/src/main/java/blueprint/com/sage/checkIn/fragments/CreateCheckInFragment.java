@@ -77,7 +77,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         super.onCreateView(inflater, parent, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_check_in_request, parent, false);
+        View view = inflater.inflate(R.layout.fragment_create_check_in, parent, false);
         ButterKnife.bind(this, view);
         initializeViews();
         return view;

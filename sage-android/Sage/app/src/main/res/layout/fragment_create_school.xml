@@ -10,46 +10,77 @@
         style="@style/SchoolMap"
         android:id="@+id/create_school_map" />
 
-    <LinearLayout
-        style="@style/SchoolLinearLayout">
+    <RelativeLayout
+        style="@style/FormRelativeLayout">
 
         <ImageView
-            style="@style/SchoolIcon"
+            style="@style/FormIcon"
+            android:id="@+id/create_school_name_icon"
             android:src="@drawable/ic_mail_white" />
 
-        <EditText
-            style="@style/SchoolText"
-            android:id="@+id/create_school_name"
-            android:hint="@string/school_name" />
+        <LinearLayout
+            style="@style/FormLinearLayout"
+            android:layout_toRightOf="@id/create_school_name_icon"
+            android:layout_toEndOf="@id/create_school_name_icon" >
 
-    </LinearLayout>
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/school_name"/>
 
-    <LinearLayout
-        style="@style/SchoolLinearLayout">
+            <EditText
+                style="@style/FormText"
+                android:id="@+id/create_school_name"
+                android:hint="@string/required"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/FormRelativeLayout">
 
         <ImageView
-            style="@style/SchoolIcon"
+            style="@style/FormIcon"
+            android:id="@+id/create_school_address_icon"
             android:src="@drawable/ic_mail_white" />
 
-        <AutoCompleteTextView
-            style="@style/SchoolText"
-            android:id="@+id/create_school_address"
-            android:hint="@string/school_address" />
+        <LinearLayout
+            style="@style/FormLinearLayout"
+            android:layout_toRightOf="@id/create_school_address_icon"
+            android:layout_toEndOf="@id/create_school_address_icon" >
 
-    </LinearLayout>
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/school_address"/>
 
-    <LinearLayout
-        style="@style/SchoolLinearLayout">
+            <AutoCompleteTextView
+                style="@style/FormText"
+                android:id="@+id/create_school_address"
+                android:hint="@string/required" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/FormRelativeLayout">
 
         <ImageView
-            style="@style/SchoolIcon"
+            style="@style/FormIcon"
+            android:id="@+id/create_school_director_icon"
             android:src="@drawable/ic_mail_white" />
 
-        <Spinner
-            style="@style/SchoolSpinner"
-            android:id="@+id/create_school_director"
-            android:hint="@string/school_address" />
+        <LinearLayout
+            style="@style/FormLinearLayout"
+            android:layout_toRightOf="@id/create_school_director_icon"
+            android:layout_toEndOf="@id/create_school_director_icon" >
 
-    </LinearLayout>
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/school_director" />
 
+            <Spinner
+                style="@style/FormSpinner"
+                android:id="@+id/create_school_director" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

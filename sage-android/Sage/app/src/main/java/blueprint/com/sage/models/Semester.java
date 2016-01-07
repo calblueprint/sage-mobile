@@ -12,4 +12,5 @@ public @Data class Semester {
     private int id;
     private Date start;
     private Date finish;
+    private int season;
 }

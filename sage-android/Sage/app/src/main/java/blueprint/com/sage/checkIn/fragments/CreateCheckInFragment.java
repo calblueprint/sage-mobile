@@ -1,7 +1,6 @@
 package blueprint.com.sage.checkIn.fragments;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -19,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,7 +34,9 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
+import blueprint.com.sage.shared.fragments.DateDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
@@ -48,7 +48,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 10/27/15.
  * Fragment to make a checkin request.
  */
-public class CreateCheckInFragment extends Fragment implements FormValidation {
+public class CreateCheckInFragment extends Fragment implements FormValidation, DateInterface {
 
     @Bind(R.id.check_in_request_date_field) TextView mDate;
     @Bind(R.id.check_in_request_start_field) TextView mStartTime;
@@ -115,6 +115,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
     private void initializeViews() {
         if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
             getActivity().setTitle("Create Checkin");
+            mDeleteRequest.setVisibility(View.GONE);
             return;
         }
 
@@ -147,13 +148,19 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
         DateTime dateTime = DateUtils.getDTTime(timeString);
 
         textView.setText(DateUtils.getFormattedTime(dateTime));
+
+//        String startString = mStartTime.getText().toString();
+//        String endString = mEndTime.getText().toString();
+//        if (!startString.isEmpty() && !endString.isEmpty()) {
+//            mTotalTime.setText(DateUtils.timeDiff(DateUtils.getDTTime(startString), DateUtils.getDTTime(endString)));
+//        }
     }
 
     @OnClick(R.id.check_in_request_date_field)
     public void onDateFieldClick(TextView textView) {
         if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) return;
 
-        DatePickerFragment picker = DatePickerFragment.newInstance(textView);
+        DateDialog picker = DateDialog.newInstance(textView, this);
         picker.setTargetFragment(this, REQUEST_CODE);
         picker.show(getFragmentManager(), DATE_PICKER);
     }
@@ -267,40 +274,6 @@ public class CreateCheckInFragment extends Fragment implements FormValidation {
             if (getTargetFragment() instanceof CreateCheckInFragment) {
                 CreateCheckInFragment fragment = (CreateCheckInFragment) getTargetFragment();
                 fragment.setTime(mTextView, hourOfDay, minute);
-            }
-        }
-    }
-
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        private TextView mTextView;
-
-        public static DatePickerFragment newInstance(TextView textView) {
-            DatePickerFragment picker = new DatePickerFragment();
-            picker.setTextView(textView);
-            return picker;
-        }
-
-        public void setTextView(TextView textView) { mTextView = textView; }
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            if (getTargetFragment() instanceof CreateCheckInFragment) {
-                CreateCheckInFragment fragment = (CreateCheckInFragment) getTargetFragment();
-                fragment.setDate(mTextView, year, month + 1, day);
             }
         }
     }

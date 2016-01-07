@@ -13,4 +13,6 @@ public @Data class Semester {
     private Date start;
     private Date finish;
     private int season;
+
+    public static final String[] SEASONS = { "Fall", "Spring" };
 }

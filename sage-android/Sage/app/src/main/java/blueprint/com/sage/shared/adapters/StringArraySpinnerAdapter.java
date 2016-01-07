@@ -13,16 +13,16 @@ import blueprint.com.sage.R;
  * Created by charlesx on 10/14/15.
  * Spinner adapter for volunteer types.
  */
-public class TypeSpinnerAdapter extends ArrayAdapter<String> {
-    private String[] mTypes;
+public class StringArraySpinnerAdapter extends ArrayAdapter<String> {
+    private String[] mArray;
     private Context mContext;
 
     private int mSpinnerItem;
     private int mSpinnerDropdown;
 
-    public TypeSpinnerAdapter(Context context, String[] types, int spinnerItem, int spinnerDropdown) {
+    public StringArraySpinnerAdapter(Context context, String[] array, int spinnerItem, int spinnerDropdown) {
         super(context, spinnerItem);
-        mTypes = types;
+        mArray = array;
         mContext = context;
         mSpinnerItem = spinnerItem;
         mSpinnerDropdown = spinnerDropdown;
@@ -35,12 +35,12 @@ public class TypeSpinnerAdapter extends ArrayAdapter<String> {
 
     @Override
     public String getItem(int position) {
-        return mTypes[position];
+        return mArray[position];
     }
 
     @Override
     public int getCount() {
-        return mTypes.length;
+        return mArray.length;
     }
 
     @Override
@@ -64,5 +64,4 @@ public class TypeSpinnerAdapter extends ArrayAdapter<String> {
 
         return convertView;
     }
-
 }

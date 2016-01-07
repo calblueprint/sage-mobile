@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/create_semester_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,13 +11,13 @@
 
         <ImageView
             style="@style/FormIcon"
-            android:id="@+id/create_semester_start"
+            android:id="@+id/create_semester_start_icon"
             android:src="@drawable/ic_today_black" />
 
         <LinearLayout
             style="@style/FormLinearLayout"
-            android:layout_toRightOf="@id/create_semester_start"
-            android:layout_toEndOf="@id/create_semester_start" >
+            android:layout_toRightOf="@id/create_semester_start_icon"
+            android:layout_toEndOf="@id/create_semester_start_icon" >
 
             <TextView
                 style="@style/FormLabel"
@@ -34,13 +35,13 @@
 
         <ImageView
             style="@style/FormIcon"
-            android:id="@+id/create_school_director_icon"
+            android:id="@+id/create_semester_season_icon"
             android:src="@drawable/ic_mail_white" />
 
         <LinearLayout
             style="@style/FormLinearLayout"
-            android:layout_toRightOf="@id/create_school_director_icon"
-            android:layout_toEndOf="@id/create_school_director_icon" >
+            android:layout_toRightOf="@id/create_semester_season_icon"
+            android:layout_toEndOf="@id/create_semester_season_icon" >
 
             <TextView
                 style="@style/FormLabel"

@@ -11,7 +11,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
-import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.StringArraySpinnerAdapter;
 import blueprint.com.sage.shared.validators.FormValidator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +27,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     @Bind(R.id.sign_up_volunteer_type) Spinner mVolunteerTypeSpinner;
 
     private SchoolSpinnerAdapter mSchoolAdapter;
-    private TypeSpinnerAdapter mTypeAdapter;
+    private StringArraySpinnerAdapter mTypeAdapter;
 
     private FormValidator mValidator;
 
@@ -62,7 +62,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
         }
 
         mTypeAdapter =
-                new TypeSpinnerAdapter(getParentActivity(),
+                new StringArraySpinnerAdapter(getParentActivity(),
                                        User.VOLUNTEER_SPINNER,
                                        R.layout.sign_in_spinner_item,
                                        R.layout.sign_in_spinner_drop_item);

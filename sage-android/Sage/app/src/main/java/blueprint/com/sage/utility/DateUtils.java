@@ -40,19 +40,7 @@ public class DateUtils {
         return String.format("%d hrs, %d min", hours, minutes);
     }
 
-    public static DateTime getDTTime(String dateTimeString) {
-        return getDateTime(dateTimeString, TIME_FORMAT);
-    }
-
-    public static DateTime getDTHour(String dateTimeString) {
-        return getDateTime(dateTimeString, HOUR_FORMAT);
-    }
-
-    public static DateTime getDTDate(String dateTimeString) {
-        return getDateTime(dateTimeString, YEAR_FORMAT);
-    }
-
-    private static DateTime getDateTime(String dateTimeString, String format) {
+    public static DateTime getDateTime(String dateTimeString, String format) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
         return formatter.parseDateTime(dateTimeString);
     }

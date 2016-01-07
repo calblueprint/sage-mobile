@@ -145,14 +145,15 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     public void setTime(TextView textView, int hourOfDay, int minute) {
         String timeString = String.format("%d:%d", hourOfDay, minute);
-        DateTime dateTime = DateUtils.getDTHour(timeString);
+        DateTime dateTime = DateUtils.getDateTime(timeString, DateUtils.HOUR_FORMAT);
 
         textView.setText(DateUtils.getFormattedTime(dateTime));
 
         String startString = mStartTime.getText().toString();
         String endString = mEndTime.getText().toString();
         if (!startString.isEmpty() && !endString.isEmpty()) {
-            mTotalTime.setText(DateUtils.timeDiff(DateUtils.getDTTime(startString), DateUtils.getDTTime(endString)));
+            mTotalTime.setText(DateUtils.timeDiff(DateUtils.getDateTime(startString, DateUtils.TIME_FORMAT),
+                                                  DateUtils.getDateTime(endString, DateUtils.TIME_FORMAT)));
         }
     }
 
@@ -167,7 +168,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     public void setDate(TextView textView, int year, int month, int day) {
         String timeString = String.format("%d/%d/%d", year, month, day);
-        DateTime dateTime = DateUtils.getDTDate(timeString);
+        DateTime dateTime = DateUtils.getDateTime(timeString, DateUtils.YEAR_FORMAT);
 
         textView.setText(DateUtils.getFormattedDate(dateTime));
     }

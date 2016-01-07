@@ -14,6 +14,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.semesters.StartSemesterEvent;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
@@ -22,9 +23,11 @@ import blueprint.com.sage.shared.fragments.DateDialog;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 1/6/16.
@@ -77,6 +80,18 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void initializeViews() {
         mAdapter = new StringArraySpinnerAdapter(getActivity(),
                                                  Semester.SEASONS,
@@ -95,7 +110,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
 
     public void setDate(TextView textView, int year, int month, int day) {
         String timeString = String.format("%d/%d/%d", year, month, day);
-        DateTime dateTime = DateUtils.getDTDate(timeString);
+        DateTime dateTime = DateUtils.getDateTime(timeString, DateUtils.YEAR_FORMAT);
 
         textView.setText(DateUtils.getFormattedDate(dateTime));
     }
@@ -108,7 +123,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
         Semester semester = new Semester();
 
         String startDate = mStartDate.getText().toString();
-        semester.setStart(DateUtils.getDTDate(startDate).toDate());
+        semester.setStart(DateUtils.getDateTime(startDate, DateUtils.YEAR_FORMAT).toDate());
         semester.setSeason(mSpinner.getSelectedItemPosition());
 
         Requests.Semesters.with(getActivity()).makeStartRequest(semester);
@@ -116,5 +131,9 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
 
     private boolean isValid() {
         return mValidator.mustBePicked(mStartDate, "Start Date", view);
+    }
+
+    public void onEvent(StartSemesterEvent event) {
+        FragUtils.popBackStack(this);
     }
 }

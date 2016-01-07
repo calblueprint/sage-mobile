@@ -6,26 +6,34 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <TextView
-        style="@style/SemesterHeader"
-        android:text="@string/semester_finish_title"/>
+    <LinearLayout
+        android:id="@+id/finish_semester_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <TextView
-        style="@style/DefaultHeader"
-        android:layout_marginTop="20dp"
-        android:text="@string/semester_finish_subtitle"/>
+        <TextView
+            style="@style/SemesterHeader"
+            android:text="@string/semester_finish_title"/>
 
-    <EditText
-        style="@style/SemesterText"
-        android:id="@+id/finish_semester_email"
-        android:layout_marginTop="10dp"
-        android:text="@string/semester_finish_email"
-        android:inputType="textEmailAddress" />
+        <TextView
+            style="@style/DefaultHeader"
+            android:layout_marginTop="20dp"
+            android:text="@string/semester_finish_subtitle"/>
 
-    <Button
-        style="@style/DefaultButton"
-        android:id="@+id/finish_semester_continue"
-        android:layout_marginTop="20dp"
-        android:text="@string/continue_confirm"/>
+        <EditText
+            style="@style/SemesterText"
+            android:id="@+id/finish_semester_email"
+            android:layout_marginTop="10dp"
+            android:text="@string/semester_finish_email"
+            android:inputType="textEmailAddress" />
 
+        <Button
+            style="@style/DefaultButton"
+            android:id="@+id/finish_semester_continue"
+            android:layout_marginTop="20dp"
+            android:text="@string/continue_confirm"/>
+
+    </LinearLayout>
 </LinearLayout>

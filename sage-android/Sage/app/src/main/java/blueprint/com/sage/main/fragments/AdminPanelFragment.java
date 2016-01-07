@@ -112,7 +112,7 @@ public class AdminPanelFragment extends Fragment {
 
         if (mSemesters == null)
             return;
-        
+
         if (mSemesters.size() == 0) {
             mStartSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters.size() == 1) {

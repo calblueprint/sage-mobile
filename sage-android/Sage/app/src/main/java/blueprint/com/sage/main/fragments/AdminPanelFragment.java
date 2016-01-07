@@ -6,25 +6,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+import java.util.List;
+
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.BrowseMentorsActivity;
 import blueprint.com.sage.browse.BrowseSchoolsActivity;
+import blueprint.com.sage.events.semesters.SemesterListEvent;
+import blueprint.com.sage.models.Semester;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.requests.CheckInRequestsActivity;
 import blueprint.com.sage.requests.SignUpRequestsActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 12/24/15.
  */
 public class AdminPanelFragment extends Fragment {
 
+    private List<Semester> mSemesters;
+
     public static AdminPanelFragment newInstance() { return new AdminPanelFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("current_semester", "true");
+        Requests.Semesters.with(getActivity()).makeListRequest(queryParams);
     }
 
     @Override
@@ -32,12 +45,20 @@ public class AdminPanelFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_admin_panel, parent, false);
         ButterKnife.bind(this, view);
-        initializeViews();
+        toggleSemester();
         return view;
     }
 
-    private void initializeViews() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @OnClick(R.id.admin_browse_schools)
@@ -63,5 +84,16 @@ public class AdminPanelFragment extends Fragment {
     @OnClick(R.id.admin_settings_semester)
     public void onSettingsSemester(View view) {
         // TODO: implement after millman gets his designs in
+    }
+
+    public void onEvent(SemesterListEvent event) {
+        mSemesters = event.getSemesters();
+        toggleSemester();
+    }
+
+    private void toggleSemester() {
+        if (mSemesters == null) {
+
+        }
     }
 }

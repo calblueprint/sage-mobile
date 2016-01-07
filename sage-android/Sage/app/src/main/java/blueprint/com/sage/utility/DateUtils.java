@@ -41,14 +41,22 @@ public class DateUtils {
     }
 
     public static DateTime getDTTime(String dateTimeString) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(HOUR_FORMAT);
-        return formatter.parseDateTime(dateTimeString);
+        return getDateTime(dateTimeString, TIME_FORMAT);
+    }
+
+    public static DateTime getDTHour(String dateTimeString) {
+        return getDateTime(dateTimeString, HOUR_FORMAT);
     }
 
     public static DateTime getDTDate(String dateTimeString) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(YEAR_FORMAT);
+        return getDateTime(dateTimeString, YEAR_FORMAT);
+    }
+
+    private static DateTime getDateTime(String dateTimeString, String format) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
         return formatter.parseDateTime(dateTimeString);
     }
+
 
     public static String getFormattedDate(DateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(DAY_FORMAT);

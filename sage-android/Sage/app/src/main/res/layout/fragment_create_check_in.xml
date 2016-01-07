@@ -122,8 +122,10 @@
 
     <RelativeLayout
         style="@style/FormRelativeLayout"
+        android:layout_height="50dp"
         android:id="@+id/check_in_request_total_layout"
-        android:padding="0dp"
+        android:paddingRight="@dimen/sixteen"
+        android:paddingLeft="@dimen/sixteen"
         android:gravity="center_vertical"
         android:layout_alignParentBottom="true">
 
@@ -131,7 +133,6 @@
             android:id="@+id/check_in_request_total_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_centerVertical="true"
             android:text="@string/check_in_request_total_time"/>
 
@@ -155,7 +156,6 @@
             android:layout_alignParentEnd="true"
             android:textSize="12sp"
             android:textColor="@color/red500"
-            android:layout_marginRight="8dp"
             android:background="@android:color/transparent"/>
     </RelativeLayout>
 

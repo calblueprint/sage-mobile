@@ -145,15 +145,15 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     public void setTime(TextView textView, int hourOfDay, int minute) {
         String timeString = String.format("%d:%d", hourOfDay, minute);
-        DateTime dateTime = DateUtils.getDTTime(timeString);
+        DateTime dateTime = DateUtils.getDTHour(timeString);
 
         textView.setText(DateUtils.getFormattedTime(dateTime));
 
-//        String startString = mStartTime.getText().toString();
-//        String endString = mEndTime.getText().toString();
-//        if (!startString.isEmpty() && !endString.isEmpty()) {
-//            mTotalTime.setText(DateUtils.timeDiff(DateUtils.getDTTime(startString), DateUtils.getDTTime(endString)));
-//        }
+        String startString = mStartTime.getText().toString();
+        String endString = mEndTime.getText().toString();
+        if (!startString.isEmpty() && !endString.isEmpty()) {
+            mTotalTime.setText(DateUtils.timeDiff(DateUtils.getDTTime(startString), DateUtils.getDTTime(endString)));
+        }
     }
 
     @OnClick(R.id.check_in_request_date_field)

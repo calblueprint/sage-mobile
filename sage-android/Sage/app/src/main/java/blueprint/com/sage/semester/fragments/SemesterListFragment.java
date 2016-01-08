@@ -3,14 +3,19 @@ package blueprint.com.sage.semester.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import blueprint.com.sage.R;
-import blueprint.com.sage.browse.adapters.UserListAdapter;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
+import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.semester.adapters.SemesterListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,13 +31,15 @@ public class SemesterListFragment extends Fragment implements SwipeRefreshLayout
     @Bind(R.id.user_list_list) RecycleViewEmpty mSemesterList;
     @Bind(R.id.user_list_refresh) SwipeRefreshLayout mRefreshSemesters;
 
-    private UserListAdapter mUserListAdapter;
+    private List<Semester> mSemesters;
+    private SemesterListAdapter mSemesterListAdapter;
 
     public static SemesterListFragment newInstance() { return new SemesterListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSemesters = new ArrayList<>();
         Requests.Semesters.with(getActivity()).makeListRequest(null);
     }
 
@@ -58,14 +65,25 @@ public class SemesterListFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private void initializeViews() {
+        mSemesterListAdapter = new SemesterListAdapter(getActivity(), mSemesters);
+        mSemesterList.setAdapter(mSemesterListAdapter);
+        mSemesterList.setEmptyView(mEmptyView);
+        mSemesterList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        mRefreshSemesters.setOnRefreshListener(this);
+        mEmptyView.setOnRefreshListener(this);
+
+        getActivity().setTitle("Semesters");
     }
 
     public void onRefresh() {
-
+        Requests.Semesters.with(getActivity()).makeListRequest(null);
     }
 
     public void onEvent(SemesterListEvent event) {
-
+        mSemesters = event.getSemesters();
+        mSemesterListAdapter.setSemesters(mSemesters);
+        mRefreshSemesters.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
     }
 }

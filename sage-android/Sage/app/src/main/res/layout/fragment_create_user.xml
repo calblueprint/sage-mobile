@@ -31,17 +31,26 @@
                 android:layout_toRightOf="@id/user_name_icon"
                 android:layout_toEndOf="@id/user_name_icon" >
 
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_first_name"/>
+
                 <EditText
                     style="@style/CreateUserText"
                     android:id="@+id/create_user_first_name"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_first_name"/>
+                    android:hint="@string/required"/>
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_last_name"
+                    android:layout_marginTop="8dp"/>
 
                 <EditText
                     style="@style/CreateUserText"
                     android:id="@+id/create_user_last_name"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_last_name"/>
+                    android:hint="@string/required"/>
 
             </LinearLayout>
         </RelativeLayout>
@@ -60,11 +69,15 @@
                 android:layout_toRightOf="@id/user_email_icon"
                 android:layout_toEndOf="@id/user_email_icon" >
 
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_in_email"/>
+
                 <EditText
                     style="@style/CreateUserText"
                     android:id="@+id/create_user_email"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sign_in_email"
+                    android:hint="@string/required"
                     android:inputType="textEmailAddress"/>
 
             </LinearLayout>
@@ -77,23 +90,32 @@
             <ImageView
                 style="@style/CreateUserIcon"
                 android:id="@+id/create_user_password_icon"
-                android:src="@drawable/ic_alarm_on_black" />
+                android:src="@drawable/ic_lock_black_24dp" />
 
             <LinearLayout
                 style="@style/CreateUserLinearLayout"
                 android:layout_toRightOf="@id/create_user_password_icon"
                 android:layout_toEndOf="@id/create_user_password_icon" >
 
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_password"/>
+
                 <EditText
                     style="@style/CreateUserText"
                     android:id="@+id/create_user_password"
-                    android:hint="@string/sign_up_password"
+                    android:hint="@string/required"
                     android:inputType="textPassword" />
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_password_confirm"
+                    android:layout_marginTop="8dp" />
 
                 <EditText
                     style="@style/CreateUserText"
                     android:id="@+id/create_user_confirm_password"
-                    android:hint="@string/sign_up_password_confirm"
+                    android:hint="@string/required"
                     android:inputType="textPassword"/>
 
             </LinearLayout>
@@ -108,11 +130,19 @@
                 android:id="@+id/user_school_icon"
                 android:src="@drawable/ic_location_city_black" />
 
-            <Spinner
-                style="@style/CreateUserSpinner"
-                android:id="@+id/create_user_school"
+            <LinearLayout
+                style="@style/CreateUserLinearLayout"
                 android:layout_toRightOf="@id/user_school_icon"
-                android:layout_toEndOf="@id/user_school_icon"/>
+                android:layout_toEndOf="@id/user_school_icon" >
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_school"/>
+
+                <Spinner
+                    style="@style/CreateUserSpinner"
+                    android:id="@+id/create_user_school" />
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -123,13 +153,22 @@
             <ImageView
                 style="@style/CreateUserIcon"
                 android:id="@+id/user_type_icon"
-                android:src="@drawable/ic_alarm_on_black" />
+                android:src="@drawable/ic_schedule_black" />
 
-            <Spinner
-                style="@style/CreateUserSpinner"
-                android:id="@+id/create_user_type"
+            <LinearLayout
+                style="@style/CreateUserLinearLayout"
                 android:layout_toRightOf="@id/user_type_icon"
-                android:layout_toEndOf="@id/user_type_icon" />
+                android:layout_toEndOf="@id/user_type_icon" >
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_type"/>
+
+                <Spinner
+                    style="@style/CreateUserSpinner"
+                    android:id="@+id/create_user_type" />
+            </LinearLayout>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -139,13 +178,21 @@
             <ImageView
                 style="@style/CreateUserIcon"
                 android:id="@+id/user_role_icon"
-                android:src="@drawable/ic_alarm_on_black" />
+                android:src="@drawable/ic_role_black_24dp" />
 
-            <Spinner
-                style="@style/CreateUserSpinner"
-                android:id="@+id/create_user_role"
+            <LinearLayout
+                style="@style/CreateUserLinearLayout"
                 android:layout_toRightOf="@id/user_role_icon"
-                android:layout_toEndOf="@id/user_role_icon" />
+                android:layout_toEndOf="@id/user_role_icon" >
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_role"/>
+
+                <Spinner
+                    style="@style/CreateUserSpinner"
+                    android:id="@+id/create_user_role" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -155,19 +202,21 @@
             <ImageView
                 style="@style/CreateUserIcon"
                 android:id="@+id/user_current_password_icon"
-                android:src="@drawable/ic_alarm_on_black" />
+                android:src="@drawable/ic_check_circle_black_24dp" />
 
             <LinearLayout
                 style="@style/CreateUserLinearLayout"
                 android:layout_toRightOf="@id/user_current_password_icon"
                 android:layout_toEndOf="@id/user_current_password_icon" >
 
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/sign_up_current_password"/>
+
                 <EditText
                     style="@style/CreateUserText"
                     android:id="@+id/create_user_current_password"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/sign_up_current_password"
+                    android:hint="@string/required"
                     android:inputType="textPassword" />
 
             </LinearLayout>

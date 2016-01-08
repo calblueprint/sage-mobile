@@ -9,6 +9,8 @@
     <string name="sign_up_current_password">Current Password</string>
     <string name="sign_up_first_name">First Name</string>
     <string name="sign_up_last_name">Last Name</string>
+    <string name="sign_up_type">Volunteer Type</string>
+    <string name="sign_up_role">Role</string>
 
     <string name="sign_up_continue">Continue</string>
     <string name="sign_up_finish">Finish</string>

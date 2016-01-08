@@ -3,6 +3,7 @@
     <string name="announcement_title">Title</string>
     <string name="announcement_body">Comment</string>
     <string name="announcement_category">Select recipients</string>
+    <string name="announcement_school">to</string>
     <string-array name="categories">
         <item>General Announcement</item>
         <item>School Announcement</item>

@@ -5,14 +5,14 @@
     android:id="@+id/create_announcement_layout">
 
     <LinearLayout
-        style="@style/SchoolLinearLayout">
+        style="@style/AnnouncementLinearLayout">
 
         <ImageView
-            style="@style/SchoolIcon"
+            style="@style/AnnouncementIcon"
             android:src="@drawable/ic_announcement_white_24dp" />
 
         <EditText
-            style="@style/SchoolText"
+            style="@style/AnnouncementText"
             android:id="@+id/create_announcement_title"
             android:inputType="textMultiLine"
             android:hint="@string/announcement_title" />
@@ -20,25 +20,25 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/SchoolLinearLayout">
+        style="@style/AnnouncementLinearLayout">
 
         <ImageView
-            style="@style/SchoolIcon"
+            style="@style/AnnouncementIcon"
             android:src="@drawable/ic_location_city_white"
             android:layout_gravity="top"/>
 
         <Spinner
-            style="@style/SchoolSpinner"
+            style="@style/AnnouncementSpinner"
             android:id="@+id/announcement_category"
             android:hint="@string/announcement_category" />
 
     </LinearLayout>
 
     <LinearLayout
-        style="@style/SchoolLinearLayout">
+        style="@style/AnnouncementLinearLayout">
 
         <Spinner
-            style="@style/SchoolSpinner"
+            style="@style/AnnouncementSpinner"
             android:id="@+id/announcement_school_list"
             android:hint="@string/announcement_category"
             android:visibility="gone"
@@ -48,15 +48,15 @@
 
 
     <LinearLayout
-        style="@style/SchoolLinearLayout">
+        style="@style/AnnouncementLinearLayout">
 
         <ImageView
-            style="@style/SchoolIcon"
+            style="@style/AnnouncementIcon"
             android:src="@drawable/ic_mail_white"
             android:layout_gravity="top"/>
 
         <EditText
-            style="@style/SchoolText"
+            style="@style/AnnouncementText"
             android:id="@+id/create_announcement_body"
             android:inputType="textMultiLine"
             android:hint="@string/announcement_body" />

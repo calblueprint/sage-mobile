@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_announcement">
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,8 +21,18 @@
             android:id="@+id/announcement_user_single"
             style="@style/AnnouncementRow"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
             android:text="User Name"
             android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/announcement_school"
+            style="@style/AnnouncementRow"
+            android:text="@string/announcement_school"
+            android:layout_toRightOf="@id/announcement_user_single"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="0dp"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/announcement_time_single"

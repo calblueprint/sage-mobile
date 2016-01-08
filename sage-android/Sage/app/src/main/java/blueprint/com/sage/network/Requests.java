@@ -15,6 +15,8 @@ import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.announcements.AnnouncementEvent;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
+import blueprint.com.sage.events.announcements.DeleteAnnouncementEvent;
+import blueprint.com.sage.events.announcements.EditAnnouncementEvent;
 import blueprint.com.sage.events.checkIns.CheckInEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
@@ -48,6 +50,8 @@ import blueprint.com.sage.models.UserSemester;
 import blueprint.com.sage.network.announcements.AnnouncementRequest;
 import blueprint.com.sage.network.announcements.AnnouncementsListRequest;
 import blueprint.com.sage.network.announcements.CreateAnnouncementRequest;
+import blueprint.com.sage.network.announcements.DeleteAnnouncementRequest;
+import blueprint.com.sage.network.announcements.EditAnnouncementRequest;
 import blueprint.com.sage.network.check_ins.CheckInListRequest;
 import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
@@ -432,7 +436,6 @@ public class Requests {
                     new Response.Listener<Announcement>() {
                         @Override
                         public void onResponse(Announcement announcement) {
-//                            FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(), mActivity);
                             EventBus.getDefault().post(new AnnouncementEvent(announcement));
                         }
                     }, new Response.Listener<APIError>() {
@@ -451,6 +454,38 @@ public class Requests {
                         @Override
                         public void onResponse(Announcement announcement) {
                             EventBus.getDefault().post(new CreateAnnouncementEvent(announcement));
+                        }
+                    }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeDeleteRequest(Announcement announcement) {
+            DeleteAnnouncementRequest request = new DeleteAnnouncementRequest(mActivity, announcement,
+                    new Response.Listener<Announcement>() {
+                        @Override
+                        public void onResponse(Announcement announcement) {
+                            EventBus.getDefault().post(new DeleteAnnouncementEvent(announcement));
+                        }
+                    }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeEditRequest(Announcement announcement) {
+            EditAnnouncementRequest request = new EditAnnouncementRequest(mActivity, announcement,
+                    new Response.Listener<Announcement>() {
+                        @Override
+                        public void onResponse(Announcement announcement) {
+                            EventBus.getDefault().post(new EditAnnouncementEvent(announcement));
                         }
                     }, new Response.Listener<APIError>() {
                 @Override

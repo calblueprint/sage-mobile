@@ -61,6 +61,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
             mAddAnnouncementButton.setVisibility(View.GONE);
         }
         initializeViews();
+        makeRequest();
         return view;
     }
 
@@ -97,6 +98,16 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
+        makeRequest();
+    }
+
+    @Override
+    public void onResume() {
+        makeRequest();
+        super.onResume();
+    }
+
+    public void makeRequest() {
         Requests.Announcements.with(getActivity()).makeListRequest();
     }
 

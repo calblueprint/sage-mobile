@@ -84,8 +84,6 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         @OnClick(R.id.announcement_row)
         public void onClick(View v) {
             Announcement announcement = announcementArrayList.get(getAdapterPosition());
-//            FragUtils.replaceBackStack(R.id.container, AnnouncementFragment.newInstance(announcement), activity);
-//            Requests.Announcements.with(activity).makeShowRequest(announcement);
             Intent intent = new Intent(activity, AnnouncementActivity.class);
             intent.putExtra("Announcement", announcementToString(announcement));
             activity.startActivity(intent);

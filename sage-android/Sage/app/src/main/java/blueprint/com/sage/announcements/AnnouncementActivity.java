@@ -25,7 +25,7 @@ public class AnnouncementActivity extends BackAbstractActivity {
         try {
             announcement = mapper.readValue(getIntent().getStringExtra("Announcement"), Announcement.class);
         } catch (IOException exception) {
-
+            announcement = new Announcement();
         }
         Requests.Announcements.with(this).makeShowRequest(announcement);
         FragUtils.replace(R.id.container, AnnouncementFragment.newInstance(announcement), this);

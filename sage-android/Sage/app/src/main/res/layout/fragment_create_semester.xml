@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/create_semester_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        style="@style/FormRelativeLayout">
+
+        <ImageView
+            style="@style/FormIcon"
+            android:id="@+id/create_semester_start_icon"
+            android:src="@drawable/ic_today_black" />
+
+        <LinearLayout
+            style="@style/FormLinearLayout"
+            android:layout_toRightOf="@id/create_semester_start_icon"
+            android:layout_toEndOf="@id/create_semester_start_icon" >
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/semester_start_date"/>
+
+            <TextView
+                style="@style/FormText"
+                android:id="@+id/create_semester_date"
+                android:hint="@string/default_date"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout style="@style/FormRelativeLayout">
+
+        <ImageView
+            style="@style/FormIcon"
+            android:id="@+id/create_semester_season_icon"
+            android:src="@drawable/ic_mail_white" />
+
+        <LinearLayout
+            style="@style/FormLinearLayout"
+            android:layout_toRightOf="@id/create_semester_season_icon"
+            android:layout_toEndOf="@id/create_semester_season_icon" >
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/semester_season" />
+
+            <Spinner
+                style="@style/FormSpinner"
+                android:id="@+id/create_semester_season" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

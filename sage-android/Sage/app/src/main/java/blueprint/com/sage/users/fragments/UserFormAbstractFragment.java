@@ -25,7 +25,7 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.adapters.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
-import blueprint.com.sage.shared.adapters.TypeSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.StringArraySpinnerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.shared.validators.PhotoPicker;
@@ -63,7 +63,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     protected FormValidator mValidator;
 
     private SchoolSpinnerAdapter mSchoolAdapter;
-    private TypeSpinnerAdapter mTypeAdapter;
+    private StringArraySpinnerAdapter mTypeAdapter;
     private RoleSpinnerAdapter mRoleAdapter;
 
     private static final int DIALOG_CODE = 200;
@@ -147,7 +147,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
                 R.layout.simple_spinner_item, R.layout.simple_spinner_item);
         mSchool.setAdapter(mSchoolAdapter);
 
-        mTypeAdapter = new TypeSpinnerAdapter(getActivity(),
+        mTypeAdapter = new StringArraySpinnerAdapter(getActivity(),
                                               User.VOLUNTEER_SPINNER,
                                               R.layout.simple_spinner_item,
                                               R.layout.simple_spinner_item);

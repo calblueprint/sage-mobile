@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.regex.Pattern;
 
@@ -56,6 +57,14 @@ public class FormValidator {
 
     public boolean mustBePicked(Spinner spinner, String error, View view) {
         if (spinner.getSelectedItem() == null) {
+            Snackbar.make(view, mActivity.getString(R.string.cannot_be_blank, error), Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean mustBePicked(TextView textView, String error, View view) {
+        if (textView.getText().toString().isEmpty()) {
             Snackbar.make(view, mActivity.getString(R.string.cannot_be_blank, error), Snackbar.LENGTH_SHORT).show();
             return false;
         }

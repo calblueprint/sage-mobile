@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="default_elevation">8dp</dimen>
+    <dimen name="sixteen">16dp</dimen>
 
     <!-- Sign up alpha-->
     <item format="float" name="white_dots_alpha" type="dimen">0.5</item>

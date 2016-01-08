@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/PanelHeader"
-            android:text="@string/user_log_out" />
+            android:text="@string/admin_browse" />
 
         <LinearLayout
             style="@style/PanelLayout"
@@ -85,7 +85,8 @@
 
         <LinearLayout
             style="@style/PanelLayout"
-            android:id="@+id/admin_settings_semester">
+            android:id="@+id/admin_settings_start_semester"
+            android:visibility="gone">
 
             <ImageView
                 style="@style/PanelIcon"
@@ -94,6 +95,35 @@
             <TextView
                 style="@style/PanelTitle"
                 android:text="@string/admin_start_semester" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/PanelLayout"
+            android:id="@+id/admin_settings_end_semester"
+            android:visibility="gone">
+
+            <ImageView
+                style="@style/PanelIcon"
+                android:src="@drawable/ic_alarm_on_black"/>
+
+            <TextView
+                style="@style/PanelTitle"
+                android:text="@string/admin_end_semester" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/PanelLayout"
+            android:id="@+id/admin_settings_browse_semesters">
+
+            <ImageView
+                style="@style/PanelIcon"
+                android:src="@drawable/ic_alarm_on_black"/>
+
+            <TextView
+                style="@style/PanelTitle"
+                android:text="@string/admin_browse_semesters" />
 
         </LinearLayout>
     </LinearLayout>

@@ -25,6 +25,7 @@ import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.semesters.FinishSemesterEvent;
+import blueprint.com.sage.events.semesters.SemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.events.semesters.StartSemesterEvent;
 import blueprint.com.sage.events.sessions.SignInEvent;
@@ -55,7 +56,9 @@ import blueprint.com.sage.network.schools.CreateSchoolRequest;
 import blueprint.com.sage.network.schools.EditSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.schools.SchoolRequest;
+import blueprint.com.sage.network.semesters.FinishSemesterRequest;
 import blueprint.com.sage.network.semesters.SemesterListRequest;
+import blueprint.com.sage.network.semesters.SemesterRequest;
 import blueprint.com.sage.network.semesters.StartSemesterRequest;
 import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
@@ -530,7 +533,7 @@ public class Requests {
         }
 
         public void makeFinishRequest(Semester semester) {
-            Request request = new StartSemesterRequest(mActivity, semester,
+            Request request = new FinishSemesterRequest(mActivity, semester,
                     new Response.Listener<Semester>() {
                         @Override
                         public void onResponse(Semester semester) {
@@ -538,6 +541,23 @@ public class Requests {
                         }
                     },
                     new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeShowRequest(Semester semester) {
+            Request request = new SemesterRequest(mActivity, semester,
+                    new Response.Listener<Semester>() {
+                        @Override
+                        public void onResponse(Semester semester) {
+                            EventBus.getDefault().post(new SemesterEvent(semester));
+                        }
+                    }, new Response.Listener<APIError>() {
                         @Override
                         public void onResponse(APIError apiError) {
                             Requests.postError(apiError);

@@ -9,111 +9,111 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout"
+        style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_date_layout">
 
         <ImageView
-            style="@style/CheckInRequestIcon"
+            style="@style/FormIcon"
             android:id="@+id/check_in_request_date"
             android:src="@drawable/ic_today_black" />
 
         <LinearLayout
-            style="@style/CheckInRequestLinearLayout"
+            style="@style/FormLinearLayout"
             android:layout_toRightOf="@id/check_in_request_date"
             android:layout_toEndOf="@id/check_in_request_date" >
 
             <TextView
-                style="@style/CheckInRequestLabel"
+                style="@style/FormLabel"
                 android:id="@+id/check_in_request_date_label"
                 android:text="@string/check_in_request_date"/>
 
             <TextView
-                style="@style/CheckInRequestText"
+                style="@style/FormText"
                 android:id="@+id/check_in_request_date_field"
-                android:hint="@string/check_in_default_date"/>
+                android:hint="@string/default_date"/>
 
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout"
+        style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_start_layout"
         android:layout_below="@id/check_in_request_date_layout">
 
         <ImageView
-            style="@style/CheckInRequestIcon"
+            style="@style/FormIcon"
             android:id="@+id/check_in_request_start_icon"
             android:src="@drawable/ic_alarm_on_black" />
 
         <LinearLayout
-            style="@style/CheckInRequestLinearLayout"
+            style="@style/FormLinearLayout"
             android:layout_toRightOf="@id/check_in_request_start_icon"
             android:layout_toEndOf="@id/check_in_request_start_icon" >
 
             <TextView
-                style="@style/CheckInRequestLabel"
+                style="@style/FormLabel"
                 android:id="@+id/check_in_request_start_text"
                 android:text="@string/check_in_request_start_time"/>
 
             <TextView
-                style="@style/CheckInRequestText"
+                style="@style/FormText"
                 android:id="@+id/check_in_request_start_field"
-                android:hint="@string/check_in_default_time"/>
+                android:hint="@string/default_time"/>
 
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout"
+        style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_end_layout"
         android:layout_below="@id/check_in_request_start_layout">
 
         <ImageView
-            style="@style/CheckInRequestIcon"
+            style="@style/FormIcon"
             android:id="@+id/check_in_request_end_icon"
             android:src="@drawable/ic_alarm_off_black" />
 
         <LinearLayout
-            style="@style/CheckInRequestLinearLayout"
+            style="@style/FormLinearLayout"
             android:layout_toRightOf="@id/check_in_request_end_icon"
             android:layout_toEndOf="@id/check_in_request_end_icon" >
 
             <TextView
-                style="@style/CheckInRequestLabel"
+                style="@style/FormLabel"
                 android:id="@+id/check_in_request_end_text"
                 android:text="@string/check_in_request_end_time"/>
 
             <TextView
-                style="@style/CheckInRequestText"
+                style="@style/FormText"
                 android:id="@+id/check_in_request_end_field"
-                android:hint="@string/check_in_default_time"/>
+                android:hint="@string/default_time"/>
 
         </LinearLayout>
     </RelativeLayout>
 
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout"
+        style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_comment_layout"
         android:layout_below="@id/check_in_request_end_layout">
 
         <ImageView
-            style="@style/CheckInRequestIcon"
+            style="@style/FormIcon"
             android:id="@+id/check_in_request_comment_icon"
             android:src="@drawable/ic_comment_black" />
 
         <LinearLayout
-            style="@style/CheckInRequestLinearLayout"
+            style="@style/FormLinearLayout"
             android:layout_toRightOf="@id/check_in_request_comment_icon"
             android:layout_toEndOf="@id/check_in_request_comment_icon" >
 
             <TextView
-                style="@style/CheckInRequestLabel"
+                style="@style/FormLabel"
                 android:id="@+id/check_in_request_comment_text"
                 android:text="@string/check_in_request_comment"/>
 
             <EditText
-                style="@style/CheckInRequestText"
+                style="@style/FormText"
                 android:id="@+id/check_in_request_comments_field"
                 android:hint="@string/optional"/>
 
@@ -121,9 +121,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        style="@style/CheckInRequestRelativeLayout"
+        style="@style/FormRelativeLayout"
+        android:layout_height="50dp"
         android:id="@+id/check_in_request_total_layout"
-        android:padding="0dp"
+        android:paddingRight="@dimen/sixteen"
+        android:paddingLeft="@dimen/sixteen"
         android:gravity="center_vertical"
         android:layout_alignParentBottom="true">
 
@@ -131,7 +133,6 @@
             android:id="@+id/check_in_request_total_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_centerVertical="true"
             android:text="@string/check_in_request_total_time"/>
 
@@ -155,7 +156,6 @@
             android:layout_alignParentEnd="true"
             android:textSize="12sp"
             android:textColor="@color/red500"
-            android:layout_marginRight="8dp"
             android:background="@android:color/transparent"/>
     </RelativeLayout>
 

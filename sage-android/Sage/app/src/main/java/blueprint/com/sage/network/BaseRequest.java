@@ -59,19 +59,17 @@ public class BaseRequest extends JsonObjectRequest {
                         Toast.makeText(activity, "Invalid user", Toast.LENGTH_SHORT).show();
                         NetworkUtils.logoutCurrentUser(activity);
                     } else {
-                        if (networkResponse.data != null) {
-                            try {
-                                String errorJson = new String(networkResponse.data);
-                                JSONObject errorJsonObject = new JSONObject(errorJson);
-                                errorJson = errorJsonObject.getString("error");
-                                ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
-                                apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {});
-                            } catch (Exception e) {
-                                Log.e("Json exception base", e.toString());
-                            }
-                        } Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                        try {
+                            String errorJson = new String(networkResponse.data);
+                            JSONObject errorJsonObject = new JSONObject(errorJson);
+                            errorJson = errorJsonObject.getString("error");
+                            ObjectMapper mapper = getNetworkManager(activity).getObjectMapper();
+                            apiError = mapper.readValue(errorJson, new TypeReference<APIError>() {});
+                        } catch (Exception e) {
+                            Log.e("Json exception base", e.toString());
+                        }
                     }
-
+                    Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 onFailure.onResponse(apiError);
             };

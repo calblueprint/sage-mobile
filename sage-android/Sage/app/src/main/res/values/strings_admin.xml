@@ -10,6 +10,7 @@
     <string name="admin_settings">SAGE settings</string>
     <string name="admin_end_semester">End Semester</string>
     <string name="admin_start_semester">Start Semester</string>
+    <string name="admin_browse_semesters">Browse Semesters</string>
 
     <!-- Admin panel for a specific user -->
     <string name="admin_user_settings">Admin</string>

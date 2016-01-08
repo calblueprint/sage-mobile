@@ -1,13 +1,11 @@
 package blueprint.com.sage.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import org.joda.time.DateTime;
 
 import java.util.Date;
 
-import blueprint.com.sage.network.serializers.CheckInSerializer;
 import blueprint.com.sage.utility.DateUtils;
 import lombok.Data;
 
@@ -15,7 +13,6 @@ import lombok.Data;
  * Created by charlesx on 10/17/15.
  * Check in model
  */
-@JsonSerialize(using = CheckInSerializer.class)
 public @Data class CheckIn {
     private int id;
     private Date createdAt;
@@ -43,4 +40,8 @@ public @Data class CheckIn {
     public String getTotalTime() {
         return DateUtils.timeDiff(new DateTime(start), new DateTime(finish));
     }
+
+    public String getComment() { return comment == null ? null : comment; }
+    public String getStart() { return start == null     ? null : start.toString(); }
+    public String getFinish() { return finish == null   ? null : finish.toString(); }
 }

@@ -38,23 +38,15 @@
             </RelativeLayout>
 
             <TextView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
+                style="@style/DefaultHeader"
                 android:layout_marginTop="10dp"
-                android:text="@string/unverified_body"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:fontFamily="sans-serif-light" />
+                android:text="@string/unverified_body" />
 
-            <TextView
+            <Button
+                style="@style/DefaultButton"
                 android:id="@+id/unverified_log_out"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="@string/user_log_out"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:fontFamily="sans-serif-light" />
+                android:text="@string/user_log_out" />
         </LinearLayout>
     </ScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>

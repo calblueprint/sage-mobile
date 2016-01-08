@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.semesters.FinishSemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.network.Requests;
@@ -84,6 +85,8 @@ public class FinishSemesterFragment extends Fragment {
     public void onContinueClick() {
         if (mEmail.getText().toString().equals(mBaseInterface.getUser().getEmail())) {
             openConfirmDialog();
+        } else {
+            mEmail.setError("Email must match your email");
         }
     }
 
@@ -113,6 +116,8 @@ public class FinishSemesterFragment extends Fragment {
         currentSemester.setFinish(DateTime.now().toDate());
         Requests.Semesters.with(getActivity()).makeFinishRequest(currentSemester);
     }
+
+    public void onEvent(FinishSemesterEvent event) { getActivity().onBackPressed(); }
 
     public void onEvent(SemesterListEvent event) {
         mSemesters = event.getSemesters();

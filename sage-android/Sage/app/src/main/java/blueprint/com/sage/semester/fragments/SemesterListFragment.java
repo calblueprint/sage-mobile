@@ -27,9 +27,9 @@ import de.greenrobot.event.EventBus;
  */
 public class SemesterListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
-    @Bind(R.id.user_list_list) RecycleViewEmpty mSemesterList;
-    @Bind(R.id.user_list_refresh) SwipeRefreshLayout mRefreshSemesters;
+    @Bind(R.id.semester_list_empty_view) SwipeRefreshLayout mEmptyView;
+    @Bind(R.id.semester_list_list) RecycleViewEmpty mSemesterList;
+    @Bind(R.id.semester_list_refresh) SwipeRefreshLayout mRefreshSemesters;
 
     private List<Semester> mSemesters;
     private SemesterListAdapter mSemesterListAdapter;

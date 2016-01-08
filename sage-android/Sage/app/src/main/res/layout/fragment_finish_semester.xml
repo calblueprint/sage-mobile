@@ -26,7 +26,7 @@
             style="@style/SemesterText"
             android:id="@+id/finish_semester_email"
             android:layout_marginTop="10dp"
-            android:text="@string/semester_finish_email"
+            android:hint="@string/semester_finish_email"
             android:inputType="textEmailAddress" />
 
         <Button

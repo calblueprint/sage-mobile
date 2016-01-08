@@ -56,6 +56,7 @@ import blueprint.com.sage.network.schools.CreateSchoolRequest;
 import blueprint.com.sage.network.schools.EditSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.schools.SchoolRequest;
+import blueprint.com.sage.network.semesters.FinishSemesterRequest;
 import blueprint.com.sage.network.semesters.SemesterListRequest;
 import blueprint.com.sage.network.semesters.SemesterRequest;
 import blueprint.com.sage.network.semesters.StartSemesterRequest;
@@ -532,7 +533,7 @@ public class Requests {
         }
 
         public void makeFinishRequest(Semester semester) {
-            Request request = new StartSemesterRequest(mActivity, semester,
+            Request request = new FinishSemesterRequest(mActivity, semester,
                     new Response.Listener<Semester>() {
                         @Override
                         public void onResponse(Semester semester) {

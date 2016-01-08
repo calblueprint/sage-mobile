@@ -68,7 +68,8 @@ public class BaseRequest extends JsonObjectRequest {
                         } catch (Exception e) {
                             Log.e("Json exception base", e.toString());
                         }
-                    } Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    Toast.makeText(activity, apiError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 onFailure.onResponse(apiError);
             };

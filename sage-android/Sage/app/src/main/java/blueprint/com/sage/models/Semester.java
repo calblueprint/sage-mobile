@@ -1,5 +1,9 @@
 package blueprint.com.sage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 import lombok.Data;
@@ -18,4 +22,15 @@ public @Data class Semester {
 
     public String getStart() { return start == null ? null : start.toString(); }
     public String getFinish() { return finish == null ? null : finish.toString(); }
+
+    @JsonIgnore
+    public int getYear() {
+        return (new DateTime(start)).getYear();
+    }
+
+    @JsonIgnore
+    @Override
+    public String toString() {
+        return String.format("%s %d", SEASONS[season], getYear());
+    }
 }

@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.semesters.SemesterEvent;
 import blueprint.com.sage.models.Semester;
+import blueprint.com.sage.network.Requests;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 1/7/16.
+ * Shows an individual semester
  */
 public class SemesterFragment extends Fragment {
 
@@ -29,6 +32,7 @@ public class SemesterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Requests.Semesters.with(getActivity()).makeShowRequest(mSemester);
     }
 
     @Override
@@ -54,5 +58,14 @@ public class SemesterFragment extends Fragment {
 
     private void initializeViews() {
 
+    }
+
+    private void initializeSemester() {
+
+    }
+
+    public void onEvent(SemesterEvent event) {
+        mSemester = event.getSemester();
+        initializeSemester();
     }
 }

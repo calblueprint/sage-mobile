@@ -18,16 +18,16 @@
             android:src="@drawable/default_profile"/>
 
         <RelativeLayout
-            style="@style/CreateUserRelativeLayout"
+            style="@style/FormRelativeLayout"
             android:id="@+id/user_name_layout">
 
             <ImageView
-                style="@style/CreateUserIcon"
+                style="@style/FormIcon"
                 android:id="@+id/user_name_icon"
                 android:src="@drawable/ic_person_pin_white" />
 
             <LinearLayout
-                style="@style/CreateUserLinearLayout"
+                style="@style/FormLinearLayout"
                 android:layout_toRightOf="@id/user_name_icon"
                 android:layout_toEndOf="@id/user_name_icon" >
 
@@ -36,10 +36,10 @@
                     android:text="@string/sign_up_first_name"/>
 
                 <EditText
-                    style="@style/CreateUserText"
+                    style="@style/FormText"
                     android:id="@+id/create_user_first_name"
                     android:layout_height="wrap_content"
-                    android:hint="@string/required"/>
+                    android:hint="@string/required" />
 
                 <TextView
                     style="@style/FormLabel"
@@ -47,7 +47,7 @@
                     android:layout_marginTop="8dp"/>
 
                 <EditText
-                    style="@style/CreateUserText"
+                    style="@style/FormText"
                     android:id="@+id/create_user_last_name"
                     android:layout_height="wrap_content"
                     android:hint="@string/required"/>
@@ -56,16 +56,16 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/CreateUserRelativeLayout"
+            style="@style/FormRelativeLayout"
             android:id="@+id/user_email_layout">
 
             <ImageView
-                style="@style/CreateUserIcon"
+                style="@style/FormIcon"
                 android:id="@+id/user_email_icon"
                 android:src="@drawable/ic_mail_white" />
 
             <LinearLayout
-                style="@style/CreateUserLinearLayout"
+                style="@style/FormLinearLayout"
                 android:layout_toRightOf="@id/user_email_icon"
                 android:layout_toEndOf="@id/user_email_icon" >
 
@@ -74,7 +74,7 @@
                     android:text="@string/sign_in_email"/>
 
                 <EditText
-                    style="@style/CreateUserText"
+                    style="@style/FormText"
                     android:id="@+id/create_user_email"
                     android:layout_height="wrap_content"
                     android:hint="@string/required"
@@ -84,16 +84,16 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/CreateUserRelativeLayout"
+            style="@style/FormRelativeLayout"
             android:id="@+id/create_user_password_layout">
 
             <ImageView
-                style="@style/CreateUserIcon"
+                style="@style/FormIcon"
                 android:id="@+id/create_user_password_icon"
                 android:src="@drawable/ic_lock_black_24dp" />
 
             <LinearLayout
-                style="@style/CreateUserLinearLayout"
+                style="@style/FormLinearLayout"
                 android:layout_toRightOf="@id/create_user_password_icon"
                 android:layout_toEndOf="@id/create_user_password_icon" >
 
@@ -102,7 +102,7 @@
                     android:text="@string/sign_up_password"/>
 
                 <EditText
-                    style="@style/CreateUserText"
+                    style="@style/FormText"
                     android:id="@+id/create_user_password"
                     android:hint="@string/required"
                     android:inputType="textPassword" />
@@ -113,7 +113,7 @@
                     android:layout_marginTop="8dp" />
 
                 <EditText
-                    style="@style/CreateUserText"
+                    style="@style/FormText"
                     android:id="@+id/create_user_confirm_password"
                     android:hint="@string/required"
                     android:inputType="textPassword"/>
@@ -122,16 +122,16 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/CreateUserRelativeLayout"
+            style="@style/FormRelativeLayout"
             android:id="@+id/user_school_layout">
 
             <ImageView
-                style="@style/CreateUserIcon"
+                style="@style/FormIcon"
                 android:id="@+id/user_school_icon"
                 android:src="@drawable/ic_location_city_black" />
 
             <LinearLayout
-                style="@style/CreateUserLinearLayout"
+                style="@style/FormLinearLayout"
                 android:layout_toRightOf="@id/user_school_icon"
                 android:layout_toEndOf="@id/user_school_icon" >
 
@@ -140,23 +140,23 @@
                     android:text="@string/sign_up_school"/>
 
                 <Spinner
-                    style="@style/CreateUserSpinner"
+                    style="@style/FormSpinner"
                     android:id="@+id/create_user_school" />
             </LinearLayout>
 
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/CreateUserRelativeLayout"
+            style="@style/FormRelativeLayout"
             android:id="@+id/user_type_layout">
 
             <ImageView
-                style="@style/CreateUserIcon"
+                style="@style/FormIcon"
                 android:id="@+id/user_type_icon"
                 android:src="@drawable/ic_schedule_black" />
 
             <LinearLayout
-                style="@style/CreateUserLinearLayout"
+                style="@style/FormLinearLayout"
                 android:layout_toRightOf="@id/user_type_icon"
                 android:layout_toEndOf="@id/user_type_icon" >
 
@@ -165,23 +165,23 @@
                     android:text="@string/sign_up_type"/>
 
                 <Spinner
-                    style="@style/CreateUserSpinner"
+                    style="@style/FormSpinner"
                     android:id="@+id/create_user_type" />
             </LinearLayout>
 
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/CreateUserRelativeLayout"
+            style="@style/FormRelativeLayout"
             android:id="@+id/user_role_layout">
 
             <ImageView
-                style="@style/CreateUserIcon"
+                style="@style/FormIcon"
                 android:id="@+id/user_role_icon"
                 android:src="@drawable/ic_role_black_24dp" />
 
             <LinearLayout
-                style="@style/CreateUserLinearLayout"
+                style="@style/FormLinearLayout"
                 android:layout_toRightOf="@id/user_role_icon"
                 android:layout_toEndOf="@id/user_role_icon" >
 
@@ -190,22 +190,22 @@
                     android:text="@string/sign_up_role"/>
 
                 <Spinner
-                    style="@style/CreateUserSpinner"
+                    style="@style/FormSpinner"
                     android:id="@+id/create_user_role" />
             </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/CreateUserRelativeLayout"
+            style="@style/FormRelativeLayout"
             android:id="@+id/user_current_password_layout">
 
             <ImageView
-                style="@style/CreateUserIcon"
+                style="@style/FormIcon"
                 android:id="@+id/user_current_password_icon"
                 android:src="@drawable/ic_check_circle_black_24dp" />
 
             <LinearLayout
-                style="@style/CreateUserLinearLayout"
+                style="@style/FormLinearLayout"
                 android:layout_toRightOf="@id/user_current_password_icon"
                 android:layout_toEndOf="@id/user_current_password_icon" >
 
@@ -214,7 +214,7 @@
                     android:text="@string/sign_up_current_password"/>
 
                 <EditText
-                    style="@style/CreateUserText"
+                    style="@style/FormText"
                     android:id="@+id/create_user_current_password"
                     android:hint="@string/required"
                     android:inputType="textPassword" />

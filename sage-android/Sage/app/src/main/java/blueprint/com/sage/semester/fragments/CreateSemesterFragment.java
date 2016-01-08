@@ -103,8 +103,8 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
 
     private void showConfirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.check_in_oob_title)
-                .setMessage(R.string.check_in_oob_body)
+                .setTitle(R.string.semester_start_confirm_title)
+                .setMessage(R.string.semester_start_confirm_message)
                 .setPositiveButton(R.string.continue_confirm,
                         new DialogInterface.OnClickListener() {
                             @Override

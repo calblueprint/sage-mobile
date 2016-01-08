@@ -18,6 +18,8 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.requests.CheckInRequestsActivity;
 import blueprint.com.sage.requests.SignUpRequestsActivity;
 import blueprint.com.sage.semester.CreateSemesterActivity;
+import blueprint.com.sage.semester.FinishSemesterActivity;
+import blueprint.com.sage.semester.SemesterListActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -93,12 +95,12 @@ public class AdminPanelFragment extends Fragment {
 
     @OnClick(R.id.admin_settings_end_semester)
     public void onEndSemester(View view) {
-        // TODO: implement after millman gets his designs in
+        FragUtils.startActivityBackStack(getActivity(), FinishSemesterActivity.class);
     }
 
     @OnClick(R.id.admin_settings_browse_semesters)
     public void onBrowseSemesters(View view) {
-        // TODO: implement after millman gets his designs in
+        FragUtils.startActivityBackStack(getActivity(), SemesterListActivity.class);
     }
 
     public void onEvent(SemesterListEvent event) {

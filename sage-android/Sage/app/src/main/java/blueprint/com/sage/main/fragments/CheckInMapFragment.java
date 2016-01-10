@@ -24,9 +24,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.joda.time.DateTime;
 
@@ -139,15 +137,8 @@ public class CheckInMapFragment extends Fragment
 
         LatLng latLng = new LatLng(school.getLat(), school.getLng());
 
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-        mMap.addMarker(markerOptions);
-
-        CircleOptions circleOptions = new CircleOptions()
-                .center(latLng)
-                .radius(MapUtils.RADIUS)
-                .strokeColor(R.color.blue500)
-                .fillColor(R.color.blue500);
-        mMap.addCircle(circleOptions);
+        mMap.addMarker(MapUtils.getMarkerOptions(latLng));
+        mMap.addCircle(MapUtils.getCircleOptions(getActivity(), latLng, MapUtils.RADIUS));
     }
 
     private void initializeViews(Bundle savedInstanceState) {

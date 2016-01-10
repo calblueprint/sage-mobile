@@ -7,8 +7,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ public class MapUtils {
 
     // Radius of circle boundary of school (int meters)
     public final static int DISTANCE = Integer.MAX_VALUE;
-    public final static int RADIUS = 100;
+    public final static int RADIUS = 50;
     public final static float DEFAULT_LONG = -122.26f;
     public final static float DEFAULT_LAT = 37.87f;
 
@@ -54,5 +57,19 @@ public class MapUtils {
     public static boolean hasPreviousRequest(Context context, SharedPreferences preferences) {
         return !preferences.getString(context.getString(R.string.check_in_start_time), "").isEmpty() &&
                 !preferences.getString(context.getString(R.string.check_in_end_time), "").isEmpty();
+    }
+
+    public static MarkerOptions getMarkerOptions(LatLng latLng) {
+        return new MarkerOptions().position(latLng)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_blue));
+    }
+
+    public static CircleOptions getCircleOptions(Activity activity, LatLng latLng, int radius) {
+        return new CircleOptions()
+                .center(latLng)
+                .radius(radius)
+                .strokeWidth(5.0f)
+                .strokeColor(ViewUtils.getColor(activity, R.color.map_circle_stroke))
+                .fillColor(ViewUtils.getColor(activity, R.color.map_circle_fill));
     }
 }

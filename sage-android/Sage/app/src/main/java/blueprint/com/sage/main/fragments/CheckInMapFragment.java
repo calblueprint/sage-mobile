@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -26,7 +27,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.joda.time.DateTime;
-import org.joda.time.Seconds;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInActivity;
@@ -145,12 +145,11 @@ public class CheckInMapFragment extends Fragment
         toggleTimer(hasStartedCheckIn());
     }
 
-
     /**
      * Super hacky, but whateves
      */
     private void updateTimer() {
-        int secondsPassed = getStartTime();
+        int secondsPassed = getSecondsElapsed();
         int hours = secondsPassed / 3600;
         int minutes = (secondsPassed % 3600) / 60;
 
@@ -159,6 +158,16 @@ public class CheckInMapFragment extends Fragment
 
         String hourMinutes = String.format("%s:%s", hourString, minutesString);
         mTimerText.setText(hourMinutes);
+    }
+
+    private int getSecondsElapsed() {
+        if (!hasStartedCheckIn())
+            return 0;
+
+        Long startString = mBaseInterface.getSharedPreferences()
+                .getLong(getString(R.string.check_in_seconds), 0);
+        Long endString = SystemClock.elapsedRealtime();
+        return (int) (endString - startString) / 1000;
     }
 
     @OnClick(R.id.check_in_location_fab)
@@ -182,7 +191,6 @@ public class CheckInMapFragment extends Fragment
             return;
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapUtils.ZOOM));
     }
 
@@ -279,10 +287,16 @@ public class CheckInMapFragment extends Fragment
 
     private boolean locationInBounds() {
         Location location = getLocation();
-        if (location == null)
-            return false;
-
         School school = mBaseInterface.getSchool();
+
+        if (location == null) {
+            return false;
+        }
+
+        if (school == null) {
+            Snackbar.make(mContainer, R.string.check_in_no_school, Snackbar.LENGTH_SHORT).show();
+        }
+
         float[] results = new float[1];
         Location.distanceBetween(location.getLatitude(), location.getLongitude(), school.getLat(), school.getLng(), results);
 
@@ -307,8 +321,10 @@ public class CheckInMapFragment extends Fragment
             return;
         }
 
-        mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
-                                      DateUtils.getFormattedTimeNow()).commit();
+        mBaseInterface.getSharedPreferences().edit()
+                      .putString(getString(R.string.check_in_start_time), DateUtils.getFormattedDateNow())
+                      .putLong(getString(R.string.check_in_seconds), SystemClock.elapsedRealtime())
+                      .commit();
         toggleButtons();
         toggleTimer(true);
         getActivity().invalidateOptionsMenu();
@@ -326,8 +342,14 @@ public class CheckInMapFragment extends Fragment
             return;
         }
 
-        mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
-                DateUtils.getFormattedTimeNow()).commit();
+        String startString = mBaseInterface.getSharedPreferences()
+                .getString(getString(R.string.check_in_start_time), "");
+        DateTime start = DateUtils.stringToDate(startString);
+        DateTime finish = start.plusSeconds(getSecondsElapsed());
+
+        mBaseInterface.getSharedPreferences().edit()
+                .putString(getString(R.string.check_in_end_time), DateUtils.dateToString(finish))
+                .commit();
 
         toggleButtons();
         toggleTimer(false);
@@ -370,15 +392,5 @@ public class CheckInMapFragment extends Fragment
 
     private boolean hasStartedCheckIn() {
         return !mBaseInterface.getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
-    }
-
-    private int getStartTime() {
-        if (!hasStartedCheckIn())
-            return 0;
-
-        String startString = mBaseInterface.getSharedPreferences().getString(getString(R.string.check_in_start_time), "");
-        DateTime start = DateUtils.stringToDate(startString);
-        DateTime end = DateTime.now();
-        return Seconds.secondsBetween(start, end).getSeconds();
     }
 }

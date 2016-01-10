@@ -134,7 +134,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
         String timeString = String.format("%d/%d/%d", year, month, day);
         DateTime dateTime = DateUtils.getDateTime(timeString, DateUtils.YEAR_FORMAT);
 
-        textView.setText(DateUtils.getFormattedDate(dateTime));
+        textView.setText(DateUtils.getFormattedDay(dateTime));
     }
 
     public void validateAndSubmitRequest() {

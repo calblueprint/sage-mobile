@@ -36,7 +36,7 @@
         <ImageView
             style="@style/FormIcon"
             android:id="@+id/create_semester_season_icon"
-            android:src="@drawable/ic_mail_white" />
+            android:src="@drawable/ic_cloud_black_24dp" />
 
         <LinearLayout
             style="@style/FormLinearLayout"

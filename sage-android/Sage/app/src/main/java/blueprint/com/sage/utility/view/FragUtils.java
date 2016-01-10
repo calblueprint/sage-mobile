@@ -45,4 +45,10 @@ public class FragUtils {
         activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
     }
+
+    public static void startActivityForResult(Activity activity, Class<?> cls, int requestCode) {
+        Intent intent = new Intent(activity, cls);
+        activity.startActivityForResult(intent, requestCode);
+        activity.overridePendingTransition(0, 0);
+    }
 }

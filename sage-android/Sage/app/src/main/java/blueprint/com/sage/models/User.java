@@ -34,6 +34,7 @@ public @Data class User {
     private String passwordConfirmation;
     private String imageUrl;
 
+    private UserSemester userSemester;
     private School school;
 
     @JsonIgnore

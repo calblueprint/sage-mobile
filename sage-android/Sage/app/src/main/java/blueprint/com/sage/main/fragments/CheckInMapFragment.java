@@ -24,7 +24,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.joda.time.DateTime;
 
@@ -35,7 +37,6 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
-import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -54,14 +55,11 @@ public class CheckInMapFragment extends Fragment
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
     @Bind(R.id.check_in_check_fab) FloatingActionButton mCheckButton;
-    @Bind(R.id.check_in_location_fab) FloatingActionButton mLocationButton;
     @Bind(R.id.check_in_map) MapView mMapView;
     @Bind(R.id.check_in_map_timer) FloatingTextView mTimerText;
 
     private GoogleMap mMap;
-    private NetworkManager mManager;
 
-    private Runnable mRunnableTimer;
     private CheckInTimer mTimer;
 
     private BaseInterface mBaseInterface;
@@ -72,15 +70,14 @@ public class CheckInMapFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MapsInitializer.initialize(getActivity());
-        mManager = NetworkManager.getInstance(getActivity());
-        mRunnableTimer = new Runnable() {
+        Runnable runnableTimer = new Runnable() {
             @Override
             public void run() {
                 updateTimer();
             }
         };
 
-        mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, mRunnableTimer);
+        mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, runnableTimer);
         mBaseInterface = (BaseInterface) getActivity();
     }
 
@@ -135,6 +132,22 @@ public class CheckInMapFragment extends Fragment
             LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
+
+        School school = mBaseInterface.getSchool();
+        if (school == null)
+            return;
+
+        LatLng latLng = new LatLng(school.getLat(), school.getLng());
+
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+        mMap.addMarker(markerOptions);
+
+        CircleOptions circleOptions = new CircleOptions()
+                .center(latLng)
+                .radius(MapUtils.RADIUS)
+                .strokeColor(R.color.blue500)
+                .fillColor(R.color.blue500);
+        mMap.addCircle(circleOptions);
     }
 
     private void initializeViews(Bundle savedInstanceState) {
@@ -295,10 +308,15 @@ public class CheckInMapFragment extends Fragment
 
         if (school == null) {
             Snackbar.make(mContainer, R.string.check_in_no_school, Snackbar.LENGTH_SHORT).show();
+            return false;
         }
 
         float[] results = new float[1];
-        Location.distanceBetween(location.getLatitude(), location.getLongitude(), school.getLat(), school.getLng(), results);
+        Location.distanceBetween(location.getLatitude(),
+                location.getLongitude(),
+                school.getLat(),
+                school.getLng(),
+                results);
 
         return results[0] <= MapUtils.DISTANCE;
     }

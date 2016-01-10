@@ -23,6 +23,7 @@ public class MapUtils {
 
     // Radius of circle boundary of school (int meters)
     public final static int DISTANCE = Integer.MAX_VALUE;
+    public final static int RADIUS = 100;
     public final static float DEFAULT_LONG = -122.26f;
     public final static float DEFAULT_LAT = 37.87f;
 

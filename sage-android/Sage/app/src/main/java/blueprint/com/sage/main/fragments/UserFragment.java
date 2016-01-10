@@ -1,6 +1,7 @@
 package blueprint.com.sage.main.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,11 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.user_semesters.UpdateUserSemesterEvent;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
-import blueprint.com.sage.events.users.StatusUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.models.UserSemester;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.fragments.ListDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
@@ -48,6 +50,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @Bind(R.id.user_settings_layout) LinearLayout mUserSettingsLayout;
     @Bind(R.id.admin_settings_layout) LinearLayout mAdminSettingsLayout;
+    @Nullable @Bind(R.id.admin_user_change_status) LinearLayout mStatusLayout;
 
     private User mUser;
 
@@ -81,6 +84,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         ButterKnife.bind(this, view);
         initializeUser();
         initializeSettings();
+        initializeSemester();
         return view;
     }
 
@@ -103,6 +107,12 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mToolbarInterface.setToolbarElevation(getResources().getDimensionPixelSize(R.dimen.tab_layout_elevation));
     }
 
+    private void initializeSemester() {
+        if (mStatusLayout == null) return;
+        int visibility = mUser.getCurrentSemester() != null ? View.VISIBLE : View.GONE;
+        mStatusLayout.setVisibility(visibility);
+    }
+
     private void initializeUser() {
         mUser.loadUserImage(getActivity(), mPhoto);
         mName.setText(mUser.getName());
@@ -110,7 +120,10 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mVolunteer.setText(User.VOLUNTEER_SPINNER[mUser.getVolunteerType()]);
         mTotalSemester.setText(String.valueOf(60));
         mTotalWeek.setText(String.valueOf(mUser.getVolunteerType() + 1));
-        mTotalHours.setText(mUser.getTimeString());
+
+        if (mUser.getCurrentSemester() != null) {
+            mTotalHours.setText(mUser.getCurrentSemester().getTimeString());
+        }
 
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());
@@ -159,7 +172,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     public void onStatusClick(View view) {
         ListDialog dialog = ListDialog.newInstance(this,
                 R.string.user_status_dialog_title,
-                User.STATUS_SPINNER);
+                UserSemester.STATUS_SPINNER);
         dialog.setTargetFragment(this, STATUS_DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
     }
@@ -172,18 +185,22 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     public void onEvent(UserEvent event) {
         mUser = event.getUser();
         initializeUser();
+        initializeSemester();
     }
 
     public void onEvent(EditUserEvent event) {
         mUser = event.getUser();
         initializeUser();
+        initializeSemester();
     }
 
     public void onEvent(PromoteUserEvent event) {
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 
-    public void onEvent(StatusUserEvent event) {
+    public void onEvent(UpdateUserSemesterEvent event) {
+        mUser.setCurrentSemester(event.getUserSemester());
+        initializeSemester();
         Snackbar.make(mLayout, "You've change this user's status!", Snackbar.LENGTH_SHORT).show();
     }
 
@@ -194,8 +211,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
                 Requests.Users.with(getActivity()).makePromoteRequest(mUser);
                 break;
             case STATUS_DIALOG_CODE:
-                mUser.setStatus(selection);
-                Requests.Users.with(getActivity()).makeStatusRequest(mUser);
+                mUser.getCurrentSemester().setStatus(selection);
+                Requests.UserSemesters.with(getActivity()).makeUpdateUserSemesterRequest(mUser.getCurrentSemester());
                 break;
         }
     }

@@ -18,6 +18,8 @@ public @Data class School {
     private User director;
     private List<User> users;
 
+    private int studentCount;
+
     public School() {}
 
     public boolean hasLatLng() {

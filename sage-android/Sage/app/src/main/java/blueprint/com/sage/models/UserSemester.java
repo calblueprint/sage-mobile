@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 public class UserSemester {
+    private int id;
     private int semesterId;
     private int totalTime;
     private boolean completed;

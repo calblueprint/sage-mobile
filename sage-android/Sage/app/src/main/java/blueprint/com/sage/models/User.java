@@ -28,18 +28,16 @@ public @Data class User {
     private int schoolId;
     private int directorId;
     private int role;
-    private int status;
     private int volunteerType;
-    private int totalTime;
     private String password;
     private String currentPassword;
     private String passwordConfirmation;
     private String imageUrl;
 
+    private School school;
+
     @JsonIgnore
     private int schoolSelected = -1;
-
-    private School school;
 
     @JsonIgnore
     private Bitmap profile;
@@ -47,13 +45,8 @@ public @Data class User {
     public final static int STUDENT = 0;
     public final static int ADMIN = 1;
 
-    public final static int INACTIVE = 0;
-    public final static int ARCHIVED = 1;
-    public final static int ACTIVE = 2;
-
     public final static String[] VOLUNTEER_SPINNER = { "Volunteer", "One Unit", "Two Units" };
     public final static String[] ROLE_SPINNER = { "Student", "Admin" };
-    public final static String[] STATUS_SPINNER = { "Inactive", "Archived", "Active" };
 
     public User() {}
 
@@ -63,11 +56,6 @@ public @Data class User {
     @JsonIgnore
     public String getHoursString() {
         return String.format("%d hrs/week", volunteerType + 1);
-    }
-
-    @JsonIgnore
-    public String getTimeString() {
-        return String.valueOf(getTotalTime() / 60);
     }
 
     /**
@@ -95,7 +83,4 @@ public @Data class User {
 
     @JsonIgnore
     public boolean isAdmin() { return role == ADMIN; }
-
-    @JsonIgnore
-    public boolean isActive() { return status == ACTIVE; }
 }

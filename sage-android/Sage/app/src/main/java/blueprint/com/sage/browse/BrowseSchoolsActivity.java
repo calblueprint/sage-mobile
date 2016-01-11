@@ -37,4 +37,18 @@ public class BrowseSchoolsActivity extends BackAbstractActivity implements Schoo
 
     public void setSchools(List<School> schools) { mSchools = schools; }
     public List<School> getSchools() { return mSchools; }
+
+    public void setNewSchool(School school) {
+        mSchools.add(school);
+    }
+
+    public void setUpdatedSchool(School updatedSchool) {
+        for (int i = 0; i < mSchools.size(); i++) {
+            School school = mSchools.get(i);
+            if (school.getId() == updatedSchool.getId()) {
+                mSchools.remove(i);
+                mSchools.add(i, updatedSchool);
+            }
+        }
+    }
 }

@@ -31,6 +31,7 @@ public class EditSchoolFragment extends SchoolFormAbstractFragment {
     }
 
     public void onEvent(EditSchoolEvent event) {
+        mSchoolsInterface.setUpdatedSchool(event.getSchool());
         FragUtils.popBackStack(this);
     }
 }

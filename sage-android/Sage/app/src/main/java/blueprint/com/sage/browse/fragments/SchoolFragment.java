@@ -75,6 +75,7 @@ public class SchoolFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_school, parent, false);
         ButterKnife.bind(this, view);
         initializeViews(savedInstanceState);
+        initializeSchool();
         return view;
     }
 
@@ -82,7 +83,11 @@ public class SchoolFragment extends Fragment
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
 
-        mAdapter = new UserListAdapter(getActivity(), new ArrayList<User>());
+        if (mSchool.getUsers() == null) {
+            mSchool.setUsers(new ArrayList<User>());
+        }
+
+        mAdapter = new UserListAdapter(getActivity(), mSchool.getUsers());
 
         mUserList.setEmptyView(mEmptyView);
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));

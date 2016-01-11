@@ -127,6 +127,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
         if (mUser.getSchool() != null)
             mSchool.setText(mUser.getSchool().getName());
+
+        getActivity().setTitle("User");
     }
 
     private void initializeSettings() {

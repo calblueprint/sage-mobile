@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.SchoolsListAdapter;
+import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -80,6 +82,11 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
     @Override
     public void onRefresh() { mSchoolsInterface.getSchoolsListRequest(); }
 
+    @OnClick(R.id.school_list_fab)
+    public void onCreateClick(FloatingActionButton button) {
+        FragUtils.replaceBackStack(R.id.container, CreateSchoolFragment.newInstance(), getActivity());
+    }
+
     public void onEvent(SchoolListEvent event) {
         mSchoolsInterface.setSchools(event.getSchools());
         mAdapter.setSchools(mSchoolsInterface.getSchools());
@@ -87,8 +94,7 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
         mSchoolsRefreshView.setRefreshing(false);
     }
 
-    @OnClick(R.id.school_list_fab)
-    public void onCreateClick(FloatingActionButton button) {
-        FragUtils.replaceBackStack(R.id.container, CreateSchoolFragment.newInstance(), getActivity());
+    public void onEvent(CreateSchoolEvent event) {
+        Log.e("asdf", "asdfasf");
     }
 }

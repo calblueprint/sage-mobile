@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.browse.fragments.SchoolFragment;
 import blueprint.com.sage.browse.fragments.SchoolListFragment;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
@@ -40,6 +41,9 @@ public class BrowseSchoolsActivity extends BackAbstractActivity implements Schoo
 
     public void setNewSchool(School school) {
         mSchools.add(school);
+        FragUtils.replaceBackStack(R.id.container,
+                SchoolFragment.newInstance(school, mSchools.size() - 1),
+                this);
     }
 
     public void setUpdatedSchool(School updatedSchool) {

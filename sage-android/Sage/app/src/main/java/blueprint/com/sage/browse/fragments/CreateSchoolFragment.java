@@ -1,6 +1,5 @@
 package blueprint.com.sage.browse.fragments;
 
-import blueprint.com.sage.R;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
@@ -22,10 +21,7 @@ public class CreateSchoolFragment extends SchoolFormAbstractFragment implements 
     }
 
     public void onEvent(CreateSchoolEvent event) {
-        mSchoolsInterface.setNewSchool(event.getSchool());
         FragUtils.popBackStack(this);
-        FragUtils.replaceBackStack(R.id.container,
-                SchoolFragment.newInstance(event.getSchool()),
-                getActivity());
+        mSchoolsInterface.setNewSchool(event.getSchool());
     }
 }

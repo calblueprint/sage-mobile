@@ -40,7 +40,7 @@ public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         if (getItemCount() <= 0 && position < 0 && position >= mSchools.size())
             return;
 
@@ -50,7 +50,7 @@ public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragUtils.replaceBackStack(R.id.container, SchoolFragment.newInstance(school), mActivity);
+                FragUtils.replaceBackStack(R.id.container, SchoolFragment.newInstance(school, position), mActivity);
             }
         });
     }

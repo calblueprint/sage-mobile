@@ -24,6 +24,7 @@ import blueprint.com.sage.requests.SignUpRequestsActivity;
 import blueprint.com.sage.semester.CreateSemesterActivity;
 import blueprint.com.sage.semester.FinishSemesterActivity;
 import blueprint.com.sage.semester.SemesterListActivity;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -40,12 +41,15 @@ public class AdminPanelFragment extends Fragment {
     @Bind(R.id.admin_settings_end_semester) View mEndSemester;
 
     private List<Semester> mSemesters;
+    private BaseInterface mBaseInterface;
 
     public static AdminPanelFragment newInstance() { return new AdminPanelFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mBaseInterface = (BaseInterface) getActivity();
 
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("current_semester", "true");
@@ -102,7 +106,9 @@ public class AdminPanelFragment extends Fragment {
 
     @OnClick(R.id.admin_settings_end_semester)
     public void onEndSemester(View view) {
-        FragUtils.startActivityBackStack(getActivity(), FinishSemesterActivity.class);
+        FragUtils.startActivityForResultFragment(getActivity(), getParentFragment(),
+                FinishSemesterActivity.class,
+                FragUtils.FINISH_SEMESTER_REQUEST_CODE);
     }
 
     @OnClick(R.id.admin_settings_browse_semesters)
@@ -114,29 +120,49 @@ public class AdminPanelFragment extends Fragment {
         mStartSemester.setVisibility(View.GONE);
         mEndSemester.setVisibility(View.GONE);
 
-        if (mSemesters == null)
-            return;
-
-        if (mSemesters.size() == 0) {
+        if (mBaseInterface.getSharedPreferences().contains(getString(R.string.current_semester))) {
+            String semesterString =
+                    mBaseInterface.getSharedPreferences().getString(getString(R.string.current_semester), "");
+            setSemester(semesterString);
+            mEndSemester.setVisibility(View.VISIBLE);
+        } else if (mSemesters == null || mSemesters.size() == 0) {
             mStartSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters.size() == 1) {
             mEndSemester.setVisibility(View.VISIBLE);
         }
     }
 
-    public void onEvent(SemesterListEvent event) {
-        mSemesters = event.getSemesters();
+    public void setSemester(String semesterString) {
+        Semester semester = NetworkUtils.writeAsObject(getActivity(), semesterString, new TypeReference<Semester>() {});
+        if (semester == null) return;
+        mSemesters = new ArrayList<>();
+        mSemesters.add(semester);
+    }
+
+    public void onStartSemeseter(Intent data) {
+        String semesterString = data.getExtras().getString(getString(R.string.activity_create_semester), "");
+        if (semesterString.isEmpty()) return;
+
+        setSemester(semesterString);
+
+        mBaseInterface.getSharedPreferences()
+                .edit()
+                .putString(getString(R.string.current_semester), semesterString)
+                .commit();
         toggleSemester();
     }
 
-    public void setSemester(Intent data) {
-        String semesterString =
-                data.getExtras().getString(getString(R.string.activity_create_semester), "");
-        Semester semester = NetworkUtils.writeAsObject(getActivity(), semesterString, new TypeReference<Semester>() {});
-        if (semester == null) return;
-
+    public void onFinishSemester(Intent data) {
+        mBaseInterface.getSharedPreferences()
+                .edit()
+                .remove(getString(R.string.current_semester))
+                .commit();
         mSemesters = new ArrayList<>();
-        mSemesters.add(semester);
+        toggleSemester();
+    }
+
+    public void onEvent(SemesterListEvent event) {
+        mSemesters = event.getSemesters();
         toggleSemester();
     }
 }

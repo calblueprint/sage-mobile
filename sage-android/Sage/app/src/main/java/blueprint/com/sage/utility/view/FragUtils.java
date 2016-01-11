@@ -16,6 +16,7 @@ public class FragUtils {
      * Activity Constants (for onActivityResult)
      */
     public static final int START_SEMESTER_REQUEST_CODE = 100;
+    public static final int FINISH_SEMESTER_REQUEST_CODE = 101;
 
 
     public static void replace(int id, Fragment fragment, FragmentActivity activity) {

@@ -13,4 +13,7 @@
     <string name="semester_finish_subtitle">Please enter your email to proceed.</string>
     <string name="semester_finish_confirm_title">Confirm Request</string>
     <string name="semester_finish_confirm_message">Are you sure you want to finish the semester? This action cannot be undone.</string>
+
+    <!-- Shared Preferences -->
+    <string name="current_semester">current_semester</string>
 </resources>

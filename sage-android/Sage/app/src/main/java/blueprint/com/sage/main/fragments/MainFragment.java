@@ -114,6 +114,9 @@ public class MainFragment extends Fragment {
             case FragUtils.START_SEMESTER_REQUEST_CODE:
                 setSemester(data);
                 break;
+            case FragUtils.FINISH_SEMESTER_REQUEST_CODE:
+                clearSemester(data);
+                break;
         }
     }
 
@@ -122,7 +125,16 @@ public class MainFragment extends Fragment {
             if (!(fragment instanceof AdminPanelFragment)) continue;
 
             AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
-            adminPanelFragment.setSemester(data);
+            adminPanelFragment.onStartSemeseter(data);
+        }
+    }
+
+    private void clearSemester(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AdminPanelFragment)) continue;
+
+            AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
+            adminPanelFragment.onFinishSemester(data);
         }
     }
 }

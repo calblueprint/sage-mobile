@@ -3,6 +3,7 @@ package blueprint.com.sage.utility.view;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -60,11 +61,21 @@ public class ViewUtils {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public static int getColor(Context context, int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return context.getResources().getColor(color, context.getTheme());
         } else {
             return context.getResources().getColor(color);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public static Drawable getDrawable(Context context, int drawable) {
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            return context.getResources().getDrawable(drawable, context.getTheme());
+        } else {
+            return context.getResources().getDrawable(drawable);
         }
     }
 }

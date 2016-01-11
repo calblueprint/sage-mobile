@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -38,6 +37,7 @@ import blueprint.com.sage.utility.DateUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -168,10 +168,9 @@ public class CheckInMapFragment extends Fragment
         if (!hasStartedCheckIn())
             return 0;
 
-        Long startString = mBaseInterface.getSharedPreferences()
-                .getLong(getString(R.string.check_in_seconds), 0);
-        Long endString = SystemClock.elapsedRealtime();
-        return (int) (endString - startString) / 1000;
+        Long totalSeconds =  mBaseInterface.getSharedPreferences()
+                .getLong(getString(R.string.check_in_total_seconds), 0);
+        return (int) Math.floor(totalSeconds / 1000);
     }
 
     @OnClick(R.id.check_in_location_fab)
@@ -393,20 +392,12 @@ public class CheckInMapFragment extends Fragment
      * If showCheckIn is true, then we show the start icon. And hide the timer.
      * Else, we show the stop icon. And show the timer.
      */
-    @SuppressWarnings("deprecation")
     private void toggleButtons() {
 
         int icon = hasStartedCheckIn() ? R.drawable.ic_clear_white : R.drawable.ic_done_white;
         int color = hasStartedCheckIn() ? R.color.red500 : R.color.green500;
 
-        Drawable drawable;
-        if (android.os.Build.VERSION.SDK_INT >= 21) {
-            drawable = getResources().getDrawable(icon, getActivity().getTheme());
-        } else {
-            drawable = getResources().getDrawable(icon);
-        }
-
-        mCheckButton.setImageDrawable(drawable);
+        mCheckButton.setImageDrawable(ViewUtils.getDrawable(getActivity(), icon));
         mCheckButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(color)));
     }
 

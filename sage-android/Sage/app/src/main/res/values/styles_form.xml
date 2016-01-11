@@ -41,8 +41,9 @@
         <item name="android:singleLine">true</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColorHighlight">@color/amber500</item>
         <item name="android:background">@drawable/edit_text_underline_selector</item>
-        <item name="android:textCursorDrawable">@drawable/edit_text_cursor</item>
+        <item name="android:textCursorDrawable">@drawable/amber_edit_text_cursor</item>
     </style>
 
     <style name="FormSpinner">

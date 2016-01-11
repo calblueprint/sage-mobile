@@ -54,7 +54,7 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textCursorDrawable">@drawable/white_edit_text_cursor</item>
     </style>
 
     <style name="LandingDefaultButton">

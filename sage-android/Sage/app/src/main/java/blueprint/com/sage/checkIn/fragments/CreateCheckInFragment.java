@@ -232,10 +232,12 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     private void resetCheckIn() {
         mBaseInterface.getSharedPreferences()
-                           .edit()
-                           .remove(getString(R.string.check_in_start_time))
-                           .remove(getString(R.string.check_in_end_time))
-                           .apply();
+                .edit()
+                .remove(getString(R.string.check_in_start_time))
+                .remove(getString(R.string.check_in_recent_seconds))
+                .remove(getString(R.string.check_in_total_seconds))
+                .remove(getString(R.string.check_in_end_time))
+                .apply();
         getActivity().onBackPressed();
     }
 

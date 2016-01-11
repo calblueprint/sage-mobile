@@ -4,11 +4,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:gravity="center_vertical">
 
     <TextView
-        style="@style/SpinnerItem"
+        style="@style/FormSpinnerItem"
         android:id="@+id/spinner_item_text" />
 
 </LinearLayout>

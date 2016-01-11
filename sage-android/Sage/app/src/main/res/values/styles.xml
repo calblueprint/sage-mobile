@@ -6,6 +6,7 @@
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/amber500</item>
         <item name="colorPrimaryDark">@color/amber700</item>
+        <item name="colorAccent">@color/amber500</item>
     </style>
 
     <!-- ToolBar -->
@@ -54,7 +55,7 @@
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textCursorDrawable">@drawable/white_edit_text_cursor</item>
     </style>
 
     <style name="LandingDefaultButton">
@@ -68,12 +69,6 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="SpinnerItem">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
     </style>
 

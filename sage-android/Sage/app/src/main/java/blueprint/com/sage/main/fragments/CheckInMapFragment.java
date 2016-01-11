@@ -332,11 +332,32 @@ public class CheckInMapFragment extends Fragment
 
         mBaseInterface.getSharedPreferences().edit()
                       .putString(getString(R.string.check_in_start_time), DateUtils.getFormattedDateNow())
-                      .putLong(getString(R.string.check_in_seconds), SystemClock.elapsedRealtime())
+                      .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
+                      .putLong(getString(R.string.check_in_total_seconds), 0)
                       .commit();
         toggleButtons();
         toggleTimer(true);
-        getActivity().invalidateOptionsMenu();
+    }
+
+    private void resumeCheckIn() {
+        mBaseInterface.getSharedPreferences().edit()
+                .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
+                .commit();
+    }
+
+    private void pauseCheckIn() {
+        Long recentSeconds = mBaseInterface.getSharedPreferences()
+                .getLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime());
+        Long totalSeconds =  mBaseInterface.getSharedPreferences()
+                .getLong(getString(R.string.check_in_total_seconds), 0);
+        Long pausedSeconds = SystemClock.elapsedRealtime();
+        totalSeconds += (pausedSeconds - recentSeconds);
+
+        mBaseInterface.getSharedPreferences().edit()
+                .putLong(getString(R.string.check_in_total_seconds), totalSeconds)
+                .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
+                .commit();
+
     }
 
     private void stopCheckIn() {

@@ -5,9 +5,10 @@
     <string name="menu_create_request">Create Request</string>
 
     <!-- CheckIn Shared Preferences -->
-    <string name="check_in_start_time">start</string>
-    <string name="check_in_seconds">seconds</string>
-    <string name="check_in_end_time">end</string>
+    <string name="check_in_start_time">start_time</string>
+    <string name="check_in_total_seconds">total_seconds</string>
+    <string name="check_in_recent_seconds">recent_seconds</string>
+    <string name="check_in_end_time">end_time</string>
 
     <!-- Invalid location dialog -->
     <string name="check_in_oob_title">Invalid location.</string>

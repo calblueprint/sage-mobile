@@ -7,7 +7,7 @@
     android:layout_centerVertical="true" >
 
     <TextView
-        style="@style/SpinnerItem"
+        style="@style/FormSpinnerItem"
         android:id="@+id/spinner_item_text"
         android:layout_centerVertical="true"
         android:textColor="@color/white" />

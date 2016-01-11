@@ -1,5 +1,7 @@
 package blueprint.com.sage.main.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.adapters.IconPagerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,10 +95,34 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        switch(requestCode) {
+            case FragUtils.START_SEMESTER_REQUEST_CODE:
+                setSemester(data);
+                break;
+        }
+    }
+
+    private void setSemester(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AdminPanelFragment)) continue;
+
+            AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
+            adminPanelFragment.setSemester(data);
+        }
     }
 }

@@ -10,6 +10,7 @@ import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 11/4/15.

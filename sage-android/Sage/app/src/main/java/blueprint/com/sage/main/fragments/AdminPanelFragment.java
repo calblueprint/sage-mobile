@@ -1,11 +1,15 @@
 package blueprint.com.sage.main.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import blueprint.com.sage.requests.SignUpRequestsActivity;
 import blueprint.com.sage.semester.CreateSemesterActivity;
 import blueprint.com.sage.semester.FinishSemesterActivity;
 import blueprint.com.sage.semester.SemesterListActivity;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,7 +95,9 @@ public class AdminPanelFragment extends Fragment {
 
     @OnClick(R.id.admin_settings_start_semester)
     public void onStartSemester(View view) {
-        FragUtils.startActivityBackStack(getActivity(), CreateSemesterActivity.class);
+        FragUtils.startActivityForResultFragment(getActivity(), getParentFragment(),
+                CreateSemesterActivity.class,
+                FragUtils.START_SEMESTER_REQUEST_CODE);
     }
 
     @OnClick(R.id.admin_settings_end_semester)
@@ -101,11 +108,6 @@ public class AdminPanelFragment extends Fragment {
     @OnClick(R.id.admin_settings_browse_semesters)
     public void onBrowseSemesters(View view) {
         FragUtils.startActivityBackStack(getActivity(), SemesterListActivity.class);
-    }
-
-    public void onEvent(SemesterListEvent event) {
-        mSemesters = event.getSemesters();
-        toggleSemester();
     }
 
     private void toggleSemester() {
@@ -120,5 +122,21 @@ public class AdminPanelFragment extends Fragment {
         } else if (mSemesters.size() == 1) {
             mEndSemester.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void onEvent(SemesterListEvent event) {
+        mSemesters = event.getSemesters();
+        toggleSemester();
+    }
+
+    public void setSemester(Intent data) {
+        String semesterString =
+                data.getExtras().getString(getString(R.string.activity_create_semester), "");
+        Semester semester = NetworkUtils.writeAsObject(getActivity(), semesterString, new TypeReference<Semester>() {});
+        if (semester == null) return;
+
+        mSemesters = new ArrayList<>();
+        mSemesters.add(semester);
+        toggleSemester();
     }
 }

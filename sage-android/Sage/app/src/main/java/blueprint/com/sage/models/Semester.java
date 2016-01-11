@@ -20,9 +20,6 @@ public @Data class Semester {
 
     public static final String[] SEASONS = { "Fall", "Spring" };
 
-    public String getStart() { return start == null ? null : start.toString(); }
-    public String getFinish() { return finish == null ? null : finish.toString(); }
-
     @JsonIgnore
     public int getYear() {
         return (new DateTime(start)).getYear();

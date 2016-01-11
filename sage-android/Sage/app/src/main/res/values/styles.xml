@@ -6,6 +6,7 @@
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/amber500</item>
         <item name="colorPrimaryDark">@color/amber700</item>
+        <item name="colorAccent">@color/amber500</item>
     </style>
 
     <!-- ToolBar -->

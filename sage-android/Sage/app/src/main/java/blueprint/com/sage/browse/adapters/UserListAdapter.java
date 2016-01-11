@@ -43,7 +43,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Item item = new Item(user, null, false);
             allUsers.add(item);
 
-            if (!user.isActive())
+            if (user.getCurrentSemester() != null && !user.getCurrentSemester().isActive())
                 inactiveUsers.add(item);
         }
 

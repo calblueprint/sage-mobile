@@ -4,14 +4,17 @@
 
     <string name="menu_create_request">Create Request</string>
 
-    <string name="check_in_start_time">start</string>
-    <string name="check_in_end_time">end</string>
-    
+    <!-- CheckIn Shared Preferences -->
+    <string name="check_in_start_time">start_time</string>
+    <string name="check_in_total_seconds">total_seconds</string>
+    <string name="check_in_recent_seconds">recent_seconds</string>
+    <string name="check_in_end_time">end_time</string>
+
+    <!-- Invalid location dialog -->
     <string name="check_in_oob_title">Invalid location.</string>
     <string name="check_in_oob_body">Look\'s like your too far away from the school! Try checking in a little closer.</string>
+    <string name="check_in_no_school">Looks like you aren\'t a register mentor! Edit your profile to sign up for a school.</string>
     <string name="check_in_oob_confirm">Return</string>
-
-    <string name="check_in_request_error">Invalid check-in request.</string>
 
     <string name="check_in_start_title">Choose an option</string>
     <string name="check_in_start_body">Click start session to begin your session, or submit a check in request.</string>
@@ -39,6 +42,7 @@
     <string name="check_in_cancel_request">Delete Request</string>
 
     <!-- Check In Request Errors -->
+    <string name="check_in_request_error">Invalid check-in request.</string>
     <string name="check_in_request_blank">Date and times cannot be blank!</string>
     <string name="check_in_request_invalid_dates">Invalid start and end times</string>
 

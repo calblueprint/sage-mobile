@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -26,7 +27,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.joda.time.DateTime;
-import org.joda.time.Seconds;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInActivity;
@@ -35,7 +35,6 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
-import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -54,14 +53,11 @@ public class CheckInMapFragment extends Fragment
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
     @Bind(R.id.check_in_check_fab) FloatingActionButton mCheckButton;
-    @Bind(R.id.check_in_location_fab) FloatingActionButton mLocationButton;
     @Bind(R.id.check_in_map) MapView mMapView;
     @Bind(R.id.check_in_map_timer) FloatingTextView mTimerText;
 
     private GoogleMap mMap;
-    private NetworkManager mManager;
 
-    private Runnable mRunnableTimer;
     private CheckInTimer mTimer;
 
     private BaseInterface mBaseInterface;
@@ -72,15 +68,14 @@ public class CheckInMapFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MapsInitializer.initialize(getActivity());
-        mManager = NetworkManager.getInstance(getActivity());
-        mRunnableTimer = new Runnable() {
+        Runnable runnableTimer = new Runnable() {
             @Override
             public void run() {
                 updateTimer();
             }
         };
 
-        mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, mRunnableTimer);
+        mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, runnableTimer);
         mBaseInterface = (BaseInterface) getActivity();
     }
 
@@ -135,6 +130,15 @@ public class CheckInMapFragment extends Fragment
             LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
+
+        School school = mBaseInterface.getSchool();
+        if (school == null)
+            return;
+
+        LatLng latLng = new LatLng(school.getLat(), school.getLng());
+
+        mMap.addMarker(MapUtils.getMarkerOptions(latLng));
+        mMap.addCircle(MapUtils.getCircleOptions(getActivity(), latLng, MapUtils.RADIUS));
     }
 
     private void initializeViews(Bundle savedInstanceState) {
@@ -145,12 +149,11 @@ public class CheckInMapFragment extends Fragment
         toggleTimer(hasStartedCheckIn());
     }
 
-
     /**
      * Super hacky, but whateves
      */
     private void updateTimer() {
-        int secondsPassed = getStartTime();
+        int secondsPassed = getSecondsElapsed();
         int hours = secondsPassed / 3600;
         int minutes = (secondsPassed % 3600) / 60;
 
@@ -159,6 +162,16 @@ public class CheckInMapFragment extends Fragment
 
         String hourMinutes = String.format("%s:%s", hourString, minutesString);
         mTimerText.setText(hourMinutes);
+    }
+
+    private int getSecondsElapsed() {
+        if (!hasStartedCheckIn())
+            return 0;
+
+        Long startString = mBaseInterface.getSharedPreferences()
+                .getLong(getString(R.string.check_in_seconds), 0);
+        Long endString = SystemClock.elapsedRealtime();
+        return (int) (endString - startString) / 1000;
     }
 
     @OnClick(R.id.check_in_location_fab)
@@ -182,7 +195,6 @@ public class CheckInMapFragment extends Fragment
             return;
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapUtils.ZOOM));
     }
 
@@ -279,12 +291,23 @@ public class CheckInMapFragment extends Fragment
 
     private boolean locationInBounds() {
         Location location = getLocation();
-        if (location == null)
-            return false;
-
         School school = mBaseInterface.getSchool();
+
+        if (location == null) {
+            return false;
+        }
+
+        if (school == null) {
+            Snackbar.make(mContainer, R.string.check_in_no_school, Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+
         float[] results = new float[1];
-        Location.distanceBetween(location.getLatitude(), location.getLongitude(), school.getLat(), school.getLng(), results);
+        Location.distanceBetween(location.getLatitude(),
+                location.getLongitude(),
+                school.getLat(),
+                school.getLng(),
+                results);
 
         return results[0] <= MapUtils.DISTANCE;
     }
@@ -307,11 +330,34 @@ public class CheckInMapFragment extends Fragment
             return;
         }
 
-        mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_start_time),
-                                      DateUtils.getFormattedTimeNow()).commit();
+        mBaseInterface.getSharedPreferences().edit()
+                      .putString(getString(R.string.check_in_start_time), DateUtils.getFormattedDateNow())
+                      .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
+                      .putLong(getString(R.string.check_in_total_seconds), 0)
+                      .commit();
         toggleButtons();
         toggleTimer(true);
-        getActivity().invalidateOptionsMenu();
+    }
+
+    private void resumeCheckIn() {
+        mBaseInterface.getSharedPreferences().edit()
+                .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
+                .commit();
+    }
+
+    private void pauseCheckIn() {
+        Long recentSeconds = mBaseInterface.getSharedPreferences()
+                .getLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime());
+        Long totalSeconds =  mBaseInterface.getSharedPreferences()
+                .getLong(getString(R.string.check_in_total_seconds), 0);
+        Long pausedSeconds = SystemClock.elapsedRealtime();
+        totalSeconds += (pausedSeconds - recentSeconds);
+
+        mBaseInterface.getSharedPreferences().edit()
+                .putLong(getString(R.string.check_in_total_seconds), totalSeconds)
+                .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
+                .commit();
+
     }
 
     private void stopCheckIn() {
@@ -326,8 +372,14 @@ public class CheckInMapFragment extends Fragment
             return;
         }
 
-        mBaseInterface.getSharedPreferences().edit().putString(getString(R.string.check_in_end_time),
-                DateUtils.getFormattedTimeNow()).commit();
+        String startString = mBaseInterface.getSharedPreferences()
+                .getString(getString(R.string.check_in_start_time), "");
+        DateTime start = DateUtils.stringToDate(startString);
+        DateTime finish = start.plusSeconds(getSecondsElapsed());
+
+        mBaseInterface.getSharedPreferences().edit()
+                .putString(getString(R.string.check_in_end_time), DateUtils.dateToString(finish))
+                .commit();
 
         toggleButtons();
         toggleTimer(false);
@@ -370,15 +422,5 @@ public class CheckInMapFragment extends Fragment
 
     private boolean hasStartedCheckIn() {
         return !mBaseInterface.getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
-    }
-
-    private int getStartTime() {
-        if (!hasStartedCheckIn())
-            return 0;
-
-        String startString = mBaseInterface.getSharedPreferences().getString(getString(R.string.check_in_start_time), "");
-        DateTime start = DateUtils.stringToDate(startString);
-        DateTime end = DateTime.now();
-        return Seconds.secondsBetween(start, end).getSeconds();
     }
 }

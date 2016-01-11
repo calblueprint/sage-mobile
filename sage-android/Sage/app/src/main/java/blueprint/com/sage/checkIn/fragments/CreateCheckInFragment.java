@@ -126,7 +126,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
         DateTime startDate = DateUtils.stringToDate(startString);
         DateTime endDate = DateUtils.stringToDate(endString);
 
-        mDate.setText(DateUtils.getFormattedDate(startDate));
+        mDate.setText(DateUtils.getFormattedDay(startDate));
         mStartTime.setText(DateUtils.getFormattedTime(startDate));
         mEndTime.setText(DateUtils.getFormattedTime(endDate));
         mTotalTime.setText(DateUtils.timeDiff(startDate, endDate));
@@ -170,7 +170,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
         String timeString = String.format("%d/%d/%d", year, month, day);
         DateTime dateTime = DateUtils.getDateTime(timeString, DateUtils.YEAR_FORMAT);
 
-        textView.setText(DateUtils.getFormattedDate(dateTime));
+        textView.setText(DateUtils.getFormattedDay(dateTime));
     }
 
     @OnClick(R.id.check_in_request_cancel_button)

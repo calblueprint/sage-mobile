@@ -5,8 +5,6 @@ import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import java.util.Date;
-
 /**
  * Created by charlesx on 10/30/15.
  * Date utilities.
@@ -46,7 +44,7 @@ public class DateUtils {
     }
 
 
-    public static String getFormattedDate(DateTime dateTime) {
+    public static String getFormattedDay(DateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(DAY_FORMAT);
         return formatter.print(dateTime);
     }
@@ -56,12 +54,8 @@ public class DateUtils {
         return formatter.print(dateTime);
     }
 
-    public static String getFormattedTimeNow() {
+    public static String getFormattedDateNow() {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
         return formatter.print(DateTime.now());
-    }
-
-    public static int getYear(Date date) {
-        return (new DateTime(date)).getYear();
     }
 }

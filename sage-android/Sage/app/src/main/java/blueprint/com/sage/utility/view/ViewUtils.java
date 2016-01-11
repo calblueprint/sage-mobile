@@ -59,4 +59,12 @@ public class ViewUtils {
             inputMethodManager.hideSoftInputFromWindow(focus.getWindowToken(), 0);
         }
     }
+
+    public static int getColor(Context context, int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return context.getResources().getColor(color, context.getTheme());
+        } else {
+            return context.getResources().getColor(color);
+        }
+    }
 }

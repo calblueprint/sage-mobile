@@ -20,4 +20,8 @@
     <color name="blue500">#2196F3</color>
 
     <color name="amber700">#FFA000</color>
+
+    <!-- Check In Map -->
+    <color name="map_circle_stroke">#BFFFC107</color>
+    <color name="map_circle_fill">#80FFC107</color>
 </resources>

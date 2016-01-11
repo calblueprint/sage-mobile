@@ -76,7 +76,7 @@ public @Data class User {
      */
     public void loadUserImage(Activity activity, ImageView imageView) {
         if (getImageUrl() == null) {
-            ViewUtils.loadImage(activity, R.drawable.ic_account_circle_black_24dp, imageView);
+            ViewUtils.loadImage(activity, R.drawable.ic_account_circle_black_48dp, imageView);
         } else {
             ViewUtils.loadImage(activity, getImageUrl(), imageView);
         }

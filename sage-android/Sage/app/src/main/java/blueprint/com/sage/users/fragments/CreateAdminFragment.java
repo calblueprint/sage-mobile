@@ -9,6 +9,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.view.ViewUtils;
 
 /**
  * Created by charlesx on 11/18/15.
@@ -21,6 +22,7 @@ public class CreateAdminFragment extends UserFormAbstractFragment {
         mCurrentPasswordLayout.setVisibility(View.GONE);
         mPassword.setHint(getString(R.string.sign_up_password));
         mConfirmPassword.setHint(getString(R.string.sign_up_password_confirm));
+        mPhoto.setImageDrawable(ViewUtils.getDrawable(getActivity(), R.drawable.ic_account_circle_black_48dp));
 
         getActivity().setTitle("Create User");
     }

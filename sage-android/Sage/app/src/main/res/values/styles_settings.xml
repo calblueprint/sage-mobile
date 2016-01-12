@@ -16,6 +16,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">@dimen/admin_layout_margin</item>
         <item name="android:paddingRight">@dimen/admin_layout_margin</item>
+        <item name="android:background">@drawable/list_item_selector</item>
     </style>
 
     <style name="PanelText">

@@ -3,6 +3,7 @@ package blueprint.com.sage.browse;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
@@ -33,7 +34,10 @@ public class BrowseSchoolsActivity extends BackAbstractActivity implements Schoo
     }
 
     public void getSchoolsListRequest() {
-        Requests.Schools.with(this).makeListRequest(null);
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("sort[attr]", "lower(name)");
+        queryParams.put("sort[order]", "asc");
+        Requests.Schools.with(this).makeListRequest(queryParams);
     }
 
     public void setSchools(List<School> schools) { mSchools = schools; }

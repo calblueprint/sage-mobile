@@ -256,9 +256,10 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         mSchool.setName(name);
         mSchool.setAddress(address);
         mSchool.setDirectorId(director.getId());
-        if (bounds != null)
+        if (bounds != null) {
             mSchool.setLat((float) bounds.latitude);
             mSchool.setLng((float) bounds.longitude);
+        }
 
         makeRequest();
     }

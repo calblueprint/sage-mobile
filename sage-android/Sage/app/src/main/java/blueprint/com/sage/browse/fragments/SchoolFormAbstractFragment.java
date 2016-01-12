@@ -286,7 +286,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     public void setUserSpinner() {
         User director = mSchool.getDirector();
-        
+
         if (director == null) return;
 
         for (int i = 0; i < mUsers.size(); i++)

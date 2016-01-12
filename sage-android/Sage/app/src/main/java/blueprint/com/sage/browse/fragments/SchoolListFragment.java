@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import java.util.HashMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.SchoolsListAdapter;
-import blueprint.com.sage.events.schools.CreateSchoolEvent;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
@@ -105,7 +104,8 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
         mSchoolsRefreshView.setRefreshing(false);
     }
 
-    public void onEvent(CreateSchoolEvent event) {
-        Log.e("asdf", "asdfasf");
+    public void onEvent(APIErrorEvent event) {
+        mEmptyView.setRefreshing(false);
+        mSchoolsRefreshView.setRefreshing(false);
     }
 }

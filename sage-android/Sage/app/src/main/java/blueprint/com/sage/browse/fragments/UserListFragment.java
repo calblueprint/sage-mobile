@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.UserListAdapter;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -81,6 +82,11 @@ public class UserListFragment extends Fragment implements OnRefreshListener {
         getActivity().setTitle("Users");
     }
 
+    @OnClick(R.id.user_list_fab)
+    public void onCreateAdminClick(FloatingActionButton button) {
+        FragUtils.replaceBackStack(R.id.container, CreateAdminFragment.newInstance(), getActivity());
+    }
+
     public void onEvent(UserListEvent event) {
         mUsersInterface.setUsers(event.getUsers());
         mUserListAdapter.setUsers(mUsersInterface.getUsers());
@@ -88,8 +94,8 @@ public class UserListFragment extends Fragment implements OnRefreshListener {
         mEmptyView.setRefreshing(false);
     }
 
-    @OnClick(R.id.user_list_fab)
-    public void onCreateAdminClick(FloatingActionButton button) {
-        FragUtils.replaceBackStack(R.id.container, CreateAdminFragment.newInstance(), getActivity());
+    public void onEvent(APIErrorEvent event) {
+        mRefreshUsers.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
     }
 }

@@ -10,5 +10,4 @@ import blueprint.com.sage.models.User;
 public interface UsersInterface {
     List<User> getUsers();
     void setUsers(List<User> users);
-    void getUsersListRequest();
 }

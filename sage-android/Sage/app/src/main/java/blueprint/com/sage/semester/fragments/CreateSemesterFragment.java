@@ -1,7 +1,9 @@
 package blueprint.com.sage.semester.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,6 +27,7 @@ import blueprint.com.sage.shared.fragments.DateDialog;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -156,6 +159,15 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
     }
 
     public void onEvent(StartSemesterEvent event) {
+        Semester semester = event.getSemester();
+
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.activity_create_semester),
+                NetworkUtils.writeAsString(getActivity(), semester));
+        intent.putExtras(bundle);
+
+        getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().onBackPressed();
     }
 }

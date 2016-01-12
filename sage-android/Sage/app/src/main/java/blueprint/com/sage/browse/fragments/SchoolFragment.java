@@ -28,6 +28,7 @@ import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -50,21 +51,26 @@ public class SchoolFragment extends Fragment
     @Bind(R.id.school_address) TextView mAddress;
 
     private School mSchool;
+    private int mPosition;
     private UserListAdapter mAdapter;
     private GoogleMap mMap;
+    private SchoolsInterface mSchoolsInterface;
 
-    public static SchoolFragment newInstance(School school) {
+    public static SchoolFragment newInstance(School school, int position) {
         SchoolFragment fragment = new SchoolFragment();
         fragment.setSchool(school);
+        fragment.setPosition(position);
         return fragment;
     }
 
     public void setSchool(School school) { mSchool = school; }
+    public void setPosition(int position) { mPosition = position; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        mSchoolsInterface = (SchoolsInterface) getActivity();
         MapsInitializer.initialize(getActivity());
         Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
@@ -74,15 +80,40 @@ public class SchoolFragment extends Fragment
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_school, parent, false);
         ButterKnife.bind(this, view);
+        updateSchool();
         initializeViews(savedInstanceState);
+        initializeSchool();
         return view;
+    }
+
+    // TODO: really find a better way to do this
+    private void updateSchool() {
+        if (mSchoolsInterface.getSchools().size() < mPosition)
+            return;
+
+        School school = mSchoolsInterface.getSchools().get(mPosition);
+        if (school.getId() == mSchool.getId()) {
+            mSchool = school;
+        } else {
+            for (int i = 0; i < mSchoolsInterface.getSchools().size(); i++) {
+                school = mSchoolsInterface.getSchools().get(i);
+                if (school.getId() == mSchool.getId()) {
+                    mSchool = school;
+                    mPosition = i;
+                }
+            }
+        }
     }
 
     private void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
 
-        mAdapter = new UserListAdapter(getActivity(), new ArrayList<User>());
+        if (mSchool.getUsers() == null) {
+            mSchool.setUsers(new ArrayList<User>());
+        }
+
+        mAdapter = new UserListAdapter(getActivity(), mSchool.getUsers());
 
         mUserList.setEmptyView(mEmptyView);
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));

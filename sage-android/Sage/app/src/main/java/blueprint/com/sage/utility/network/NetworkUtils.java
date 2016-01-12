@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -109,5 +110,38 @@ public class NetworkUtils {
                // TODO: replace this with getString after Kelsey merges her stuff
                !preferences.getString("user", "").isEmpty() &&
                !preferences.getString("school", "").isEmpty();
+    }
+
+    public static void writeAsPreferences(Activity activity, String key, Object object) {
+        SharedPreferences sharedPreferences = 
+                activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
+
+        String objectString = writeAsString(activity, object);
+        if (objectString != null) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(key, objectString);
+            editor.apply();
+        }
+    }
+
+    public static String writeAsString(Activity activity, Object object) {
+        String objectString = null;
+        try {
+            ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+            objectString = mapper.writeValueAsString(object);
+        } catch(Exception e) {
+            Log.e(NetworkUtils.class.toString(), e.toString());
+        }
+        return objectString;
+    }
+
+    public static <T> T writeAsObject(Activity activity, String objectString, TypeReference<T> typeReference) {
+        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+        try {
+            return mapper.readValue(objectString, typeReference);
+        } catch(Exception e) {
+            Log.e(NetworkUtils.class.toString(), e.toString());
+        }
+        return null;
     }
 }

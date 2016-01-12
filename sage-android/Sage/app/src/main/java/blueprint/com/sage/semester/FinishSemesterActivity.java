@@ -15,6 +15,6 @@ public class FinishSemesterActivity extends BackAbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragUtils.replaceBackStack(R.id.container, FinishSemesterFragment.newInstance(), this);
+        FragUtils.replace(R.id.container, FinishSemesterFragment.newInstance(), this);
     }
 }

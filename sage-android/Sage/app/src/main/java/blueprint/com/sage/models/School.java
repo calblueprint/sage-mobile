@@ -17,6 +17,7 @@ public @Data class School {
     
     private User director;
     private List<User> users;
+    private List<CheckIn> checkIns;
 
     private int studentCount;
 

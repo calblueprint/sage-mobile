@@ -1,5 +1,6 @@
 package blueprint.com.sage.semester.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -117,7 +118,10 @@ public class FinishSemesterFragment extends Fragment {
         Requests.Semesters.with(getActivity()).makeFinishRequest(currentSemester);
     }
 
-    public void onEvent(FinishSemesterEvent event) { getActivity().onBackPressed(); }
+    public void onEvent(FinishSemesterEvent event) {
+        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().onBackPressed();
+    }
 
     public void onEvent(SemesterListEvent event) {
         mSemesters = event.getSemesters();

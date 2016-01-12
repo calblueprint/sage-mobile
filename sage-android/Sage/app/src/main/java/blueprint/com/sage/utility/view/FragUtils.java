@@ -11,6 +11,14 @@ import android.support.v4.app.FragmentTransaction;
  * Some Fragment Utilities
  */
 public class FragUtils {
+
+    /**
+     * Activity Constants (for onActivityResult)
+     */
+    public static final int START_SEMESTER_REQUEST_CODE = 100;
+    public static final int FINISH_SEMESTER_REQUEST_CODE = 101;
+
+
     public static void replace(int id, Fragment fragment, FragmentActivity activity) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.replace(id, fragment).commit();
@@ -46,9 +54,15 @@ public class FragUtils {
         activity.overridePendingTransition(0, 0);
     }
 
-    public static void startActivityForResult(Activity activity, Class<?> cls, int requestCode) {
+    public static void startActivityForResultActivity(Activity activity, Class<?> cls, int requestCode) {
         Intent intent = new Intent(activity, cls);
         activity.startActivityForResult(intent, requestCode);
+        activity.overridePendingTransition(0, 0);
+    }
+
+    public static void startActivityForResultFragment(Activity activity, Fragment fragment, Class<?> cls, int requestCode) {
+        Intent intent = new Intent(activity, cls);
+        fragment.startActivityForResult(intent, requestCode);
         activity.overridePendingTransition(0, 0);
     }
 }

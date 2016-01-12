@@ -11,4 +11,7 @@ public interface SchoolsInterface {
     List<School> getSchools();
     void setSchools(List<School> schools);
     void getSchoolsListRequest();
+
+    void setNewSchool(School school);
+    void setUpdatedSchool(School school);
 }

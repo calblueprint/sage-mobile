@@ -42,6 +42,4 @@ public @Data class CheckIn {
     }
 
     public String getComment() { return comment == null ? null : comment; }
-    public String getStart() { return start == null     ? null : start.toString(); }
-    public String getFinish() { return finish == null   ? null : finish.toString(); }
 }

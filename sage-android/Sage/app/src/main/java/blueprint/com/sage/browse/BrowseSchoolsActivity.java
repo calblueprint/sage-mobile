@@ -29,13 +29,6 @@ public class BrowseSchoolsActivity extends BackAbstractActivity implements Schoo
         FragUtils.replace(R.id.container, SchoolListFragment.newInstance(), this);
     }
 
-    public void getSchoolsListRequest() {
-        HashMap<String, String> queryParams = new HashMap<>();
-        queryParams.put("sort[attr]", "lower(name)");
-        queryParams.put("sort[order]", "asc");
-        Requests.Schools.with(this).makeListRequest(queryParams);
-    }
-
     public void setSchools(List<School> schools) { mSchools = schools; }
     public List<School> getSchools() { return mSchools; }
 }

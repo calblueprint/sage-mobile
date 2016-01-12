@@ -11,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.SchoolsListAdapter;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -77,11 +80,18 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
         mSchoolsRefreshView.setOnRefreshListener(this);
 
         getActivity().setTitle("Schools");
-        mSchoolsInterface.getSchoolsListRequest();
+        getSchoolsListRequest();
     }
 
     @Override
-    public void onRefresh() { mSchoolsInterface.getSchoolsListRequest(); }
+    public void onRefresh() { getSchoolsListRequest(); }
+
+    public void getSchoolsListRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("sort[attr]", "lower(name)");
+        queryParams.put("sort[order]", "asc");
+        Requests.Schools.with(getActivity()).makeListRequest(queryParams);
+    }
 
     @OnClick(R.id.school_list_fab)
     public void onCreateClick(FloatingActionButton button) {

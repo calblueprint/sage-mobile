@@ -1,6 +1,7 @@
 package blueprint.com.sage.browse.fragments;
 
 import blueprint.com.sage.events.schools.EditSchoolEvent;
+import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -24,10 +25,17 @@ public class EditSchoolFragment extends SchoolFormAbstractFragment {
         setUserSpinner();
 
         getActivity().setTitle("Edit School");
+
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     public void makeRequest() {
         Requests.Schools.with(getActivity()).makeEditRequest(mSchool);
+    }
+
+    public void onEvent(SchoolEvent event) {
+        mSchool = event.getSchool();
+        initializeSchool();
     }
 
     public void onEvent(EditSchoolEvent event) {

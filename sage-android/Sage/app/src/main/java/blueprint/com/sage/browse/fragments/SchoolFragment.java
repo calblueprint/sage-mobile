@@ -118,8 +118,8 @@ public class SchoolFragment extends Fragment
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setAdapter(mAdapter);
 
-        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
         getActivity().setTitle("School");
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     private void initializeSchool() {

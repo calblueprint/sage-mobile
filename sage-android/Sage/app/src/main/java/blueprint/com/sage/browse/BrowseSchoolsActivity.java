@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.browse.fragments.SchoolFragment;
 import blueprint.com.sage.browse.fragments.SchoolListFragment;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
@@ -26,10 +25,7 @@ public class BrowseSchoolsActivity extends BackAbstractActivity implements Schoo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mSchools = new ArrayList<>();
-
-        getSchoolsListRequest();
         FragUtils.replace(R.id.container, SchoolListFragment.newInstance(), this);
     }
 
@@ -42,21 +38,4 @@ public class BrowseSchoolsActivity extends BackAbstractActivity implements Schoo
 
     public void setSchools(List<School> schools) { mSchools = schools; }
     public List<School> getSchools() { return mSchools; }
-
-    public void setNewSchool(School school) {
-        mSchools.add(school);
-        FragUtils.replaceBackStack(R.id.container,
-                SchoolFragment.newInstance(school, mSchools.size() - 1),
-                this);
-    }
-
-    public void setUpdatedSchool(School updatedSchool) {
-        for (int i = 0; i < mSchools.size(); i++) {
-            School school = mSchools.get(i);
-            if (school.getId() == updatedSchool.getId()) {
-                mSchools.remove(i);
-                mSchools.add(i, updatedSchool);
-            }
-        }
-    }
 }

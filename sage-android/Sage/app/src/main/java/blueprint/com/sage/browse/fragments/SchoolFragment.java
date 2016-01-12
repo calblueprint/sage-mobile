@@ -72,7 +72,6 @@ public class SchoolFragment extends Fragment
         setHasOptionsMenu(true);
         mSchoolsInterface = (SchoolsInterface) getActivity();
         MapsInitializer.initialize(getActivity());
-        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     @Override
@@ -119,6 +118,7 @@ public class SchoolFragment extends Fragment
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setAdapter(mAdapter);
 
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
         getActivity().setTitle("School");
     }
 

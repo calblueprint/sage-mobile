@@ -77,6 +77,7 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
         mSchoolsRefreshView.setOnRefreshListener(this);
 
         getActivity().setTitle("Schools");
+        mSchoolsInterface.getSchoolsListRequest();
     }
 
     @Override

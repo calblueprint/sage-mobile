@@ -4,10 +4,12 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.TypedValue;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.shared.views.ImageTabView;
 
 /**
@@ -20,12 +22,17 @@ public class IconPagerAdapter extends FragmentPagerAdapter {
     private List<ImageTabView> mTabViews;
     private Context mContext;
 
+    private float mMinAlpha;
+
     public IconPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         mFragments = new ArrayList<>();
         mDrawables = new ArrayList<>();
         mTabViews = new ArrayList<>();
         mContext = context;
+        TypedValue value = new TypedValue();
+        context.getResources().getValue(R.dimen.tabs_alpha, value, true);
+        mMinAlpha = value.getFloat();
     }
 
     @Override
@@ -44,6 +51,7 @@ public class IconPagerAdapter extends FragmentPagerAdapter {
 
         ImageTabView tabView = new ImageTabView(mContext);
         tabView.setImage(drawableId);
+        tabView.setImageAlpha(mMinAlpha);
         mTabViews.add(tabView);
     }
 }

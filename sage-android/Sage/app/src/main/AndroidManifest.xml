@@ -68,7 +68,6 @@
             android:launchMode="singleTop" />
 
         <activity
-<<<<<<< HEAD
             android:name=".semester.CreateSemesterActivity"
             android:launchMode="singleTop" />
 
@@ -81,8 +80,6 @@
             android:launchMode="singleTop" />
 
         <activity
-=======
->>>>>>> 087845c78da026cdbf193a9e81653ce1539b178d
             android:name=".announcements.CreateAnnouncementActivity"
             android:launchMode="singleTop" />
 

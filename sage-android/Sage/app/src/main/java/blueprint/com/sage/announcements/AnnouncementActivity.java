@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.Announcement;
-import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.activities.BackAbstractActivity;
 import blueprint.com.sage.utility.view.FragUtils;
 
@@ -27,7 +26,6 @@ public class AnnouncementActivity extends BackAbstractActivity {
         } catch (IOException exception) {
             announcement = new Announcement();
         }
-        Requests.Announcements.with(this).makeShowRequest(announcement);
         FragUtils.replace(R.id.container, AnnouncementFragment.newInstance(announcement), this);
     }
 }

@@ -44,6 +44,7 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Requests.Announcements.with(getActivity()).makeShowRequest(announcement);
         setHasOptionsMenu(true);
     }
 
@@ -103,12 +104,6 @@ public class AnnouncementFragment extends Fragment {
         super.onStart();
         EventBus.getDefault().register(this);
     }
-
-//    @Override
-//    public void onResume() {
-//        Requests.Announcements.with(getActivity()).makeShowRequest(announcement);
-//        super.onResume();
-//    }
 
     @Override
     public void onStop() {

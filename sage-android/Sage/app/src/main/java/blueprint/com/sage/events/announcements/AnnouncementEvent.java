@@ -7,13 +7,10 @@ import lombok.Data;
  * Created by kelseylam on 1/4/16.
  */
 public @Data class AnnouncementEvent {
-    Announcement announcement;
+
+    private Announcement mAnnouncement;
 
     public AnnouncementEvent(Announcement announcement) {
-        this.announcement = announcement;
-    }
-
-    public Announcement getAnnouncement() {
-        return announcement;
+        mAnnouncement = announcement;
     }
 }

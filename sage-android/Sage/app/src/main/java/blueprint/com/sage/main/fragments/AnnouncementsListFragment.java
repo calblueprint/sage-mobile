@@ -34,16 +34,12 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     private AnnouncementsListAdapter mAdapter;
     private BaseInterface mBaseInterface;
 
-    @Bind(R.id.announcements_recycler) RecycleViewEmpty announcementsList;
+    @Bind(R.id.announcements_recycler) RecycleViewEmpty mAnnouncementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;
     @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
-
-    public void initializeAnnouncementsList() {
-        getActivity().setTitle("Announcements");
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,12 +69,12 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     @Override
     public void onStop() {
-        EventBus.getDefault().unregister(this);
         super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     public void onEvent(AnnouncementsListEvent event) {
-        mAnnouncements = event.getAnnouncements();
+        mAnnouncements = event.getMAnnouncements();
         mAdapter.setAnnouncements(mAnnouncements);
         mEmptyView.setRefreshing(false);
         mAnnouncementsRefreshView.setRefreshing(false);
@@ -87,10 +83,10 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     public void initializeViews() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        announcementsList.setLayoutManager(llm);
-        announcementsList.setEmptyView(mEmptyView);
+        mAnnouncementsList.setLayoutManager(llm);
+        mAnnouncementsList.setEmptyView(mEmptyView);
         mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity());
-        announcementsList.setAdapter(mAdapter);
+        mAnnouncementsList.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
@@ -99,12 +95,6 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Override
     public void onRefresh() {
         makeRequest();
-    }
-
-    @Override
-    public void onResume() {
-        makeRequest();
-        super.onResume();
     }
 
     public void makeRequest() {

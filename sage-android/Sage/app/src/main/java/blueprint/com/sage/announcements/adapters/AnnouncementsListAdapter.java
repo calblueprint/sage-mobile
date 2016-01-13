@@ -27,41 +27,41 @@ import butterknife.OnClick;
  */
 public class AnnouncementsListAdapter extends RecyclerView.Adapter<AnnouncementsListAdapter.AnnouncementsListViewHolder> {
 
-    private static ArrayList<Announcement> announcementArrayList;
-    private FragmentActivity activity;
+    private static ArrayList<Announcement> mAnnouncementArrayList;
+    private FragmentActivity mActivity;
 
     public AnnouncementsListAdapter(ArrayList<Announcement> announcementArrayList, FragmentActivity activity) {
-        this.announcementArrayList = announcementArrayList;
-        this.activity = activity;
+        mAnnouncementArrayList = announcementArrayList;
+        mActivity = activity;
     }
 
     @Override
     public int getItemCount() {
-        return announcementArrayList.size();
+        return mAnnouncementArrayList.size();
     }
 
     @Override
     public void onBindViewHolder(AnnouncementsListViewHolder viewHolder, int i) {
-        Announcement announcement = announcementArrayList.get(i);
+        Announcement announcement = mAnnouncementArrayList.get(i);
         User user = announcement.getUser();
         if (user != null) {
-            viewHolder.vUser.setText(user.getName());
+            viewHolder.mUser.setText(user.getName());
         }
-        viewHolder.vTime.setText(announcement.getTime());
-        viewHolder.vTitle.setText(announcement.getTitle());
-        viewHolder.vBody.setText(announcement.getBody());
-        user.loadUserImage(activity, viewHolder.vPicture);
+        viewHolder.mTime.setText(announcement.getTime());
+        viewHolder.mTitle.setText(announcement.getTitle());
+        viewHolder.mBody.setText(announcement.getBody());
+        user.loadUserImage(mActivity, viewHolder.mPicture);
     }
 
     public void setAnnouncements(ArrayList<Announcement> curList) {
-        announcementArrayList = curList;
+        mAnnouncementArrayList = curList;
         notifyDataSetChanged();
     }
 
     @Override
     public AnnouncementsListViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.announcement_row, viewGroup, false);
-        return new AnnouncementsListViewHolder(view, activity);
+        return new AnnouncementsListViewHolder(view, mActivity);
     }
 
 
@@ -69,11 +69,11 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
 
         FragmentActivity activity;
 
-        @Bind(R.id.announcement_user) TextView vUser;
-        @Bind(R.id.announcement_time) TextView vTime;
-        @Bind(R.id.announcement_title) TextView vTitle;
-        @Bind(R.id.announcement_body) TextView vBody;
-        @Bind(R.id.announcement_profile_picture) CircleImageView vPicture;
+        @Bind(R.id.announcement_user) TextView mUser;
+        @Bind(R.id.announcement_time) TextView mTime;
+        @Bind(R.id.announcement_title) TextView mTitle;
+        @Bind(R.id.announcement_body) TextView mBody;
+        @Bind(R.id.announcement_profile_picture) CircleImageView mPicture;
 
         public AnnouncementsListViewHolder(View v, FragmentActivity activity) {
             super(v);
@@ -83,7 +83,7 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
 
         @OnClick(R.id.announcement_row)
         public void onClick(View v) {
-            Announcement announcement = announcementArrayList.get(getAdapterPosition());
+            Announcement announcement = mAnnouncementArrayList.get(getAdapterPosition());
             Intent intent = new Intent(activity, AnnouncementActivity.class);
             intent.putExtra("Announcement", announcementToString(announcement));
             activity.startActivity(intent);

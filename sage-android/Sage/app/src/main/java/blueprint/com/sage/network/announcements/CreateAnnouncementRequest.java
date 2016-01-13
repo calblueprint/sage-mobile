@@ -42,23 +42,4 @@ public class CreateAnnouncementRequest extends BaseRequest {
                     }
                 }, activity);
     }
-
-//    public static JSONObject createAnnouncementParams(Announcement announcement) {
-//        HashMap<String, JSONObject> params = new HashMap<>();
-//        JSONObject announcementObject = new JSONObject();
-//        try {
-//            announcementObject.put("title", announcement.getTitle());
-//            announcementObject.put("created_at", announcement.getCreatedAt());
-//            announcementObject.put("body", announcement.getBody());
-//            announcementObject.put("user_id", announcement.getUserId());
-//            announcementObject.put("school_id", announcement.getSchoolId());
-//            announcementObject.put("user", announcement.getUser());
-//            announcementObject.put("school", announcement.getSchool());
-//            announcementObject.put("category", announcement.getCategory());
-//        } catch(JSONException e) {
-//            Log.e(CreateAnnouncementRequest.class.toString(), e.toString());
-//        }
-//        params.put("announcement", announcementObject);
-//        return new JSONObject(params);
-//    }
 }

@@ -1,12 +1,13 @@
 package blueprint.com.sage.events.announcements;
 
 import blueprint.com.sage.models.Announcement;
+import lombok.Data;
 
 /**
  * Created by kelseylam on 1/7/16.
  */
-public class EditAnnouncementEvent {
-    public Announcement announcement;
+public @Data class EditAnnouncementEvent {
+    private Announcement mAnnouncement;
 
-    public EditAnnouncementEvent(Announcement announcement) { this.announcement = announcement; }
+    public EditAnnouncementEvent(Announcement announcement) { mAnnouncement = announcement; }
 }

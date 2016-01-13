@@ -1,6 +1,7 @@
 package blueprint.com.sage.announcements;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,10 +24,13 @@ public class AnnouncementActivity extends BackAbstractActivity {
         ObjectMapper mapper = new ObjectMapper();
         try {
             announcement = mapper.readValue(getIntent().getStringExtra("Announcement"), Announcement.class);
+            FragUtils.replace(R.id.container, AnnouncementFragment.newInstance(announcement), this);
+
         } catch (IOException exception) {
-            announcement = new Announcement();
+            String error = "Announcement";
+            Toast.makeText(this, getString(R.string.cannot_be_displayed, error), Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
-        FragUtils.replace(R.id.container, AnnouncementFragment.newInstance(announcement), this);
     }
 }
 

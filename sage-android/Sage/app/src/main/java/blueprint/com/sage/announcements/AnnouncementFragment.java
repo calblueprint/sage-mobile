@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.announcements.AnnouncementEvent;
+import blueprint.com.sage.events.announcements.DeleteAnnouncementEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
@@ -26,14 +27,14 @@ import de.greenrobot.event.EventBus;
  */
 public class AnnouncementFragment extends Fragment {
 
-    Announcement announcement;
+    private Announcement mAnnouncement;
 
-    @Bind(R.id.announcement_user_single) TextView vUser;
-    @Bind(R.id.announcement_school) TextView vSchool;
-    @Bind(R.id.announcement_time_single) TextView vTime;
-    @Bind(R.id.announcement_title_single) TextView vTitle;
-    @Bind(R.id.announcement_body_single) TextView vBody;
-    @Bind(R.id.announcement_pf_pic_single) CircleImageView vPicture;
+    @Bind(R.id.announcement_user_single) TextView mUser;
+    @Bind(R.id.announcement_school) TextView mSchool;
+    @Bind(R.id.announcement_time_single) TextView mTime;
+    @Bind(R.id.announcement_title_single) TextView mTitle;
+    @Bind(R.id.announcement_body_single) TextView mBody;
+    @Bind(R.id.announcement_pf_pic_single) CircleImageView mPicture;
 
     public static AnnouncementFragment newInstance(Announcement announcement) {
         AnnouncementFragment fragment = new AnnouncementFragment();
@@ -44,7 +45,7 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Requests.Announcements.with(getActivity()).makeShowRequest(announcement);
+        Requests.Announcements.with(getActivity()).makeShowRequest(mAnnouncement);
         setHasOptionsMenu(true);
     }
 
@@ -53,7 +54,7 @@ public class AnnouncementFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_announcement, container, false);
         ButterKnife.bind(this, view);
-        initializeViews();
+        initializeAnnouncement(mAnnouncement);
         return view;
     }
 
@@ -68,11 +69,10 @@ public class AnnouncementFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_edit:
-                FragUtils.replaceBackStack(R.id.container, EditAnnouncementFragment.newInstance(announcement), getActivity());
+                FragUtils.replaceBackStack(R.id.container, EditAnnouncementFragment.newInstance(mAnnouncement), getActivity());
                 break;
             case R.id.menu_delete:
-                Requests.Announcements.with(getActivity()).makeDeleteRequest(announcement);
-                getActivity().onBackPressed();
+                Requests.Announcements.with(getActivity()).makeDeleteRequest(mAnnouncement);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -81,22 +81,22 @@ public class AnnouncementFragment extends Fragment {
 
     public void initializeViews() {
         getActivity().setTitle("Announcement");
-        User user = announcement.getUser();
+        User user = mAnnouncement.getUser();
         if (user != null) {
-            vUser.setText(user.getName());
+            mUser.setText(user.getName());
         }
-        if (announcement.getSchoolId() != 0) {
-            vSchool.setVisibility(View.VISIBLE);
-            vSchool.append(" " + announcement.getSchool().getName());
+        if (mAnnouncement.getSchoolId() != 0) {
+            mSchool.setVisibility(View.VISIBLE);
+            mSchool.setText("to " + mAnnouncement.getSchool().getName());
         }
-        vTime.setText(announcement.getDate());
-        vTitle.setText(announcement.getTitle());
-        vBody.setText(announcement.getBody());
-        user.loadUserImage(getActivity(), vPicture);
+        mTime.setText(mAnnouncement.getDate());
+        mTitle.setText(mAnnouncement.getTitle());
+        mBody.setText(mAnnouncement.getBody());
+        user.loadUserImage(getActivity(), mPicture);
     }
 
     public void setAnnouncement(Announcement announcement) {
-        this.announcement = announcement;
+        mAnnouncement = announcement;
     }
 
     @Override
@@ -112,6 +112,15 @@ public class AnnouncementFragment extends Fragment {
     }
 
     public void onEvent(AnnouncementEvent event) {
+        initializeAnnouncement(event.getMAnnouncement());
+    }
 
+    public void onEvent(DeleteAnnouncementEvent event) {
+        getActivity().onBackPressed();
+    }
+
+    public void initializeAnnouncement(Announcement announcement) {
+        setAnnouncement(announcement);
+        initializeViews();
     }
 }

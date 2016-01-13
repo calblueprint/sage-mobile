@@ -10,13 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.HashMap;
-
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.UserListAdapter;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserListEvent;
-import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.users.fragments.CreateAdminFragment;
@@ -68,7 +65,7 @@ public class UserListFragment extends Fragment implements OnRefreshListener {
     }
 
     @Override
-    public void onRefresh() { getUsersListRequest(); }
+    public void onRefresh() { mUsersInterface.getUsersListRequest(); }
 
     private void initializeViews() {
         mUserListAdapter = new UserListAdapter(getActivity(), mUsersInterface.getUsers());
@@ -81,13 +78,7 @@ public class UserListFragment extends Fragment implements OnRefreshListener {
         mEmptyView.setOnRefreshListener(this);
 
         getActivity().setTitle("Users");
-        getUsersListRequest();
-    }
-
-    public void getUsersListRequest() {
-        HashMap<String, String> queryParams = new HashMap<>();
-        queryParams.put("sort_name", "true");
-        Requests.Users.with(getActivity()).makeListRequest(queryParams);
+        mUsersInterface.getUsersListRequest();
     }
 
     @OnClick(R.id.user_list_fab)

@@ -72,7 +72,6 @@ public class SchoolFragment extends Fragment
         setHasOptionsMenu(true);
         mSchoolsInterface = (SchoolsInterface) getActivity();
         MapsInitializer.initialize(getActivity());
-        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     @Override
@@ -120,6 +119,7 @@ public class SchoolFragment extends Fragment
         mUserList.setAdapter(mAdapter);
 
         getActivity().setTitle("School");
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     private void initializeSchool() {

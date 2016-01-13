@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.browse.adapters.UserListAdapter;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -64,9 +65,7 @@ public class UserListFragment extends Fragment implements OnRefreshListener {
     }
 
     @Override
-    public void onRefresh() {
-        mUsersInterface.getUsersListRequest();
-    }
+    public void onRefresh() { mUsersInterface.getUsersListRequest(); }
 
     private void initializeViews() {
         mUserListAdapter = new UserListAdapter(getActivity(), mUsersInterface.getUsers());
@@ -79,6 +78,12 @@ public class UserListFragment extends Fragment implements OnRefreshListener {
         mEmptyView.setOnRefreshListener(this);
 
         getActivity().setTitle("Users");
+        mUsersInterface.getUsersListRequest();
+    }
+
+    @OnClick(R.id.user_list_fab)
+    public void onCreateAdminClick(FloatingActionButton button) {
+        FragUtils.replaceBackStack(R.id.container, CreateAdminFragment.newInstance(), getActivity());
     }
 
     public void onEvent(UserListEvent event) {
@@ -88,8 +93,8 @@ public class UserListFragment extends Fragment implements OnRefreshListener {
         mEmptyView.setRefreshing(false);
     }
 
-    @OnClick(R.id.user_list_fab)
-    public void onCreateAdminClick(FloatingActionButton button) {
-        FragUtils.replaceBackStack(R.id.container, CreateAdminFragment.newInstance(), getActivity());
+    public void onEvent(APIErrorEvent event) {
+        mRefreshUsers.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
     }
 }

@@ -22,6 +22,5 @@ public class CreateSchoolFragment extends SchoolFormAbstractFragment implements 
 
     public void onEvent(CreateSchoolEvent event) {
         FragUtils.popBackStack(this);
-        mSchoolsInterface.setNewSchool(event.getSchool());
     }
 }

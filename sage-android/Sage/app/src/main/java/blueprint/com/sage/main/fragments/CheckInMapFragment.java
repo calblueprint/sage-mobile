@@ -170,7 +170,12 @@ public class CheckInMapFragment extends Fragment
 
         Long totalSeconds =  mBaseInterface.getSharedPreferences()
                 .getLong(getString(R.string.check_in_total_seconds), 0);
-        return (int) Math.floor(totalSeconds / 1000);
+
+        Long diffSeconds = SystemClock.elapsedRealtime() -
+                mBaseInterface.getSharedPreferences()
+                        .getLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime());
+
+        return (int) Math.floor((totalSeconds + diffSeconds) / 1000);
     }
 
     @OnClick(R.id.check_in_location_fab)

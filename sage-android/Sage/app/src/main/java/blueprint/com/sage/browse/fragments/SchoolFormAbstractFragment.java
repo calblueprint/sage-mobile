@@ -256,9 +256,10 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         mSchool.setName(name);
         mSchool.setAddress(address);
         mSchool.setDirectorId(director.getId());
-        if (bounds != null)
+        if (bounds != null) {
             mSchool.setLat((float) bounds.latitude);
             mSchool.setLng((float) bounds.longitude);
+        }
 
         makeRequest();
     }
@@ -285,6 +286,9 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     public void setUserSpinner() {
         User director = mSchool.getDirector();
+
+        if (director == null) return;
+
         for (int i = 0; i < mUsers.size(); i++)
             if (mUsers.get(i).getId() == director.getId())
                 mDirector.setSelection(i);

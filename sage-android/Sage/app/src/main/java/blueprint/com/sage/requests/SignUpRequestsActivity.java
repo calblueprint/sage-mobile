@@ -39,6 +39,5 @@ public class SignUpRequestsActivity extends BackAbstractActivity implements User
         queryParams.put("verified", "false");
 
         Requests.Users.with(this).makeListRequest(queryParams);
-
     }
 }

@@ -3,6 +3,7 @@ package blueprint.com.sage.browse;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
@@ -24,15 +25,15 @@ public class BrowseMentorsActivity extends BackAbstractActivity implements Users
         super.onCreate(savedInstanceState);
 
         mUsers = new ArrayList<>();
-
-        getUsersListRequest();
         FragUtils.replace(R.id.container, UserListFragment.newInstance(), this);
-    }
-
-    public void getUsersListRequest() {
-        Requests.Users.with(this).makeListRequest(null);
     }
 
     public void setUsers(List<User> users) { mUsers = users; }
     public List<User> getUsers() { return mUsers; }
+
+    public void getUsersListRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("sort_name", "true");
+        Requests.Users.with(this).makeListRequest(queryParams);
+    }
 }

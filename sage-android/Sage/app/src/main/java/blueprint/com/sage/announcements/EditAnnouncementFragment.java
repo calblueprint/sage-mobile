@@ -95,11 +95,11 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
     }
 
     protected boolean validateAndSubmitRequest() {
+        setAnnouncement();
         if (!isValid())
             return false;
         mAnnouncement.setTitle(mAnnouncementTitle.getText().toString());
         mAnnouncement.setBody(mAnnouncementBody.getText().toString());
-        setAnnouncement();
         Requests.Announcements.with(getActivity()).makeEditRequest(mAnnouncement);
         return true;
     }

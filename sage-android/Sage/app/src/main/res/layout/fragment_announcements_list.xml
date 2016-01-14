@@ -43,6 +43,8 @@
         android:id="@+id/add_announcement_fab"
         android:src="@drawable/ic_add_white"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/blue500" />
+        app:backgroundTint="@color/blue500"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </android.support.design.widget.CoordinatorLayout>

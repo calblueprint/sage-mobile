@@ -1,5 +1,6 @@
 package blueprint.com.sage.main.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.ListDialogInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.users.info.UserSemesterListActivity;
 import blueprint.com.sage.users.profile.EditUserActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -143,7 +145,10 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.user_check_ins)
     public void onCheckInClick(View view) {
-        // TODO: add check in fragment
+        Intent intent = new Intent(getActivity(), UserSemesterListActivity.class);
+        intent.putExtra(getString(R.string.semester_user),
+                NetworkUtils.writeAsString(getActivity(), mUser));
+        FragUtils.startActivityBackStack(getActivity(), intent);
     }
 
     @OnClick(R.id.user_edit_profile)

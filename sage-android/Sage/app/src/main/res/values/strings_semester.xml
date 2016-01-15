@@ -14,6 +14,11 @@
     <string name="semester_finish_confirm_title">Confirm Request</string>
     <string name="semester_finish_confirm_message">Are you sure you want to finish the semester? This action cannot be undone.</string>
 
-    <!-- Shared Preferences -->
+    <!-- Errors -->
+    <string name="semester_list_no_user">Invalid user - please try again.</string>
+
+    <!-- Shared Preferences & Activity keys-->
+    <string name="activity_create_semester">create_semester</string>
     <string name="current_semester">current_semester</string>
+    <string name="semester_user">user</string>
 </resources>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import java.util.HashMap;
 
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.fragments.SemesterAbstractListFragment;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
@@ -14,8 +15,15 @@ import blueprint.com.sage.shared.interfaces.BaseInterface;
 public class UserSemesterListFragment extends SemesterAbstractListFragment {
 
     private BaseInterface mBaseInterface;
+    private User mUser;
 
-    public static UserSemesterListFragment newInstance() { return new UserSemesterListFragment(); }
+    public static UserSemesterListFragment newInstance(User user) {
+        UserSemesterListFragment fragment = new UserSemesterListFragment();
+        fragment.setUser(user);
+        return fragment;
+    }
+
+    public void setUser(User user) { mUser = user; }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

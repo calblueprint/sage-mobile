@@ -34,6 +34,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
 import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -50,6 +51,7 @@ public class CheckInMapFragment extends Fragment
                                 implements OnMapReadyCallback {
 
     private final static int TIMER_INTERVAL = 1000;
+    private final static int SIX_HOURS = 21600;
 
     @Bind(R.id.check_in_coordinator) CoordinatorLayout mContainer;
     @Bind(R.id.check_in_check_fab) FloatingActionButton mCheckButton;
@@ -93,7 +95,7 @@ public class CheckInMapFragment extends Fragment
         super.onResume();
         mMapView.onResume();
         toggleButtons();
-        toggleTimer(hasStartedCheckIn());
+        toggleTimer();
         if (hasStartedCheckIn())
             mTimer.start();
     }
@@ -146,7 +148,7 @@ public class CheckInMapFragment extends Fragment
         mMapView.getMapAsync(this);
 
         toggleButtons();
-        toggleTimer(hasStartedCheckIn());
+        toggleTimer();
     }
 
     /**
@@ -154,6 +156,12 @@ public class CheckInMapFragment extends Fragment
      */
     private void updateTimer() {
         int secondsPassed = getSecondsElapsed();
+
+        if (secondsPassed > SIX_HOURS) {
+            resetCheckIn();
+            return;
+        }
+
         int hours = secondsPassed / 3600;
         int minutes = (secondsPassed % 3600) / 60;
 
@@ -162,6 +170,14 @@ public class CheckInMapFragment extends Fragment
 
         String hourMinutes = String.format("%s:%s", hourString, minutesString);
         mTimerText.setText(hourMinutes);
+    }
+
+    private void resetCheckIn() {
+        CheckInUtils.resetCheckIn(getActivity(), mBaseInterface.getSharedPreferences());
+        toggleButtons();
+        toggleTimer();
+        Snackbar.make(mContainer, R.string.check_in_request_too_long, Snackbar.LENGTH_SHORT).show();
+        mTimer.stop();
     }
 
     private int getSecondsElapsed() {
@@ -340,7 +356,7 @@ public class CheckInMapFragment extends Fragment
                       .putLong(getString(R.string.check_in_total_seconds), 0)
                       .commit();
         toggleButtons();
-        toggleTimer(true);
+        toggleTimer();
     }
 
     private void resumeCheckIn() {
@@ -386,7 +402,7 @@ public class CheckInMapFragment extends Fragment
                 .commit();
 
         toggleButtons();
-        toggleTimer(false);
+        toggleTimer();
 
         FragUtils.startActivityBackStack(getActivity(), CheckInActivity.class);
     }
@@ -406,8 +422,8 @@ public class CheckInMapFragment extends Fragment
         mCheckButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(color)));
     }
 
-    private void toggleTimer(boolean shouldShow) {
-        if (shouldShow) {
+    private void toggleTimer() {
+        if (hasStartedCheckIn()) {
             mTimerText.setVisibility(View.VISIBLE);
             mTimer.start();
         } else {

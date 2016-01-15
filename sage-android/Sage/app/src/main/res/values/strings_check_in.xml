@@ -45,6 +45,8 @@
     <string name="check_in_request_error">Invalid check-in request.</string>
     <string name="check_in_request_blank">Date and times cannot be blank!</string>
     <string name="check_in_request_invalid_dates">Invalid start and end times</string>
+    <string name="check_in_request_too_long">Check-ins cannot exceed six hours - your request has been reset.</string>
+    <string name="check_in_request_invalid_time">Check In requests cannot exceed six hours.</string>
 
     <string name="check_in_request_delete_title">Delete Request?</string>
     <string name="check_in_request_delete_body">Are you sure you want to delete your request? This will reset your session.</string>

@@ -38,6 +38,7 @@ import blueprint.com.sage.shared.fragments.DateDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -231,13 +232,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
     }
 
     private void resetCheckIn() {
-        mBaseInterface.getSharedPreferences()
-                .edit()
-                .remove(getString(R.string.check_in_start_time))
-                .remove(getString(R.string.check_in_recent_seconds))
-                .remove(getString(R.string.check_in_total_seconds))
-                .remove(getString(R.string.check_in_end_time))
-                .apply();
+        CheckInUtils.resetCheckIn(getActivity(), mBaseInterface.getSharedPreferences());
         getActivity().onBackPressed();
     }
 

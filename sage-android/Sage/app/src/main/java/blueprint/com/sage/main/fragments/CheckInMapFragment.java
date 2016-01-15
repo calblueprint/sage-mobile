@@ -96,7 +96,7 @@ public class CheckInMapFragment extends Fragment
         mMapView.onResume();
         toggleButtons();
         toggleTimer();
-        if (hasStartedCheckIn())
+        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences()))
             mTimer.start();
     }
 
@@ -105,7 +105,7 @@ public class CheckInMapFragment extends Fragment
         super.onPause();
         mMapView.onPause();
 
-        if (hasStartedCheckIn())
+        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences()))
             mTimer.stop();
     }
 
@@ -181,7 +181,7 @@ public class CheckInMapFragment extends Fragment
     }
 
     private int getSecondsElapsed() {
-        if (!hasStartedCheckIn())
+        if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences()))
             return 0;
 
         Long totalSeconds =  mBaseInterface.getSharedPreferences()
@@ -220,7 +220,7 @@ public class CheckInMapFragment extends Fragment
 
     @OnClick(R.id.check_in_check_fab)
     public void onCheckInClick(FloatingActionButton button) {
-        if (hasStartedCheckIn()) {
+        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
             showStopCheckInDialog();
         } else {
             showStartCheckInDialog();
@@ -387,7 +387,7 @@ public class CheckInMapFragment extends Fragment
         } else if (!locationInBounds()) {
             showOutOfBoundsDialog();
             return;
-        } else if (!hasStartedCheckIn()) {
+        } else if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
             return;
         }
@@ -415,15 +415,16 @@ public class CheckInMapFragment extends Fragment
      */
     private void toggleButtons() {
 
-        int icon = hasStartedCheckIn() ? R.drawable.ic_clear_white : R.drawable.ic_done_white;
-        int color = hasStartedCheckIn() ? R.color.red500 : R.color.green500;
+        boolean hasCheckIn = MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences());
+        int icon = hasCheckIn ? R.drawable.ic_clear_white : R.drawable.ic_done_white;
+        int color = hasCheckIn ? R.color.red500 : R.color.green500;
 
         mCheckButton.setImageDrawable(ViewUtils.getDrawable(getActivity(), icon));
         mCheckButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(color)));
     }
 
     private void toggleTimer() {
-        if (hasStartedCheckIn()) {
+        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
             mTimerText.setVisibility(View.VISIBLE);
             mTimer.start();
         } else {
@@ -432,7 +433,4 @@ public class CheckInMapFragment extends Fragment
         }
     }
 
-    private boolean hasStartedCheckIn() {
-        return !mBaseInterface.getSharedPreferences().getString(getString(R.string.check_in_start_time), "").isEmpty();
-    }
 }

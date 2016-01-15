@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.semesters.SemesterListEvent;
-import blueprint.com.sage.models.Semester;
-import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.admin.semester.adapters.SemesterListAdapter;
+import blueprint.com.sage.events.semesters.SemesterListEvent;
+import blueprint.com.sage.models.APIError;
+import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -66,8 +66,8 @@ public abstract class SemesterAbstractListFragment extends Fragment implements S
 
     private void initializeViews() {
         mSemesterListAdapter = new SemesterListAdapter(getActivity(), mSemesters);
-        mSemesterList.setAdapter(mSemesterListAdapter);
         mSemesterList.setEmptyView(mEmptyView);
+        mSemesterList.setAdapter(mSemesterListAdapter);
         mSemesterList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mRefreshSemesters.setOnRefreshListener(this);
@@ -76,13 +76,16 @@ public abstract class SemesterAbstractListFragment extends Fragment implements S
         getActivity().setTitle("Semesters");
     }
 
-    public void onRefresh() {
-        Requests.Semesters.with(getActivity()).makeListRequest(null);
-    }
+    public void onRefresh() { makeSemesterListRequest(); }
 
     public void onEvent(SemesterListEvent event) {
         mSemesters = event.getSemesters();
         mSemesterListAdapter.setSemesters(mSemesters);
+        mRefreshSemesters.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
+    }
+
+    public void onEvent(APIError event) {
         mRefreshSemesters.setRefreshing(false);
         mEmptyView.setRefreshing(false);
     }

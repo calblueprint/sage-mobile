@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
@@ -91,5 +92,10 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
 
     public void onEvent(DeleteUserEvent deleteUserRequest) {
         mUserAdapter.removeUser(deleteUserRequest.getPosition());
+    }
+
+    public void onEvent(APIErrorEvent event) {
+        mEmptyView.setRefreshing(false);
+        mRefreshUser.setRefreshing(false);
     }
 }

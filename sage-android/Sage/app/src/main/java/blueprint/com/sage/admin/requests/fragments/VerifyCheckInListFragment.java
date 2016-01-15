@@ -10,10 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.admin.requests.adapters.VerifyCheckInListAdapter;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
-import blueprint.com.sage.admin.requests.adapters.VerifyCheckInListAdapter;
 import blueprint.com.sage.shared.interfaces.CheckInsInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
@@ -96,5 +97,10 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
     public void onEvent(VerifyCheckInEvent event) {
         int position = event.getPosition();
         mCheckInAdapter.removeCheckIn(position);
+    }
+
+    public void onEvent(APIErrorEvent event) {
+        mCheckInRefreshLayout.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
     }
 }

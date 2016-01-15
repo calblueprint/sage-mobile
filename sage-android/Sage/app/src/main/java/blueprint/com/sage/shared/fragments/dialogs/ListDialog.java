@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared.fragments;
+package blueprint.com.sage.shared.fragments.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

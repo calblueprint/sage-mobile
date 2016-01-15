@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.shared.adapters.IconPagerAdapter;
+import blueprint.com.sage.shared.adapters.pagers.IconPagerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.ViewUtils;

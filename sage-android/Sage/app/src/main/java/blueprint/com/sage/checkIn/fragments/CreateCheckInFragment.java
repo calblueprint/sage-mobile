@@ -34,7 +34,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
-import blueprint.com.sage.shared.fragments.DateDialog;
+import blueprint.com.sage.shared.fragments.dialogs.DateDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.utility.DateUtils;

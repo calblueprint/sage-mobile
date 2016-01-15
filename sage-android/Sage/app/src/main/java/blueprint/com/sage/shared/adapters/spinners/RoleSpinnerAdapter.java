@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared.adapters;
+package blueprint.com.sage.shared.adapters.spinners;
 
 import android.content.Context;
 import android.view.LayoutInflater;

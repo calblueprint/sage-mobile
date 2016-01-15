@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared.adapters;
+package blueprint.com.sage.shared.adapters.spinners;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,27 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
 import blueprint.com.sage.R;
-import blueprint.com.sage.models.School;
 
 /**
  * Created by charlesx on 10/14/15.
- * Adapter for the sign up spinner
+ * Spinner adapter for volunteer types.
  */
-public class SchoolSpinnerAdapter extends ArrayAdapter<School> {
-    private List<School> mSchools;
+public class StringArraySpinnerAdapter extends ArrayAdapter<String> {
+    private String[] mArray;
     private Context mContext;
+
     private int mSpinnerItem;
     private int mSpinnerDropdown;
 
-    private TextView mTextView;
-
-    public SchoolSpinnerAdapter(Context context, List<School> schools,
-                                int spinnerItem, int spinnerDropdown) {
+    public StringArraySpinnerAdapter(Context context, String[] array, int spinnerItem, int spinnerDropdown) {
         super(context, spinnerItem);
-        mSchools = schools;
+        mArray = array;
         mContext = context;
         mSpinnerItem = spinnerItem;
         mSpinnerDropdown = spinnerDropdown;
@@ -35,17 +30,17 @@ public class SchoolSpinnerAdapter extends ArrayAdapter<School> {
 
     @Override
     public long getItemId(int position) {
-        return mSchools.get(position).getId();
+        return position;
     }
 
     @Override
-    public School getItem(int position) {
-        return mSchools.get(position);
+    public String getItem(int position) {
+        return mArray[position];
     }
 
     @Override
     public int getCount() {
-        return mSchools.size();
+        return mArray.length;
     }
 
     @Override
@@ -64,14 +59,9 @@ public class SchoolSpinnerAdapter extends ArrayAdapter<School> {
             convertView = inflater.inflate(layoutId, parent, false);
         }
 
-        mTextView = (TextView) convertView.findViewById(R.id.spinner_item_text);
-        mTextView.setText(getItem(position).getName());
+        TextView textView = (TextView) convertView.findViewById(R.id.spinner_item_text);
+        textView.setText(getItem(position));
 
         return convertView;
-    }
-
-    public void setSchools(List<School> schools) {
-        mSchools = schools;
-        notifyDataSetChanged();
     }
 }

@@ -19,7 +19,7 @@ import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.models.UserSemester;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.fragments.ListDialog;
+import blueprint.com.sage.shared.fragments.dialogs.ListDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.ListDialogInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;

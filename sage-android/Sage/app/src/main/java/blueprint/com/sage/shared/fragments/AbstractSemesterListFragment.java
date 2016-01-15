@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.admin.semester.adapters.SemesterListAdapter;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Semester;
+import blueprint.com.sage.shared.adapters.models.AbstractSemesterListAdapter;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,14 +25,14 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 1/7/16.
  * Shows a list of semesters
  */
-public abstract class SemesterAbstractListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class AbstractSemesterListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.semester_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.semester_list_list) RecycleViewEmpty mSemesterList;
     @Bind(R.id.semester_list_refresh) SwipeRefreshLayout mRefreshSemesters;
 
-    List<Semester> mSemesters;
-    SemesterListAdapter mSemesterListAdapter;
+    public List<Semester> mSemesters;
+    public AbstractSemesterListAdapter mSemesterListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public abstract class SemesterAbstractListFragment extends Fragment implements S
     }
 
     private void initializeViews() {
-        mSemesterListAdapter = new SemesterListAdapter(getActivity(), mSemesters);
+        mSemesterListAdapter = getAdapter();
         mSemesterList.setEmptyView(mEmptyView);
         mSemesterList.setAdapter(mSemesterListAdapter);
         mSemesterList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -75,6 +75,8 @@ public abstract class SemesterAbstractListFragment extends Fragment implements S
 
         getActivity().setTitle("Semesters");
     }
+
+    public abstract AbstractSemesterListAdapter getAdapter();
 
     public void onRefresh() { makeSemesterListRequest(); }
 

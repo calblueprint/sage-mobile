@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.BackEvent;
-import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
+import blueprint.com.sage.shared.adapters.pagers.SimplePagerAdapter;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.signUp.SignUpActivity;
 import blueprint.com.sage.signUp.animation.SignUpPageTransformer;

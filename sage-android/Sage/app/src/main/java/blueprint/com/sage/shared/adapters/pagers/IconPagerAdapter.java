@@ -1,4 +1,4 @@
-package blueprint.com.sage.shared.adapters;
+package blueprint.com.sage.shared.adapters.pagers;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

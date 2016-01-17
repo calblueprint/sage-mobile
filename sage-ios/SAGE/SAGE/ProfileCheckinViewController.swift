@@ -9,9 +9,18 @@
 import UIKit
 
 class ProfileCheckinViewController: UITableViewController {
-    var checkins: [Checkin]?
+    var verifiedCheckins: [Checkin]?
+    var unverifiedCheckins: [Checkin]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    
+    init() {
+        super.init(style: .Grouped)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +51,16 @@ class ProfileCheckinViewController: UITableViewController {
     
     func loadCheckins() {
         ProfileOperations.loadCheckins({ (var checkins) -> Void in
-            checkins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+            self.verifiedCheckins = [Checkin]()
+            self.unverifiedCheckins = [Checkin]()
+            for checkin in checkins {
+                if checkin.verified {
+                    self.verifiedCheckins!.append(checkin)
+                } else {
+                    self.unverifiedCheckins!.append(checkin)
+                }
+            }
+            self.verifiedCheckins!.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
                 let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
                 if comparisonResult == .OrderedDescending {
                     return true
@@ -50,7 +68,15 @@ class ProfileCheckinViewController: UITableViewController {
                     return false
                 }
             })
-            self.checkins = checkins
+            
+            self.unverifiedCheckins!.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+                let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
+                if comparisonResult == .OrderedDescending {
+                    return true
+                } else {
+                    return false
+                }
+            })
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
@@ -61,19 +87,29 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let checkins = self.checkins {
-            return checkins.count
+        if let verifiedCheckins = self.verifiedCheckins {
+            if section == 0 {
+                return self.verifiedCheckins!.count
+            } else {
+                return self.unverifiedCheckins!.count
+            }
         } else {
             return 0
         }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let checkin = self.checkins![indexPath.row]
+        
+        var checkin: Checkin
+        if indexPath.section == 0 {
+            checkin = self.verifiedCheckins![indexPath.row]
+        } else {
+            checkin = self.unverifiedCheckins![indexPath.row]
+        }
     
         var cell = self.tableView.dequeueReusableCellWithIdentifier("CheckinRequestCell")
         if cell == nil {
@@ -84,8 +120,31 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let checkin = self.checkins![indexPath.row]
+        var checkin: Checkin
+        if indexPath.section == 0 {
+            checkin = self.verifiedCheckins![indexPath.row]
+        } else {
+            checkin = self.unverifiedCheckins![indexPath.row]
+        }
         return CheckinTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Verified Checkins"
+        } else {
+            return "Unverified Checkins"
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (section == 0) && ((self.verifiedCheckins == nil) || (self.verifiedCheckins!.count == 0)) {
+            return 0.0
+        } else if (section == 1) && ((self.unverifiedCheckins == nil) || (self.unverifiedCheckins!.count == 0)) {
+            return 0.0
+        } else {
+            return 22.0
+        }
     }
 }
 

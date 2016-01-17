@@ -35,4 +35,8 @@ class ProfileOperations: NSObject {
                 failure(error.localizedDescription)
         }
     }
+    
+    static func updateProfile(user: User, completion: (User) -> Void, failure: (String) -> Void) {
+        
+    }
 }

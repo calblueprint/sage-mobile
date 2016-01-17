@@ -142,5 +142,29 @@ class EditProfileView: FormView {
     func setProfileImage(user: User) {
         self.photoView.setImageWithUser(user)
     }
+    
+    func isValid() -> Bool {
+        if self.firstName.textField.text == "" {
+            return false
+        } else if self.lastName.textField.text == "" {
+            return false
+        } else if self.email.textField.text == "" {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func getFirstName() -> String {
+        return self.firstName.textField.text
+    }
+    
+    func getLastName() -> String {
+        return self.lastName.textField.text
+    }
+    
+    func getEmail() -> String {
+        return self.email.textField.text
+    }
 
 }

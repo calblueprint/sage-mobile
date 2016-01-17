@@ -70,6 +70,8 @@
 		422334511BC0D8D400E863D0 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334501BC0D8D400E863D0 /* libAFNetworking.a */; };
 		422334531BC0D8D900E863D0 /* libFontAwesomeKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */; };
 		422715451BC7359D00FD719C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422715441BC7359D00FD719C /* UIFont.swift */; };
+		4241AF791C4BAD52009BC133 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF781C4BAD52009BC133 /* EditProfileController.swift */; };
+		4241AF7B1C4BAF2F009BC133 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF7A1C4BAF2F009BC133 /* FormView.swift */; };
 		4243E4DB1BF1A79100AA627A /* BrowseMentorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */; };
 		424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */; };
 		424A137C1BEED27300775E86 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A137B1BEED27300775E86 /* UIViewController.swift */; };
@@ -189,6 +191,8 @@
 		422334501BC0D8D400E863D0 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "Pods/../build/Debug-iphoneos/libAFNetworking.a"; sourceTree = "<group>"; };
 		422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFontAwesomeKit.a; path = "Pods/../build/Debug-iphoneos/libFontAwesomeKit.a"; sourceTree = "<group>"; };
 		422715441BC7359D00FD719C /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		4241AF781C4BAD52009BC133 /* EditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
+		4241AF7A1C4BAF2F009BC133 /* FormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsViewController.swift; sourceTree = "<group>"; };
 		424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsOperations.swift; sourceTree = "<group>"; };
 		424A137B1BEED27300775E86 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -544,6 +548,7 @@
 				27D1B6811BE1A62E00F9D026 /* FormFieldItem.swift */,
 				42B82B441C0478630076892A /* FormButtonItem.swift */,
 				27D1B6831BE1C20C00F9D026 /* FormTextItem.swift */,
+				4241AF7A1C4BAF2F009BC133 /* FormView.swift */,
 			);
 			name = Form;
 			sourceTree = "<group>";
@@ -594,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				5D916A1A1C013529003959CE /* ProfileViewController.swift */,
+				4241AF781C4BAD52009BC133 /* EditProfileController.swift */,
 				5D757DB41C12381200BDAE61 /* ProfileCheckinViewController.swift */,
 			);
 			name = Profile;
@@ -833,6 +839,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4241AF7B1C4BAF2F009BC133 /* FormView.swift in Sources */,
 				42EFD67F1BC9ED730063FD78 /* SignUpFormView.swift in Sources */,
 				27D1B6821BE1A62E00F9D026 /* FormFieldItem.swift in Sources */,
 				42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */,
@@ -864,6 +871,7 @@
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
+				4241AF791C4BAD52009BC133 /* EditProfileController.swift in Sources */,
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
 				5D757DB51C12381200BDAE61 /* ProfileCheckinViewController.swift in Sources */,
 				27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */,

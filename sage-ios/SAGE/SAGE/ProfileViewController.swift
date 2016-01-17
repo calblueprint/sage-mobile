@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class ProfileViewController: UITableViewController {
 
@@ -18,11 +19,25 @@ class ProfileViewController: UITableViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+
     }
 
     required init?(coder aDecoder: NSCoder) {
         self.user = User()
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //
+    // MARK: - NSNotificationCenter selectors
+    //
+    func editedProfile(notification: NSNotification) {
+        let user = notification.object!.copy() as! User
+        if LoginOperations.getUser()!.id == user.id {
+            LoginOperations.storeUserDataInKeychain(user)
+            self.profileView.setupWithUser(user)
+            self.tableView.reloadData()
+        }
     }
     
     func setupHeader() {
@@ -33,6 +48,7 @@ class ProfileViewController: UITableViewController {
         headerFrame.size.height = headerOffset
         self.profileView.frame = headerFrame
         self.tableView.tableHeaderView = self.profileView
+        self.profileView.profileEditButton.addTarget(self, action: "editProfile", forControlEvents: .TouchUpInside)
     }
     
     override func viewDidLoad() {
@@ -63,8 +79,16 @@ class ProfileViewController: UITableViewController {
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
-                self.showErrorAndSetMessage("Could not load announcements.")
+                self.showErrorAndSetMessage("Could not load profile.")
         }
+    }
+    
+    func editProfile() {
+        let editProfileController = EditProfileController(user: self.user!.copy() as! User)
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController?.pushViewController(editProfileController, animated: true)
     }
     
     func showErrorAndSetMessage(message: String) {

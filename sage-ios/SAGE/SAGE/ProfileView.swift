@@ -14,7 +14,7 @@ class ProfileView: UIView {
     let header = UIView()
     let profileUserImg = UIImageView()
     let profileUserImgBorder = UIView()
-    let profileEditButton = UILabel()
+    let profileEditButton = UIButton()
     let userName = UILabel()
     let userVolunteerLevel = UILabel()
     let userSchool = UILabel()
@@ -122,8 +122,8 @@ class ProfileView: UIView {
         self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
         self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
         
-        self.profileEditButton.font = UIFont.normalFont
-        self.profileEditButton.textColor = UIColor.secondaryTextColor
+        self.profileEditButton.titleLabel?.font = UIFont.normalFont
+        self.profileEditButton.titleLabel?.textColor = UIColor.secondaryTextColor
         
         self.profileUserImg.layer.cornerRadius = self.profileImageSize/2
         self.profileUserImg.clipsToBounds = true
@@ -156,7 +156,9 @@ class ProfileView: UIView {
         self.header.setHeight(self.headerHeight+self.headerOffset)
         
         // position edit button
-        self.profileEditButton.text = "Edit Profile"
+        self.profileEditButton.setTitle("Edit Profile", forState: .Normal)
+        self.profileEditButton.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
+        self.profileEditButton.layoutIfNeeded()
         self.profileEditButton.sizeToFit()
         self.profileEditButton.setY(self.headerHeight + 15)
         let profileEditButtonX = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.profileEditButton.frame)

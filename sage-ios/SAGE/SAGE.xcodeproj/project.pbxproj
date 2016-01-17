@@ -72,6 +72,8 @@
 		422715451BC7359D00FD719C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422715441BC7359D00FD719C /* UIFont.swift */; };
 		4241AF791C4BAD52009BC133 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF781C4BAD52009BC133 /* EditProfileController.swift */; };
 		4241AF7B1C4BAF2F009BC133 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF7A1C4BAF2F009BC133 /* FormView.swift */; };
+		4241AF801C4BB430009BC133 /* FormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF7F1C4BB430009BC133 /* FormController.swift */; };
+		4241AF841C4BB65F009BC133 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF831C4BB65F009BC133 /* EditProfileView.swift */; };
 		4243E4DB1BF1A79100AA627A /* BrowseMentorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */; };
 		424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */; };
 		424A137C1BEED27300775E86 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A137B1BEED27300775E86 /* UIViewController.swift */; };
@@ -193,6 +195,8 @@
 		422715441BC7359D00FD719C /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		4241AF781C4BAD52009BC133 /* EditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		4241AF7A1C4BAF2F009BC133 /* FormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
+		4241AF7F1C4BB430009BC133 /* FormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormController.swift; sourceTree = "<group>"; };
+		4241AF831C4BB65F009BC133 /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		4243E4DA1BF1A79100AA627A /* BrowseMentorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseMentorsViewController.swift; sourceTree = "<group>"; };
 		424A13771BEEBC0B00775E86 /* AnnouncementsOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsOperations.swift; sourceTree = "<group>"; };
 		424A137B1BEED27300775E86 /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +393,7 @@
 		27F990BB1BBCC58700D61DA2 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4241AF7E1C4BB40C009BC133 /* Reusable */,
 				5D916A181C013503003959CE /* Profile */,
 				42705CCB1BEB4F3A0081B29D /* Admin */,
 				278160191BC0E1FD00A1DB75 /* Checkin */,
@@ -475,6 +480,14 @@
 				114953501C190CAA00A74845 /* APIKeys.swift */,
 			);
 			name = ModelConstants;
+			sourceTree = "<group>";
+		};
+		4241AF7E1C4BB40C009BC133 /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				4241AF7F1C4BB430009BC133 /* FormController.swift */,
+			);
+			name = Reusable;
 			sourceTree = "<group>";
 		};
 		4243E4DF1BF1B2BE00AA627A /* Admin Views */ = {
@@ -609,6 +622,7 @@
 			isa = PBXGroup;
 			children = (
 				5D916A1C1C01353D003959CE /* ProfileView.swift */,
+				4241AF831C4BB65F009BC133 /* EditProfileView.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -897,11 +911,13 @@
 				114953511C190CAA00A74845 /* APIKeys.swift in Sources */,
 				5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */,
 				27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */,
+				4241AF841C4BB65F009BC133 /* EditProfileView.swift in Sources */,
 				42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */,
 				42828FCA1C00718B00ACBC7E /* SignUpRequestsDetailViewController.swift in Sources */,
 				42A6CE641C0BDFC700F97CFF /* SchoolsTableViewCell.swift in Sources */,
 				4216872D1C09286A00C29DEF /* SchoolDetailHeaderView.swift in Sources */,
 				5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */,
+				4241AF801C4BB430009BC133 /* FormController.swift in Sources */,
 				42C1D1C51C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift in Sources */,
 				427B72461C0C4C5B00A32DF5 /* EditSchoolController.swift in Sources */,
 				42A2E00F1C02943E00033577 /* AddAnnouncementController.swift in Sources */,

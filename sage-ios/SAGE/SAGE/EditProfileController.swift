@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditProfileController: UIViewController {
+class EditProfileController: FormController {
     
     var user: User
     
@@ -22,13 +22,16 @@ class EditProfileController: UIViewController {
     }
 
     override func viewDidLoad() {
-//        let editProfileView = editProfileView(frame: self.view.frame)
-//        self.view = editProfileView
-//        self.title = "Edit Profile"
-//        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
-//        self.navigationItem.rightBarButtonItem = self.finishButton
-//        addSchoolView.location.button.addTarget(self, action: "locationButtonTapped", forControlEvents: .TouchUpInside)
-//        addSchoolView.director.button.addTarget(self, action: "directorButtonTapped", forControlEvents: .TouchUpInside)
+        super.viewDidLoad()
+        let editProfileView = EditProfileView(frame: self.view.frame)
+        self.view = editProfileView
+        self.title = "Edit Profile"
+        editProfileView.displayFirstName(self.user.firstName!)
+        editProfileView.displayLastName(self.user.lastName!)
+        editProfileView.displayEmail(self.user.email!)
+        editProfileView.displaySchoolName(self.user.school!.name!)
+        editProfileView.displayHours(self.user.level)
+        editProfileView.setProfileImage(self.user)
     }
 
 }

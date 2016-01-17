@@ -8,12 +8,10 @@
 
 import UIKit
 
-class AddAnnouncementController: UIViewController {
+class AddAnnouncementController: FormController {
 
     var addAnnouncementView = AddAnnouncementView()
     var school: School?
-
-    private var finishButton: SGBarButtonItem?
 
     //
     // MARK: - ViewController Lifecycle
@@ -25,8 +23,6 @@ class AddAnnouncementController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Create Announcement"
-        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
-        self.navigationItem.rightBarButtonItem = self.finishButton
         self.addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
     }
     

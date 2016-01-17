@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class AnnouncementsViewController: UITableViewController {
     
@@ -88,7 +89,21 @@ class AnnouncementsViewController: UITableViewController {
     
     func getAnnouncements() {
         AnnouncementsOperations.loadAnnouncements({ (announcements) -> Void in
-            self.announcements = announcements
+            if let role = LoginOperations.getUser()?.role {
+                if role == .Admin || role == .Director {
+                    self.announcements = announcements
+                } else {
+                    let schoolID = (KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School).id
+                    
+                    for announcement in announcements {
+                        if announcement.school == nil {
+                            self.announcements.append(announcement)
+                        } else if schoolID == announcement.school!.id {
+                            self.announcements.append(announcement)
+                        }
+                    }
+                }
+            }
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()

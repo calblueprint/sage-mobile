@@ -23,8 +23,8 @@
 		27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67F1BE1993700F9D026 /* FormItem.swift */; };
 		27D1B6821BE1A62E00F9D026 /* FormFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B6811BE1A62E00F9D026 /* FormFieldItem.swift */; };
 		27D1B6841BE1C20C00F9D026 /* FormTextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B6831BE1C20C00F9D026 /* FormTextItem.swift */; };
-		27EB32A71C3917D400FD8050 /* SemesterVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */; settings = {ASSET_TAGS = (); }; };
+		27EB32A71C3917D400FD8050 /* SemesterVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */; };
+		27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */; };
 		27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; };
 		27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; };
 		27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C31BBDD1F300D61DA2 /* UIConstants.swift */; };
@@ -551,6 +551,7 @@
 		42A6CE681C0BE03300F97CFF /* Table View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */,
 				42A6CE631C0BDFC700F97CFF /* SchoolsTableViewCell.swift */,
 				42A6CE651C0BDFFD00F97CFF /* UsersTableViewCell.swift */,
 				5D221C231C18D296008FBD9B /* CheckinTableViewCell.swift */,
@@ -609,7 +610,6 @@
 		5DD14CFF1BD33B4200B935DE /* Announcements */ = {
 			isa = PBXGroup;
 			children = (
-				5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */,
 				5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */,
 				42A2E0101C0294C500033577 /* AddAnnouncementView.swift */,
 			);
@@ -860,7 +860,6 @@
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
-				42828FC41C00701000ACBC7E /* BrowseMentorsDetailViewController.swift in Sources */,
 				27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,

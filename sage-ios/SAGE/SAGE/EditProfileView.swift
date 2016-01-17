@@ -156,15 +156,15 @@ class EditProfileView: FormView {
     }
     
     func getFirstName() -> String {
-        return self.firstName.textField.text
+        return self.firstName.textField.text!
     }
     
     func getLastName() -> String {
-        return self.lastName.textField.text
+        return self.lastName.textField.text!
     }
     
     func getEmail() -> String {
-        return self.email.textField.text
+        return self.email.textField.text!
     }
 
 }

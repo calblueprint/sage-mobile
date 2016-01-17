@@ -37,6 +37,31 @@ class ProfileOperations: NSObject {
     }
     
     static func updateProfile(user: User, completion: (User) -> Void, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        
+        var hours = 0
+        switch user.level {
+        case .ZeroUnit: hours = 0
+        case .OneUnit: hours = 1
+        case .TwoUnit: hours = 2
+        default: hours = 0
+        }
+        
+        let params = [
+            UserConstants.kFirstName: user.firstName!,
+            UserConstants.kLastName: user.lastName!,
+            UserConstants.kEmail: user.email!,
+            UserConstants.kLevel: hours,
+            UserConstants.kSchoolID: user.school!.id,
+        ]
+        
+        let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
+        
+        manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in
+            completion(user)
+            }) { (operation, error) -> Void in
+                failure("Could not edit profile.")
+        }
         
     }
 }

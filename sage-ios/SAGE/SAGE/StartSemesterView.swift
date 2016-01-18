@@ -14,8 +14,10 @@ class StartSemesterView: UIView {
     private var scrollView = UIScrollView()
     
     private var startDate = NSDate()
-    private var term: Term = .Spring
     private var dateFormatter = NSDateFormatter()
+    
+    private var termList: [Term] = [.Fall, .Spring]
+    private var selectedTerm: Term = .Fall
     
     //
     // MARK: - Initialization
@@ -48,7 +50,7 @@ class StartSemesterView: UIView {
         self.scrollView.keyboardDismissMode = .OnDrag
         self.addSubview(self.scrollView)
         
-        // Pre-fill date only
+        // Pre-fill date
         self.dateFormatter.dateStyle = .MediumStyle
         self.dateFormatter.timeStyle = .NoStyle
         self.startDateItem.textField.text = self.dateFormatter.stringFromDate(self.startDate)
@@ -61,6 +63,9 @@ class StartSemesterView: UIView {
         self.startDateItem.textField.inputView = datePicker
         self.startDateItem.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.startDateItem)
+        
+        // Pre-fill term
+        self.semesterTermItem.textField.text = stringFromTerm(self.termList[0])
         
         self.semesterTermItem.label.text = "Term"
         self.semesterTermItem.textField.placeholder = "Select a term"
@@ -96,11 +101,12 @@ class StartSemesterView: UIView {
 //
 extension StartSemesterView: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if row == 0 {
-            return stringFromTerm(.Fall)
-        } else {
-            return stringFromTerm(.Spring)
-        }
+        return stringFromTerm(self.termList[row])
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.semesterTermItem.textField.text = stringFromTerm(self.termList[row])
+        self.selectedTerm = self.termList[row]
     }
 }
 

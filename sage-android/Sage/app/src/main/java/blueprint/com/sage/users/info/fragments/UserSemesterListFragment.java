@@ -24,7 +24,7 @@ public class UserSemesterListFragment extends AbstractSemesterListFragment {
     public void setUser(User user) { mUser = user; }
 
     public AbstractSemesterListAdapter getAdapter() {
-        return new UserSemesterListAdapter(getActivity(), mSemesters);
+        return new UserSemesterListAdapter(getActivity(), mSemesters, mUser);
     }
 
     public void makeSemesterListRequest() {

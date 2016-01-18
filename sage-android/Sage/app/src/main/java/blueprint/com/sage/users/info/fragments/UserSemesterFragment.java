@@ -31,6 +31,11 @@ public class UserSemesterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        makeUserSemesterRequest();
+    }
+
+    private void makeUserSemesterRequest() {
+
     }
 
     @Override

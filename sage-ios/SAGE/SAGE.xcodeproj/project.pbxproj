@@ -23,8 +23,8 @@
 		27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67F1BE1993700F9D026 /* FormItem.swift */; };
 		27D1B6821BE1A62E00F9D026 /* FormFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B6811BE1A62E00F9D026 /* FormFieldItem.swift */; };
 		27D1B6841BE1C20C00F9D026 /* FormTextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B6831BE1C20C00F9D026 /* FormTextItem.swift */; };
-		27EB32A71C3917D400FD8050 /* SemesterVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */; settings = {ASSET_TAGS = (); }; };
+		27EB32A71C3917D400FD8050 /* SemesterVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */; };
+		27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */; };
 		27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; };
 		27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; };
 		27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C31BBDD1F300D61DA2 /* UIConstants.swift */; };
@@ -125,6 +125,8 @@
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
+		E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */; };
+		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +250,8 @@
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterView.swift; sourceTree = "<group>"; };
+		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -479,6 +483,7 @@
 				42F71DF41BF80455004E1B3B /* Requests */,
 				4280CE1A1BF43F01005D1B97 /* Browse */,
 				27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */,
+				E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */,
 			);
 			name = "Admin Views";
 			sourceTree = "<group>";
@@ -499,6 +504,7 @@
 				42828FC11C006FE800ACBC7E /* Browse */,
 				42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */,
 				27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */,
+				E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */,
 			);
 			name = Admin;
 			sourceTree = "<group>";
@@ -843,6 +849,7 @@
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
 				27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */,
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
+				E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */,
 				42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */,
 				4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */,
 				27561FCE1C0D2E0E00DAB74A /* SGButton.swift in Sources */,
@@ -860,7 +867,6 @@
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
-				42828FC41C00701000ACBC7E /* BrowseMentorsDetailViewController.swift in Sources */,
 				27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
@@ -912,6 +918,7 @@
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
 				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
+				E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,

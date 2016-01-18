@@ -37,17 +37,21 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mUserSemester = userSemester;
         mItems = new ArrayList<>();
 
-        setUpCheckIn(mUserSemester);
+        setUpCheckIn();
     }
 
-    private void setUpCheckIn(UserSemester userSemester) {
-        if (userSemester == null) {
+    private void setUpCheckIn() {
+        if (mUserSemester == null) {
             return;
         }
 
         mItems.add(new Item(HEADER_VIEW, null));
 
-        for (CheckIn checkIn : userSemester.getCheckIns())
+        if (mUserSemester.getCheckIns().size() == 0) {
+            return;
+        }
+
+        for (CheckIn checkIn : mUserSemester.getCheckIns())
             mItems.add(new Item(CHECK_IN_VIEW, checkIn));
     }
 
@@ -105,7 +109,8 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public void setCheckIns(UserSemester userSemester) {
-        setUpCheckIn(userSemester);
+        mUserSemester = userSemester;
+        setUpCheckIn();
     }
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {

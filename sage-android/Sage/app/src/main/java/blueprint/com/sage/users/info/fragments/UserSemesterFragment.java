@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * Created by charlesx on 1/15/16.
  */
 public class UserSemesterFragment extends Fragment {
-    
+
     private User mUser;
     private Semester mSemester;
 

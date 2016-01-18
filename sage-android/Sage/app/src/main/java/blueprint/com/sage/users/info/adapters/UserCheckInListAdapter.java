@@ -22,31 +22,29 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private Activity mActivity;
     private List<Item> mItems;
-    private List<CheckIn> mCheckIns;
     private UserSemester mUserSemester;
 
     private static final int HEADER_VIEW = 0;
     private static final int CHECK_IN_VIEW = 1;
 
-    public UserCheckInListAdapter(Activity activity, List<CheckIn> checkIns, UserSemester userSemester) {
+    public UserCheckInListAdapter(Activity activity, UserSemester userSemester) {
         super();
 
         mActivity = activity;
-        mCheckIns = checkIns;
         mUserSemester = userSemester;
         mItems = new ArrayList<>();
 
-        setUpCheckIn(checkIns);
+        setUpCheckIn(mUserSemester);
     }
 
-    private void setUpCheckIn(List<CheckIn> checkIns) {
-        if (checkIns.size() == 0) {
+    private void setUpCheckIn(UserSemester userSemester) {
+        if (userSemester == null) {
             return;
         }
 
         mItems.add(new Item(HEADER_VIEW, null));
 
-        for (CheckIn checkIn : checkIns)
+        for (CheckIn checkIn : userSemester.getCheckIns())
             mItems.add(new Item(CHECK_IN_VIEW, checkIn));
     }
 
@@ -72,15 +70,15 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public int getItemCount() { return mCheckIns.size(); }
+    public int getItemCount() { return mItems.size(); }
 
     @Override
     public int getItemViewType(int position) {
         return mItems.get(position).getType();
     }
 
-    public void setCheckIns(List<CheckIn> checkIns) {
-        setUpCheckIn(checkIns);
+    public void setCheckIns(UserSemester userSemester) {
+        setUpCheckIn(userSemester);
     }
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {

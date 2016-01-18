@@ -26,6 +26,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by charlesx on 1/15/16.
+ * Shows check ins for a specific user
  */
 public class UserSemesterFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -102,7 +103,7 @@ public class UserSemesterFragment extends Fragment implements SwipeRefreshLayout
             Log.e(getClass().toString(), "No user semester");
             return;
         }
-
-        mAdapter.setCheckIns(event.getUserSemesters().get(0));
+        mUserSemester = event.getUserSemesters().get(0);
+        mAdapter.setCheckIns(mUserSemester);
     }
 }

@@ -26,7 +26,6 @@ class StartSemesterController: UIViewController {
         self.title = "Start Semester"
         self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
         self.navigationItem.rightBarButtonItem = self.finishButton
-        self.startSemesterView.semesterTermItem.button.addTarget(self, action: "semesterButtonTapped", forControlEvents: .TouchUpInside)
     }
     
     @objc private func schoolButtonTapped() {

@@ -6,14 +6,16 @@
 //  Copyright © 2016 Cal Blueprint. All rights reserved.
 //
 
-import BSKeyboardControls
-
 class StartSemesterView: UIView {
     
     var startDateItem =  FormFieldItem()
-    var semesterTermItem = FormButtonItem()
-    
+    var semesterTermItem = FormFieldItem()
+
     private var scrollView = UIScrollView()
+    
+    private var startDate = NSDate()
+    private var term: Term = .Spring
+    private var dateFormatter = NSDateFormatter()
     
     //
     // MARK: - Initialization
@@ -46,16 +48,37 @@ class StartSemesterView: UIView {
         self.scrollView.keyboardDismissMode = .OnDrag
         self.addSubview(self.scrollView)
         
+        // Pre-fill date only
+        self.dateFormatter.dateStyle = .MediumStyle
+        self.dateFormatter.timeStyle = .NoStyle
+        self.startDateItem.textField.text = self.dateFormatter.stringFromDate(self.startDate)
+        
         self.startDateItem.label.text = "Start Date"
         self.startDateItem.textField.placeholder = "Enter a date"
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .Date
+        datePicker.addTarget(self, action: "datePicked:", forControlEvents: .ValueChanged)
+        self.startDateItem.textField.inputView = datePicker
         self.startDateItem.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.startDateItem)
         
-        self.semesterTermItem.label.text = "Recipients"
-        self.semesterTermItem.button.setTitle("Select semester", forState: .Normal)
+        self.semesterTermItem.label.text = "Term"
+        self.semesterTermItem.textField.placeholder = "Select a term"
+        let pickerView = UIPickerView()
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        self.semesterTermItem.textField.inputView = pickerView
         self.semesterTermItem.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.semesterTermItem)
 
+    }
+    
+    //
+    // MARK: - Event handlers
+    //
+    @objc private func datePicked(sender: UIDatePicker!) {
+        self.startDateItem.textField.text = self.dateFormatter.stringFromDate(sender.date)
+        self.startDate = sender.date
     }
     
     //
@@ -64,12 +87,33 @@ class StartSemesterView: UIView {
     func isValid() -> Bool {
         return
             self.startDateItem.textField.text?.characters.count > 0 &&
-            self.semesterTermItem.button.titleLabel?.text?.characters.count > 0
+            self.startDateItem.textField.text?.characters.count > 0
+    }
+}
+
+//
+// MARK: - UIPickerViewDelegate
+//
+extension StartSemesterView: UIPickerViewDelegate {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if row == 0 {
+            return stringFromTerm(.Fall)
+        } else {
+            return stringFromTerm(.Spring)
+        }
+    }
+}
+
+//
+// MARK: - UIPickerViewDataSource
+//
+extension StartSemesterView: UIPickerViewDataSource {
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
     }
     
-    func displayChosenSemester(school: School) {
-        self.semesterTermItem.button.setTitle("Spring", forState: .Normal)
-        self.semesterTermItem.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 2
     }
-    
 }

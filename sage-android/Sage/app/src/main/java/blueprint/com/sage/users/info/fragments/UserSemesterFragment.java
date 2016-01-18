@@ -6,15 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.network.Requests;
 import butterknife.ButterKnife;
 
 /**
  * Created by charlesx on 1/15/16.
  */
 public class UserSemesterFragment extends Fragment {
+    
     private User mUser;
     private Semester mSemester;
 
@@ -35,7 +39,10 @@ public class UserSemesterFragment extends Fragment {
     }
 
     private void makeUserSemesterRequest() {
-
+        HashMap<String, String> queryRequests = new HashMap<>();
+        queryRequests.put("user_id", String.valueOf(mUser.getId()));
+        queryRequests.put("semester_id", String.valueOf(mSemester.getId()));
+        Requests.UserSemesters.with(getActivity()).makeListRequest(queryRequests);
     }
 
     @Override

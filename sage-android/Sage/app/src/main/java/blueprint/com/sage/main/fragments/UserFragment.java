@@ -219,7 +219,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
                 break;
             case STATUS_DIALOG_CODE:
                 mUser.getCurrentSemester().setStatus(selection);
-                Requests.UserSemesters.with(getActivity()).makeUpdateUserSemesterRequest(mUser.getCurrentSemester());
+                Requests.UserSemesters.with(getActivity()).makeUpdateRequest(mUser.getCurrentSemester());
                 break;
         }
     }

@@ -36,10 +36,10 @@ class ProfileOperations: NSObject {
         }
     }
     
-    static func updateProfile(user: User, completion: (User) -> Void, failure: (String) -> Void) {
+    static func updateProfile(user: User, password: String, photoData: String, completion: (User) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         
-        var hours = 0
+        var hours: Int = 0
         switch user.level {
         case .ZeroUnit: hours = 0
         case .OneUnit: hours = 1
@@ -47,12 +47,16 @@ class ProfileOperations: NSObject {
         default: hours = 0
         }
         
-        let params = [
-            UserConstants.kFirstName: user.firstName!,
-            UserConstants.kLastName: user.lastName!,
-            UserConstants.kEmail: user.email!,
-            UserConstants.kLevel: hours,
-            UserConstants.kSchoolID: user.school!.id,
+        let params = ["user":
+            [
+                UserConstants.kFirstName: user.firstName!,
+                UserConstants.kLastName: user.lastName!,
+                UserConstants.kEmail: user.email!,
+                UserConstants.kLevel: hours,
+                UserConstants.kSchoolID: user.school!.id,
+                UserConstants.kCurrentPassword: password,
+                UserConstants.kPhotoData: photoData
+            ]
         ]
         
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)

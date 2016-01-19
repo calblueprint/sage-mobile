@@ -18,6 +18,7 @@ class EditProfileView: FormView {
     var email = FormFieldItem()
     var school = FormButtonItem()
     var hours = FormButtonItem()
+    let password = FormFieldItem()
     
     let profileImageSize = CGFloat(90)
     
@@ -26,6 +27,7 @@ class EditProfileView: FormView {
         self.keyboardControls.fields.append(self.firstName.textField)
         self.keyboardControls.fields.append(self.lastName.textField)
         self.keyboardControls.fields.append(self.email.textField)
+        self.keyboardControls.fields.append(self.password.textField)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -67,6 +69,13 @@ class EditProfileView: FormView {
         self.hours.button.setTitle("Choose your hours", forState: .Normal)
         self.hours.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.hours)
+        
+        self.password.label.text = "Password"
+        self.password.textField.delegate = self
+        self.password.textField.placeholder = "Enter your password."
+        self.password.setHeight(FormFieldItem.defaultHeight)
+        self.password.textField.secureTextEntry = true
+        self.scrollView.addSubview(self.password)
     }
     
     override func layoutSubviews() {
@@ -103,7 +112,10 @@ class EditProfileView: FormView {
         self.hours.fillWidth()
         self.hours.setY(CGRectGetMaxY(self.school.frame))
         
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.hours.frame))
+        self.password.fillWidth()
+        self.password.setY(CGRectGetMaxY(self.hours.frame))
+
+        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.password.frame))
     }
     
     //
@@ -150,6 +162,8 @@ class EditProfileView: FormView {
             return false
         } else if self.email.textField.text == "" {
             return false
+        } else if self.password.textField.text == "" {
+            return false
         } else {
             return true
         }
@@ -165,6 +179,10 @@ class EditProfileView: FormView {
     
     func getEmail() -> String {
         return self.email.textField.text!
+    }
+    
+    func getPassword() -> String {
+        return self.password.textField.text!
     }
 
 }

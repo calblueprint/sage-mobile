@@ -73,7 +73,9 @@ class EditProfileController: FormController {
             self.user.lastName = editProfileView.getLastName()
             self.user.email = editProfileView.getEmail()
             self.finishButton?.startLoading()
-            ProfileOperations.updateProfile(self.user, completion: { (updatedUser) -> Void in
+            let password = editProfileView.getPassword()
+            let photoData = UIImage.encodedPhotoString(editProfileView.photoView.image!)
+            ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, completion: { (updatedUser) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
                 }) { (errorMessage) -> Void in

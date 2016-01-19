@@ -14,7 +14,9 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
+import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.semesters.SemesterEvent;
+import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.Semester;
@@ -92,6 +94,9 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
 
     public void onEvent(SemesterEvent event) {
         mSemester = event.getSemester();
+
+        EventBus.getDefault().post(new CheckInListEvent(mSemester.getCheckIns()));
+        EventBus.getDefault().post(new UserListEvent(mSemester.getUsers()));
     }
 
     public void setUsers(List<User> users) { mUsers = users; }

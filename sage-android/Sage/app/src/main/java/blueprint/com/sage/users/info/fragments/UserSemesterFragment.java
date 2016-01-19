@@ -1,7 +1,6 @@
 package blueprint.com.sage.users.info.fragments;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -21,7 +20,7 @@ import blueprint.com.sage.users.info.adapters.UserCheckInListAdapter;
  * Created by charlesx on 1/15/16.
  * Shows check ins for a specific user
  */
-public class UserSemesterFragment extends AbstractCheckInListFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class UserSemesterFragment extends AbstractCheckInListFragment {
 
     private User mUser;
     private Semester mSemester;
@@ -66,7 +65,7 @@ public class UserSemesterFragment extends AbstractCheckInListFragment implements
     }
 
     public void onEvent(APIErrorEvent event) {
-        mRefreshUsers.setRefreshing(false);
+        mCheckInRefreshView.setRefreshing(false);
         mEmptyView.setRefreshing(false);
     }
 }

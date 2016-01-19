@@ -52,7 +52,8 @@ class ProfileOperations: NSObject {
                 UserConstants.kFirstName: user.firstName!,
                 UserConstants.kLastName: user.lastName!,
                 UserConstants.kEmail: user.email!,
-                UserConstants.kLevel: hours,
+                // TODO: figure out why this is being sent up as a string
+                //UserConstants.kLevel: hours,
                 UserConstants.kSchoolID: user.school!.id,
                 UserConstants.kCurrentPassword: password,
                 UserConstants.kPhotoData: photoData

@@ -35,6 +35,33 @@ class EditProfileController: FormController {
         
         editProfileView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
         editProfileView.hours.button.addTarget(self, action: "hoursButtonTapped", forControlEvents: .TouchUpInside)
+        editProfileView.photoButton.addTarget(self, action: "chooseNewPhoto", forControlEvents: .TouchUpInside)
+    }
+    
+    @objc private func chooseNewPhoto() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let imagePickerController: UIImagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = false
+        
+        actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .Default, handler: { (alertAction) -> Void in
+            if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+                imagePickerController.sourceType = .Camera
+                self.presentViewController(imagePickerController, animated: true, completion: nil)
+            }
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Choose From Library", style: .Default, handler: { (alertAction) -> Void in
+            if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+                imagePickerController.sourceType = .PhotoLibrary
+                self.presentViewController(imagePickerController, animated: true, completion: nil)
+            }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (alertAction) -> Void in
+            actionSheet.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(actionSheet, animated: true, completion: nil)
     }
     
     @objc private func schoolButtonTapped() {
@@ -97,4 +124,13 @@ class EditProfileController: FormController {
         }
     }
 
+}
+
+extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let editProfileView = (self.view as! EditProfileView)
+        let photoView = editProfileView.photoView
+        photoView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

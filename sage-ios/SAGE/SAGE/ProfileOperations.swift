@@ -63,7 +63,9 @@ class ProfileOperations: NSObject {
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
         
         manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in
-            completion(user)
+            let newUserData = (data as! [String: AnyObject])["user"] as! [String: AnyObject]
+            let newUser = User(propertyDictionary: newUserData)
+            completion(newUser)
             }) { (operation, error) -> Void in
                 failure("Could not edit profile.")
         }

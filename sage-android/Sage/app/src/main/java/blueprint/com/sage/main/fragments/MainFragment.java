@@ -95,12 +95,10 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {
-            }
+            public void onPageSelected(int position) {}
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
     }
 

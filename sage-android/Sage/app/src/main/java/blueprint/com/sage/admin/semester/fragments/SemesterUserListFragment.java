@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import blueprint.com.sage.admin.browse.adapters.UserListAdapter;
-import blueprint.com.sage.admin.browse.fragments.UserListFragment;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.shared.fragments.AbstractUserListFragment;
@@ -18,12 +17,12 @@ public class SemesterUserListFragment extends AbstractUserListFragment {
 
     private UsersInterface mUsersInterface;
 
-    public static UserListFragment newInstance() { return new UserListFragment(); }
+    public static SemesterUserListFragment newInstance() { return new SemesterUserListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUsersInterface = (UsersInterface) getActivity();
+        mUsersInterface = (UsersInterface) getParentFragment();
     }
 
     @Override

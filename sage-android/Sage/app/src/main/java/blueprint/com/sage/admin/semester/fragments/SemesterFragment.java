@@ -25,6 +25,7 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.adapters.pagers.SimplePagerAdapter;
 import blueprint.com.sage.shared.interfaces.CheckInsInterface;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -82,6 +83,12 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroy();
+        ViewUtils.setToolBarElevation(getActivity(), 8);
+    }
+
     private void initializeViews() {
         mAdapter = new SimplePagerAdapter(getChildFragmentManager());
 
@@ -90,6 +97,8 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
 
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        ViewUtils.setToolBarElevation(getActivity(), 0);
     }
 
     public void onEvent(SemesterEvent event) {

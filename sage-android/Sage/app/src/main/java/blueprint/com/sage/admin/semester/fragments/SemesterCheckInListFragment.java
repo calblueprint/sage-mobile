@@ -35,6 +35,8 @@ public class SemesterCheckInListFragment extends AbstractCheckInListFragment {
 
     public void onEvent(CheckInListEvent event) {
         List<CheckIn> checkIns = event.getCheckIns();
+        mCheckInInterface.setCheckIns(checkIns);
+        ((SemesterCheckInListAdapter) mAdapter).setCheckIns(checkIns);
     }
 
     public void onEvent(APIErrorEvent event) {

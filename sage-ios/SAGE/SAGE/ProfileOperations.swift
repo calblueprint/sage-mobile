@@ -71,4 +71,38 @@ class ProfileOperations: NSObject {
         }
         
     }
+    
+    static func promote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let url = StringConstants.kUserAdminPromoteURL(user.id)
+        
+        let params = ["user":
+            [
+                UserConstants.kRole: 1
+            ]
+        ]
+        
+        manager.POST(url, parameters: params, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not promote user.")
+        }
+    }
+    
+    static func demote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let url = StringConstants.kUserAdminPromoteURL(user.id)
+        
+        let params = ["user":
+            [
+                UserConstants.kRole: 0
+            ]
+        ]
+        
+        manager.POST(url, parameters: params, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not demote user.")
+        }
+    }
 }

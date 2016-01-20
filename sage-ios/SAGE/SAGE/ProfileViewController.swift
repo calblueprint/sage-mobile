@@ -49,6 +49,8 @@ class ProfileViewController: UITableViewController {
         self.profileView.frame = headerFrame
         self.tableView.tableHeaderView = self.profileView
         self.profileView.profileEditButton.addTarget(self, action: "editProfile", forControlEvents: .TouchUpInside)
+        self.profileView.promoteButton.addTarget(self, action: "promote", forControlEvents: .TouchUpInside)
+        self.profileView.demoteButton.addTarget(self, action: "demote", forControlEvents: .TouchUpInside)
     }
     
     override func viewDidLoad() {
@@ -64,13 +66,53 @@ class ProfileViewController: UITableViewController {
         self.getUser()
     }
     
+    func promote() {
+        var message = "Do you want to promote this user?"
+        if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
+            message = "Do you want to promote " + self.user!.fullName() + "?"
+        }
+        let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
+            ProfileOperations.promote(self.user!, completion: nil, failure: { (message) -> Void in
+                self.showErrorAndSetMessage(message)
+            })
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func demote() {
+        var message = "Do you want to demote this user?"
+        if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
+            message = "Do you want to demote " + self.user!.fullName() + "?"
+        }
+        let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
+            ProfileOperations.demote(self.user!, completion: nil, failure: { (message) -> Void in
+                self.showErrorAndSetMessage(message)
+            })
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     func getUser() {
         ProfileOperations.getUser(self.user!, completion: { (user) -> Void in
             
             if LoginOperations.getUser()!.id == user.id {
-                self.profileView.currentUserProfile = Bool(true)
+                self.profileView.currentUserProfile = true
             } else {
-                self.profileView.currentUserProfile = Bool(false)
+                self.profileView.currentUserProfile = false
+            }
+            
+            if LoginOperations.getUser()!.role == .Admin && LoginOperations.getUser()!.id != user.id  {
+                self.profileView.canPromoteDemote = true
+            } else {
+                self.profileView.canPromoteDemote = false
             }
             
             self.profileView.setupWithUser(user)

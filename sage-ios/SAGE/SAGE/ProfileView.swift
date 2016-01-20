@@ -15,6 +15,8 @@ class ProfileView: UIView {
     let profileUserImg = UIImageView()
     let profileUserImgBorder = UIView()
     let profileEditButton = UIButton()
+    let promoteButton = UIButton()
+    let demoteButton = UIButton()
     let userName = UILabel()
     let userVolunteerLevel = UILabel()
     let userSchool = UILabel()
@@ -45,9 +47,24 @@ class ProfileView: UIView {
         }
         set(isCurrentUser) {
             if isCurrentUser {
-                self.profileEditButton.alpha = 1
+                self.profileEditButton.hidden = false
             } else {
-                self.profileEditButton.alpha = 0
+                self.profileEditButton.hidden = true
+            }
+        }
+    }
+    
+    var canPromoteDemote: Bool {
+        get {
+            return self.canPromoteDemote
+        }
+        set (promoteDemoteStatus) {
+            if promoteDemoteStatus {
+                self.promoteButton.hidden = false
+                self.demoteButton.hidden = false
+            } else {
+                self.promoteButton.hidden = true
+                self.promoteButton.hidden = true
             }
         }
     }
@@ -57,6 +74,8 @@ class ProfileView: UIView {
         self.addSubview(self.profileContent)
         self.profileContent.addSubview(self.header)
         self.profileContent.addSubview(self.profileEditButton)
+        self.profileContent.addSubview(self.promoteButton)
+        self.profileContent.addSubview(self.demoteButton)
         self.profileContent.addSubview(self.profileUserImgBorder)
         self.profileContent.addSubview(self.profileUserImg)
         self.profileContent.addSubview(self.userName)
@@ -122,8 +141,31 @@ class ProfileView: UIView {
         self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
         self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
         
+        self.profileEditButton.setTitle("Edit Profile", forState: .Normal)
+        self.profileEditButton.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
         self.profileEditButton.titleLabel?.font = UIFont.normalFont
         self.profileEditButton.titleLabel?.textColor = UIColor.secondaryTextColor
+        
+        self.promoteButton.setTitle("Promote", forState: .Normal)
+        self.promoteButton.titleLabel?.font = UIFont.normalFont
+        self.promoteButton.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
+        self.promoteButton.layer.borderWidth = 1.0
+        self.promoteButton.layer.borderColor = UIColor.secondaryTextColor.CGColor
+        self.promoteButton.layer.cornerRadius = 3
+        self.promoteButton.clipsToBounds = true
+        self.promoteButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        self.promoteButton.hidden = true
+
+        self.demoteButton.setTitle("Demote", forState: .Normal)
+        self.demoteButton.titleLabel?.font = UIFont.normalFont
+        self.demoteButton.setTitleColor(UIColor.lightRedColor, forState: .Normal)
+        self.demoteButton.layer.borderWidth = 1.0
+        self.demoteButton.layer.borderColor = UIColor.lightRedColor.CGColor
+        self.demoteButton.layer.cornerRadius = 3
+        self.demoteButton.clipsToBounds = true
+        self.demoteButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        self.demoteButton.hidden = true
+
         
         self.profileUserImg.layer.cornerRadius = self.profileImageSize/2
         self.profileUserImg.clipsToBounds = true
@@ -156,13 +198,25 @@ class ProfileView: UIView {
         self.header.setHeight(self.headerHeight+self.headerOffset)
         
         // position edit button
-        self.profileEditButton.setTitle("Edit Profile", forState: .Normal)
-        self.profileEditButton.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
         self.profileEditButton.layoutIfNeeded()
         self.profileEditButton.sizeToFit()
         self.profileEditButton.setY(self.headerHeight + 15)
         let profileEditButtonX = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.profileEditButton.frame)
         self.profileEditButton.setX(profileEditButtonX)
+        
+        // position promote button
+        self.promoteButton.layoutIfNeeded()
+        self.promoteButton.sizeToFit()
+        self.promoteButton.setY(self.headerHeight + 15)
+        let promoteEditButtonX = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.promoteButton.frame)
+        self.promoteButton.setX(promoteEditButtonX)
+        
+        // position demote button
+        self.demoteButton.layoutIfNeeded()
+        self.demoteButton.sizeToFit()
+        self.demoteButton.setY(CGRectGetMaxY(self.promoteButton.frame) + UIConstants.verticalMargin)
+        let demoteEditButtonx = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.demoteButton.frame)
+        self.demoteButton.setX(demoteEditButtonx)
 
         // set up image
         self.profileUserImgBorder.setHeight(self.profileImageSize + self.profileImageBorder)

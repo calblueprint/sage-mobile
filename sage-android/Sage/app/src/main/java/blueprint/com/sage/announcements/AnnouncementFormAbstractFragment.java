@@ -80,9 +80,14 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     }
 
     protected boolean isValid() {
-        return mValidator.hasNonBlankField(mAnnouncementTitle, "Title") &
-                mValidator.hasNonBlankField(mAnnouncementBody, "Body") &
-                (mAnnouncement.getCategory() == 0 && mSchoolAdapter.getCount() != 0);
+        if (mValidator.hasNonBlankField(mAnnouncementTitle, "Title") &
+                mValidator.hasNonBlankField(mAnnouncementBody, "Body")) {
+            if (mAnnouncement.getCategory() == 0 && mSchoolAdapter.getCount() == 0) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     protected abstract boolean validateAndSubmitRequest();

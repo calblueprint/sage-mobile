@@ -416,7 +416,7 @@ public class Requests {
             return new Announcements(activity);
         }
 
-        public void makeListRequest() {
+        public void makeListRequest(HashMap<String, String> params) {
             AnnouncementsListRequest announcementsRequest = new AnnouncementsListRequest(mActivity, null, new Response.Listener<ArrayList<Announcement>>() {
                 @Override
                 public void onResponse(ArrayList<Announcement> announcementsArrayList) {

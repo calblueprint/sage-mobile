@@ -98,7 +98,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     public void makeRequest() {
-        Requests.Announcements.with(getActivity()).makeListRequest();
+        Requests.Announcements.with(getActivity()).makeListRequest(null);
     }
 
     @OnClick(R.id.add_announcement_fab)

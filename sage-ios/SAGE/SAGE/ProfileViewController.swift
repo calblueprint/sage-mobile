@@ -73,6 +73,7 @@ class ProfileViewController: UITableViewController {
         }
         let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
+            self.profileView.startActivityIndicator()
             ProfileOperations.promote(self.user!, completion: { () -> Void in
                     self.profileView.didPromote()
                 }, failure: { (message) -> Void in
@@ -90,8 +91,9 @@ class ProfileViewController: UITableViewController {
         if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
             message = "Do you want to demote " + self.user!.fullName() + "?"
         }
-        let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alertController = UIAlertController(title: "Demote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
+            self.profileView.startActivityIndicator()
             ProfileOperations.demote(self.user!, completion: { () -> Void in
                 self.profileView.didDemote()
                 }, failure: { (message) -> Void in

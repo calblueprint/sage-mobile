@@ -19,7 +19,6 @@ class EditProfileView: FormView {
     var school = FormButtonItem()
     var hours = FormButtonItem()
     let password = FormFieldItem()
-    
     let profileImageSize = CGFloat(90)
     
     override init(frame: CGRect) {

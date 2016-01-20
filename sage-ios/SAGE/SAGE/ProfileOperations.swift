@@ -38,7 +38,8 @@ class ProfileOperations: NSObject {
     
     static func updateProfile(user: User, password: String, photoData: String, completion: (User) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        
+        BaseOperation.setJSONSerializer(manager)
+
         var hours: Int = 0
         switch user.level {
         case .ZeroUnit: hours = 0
@@ -52,8 +53,7 @@ class ProfileOperations: NSObject {
                 UserConstants.kFirstName: user.firstName!,
                 UserConstants.kLastName: user.lastName!,
                 UserConstants.kEmail: user.email!,
-                // TODO: figure out why this is being sent up as a string
-                //UserConstants.kLevel: hours,
+                UserConstants.kLevel: hours,
                 UserConstants.kSchoolID: user.school!.id,
                 UserConstants.kCurrentPassword: password,
                 UserConstants.kPhotoData: photoData
@@ -74,8 +74,9 @@ class ProfileOperations: NSObject {
     
     static func promote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
+        BaseOperation.setJSONSerializer(manager)
         let url = StringConstants.kUserAdminPromoteURL(user.id)
-        
+
         let params = ["user":
             [
                 UserConstants.kRole: 1
@@ -91,6 +92,7 @@ class ProfileOperations: NSObject {
     
     static func demote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
+        BaseOperation.setJSONSerializer(manager)
         let url = StringConstants.kUserAdminPromoteURL(user.id)
         
         let params = ["user":

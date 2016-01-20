@@ -16,14 +16,14 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.BrowseMentorsActivity;
 import blueprint.com.sage.admin.browse.BrowseSchoolsActivity;
-import blueprint.com.sage.events.semesters.SemesterListEvent;
-import blueprint.com.sage.models.Semester;
-import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.admin.requests.CheckInRequestsActivity;
 import blueprint.com.sage.admin.requests.SignUpRequestsActivity;
 import blueprint.com.sage.admin.semester.CreateSemesterActivity;
 import blueprint.com.sage.admin.semester.FinishSemesterActivity;
 import blueprint.com.sage.admin.semester.SemesterListActivity;
+import blueprint.com.sage.events.semesters.SemesterListEvent;
+import blueprint.com.sage.models.Semester;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -119,6 +119,10 @@ public class AdminPanelFragment extends Fragment {
     private void toggleSemester() {
         mStartSemester.setVisibility(View.GONE);
         mEndSemester.setVisibility(View.GONE);
+
+        if (!mBaseInterface.getUser().isAdmin()) {
+            return;
+        }
 
         if (mBaseInterface.getSharedPreferences().contains(getString(R.string.current_semester))) {
             String semesterString =

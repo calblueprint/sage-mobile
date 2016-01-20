@@ -61,7 +61,7 @@ public class MainFragment extends Fragment {
         mAdapter.addFragment(CheckInMapFragment.newInstance(), R.drawable.ic_place_white_24dp);
         mAdapter.addFragment(AnnouncementsListFragment.newInstance(), R.drawable.ic_announcement_white_24dp);
 
-        if (mBaseInterface.getUser().isAdmin())
+        if (mBaseInterface.getUser().isAdmin() || mBaseInterface.getUser().isPresident());
             mAdapter.addFragment(AdminPanelFragment.newInstance(), R.drawable.ic_assignment_white_24dp);
 
         mAdapter.addFragment(UserFragment.newInstance(mBaseInterface.getUser()), R.drawable.ic_account_circle_white_24dp);

@@ -73,8 +73,10 @@ class ProfileViewController: UITableViewController {
         }
         let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
-            ProfileOperations.promote(self.user!, completion: nil, failure: { (message) -> Void in
-                self.showErrorAndSetMessage(message)
+            ProfileOperations.promote(self.user!, completion: { () -> Void in
+                    self.profileView.didPromote()
+                }, failure: { (message) -> Void in
+                    self.showErrorAndSetMessage(message)
             })
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -90,8 +92,10 @@ class ProfileViewController: UITableViewController {
         }
         let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
-            ProfileOperations.demote(self.user!, completion: nil, failure: { (message) -> Void in
-                self.showErrorAndSetMessage(message)
+            ProfileOperations.demote(self.user!, completion: { () -> Void in
+                self.profileView.didDemote()
+                }, failure: { (message) -> Void in
+                    self.showErrorAndSetMessage(message)
             })
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -110,9 +114,17 @@ class ProfileViewController: UITableViewController {
             }
             
             if LoginOperations.getUser()!.role == .Admin && LoginOperations.getUser()!.id != user.id  {
-                self.profileView.canPromoteDemote = true
+                if user.role == .Admin {
+                    self.profileView.canPromote = false
+                    self.profileView.canDemote = true
+                } else {
+                    self.profileView.canPromote = true
+                    self.profileView.canDemote = false
+
+                }
             } else {
-                self.profileView.canPromoteDemote = false
+                self.profileView.canPromote = false
+                self.profileView.canDemote = false
             }
             
             self.profileView.setupWithUser(user)

@@ -27,6 +27,7 @@ class ProfileView: UIView {
     let userStatusLabel = UILabel()
     let userCommitmentContainer = UIView()
     let userCommitmentLabel = UILabel()
+    let userRoleLabel = UILabel()
     
     // profile page constants
     let viewHeight = CGFloat(351.5)
@@ -54,17 +55,28 @@ class ProfileView: UIView {
         }
     }
     
-    var canPromoteDemote: Bool {
+    var canPromote: Bool {
         get {
-            return self.canPromoteDemote
+            return self.canPromote
         }
-        set (promoteDemoteStatus) {
-            if promoteDemoteStatus {
+        set (promoteStatus) {
+            if promoteStatus {
                 self.promoteButton.hidden = false
-                self.demoteButton.hidden = false
             } else {
                 self.promoteButton.hidden = true
-                self.promoteButton.hidden = true
+            }
+        }
+    }
+    
+    var canDemote: Bool {
+        get {
+            return self.canDemote
+        }
+        set (demoteStatus) {
+            if demoteStatus {
+                self.demoteButton.hidden = false
+            } else {
+                self.demoteButton.hidden = true
             }
         }
     }
@@ -80,6 +92,8 @@ class ProfileView: UIView {
         self.profileContent.addSubview(self.profileUserImg)
         self.profileContent.addSubview(self.userName)
         self.profileContent.addSubview(self.userSchool)
+        self.profileContent.addSubview(self.userRoleLabel)
+
         self.profileContent.addSubview(self.userVolunteerLevel)
         self.profileContent.addSubview(self.topBorder)
         self.profileContent.addSubview(self.bottomBorder)
@@ -131,6 +145,13 @@ class ProfileView: UIView {
         let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")
         styleAttributedString(self.userCommitmentString, string: userCommitmentString, length: weeklyHoursRequiredString.characters.count)
         self.userCommitmentLabel.attributedText = userCommitmentString
+        
+        var roleString = "Mentor"
+        if user.role == .Admin {
+            roleString = "Admin"
+        }
+        self.userRoleLabel.text = roleString
+        
         layoutSubviews()
     }
     
@@ -173,18 +194,20 @@ class ProfileView: UIView {
         self.userName.font = UIFont.getSemiboldFont(20)
         self.userSchool.font = UIFont.normalFont
         self.userVolunteerLevel.font = UIFont.normalFont
-        
+        self.userRoleLabel.font = UIFont.normalFont
+
         self.topBorder.backgroundColor = UIColor.borderColor
         self.bottomBorder.backgroundColor = UIColor.borderColor
         self.centerBorder.backgroundColor = UIColor.borderColor
         
         self.userStatusLabel.font = UIFont.normalFont
         self.userStatusLabel.numberOfLines = 0
-        self.userStatusLabel.textAlignment = NSTextAlignment.Center
+        self.userStatusLabel.textAlignment = .Center
         
         self.userCommitmentLabel.font = UIFont.normalFont
         self.userCommitmentLabel.numberOfLines = 0
-        self.userCommitmentLabel.textAlignment = NSTextAlignment.Center
+        self.userCommitmentLabel.textAlignment = .Center
+        
     }
     
     override func layoutSubviews() {
@@ -214,7 +237,7 @@ class ProfileView: UIView {
         // position demote button
         self.demoteButton.layoutIfNeeded()
         self.demoteButton.sizeToFit()
-        self.demoteButton.setY(CGRectGetMaxY(self.promoteButton.frame) + UIConstants.verticalMargin)
+        self.demoteButton.setY(self.headerHeight + 15)
         let demoteEditButtonx = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.demoteButton.frame)
         self.demoteButton.setX(demoteEditButtonx)
 
@@ -250,11 +273,17 @@ class ProfileView: UIView {
         let userVolunteerLevelY = CGRectGetMaxY(userSchool.frame) + 7
         self.userVolunteerLevel.setY(userVolunteerLevelY)
         
+        self.userRoleLabel.fillWidth()
+        self.userRoleLabel.setHeight(12)
+        self.userRoleLabel.setX(self.leftMargin)
+        let userRoleLabelY = CGRectGetMaxY(userVolunteerLevel.frame) + 7
+        self.userRoleLabel.setY(userRoleLabelY)
+        
         // set up lines
         self.topBorder.setHeight(UIConstants.dividerHeight())
         self.topBorder.fillWidth()
         self.topBorder.setX(0)
-        let topBorderY = CGRectGetMaxY(userVolunteerLevel.frame) + 20
+        let topBorderY = CGRectGetMaxY(userRoleLabel.frame) + 20
         self.topBorder.setY(topBorderY)
         
         self.bottomBorder.setHeight(UIConstants.dividerHeight())
@@ -292,6 +321,18 @@ class ProfileView: UIView {
     
     deinit {
         self.profileUserImg.cancelImageRequestOperation()
+    }
+    
+    func didPromote() {
+        self.promoteButton.hidden = true
+        self.demoteButton.hidden = false
+        self.userRoleLabel.text = "Admin"
+    }
+    
+    func didDemote() {
+        self.demoteButton.hidden = true
+        self.promoteButton.hidden = false
+        self.userRoleLabel.text = "Mentor"
     }
     
 }

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     android:id="@+id/check_in_request_layout"
     android:orientation="vertical"
@@ -8,19 +7,16 @@
     android:background="@color/heather"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
         style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_date_layout">
 
         <ImageView
             style="@style/FormIcon"
-            android:id="@+id/check_in_request_date"
             android:src="@drawable/ic_today_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout"
-            android:layout_toRightOf="@id/check_in_request_date"
-            android:layout_toEndOf="@id/check_in_request_date" >
+            style="@style/FormLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -33,22 +29,19 @@
                 android:hint="@string/default_date"/>
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_start_layout"
         android:layout_below="@id/check_in_request_date_layout">
 
         <ImageView
             style="@style/FormIcon"
-            android:id="@+id/check_in_request_start_icon"
             android:src="@drawable/ic_alarm_on_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout"
-            android:layout_toRightOf="@id/check_in_request_start_icon"
-            android:layout_toEndOf="@id/check_in_request_start_icon" >
+            style="@style/FormLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -61,22 +54,19 @@
                 android:hint="@string/default_time"/>
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_end_layout"
         android:layout_below="@id/check_in_request_start_layout">
 
         <ImageView
             style="@style/FormIcon"
-            android:id="@+id/check_in_request_end_icon"
             android:src="@drawable/ic_alarm_off_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout"
-            android:layout_toRightOf="@id/check_in_request_end_icon"
-            android:layout_toEndOf="@id/check_in_request_end_icon" >
+            style="@style/FormLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -89,10 +79,10 @@
                 android:hint="@string/default_time"/>
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         style="@style/FormRelativeLayout"
         android:id="@+id/check_in_request_comment_layout"
         android:layout_below="@id/check_in_request_end_layout">
@@ -103,9 +93,7 @@
             android:src="@drawable/ic_comment_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout"
-            android:layout_toRightOf="@id/check_in_request_comment_icon"
-            android:layout_toEndOf="@id/check_in_request_comment_icon" >
+            style="@style/FormLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -118,7 +106,7 @@
                 android:hint="@string/optional"/>
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         style="@style/FormRelativeLayout"

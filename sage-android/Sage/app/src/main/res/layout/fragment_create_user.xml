@@ -7,7 +7,7 @@
         android:id="@+id/create_user_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <blueprint.com.sage.shared.views.CircleImageView
             android:id="@+id/create_user_photo"

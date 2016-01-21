@@ -49,6 +49,7 @@ public @Data class User {
 
     public final static String[] VOLUNTEER_SPINNER = { "Volunteer", "One Unit", "Two Units" };
     public final static String[] ROLE_SPINNER = { "Student", "Admin" };
+    public final static String[] ROLE_SPINNER_PRESIDENT = { "Student", "Admin", "President" };
 
     public User() {}
 

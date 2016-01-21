@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,9 +169,12 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.admin_user_change_role)
     public void onPromoteClick(View view) {
+        String[] roleArray =
+                mBaseInterface.getUser().isPresident() ?
+                        User.ROLE_SPINNER_PRESIDENT : User.ROLE_SPINNER;
         ListDialog dialog = ListDialog.newInstance(this,
                 R.string.user_promote_dialog_title,
-                User.ROLE_SPINNER);
+                roleArray);
         dialog.setTargetFragment(this, PROMOTE_DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
     }
@@ -202,6 +206,15 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     }
 
     public void onEvent(PromoteUserEvent event) {
+        // This means that there is a new president
+        if (event.getUser().isPresident()) {
+            mBaseInterface.getUser().setRole(User.ADMIN);
+            try {
+                NetworkUtils.setUser(getActivity(), mBaseInterface.getUser());
+            } catch(Exception e) {
+                Log.e(getClass().toString(), e.toString());
+            }
+        }
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 

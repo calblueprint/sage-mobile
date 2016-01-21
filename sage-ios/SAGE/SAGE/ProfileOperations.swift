@@ -38,7 +38,6 @@ class ProfileOperations: NSObject {
     
     static func updateProfile(user: User, password: String, photoData: String, completion: (User) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        BaseOperation.setJSONSerializer(manager)
 
         var hours: Int = 0
         switch user.level {
@@ -74,7 +73,6 @@ class ProfileOperations: NSObject {
     
     static func promote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        BaseOperation.setJSONSerializer(manager)
         let url = StringConstants.kUserAdminPromoteURL(user.id)
 
         let params = ["user":
@@ -92,7 +90,6 @@ class ProfileOperations: NSObject {
     
     static func demote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
-        BaseOperation.setJSONSerializer(manager)
         let url = StringConstants.kUserAdminPromoteURL(user.id)
         
         let params = ["user":

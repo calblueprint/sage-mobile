@@ -23,20 +23,11 @@ class BaseOperation {
     
     // This should be added to every params with any request while logged in
     private class func addAuthParams(manager: AFHTTPRequestOperationManager) {
-        manager.requestSerializer.setValue(KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String, forHTTPHeaderField: "X-AUTH-TOKEN")
-        if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
-            if let email = user.email {
-                 manager.requestSerializer.setValue(email, forHTTPHeaderField: "X-AUTH-EMAIL")
-            }
-        }
-    }
-    
-    static func setJSONSerializer(manager: AFHTTPRequestOperationManager) {
         manager.requestSerializer = AFJSONRequestSerializer()
         manager.requestSerializer.setValue(KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String, forHTTPHeaderField: "X-AUTH-TOKEN")
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if let email = user.email {
-                manager.requestSerializer.setValue(email, forHTTPHeaderField: "X-AUTH-EMAIL")
+                 manager.requestSerializer.setValue(email, forHTTPHeaderField: "X-AUTH-EMAIL")
             }
         }
     }

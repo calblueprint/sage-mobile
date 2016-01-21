@@ -85,7 +85,7 @@ public @Data class User {
     }
 
     @JsonIgnore
-    public boolean isAdmin() { return role == ADMIN; }
+    public boolean isAdmin() { return role == ADMIN || role == PRESIDENT; }
 
     @JsonIgnore
     public boolean isPresident() { return role == PRESIDENT; }

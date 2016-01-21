@@ -16,14 +16,14 @@
             style="@style/SchoolMap"
             android:id="@+id/create_school_map" />
 
-        <LinearLayout style="@style/FormRelativeLayout">
+        <LinearLayout style="@style/FormContainerLinearLayout">
 
             <ImageView
                 style="@style/FormIcon"
                 android:src="@drawable/ic_location_city_black"/>
 
             <LinearLayout
-                style="@style/FormLinearLayout">
+                style="@style/FormEditLinearLayout">
 
                 <TextView
                     style="@style/FormLabel"
@@ -37,14 +37,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout style="@style/FormRelativeLayout">
+        <LinearLayout style="@style/FormContainerLinearLayout">
 
             <ImageView
                 style="@style/FormIcon"
                 android:id="@+id/create_school_address_icon"
                 android:src="@drawable/ic_place_black" />
 
-            <LinearLayout style="@style/FormLinearLayout">
+            <LinearLayout style="@style/FormEditLinearLayout">
 
                 <TextView
                     style="@style/FormLabel"
@@ -58,13 +58,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout style="@style/FormRelativeLayout">
+        <LinearLayout style="@style/FormContainerLinearLayout">
 
             <ImageView
                 style="@style/FormIcon"
                 android:src="@drawable/ic_face_black" />
 
-            <LinearLayout style="@style/FormLinearLayout">
+            <LinearLayout style="@style/FormEditLinearLayout">
 
                 <TextView
                     style="@style/FormLabel"

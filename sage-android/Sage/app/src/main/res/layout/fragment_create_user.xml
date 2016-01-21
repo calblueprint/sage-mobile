@@ -17,7 +17,7 @@
             android:layout_gravity="center_horizontal" />
 
         <RelativeLayout
-            style="@style/FormRelativeLayout"
+            style="@style/FormContainerLinearLayout"
             android:id="@+id/user_name_layout">
 
             <ImageView
@@ -26,7 +26,7 @@
                 android:src="@drawable/ic_person_pin_white" />
 
             <LinearLayout
-                style="@style/FormLinearLayout"
+                style="@style/FormEditLinearLayout"
                 android:layout_toRightOf="@id/user_name_icon"
                 android:layout_toEndOf="@id/user_name_icon" >
 
@@ -55,7 +55,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/FormRelativeLayout"
+            style="@style/FormContainerLinearLayout"
             android:id="@+id/user_email_layout">
 
             <ImageView
@@ -64,7 +64,7 @@
                 android:src="@drawable/ic_mail_white" />
 
             <LinearLayout
-                style="@style/FormLinearLayout"
+                style="@style/FormEditLinearLayout"
                 android:layout_toRightOf="@id/user_email_icon"
                 android:layout_toEndOf="@id/user_email_icon" >
 
@@ -83,7 +83,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/FormRelativeLayout"
+            style="@style/FormContainerLinearLayout"
             android:id="@+id/create_user_password_layout">
 
             <ImageView
@@ -92,7 +92,7 @@
                 android:src="@drawable/ic_lock_black_24dp" />
 
             <LinearLayout
-                style="@style/FormLinearLayout"
+                style="@style/FormEditLinearLayout"
                 android:layout_toRightOf="@id/create_user_password_icon"
                 android:layout_toEndOf="@id/create_user_password_icon" >
 
@@ -121,7 +121,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/FormRelativeLayout"
+            style="@style/FormContainerLinearLayout"
             android:id="@+id/user_school_layout">
 
             <ImageView
@@ -130,7 +130,7 @@
                 android:src="@drawable/ic_location_city_black" />
 
             <LinearLayout
-                style="@style/FormLinearLayout"
+                style="@style/FormEditLinearLayout"
                 android:layout_toRightOf="@id/user_school_icon"
                 android:layout_toEndOf="@id/user_school_icon" >
 
@@ -146,7 +146,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/FormRelativeLayout"
+            style="@style/FormContainerLinearLayout"
             android:id="@+id/user_type_layout">
 
             <ImageView
@@ -155,7 +155,7 @@
                 android:src="@drawable/ic_schedule_black" />
 
             <LinearLayout
-                style="@style/FormLinearLayout"
+                style="@style/FormEditLinearLayout"
                 android:layout_toRightOf="@id/user_type_icon"
                 android:layout_toEndOf="@id/user_type_icon" >
 
@@ -171,7 +171,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/FormRelativeLayout"
+            style="@style/FormContainerLinearLayout"
             android:id="@+id/user_role_layout">
 
             <ImageView
@@ -180,7 +180,7 @@
                 android:src="@drawable/ic_role_black_24dp" />
 
             <LinearLayout
-                style="@style/FormLinearLayout"
+                style="@style/FormEditLinearLayout"
                 android:layout_toRightOf="@id/user_role_icon"
                 android:layout_toEndOf="@id/user_role_icon" >
 
@@ -195,7 +195,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            style="@style/FormRelativeLayout"
+            style="@style/FormContainerLinearLayout"
             android:id="@+id/user_current_password_layout">
 
             <ImageView
@@ -204,7 +204,7 @@
                 android:src="@drawable/ic_check_circle_black_24dp" />
 
             <LinearLayout
-                style="@style/FormLinearLayout"
+                style="@style/FormEditLinearLayout"
                 android:layout_toRightOf="@id/user_current_password_icon"
                 android:layout_toEndOf="@id/user_current_password_icon" >
 

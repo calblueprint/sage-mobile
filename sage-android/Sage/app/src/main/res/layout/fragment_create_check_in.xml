@@ -8,7 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        style="@style/FormRelativeLayout"
+        style="@style/FormContainerLinearLayout"
         android:id="@+id/check_in_request_date_layout">
 
         <ImageView
@@ -16,7 +16,7 @@
             android:src="@drawable/ic_today_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout">
+            style="@style/FormEditLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -32,7 +32,7 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/FormRelativeLayout"
+        style="@style/FormContainerLinearLayout"
         android:id="@+id/check_in_request_start_layout"
         android:layout_below="@id/check_in_request_date_layout">
 
@@ -41,7 +41,7 @@
             android:src="@drawable/ic_alarm_on_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout">
+            style="@style/FormEditLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/FormRelativeLayout"
+        style="@style/FormContainerLinearLayout"
         android:id="@+id/check_in_request_end_layout"
         android:layout_below="@id/check_in_request_start_layout">
 
@@ -66,7 +66,7 @@
             android:src="@drawable/ic_alarm_off_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout">
+            style="@style/FormEditLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -83,7 +83,7 @@
 
 
     <LinearLayout
-        style="@style/FormRelativeLayout"
+        style="@style/FormContainerLinearLayout"
         android:id="@+id/check_in_request_comment_layout"
         android:layout_below="@id/check_in_request_end_layout">
 
@@ -93,7 +93,7 @@
             android:src="@drawable/ic_comment_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout">
+            style="@style/FormEditLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -109,7 +109,7 @@
     </LinearLayout>
 
     <RelativeLayout
-        style="@style/FormRelativeLayout"
+        style="@style/FormContainerLinearLayout"
         android:layout_height="50dp"
         android:id="@+id/check_in_request_total_layout"
         android:paddingRight="@dimen/sixteen"

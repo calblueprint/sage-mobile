@@ -7,14 +7,14 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        style="@style/FormRelativeLayout">
+        style="@style/FormContainerLinearLayout">
 
         <ImageView
             style="@style/FormIcon"
             android:src="@drawable/ic_today_black" />
 
         <LinearLayout
-            style="@style/FormLinearLayout">
+            style="@style/FormEditLinearLayout">
 
             <TextView
                 style="@style/FormLabel"
@@ -28,14 +28,14 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout style="@style/FormRelativeLayout">
+    <LinearLayout style="@style/FormContainerLinearLayout">
 
         <ImageView
             style="@style/FormIcon"
             android:src="@drawable/ic_cloud_black_24dp" />
 
         <LinearLayout
-            style="@style/FormLinearLayout">
+            style="@style/FormEditLinearLayout">
 
             <TextView
                 style="@style/FormLabel"

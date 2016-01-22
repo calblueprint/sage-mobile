@@ -3,11 +3,13 @@ package blueprint.com.sage.main.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -33,9 +35,10 @@ import blueprint.com.sage.checkIn.CheckInTimer;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
-import blueprint.com.sage.utility.view.DateUtils;
+import blueprint.com.sage.utility.PermissionsUtils;
 import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.DateUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import blueprint.com.sage.utility.view.ViewUtils;
@@ -69,7 +72,6 @@ public class CheckInMapFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MapsInitializer.initialize(getActivity());
         Runnable runnableTimer = new Runnable() {
             @Override
             public void run() {
@@ -79,6 +81,7 @@ public class CheckInMapFragment extends Fragment
 
         mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, runnableTimer);
         mBaseInterface = (BaseInterface) getActivity();
+        MapsInitializer.initialize(getActivity());
     }
 
     @Override
@@ -116,7 +119,25 @@ public class CheckInMapFragment extends Fragment
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
+        if (PermissionsUtils.hasLocationPermissions(getActivity())) {
+            setUpMap();
+        } else {
+            PermissionsUtils.requestLocationPermissions(getActivity());
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PermissionsUtils.PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setUpMap();
+                }
+            }
+        }
+    }
+
+    private void setUpMap() {
         if (NetworkUtils.hasLocationServiceEnabled(getActivity())) {
             Location location = getLocation();
 
@@ -342,7 +363,10 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void startCheckIn() {
-        if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
+        if (!PermissionsUtils.hasLocationPermissions(getActivity())) {
+            PermissionsUtils.requestLocationPermissions(getActivity());
+            return;
+        } else if (!NetworkUtils.hasLocationServiceEnabled(getActivity())) {
             showEnableLocationDialog();
             return;
         } else if (!locationInBounds()) {

@@ -12,7 +12,7 @@ import android.support.v4.content.ContextCompat;
  */
 public class PermissionsUtils {
 
-    public static int PERMISSION_REQUEST_CODE = 200;
+    public static final int PERMISSION_REQUEST_CODE = 200;
 
     public static boolean hasLocationPermissions(Activity activity) {
         return hasPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) &&

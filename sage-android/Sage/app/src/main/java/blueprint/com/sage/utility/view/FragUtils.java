@@ -17,6 +17,8 @@ public class FragUtils {
      */
     public static final int START_SEMESTER_REQUEST_CODE = 100;
     public static final int FINISH_SEMESTER_REQUEST_CODE = 101;
+    public static final int CREATE_SEMESTER_REQUEST_CODE = 102;
+    public static final int DELETE_SEMESTER_REQUEST_CODE = 103;
 
 
     public static void replace(int id, Fragment fragment, FragmentActivity activity) {

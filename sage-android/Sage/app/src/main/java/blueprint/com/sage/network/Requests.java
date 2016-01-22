@@ -417,7 +417,7 @@ public class Requests {
         }
 
         public void makeListRequest(HashMap<String, String> params) {
-            AnnouncementsListRequest announcementsRequest = new AnnouncementsListRequest(mActivity, null, new Response.Listener<ArrayList<Announcement>>() {
+            AnnouncementsListRequest announcementsRequest = new AnnouncementsListRequest(mActivity, params, new Response.Listener<ArrayList<Announcement>>() {
                 @Override
                 public void onResponse(ArrayList<Announcement> announcementsArrayList) {
                     EventBus.getDefault().post(new AnnouncementsListEvent(announcementsArrayList));

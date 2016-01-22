@@ -94,7 +94,12 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
 
     public void onEvent(SchoolListEvent event) {
         mSchools = event.getSchools();
-        if (mSchoolAdapter != null) { mSchoolAdapter.setSchools(mSchools);}
+        if (mSchoolAdapter != null) {
+            mSchoolAdapter.setSchools(mSchools);
+            if (mAnnouncement.getSchool() != null) {
+                setSchoolSpinner();
+            }
+        }
     }
 
     public abstract void initializeViews();
@@ -103,6 +108,7 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
         final ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.categories, android.R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAnnouncementCategory.setAdapter(categoryAdapter);
+        mAnnouncementCategory.setSelection(1, true);
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
         mSchoolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAnnouncementSchoolList.setAdapter(mSchoolAdapter);
@@ -110,9 +116,9 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
         mAnnouncementCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (mAnnouncementCategory.getSelectedItem().equals("General Announcement")) {
+                if (mAnnouncementCategory.getSelectedItemPosition() == 1) {
                     mAnnouncementSchoolList.setVisibility(View.GONE);
-                } else if (mAnnouncementCategory.getSelectedItem().equals("School Announcement")) {
+                } else {
                     mAnnouncementSchoolList.setVisibility(View.VISIBLE);
                 }
             }
@@ -123,10 +129,10 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     }
 
     public void setAnnouncement() {
-        if (mAnnouncementCategory.getSelectedItem().equals("General Announcement")) {
+        if (mAnnouncementCategory.getSelectedItemPosition() == 1) {
             mAnnouncement.setCategory(1);
             mAnnouncement.setSchoolId(0);
-        } else if (mAnnouncementCategory.getSelectedItem().equals("School Announcement")) {
+        } else {
             mAnnouncement.setCategory(0);
             School school = (School) mAnnouncementSchoolList.getSelectedItem();
             mAnnouncement.setSchoolId(school.getId());

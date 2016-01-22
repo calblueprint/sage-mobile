@@ -45,7 +45,6 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Requests.Announcements.with(getActivity()).makeShowRequest(mAnnouncement);
         setHasOptionsMenu(true);
     }
 
@@ -54,7 +53,8 @@ public class AnnouncementFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_announcement, container, false);
         ButterKnife.bind(this, view);
-        initializeAnnouncement(mAnnouncement);
+        initializeViews();
+        initializeAnnouncement();
         return view;
     }
 
@@ -81,18 +81,22 @@ public class AnnouncementFragment extends Fragment {
 
     public void initializeViews() {
         getActivity().setTitle("Announcement");
+        Requests.Announcements.with(getActivity()).makeShowRequest(mAnnouncement);
+    }
+
+    public void initializeAnnouncement() {
         User user = mAnnouncement.getUser();
-        if (user != null) {
-            mUser.setText(user.getName());
-        }
-        if (mAnnouncement.getSchoolId() != 0) {
+        user.loadUserImage(getActivity(), mPicture);
+        mUser.setText(user.getName());
+        if (mAnnouncement.getSchool() != null) {
             mSchool.setVisibility(View.VISIBLE);
             mSchool.setText("to " + mAnnouncement.getSchool().getName());
+        } else {
+            mSchool.setVisibility(View.GONE);
         }
         mTime.setText(mAnnouncement.getDate());
         mTitle.setText(mAnnouncement.getTitle());
         mBody.setText(mAnnouncement.getBody());
-        user.loadUserImage(getActivity(), mPicture);
     }
 
     public void setAnnouncement(Announcement announcement) {
@@ -112,15 +116,12 @@ public class AnnouncementFragment extends Fragment {
     }
 
     public void onEvent(AnnouncementEvent event) {
-        initializeAnnouncement(event.getMAnnouncement());
+        mAnnouncement = event.getMAnnouncement();
+        initializeAnnouncement();
     }
 
     public void onEvent(DeleteAnnouncementEvent event) {
         getActivity().onBackPressed();
     }
 
-    public void initializeAnnouncement(Announcement announcement) {
-        setAnnouncement(announcement);
-        initializeViews();
-    }
 }

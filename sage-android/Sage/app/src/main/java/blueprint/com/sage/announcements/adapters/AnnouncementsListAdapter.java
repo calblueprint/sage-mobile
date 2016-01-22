@@ -44,13 +44,11 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
     public void onBindViewHolder(AnnouncementsListViewHolder viewHolder, int i) {
         Announcement announcement = mAnnouncementArrayList.get(i);
         User user = announcement.getUser();
-        if (user != null) {
-            viewHolder.mUser.setText(user.getName());
-        }
+        viewHolder.mUser.setText(user.getName());
+        user.loadUserImage(mActivity, viewHolder.mPicture);
         viewHolder.mTime.setText(announcement.getTime());
         viewHolder.mTitle.setText(announcement.getTitle());
         viewHolder.mBody.setText(announcement.getBody());
-        user.loadUserImage(mActivity, viewHolder.mPicture);
     }
 
     public void setAnnouncements(ArrayList<Announcement> curList) {

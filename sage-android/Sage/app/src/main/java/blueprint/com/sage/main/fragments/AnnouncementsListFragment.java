@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.CreateAnnouncementActivity;
@@ -98,7 +99,10 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     public void makeRequest() {
-        Requests.Announcements.with(getActivity()).makeListRequest(null);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("sort[attr]", "created_at");
+        map.put("sort[order]", "desc");
+        Requests.Announcements.with(getActivity()).makeListRequest(map);
     }
 
     @OnClick(R.id.add_announcement_fab)

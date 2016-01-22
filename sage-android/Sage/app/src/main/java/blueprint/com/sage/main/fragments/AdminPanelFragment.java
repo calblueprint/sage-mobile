@@ -120,7 +120,7 @@ public class AdminPanelFragment extends Fragment {
         mStartSemester.setVisibility(View.GONE);
         mEndSemester.setVisibility(View.GONE);
 
-        if (!mBaseInterface.getUser().isAdmin()) {
+        if (!mBaseInterface.getUser().isPresident()) {
             return;
         }
 

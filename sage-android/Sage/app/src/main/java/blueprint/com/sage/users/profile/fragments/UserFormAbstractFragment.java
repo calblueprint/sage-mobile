@@ -31,6 +31,7 @@ import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.signUp.SignUpActivity;
+import blueprint.com.sage.utility.PermissionsUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -166,6 +167,11 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
 
     @OnClick(R.id.create_user_photo)
     public void onPhotoClick(CircleImageView imageView) {
+        if (PermissionsUtils.hasIOPermissions(getActivity())) {
+            PermissionsUtils.requestIOPermissions(getActivity());
+            return;
+        }
+
         PhotoPicker.PhotoOptionDialog dialog = PhotoPicker.PhotoOptionDialog.newInstance(mPhotoPicker);
         dialog.setTargetFragment(this, DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);

@@ -33,8 +33,10 @@ public class SignUpPageTransformer implements ViewPager.PageTransformer {
 
         // Counteract default motion
 
-        view.setTranslationX(-position * pageWidth);
-        view.setAlpha((1 - Math.abs(position)));
+//        view.setTranslationX(-position * pageWidth);
+//        view.setAlpha((1 - Math.abs(position)));
+        View whiteDotsLayout = view.findViewById(R.id.white_dots_container);
+        whiteDotsLayout.setTranslationX(-position * pageWidth);
 
         switch (id) {
             case R.id.sign_up_name_container:

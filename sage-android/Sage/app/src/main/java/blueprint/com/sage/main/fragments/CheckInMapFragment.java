@@ -33,7 +33,7 @@ import blueprint.com.sage.checkIn.CheckInTimer;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
-import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.view.DateUtils;
 import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;

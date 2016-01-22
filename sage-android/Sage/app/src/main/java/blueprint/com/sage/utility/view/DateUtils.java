@@ -1,4 +1,4 @@
-package blueprint.com.sage.utility;
+package blueprint.com.sage.utility.view;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;

@@ -26,7 +26,7 @@ import blueprint.com.sage.shared.adapters.spinners.StringArraySpinnerAdapter;
 import blueprint.com.sage.shared.fragments.dialogs.DateDialog;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
-import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.view.DateUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;

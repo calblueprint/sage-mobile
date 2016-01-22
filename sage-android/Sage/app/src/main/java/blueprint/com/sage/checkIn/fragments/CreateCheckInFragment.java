@@ -37,7 +37,7 @@ import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.fragments.dialogs.DateDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.DateInterface;
-import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.view.DateUtils;
 import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;

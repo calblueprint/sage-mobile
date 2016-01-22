@@ -23,6 +23,8 @@
 		27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B67F1BE1993700F9D026 /* FormItem.swift */; };
 		27D1B6821BE1A62E00F9D026 /* FormFieldItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B6811BE1A62E00F9D026 /* FormFieldItem.swift */; };
 		27D1B6841BE1C20C00F9D026 /* FormTextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D1B6831BE1C20C00F9D026 /* FormTextItem.swift */; };
+		27EB32A71C3917D400FD8050 /* SemesterVerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */; settings = {ASSET_TAGS = (); }; };
 		27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; };
 		27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; };
 		27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C31BBDD1F300D61DA2 /* UIConstants.swift */; };
@@ -165,6 +167,8 @@
 		27D1B67F1BE1993700F9D026 /* FormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormItem.swift; sourceTree = "<group>"; };
 		27D1B6811BE1A62E00F9D026 /* FormFieldItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormFieldItem.swift; sourceTree = "<group>"; };
 		27D1B6831BE1C20C00F9D026 /* FormTextItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextItem.swift; sourceTree = "<group>"; };
+		27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterVerifyViewController.swift; sourceTree = "<group>"; };
+		27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterVerifyView.swift; sourceTree = "<group>"; };
 		27F990B81BBCC3CB00D61DA2 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		27F990BF1BBCE3B300D61DA2 /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		27F990C11BBDC5C200D61DA2 /* SAGE-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAGE-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -474,6 +478,7 @@
 			children = (
 				42F71DF41BF80455004E1B3B /* Requests */,
 				4280CE1A1BF43F01005D1B97 /* Browse */,
+				27EB32A81C3917E900FD8050 /* SemesterVerifyView.swift */,
 			);
 			name = "Admin Views";
 			sourceTree = "<group>";
@@ -493,6 +498,7 @@
 				42828FC21C006FF300ACBC7E /* Requests */,
 				42828FC11C006FE800ACBC7E /* Browse */,
 				42705CCC1BEB4F6D0081B29D /* AdminTableViewController.swift */,
+				27EB32A61C3917D400FD8050 /* SemesterVerifyViewController.swift */,
 			);
 			name = Admin;
 			sourceTree = "<group>";
@@ -854,6 +860,8 @@
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
+				42828FC41C00701000ACBC7E /* BrowseMentorsDetailViewController.swift in Sources */,
+				27EB32A91C3917E900FD8050 /* SemesterVerifyView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
@@ -873,6 +881,7 @@
 				4254C1EF1BFDD6A200D0D33E /* SignUpRequestsViewController.swift in Sources */,
 				5D221C241C18D296008FBD9B /* CheckinTableViewCell.swift in Sources */,
 				42A6CE661C0BDFFD00F97CFF /* UsersTableViewCell.swift in Sources */,
+				27EB32A71C3917D400FD8050 /* SemesterVerifyViewController.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
 				4254C1EB1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift in Sources */,
 				42828FC81C00718000ACBC7E /* CheckinRequestsDetailViewController.swift in Sources */,

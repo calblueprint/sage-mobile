@@ -31,6 +31,7 @@ import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.events.semesters.StartSemesterEvent;
 import blueprint.com.sage.events.sessions.SignInEvent;
 import blueprint.com.sage.events.user_semesters.UpdateUserSemesterEvent;
+import blueprint.com.sage.events.user_semesters.UserSemesterListEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
@@ -65,6 +66,7 @@ import blueprint.com.sage.network.semesters.SemesterListRequest;
 import blueprint.com.sage.network.semesters.SemesterRequest;
 import blueprint.com.sage.network.semesters.StartSemesterRequest;
 import blueprint.com.sage.network.user_semesters.UpdateUserSemesterRequest;
+import blueprint.com.sage.network.user_semesters.UserSemesterListRequest;
 import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
@@ -610,12 +612,30 @@ public class Requests {
 
         public static UserSemesters with(FragmentActivity activity) { return new UserSemesters(activity); }
 
-        public void makeUpdateUserSemesterRequest(UserSemester userSemester) {
+        public void makeUpdateRequest(UserSemester userSemester) {
             Request request = new UpdateUserSemesterRequest(mActivity, userSemester,
                     new Response.Listener<UserSemester>() {
                         @Override
                         public void onResponse(UserSemester userSemester) {
                             EventBus.getDefault().post(new UpdateUserSemesterEvent(userSemester));
+                        }
+                    },
+                    new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeListRequest(HashMap<String, String> queryParams) {
+            Request request = new UserSemesterListRequest(mActivity, queryParams,
+                    new Response.Listener<List<UserSemester>>() {
+                        @Override
+                        public void onResponse(List<UserSemester> userSemesters) {
+                            EventBus.getDefault().post(new UserSemesterListEvent(userSemesters));
                         }
                     },
                     new Response.Listener<APIError>() {

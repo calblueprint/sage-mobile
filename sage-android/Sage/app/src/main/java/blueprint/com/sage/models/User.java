@@ -45,9 +45,11 @@ public @Data class User {
 
     public final static int STUDENT = 0;
     public final static int ADMIN = 1;
+    public final static int PRESIDENT = 2;
 
     public final static String[] VOLUNTEER_SPINNER = { "Volunteer", "One Unit", "Two Units" };
     public final static String[] ROLE_SPINNER = { "Student", "Admin" };
+    public final static String[] ROLE_SPINNER_PRESIDENT = { "Student", "Admin", "President" };
 
     public User() {}
 
@@ -83,5 +85,8 @@ public @Data class User {
     }
 
     @JsonIgnore
-    public boolean isAdmin() { return role == ADMIN; }
+    public boolean isAdmin() { return role == ADMIN || role == PRESIDENT; }
+
+    @JsonIgnore
+    public boolean isPresident() { return role == PRESIDENT; }
 }

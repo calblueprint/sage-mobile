@@ -7,9 +7,13 @@
 //
 
 import Foundation
+import UIKit
 
 struct UIConstants {
     
+    static let screenWidth = UIScreen.mainScreen().bounds.width
+    static let screenHeight = UIScreen.mainScreen().bounds.height
+
     static let profileImageSize: CGFloat = 40.0
     static let sideMargin: CGFloat = 15.0
     static let verticalMargin: CGFloat = 10.0

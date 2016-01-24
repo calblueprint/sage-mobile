@@ -243,13 +243,16 @@ class AdminOperations {
         }
     }
     
-    static func startSemester(completion: () -> Void, failure: (String) -> Void) {
+    static func startSemester(semester: Semester, completion: (Semester) -> Void, failure: (String) -> Void) {
         let params = [
-            "start_date": "2",
-            "term": "term"
+            SemesterConstants.kStartDate: semester.stringFromStartDate(),
+            SemesterConstants.kTerm: semester.term.rawValue
         ]
+        
         BaseOperation.manager().POST(StringConstants.kEndpointStartSemester, parameters: params, success: { (operation, data) -> Void in
-            completion()
+            let semesterDict = (data as! [String: AnyObject])["semester"] as! [String: AnyObject]
+            let createdSemester = Semester(propertyDictionary: semesterDict)
+            completion(createdSemester)
             }) { (operation, error) -> Void in
                 failure("Could not start semester.")
         }

@@ -49,6 +49,12 @@ class Semester: NSObject {
     //
     // MARK: - Public Methods
     //
+    func stringFromStartDate() -> NSString {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = StringConstants.displayDateFormat
+        return formatter.stringFromDate(self.startDate!)
+    }
+    
     static func termFromInt(number: Int) -> Term {
         if number == 0 {
             return Term.Spring

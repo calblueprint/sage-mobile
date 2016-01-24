@@ -131,9 +131,17 @@ class ProfileCheckinViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Verified Checkins"
+            if (self.verifiedCheckins == nil) || (self.verifiedCheckins!.count == 0) {
+                return nil
+            } else {
+                return "Verified Checkins"
+            }
         } else {
-            return "Unverified Checkins"
+            if (self.unverifiedCheckins == nil) || (self.unverifiedCheckins!.count == 0) {
+                return nil
+            } else {
+                return "Unverified Checkins"
+            }
         }
     }
     
@@ -143,8 +151,9 @@ class ProfileCheckinViewController: UITableViewController {
         } else if (section == 1) && ((self.unverifiedCheckins == nil) || (self.unverifiedCheckins!.count == 0)) {
             return 0.0
         } else {
-            return 22.0
+            return UITableViewAutomaticDimension
         }
     }
+    
 }
 

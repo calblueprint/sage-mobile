@@ -12,8 +12,15 @@ import AFNetworking
 class AnnouncementsOperations {
     
     static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
+        var url: String
+        if LoginOperations.getUser()!.role == .Admin {
+            url = StringConstants.kEndpointAnnouncements
+        } else {
+            let schoolID = LoginOperations.getUser()!.school!.id
+            url = StringConstants.kEndpointAnnouncements + "?school_id=" + String(schoolID)
+        }
 
-        BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: nil, success: { (operation, data) -> Void in
+        BaseOperation.manager().GET(url, parameters: nil, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
             var announcements = [Announcement]()
             for item in announcementsJSON {

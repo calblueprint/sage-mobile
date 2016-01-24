@@ -215,6 +215,10 @@ class User: NSObject, NSCoding {
     func isBefore(otherUser: User) -> Bool {
         return self.firstName < otherUser.firstName
     }
+    
+    func isDirector() -> Bool {
+        return self.role == .Admin && self.directorID != -1
+    }
 }
 
 extension User: NSCopying {

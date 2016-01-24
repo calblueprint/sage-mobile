@@ -168,6 +168,15 @@ class EditProfileView: FormView {
         }
     }
     
+    func setupWithUser(user: User) {
+        self.displayFirstName(user.firstName!)
+        self.displayLastName(user.lastName!)
+        self.displayEmail(user.email!)
+        self.displaySchoolName(user.school!.name!)
+        self.displayHours(user.level)
+        self.setProfileImage(user)
+    }
+    
     func getFirstName() -> String {
         return self.firstName.textField.text!
     }

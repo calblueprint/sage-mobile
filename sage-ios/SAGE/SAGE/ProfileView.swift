@@ -15,8 +15,8 @@ class ProfileView: UIView {
     let profileUserImg = UIImageView()
     let profileUserImgBorder = UIView()
     let profileEditButton = UIButton()
-    let promoteButton = UIButton()
-    let demoteButton = UIButton()
+    let promoteButton = SGButton()
+    let demoteButton = SGButton()
     let userName = UILabel()
     let userVolunteerLevel = UILabel()
     let userSchool = UILabel()
@@ -28,7 +28,6 @@ class ProfileView: UIView {
     let userCommitmentContainer = UIView()
     let userCommitmentLabel = UILabel()
     let userRoleLabel = UILabel()
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     // profile page constants
     let viewHeight = CGFloat(351.5)
@@ -100,7 +99,6 @@ class ProfileView: UIView {
         self.profileContent.addSubview(self.bottomBorder)
         self.profileContent.addSubview(self.centerBorder)
         self.profileContent.addSubview(self.userStatusContainer)
-        self.profileContent.addSubview(self.activityIndicator)
         self.userStatusContainer.addSubview(self.userStatusLabel)
         self.profileContent.addSubview(self.userCommitmentContainer)
         self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
@@ -168,26 +166,28 @@ class ProfileView: UIView {
         self.profileEditButton.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
         self.profileEditButton.titleLabel?.font = UIFont.normalFont
         self.profileEditButton.titleLabel?.textColor = UIColor.secondaryTextColor
+        self.profileEditButton.hidden = true
         
         self.promoteButton.setTitle("Promote", forState: .Normal)
-        self.promoteButton.titleLabel?.font = UIFont.normalFont
-        self.promoteButton.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
+        self.promoteButton.setThemeColor(UIColor.secondaryTextColor)
         self.promoteButton.layer.borderWidth = 1.0
         self.promoteButton.layer.borderColor = UIColor.secondaryTextColor.CGColor
         self.promoteButton.layer.cornerRadius = 3
         self.promoteButton.clipsToBounds = true
         self.promoteButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        self.promoteButton.hidden = false
+        self.promoteButton.hidden = true
+        self.promoteButton.titleLabel?.font = UIFont.normalFont
 
         self.demoteButton.setTitle("Demote", forState: .Normal)
-        self.demoteButton.titleLabel?.font = UIFont.normalFont
-        self.demoteButton.setTitleColor(UIColor.lightRedColor, forState: .Normal)
+        self.demoteButton.setThemeColor(UIColor.lightRedColor)
         self.demoteButton.layer.borderWidth = 1.0
         self.demoteButton.layer.borderColor = UIColor.lightRedColor.CGColor
         self.demoteButton.layer.cornerRadius = 3
         self.demoteButton.clipsToBounds = true
         self.demoteButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         self.demoteButton.hidden = true
+        self.demoteButton.titleLabel?.font = UIFont.normalFont
+
         
         self.profileUserImg.layer.cornerRadius = self.profileImageSize/2
         self.profileUserImg.clipsToBounds = true
@@ -197,8 +197,6 @@ class ProfileView: UIView {
         self.userVolunteerLevel.font = UIFont.normalFont
         self.userRoleLabel.font = UIFont.normalFont
         
-        self.activityIndicator.hidden = true
-
         self.topBorder.backgroundColor = UIColor.borderColor
         self.bottomBorder.backgroundColor = UIColor.borderColor
         self.centerBorder.backgroundColor = UIColor.borderColor
@@ -240,11 +238,11 @@ class ProfileView: UIView {
         // position demote button
         self.demoteButton.layoutIfNeeded()
         self.demoteButton.sizeToFit()
+        self.demoteButton.setWidth(self.promoteButton.frame.width)
         self.demoteButton.setY(self.headerHeight + 15)
         let demoteEditButtonx = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.demoteButton.frame)
         self.demoteButton.setX(demoteEditButtonx)
         
-        self.activityIndicator.center = self.promoteButton.center
 
         // set up image
         self.profileUserImgBorder.setHeight(self.profileImageSize + self.profileImageBorder)
@@ -328,31 +326,30 @@ class ProfileView: UIView {
         self.profileUserImg.cancelImageRequestOperation()
     }
     
-    func startActivityIndicator() {
-        self.promoteButton.setTitle("", forState: .Normal)
-        self.demoteButton.setTitle("", forState: .Normal)
-        self.activityIndicator.hidden = false
-        self.activityIndicator.startAnimating()
+    func startPromoting() {
+        self.promoteButton.startLoading()
+    }
+    
+    func startDemoting() {
+        self.demoteButton.startLoading()
     }
     
     func didPromote() {
+        self.promoteButton.stopLoading()
         self.promoteButton.setTitle("Promote", forState: .Normal)
         self.demoteButton.setTitle("Demote", forState: .Normal)
         self.promoteButton.hidden = true
         self.demoteButton.hidden = false
         self.userRoleLabel.text = "Admin"
-        self.activityIndicator.stopAnimating()
-        self.activityIndicator.hidden = true
     }
     
     func didDemote() {
+        self.demoteButton.stopLoading()
         self.promoteButton.setTitle("Promote", forState: .Normal)
         self.demoteButton.setTitle("Demote", forState: .Normal)
         self.demoteButton.hidden = true
         self.promoteButton.hidden = false
         self.userRoleLabel.text = "Mentor"
-        self.activityIndicator.stopAnimating()
-        self.activityIndicator.hidden = true
     }
     
 }

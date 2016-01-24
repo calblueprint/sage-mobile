@@ -73,7 +73,7 @@ class ProfileViewController: UITableViewController {
         }
         let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
-            self.profileView.startActivityIndicator()
+            self.profileView.startPromoting()
             ProfileOperations.promote(self.user!, completion: { () -> Void in
                     self.profileView.didPromote()
                 }, failure: { (message) -> Void in
@@ -93,7 +93,7 @@ class ProfileViewController: UITableViewController {
         }
         let alertController = UIAlertController(title: "Demote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
-            self.profileView.startActivityIndicator()
+            self.profileView.startDemoting()
             ProfileOperations.demote(self.user!, completion: { () -> Void in
                 self.profileView.didDemote()
                 }, failure: { (message) -> Void in
@@ -186,6 +186,10 @@ class ProfileViewController: UITableViewController {
             cell.textLabel!.textAlignment = .Center
         }
         return cell
+    }
+    
+    deinit {
+        self.removeObserver(self, forKeyPath: NotificationConstants.editProfileKey)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

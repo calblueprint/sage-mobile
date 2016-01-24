@@ -258,6 +258,16 @@ class AdminOperations {
         }
     }
     
+    static func endSemester(completion: () -> Void, failure: (String) -> Void) {
+        // GET CACHED semester
+        let semester = Semester()
+        BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: nil, success: { (operation, data) -> Void in
+            completion()
+            }) { (operation, error) -> Void in
+                failure("Could not end semester.")
+        }
+    }
+    
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         var params = [String: AnyObject]()

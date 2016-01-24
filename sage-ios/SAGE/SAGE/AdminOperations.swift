@@ -243,6 +243,18 @@ class AdminOperations {
         }
     }
     
+    static func startSemester(completion: () -> Void, failure: (String) -> Void) {
+        let params = [
+            "start_date": "2",
+            "term": "term"
+        ]
+        BaseOperation.manager().POST(StringConstants.kEndpointStartSemester, parameters: params, success: { (operation, data) -> Void in
+            completion()
+            }) { (operation, error) -> Void in
+                failure("Could not start semester.")
+        }
+    }
+    
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         var params = [String: AnyObject]()

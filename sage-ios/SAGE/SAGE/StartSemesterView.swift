@@ -65,7 +65,7 @@ class StartSemesterView: UIView {
         self.scrollView.addSubview(self.startDateItem)
         
         // Pre-fill term
-        self.semesterTermItem.textField.text = stringFromTerm(self.termList[0])
+        self.semesterTermItem.textField.text = Semester.stringFromTerm(self.termList[0])
         
         self.semesterTermItem.label.text = "Term"
         self.semesterTermItem.textField.placeholder = "Select a term"
@@ -101,11 +101,11 @@ class StartSemesterView: UIView {
 //
 extension StartSemesterView: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return stringFromTerm(self.termList[row])
+        return Semester.stringFromTerm(self.termList[row])
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.semesterTermItem.textField.text = stringFromTerm(self.termList[row])
+        self.semesterTermItem.textField.text = Semester.stringFromTerm(self.termList[row])
         self.selectedTerm = self.termList[row]
     }
 }

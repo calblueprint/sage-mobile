@@ -127,7 +127,8 @@
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
 		E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */; };
 		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
-		E4A3C54D1C4D84040000D7D9 /* Term.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54C1C4D84040000D7D9 /* Term.swift */; };
+		E4A3C54D1C4D84040000D7D9 /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54C1C4D84040000D7D9 /* Semester.swift */; };
+		E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF49E51C5462920078A799 /* SemesterConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,7 +254,8 @@
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterView.swift; sourceTree = "<group>"; };
 		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
-		E4A3C54C1C4D84040000D7D9 /* Term.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Term.swift; sourceTree = "<group>"; };
+		E4A3C54C1C4D84040000D7D9 /* Semester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
+		E4CF49E51C5462920078A799 /* SemesterConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,7 +427,7 @@
 				422334231BC099D400E863D0 /* Checkin.swift */,
 				422334251BC09E0400E863D0 /* User.swift */,
 				422334271BC09E0F00E863D0 /* School.swift */,
-				E4A3C54C1C4D84040000D7D9 /* Term.swift */,
+				E4A3C54C1C4D84040000D7D9 /* Semester.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -475,6 +477,7 @@
 				4223342C1BC0C96000E863D0 /* AnnouncementConstants.swift */,
 				4223342E1BC0C97000E863D0 /* CheckinConstants.swift */,
 				422334301BC0C97E00E863D0 /* SchoolConstants.swift */,
+				E4CF49E51C5462920078A799 /* SemesterConstants.swift */,
 				114953501C190CAA00A74845 /* APIKeys.swift */,
 			);
 			name = ModelConstants;
@@ -921,11 +924,12 @@
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
 				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
+				E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */,
 				E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,
-				E4A3C54D1C4D84040000D7D9 /* Term.swift in Sources */,
+				E4A3C54D1C4D84040000D7D9 /* Semester.swift in Sources */,
 				4243E4DB1BF1A79100AA627A /* BrowseMentorsViewController.swift in Sources */,
 				2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */,
 				42EFD6771BC9EC540063FD78 /* SignUpNameView.swift in Sources */,

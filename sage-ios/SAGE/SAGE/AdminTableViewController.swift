@@ -67,9 +67,9 @@ class AdminTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 if false { //if semester exists
-                    self.presentViewController(SemesterVerifyViewController(), animated: true, completion: nil)
+                    self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
                 } else {
-                    self.navigationController?.pushViewController(StartSemesterController(), animated: true)
+                    self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
                 }
             default: break
             }

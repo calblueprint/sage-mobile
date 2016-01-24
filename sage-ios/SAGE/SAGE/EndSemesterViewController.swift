@@ -1,5 +1,5 @@
 //
-//  SemesterVerifyViewController.swift
+//  EndSemesterViewController.swift
 //  SAGE
 //
 //  Created by Andrew on 1/1/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SemesterVerifyViewController: UIViewController {
+class EndSemesterViewController: UIViewController {
 
     let verifyView = SemesterVerifyView()
 

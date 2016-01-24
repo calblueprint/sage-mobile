@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StartSemesterController: UIViewController {
+class StartSemesterViewController: UIViewController {
     
     var startSemesterView = StartSemesterView()
     

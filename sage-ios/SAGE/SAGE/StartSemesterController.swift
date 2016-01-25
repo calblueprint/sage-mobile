@@ -28,31 +28,24 @@ class StartSemesterViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = self.finishButton
     }
     
-    @objc private func schoolButtonTapped() {
-//        let tableViewController = SelectAnnouncementSchoolTableViewController()
-//        tableViewController.parentVC = self
-//        if let topItem = self.navigationController?.navigationBar.topItem {
-//            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-//        }
-//        self.navigationController?.pushViewController(tableViewController, animated: true)
-    }
-    
-    func completeForm() {
+    //
+    // MARK: - Navigation Button Handlers
+    //
+    @objc private func completeForm() {
         if self.startSemesterView.isValid() {
-            //let finalAnnouncement = self.exportToAnnouncement()
+            let finalSemester = self.startSemesterView.exportToSemester()
             self.finishButton?.startLoading()
-//            AdminOperations.createAnnouncement(finalAnnouncement, completion: { (announcement) -> Void in
-//                self.navigationController?.popViewControllerAnimated(true)
-//                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
-//                }) { (errorMessage) -> Void in
-//                    self.finishButton?.stopLoading()
-//                    let alertController = UIAlertController(
-//                        title: "Failure",
-//                        message: errorMessage as String,
-//                        preferredStyle: .Alert)
-//                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-//                    self.presentViewController(alertController, animated: true, completion: nil)
-//            }
+            AdminOperations.startSemester(finalSemester, completion: { (semester) -> Void in
+                self.navigationController?.popViewControllerAnimated(true)
+                }) { (errorMessage) -> Void in
+                    self.finishButton?.stopLoading()
+                    let alertController = UIAlertController(
+                        title: "Failure",
+                        message: errorMessage,
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+            }
         } else {
             let alertController = UIAlertController(
                 title: "Error",
@@ -62,16 +55,4 @@ class StartSemesterViewController: UIViewController {
             self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
-    
-//    private func exportToAnnouncement() -> Announcement {
-//        let addView = self.view as! AddAnnouncementView
-//        let announcement = Announcement(sender: LoginOperations.getUser(), title: addView.title.textField.text, text: addView.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.school)
-//        return announcement
-//    }
-    
-//    func didSelectSchool(school: School) {
-//        self.school = school
-//        self.addAnnouncementView.displayChosenSchool(school)
-//        
-//    }
 }

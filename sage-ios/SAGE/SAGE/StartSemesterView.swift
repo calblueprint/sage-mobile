@@ -94,6 +94,10 @@ class StartSemesterView: UIView {
             self.startDateItem.textField.text?.characters.count > 0 &&
             self.startDateItem.textField.text?.characters.count > 0
     }
+    
+    func exportToSemester() -> Semester {
+        return Semester(id: -1, startDate: self.startDate, term: self.selectedTerm)
+    }
 }
 
 //

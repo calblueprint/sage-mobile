@@ -1,5 +1,5 @@
 //
-//  SemesterVerifyView.swift
+//  EndSemesterView.swift
 //  SAGE
 //
 //  Created by Andrew on 1/1/16.
@@ -10,7 +10,7 @@ import UIKit
 import Darwin
 import FontAwesomeKit
 
-class SemesterVerifyView: UIView {
+class EndSemesterView: UIView {
 
     let cancelButton = UIButton()
     let finalButton = SGButton()

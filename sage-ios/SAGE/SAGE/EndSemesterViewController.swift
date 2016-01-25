@@ -10,19 +10,19 @@ import Foundation
 
 class EndSemesterViewController: UIViewController {
 
-    let verifyView = SemesterVerifyView()
+    let endView = EndSemesterView()
 
     //
     // MARK: - ViewController Lifecycle
     //
     override func loadView() {
-        self.view = self.verifyView
+        self.view = self.endView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.verifyView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        self.verifyView.finalButton.addTarget(self, action: "endSemester", forControlEvents: .TouchUpInside)
+        self.endView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+        self.endView.finalButton.addTarget(self, action: "endSemester", forControlEvents: .TouchUpInside)
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -32,7 +32,7 @@ class EndSemesterViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.verifyView.showFirstLabel()
+        self.endView.showFirstLabel()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -48,11 +48,11 @@ class EndSemesterViewController: UIViewController {
     }
     
     @objc private func endSemester() {
-        self.verifyView.finalButton.startLoading()
+        self.endView.finalButton.startLoading()
         SemesterOperations.endSemester({ () -> Void in
             self.dismissViewControllerAnimated(true, completion: nil) // Show the semester doesnt exist modal
             }) { (errorMessage) -> Void in
-                self.verifyView.finalButton.stopLoading()
+                self.endView.finalButton.stopLoading()
                 let alertController = UIAlertController(
                     title: "Failure",
                     message: errorMessage,

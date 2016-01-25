@@ -35,7 +35,7 @@ class StartSemesterViewController: UIViewController {
         if self.startSemesterView.isValid() {
             let finalSemester = self.startSemesterView.exportToSemester()
             self.finishButton?.startLoading()
-            AdminOperations.startSemester(finalSemester, completion: { (semester) -> Void in
+            SemesterOperations.startSemester(finalSemester, completion: { (semester) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 }) { (errorMessage) -> Void in
                     self.finishButton?.stopLoading()

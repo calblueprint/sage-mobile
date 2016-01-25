@@ -27,7 +27,6 @@ class SemesterVerifyView: UIView {
 
     private let progressBar = UIView()
 
-
     private let buttonSize: CGFloat = 70.0
     private let buttonMargin: CGFloat = 50.0
     private let rippleSize: CGFloat =

@@ -65,7 +65,7 @@ class StartSemesterView: UIView {
         self.scrollView.addSubview(self.startDateItem)
         
         // Pre-fill term
-        self.semesterTermItem.textField.text = Semester.stringFromTerm(self.termList[0])
+        self.semesterTermItem.textField.text = Semester.stringFromTerm(self.selectedTerm)
         
         self.semesterTermItem.label.text = "Term"
         self.semesterTermItem.textField.placeholder = "Select a term"

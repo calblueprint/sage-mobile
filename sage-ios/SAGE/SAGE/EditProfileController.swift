@@ -11,7 +11,7 @@ import UIKit
 class EditProfileController: FormController {
     
     var user: User
-    var editProfileView: EditProfileView?
+    var editProfileView = EditProfileView()
     
     init(user: User) {
         self.user = user
@@ -23,17 +23,17 @@ class EditProfileController: FormController {
     }
     
     override func loadView() {
-        self.view = EditProfileView()
+        self.view = self.editProfileView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Edit Profile"
-        self.editProfileView!.setupWithUser(self.user)
+        self.editProfileView.setupWithUser(self.user)
         
-        editProfileView!.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
-        editProfileView!.hours.button.addTarget(self, action: "hoursButtonTapped", forControlEvents: .TouchUpInside)
-        editProfileView!.photoButton.addTarget(self, action: "chooseNewPhoto", forControlEvents: .TouchUpInside)
+        editProfileView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
+        editProfileView.hours.button.addTarget(self, action: "hoursButtonTapped", forControlEvents: .TouchUpInside)
+        editProfileView.photoButton.addTarget(self, action: "chooseNewPhoto", forControlEvents: .TouchUpInside)
     }
     
     @objc private func chooseNewPhoto() {
@@ -82,23 +82,23 @@ class EditProfileController: FormController {
     
     func didSelectSchool(school: School) {
         self.user.school = school
-        self.editProfileView?.displaySchoolName(school.name!)
+        self.editProfileView.displaySchoolName(school.name!)
         
     }
     
     func didSelectHours(hours: User.VolunteerLevel) {
         self.user.level = hours
-        self.editProfileView?.displayHours(self.user.level)
+        self.editProfileView.displayHours(self.user.level)
     }
     
     func completeForm() {
-        if self.editProfileView!.isValid() {
-            self.user.firstName = self.editProfileView!.getFirstName()
-            self.user.lastName = self.editProfileView!.getLastName()
-            self.user.email = self.editProfileView!.getEmail()
+        if self.editProfileView.isValid() {
+            self.user.firstName = self.editProfileView.getFirstName()
+            self.user.lastName = self.editProfileView.getLastName()
+            self.user.email = self.editProfileView.getEmail()
             self.finishButton?.startLoading()
-            let password = editProfileView!.getPassword()
-            let photoData = UIImage.encodedPhotoString(self.editProfileView!.photoView.image!)
+            let password = editProfileView.getPassword()
+            let photoData = UIImage.encodedPhotoString(self.editProfileView.photoView.image!)
             ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, completion: { (updatedUser) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
@@ -125,7 +125,7 @@ class EditProfileController: FormController {
 
 extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        let photoView = self.editProfileView!.photoView
+        let photoView = self.editProfileView.photoView
         photoView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         picker.dismissViewControllerAnimated(true, completion: nil)
     }

@@ -17,7 +17,7 @@ class AnnouncementsOperations {
             url = StringConstants.kEndpointAnnouncements
         } else {
             let schoolID = LoginOperations.getUser()!.school!.id
-            url = StringConstants.kEndpointAnnouncements + "?school_id=" + String(schoolID)
+            url = StringConstants.kEndpointAnnouncements + "?" + AnnouncementConstants.kDefault + "=" + String(schoolID)
         }
 
         BaseOperation.manager().GET(url, parameters: nil, success: { (operation, data) -> Void in

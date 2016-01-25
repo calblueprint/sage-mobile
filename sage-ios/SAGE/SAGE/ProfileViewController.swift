@@ -189,7 +189,7 @@ class ProfileViewController: UITableViewController {
     }
     
     deinit {
-        self.removeObserver(self, forKeyPath: NotificationConstants.editProfileKey)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

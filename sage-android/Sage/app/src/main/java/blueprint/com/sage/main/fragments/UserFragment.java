@@ -143,15 +143,17 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mName.setText(mUser.getName());
 
         mVolunteer.setText(User.VOLUNTEER_SPINNER[mUser.getVolunteerType()]);
-        mTotalSemester.setText(String.valueOf(mUser.getUserSemester().getHoursRequired()));
+
+        int hoursRequired = mUser.getUserSemester() == null ? 0 : mUser.getUserSemester().getHoursRequired();
+        mTotalSemester.setText(String.valueOf(hoursRequired));
+
+        String totalHours = mUser.getUserSemester() == null ? String.valueOf(0) : mUser.getUserSemester().getTimeString();
+        mTotalHours.setText(totalHours);
+
         mTotalWeek.setText(String.valueOf(mUser.getVolunteerType() + 1));
 
-        if (mUser.getUserSemester() != null) {
-            mTotalHours.setText(mUser.getUserSemester().getTimeString());
-        }
-
-        if (mUser.getSchool() != null)
-            mSchool.setText(mUser.getSchool().getName());
+        String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
+        mSchool.setText(schoolString);
 
         getActivity().setTitle("User");
     }

@@ -26,6 +26,11 @@
         <item name="tabTextAppearance">@style/TabLayoutText</item>
         <item name="tabSelectedTextColor">@color/white</item>
         <item name="tabIndicatorColor">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/amber500</item>
+        <item name="elevation">@dimen/tab_layout_elevation</item>
+        <item name="android:elevation">@dimen/tab_layout_elevation</item>
     </style>
     
     <style name="TabLayoutText" parent="TextAppearance.AppCompat.Button">

@@ -48,35 +48,39 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".browse.BrowseMentorsActivity"
+            android:name=".admin.browse.BrowseMentorsActivity"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".browse.BrowseSchoolsActivity"
+            android:name=".admin.browse.BrowseSchoolsActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".requests.CheckInRequestsActivity"
+            android:name=".admin.requests.CheckInRequestsActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".requests.SignUpRequestsActivity"
+            android:name=".admin.requests.SignUpRequestsActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".users.EditUserActivity"
+            android:name=".users.profile.EditUserActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".semester.CreateSemesterActivity"
+            android:name=".admin.semester.CreateSemesterActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".semester.FinishSemesterActivity"
+            android:name=".admin.semester.FinishSemesterActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".semester.SemesterListActivity"
+            android:name=".admin.semester.SemesterListActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".users.info.UserSemesterListActivity"
             android:launchMode="singleTop" />
 
         <meta-data

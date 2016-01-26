@@ -9,14 +9,12 @@
 import Foundation
 import SwiftKeychainWrapper
 
-class RequestHoursViewController: UIViewController {
+class RequestHoursViewController: FormController {
     
     var requestHoursView = RequestHoursView()
     var inSession: Bool = false
     var startTime: NSTimeInterval = 0.0
     
-    private var finishButton: SGBarButtonItem?
-
     //
     // MARK: - ViewController Lifecycle
     //
@@ -28,8 +26,6 @@ class RequestHoursViewController: UIViewController {
         super.viewDidLoad()
         self.setupView()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismiss")
-        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
-        self.navigationItem.rightBarButtonItem = self.finishButton
     }
     
     //

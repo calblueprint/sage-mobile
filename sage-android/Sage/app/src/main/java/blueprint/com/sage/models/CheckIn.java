@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 
-import blueprint.com.sage.utility.DateUtils;
+import blueprint.com.sage.utility.view.DateUtils;
 import lombok.Data;
 
 /**

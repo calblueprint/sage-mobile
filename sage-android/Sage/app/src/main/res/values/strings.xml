@@ -29,7 +29,4 @@
     <string name="shared_preferences">SAGE_ANDROID</string>
     <string name="shared_preference_email">email</string>
     <string name="shared_preference_auth_token">auth_token</string>
-
-    <!-- Keys -->
-    <string name="activity_create_semester">create_semester</string>
 </resources>

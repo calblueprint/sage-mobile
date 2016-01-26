@@ -1,9 +1,11 @@
 package blueprint.com.sage.main.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,13 @@ import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.models.UserSemester;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.fragments.ListDialog;
+import blueprint.com.sage.shared.fragments.dialogs.ListDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.ListDialogInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
-import blueprint.com.sage.users.EditUserActivity;
+import blueprint.com.sage.users.info.UserSemesterListActivity;
+import blueprint.com.sage.users.profile.EditUserActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -143,7 +146,10 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.user_check_ins)
     public void onCheckInClick(View view) {
-        // TODO: add check in fragment
+        Intent intent = new Intent(getActivity(), UserSemesterListActivity.class);
+        intent.putExtra(getString(R.string.semester_user),
+                NetworkUtils.writeAsString(getActivity(), mUser));
+        FragUtils.startActivityBackStack(getActivity(), intent);
     }
 
     @OnClick(R.id.user_edit_profile)
@@ -163,9 +169,12 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.admin_user_change_role)
     public void onPromoteClick(View view) {
+        String[] roleArray =
+                mBaseInterface.getUser().isPresident() ?
+                        User.ROLE_SPINNER_PRESIDENT : User.ROLE_SPINNER;
         ListDialog dialog = ListDialog.newInstance(this,
                 R.string.user_promote_dialog_title,
-                User.ROLE_SPINNER);
+                roleArray);
         dialog.setTargetFragment(this, PROMOTE_DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
     }
@@ -197,6 +206,15 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     }
 
     public void onEvent(PromoteUserEvent event) {
+        // This means that there is a new president
+        if (event.getUser().isPresident()) {
+            mBaseInterface.getUser().setRole(User.ADMIN);
+            try {
+                NetworkUtils.setUser(getActivity(), mBaseInterface.getUser());
+            } catch(Exception e) {
+                Log.e(getClass().toString(), e.toString());
+            }
+        }
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 
@@ -214,7 +232,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
                 break;
             case STATUS_DIALOG_CODE:
                 mUser.getCurrentSemester().setStatus(selection);
-                Requests.UserSemesters.with(getActivity()).makeUpdateUserSemesterRequest(mUser.getCurrentSemester());
+                Requests.UserSemesters.with(getActivity()).makeUpdateRequest(mUser.getCurrentSemester());
                 break;
         }
     }

@@ -15,5 +15,6 @@ struct NotificationConstants {
     static let addAnnouncementKey: String = notificationBaseName + "addAnnouncement"
     static let editAnnouncementKey: String = notificationBaseName + "editAnnouncement"
     static let addCheckinKey: String = notificationBaseName + "addCheckin"
+    static let editProfileKey: String = notificationBaseName + "editProfile"
     
 }

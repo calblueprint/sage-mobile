@@ -1,5 +1,6 @@
 package blueprint.com.sage.signUp.fragments;
 
+import android.animation.ArgbEvaluator;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.BackEvent;
-import blueprint.com.sage.shared.adapters.SimplePagerAdapter;
+import blueprint.com.sage.shared.adapters.pagers.SimplePagerAdapter;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.signUp.SignUpActivity;
 import blueprint.com.sage.signUp.animation.SignUpPageTransformer;
@@ -27,6 +28,9 @@ public class SignUpPagerFragment extends Fragment {
 
     @Bind(R.id.sign_up_view_pager) ViewPager mViewPager;
 
+    private int[] mColors;
+    private ArgbEvaluator mEvaluator;
+
     private SimplePagerAdapter mViewPagerAdapter;
 
     public static SignUpPagerFragment newInstance() { return new SignUpPagerFragment(); }
@@ -34,6 +38,8 @@ public class SignUpPagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mColors = getResources().getIntArray(R.array.sign_up_colors);
+        mEvaluator = new ArgbEvaluator();
     }
 
     @Override
@@ -67,6 +73,28 @@ public class SignUpPagerFragment extends Fragment {
 
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setPageTransformer(true, new SignUpPageTransformer());
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position < mViewPagerAdapter.getCount() - 1 && position < mColors.length - 1) {
+                    Integer value = (Integer) mEvaluator.evaluate(positionOffset, mColors[position], mColors[position + 1]);
+                    mViewPager.setBackgroundColor(value);
+                } else {
+                    mViewPager.setBackgroundColor(mColors[mColors.length - 1]);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     public void onEvent(BackEvent event) {

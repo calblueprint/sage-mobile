@@ -98,7 +98,6 @@ public class SignInFragment extends Fragment {
 
     public void onEvent(SignInEvent event) {
         try {
-            mLoginButton.stopSpinning();
             NetworkUtils.loginUser(event.getSession(), getActivity());
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());

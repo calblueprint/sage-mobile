@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -17,6 +18,9 @@ public @Data class Semester {
     private Date start;
     private Date finish;
     private int season;
+
+    private List<CheckIn> checkIns;
+    private List<User> users;
 
     public static final String[] SEASONS = { "Fall", "Spring" };
 

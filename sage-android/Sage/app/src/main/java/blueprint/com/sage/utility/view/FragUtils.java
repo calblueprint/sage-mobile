@@ -40,6 +40,10 @@ public class FragUtils {
 
     public static void startActivityBackStack(Activity activity, Class<?> cls) {
         Intent intent = new Intent(activity, cls);
+        startActivityBackStack(activity, intent);
+    }
+
+    public static void startActivityBackStack(Activity activity, Intent intent) {
         activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
     }

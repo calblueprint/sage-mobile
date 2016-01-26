@@ -35,4 +35,73 @@ class ProfileOperations: NSObject {
                 failure(error.localizedDescription)
         }
     }
+    
+    static func updateProfile(user: User, password: String, photoData: String, completion: (User) -> Void, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+
+        var hours: Int = 0
+        switch user.level {
+        case .ZeroUnit: hours = 0
+        case .OneUnit: hours = 1
+        case .TwoUnit: hours = 2
+        default: hours = 0
+        }
+        
+        let params = ["user":
+            [
+                UserConstants.kFirstName: user.firstName!,
+                UserConstants.kLastName: user.lastName!,
+                UserConstants.kEmail: user.email!,
+                UserConstants.kLevel: hours,
+                UserConstants.kSchoolID: user.school!.id,
+                UserConstants.kCurrentPassword: password,
+                UserConstants.kPhotoData: photoData
+            ]
+        ]
+        
+        let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
+        
+        manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in
+            let newUserData = (data as! [String: AnyObject])["user"] as! [String: AnyObject]
+            let newUser = User(propertyDictionary: newUserData)
+            completion(newUser)
+            }) { (operation, error) -> Void in
+                failure("Could not edit profile.")
+        }
+        
+    }
+    
+    static func promote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let url = StringConstants.kUserAdminPromoteURL(user.id)
+
+        let params = ["user":
+            [
+                UserConstants.kRole: 1
+            ]
+        ]
+        
+        manager.POST(url, parameters: params, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not promote user.")
+        }
+    }
+    
+    static func demote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let url = StringConstants.kUserAdminPromoteURL(user.id)
+        
+        let params = ["user":
+            [
+                UserConstants.kRole: 0
+            ]
+        ]
+        
+        manager.POST(url, parameters: params, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not demote user.")
+        }
+    }
 }

@@ -21,7 +21,7 @@ class User: NSObject, NSCoding {
         case Default = -1
         case Volunteer = 0
         case Admin = 1
-        case Director = 2
+        case President = 2
     }
         
     var id: Int = -1
@@ -107,6 +107,7 @@ class User: NSObject, NSCoding {
                     switch val {
                     case 0: self.role = UserRole.Volunteer
                     case 1: self.role = UserRole.Admin
+                    case 2: self.role = UserRole.President
                     default: break
                     }
                 }
@@ -174,7 +175,7 @@ class User: NSObject, NSCoding {
             switch self.role {
             case .Admin: propertyDict[UserConstants.kRole] = "admin"
             case .Volunteer: propertyDict[UserConstants.kRole] = "volunteer"
-            case .Director: propertyDict[UserConstants.kRole] = "director"
+            case .President: propertyDict[UserConstants.kRole] = "president"
             default: break
             }
         }

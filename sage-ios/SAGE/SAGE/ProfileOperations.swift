@@ -71,13 +71,13 @@ class ProfileOperations: NSObject {
         
     }
     
-    static func promote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func promote(user: User, role: User.UserRole, completion: (() -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         let url = StringConstants.kUserAdminPromoteURL(user.id)
 
         let params = ["user":
             [
-                UserConstants.kRole: 1
+                UserConstants.kRole: role.rawValue
             ]
         ]
         

@@ -46,6 +46,13 @@ class LoginOperations: NSObject {
         }
     }
     
+    static func updateUserRoleInKeychain(role: User.UserRole) -> User {
+        let existingUser = KeychainWrapper.objectForKey(KeychainConstants.kUser) as! User
+        existingUser.role = role
+        KeychainWrapper.setObject(existingUser, forKey: KeychainConstants.kUser)
+        return existingUser
+    }
+    
     static func storeUserDataInKeychain(user: User, authToken: String? = nil) {
         if let existingUser = (KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User) {
             if -1 != user.id {

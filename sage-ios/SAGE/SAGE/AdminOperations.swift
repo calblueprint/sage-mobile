@@ -185,11 +185,25 @@ class AdminOperations {
     
     static func editAnnouncement(announcement: Announcement, completion: ((Announcement) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let params = [
-                AnnouncementConstants.kTitle: announcement.title!,
-                AnnouncementConstants.kText: announcement.text!,
-                AnnouncementConstants.kSchoolID: announcement.school!.id,
-        ]
+        var params: [String: AnyObject]
+        if announcement.school != nil && announcement.school!.id != -1 {
+            params = ["announcement": [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: announcement.school!.id,
+                    AnnouncementConstants.kCategory: "school"
+                ]
+            ]
+        } else {
+            params = [
+                "announcement": [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kCategory: "general"
+                ]
+            ]
+        }
+
         let announcementURLString = StringConstants.kAnnouncementAdminDetailURL(announcement.id!)
         manager.PATCH(announcementURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(announcement)

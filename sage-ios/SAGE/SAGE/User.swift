@@ -218,7 +218,7 @@ class User: NSObject, NSCoding {
     }
     
     func isDirector() -> Bool {
-        return self.role == .Admin && self.directorID != -1
+        return (self.role == .Admin || self.role == .President) && self.directorID != -1
     }
 }
 

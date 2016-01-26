@@ -149,6 +149,8 @@ class ProfileView: UIView {
         var roleString = "Mentor"
         if user.role == .Admin {
             roleString = "Admin"
+        } else if user.role == .President {
+            roleString = "President"
         }
         self.userRoleLabel.text = roleString
         

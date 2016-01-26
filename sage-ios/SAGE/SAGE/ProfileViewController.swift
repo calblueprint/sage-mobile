@@ -142,11 +142,14 @@ class ProfileViewController: UITableViewController {
             } else {
                 self.profileView.currentUserProfile = false
             }
-            
-            if LoginOperations.getUser()!.role == .Admin && LoginOperations.getUser()!.id != user.id  {
+            let isAdminOrPresident = (LoginOperations.getUser()!.role == .Admin) || (LoginOperations.getUser()!.role == .President)
+            if isAdminOrPresident && LoginOperations.getUser()!.id != user.id  {
                 if user.role == .Admin {
                     self.profileView.canPromote = false
                     self.profileView.canDemote = true
+                } else if user.role == .President {
+                    self.profileView.canPromote = false
+                    self.profileView.canDemote = false
                 } else {
                     self.profileView.canPromote = true
                     self.profileView.canDemote = false

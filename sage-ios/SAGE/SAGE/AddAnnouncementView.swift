@@ -7,30 +7,20 @@
 //
 
 import UIKit
-import BSKeyboardControls
 
-class AddAnnouncementView: UIView {
+class AddAnnouncementView: FormView {
 
     var title =  FormFieldItem()
     var school = FormButtonItem()
     var commentField = FormTextItem()
-    
-    private var keyboardControls = BSKeyboardControls()
-    private var scrollView = UIScrollView()
     
     //
     // MARK: - Initialization
     //
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
-        self.setupSubviews()
-        self.keyboardControls.fields = [
-            self.title.textField,
-            self.commentField.textView
-        ]
-        self.keyboardControls.barTintColor = UIColor.mainColor
-        self.keyboardControls.delegate = self
+        self.keyboardControls.fields.append(self.title.textField)
+        self.keyboardControls.fields.append(self.commentField.textView)
     }
     
     
@@ -38,13 +28,8 @@ class AddAnnouncementView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //
-    // MARK: - Private methods
-    //
-    private func setupSubviews() {
-        self.scrollView.alwaysBounceVertical = true
-        self.scrollView.keyboardDismissMode = .OnDrag
-        self.addSubview(self.scrollView)
+    override func setupSubviews() {
+        super.setupSubviews()
         
         self.title.label.text = "Title"
         self.title.textField.placeholder = "Enter a title"
@@ -64,8 +49,7 @@ class AddAnnouncementView: UIView {
     }
     
     override func layoutSubviews() {
-        self.scrollView.fillWidth()
-        self.scrollView.fillHeight()
+        super.layoutSubviews()
         
         self.title.fillWidth()
         
@@ -90,39 +74,4 @@ class AddAnnouncementView: UIView {
         self.school.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }
 
-}
-
-//
-// MARK: - BSKeyboardControlsDelegate
-//
-extension AddAnnouncementView: BSKeyboardControlsDelegate {
-    
-    func keyboardControlsDonePressed(keyboardControls: BSKeyboardControls!) {
-        keyboardControls.activeField.resignFirstResponder()
-        self.scrollView.setContentOffset(CGPointZero, animated: true)
-    }
-}
-
-//
-// MARK: - UITextFieldDelegate
-//
-extension AddAnnouncementView: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let offset = textField.superview!.frame.origin
-        self.scrollView.setContentOffset(CGPointMake(0, offset.y), animated: true)
-        self.keyboardControls.activeField = textField
-    }
-}
-
-//
-// MARK: - UITextViewDelegate
-//
-extension AddAnnouncementView: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(textView: UITextView) {
-        let offset = textView.superview!.frame.origin
-        self.scrollView.setContentOffset(CGPointMake(0, offset.y), animated: true)
-        self.keyboardControls.activeField = textView
-    }
 }

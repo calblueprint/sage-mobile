@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import BSKeyboardControls
 import SwiftKeychainWrapper
 
-class RequestHoursView: UIView {
+class RequestHoursView: FormView {
     
     var dateField =  FormFieldItem()
     var startTimeField = FormFieldItem()
@@ -20,8 +19,7 @@ class RequestHoursView: UIView {
     private var startDate = NSDate()
     private var startTime = NSDate()
     private var endTime = NSDate()
-    private var keyboardControls = BSKeyboardControls()
-    private var scrollView = UIScrollView()
+
     private var dateFormatter = NSDateFormatter()
 
     //
@@ -29,16 +27,10 @@ class RequestHoursView: UIView {
     //
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
-        self.setupSubviews()
-        self.keyboardControls.fields = [
-            self.dateField.textField,
-            self.startTimeField.textField,
-            self.endTimeField.textField,
-            self.commentField.textView
-        ]
-        self.keyboardControls.barTintColor = UIColor.mainColor
-        self.keyboardControls.delegate = self
+        self.keyboardControls.fields.append(self.dateField.textField)
+        self.keyboardControls.fields.append(self.startTimeField.textField)
+        self.keyboardControls.fields.append(self.endTimeField.textField)
+        self.keyboardControls.fields.append(self.commentField.textView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,8 +38,7 @@ class RequestHoursView: UIView {
     }
     
     override func layoutSubviews() {
-        self.scrollView.fillWidth()
-        self.scrollView.fillHeight()
+        super.layoutSubviews()
         
         self.dateField.fillWidth()
         
@@ -131,13 +122,9 @@ class RequestHoursView: UIView {
             self.endTimeField.textField.text?.characters.count > 0
     }
     
-    //
-    // MARK: - Private methods
-    //
-    private func setupSubviews() {
-        self.scrollView.alwaysBounceVertical = true
-        self.scrollView.keyboardDismissMode = .OnDrag
-        self.addSubview(self.scrollView)
+
+    override func setupSubviews() {
+        super.setupSubviews()
         
         // Pre-fill date only
         self.dateFormatter.dateStyle = .MediumStyle
@@ -197,40 +184,5 @@ class RequestHoursView: UIView {
         endComponents.month = dateComponents.month
         endComponents.day = dateComponents.day
         self.endTime = calendar!.dateFromComponents(endComponents)!
-    }
-}
-
-//
-// MARK: - BSKeyboardControlsDelegate
-//
-extension RequestHoursView: BSKeyboardControlsDelegate {
-    
-    func keyboardControlsDonePressed(keyboardControls: BSKeyboardControls!) {
-        keyboardControls.activeField.resignFirstResponder()
-        self.scrollView.setContentOffset(CGPointZero, animated: true)
-    }
-}
-
-//
-// MARK: - UITextFieldDelegate
-//
-extension RequestHoursView: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let offset = textField.superview!.frame.origin
-        self.scrollView.setContentOffset(CGPointMake(0, offset.y), animated: true)
-        self.keyboardControls.activeField = textField
-    }
-}
-
-//
-// MARK: - UITextViewDelegate
-//
-extension RequestHoursView: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(textView: UITextView) {
-        let offset = textView.superview!.frame.origin
-        self.scrollView.setContentOffset(CGPointMake(0, offset.y), animated: true)
-        self.keyboardControls.activeField = textView
     }
 }

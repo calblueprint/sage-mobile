@@ -7,39 +7,25 @@
 //
 
 import UIKit
-import BSKeyboardControls
 
-class AddSchoolView: UIView {
+class AddSchoolView: FormView {
     
     var name =  FormFieldItem()
     var location = FormButtonItem()
     var director = FormButtonItem()
     
-    private var scrollView = UIScrollView()
-    private var keyboardControls = BSKeyboardControls()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
-        self.setupSubviews()
-        self.keyboardControls.fields = [
-            self.name.textField
-        ]
-        self.keyboardControls.barTintColor = UIColor.mainColor
-        self.keyboardControls.delegate = self
+        self.keyboardControls.fields.append(self.name.textField)
+
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //
-    // MARK: - Private methods
-    //
-    private func setupSubviews() {
-        self.scrollView.alwaysBounceVertical = true
-        self.scrollView.keyboardDismissMode = .OnDrag
-        self.addSubview(self.scrollView)
+    override func setupSubviews() {
+        super.setupSubviews()
         
         self.name.label.text = "School Name"
         self.name.textField.placeholder = "Enter the school's name"
@@ -60,8 +46,6 @@ class AddSchoolView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.scrollView.fillWidth()
-        self.scrollView.fillHeight()
         
         self.director.fillWidth()
         
@@ -96,27 +80,4 @@ class AddSchoolView: UIView {
         self.name.textField.text = name
     }
 
-}
-
-//
-// MARK: - BSKeyboardControlsDelegate
-//
-extension AddSchoolView: BSKeyboardControlsDelegate {
-    
-    func keyboardControlsDonePressed(keyboardControls: BSKeyboardControls!) {
-        keyboardControls.activeField.resignFirstResponder()
-        self.scrollView.setContentOffset(CGPointZero, animated: true)
-    }
-}
-
-//
-// MARK: - UITextFieldDelegate
-//
-extension AddSchoolView: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        let offset = textField.superview!.frame.origin
-        self.scrollView.setContentOffset(CGPointMake(0, offset.y), animated: true)
-        self.keyboardControls.activeField = textField
-    }
 }

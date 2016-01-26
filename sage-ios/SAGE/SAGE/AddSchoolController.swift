@@ -8,21 +8,17 @@
 
 import UIKit
 
-class AddSchoolController: UIViewController {
+class AddSchoolController: FormController {
     
     var director: User?
     var location: CLLocation?
     var address: String?
-    var currentErrorMessage: ErrorView?
-
-    private var finishButton: SGBarButtonItem?
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         let addSchoolView = AddSchoolView(frame: self.view.frame)
         self.view = addSchoolView
         self.title = "Add School"
-        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
-        self.navigationItem.rightBarButtonItem = self.finishButton
         addSchoolView.location.button.addTarget(self, action: "locationButtonTapped", forControlEvents: .TouchUpInside)
         addSchoolView.director.button.addTarget(self, action: "directorButtonTapped", forControlEvents: .TouchUpInside)
     }
@@ -64,12 +60,6 @@ class AddSchoolController: UIViewController {
                     self.showAlertControllerError(message)
             })
         }
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = self.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     func didSelectDirector(director: User) {

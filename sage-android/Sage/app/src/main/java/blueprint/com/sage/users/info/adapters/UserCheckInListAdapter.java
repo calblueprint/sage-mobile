@@ -13,7 +13,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
-import blueprint.com.sage.models.UserSemester;
+import blueprint.com.sage.models.User;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Data;
@@ -25,33 +25,33 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private Activity mActivity;
     private List<Item> mItems;
-    private UserSemester mUserSemester;
+    private User mUser;
 
     private static final int HEADER_VIEW = 0;
     private static final int CHECK_IN_VIEW = 1;
 
-    public UserCheckInListAdapter(Activity activity, UserSemester userSemester) {
+    public UserCheckInListAdapter(Activity activity, User user) {
         super();
 
         mActivity = activity;
-        mUserSemester = userSemester;
+        mUser = user;
         mItems = new ArrayList<>();
 
         setUpCheckIn();
     }
 
     private void setUpCheckIn() {
-        if (mUserSemester == null) {
+        if (mUser.getUserSemester() == null) {
             return;
         }
 
         mItems.add(new Item(HEADER_VIEW, null));
 
-        if (mUserSemester.getCheckIns().size() == 0) {
+        if (mUser.getCheckIns().size() == 0) {
             return;
         }
 
-        for (CheckIn checkIn : mUserSemester.getCheckIns())
+        for (CheckIn checkIn : mUser.getCheckIns())
             mItems.add(new Item(CHECK_IN_VIEW, checkIn));
     }
 
@@ -94,10 +94,10 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void setHeaderView(HeaderViewHolder viewHolder) {
-        viewHolder.mTotal.setText(mUserSemester.getTotalTime());
-        viewHolder.mRequired.setText(mUserSemester.getHoursRequired());
-        viewHolder.mComplete.setText(String.valueOf(mUserSemester.isCompleted()));
-        viewHolder.mNumberCheckIns.setText(mUserSemester.getCheckIns().size());
+        viewHolder.mTotal.setText(mUser.getUserSemester().getTotalTime());
+        viewHolder.mRequired.setText(mUser.getUserSemester().getHoursRequired());
+        viewHolder.mComplete.setText(String.valueOf(mUser.getUserSemester().isCompleted()));
+        viewHolder.mNumberCheckIns.setText(mUser.getUserSemester().getCheckIns().size());
     }
 
     @Override
@@ -108,8 +108,8 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return mItems.get(position).getType();
     }
 
-    public void setCheckIns(UserSemester userSemester) {
-        mUserSemester = userSemester;
+    public void setCheckIns(User user) {
+        mUser = user;
         setUpCheckIn();
     }
 

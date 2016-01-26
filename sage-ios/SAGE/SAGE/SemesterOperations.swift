@@ -12,7 +12,7 @@ class SemesterOperations {
     
     static func startSemester(semester: Semester, completion: (Semester) -> Void, failure: (String) -> Void) {
         let params = [
-            SemesterConstants.kStartDate: semester.stringFromStartDate(),
+            SemesterConstants.kStartDate: semester.dateStringFromStartDate(),
             SemesterConstants.kTerm: semester.term.rawValue
         ]
         
@@ -26,7 +26,7 @@ class SemesterOperations {
     }
     
     static func endSemester(completion: () -> Void, failure: (String) -> Void) {
-        // GET CACHED semester
+        // TODO: Get semester from keychain
         let semester = Semester()
         BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: nil, success: { (operation, data) -> Void in
             completion()

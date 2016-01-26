@@ -49,7 +49,7 @@ class Semester: NSObject {
     //
     // MARK: - Public Methods
     //
-    func stringFromStartDate() -> NSString {
+    func dateStringFromStartDate() -> NSString {
         let formatter = NSDateFormatter()
         formatter.dateFormat = StringConstants.displayDateFormat
         return formatter.stringFromDate(self.startDate!)

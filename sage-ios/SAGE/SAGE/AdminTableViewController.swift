@@ -66,7 +66,7 @@ class AdminTableViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                if false { //if semester exists
+                if false { // TODO: check if semester exists
                     self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
                 } else {
                     self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
@@ -109,7 +109,7 @@ class AdminTableViewController: UITableViewController {
             }
         case 2:
             if indexPath.row == 0 {
-                if false { // if semester exists
+                if false { // TODO: check if semester exists
                     cell.textLabel?.text = "End Fall 2015"
                     let icon = FAKIonIcons.logOutIconWithSize(iconSize)
                         .imageWithSize(CGSizeMake(iconSize, iconSize))

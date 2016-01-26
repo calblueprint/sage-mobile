@@ -14,6 +14,7 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.AnnouncementFragment;
 import blueprint.com.sage.events.APIErrorEvent;
+import blueprint.com.sage.events.SessionEvent;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.events.checkIns.CheckInEvent;
@@ -71,6 +72,7 @@ import blueprint.com.sage.network.users.EditUserRequest;
 import blueprint.com.sage.network.users.PromoteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
+import blueprint.com.sage.network.users.UserStateRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -228,6 +230,24 @@ public class Requests {
                             EventBus.getDefault().post(new PromoteUserEvent(user));
                         }
                     }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeStateRequest(User user) {
+            UserStateRequest request = new UserStateRequest(mActivity, user,
+                    new Response.Listener<Session>() {
+                        @Override
+                        public void onResponse(Session session) {
+                            EventBus.getDefault().post(new SessionEvent(session));
+                        }
+                    },
+                    new Response.Listener<APIError>() {
                         @Override
                         public void onResponse(APIError apiError) {
                             Requests.postError(apiError);

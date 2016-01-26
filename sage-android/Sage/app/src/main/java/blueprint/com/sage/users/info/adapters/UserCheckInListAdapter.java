@@ -95,7 +95,7 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void setHeaderView(HeaderViewHolder viewHolder) {
         viewHolder.mTotal.setText(mUserSemester.getTotalTime());
-        viewHolder.mRequired.setText(mUserSemester.getTimeRequired());
+        viewHolder.mRequired.setText(mUserSemester.getHoursRequired());
         viewHolder.mComplete.setText(String.valueOf(mUserSemester.isCompleted()));
         viewHolder.mNumberCheckIns.setText(mUserSemester.getCheckIns().size());
     }

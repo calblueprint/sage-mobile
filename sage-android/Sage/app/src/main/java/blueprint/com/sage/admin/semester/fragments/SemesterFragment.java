@@ -92,7 +92,7 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
     private void initializeViews() {
         mAdapter = new SimplePagerAdapter(getChildFragmentManager());
 
-        mAdapter.addFragment(SemesterUserListFragment.newInstance(), "User");
+        mAdapter.addFragment(SemesterUserListFragment.newInstance(mSemester), "User");
         mAdapter.addFragment(SemesterCheckInListFragment.newInstance(), "Check In");
 
         mViewPager.setAdapter(mAdapter);

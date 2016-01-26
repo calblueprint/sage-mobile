@@ -203,8 +203,8 @@ public class Requests {
             Requests.addToRequestQueue(mActivity, request);
         }
 
-        public void makeShowRequest(User user) {
-            UserRequest request = new UserRequest(mActivity, user,
+        public void makeShowRequest(User user, HashMap<String, String> queryParams) {
+            UserRequest request = new UserRequest(mActivity, user, queryParams,
                     new Response.Listener<User>() {
                         @Override
                         public void onResponse(User user) {

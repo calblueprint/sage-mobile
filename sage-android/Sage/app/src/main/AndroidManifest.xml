@@ -48,7 +48,7 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".admin.browse.BrowseMentorsActivity"
+            android:name=".admin.browse.BrowseUsersActivity"
             android:launchMode="singleTop"/>
 
         <activity

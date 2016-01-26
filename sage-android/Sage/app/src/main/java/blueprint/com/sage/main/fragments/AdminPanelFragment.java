@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.admin.browse.BrowseMentorsActivity;
+import blueprint.com.sage.admin.browse.BrowseUsersActivity;
 import blueprint.com.sage.admin.browse.BrowseSchoolsActivity;
 import blueprint.com.sage.admin.requests.CheckInRequestsActivity;
 import blueprint.com.sage.admin.requests.SignUpRequestsActivity;
@@ -84,7 +84,7 @@ public class AdminPanelFragment extends Fragment {
 
     @OnClick(R.id.admin_browse_users)
     public void onBrowseMentors(View view) {
-        FragUtils.startActivityBackStack(getActivity(), BrowseMentorsActivity.class);
+        FragUtils.startActivityBackStack(getActivity(), BrowseUsersActivity.class);
     }
 
     @OnClick(R.id.admin_request_check_ins)

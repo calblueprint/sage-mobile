@@ -12,8 +12,6 @@ import AFNetworking
 class AnnouncementsOperations {
     
     static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
-        let url = StringConstants.kEndpointAnnouncements
-
         var params: [String: String]
         if LoginOperations.getUser()!.role == .Admin {
             params = [String: String]()
@@ -25,7 +23,7 @@ class AnnouncementsOperations {
         }
 
 
-        BaseOperation.manager().GET(url, parameters: params, success: { (operation, data) -> Void in
+        BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: params, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
             var announcements = [Announcement]()
             for item in announcementsJSON {

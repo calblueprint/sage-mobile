@@ -100,7 +100,7 @@ public class CheckInMapFragment extends Fragment
         mMapView.onResume();
         toggleButtons();
         toggleTimer();
-        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences()))
+        if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface))
             mTimer.start();
     }
 
@@ -109,7 +109,7 @@ public class CheckInMapFragment extends Fragment
         super.onPause();
         mMapView.onPause();
 
-        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences()))
+        if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface))
             mTimer.stop();
     }
 
@@ -193,7 +193,7 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void resetCheckIn() {
-        CheckInUtils.resetCheckIn(getActivity(), mBaseInterface.getSharedPreferences());
+        CheckInUtils.resetCheckIn(getActivity(), mBaseInterface);
         toggleButtons();
         toggleTimer();
         Snackbar.make(mContainer, R.string.check_in_request_too_long, Snackbar.LENGTH_SHORT).show();
@@ -201,15 +201,15 @@ public class CheckInMapFragment extends Fragment
     }
 
     private int getSecondsElapsed() {
-        if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences()))
+        if (!CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface))
             return 0;
 
         Long totalSeconds =  mBaseInterface.getSharedPreferences()
-                .getLong(getString(R.string.check_in_total_seconds), 0);
+                .getLong(getString(R.string.check_in_total_seconds, mBaseInterface.getUser().getId()), 0);
 
         Long diffSeconds = SystemClock.elapsedRealtime() -
                 mBaseInterface.getSharedPreferences()
-                        .getLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime());
+                        .getLong(getString(R.string.check_in_recent_seconds, mBaseInterface.getUser().getId()), SystemClock.elapsedRealtime());
 
         return (int) Math.floor((totalSeconds + diffSeconds) / 1000);
     }
@@ -245,7 +245,7 @@ public class CheckInMapFragment extends Fragment
 
     @OnClick(R.id.check_in_check_fab)
     public void onCheckInClick(FloatingActionButton button) {
-        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
+        if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) {
             showStopCheckInDialog();
         } else {
             showStartCheckInDialog();
@@ -379,34 +379,13 @@ public class CheckInMapFragment extends Fragment
         }
 
         mBaseInterface.getSharedPreferences().edit()
-                      .putString(getString(R.string.check_in_start_time), DateUtils.getFormattedDateNow())
-                      .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
-                      .putLong(getString(R.string.check_in_total_seconds), 0)
-                      .commit();
+                .putString(getString(R.string.check_in_start_time, mBaseInterface.getUser().getId()), DateUtils.getFormattedDateNow())
+                .putLong(getString(R.string.check_in_recent_seconds, mBaseInterface.getUser().getId()), SystemClock.elapsedRealtime())
+                .putLong(getString(R.string.check_in_total_seconds, mBaseInterface.getUser().getId()), 0)
+                .commit();
         toggleButtons();
         toggleTimer();
         Snackbar.make(mContainer, R.string.check_in_start_message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void resumeCheckIn() {
-        mBaseInterface.getSharedPreferences().edit()
-                .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
-                .commit();
-    }
-
-    private void pauseCheckIn() {
-        Long recentSeconds = mBaseInterface.getSharedPreferences()
-                .getLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime());
-        Long totalSeconds =  mBaseInterface.getSharedPreferences()
-                .getLong(getString(R.string.check_in_total_seconds), 0);
-        Long pausedSeconds = SystemClock.elapsedRealtime();
-        totalSeconds += (pausedSeconds - recentSeconds);
-
-        mBaseInterface.getSharedPreferences().edit()
-                .putLong(getString(R.string.check_in_total_seconds), totalSeconds)
-                .putLong(getString(R.string.check_in_recent_seconds), SystemClock.elapsedRealtime())
-                .commit();
-
     }
 
     private void stopCheckIn() {
@@ -416,18 +395,18 @@ public class CheckInMapFragment extends Fragment
         } else if (!locationInBounds()) {
             showOutOfBoundsDialog();
             return;
-        } else if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
+        } else if (!CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) {
             Snackbar.make(mContainer, R.string.check_in_request_error, Snackbar.LENGTH_SHORT).show();
             return;
         }
 
         String startString = mBaseInterface.getSharedPreferences()
-                .getString(getString(R.string.check_in_start_time), "");
+                .getString(getString(R.string.check_in_start_time, mBaseInterface.getUser().getId()), "");
         DateTime start = DateUtils.stringToDate(startString);
         DateTime finish = start.plusSeconds(getSecondsElapsed());
 
         mBaseInterface.getSharedPreferences().edit()
-                .putString(getString(R.string.check_in_end_time), DateUtils.dateToString(finish))
+                .putString(getString(R.string.check_in_end_time, mBaseInterface.getUser().getId()), DateUtils.dateToString(finish))
                 .commit();
 
         toggleButtons();
@@ -443,8 +422,7 @@ public class CheckInMapFragment extends Fragment
      * Else, we show the stop icon. And show the timer.
      */
     private void toggleButtons() {
-
-        boolean hasCheckIn = MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences());
+        boolean hasCheckIn = CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface);
         int icon = hasCheckIn ? R.drawable.ic_clear_white : R.drawable.ic_done_white;
         int color = hasCheckIn ? R.color.red500 : R.color.green500;
 
@@ -453,7 +431,7 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void toggleTimer() {
-        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
+        if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) {
             mTimerText.setVisibility(View.VISIBLE);
             mTimer.start();
         } else {

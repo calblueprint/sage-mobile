@@ -1,8 +1,6 @@
 package blueprint.com.sage.utility.view;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
@@ -52,10 +50,6 @@ public class MapUtils {
         }
 
         return null;
-    }
-
-    public static boolean hasPreviousRequest(Context context, SharedPreferences preferences) {
-        return !preferences.getString(context.getString(R.string.check_in_start_time), "").isEmpty();
     }
 
     public static MarkerOptions getMarkerOptions(LatLng latLng) {

@@ -125,6 +125,7 @@ public class CheckInMapFragment extends Fragment
         mMap = map;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
+        setUpMap();
     }
 
     public void setUpMap() {

@@ -199,6 +199,7 @@ class AdminOperations {
                 "announcement": [
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: 0,
                     AnnouncementConstants.kCategory: "general"
                 ]
             ]

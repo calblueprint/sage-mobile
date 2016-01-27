@@ -42,15 +42,16 @@ class AnnouncementsViewController: UITableViewController {
     
     func announcementEdited(notification: NSNotification) {
         let announcement = notification.object!.copy() as! Announcement
-        for i in 0...(self.announcements.count-1) {
-            let oldAnnouncement = self.announcements[i]
-            if announcement.id == oldAnnouncement.id {
-                self.announcements[i] = announcement
-                let indexPath = NSIndexPath(forRow: i, inSection: 0)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        if self.announcements.count != 0 {
+            for i in 0...(self.announcements.count-1) {
+                let oldAnnouncement = self.announcements[i]
+                if announcement.id == oldAnnouncement.id {
+                    self.announcements[i] = announcement
+                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }
             }
         }
-
     }
     
     override func viewDidLoad() {

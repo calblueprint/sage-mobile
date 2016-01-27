@@ -26,7 +26,11 @@ class AdminTableViewController: UITableViewController {
         case 1:
             return 2
         case 2:
-            return 2
+            if LoginOperations.getUser()?.role == .President {
+                return 2
+            } else {
+                return 1
+            }
         default: return 0
         }
     }
@@ -66,7 +70,10 @@ class AdminTableViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                self.presentViewController(SemesterVerifyViewController(), animated: true, completion: nil)
+                if LoginOperations.getUser()?.role == .President {
+                    self.presentViewController(SemesterVerifyViewController(), animated: true, completion: nil)
+
+                }
             default: break
             }
         default: break
@@ -104,7 +111,7 @@ class AdminTableViewController: UITableViewController {
                 cell.imageView?.image = icon
             }
         case 2:
-            if indexPath.row == 0 {
+            if LoginOperations.getUser()?.role == .President && indexPath.row == 0{
                 cell.textLabel?.text = "End Fall 2015"
                 let icon = FAKIonIcons.logOutIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))

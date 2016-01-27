@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 
@@ -36,15 +37,31 @@ public class PermissionsUtils {
         requestPermissions(activity, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
+    public static void requestLocationPermissions(Fragment fragment) {
+        requestPermissions(fragment, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+    }
+
     public static void requestIOPermissions(Activity activity) {
         requestPermissions(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    public static void requestIOPermissions(Fragment fragment) {
+        requestPermissions(fragment, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     public static void requestInternetPermissions(Activity activity) {
         requestPermissions(activity, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE);
     }
 
+    public static void requestInternetPermissions(Fragment fragment) {
+        requestPermissions(fragment, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE);
+    }
+
     public static void requestPermissions(Activity activity, String... permissions) {
         ActivityCompat.requestPermissions(activity, permissions, PERMISSION_REQUEST_CODE);
+    }
+
+    public static void requestPermissions(Fragment fragment, String... permissions) {
+        fragment.requestPermissions(permissions, PERMISSION_REQUEST_CODE);
     }
 }

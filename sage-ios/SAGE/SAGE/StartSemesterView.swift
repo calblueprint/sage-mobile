@@ -6,12 +6,10 @@
 //  Copyright © 2016 Cal Blueprint. All rights reserved.
 //
 
-class StartSemesterView: UIView {
+class StartSemesterView: FormView {
     
     var startDateItem =  FormFieldItem()
     var semesterTermItem = FormFieldItem()
-
-    private var scrollView = UIScrollView()
     
     private var startDate = NSDate()
     private var dateFormatter = NSDateFormatter()
@@ -24,8 +22,8 @@ class StartSemesterView: UIView {
     //
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
-        self.setupSubviews()
+        self.keyboardControls.fields.append(self.startDateItem.textField)
+        self.keyboardControls.fields.append(self.semesterTermItem.textField)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,9 +31,7 @@ class StartSemesterView: UIView {
     }
     
     override func layoutSubviews() {
-        self.scrollView.fillWidth()
-        self.scrollView.fillHeight()
-        
+        super.layoutSubviews()
         
         self.startDateItem.fillWidth()
         
@@ -45,10 +41,8 @@ class StartSemesterView: UIView {
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.semesterTermItem.frame))
     }
     
-    private func setupSubviews() {
-        self.scrollView.alwaysBounceVertical = true
-        self.scrollView.keyboardDismissMode = .OnDrag
-        self.addSubview(self.scrollView)
+    override func setupSubviews() {
+        super.setupSubviews()
         
         // Pre-fill date
         self.dateFormatter.dateStyle = .MediumStyle
@@ -57,6 +51,7 @@ class StartSemesterView: UIView {
         
         self.startDateItem.label.text = "Start Date"
         self.startDateItem.textField.placeholder = "Enter a date"
+        self.startDateItem.textField.delegate = self
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .Date
         datePicker.addTarget(self, action: "datePicked:", forControlEvents: .ValueChanged)
@@ -69,6 +64,7 @@ class StartSemesterView: UIView {
         
         self.semesterTermItem.label.text = "Term"
         self.semesterTermItem.textField.placeholder = "Select a term"
+        self.semesterTermItem.textField.delegate = self
         let pickerView = UIPickerView()
         pickerView.delegate = self
         pickerView.dataSource = self

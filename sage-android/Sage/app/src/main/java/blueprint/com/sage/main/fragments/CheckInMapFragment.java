@@ -385,6 +385,7 @@ public class CheckInMapFragment extends Fragment
                       .commit();
         toggleButtons();
         toggleTimer();
+        Snackbar.make(mContainer, R.string.check_in_start_message, Snackbar.LENGTH_SHORT).show();
     }
 
     private void resumeCheckIn() {

@@ -55,8 +55,7 @@ public class MapUtils {
     }
 
     public static boolean hasPreviousRequest(Context context, SharedPreferences preferences) {
-        return !preferences.getString(context.getString(R.string.check_in_start_time), "").isEmpty() &&
-                !preferences.getString(context.getString(R.string.check_in_end_time), "").isEmpty();
+        return !preferences.getString(context.getString(R.string.check_in_start_time), "").isEmpty();
     }
 
     public static MarkerOptions getMarkerOptions(LatLng latLng) {

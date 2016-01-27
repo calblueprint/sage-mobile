@@ -40,6 +40,7 @@ public class VerifyCheckInRequestsActivity extends BackAbstractActivity implemen
         queryParams.put("verified", "false");
         queryParams.put("sort[attr]", "created_at");
         queryParams.put("sort[order]", "asc");
+        queryParams.put("current_semester", "true");
 
         Requests.CheckIns.with(this).makeListRequest(queryParams);
     }

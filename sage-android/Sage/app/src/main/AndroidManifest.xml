@@ -57,11 +57,11 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".admin.requests.CheckInRequestsActivity"
+            android:name=".admin.requests.VerifyCheckInRequestsActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".admin.requests.SignUpRequestsActivity"
+            android:name=".admin.requests.VerifyUserRequestsActivity"
             android:launchMode="singleTop" />
 
         <activity

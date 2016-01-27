@@ -49,7 +49,8 @@ import butterknife.OnClick;
  * Fragment for check in map.
  */
 public class CheckInMapFragment extends Fragment
-                                implements OnMapReadyCallback {
+                                implements OnMapReadyCallback,
+                                           GoogleApiClient.ConnectionCallbacks {
 
     private final static int TIMER_INTERVAL = 1000;
     private final static int SIX_HOURS = 21600;
@@ -79,6 +80,8 @@ public class CheckInMapFragment extends Fragment
 
         mTimer = new CheckInTimer(getActivity(), TIMER_INTERVAL, runnableTimer);
         mBaseInterface = (BaseInterface) getActivity();
+        if (mBaseInterface.getGoogleApiClient() != null)
+            mBaseInterface.getGoogleApiClient().registerConnectionCallbacks(this);
         MapsInitializer.initialize(getActivity());
     }
 
@@ -111,21 +114,27 @@ public class CheckInMapFragment extends Fragment
     }
 
     @Override
+    public void onConnected(Bundle bundle) { setUpMap(); }
+
+    @Override
+    public void onConnectionSuspended(int i) {}
+
+    @Override
     public void onMapReady(GoogleMap map) {
         map.getUiSettings().setCompassEnabled(false);
         mMap = map;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
-        if (PermissionsUtils.hasLocationPermissions(getActivity())) {
-            setUpMap();
-        } else {
-            LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            PermissionsUtils.requestLocationPermissions(getParentFragment());
-        }
     }
 
     public void setUpMap() {
+        if (!PermissionsUtils.hasLocationPermissions(getActivity())) {
+            LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            PermissionsUtils.requestLocationPermissions(getParentFragment());
+            return;
+        }
+
         if (NetworkUtils.hasLocationServiceEnabled(getActivity())) {
             Location location = getLocation();
 
@@ -228,9 +237,9 @@ public class CheckInMapFragment extends Fragment
         if (location == null)
             return;
 
-        mMap.setMyLocationEnabled(true);
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MapUtils.ZOOM));
+        mMap.setMyLocationEnabled(true);
     }
 
     @OnClick(R.id.check_in_check_fab)

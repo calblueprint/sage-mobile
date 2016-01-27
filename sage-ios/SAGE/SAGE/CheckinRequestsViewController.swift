@@ -134,13 +134,4 @@ class CheckinRequestsViewController: UITableViewController {
         let checkin = self.requests![indexPath.row]
         return CheckinRequestTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let request = self.requests![indexPath.row]
-        let vc = CheckinRequestsDetailViewController(checkin: request)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
 }

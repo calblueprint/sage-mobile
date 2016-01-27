@@ -151,6 +151,8 @@ class ProfileView: UIView {
             roleString = "Admin"
         } else if user.role == .President {
             roleString = "President"
+        } else if user.verified == false {
+            roleString = "Unverified"
         }
         self.userRoleLabel.text = roleString
         

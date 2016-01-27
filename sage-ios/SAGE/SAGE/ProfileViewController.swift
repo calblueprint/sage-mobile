@@ -150,10 +150,12 @@ class ProfileViewController: UITableViewController {
                 } else if user.role == .President {
                     self.profileView.canPromote = false
                     self.profileView.canDemote = false
+                } else if user.verified == false {
+                    self.profileView.canPromote = false
+                    self.profileView.canDemote = false
                 } else {
                     self.profileView.canPromote = true
                     self.profileView.canDemote = false
-
                 }
             } else {
                 self.profileView.canPromote = false

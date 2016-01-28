@@ -31,4 +31,15 @@ class BaseOperation {
             }
         }
     }
+    
+    static func getErrorMessage(error: NSError) -> String {
+        let errorResponse = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey]
+        let errorDict = try? NSJSONSerialization.JSONObjectWithData(errorResponse as! NSData, options: [])
+        let errorMessage = errorDict!["error"]!!["message"] as? String
+        if let message = errorMessage {
+            return message
+        } else {
+            return StringConstants.defaultErrorMessage
+        }
+    }
 }

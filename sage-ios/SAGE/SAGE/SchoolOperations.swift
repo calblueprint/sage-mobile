@@ -18,7 +18,7 @@ class SchoolOperations {
             let schoolDict = data["schools"] as! NSMutableArray
             completion(schoolDict)
             }, failure: { (operation, error) -> Void in
-               failure("Could not load schools")
+                failure(BaseOperation.getErrorMessage(error))
         })
     }
     

@@ -1,5 +1,7 @@
 package blueprint.com.sage.shared.views;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -11,9 +13,9 @@ import android.view.View;
  */
 public class RecycleViewEmpty extends RecyclerView {
 
+    private int ANIMATION_DURATION = 500;
     private AdapterDataObserver mObserver;
 
-    private int mEmptyViewId;
     private View mEmptyView;
 
     public RecycleViewEmpty(Context context) {
@@ -61,6 +63,7 @@ public class RecycleViewEmpty extends RecyclerView {
                 refreshLayout();
             }
         };
+
     }
 
     public void setEmptyView(View view) {
@@ -91,17 +94,40 @@ public class RecycleViewEmpty extends RecyclerView {
     }
 
     private void showRecyclerView() {
-        setVisibility(View.VISIBLE);
-
+        getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION)
+                .addListener(getAnimationListener(this, View.VISIBLE));
         if (mEmptyView != null)
-            mEmptyView.setVisibility(View.GONE);
+            getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION)
+                    .addListener(getAnimationListener(mEmptyView, View.GONE));
     }
 
     private void showEmptyView() {
         if (mEmptyView == null)
             return;
 
-        setVisibility(View.GONE);
-        mEmptyView.setVisibility(View.VISIBLE);
+        getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION)
+                .addListener(getAnimationListener(this, View.GONE));
+        getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION)
+                .addListener(getAnimationListener(mEmptyView, View.VISIBLE));
+    }
+
+    private ObjectAnimator getObjectAnimator(View target, int start, int end) {
+        return ObjectAnimator.ofFloat(target, "alpha", start, end);
+    }
+
+    private Animator.AnimatorListener getAnimationListener(final View view, final int visibilityOnEnd) {
+        return new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+
+            @Override
+            public void onAnimationEnd(Animator animation) { view.setVisibility(visibilityOnEnd); }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+        };
     }
 }

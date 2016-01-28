@@ -24,9 +24,8 @@ class LoginOperations: NSObject {
     
     static func getState(completion: ((User) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
-            var test = data
-            let userJSON = data["user"]!! as! [String: AnyObject]
-            let user = User(propertyDictionary: userJSON)
+            let sessionJSON = data["session"]!!["user"] as! [String: AnyObject]
+            let user = User(propertyDictionary: sessionJSON)
             completion(user)
             }) { (operation, error) -> Void in
                 failure("Cannot get user state")

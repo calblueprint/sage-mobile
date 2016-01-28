@@ -2,7 +2,9 @@ package blueprint.com.sage.main.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import blueprint.com.sage.R;
 import blueprint.com.sage.shared.adapters.pagers.IconPagerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.utility.PermissionsUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
@@ -95,10 +98,12 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
     }
 
@@ -115,6 +120,17 @@ public class MainFragment extends Fragment {
             case FragUtils.FINISH_SEMESTER_REQUEST_CODE:
                 clearSemester(data);
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PermissionsUtils.PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setUpMap();
+                }
+            }
         }
     }
 
@@ -135,4 +151,14 @@ public class MainFragment extends Fragment {
             adminPanelFragment.onFinishSemester(data);
         }
     }
+
+    private void setUpMap() {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof CheckInMapFragment)) continue;
+
+            CheckInMapFragment checkInMapFragment = (CheckInMapFragment) fragment;
+            checkInMapFragment.setUpMap();
+        }
+    }
 }
+

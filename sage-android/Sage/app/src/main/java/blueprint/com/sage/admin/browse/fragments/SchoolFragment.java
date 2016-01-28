@@ -23,7 +23,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.admin.browse.adapters.UserListAdapter;
+import blueprint.com.sage.admin.browse.adapters.BrowseUserListAdapter;
+import blueprint.com.sage.shared.adapters.models.AbstractUserListAdapter;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -52,7 +53,7 @@ public class SchoolFragment extends Fragment
 
     private School mSchool;
     private int mPosition;
-    private UserListAdapter mAdapter;
+    private AbstractUserListAdapter mAdapter;
     private GoogleMap mMap;
     private SchoolsInterface mSchoolsInterface;
 
@@ -112,7 +113,7 @@ public class SchoolFragment extends Fragment
             mSchool.setUsers(new ArrayList<User>());
         }
 
-        mAdapter = new UserListAdapter(getActivity(), mSchool.getUsers());
+        mAdapter = new BrowseUserListAdapter(getActivity(), mSchool.getUsers());
 
         mUserList.setEmptyView(mEmptyView);
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));

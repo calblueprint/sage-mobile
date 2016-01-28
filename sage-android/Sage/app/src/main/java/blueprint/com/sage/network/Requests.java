@@ -13,6 +13,7 @@ import java.util.List;
 
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.announcements.AnnouncementEvent;
+import blueprint.com.sage.events.SessionEvent;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.events.announcements.DeleteAnnouncementEvent;
@@ -74,6 +75,7 @@ import blueprint.com.sage.network.users.EditUserRequest;
 import blueprint.com.sage.network.users.PromoteUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
+import blueprint.com.sage.network.users.UserStateRequest;
 import blueprint.com.sage.network.users.VerifyUserRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 import de.greenrobot.event.EventBus;
@@ -205,8 +207,8 @@ public class Requests {
             Requests.addToRequestQueue(mActivity, request);
         }
 
-        public void makeShowRequest(User user) {
-            UserRequest request = new UserRequest(mActivity, user,
+        public void makeShowRequest(User user, HashMap<String, String> queryParams) {
+            UserRequest request = new UserRequest(mActivity, user, queryParams,
                     new Response.Listener<User>() {
                         @Override
                         public void onResponse(User user) {
@@ -230,6 +232,24 @@ public class Requests {
                             EventBus.getDefault().post(new PromoteUserEvent(user));
                         }
                     }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeStateRequest(User user) {
+            UserStateRequest request = new UserStateRequest(mActivity, user,
+                    new Response.Listener<Session>() {
+                        @Override
+                        public void onResponse(Session session) {
+                            EventBus.getDefault().post(new SessionEvent(session));
+                        }
+                    },
+                    new Response.Listener<APIError>() {
                         @Override
                         public void onResponse(APIError apiError) {
                             Requests.postError(apiError);

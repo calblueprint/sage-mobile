@@ -67,9 +67,9 @@ class ProfileViewController: UITableViewController {
     
     func promote() {
         if LoginOperations.getUser()?.role == .President && self.user?.role == .Volunteer {
-            var message = "What do you want to promote this user to?"
+            var message = "Promote user to:"
             if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
-                message = "What do you want to promote " + self.user!.fullName() + " to?"
+                message = "Promote " + self.user!.fullName() + " to:"
             }
             let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
             let adminAction = UIAlertAction(title: "Admin", style: .Default) { (action) -> Void in
@@ -87,23 +87,23 @@ class ProfileViewController: UITableViewController {
             var role: User.UserRole
             var message: String
             if LoginOperations.getUser()?.role == .President {
-                message = "Do you want to promote this user to be the president?"
+                message = "Promote user to president?"
                 if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
-                    message = "Do you want to promote " + self.user!.fullName() + " to be the president?"
+                    message = "Promote " + self.user!.fullName() + " to president?"
                 }
                 role = .President
             } else {
-                message = "Do you want to promote this user to be an admin?"
+                message = "Promote user to admin?"
                 if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
-                    message = "Do you want to promote " + self.user!.fullName() + " to be an admin?"
+                    message = "Promote " + self.user!.fullName() + " to admin?"
                 }
                 role = .Admin
             }
-            let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
                 self.sendChangeRoleRequest(role)
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             alertController.addAction(okAction)
             alertController.addAction(cancelAction)
             self.presentViewController(alertController, animated: true, completion: nil)
@@ -116,7 +116,6 @@ class ProfileViewController: UITableViewController {
             self.user = updatedUser
             self.profileView.setupWithUser(updatedUser)
             self.profileView.promoteButton.stopLoading()
-            self.setButtonVisibility()
             if role == .President {
                 let existingUser = LoginOperations.updateUserRoleInKeychain(.Admin)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: existingUser)
@@ -138,7 +137,7 @@ class ProfileViewController: UITableViewController {
                 self.user = updatedUser
                 self.profileView.setupWithUser(updatedUser)
                 self.profileView.demoteButton.stopLoading()
-                self.setButtonVisibility()
+
                 }, failure: { (message) -> Void in
                     self.showErrorAndSetMessage(message)
             })
@@ -152,7 +151,7 @@ class ProfileViewController: UITableViewController {
     func getUser() {
         ProfileOperations.getUser(self.user!, completion: { (user) -> Void in
             self.user = user
-            self.setButtonVisibility()
+
             
             self.profileView.setupWithUser(user)
             self.activityIndicator.stopAnimating()
@@ -162,36 +161,6 @@ class ProfileViewController: UITableViewController {
                 self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage("Could not load profile.")
         }
-    }
-    
-    func setButtonVisibility() {
-        self.profileView.showBothButtons = false
-        if LoginOperations.getUser()!.id == self.user!.id {
-            self.profileView.currentUserProfile = true
-        } else {
-            self.profileView.currentUserProfile = false
-        }
-        let isAdminOrPresident = (LoginOperations.getUser()!.role == .Admin) || (LoginOperations.getUser()!.role == .President)
-        if isAdminOrPresident && LoginOperations.getUser()!.id != self.user!.id  {
-            if self.user!.role == .Admin {
-                self.profileView.canPromote = true
-                self.profileView.canDemote = true
-                self.profileView.showBothButtons = true
-            } else if user!.role == .President {
-                self.profileView.canPromote = false
-                self.profileView.canDemote = false
-            } else if user!.verified == false {
-                self.profileView.canPromote = false
-                self.profileView.canDemote = false
-            } else {
-                self.profileView.canPromote = true
-                self.profileView.canDemote = false
-            }
-        } else {
-            self.profileView.canPromote = false
-            self.profileView.canDemote = false
-        }
-        self.profileView.layoutSubviews()
     }
     
     func editProfile() {

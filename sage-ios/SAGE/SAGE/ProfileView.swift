@@ -133,6 +133,8 @@ class ProfileView: UIView {
     }
     
     func setupWithUser(user: User) {
+        self.setButtonVisibility(user)
+        
         self.profileUserImg.setImageWithUser(user)
         self.userName.text = user.fullName()
         self.userSchool.text = user.school?.name
@@ -335,6 +337,39 @@ class ProfileView: UIView {
         let height = CGRectGetMaxY(self.bottomBorder.frame)
         self.profileContent.setHeight(height)
         self.setHeight(height)
+    }
+    
+    func setButtonVisibility(user: User) {
+        self.showBothButtons = false
+        if LoginOperations.getUser()!.id == user.id {
+            self.currentUserProfile = true
+        } else {
+            self.currentUserProfile = false
+        }
+        let isAdminOrPresident = (LoginOperations.getUser()!.role == .Admin) || (LoginOperations.getUser()!.role == .President)
+        if isAdminOrPresident && LoginOperations.getUser()!.id != user.id  {
+            if user.role == .Admin && LoginOperations.getUser()!.role == .Admin {
+                self.canPromote = false
+                self.canDemote = true
+            } else if user.role == .Admin && LoginOperations.getUser()!.role == .President {
+                self.canPromote = true
+                self.canDemote = true
+                self.showBothButtons = true
+            } else if user.role == .President {
+                self.canPromote = false
+                self.canDemote = false
+            } else if user.verified == false {
+                self.canPromote = false
+                self.canDemote = false
+            } else {
+                self.canPromote = true
+                self.canDemote = false
+            }
+        } else {
+            self.canPromote = false
+            self.canDemote = false
+        }
+        self.layoutSubviews()
     }
     
     deinit {

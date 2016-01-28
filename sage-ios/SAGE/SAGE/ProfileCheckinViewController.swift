@@ -9,13 +9,19 @@
 import UIKit
 
 class ProfileCheckinViewController: UITableViewController {
-    var verifiedCheckins: [Checkin]?
-    var unverifiedCheckins: [Checkin]?
+    var verifiedCheckins = [Checkin]()
+    var unverifiedCheckins = [Checkin]()
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     init() {
         super.init(style: .Grouped)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "unverifiedCheckinAdded:", name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,17 +56,17 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     func loadCheckins() {
-        ProfileOperations.loadCheckins({ (var checkins) -> Void in
+        ProfileOperations.loadCheckins({ (checkins) -> Void in
             self.verifiedCheckins = [Checkin]()
             self.unverifiedCheckins = [Checkin]()
             for checkin in checkins {
                 if checkin.verified {
-                    self.verifiedCheckins!.append(checkin)
+                    self.verifiedCheckins.append(checkin)
                 } else {
-                    self.unverifiedCheckins!.append(checkin)
+                    self.unverifiedCheckins.append(checkin)
                 }
             }
-            self.verifiedCheckins!.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+            self.verifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
                 let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
                 if comparisonResult == .OrderedDescending {
                     return true
@@ -69,7 +75,7 @@ class ProfileCheckinViewController: UITableViewController {
                 }
             })
             
-            self.unverifiedCheckins!.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+            self.unverifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
                 let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
                 if comparisonResult == .OrderedDescending {
                     return true
@@ -86,15 +92,31 @@ class ProfileCheckinViewController: UITableViewController {
         }
     }
     
+    //
+    // MARK: - Notification Handling
+    //
+    func verifiedCheckinAdded(notification: NSNotification) {
+        let checkin = notification.object!.copy() as! Checkin
+        self.verifiedCheckins.insert(checkin, atIndex: 0)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func unverifiedCheckinAdded(notification: NSNotification) {
+        let checkin = notification.object!.copy() as! Checkin
+        self.unverifiedCheckins.insert(checkin, atIndex: 0)
+        let indexPath = NSIndexPath(forRow: 0, inSection: 1)
+        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let verifiedCheckins = self.verifiedCheckins {
-            if section == 0 {
-                return self.verifiedCheckins!.count
-            } else {
-                return self.unverifiedCheckins!.count
-            }
+        if section == 0 {
+            return self.verifiedCheckins.count
         } else {
-            return 0
+            return self.unverifiedCheckins.count
         }
     }
     
@@ -106,9 +128,9 @@ class ProfileCheckinViewController: UITableViewController {
         
         var checkin: Checkin
         if indexPath.section == 0 {
-            checkin = self.verifiedCheckins![indexPath.row]
+            checkin = self.verifiedCheckins[indexPath.row]
         } else {
-            checkin = self.unverifiedCheckins![indexPath.row]
+            checkin = self.unverifiedCheckins[indexPath.row]
         }
     
         var cell = self.tableView.dequeueReusableCellWithIdentifier("CheckinRequestCell")
@@ -122,22 +144,22 @@ class ProfileCheckinViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var checkin: Checkin
         if indexPath.section == 0 {
-            checkin = self.verifiedCheckins![indexPath.row]
+            checkin = self.verifiedCheckins[indexPath.row]
         } else {
-            checkin = self.unverifiedCheckins![indexPath.row]
+            checkin = self.unverifiedCheckins[indexPath.row]
         }
         return CheckinTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            if (self.verifiedCheckins == nil) || (self.verifiedCheckins!.count == 0) {
+            if (self.verifiedCheckins.count == 0) {
                 return nil
             } else {
                 return "Verified Checkins"
             }
         } else {
-            if (self.unverifiedCheckins == nil) || (self.unverifiedCheckins!.count == 0) {
+            if (self.unverifiedCheckins.count == 0) {
                 return nil
             } else {
                 return "Unverified Checkins"
@@ -146,9 +168,9 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (section == 0) && ((self.verifiedCheckins == nil) || (self.verifiedCheckins!.count == 0)) {
+        if (section == 0) && (self.verifiedCheckins.count == 0) {
             return 0.0
-        } else if (section == 1) && ((self.unverifiedCheckins == nil) || (self.unverifiedCheckins!.count == 0)) {
+        } else if (section == 1) && (self.unverifiedCheckins.count == 0) {
             return 0.0
         } else {
             return UITableViewAutomaticDimension

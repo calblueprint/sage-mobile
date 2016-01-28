@@ -1,4 +1,4 @@
-package blueprint.com.sage.admin.browse.adapters;
+package blueprint.com.sage.shared.adapters.models;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -7,58 +7,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.main.fragments.UserFragment;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
-import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * Created by charlesx on 11/17/15.
  */
-public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private FragmentActivity mActivity;
-    private List<Item> mItemList;
+    public FragmentActivity mActivity;
+    public List<Item> mItemList;
 
     private static final int HEADER_VIEW = 0;
     private static final int USER_VIEW = 1;
 
-    public UserListAdapter(FragmentActivity activity, List<User> users) {
+    public AbstractUserListAdapter(FragmentActivity activity, List<User> users) {
         super();
         mActivity = activity;
         setUpUsers(users);
     }
 
-    private void setUpUsers(List<User> users) {
-        List<Item> allUsers = new ArrayList<>();
-        List<Item> inactiveUsers = new ArrayList<>();
-
-        for (User user : users) {
-            Item item = new Item(user, null, false);
-            allUsers.add(item);
-
-            if (user.getCurrentSemester() != null && !user.getCurrentSemester().isActive())
-                inactiveUsers.add(item);
-        }
-
-        mItemList = new ArrayList<>();
-
-        if (inactiveUsers.size() != 0) {
-            mItemList.add(new Item(null, "Inactive Users", true));
-            mItemList.addAll(inactiveUsers);
-        }
-
-        if (allUsers.size() != 0) {
-            mItemList.add(new Item(null, "All Users", true));
-            mItemList.addAll(allUsers);
-        }
-    }
+    public abstract void setUpUsers(List<User> users);
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
@@ -102,11 +76,13 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragUtils.replaceBackStack(R.id.container, UserFragment.newInstance(user), mActivity);
+                onItemClick(user);
             }
         });
         user.loadUserImage(mActivity, viewHolder.mImage);
     }
+
+    public abstract void onItemClick(User user);
 
     public void setUsers(List<User> users) {
         setUpUsers(users);

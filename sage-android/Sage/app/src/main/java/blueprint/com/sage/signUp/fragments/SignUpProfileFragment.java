@@ -12,6 +12,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.PermissionsUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,6 +55,11 @@ public class SignUpProfileFragment extends SignUpAbstractFragment {
 
     @OnClick(R.id.sign_up_profile_picture)
     public void openPhotoDialog() {
+        if (PermissionsUtils.hasIOPermissions(getActivity())) {
+            PermissionsUtils.requestIOPermissions(getActivity());
+            return;
+        }
+
         PhotoPicker.PhotoOptionDialog dialog = PhotoPicker.PhotoOptionDialog.newInstance(mPhotoPicker);
         dialog.setTargetFragment(this, DIALOG_CODE);
         dialog.show(getParentFragment().getFragmentManager(), DIALOG_TAG);

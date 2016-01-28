@@ -1,5 +1,5 @@
 //
-//  SemesterVerifyView.swift
+//  EndSemesterView.swift
 //  SAGE
 //
 //  Created by Andrew on 1/1/16.
@@ -10,7 +10,7 @@ import UIKit
 import Darwin
 import FontAwesomeKit
 
-class SemesterVerifyView: UIView {
+class EndSemesterView: UIView {
 
     let cancelButton = UIButton()
     let finalButton = SGButton()
@@ -26,7 +26,6 @@ class SemesterVerifyView: UIView {
     private var secondButtonDone = false
 
     private let progressBar = UIView()
-
 
     private let buttonSize: CGFloat = 70.0
     private let buttonMargin: CGFloat = 50.0

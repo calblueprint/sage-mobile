@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.utility.view.ViewUtils;
@@ -34,8 +35,9 @@ public @Data class User {
     private String passwordConfirmation;
     private String imageUrl;
 
-    private UserSemester currentSemester;
+    private UserSemester userSemester;
     private School school;
+    private List<CheckIn> checkIns;
 
     @JsonIgnore
     private int schoolSelected = -1;

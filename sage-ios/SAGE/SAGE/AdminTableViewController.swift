@@ -66,7 +66,11 @@ class AdminTableViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                self.presentViewController(SemesterVerifyViewController(), animated: true, completion: nil)
+                if false { // TODO: check if semester exists
+                    self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
+                } else {
+                    self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
+                }
             default: break
             }
         default: break
@@ -105,10 +109,17 @@ class AdminTableViewController: UITableViewController {
             }
         case 2:
             if indexPath.row == 0 {
-                cell.textLabel?.text = "End Fall 2015"
-                let icon = FAKIonIcons.logOutIconWithSize(iconSize)
-                    .imageWithSize(CGSizeMake(iconSize, iconSize))
-                cell.imageView?.image = icon
+                if false { // TODO: check if semester exists
+                    cell.textLabel?.text = "End Fall 2015"
+                    let icon = FAKIonIcons.logOutIconWithSize(iconSize)
+                        .imageWithSize(CGSizeMake(iconSize, iconSize))
+                    cell.imageView?.image = icon
+                } else {
+                    cell.textLabel?.text = "Start new semester"
+                    let icon = FAKIonIcons.logInIconWithSize(iconSize)
+                        .imageWithSize(CGSizeMake(iconSize, iconSize))
+                    cell.imageView?.image = icon
+                }
             } else {
                 cell.textLabel?.text = "Change hour requirements"
                 let icon = FAKIonIcons.clockIconWithSize(iconSize)

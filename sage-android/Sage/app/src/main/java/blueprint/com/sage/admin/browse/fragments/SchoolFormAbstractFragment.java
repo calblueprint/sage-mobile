@@ -34,7 +34,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.PlacePredictionAdapter;
-import blueprint.com.sage.admin.browse.adapters.UserSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.spinners.UserSpinnerAdapter;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;

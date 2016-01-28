@@ -35,7 +35,7 @@ class AnnouncementsOperations {
             })
             completion(announcements)
             }) { (operation, error) -> Void in
-                failure("Cannot get announcements")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     

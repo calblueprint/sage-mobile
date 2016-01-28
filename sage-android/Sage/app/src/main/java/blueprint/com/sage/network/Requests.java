@@ -431,7 +431,7 @@ public class Requests {
                     new Response.Listener<School>() {
                         @Override
                         public void onResponse(School school) {
-                            EventBus.getDefault().post(new DeleteSchoolEvent(school)));
+                            EventBus.getDefault().post(new DeleteSchoolEvent(school));
                         }
                     }, new Response.Listener<APIError>() {
                         @Override

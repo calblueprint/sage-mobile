@@ -3,4 +3,7 @@
     <string name="school_name">Name</string>
     <string name="school_address">Address</string>
     <string name="school_director">Director</string>
+
+    <string name="delete_school_title">Delete School</string>
+    <string name="delete_school_message">Are you sure you want to continue? All associated check ins will be deleted.</string>
 </resources>

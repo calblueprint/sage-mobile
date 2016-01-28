@@ -8,6 +8,7 @@
 
     <TextView
         style="@style/FormSpinnerItem"
-        android:id="@+id/spinner_item_text" />
+        android:id="@+id/spinner_item_text"
+        android:padding="8dp"/>
 
 </LinearLayout>

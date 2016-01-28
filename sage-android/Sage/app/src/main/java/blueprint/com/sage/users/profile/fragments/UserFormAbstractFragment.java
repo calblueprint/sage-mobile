@@ -145,20 +145,21 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     private void initializeSpinners() {
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(),
                 mSchools,
-                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+                R.layout.simple_spinner_header,
+                R.layout.simple_spinner_item);
         mSchool.setAdapter(mSchoolAdapter);
 
         mTypeAdapter = new StringArraySpinnerAdapter(getActivity(),
-                                              User.VOLUNTEER_SPINNER,
-                                              R.layout.simple_spinner_item,
-                                              R.layout.simple_spinner_item);
+                User.VOLUNTEER_SPINNER,
+                R.layout.simple_spinner_header,
+                R.layout.simple_spinner_item);
 
         mType.setAdapter(mTypeAdapter);
 
         mRoleAdapter = new RoleSpinnerAdapter(getActivity(),
-                                              User.ROLE_SPINNER,
-                                              R.layout.simple_spinner_item,
-                                              R.layout.simple_spinner_item);
+                User.ROLE_SPINNER,
+                R.layout.simple_spinner_header,
+                R.layout.simple_spinner_item);
 
         mRole.setAdapter(mRoleAdapter);
     }

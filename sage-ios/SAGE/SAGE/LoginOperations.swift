@@ -22,12 +22,15 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
-    static func getState(completion: ((User, Semester, Semester?) -> Void), failure:((String) -> Void)) {
+    static func getState(completion: ((User, Semester?, Semester?) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
-            let currentSemesterJSON = data["session"]!!["current_semester"] as! [String: AnyObject]
-            let currentSemester = Semester(propertyDictionary: currentSemesterJSON)
+            let currentSemesterJSON = data["session"]!!["current_semester"]
+            var currentSemester: Semester? = nil
+            if !(currentSemesterJSON is NSNull) {
+                currentSemester = Semester(propertyDictionary: currentSemesterJSON as! [String: AnyObject])
+            }
             let userSemesterJSON = userJSON["user_semester"]
             var userSemester: Semester? = nil
             if !(userSemesterJSON is NSNull) {

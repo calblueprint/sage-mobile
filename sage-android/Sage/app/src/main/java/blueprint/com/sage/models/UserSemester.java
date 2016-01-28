@@ -16,7 +16,7 @@ public class UserSemester {
     private int totalTime;
     private boolean completed;
     private int status;
-    private int timeRequired;
+    private int hoursRequired;
 
     private List<CheckIn> checkIns;
 

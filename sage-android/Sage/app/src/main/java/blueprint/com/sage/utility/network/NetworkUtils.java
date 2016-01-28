@@ -18,6 +18,7 @@ import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.signIn.SignInActivity;
 import blueprint.com.sage.signUp.UnverifiedActivity;
+import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by kelseylam on 10/17/15.
@@ -67,8 +68,7 @@ public class NetworkUtils {
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
         String userString = sharedPreferences.getString(activity.getString(R.string.user), "");
-        User user = mapper.readValue(userString, new TypeReference<User>() {
-        });
+        User user = mapper.readValue(userString, new TypeReference<User>() {});
 
         if (user.isVerified()) {
             intent = new Intent(activity, MainActivity.class);
@@ -91,9 +91,7 @@ public class NetworkUtils {
         editor.remove(activity.getString(R.string.school));
         editor.apply();
 
-        Intent loginIntent = new Intent(activity, SignInActivity.class);
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        activity.startActivity(loginIntent);
+        FragUtils.startActivity(activity, SignInActivity.class);
     }
 
     public static boolean hasLocationServiceEnabled(Context context) {
@@ -108,8 +106,8 @@ public class NetworkUtils {
         return !preferences.getString(context.getString(R.string.email), "").isEmpty() &&
                !preferences.getString(context.getString(R.string.auth_token), "").isEmpty() &&
                // TODO: replace this with getString after Kelsey merges her stuff
-               !preferences.getString("user", "").isEmpty() &&
-               !preferences.getString("school", "").isEmpty();
+               !preferences.getString(context.getString(R.string.user), "").isEmpty() &&
+               !preferences.getString(context.getString(R.string.school), "").isEmpty();
     }
 
     public static void writeAsPreferences(Activity activity, String key, Object object) {

@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.BaseRequest;
@@ -20,9 +22,10 @@ import blueprint.com.sage.utility.network.NetworkManager;
  */
 public class UserRequest extends BaseRequest {
     public UserRequest(final Activity activity, User user,
+                       HashMap<String, String> queryParams,
                        final Response.Listener<User> onSuccess,
                        final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(null, "users", String.valueOf(user.getId())), null,
+        super(Method.GET, makeUrl(queryParams, "users", String.valueOf(user.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

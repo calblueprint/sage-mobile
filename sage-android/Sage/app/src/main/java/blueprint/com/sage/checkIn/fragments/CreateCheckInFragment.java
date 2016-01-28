@@ -37,9 +37,8 @@ import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.fragments.dialogs.DateDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.DateInterface;
-import blueprint.com.sage.utility.view.DateUtils;
 import blueprint.com.sage.utility.model.CheckInUtils;
-import blueprint.com.sage.utility.view.MapUtils;
+import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -114,15 +113,16 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
     }
 
     private void initializeViews() {
-        if (!MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) {
+        if (!CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) {
             getActivity().setTitle("Create Checkin");
             mDeleteRequest.setVisibility(View.GONE);
             return;
         }
 
         SharedPreferences sharedPreferences = mBaseInterface.getSharedPreferences();
-        String startString = sharedPreferences.getString(getString(R.string.check_in_start_time), "");
-        String endString = sharedPreferences.getString(getString(R.string.check_in_end_time), "");
+        User user = mBaseInterface.getUser();
+        String startString = sharedPreferences.getString(getString(R.string.check_in_start_time, user.getId()), "");
+        String endString = sharedPreferences.getString(getString(R.string.check_in_end_time, user.getId()), "");
 
         DateTime startDate = DateUtils.stringToDate(startString);
         DateTime endDate = DateUtils.stringToDate(endString);
@@ -137,7 +137,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     @OnClick({ R.id.check_in_request_start_field, R.id.check_in_request_end_field})
     public void onTimeFieldClick(TextView textView) {
-        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) return;
+        if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) return;
 
         TimePickerFragment picker = TimePickerFragment.newInstance(textView);
         picker.setTargetFragment(this, REQUEST_CODE);
@@ -160,7 +160,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     @OnClick(R.id.check_in_request_date_field)
     public void onDateFieldClick(TextView textView) {
-        if (MapUtils.hasPreviousRequest(getContext(), mBaseInterface.getSharedPreferences())) return;
+        if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) return;
 
         DateDialog picker = DateDialog.newInstance(textView, this);
         picker.setTargetFragment(this, REQUEST_CODE);
@@ -232,7 +232,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
     }
 
     private void resetCheckIn() {
-        CheckInUtils.resetCheckIn(getActivity(), mBaseInterface.getSharedPreferences());
+        CheckInUtils.resetCheckIn(getActivity(), mBaseInterface);
         getActivity().onBackPressed();
     }
 

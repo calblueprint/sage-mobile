@@ -26,23 +26,27 @@
         app:backgroundTint="@color/white"
         />
 
-    <android.support.design.widget.FloatingActionButton
-        style="@style/CheckInFAB"
-        android:id="@+id/check_in_check_fab"
-        android:src="@drawable/ic_done_white"
-        app:backgroundTint="@color/green500"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="88dp"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-        style="@style/CheckInFAB"
-        android:id="@+id/check_in_location_fab"
-        android:src="@drawable/ic_my_location_black"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/white" />
+        android:orientation="vertical"
+        android:layout_gravity="bottom|end"
+        app:layout_behavior="blueprint.com.sage.shared.behaviors.ViewCoordinatorBehavior">
 
+        <android.support.design.widget.FloatingActionButton
+            style="@style/CheckInFAB"
+            android:id="@+id/check_in_check_fab"
+            android:src="@drawable/ic_done_white"
+            android:layout_marginBottom="8dp"
+            app:backgroundTint="@color/green500" />
 
+        <android.support.design.widget.FloatingActionButton
+            style="@style/CheckInFAB"
+            android:id="@+id/check_in_location_fab"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_my_location_black"
+            app:backgroundTint="@color/white" />
+
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

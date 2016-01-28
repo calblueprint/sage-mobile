@@ -36,7 +36,6 @@ class User: NSObject, NSCoding {
     var imageURL: NSURL?
     var directorID: Int = -1
     
-    
     //
     // MARK -- NSCoding
     //

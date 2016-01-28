@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AFNetworking
 
 class CheckinOperations {
     
@@ -23,7 +24,7 @@ class CheckinOperations {
         BaseOperation.manager().POST(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
             success(checkin)
         }, failure: { (operation, error) -> Void in
-            failure("Could not check in")
+            failure(BaseOperation.getErrorMessage(error))
         })
     }
 }

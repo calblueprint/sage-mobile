@@ -26,7 +26,7 @@ class AdminOperations {
             })
             completion(userArray)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -45,7 +45,7 @@ class AdminOperations {
             })
             completion(userArray)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -64,7 +64,7 @@ class AdminOperations {
             })
             completion(userArray)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -81,7 +81,7 @@ class AdminOperations {
             completion(checkins)
 
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
 
@@ -100,7 +100,7 @@ class AdminOperations {
             })
             completion(schools)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -122,7 +122,7 @@ class AdminOperations {
             completion(school)
             
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -138,7 +138,7 @@ class AdminOperations {
             }
             completion(users)
         }) { (operation, error) -> Void in
-            failure(error.localizedDescription)
+            failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -160,7 +160,7 @@ class AdminOperations {
             let school = School(propertyDictionary: schoolDict)
             completion!(school)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -179,7 +179,7 @@ class AdminOperations {
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(school)
             }) { (operation, error) -> Void in
-                failure("Could not edit school.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -194,7 +194,7 @@ class AdminOperations {
         manager.PATCH(announcementURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(announcement)
             }) { (operation, error) -> Void in
-                failure("Could not edit announcement.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -206,7 +206,7 @@ class AdminOperations {
         manager.POST(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not approve checkin.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -217,7 +217,7 @@ class AdminOperations {
         manager.DELETE(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not remove checkin.")
+                failure(BaseOperation.getErrorMessage(error))
         }
 
     }
@@ -229,7 +229,7 @@ class AdminOperations {
         manager.POST(userURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Couldn't verify user.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -239,7 +239,7 @@ class AdminOperations {
         manager.DELETE(userURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not remove user.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -274,7 +274,7 @@ class AdminOperations {
             let createdAnnouncement = Announcement(properties: announcementDict)
             completion(createdAnnouncement)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     

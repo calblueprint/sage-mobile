@@ -42,16 +42,29 @@ class RootController: UIViewController {
     
     func pushCorrectViewController() {
         if LoginOperations.userIsLoggedIn() {
-            let completion = { (success: Bool) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    if success {
-                        self.pushRootTabBarController()
-                    } else {
-                        self.pushUnverifiedViewController()
-                    }
-                })
+            // get all data -> user, userSemester, currentSemester
+            // in completion block, put all these into keychain
+            // and run code below. check if user.verified to determine
+            // which VC to push
+            
+            LoginOperations.getState({ (state) -> Void in
+                // update keychain
+                // print out state here when debugging
+                self.pushRootTabBarController()
+                
+                }) { (errorMessage) -> Void in
+                    // error
             }
-            LoginOperations.verifyUser(completion)
+//            let completion = { (success: Bool) -> Void in
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    if success {
+//                        self.pushRootTabBarController()
+//                    } else {
+//                        self.pushUnverifiedViewController()
+//                    }
+//                })
+//            }
+//            LoginOperations.verifyUser(completion)
         } else {
             self.pushLoginViewController()
         }

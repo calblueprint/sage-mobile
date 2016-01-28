@@ -22,6 +22,17 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
+    static func getState(completion: ((User) -> Void), failure:((String) -> Void)) {
+        BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
+            var test = data
+            let userJSON = data["user"]!! as! [String: AnyObject]
+            let user = User(propertyDictionary: userJSON)
+            completion(user)
+            }) { (operation, error) -> Void in
+                failure("Cannot get user state")
+        }
+    }
+    
     static func verifyUser(completion: ((Bool) -> Void)) {
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if user.verified {

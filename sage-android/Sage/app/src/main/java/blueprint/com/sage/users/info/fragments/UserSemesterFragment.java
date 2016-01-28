@@ -2,13 +2,11 @@ package blueprint.com.sage.users.info.fragments;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import java.util.HashMap;
-import java.util.List;
 
 import blueprint.com.sage.events.APIErrorEvent;
-import blueprint.com.sage.events.user_semesters.UserSemesterListEvent;
+import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.models.UserSemester;
@@ -24,7 +22,6 @@ public class UserSemesterFragment extends AbstractCheckInListFragment {
 
     private User mUser;
     private Semester mSemester;
-    private UserSemester mUserSemester;
 
     public static UserSemesterFragment newInstance(User user, Semester semester) {
         UserSemesterFragment fragment = new UserSemesterFragment();
@@ -43,25 +40,20 @@ public class UserSemesterFragment extends AbstractCheckInListFragment {
     }
 
     public RecyclerView.Adapter getAdapter() {
-        return new UserCheckInListAdapter(getActivity(), mUserSemester);
+        return new UserCheckInListAdapter(getActivity(), mUser);
     }
 
     public void makeCheckInRequest() {
-        HashMap<String, String> queryRequests = new HashMap<>();
-        queryRequests.put("user_id", String.valueOf(mUser.getId()));
-        queryRequests.put("semester_id", String.valueOf(mSemester.getId()));
-        Requests.UserSemesters.with(getActivity()).makeListRequest(queryRequests);
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("semester_id", String.valueOf(mSemester.getId()));
+        queryParams.put("check_ins", "true");
+        Requests.Users.with(getActivity()).makeShowRequest(mUser, queryParams);
     }
     
-    public void onEvent(UserSemesterListEvent event) {
-        List<UserSemester> userSemesters = event.getUserSemesters();
-
-        if (userSemesters.size() == 0) {
-            Log.e(getClass().toString(), "No user semester");
-            return;
-        }
-        mUserSemester = event.getUserSemesters().get(0);
-        ((UserCheckInListAdapter) mAdapter).setCheckIns(mUserSemester);
+    public void onEvent(UserEvent event) {
+        User user = event.getUser();
+        setUser(user);
+        ((UserCheckInListAdapter) mAdapter).setCheckIns(mUser);
     }
 
     public void onEvent(APIErrorEvent event) {

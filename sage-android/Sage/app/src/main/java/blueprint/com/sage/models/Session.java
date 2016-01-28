@@ -11,4 +11,5 @@ public @Data class Session {
     private String authenticationToken;
     private User user;
     private School school;
+    private Semester currentSemester;
 }

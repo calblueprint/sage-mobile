@@ -18,7 +18,7 @@ import blueprint.com.sage.utility.view.FragUtils;
  * Created by charlesx on 12/28/15.
  * Shows a list of sign up requests
  */
-public class SignUpRequestsActivity extends BackAbstractActivity implements UsersInterface {
+public class VerifyUserRequestsActivity extends BackAbstractActivity implements UsersInterface {
     private List<User> mUsers;
 
     @Override
@@ -37,6 +37,7 @@ public class SignUpRequestsActivity extends BackAbstractActivity implements User
     public void getUsersListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("verified", "false");
+        queryParams.put("sort_name", "true");
 
         Requests.Users.with(this).makeListRequest(queryParams);
     }

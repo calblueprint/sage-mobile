@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="check_in_default_start_time">00:00</string>
+    <string name="check_in_start_message">You\'ve started your mentoring session - have fun!</string>
 
     <string name="menu_create_request">Create Request</string>
 
     <!-- CheckIn Shared Preferences -->
-    <string name="check_in_start_time">start_time</string>
-    <string name="check_in_total_seconds">total_seconds</string>
-    <string name="check_in_recent_seconds">recent_seconds</string>
-    <string name="check_in_end_time">end_time</string>
+    <string name="check_in_start_time">start_time $1%d</string>
+    <string name="check_in_total_seconds">total_seconds $1%d</string>
+    <string name="check_in_recent_seconds">recent_seconds $1%d</string>
+    <string name="check_in_end_time">end_time $1%d</string>
 
     <!-- Invalid location dialog -->
     <string name="check_in_oob_title">Invalid location.</string>

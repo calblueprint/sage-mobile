@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.admin.browse.BrowseMentorsActivity;
+import blueprint.com.sage.admin.browse.BrowseUsersActivity;
 import blueprint.com.sage.admin.browse.BrowseSchoolsActivity;
-import blueprint.com.sage.admin.requests.CheckInRequestsActivity;
-import blueprint.com.sage.admin.requests.SignUpRequestsActivity;
+import blueprint.com.sage.admin.requests.VerifyCheckInRequestsActivity;
+import blueprint.com.sage.admin.requests.VerifyUserRequestsActivity;
 import blueprint.com.sage.admin.semester.CreateSemesterActivity;
 import blueprint.com.sage.admin.semester.FinishSemesterActivity;
 import blueprint.com.sage.admin.semester.SemesterListActivity;
@@ -84,17 +84,17 @@ public class AdminPanelFragment extends Fragment {
 
     @OnClick(R.id.admin_browse_users)
     public void onBrowseMentors(View view) {
-        FragUtils.startActivityBackStack(getActivity(), BrowseMentorsActivity.class);
+        FragUtils.startActivityBackStack(getActivity(), BrowseUsersActivity.class);
     }
 
     @OnClick(R.id.admin_request_check_ins)
     public void onRequestCheckIns(View view) {
-        FragUtils.startActivityBackStack(getActivity(), CheckInRequestsActivity.class);
+        FragUtils.startActivityBackStack(getActivity(), VerifyCheckInRequestsActivity.class);
     }
 
     @OnClick(R.id.admin_request_users)
     public void onRequestUsers(View view) {
-        FragUtils.startActivityBackStack(getActivity(), SignUpRequestsActivity.class);
+        FragUtils.startActivityBackStack(getActivity(), VerifyUserRequestsActivity.class);
     }
 
     @OnClick(R.id.admin_settings_start_semester)

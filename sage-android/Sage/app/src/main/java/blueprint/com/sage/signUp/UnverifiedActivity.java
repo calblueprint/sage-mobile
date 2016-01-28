@@ -64,7 +64,7 @@ public class UnverifiedActivity extends AbstractActivity implements SwipeRefresh
     }
 
     @Override
-    public void onRefresh() { Requests.Users.with(this).makeShowRequest(mUser); }
+    public void onRefresh() { Requests.Users.with(this).makeShowRequest(mUser, null); }
 
 
     @OnClick(R.id.unverified_log_out)

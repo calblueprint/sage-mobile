@@ -12,11 +12,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.user_semesters.UpdateUserSemesterEvent;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
+import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.models.UserSemester;
 import blueprint.com.sage.network.Requests;
@@ -56,6 +59,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     @Nullable @Bind(R.id.admin_user_change_status) LinearLayout mStatusLayout;
 
     private User mUser;
+    private Semester mSemester;
 
     private BaseInterface mBaseInterface;
     private ToolbarInterface mToolbarInterface;
@@ -70,14 +74,22 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         return fragment;
     }
 
+    public static UserFragment newInstance(User user, Semester semester) {
+        UserFragment fragment = new UserFragment();
+        fragment.setUser(user);
+        fragment.setSemester(semester);
+        return fragment;
+    }
+
     public void setUser(User user) { mUser = user; }
+    public void setSemester(Semester semester) { mSemester = semester; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBaseInterface = (BaseInterface) getActivity();
         mToolbarInterface = (ToolbarInterface) getActivity();
-        Requests.Users.with(getActivity()).makeShowRequest(mUser);
+        makeUserRequest();
     }
 
     @Override
@@ -110,9 +122,19 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mToolbarInterface.setToolbarElevation(getResources().getDimensionPixelSize(R.dimen.tab_layout_elevation));
     }
 
+    private void makeUserRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+
+        if (mSemester != null) {
+            queryParams.put("semester_id", String.valueOf(mSemester.getId()));
+        }
+
+        Requests.Users.with(getActivity()).makeShowRequest(mUser, queryParams);
+    }
+
     private void initializeSemester() {
         if (mStatusLayout == null) return;
-        int visibility = mUser.getCurrentSemester() != null ? View.VISIBLE : View.GONE;
+        int visibility = mUser.getUserSemester() != null ? View.VISIBLE : View.GONE;
         mStatusLayout.setVisibility(visibility);
     }
 
@@ -121,15 +143,17 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mName.setText(mUser.getName());
 
         mVolunteer.setText(User.VOLUNTEER_SPINNER[mUser.getVolunteerType()]);
-        mTotalSemester.setText(String.valueOf(60));
+
+        int hoursRequired = mUser.getUserSemester() == null ? 0 : mUser.getUserSemester().getHoursRequired();
+        mTotalSemester.setText(String.valueOf(hoursRequired));
+
+        String totalHours = mUser.getUserSemester() == null ? String.valueOf(0) : mUser.getUserSemester().getTimeString();
+        mTotalHours.setText(totalHours);
+
         mTotalWeek.setText(String.valueOf(mUser.getVolunteerType() + 1));
 
-        if (mUser.getCurrentSemester() != null) {
-            mTotalHours.setText(mUser.getCurrentSemester().getTimeString());
-        }
-
-        if (mUser.getSchool() != null)
-            mSchool.setText(mUser.getSchool().getName());
+        String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
+        mSchool.setText(schoolString);
 
         getActivity().setTitle("User");
     }
@@ -219,7 +243,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     }
 
     public void onEvent(UpdateUserSemesterEvent event) {
-        mUser.setCurrentSemester(event.getUserSemester());
+        mUser.setUserSemester(event.getUserSemester());
         initializeSemester();
         Snackbar.make(mLayout, "You've change this user's status!", Snackbar.LENGTH_SHORT).show();
     }
@@ -231,8 +255,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
                 Requests.Users.with(getActivity()).makePromoteRequest(mUser);
                 break;
             case STATUS_DIALOG_CODE:
-                mUser.getCurrentSemester().setStatus(selection);
-                Requests.UserSemesters.with(getActivity()).makeUpdateRequest(mUser.getCurrentSemester());
+                mUser.getUserSemester().setStatus(selection);
+                Requests.UserSemesters.with(getActivity()).makeUpdateRequest(mUser.getUserSemester());
                 break;
         }
     }

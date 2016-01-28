@@ -16,7 +16,7 @@ class CheckinViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocation()
     var school = School()
-    let distanceTolerance: CLLocationDistance = 2000 // in Meters
+    let distanceTolerance: CLLocationDistance = 2000 // in Meters TODO: Change to 200
     
     let checkinView = CheckinView()
     let defaultTitleLabel = UILabel()
@@ -130,13 +130,9 @@ class CheckinViewController: UIViewController {
                     message: nil,
                     preferredStyle: .ActionSheet)
                 confirmAlert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                    // send request to make check in and present to default
-                    // when finished. if failure, store locally and
-                    // try again until success
                     self.presentDefaultMode(UIConstants.normalAnimationTime)
                     self.inSession = false
                     KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
-                    //make a request
                 }))
                 confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
                 self.presentViewController(confirmAlert, animated: true, completion: nil)
@@ -160,6 +156,19 @@ class CheckinViewController: UIViewController {
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
         let timePassed = currentTime - startTime
+        if timePassed >= 3600 * 6 { // If time passed exceeds 6 hours, delete the session
+            let cancelSessionBlock: (UIAlertAction) -> Void = { (alertAction) -> Void in
+                self.presentDefaultMode(UIConstants.normalAnimationTime)
+                self.inSession = false
+                KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+            }
+            let alertController = UIAlertController(
+                title: "Hour limited exceeded",
+                message: "You have been in a session for more than 6 hours. Your session has been cancelled.",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: cancelSessionBlock))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
         // get the user's min hours and pass that into percentage
         self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/self.requiredTime))
         if (self.inSession) {

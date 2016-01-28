@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class AnnouncementsViewController: UITableViewController {
     

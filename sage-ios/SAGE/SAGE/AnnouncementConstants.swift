@@ -19,4 +19,5 @@ struct AnnouncementConstants {
     static let kSchoolID: String = "school_id"
     static let kUserID: String = "user_id"
     static let kCategory: String = "category"
+    static let kDefault: String = "default"
 }

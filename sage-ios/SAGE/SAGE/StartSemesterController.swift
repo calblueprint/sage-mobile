@@ -8,11 +8,9 @@
 
 import Foundation
 
-class StartSemesterViewController: UIViewController {
+class StartSemesterViewController: FormController {
     
     var startSemesterView = StartSemesterView()
-    
-    private var finishButton: SGBarButtonItem?
     
     //
     // MARK: - ViewController Lifecycle
@@ -24,8 +22,6 @@ class StartSemesterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Start Semester"
-        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
-        self.navigationItem.rightBarButtonItem = self.finishButton
     }
     
     //

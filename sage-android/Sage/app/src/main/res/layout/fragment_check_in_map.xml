@@ -35,8 +35,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="88dp"
-        app:layout_behavior="blueprint.com.sage.shared.behaviors.ViewCoordinatorBehavior"
-        />
+        app:layout_behavior="blueprint.com.sage.shared.behaviors.ViewCoordinatorBehavior" />
 
     <android.support.design.widget.FloatingActionButton
         style="@style/DefaultFAB"

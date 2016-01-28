@@ -32,10 +32,10 @@ class ProfileViewController: UITableViewController {
     // MARK: - NSNotificationCenter selectors
     //
     func editedProfile(notification: NSNotification) {
-        let user = notification.object!.copy() as! User
-        if LoginOperations.getUser()!.id == user.id {
-            LoginOperations.storeUserDataInKeychain(user)
-            self.profileView.setupWithUser(user)
+        let newUser = notification.object!.copy() as! User
+        if self.user?.id == newUser.id {
+            LoginOperations.storeUserDataInKeychain(newUser)
+            self.profileView.setupWithUser(newUser)
             self.tableView.reloadData()
         }
     }
@@ -62,12 +62,11 @@ class ProfileViewController: UITableViewController {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.setY(self.profileView.headerHeight + CGFloat(65))
         self.activityIndicator.startAnimating()
-        
         self.getUser()
     }
     
     func promote() {
-        if LoginOperations.getUser()?.role == .President {
+        if LoginOperations.getUser()?.role == .President && self.user?.role == .Volunteer {
             var message = "What do you want to promote this user to?"
             if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
                 message = "What do you want to promote " + self.user!.fullName() + " to?"
@@ -78,11 +77,6 @@ class ProfileViewController: UITableViewController {
             }
             let presidentAction = UIAlertAction(title: "President", style: .Default) { (action) -> Void in
                 self.sendChangeRoleRequest(.President)
-                let existingUser = LoginOperations.updateUserRoleInKeychain(.Admin)
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: existingUser)
-                
-                
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
             alertController.addAction(adminAction)
@@ -90,13 +84,24 @@ class ProfileViewController: UITableViewController {
             alertController.addAction(cancelAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         } else {
-            var message = "Do you want to promote this user?"
-            if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
-                message = "Do you want to promote " + self.user!.fullName() + "?"
+            var role: User.UserRole
+            var message: String
+            if LoginOperations.getUser()?.role == .President {
+                message = "Do you want to promote this user to be the president?"
+                if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
+                    message = "Do you want to promote " + self.user!.fullName() + " to be the president?"
+                }
+                role = .President
+            } else {
+                message = "Do you want to promote this user to be an admin?"
+                if self.user != nil && self.user?.firstName != nil && self.user?.lastName != nil {
+                    message = "Do you want to promote " + self.user!.fullName() + " to be an admin?"
+                }
+                role = .Admin
             }
             let alertController = UIAlertController(title: "Promote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
-                self.sendChangeRoleRequest(.Admin)
+                self.sendChangeRoleRequest(role)
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
             alertController.addAction(okAction)
@@ -107,8 +112,15 @@ class ProfileViewController: UITableViewController {
     
     func sendChangeRoleRequest(role: User.UserRole) {
         self.profileView.startPromoting()
-        ProfileOperations.promote(self.user!, role: role, completion: { () -> Void in
-            self.profileView.didPromote()
+        ProfileOperations.promote(self.user!, role: role, completion: { (updatedUser) -> Void in
+            self.user = updatedUser
+            self.profileView.setupWithUser(updatedUser)
+            self.profileView.promoteButton.stopLoading()
+            self.setButtonVisibility()
+            if role == .President {
+                let existingUser = LoginOperations.updateUserRoleInKeychain(.Admin)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: existingUser)
+            }
             }, failure: { (message) -> Void in
                 self.showErrorAndSetMessage(message)
         })
@@ -122,8 +134,11 @@ class ProfileViewController: UITableViewController {
         let alertController = UIAlertController(title: "Demote", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) { (action) -> Void in
             self.profileView.startDemoting()
-            ProfileOperations.demote(self.user!, completion: { () -> Void in
-                self.profileView.didDemote()
+            ProfileOperations.demote(self.user!, completion: { (updatedUser) -> Void in
+                self.user = updatedUser
+                self.profileView.setupWithUser(updatedUser)
+                self.profileView.demoteButton.stopLoading()
+                self.setButtonVisibility()
                 }, failure: { (message) -> Void in
                     self.showErrorAndSetMessage(message)
             })
@@ -136,31 +151,8 @@ class ProfileViewController: UITableViewController {
     
     func getUser() {
         ProfileOperations.getUser(self.user!, completion: { (user) -> Void in
-            
-            if LoginOperations.getUser()!.id == user.id {
-                self.profileView.currentUserProfile = true
-            } else {
-                self.profileView.currentUserProfile = false
-            }
-            let isAdminOrPresident = (LoginOperations.getUser()!.role == .Admin) || (LoginOperations.getUser()!.role == .President)
-            if isAdminOrPresident && LoginOperations.getUser()!.id != user.id  {
-                if user.role == .Admin {
-                    self.profileView.canPromote = false
-                    self.profileView.canDemote = true
-                } else if user.role == .President {
-                    self.profileView.canPromote = false
-                    self.profileView.canDemote = false
-                } else if user.verified == false {
-                    self.profileView.canPromote = false
-                    self.profileView.canDemote = false
-                } else {
-                    self.profileView.canPromote = true
-                    self.profileView.canDemote = false
-                }
-            } else {
-                self.profileView.canPromote = false
-                self.profileView.canDemote = false
-            }
+            self.user = user
+            self.setButtonVisibility()
             
             self.profileView.setupWithUser(user)
             self.activityIndicator.stopAnimating()
@@ -170,6 +162,36 @@ class ProfileViewController: UITableViewController {
                 self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage("Could not load profile.")
         }
+    }
+    
+    func setButtonVisibility() {
+        self.profileView.bothButtons = false
+        if LoginOperations.getUser()!.id == self.user!.id {
+            self.profileView.currentUserProfile = true
+        } else {
+            self.profileView.currentUserProfile = false
+        }
+        let isAdminOrPresident = (LoginOperations.getUser()!.role == .Admin) || (LoginOperations.getUser()!.role == .President)
+        if isAdminOrPresident && LoginOperations.getUser()!.id != self.user!.id  {
+            if self.user!.role == .Admin {
+                self.profileView.canPromote = true
+                self.profileView.canDemote = true
+                self.profileView.bothButtons = true
+            } else if user!.role == .President {
+                self.profileView.canPromote = false
+                self.profileView.canDemote = false
+            } else if user!.verified == false {
+                self.profileView.canPromote = false
+                self.profileView.canDemote = false
+            } else {
+                self.profileView.canPromote = true
+                self.profileView.canDemote = false
+            }
+        } else {
+            self.profileView.canPromote = false
+            self.profileView.canDemote = false
+        }
+        self.profileView.layoutSubviews()
     }
     
     func editProfile() {

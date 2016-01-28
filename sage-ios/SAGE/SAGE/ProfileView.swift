@@ -55,6 +55,8 @@ class ProfileView: UIView {
         }
     }
     
+    var bothButtons = false
+    
     var canPromote: Bool {
         get {
             return self.canPromote
@@ -136,7 +138,12 @@ class ProfileView: UIView {
         self.userSchool.text = user.school?.name
         self.userVolunteerLevel.text = user.volunteerLevelToString(user.level)
         
-        let hoursCompletedString = String(user.totalHours)
+        var hoursCompletedString: String
+        if user.totalHours != -1 {
+            hoursCompletedString = String(user.totalHours)
+        } else {
+            hoursCompletedString = "0"
+        }
         let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / 60 \nhours") // ask charles about the 60
         styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
         self.userStatusLabel.attributedText = userStatusString
@@ -239,13 +246,17 @@ class ProfileView: UIView {
         let promoteEditButtonX = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.promoteButton.frame)
         self.promoteButton.setX(promoteEditButtonX)
         
-        // position demote button
         self.demoteButton.layoutIfNeeded()
         self.demoteButton.sizeToFit()
         self.demoteButton.setWidth(self.promoteButton.frame.width)
-        self.demoteButton.setY(self.headerHeight + 15)
         let demoteEditButtonx = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.demoteButton.frame)
         self.demoteButton.setX(demoteEditButtonx)
+        
+        if self.bothButtons {
+            self.demoteButton.setY(CGRectGetMaxY(self.promoteButton.frame) + UIConstants.verticalMargin)
+        } else {
+            self.demoteButton.setY(self.headerHeight + 15)
+        }
         
 
         // set up image
@@ -336,24 +347,5 @@ class ProfileView: UIView {
     
     func startDemoting() {
         self.demoteButton.startLoading()
-    }
-    
-    func didPromote() {
-        self.promoteButton.stopLoading()
-        self.promoteButton.setTitle("Promote", forState: .Normal)
-        self.demoteButton.setTitle("Demote", forState: .Normal)
-        self.promoteButton.hidden = true
-        self.demoteButton.hidden = false
-        self.userRoleLabel.text = "Admin"
-    }
-    
-    func didDemote() {
-        self.demoteButton.stopLoading()
-        self.promoteButton.setTitle("Promote", forState: .Normal)
-        self.demoteButton.setTitle("Demote", forState: .Normal)
-        self.demoteButton.hidden = true
-        self.promoteButton.hidden = false
-        self.userRoleLabel.text = "Mentor"
-    }
-    
+    }    
 }

@@ -41,6 +41,8 @@ struct StringConstants {
     static let kEndpointGetSchools = kEndpointBaseURL + "/schools?"
     static let kEndpointGetSignUpRequests = kEndpointBaseURL + "/users?verified=false"
     
+    static let defaultErrorMessage = "Sorry, something went wrong."
+    
     static func kSchoolDetailURL(id: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/schools/" + String(id)
     }

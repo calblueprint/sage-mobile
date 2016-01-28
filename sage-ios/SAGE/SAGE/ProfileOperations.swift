@@ -16,7 +16,7 @@ class ProfileOperations: NSObject {
             let user = User(propertyDictionary: userJSON)
             completion(user)
             }) { (operation, error) -> Void in
-                failure("Cannot get user")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -32,7 +32,7 @@ class ProfileOperations: NSObject {
             completion(checkins)
             
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -66,7 +66,7 @@ class ProfileOperations: NSObject {
             let newUser = User(propertyDictionary: newUserData)
             completion(newUser)
             }) { (operation, error) -> Void in
-                failure("Could not edit profile.")
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -84,7 +84,7 @@ class ProfileOperations: NSObject {
         manager.POST(url, parameters: params, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not promote user.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -101,7 +101,7 @@ class ProfileOperations: NSObject {
         manager.POST(url, parameters: params, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not demote user.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
 }

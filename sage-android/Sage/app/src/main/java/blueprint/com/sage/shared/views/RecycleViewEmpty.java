@@ -2,9 +2,11 @@ package blueprint.com.sage.shared.views;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -13,7 +15,7 @@ import android.view.View;
  */
 public class RecycleViewEmpty extends RecyclerView {
 
-    private int ANIMATION_DURATION = 500;
+    private int ANIMATION_DURATION = 300;
     private AdapterDataObserver mObserver;
 
     private View mEmptyView;
@@ -86,42 +88,54 @@ public class RecycleViewEmpty extends RecyclerView {
     }
 
     private void toggleRecyclerView(boolean showRecyclerView) {
-        if (showRecyclerView) {
+        if (showRecyclerView && getVisibility() == View.GONE) {
             showRecyclerView();
-        } else {
+        } else if (mEmptyView != null && mEmptyView.getVisibility() == View.GONE) {
             showEmptyView();
         }
     }
 
     private void showRecyclerView() {
-        getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION)
-                .addListener(getAnimationListener(this, View.VISIBLE));
-        if (mEmptyView != null)
-            getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION)
-                    .addListener(getAnimationListener(mEmptyView, View.GONE));
+        ValueAnimator fadeIn = getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION);
+        fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
+        fadeIn.start();
+
+        if (mEmptyView != null) {
+            ValueAnimator fadeOut = getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION);
+            fadeOut.addListener(getAnimationListener(mEmptyView, View.GONE));
+            fadeOut.start();
+        }
     }
 
     private void showEmptyView() {
         if (mEmptyView == null)
             return;
 
-        getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION)
-                .addListener(getAnimationListener(this, View.GONE));
-        getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION)
-                .addListener(getAnimationListener(mEmptyView, View.VISIBLE));
+        ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
+        fadeOut.addListener(getAnimationListener(this, View.GONE));
+        fadeOut.start();
+
+        ValueAnimator fadeIn = getObjectAnimator(mEmptyView, 0, 1).setDuration(ANIMATION_DURATION);
+        fadeIn.addListener(getAnimationListener(mEmptyView, View.VISIBLE));
+        fadeIn.start();
     }
 
-    private ObjectAnimator getObjectAnimator(View target, int start, int end) {
+    private ValueAnimator getObjectAnimator(View target, int start, int end) {
         return ObjectAnimator.ofFloat(target, "alpha", start, end);
     }
 
     private Animator.AnimatorListener getAnimationListener(final View view, final int visibilityOnEnd) {
         return new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animation) {}
+            public void onAnimationStart(Animator animation) {
+                Log.e("asdf", "asfasdf");
+            }
 
             @Override
-            public void onAnimationEnd(Animator animation) { view.setVisibility(visibilityOnEnd); }
+            public void onAnimationEnd(Animator animation) {
+                Log.e("asdf", "ended");
+                view.setVisibility(visibilityOnEnd);
+            }
 
             @Override
             public void onAnimationRepeat(Animator animation) {}

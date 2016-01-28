@@ -23,7 +23,7 @@
             <ImageView
                 style="@style/FormIcon"
                 android:id="@+id/user_name_icon"
-                android:src="@drawable/ic_person_pin_white" />
+                android:src="@drawable/ic_person_pin_white_48dp" />
 
             <LinearLayout
                 style="@style/FormEditLinearLayout"

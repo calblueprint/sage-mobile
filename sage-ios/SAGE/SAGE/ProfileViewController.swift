@@ -165,7 +165,7 @@ class ProfileViewController: UITableViewController {
     }
     
     func setButtonVisibility() {
-        self.profileView.bothButtons = false
+        self.profileView.showBothButtons = false
         if LoginOperations.getUser()!.id == self.user!.id {
             self.profileView.currentUserProfile = true
         } else {
@@ -176,7 +176,7 @@ class ProfileViewController: UITableViewController {
             if self.user!.role == .Admin {
                 self.profileView.canPromote = true
                 self.profileView.canDemote = true
-                self.profileView.bothButtons = true
+                self.profileView.showBothButtons = true
             } else if user!.role == .President {
                 self.profileView.canPromote = false
                 self.profileView.canDemote = false

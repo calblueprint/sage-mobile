@@ -111,7 +111,7 @@ class AdminTableViewController: UITableViewController {
                 cell.imageView?.image = icon
             }
         case 2:
-            if LoginOperations.getUser()?.role == .President && indexPath.row == 0{
+            if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
                 cell.textLabel?.text = "End Fall 2015"
                 let icon = FAKIonIcons.logOutIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))

@@ -191,7 +191,7 @@ class AdminOperations {
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
                     AnnouncementConstants.kSchoolID: announcement.school!.id,
-                    AnnouncementConstants.kCategory: "school"
+                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
                 ]
             ]
         } else {
@@ -200,7 +200,7 @@ class AdminOperations {
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
                     AnnouncementConstants.kSchoolID: 0,
-                    AnnouncementConstants.kCategory: "general"
+                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
                 ]
             ]
         }
@@ -268,7 +268,7 @@ class AdminOperations {
                     AnnouncementConstants.kText: announcement.text!,
                     AnnouncementConstants.kSchoolID: announcement.school!.id,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: "school"
+                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
                 ]
             ]
         } else {
@@ -277,7 +277,7 @@ class AdminOperations {
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: "general"
+                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
                 ]
             ]
         }

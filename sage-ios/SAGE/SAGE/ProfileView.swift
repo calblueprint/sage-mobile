@@ -55,7 +55,7 @@ class ProfileView: UIView {
         }
     }
     
-    var bothButtons = false
+    var showBothButtons = false
     
     var canPromote: Bool {
         get {
@@ -252,7 +252,7 @@ class ProfileView: UIView {
         let demoteEditButtonx = CGRectGetWidth(self.header.frame) - self.leftMargin - CGRectGetWidth(self.demoteButton.frame)
         self.demoteButton.setX(demoteEditButtonx)
         
-        if self.bothButtons {
+        if self.showBothButtons {
             self.demoteButton.setY(CGRectGetMaxY(self.promoteButton.frame) + UIConstants.verticalMargin)
         } else {
             self.demoteButton.setY(self.headerHeight + 15)

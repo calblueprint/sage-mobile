@@ -59,7 +59,7 @@ class AnnouncementsViewController: UITableViewController {
         self.view.backgroundColor = UIColor.whiteColor()
 
         if let role = LoginOperations.getUser()?.role {
-            if role == .Admin || role == .President {
+            if (role == .Admin && LoginOperations.getUser()?.directorID == -1) || role == .President {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
             }
         }

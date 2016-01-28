@@ -22,11 +22,18 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
-    static func getState(completion: ((User) -> Void), failure:((String) -> Void)) {
+    static func getState(completion: ((User, Semester, Semester?) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
-            let sessionJSON = data["session"]!!["user"] as! [String: AnyObject]
-            let user = User(propertyDictionary: sessionJSON)
-            completion(user)
+            let userJSON = data["session"]!!["user"] as! [String: AnyObject]
+            let user = User(propertyDictionary: userJSON)
+            let currentSemesterJSON = data["session"]!!["current_semester"] as! [String: AnyObject]
+            let currentSemester = Semester(propertyDictionary: currentSemesterJSON)
+            let userSemesterJSON = userJSON["user_semester"]
+            var userSemester: Semester? = nil
+            if !(userSemesterJSON is NSNull) {
+                userSemester = Semester(propertyDictionary: userSemesterJSON as! [String: AnyObject])
+            }
+            completion(user, currentSemester, userSemester)
             }) { (operation, error) -> Void in
                 failure("Cannot get user state")
         }

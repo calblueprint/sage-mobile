@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class RootController: UIViewController {
     
@@ -50,6 +51,14 @@ class RootController: UIViewController {
             LoginOperations.getState({ (state) -> Void in
                 // update keychain
                 // print out state here when debugging
+                let user = state.0
+                let currentSemester = state.1
+                let userSemester = state.2
+                KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
+                KeychainWrapper.setObject(currentSemester, forKey: KeychainConstants.kCurrentSemester)
+                if !(userSemester == nil) {
+                    KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kUserSemester)
+                }
                 self.pushRootTabBarController()
                 
                 }) { (errorMessage) -> Void in

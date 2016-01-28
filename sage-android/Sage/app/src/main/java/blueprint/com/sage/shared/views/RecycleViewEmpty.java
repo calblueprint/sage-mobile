@@ -90,7 +90,7 @@ public class RecycleViewEmpty extends RecyclerView {
     private void toggleRecyclerView(boolean showRecyclerView) {
         if (showRecyclerView && getVisibility() == View.GONE) {
             showRecyclerView();
-        } else if (mEmptyView != null && mEmptyView.getVisibility() == View.GONE) {
+        } else if (mEmptyView != null && mEmptyView.getVisibility() == View.GONE && !showRecyclerView) {
             showEmptyView();
         }
     }

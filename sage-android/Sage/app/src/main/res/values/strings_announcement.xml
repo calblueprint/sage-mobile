@@ -4,8 +4,5 @@
     <string name="announcement_body">Comment</string>
     <string name="announcement_category">Select recipients</string>
     <string name="announcement_school">to</string>
-    <string-array name="categories">
-        <item>School Announcement</item>
-        <item>General Announcement</item>
-    </string-array>
+    <string name="announcement_select_school">School</string>
 </resources>

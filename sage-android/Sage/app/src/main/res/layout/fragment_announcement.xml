@@ -26,7 +26,7 @@
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/announcement_school"
+            android:id="@+id/announcement_school_single"
             style="@style/AnnouncementRow"
             android:text="@string/announcement_school"
             android:layout_toRightOf="@id/announcement_user_single"

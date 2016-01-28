@@ -1,5 +1,7 @@
 package blueprint.com.sage.announcements;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.MenuItem;
 
 import blueprint.com.sage.R;
@@ -20,10 +22,19 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
-                if (validateAndSubmitRequest()) getActivity().onBackPressed();
+                if (validateAndSubmitRequest()) {
+                    onActivityResult(102, Activity.RESULT_OK, createIntent());
+                    getActivity().onBackPressed();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public Intent createIntent() {
+        Intent intent = new Intent(getActivity(), AnnouncementActivity.class);
+        intent.putExtra("Announcement", announcementToString(mAnnouncement));
+        return intent;
     }
 
     public void initializeViews() {

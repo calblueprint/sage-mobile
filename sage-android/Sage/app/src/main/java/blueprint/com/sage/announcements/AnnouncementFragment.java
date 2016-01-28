@@ -30,7 +30,7 @@ public class AnnouncementFragment extends Fragment {
     private Announcement mAnnouncement;
 
     @Bind(R.id.announcement_user_single) TextView mUser;
-    @Bind(R.id.announcement_school) TextView mSchool;
+    @Bind(R.id.announcement_school_single) TextView mSchool;
     @Bind(R.id.announcement_time_single) TextView mTime;
     @Bind(R.id.announcement_title_single) TextView mTitle;
     @Bind(R.id.announcement_body_single) TextView mBody;

@@ -1,66 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/create_announcement_layout">
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
 
     <LinearLayout
-        style="@style/AnnouncementLinearLayout">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/create_announcement_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            style="@style/AnnouncementIcon"
-            android:src="@drawable/ic_announcement_white_24dp" />
+        <LinearLayout style="@style/FormContainerLinearLayout">
 
-        <EditText
-            style="@style/AnnouncementText"
-            android:id="@+id/create_announcement_title"
-            android:inputType="textMultiLine"
-            android:hint="@string/announcement_title" />
+            <ImageView
+                style="@style/FormIcon"
+                android:src="@drawable/ic_announcement_white_24dp"/>
 
+            <LinearLayout
+                style="@style/FormEditLinearLayout">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/announcement_title"/>
+
+                <EditText
+                    style="@style/FormText"
+                    android:id="@+id/create_announcement_title"
+                    android:hint="@string/required"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/FormContainerLinearLayout">
+
+            <ImageView
+                style="@style/FormIcon"
+                android:src="@drawable/ic_location_city_black" />
+
+            <LinearLayout style="@style/FormEditLinearLayout">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/announcement_category" />
+
+                <Spinner
+                    style="@style/FormSpinner"
+                    android:id="@+id/announcement_category" />
+
+                <Spinner
+                    style="@style/FormSpinner"
+                    android:id="@+id/announcement_school_list"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/FormContainerLinearLayout">
+
+            <ImageView
+                style="@style/FormIcon"
+                android:id="@+id/create_school_address_icon"
+                android:src="@drawable/ic_mail_white" />
+
+            <LinearLayout style="@style/FormEditLinearLayout">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/announcement_body"/>
+
+                <EditText
+                    style="@style/FormText"
+                    android:id="@+id/create_announcement_body"
+                    android:hint="@string/required" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        style="@style/AnnouncementLinearLayout">
-
-        <ImageView
-            style="@style/AnnouncementIcon"
-            android:src="@drawable/ic_location_city_white"
-            android:layout_gravity="top"/>
-
-        <Spinner
-            style="@style/AnnouncementSpinner"
-            android:id="@+id/announcement_category"
-            android:hint="@string/announcement_category" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/AnnouncementLinearLayout">
-
-        <Spinner
-            style="@style/AnnouncementSpinner"
-            android:id="@+id/announcement_school_list"
-            android:hint="@string/announcement_category"
-            android:visibility="gone"
-            android:layout_marginLeft="56dp"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        style="@style/AnnouncementLinearLayout">
-
-        <ImageView
-            style="@style/AnnouncementIcon"
-            android:src="@drawable/ic_mail_white"
-            android:layout_gravity="top"/>
-
-        <EditText
-            style="@style/AnnouncementText"
-            android:id="@+id/create_announcement_body"
-            android:inputType="textMultiLine"
-            android:hint="@string/announcement_body" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

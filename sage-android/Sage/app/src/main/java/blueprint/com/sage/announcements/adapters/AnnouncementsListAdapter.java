@@ -18,6 +18,7 @@ import blueprint.com.sage.announcements.AnnouncementActivity;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,6 +50,12 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         viewHolder.mTime.setText(announcement.getTime());
         viewHolder.mTitle.setText(announcement.getTitle());
         viewHolder.mBody.setText(announcement.getBody());
+        if (announcement.getSchool() != null) {
+            viewHolder.mSchool.setVisibility(View.VISIBLE);
+            viewHolder.mSchool.setText("to " + announcement.getSchool().getName());
+        } else {
+            viewHolder.mSchool.setVisibility(View.GONE);
+        }
     }
 
     public void setAnnouncements(ArrayList<Announcement> curList) {
@@ -71,6 +78,7 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         @Bind(R.id.announcement_time) TextView mTime;
         @Bind(R.id.announcement_title) TextView mTitle;
         @Bind(R.id.announcement_body) TextView mBody;
+        @Bind(R.id.announcement_school) TextView mSchool;
         @Bind(R.id.announcement_profile_picture) CircleImageView mPicture;
 
         public AnnouncementsListViewHolder(View v, FragmentActivity activity) {
@@ -82,9 +90,10 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         @OnClick(R.id.announcement_row)
         public void onClick(View v) {
             Announcement announcement = mAnnouncementArrayList.get(getAdapterPosition());
-            Intent intent = new Intent(activity, AnnouncementActivity.class);
-            intent.putExtra("Announcement", announcementToString(announcement));
-            activity.startActivity(intent);
+//            Class<?> cls = Class.cast(announcement);
+////            Intent intent = new Intent(activity, AnnouncementActivity.class);
+////            intent.putExtra("Announcement", announcementToString(announcement));
+            FragUtils.startActivityForResultActivity(activity, cls, 102);
         }
 
         public String announcementToString(Announcement announcement) {

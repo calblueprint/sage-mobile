@@ -8,9 +8,11 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,8 @@ import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.adapters.SchoolSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
+import blueprint.com.sage.shared.adapters.spinners.StringArraySpinnerAdapter;
 import blueprint.com.sage.shared.validators.FormValidator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -105,8 +108,9 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     public abstract void initializeViews();
 
     public void initializeSpinners() {
-        final ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.categories, android.R.layout.simple_spinner_item);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        String[] categoryList = new String[]{"School Announcement", "General Announcement"};
+        StringArraySpinnerAdapter categoryAdapter = new StringArraySpinnerAdapter(getActivity(), categoryList, android.R.layout.simple_spinner_item, android.R.layout.simple_spinner_item);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         mAnnouncementCategory.setAdapter(categoryAdapter);
         mAnnouncementCategory.setSelection(1, true);
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
@@ -146,5 +150,15 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
                 mAnnouncementSchoolList.setSelection(i);
             }
         }
+    }
+
+    public String announcementToString(Announcement announcement) {
+        ObjectMapper mapper = new ObjectMapper();
+        String string = null;
+        try {
+            string = mapper.writeValueAsString(announcement);
+        } catch (JsonProcessingException exception) {
+        }
+        return string;
     }
 }

@@ -22,6 +22,7 @@ import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
+import blueprint.com.sage.events.schools.DeleteSchoolEvent;
 import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
@@ -56,6 +57,7 @@ import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.schools.CreateSchoolRequest;
+import blueprint.com.sage.network.schools.DeleteSchoolRequest;
 import blueprint.com.sage.network.schools.EditSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.schools.SchoolRequest;
@@ -413,6 +415,23 @@ public class Requests {
                         @Override
                         public void onResponse(School school) {
                             EventBus.getDefault().post(new EditSchoolEvent(school));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeDeleteRequest(School school) {
+            DeleteSchoolRequest request = new DeleteSchoolRequest(mActivity, school,
+                    new Response.Listener<School>() {
+                        @Override
+                        public void onResponse(School school) {
+                            EventBus.getDefault().post(new DeleteSchoolEvent(school)));
                         }
                     }, new Response.Listener<APIError>() {
                         @Override

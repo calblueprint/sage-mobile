@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -127,15 +126,10 @@ public class RecycleViewEmpty extends RecyclerView {
     private Animator.AnimatorListener getAnimationListener(final View view, final int visibilityOnEnd) {
         return new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animation) {
-                Log.e("asdf", "asfasdf");
-            }
+            public void onAnimationStart(Animator animation) {}
 
             @Override
-            public void onAnimationEnd(Animator animation) {
-                Log.e("asdf", "ended");
-                view.setVisibility(visibilityOnEnd);
-            }
+            public void onAnimationEnd(Animator animation) { view.setVisibility(visibilityOnEnd); }
 
             @Override
             public void onAnimationRepeat(Animator animation) {}

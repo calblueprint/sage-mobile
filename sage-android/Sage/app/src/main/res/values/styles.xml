@@ -9,6 +9,9 @@
         <item name="colorAccent">@color/amber500</item>
     </style>
 
+    <style name="AppThemeTranslucent" parent="AppTheme">
+    </style>
+
     <!-- ToolBar -->
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="actionMenuTextColor">@color/white</item>

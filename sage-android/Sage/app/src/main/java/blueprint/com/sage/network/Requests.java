@@ -27,6 +27,7 @@ import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.semesters.FinishSemesterEvent;
+import blueprint.com.sage.events.semesters.JoinSemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.events.semesters.StartSemesterEvent;
@@ -62,6 +63,7 @@ import blueprint.com.sage.network.schools.EditSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.schools.SchoolRequest;
 import blueprint.com.sage.network.semesters.FinishSemesterRequest;
+import blueprint.com.sage.network.semesters.JoinSemesterRequest;
 import blueprint.com.sage.network.semesters.SemesterListRequest;
 import blueprint.com.sage.network.semesters.SemesterRequest;
 import blueprint.com.sage.network.semesters.StartSemesterRequest;
@@ -598,6 +600,24 @@ public class Requests {
                         @Override
                         public void onResponse(List<Semester> semesters) {
                             EventBus.getDefault().post(new SemesterListEvent(semesters));
+                        }
+                    },
+                    new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeJoinRequest() {
+            Request request = new JoinSemesterRequest(mActivity,
+                    new Response.Listener<Session>() {
+                        @Override
+                        public void onResponse(Session session) {
+                            EventBus.getDefault().post(new JoinSemesterEvent(session));
                         }
                     },
                     new Response.Listener<APIError>() {

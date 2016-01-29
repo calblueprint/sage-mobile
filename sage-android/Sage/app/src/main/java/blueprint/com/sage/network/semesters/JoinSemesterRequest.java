@@ -1,4 +1,4 @@
-package blueprint.com.sage.events.semesters;
+package blueprint.com.sage.network.semesters;
 
 import android.app.Activity;
 import android.util.Log;

@@ -20,7 +20,7 @@ class ProfileViewController: UITableViewController {
         self.user = user
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
-
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -38,6 +38,16 @@ class ProfileViewController: UITableViewController {
             self.profileView.setupWithUser(user)
             self.tableView.reloadData()
         }
+    }
+    
+    func verifiedCheckinAdded(notification: NSNotification) {
+        let checkin = notification.object!.copy() as! Checkin
+        if LoginOperations.getUser()?.id == checkin.user?.id {
+            self.user?.totalMinutes += checkin.minuteDuration()
+            self.profileView.setupWithUser(self.user!)
+            self.tableView.reloadData()
+        }
+
     }
     
     func setupHeader() {

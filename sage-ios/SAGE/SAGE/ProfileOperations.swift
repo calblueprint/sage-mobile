@@ -71,24 +71,26 @@ class ProfileOperations: NSObject {
         
     }
     
-    static func promote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func promote(user: User, role: User.UserRole, completion: ((User) -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         let url = StringConstants.kUserAdminPromoteURL(user.id)
 
         let params = ["user":
             [
-                UserConstants.kRole: 1
+                UserConstants.kRole: role.rawValue
             ]
         ]
         
         manager.POST(url, parameters: params, success: { (operation, data) -> Void in
-            completion?()
+            let userDict = (data as! [String: AnyObject])["user"] as! [String: AnyObject]
+            let user = User(propertyDictionary: userDict)
+            completion?(user)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
     }
     
-    static func demote(user: User, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func demote(user: User, completion: ((User) -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         let url = StringConstants.kUserAdminPromoteURL(user.id)
         
@@ -99,7 +101,9 @@ class ProfileOperations: NSObject {
         ]
         
         manager.POST(url, parameters: params, success: { (operation, data) -> Void in
-            completion?()
+            let userDict = (data as! [String: AnyObject])["user"] as! [String: AnyObject]
+            let user = User(propertyDictionary: userDict)
+            completion?(user)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }

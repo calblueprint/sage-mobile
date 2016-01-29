@@ -13,7 +13,7 @@ class AnnouncementsOperations {
     
     static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
         var params: [String: String]
-        if LoginOperations.getUser()!.role == .Admin {
+        if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
             params = [String: String]()
         } else {
             let schoolID = LoginOperations.getUser()!.school!.id

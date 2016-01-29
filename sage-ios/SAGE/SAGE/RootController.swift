@@ -43,16 +43,7 @@ class RootController: UIViewController {
     
     func pushCorrectViewController() {
         if LoginOperations.userIsLoggedIn() {
-            // get all data -> user, userSemester, currentSemester
-            // in completion block, put all these into keychain
-            // and run code below. check if user.verified to determine
-            // which VC to push
-            
-            LoginOperations.getState({ (state) -> Void in
-                // update keychain
-                let user = state.0
-                let currentSemester = state.1
-                let userSemester = state.2
+            LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                 KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
                 if !(currentSemester == nil) {
                     KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
@@ -65,16 +56,6 @@ class RootController: UIViewController {
                 }) { (errorMessage) -> Void in
                     // error
             }
-//            let completion = { (success: Bool) -> Void in
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    if success {
-//                        self.pushRootTabBarController()
-//                    } else {
-//                        self.pushUnverifiedViewController()
-//                    }
-//                })
-//            }
-//            LoginOperations.verifyUser(completion)
         } else {
             self.pushLoginViewController()
         }

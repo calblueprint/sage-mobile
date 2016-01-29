@@ -20,7 +20,7 @@
 
         <ImageView
             style="@style/SignUpIcon"
-            android:src="@drawable/ic_mail_white" />
+            android:src="@drawable/ic_email_white_48dp" />
 
         <EditText
             style="@style/LandingField"

@@ -8,6 +8,7 @@
 
 import UIKit
 import FontAwesomeKit
+import SwiftKeychainWrapper
 
 class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
@@ -36,7 +37,16 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         ]
 
         let announcementsViewController = AnnouncementsViewController(style: .Plain)
-        let checkInViewController = CheckinViewController()
+        
+        var checkInViewController: UIViewController? = nil
+        
+        // if current semester is nil and user semester is nil
+        if (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) == nil && KeychainWrapper.objectForKey(KeychainConstants.kUserSemester) == nil) {
+            checkInViewController = JoinSemesterViewController()
+        } else {
+            checkInViewController = CheckinViewController()
+        }
+        
         let profileViewController = ProfileViewController(user: LoginOperations.getUser()!)
         
         var rootViewControllers = [announcementsViewController, checkInViewController, profileViewController]
@@ -59,7 +69,8 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
             navigationController.delegate = self
             navigationController.tabBarItem = UITabBarItem(title: titles[i], image: images[i], tag:i)
             navigationController.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -3) // Offset to move text up
-            navigationController.viewControllers = [rootViewControllers[i]]
+            // CHANGE THIS BACK TO THE ORIGINAL BY REMOVING THE FORCE UNWRAPPING
+            navigationController.viewControllers = [rootViewControllers[i]!]
             
             viewControllers.append(navigationController)
         }

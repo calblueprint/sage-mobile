@@ -36,6 +36,12 @@ class LoginOperations: NSObject {
             if !(userSemesterJSON is NSNull) {
                 userSemester = Semester(propertyDictionary: userSemesterJSON as! [String: AnyObject])
             }
+            if !(currentSemester == nil) {
+                KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
+            }
+            if !(userSemester == nil) {
+                KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kUserSemester)
+            }
             completion(user, currentSemester, userSemester)
             }) { (operation, error) -> Void in
                 failure("Cannot get user state")
@@ -197,5 +203,7 @@ class LoginOperations: NSObject {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kUser)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kAuthToken)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSchool)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kUserSemester)
     }
 }

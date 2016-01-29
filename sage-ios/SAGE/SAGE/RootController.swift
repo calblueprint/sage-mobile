@@ -45,14 +45,11 @@ class RootController: UIViewController {
         if LoginOperations.userIsLoggedIn() {
             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                 KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
-                if !(currentSemester == nil) {
-                    KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
+                if (user.verified) {
+                    self.pushRootTabBarController()
+                } else {
+                    self.pushUnverifiedViewController()
                 }
-                if !(userSemester == nil) {
-                    KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kUserSemester)
-                }
-                self.pushRootTabBarController()
-                
                 }) { (errorMessage) -> Void in
                     // error
             }

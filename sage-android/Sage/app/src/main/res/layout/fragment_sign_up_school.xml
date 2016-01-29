@@ -24,8 +24,6 @@
         <Spinner
             style="@style/LandingField"
             android:id="@+id/sign_up_school"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
             android:hint="@string/sign_up_first_name"
             android:fontFamily="sans-serif-light"
             android:layout_marginTop="10dp"/>
@@ -33,8 +31,6 @@
         <Spinner
             style="@style/LandingField"
             android:id="@+id/sign_up_volunteer_type"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
             android:hint="@string/sign_up_last_name"
             android:fontFamily="sans-serif-light" />
 

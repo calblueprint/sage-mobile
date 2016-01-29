@@ -168,7 +168,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
 
     @OnClick(R.id.create_user_photo)
     public void onPhotoClick(CircleImageView imageView) {
-        if (PermissionsUtils.hasIOPermissions(getActivity())) {
+        if (!PermissionsUtils.hasIOPermissions(getActivity())) {
             PermissionsUtils.requestIOPermissions(getActivity());
             return;
         }

@@ -41,15 +41,7 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func loadCheckinRequests() {
-        AdminOperations.loadCheckinRequests({ (var checkinRequests) -> Void in
-            checkinRequests.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
-                let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
-                if comparisonResult == .OrderedDescending {
-                    return true
-                } else {
-                    return false
-                }
-            })
+        AdminOperations.loadCheckinRequests({ (checkinRequests) -> Void in
             self.requests = checkinRequests
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()

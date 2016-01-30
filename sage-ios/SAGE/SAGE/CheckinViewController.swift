@@ -72,7 +72,7 @@ class CheckinViewController: UIViewController {
         }
         
         if (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) == nil && KeychainWrapper.objectForKey(KeychainConstants.kUserSemester) == nil) {
-            self.view = NoSemesterView()
+            self.navigationController!.pushViewController(NoSemesterViewController(), animated: false)
         } else if (KeychainWrapper.objectForKey(KeychainConstants.kUserSemester) == nil && KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) != nil) {
             self.navigationController!.pushViewController(JoinSemesterViewController(), animated: false)
         }

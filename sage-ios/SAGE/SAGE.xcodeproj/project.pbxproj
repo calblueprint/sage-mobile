@@ -122,6 +122,8 @@
 		5D6149111C5B76450036708A /* JoinSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149101C5B76450036708A /* JoinSemesterView.swift */; };
 		5D6149131C5C31090036708A /* NoSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149121C5C31090036708A /* NoSemesterView.swift */; };
 		5D6149151C5C3F0D0036708A /* JoinSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149141C5C3F0D0036708A /* JoinSemesterViewController.swift */; };
+		5D6149171C5C5ADC0036708A /* SemesterSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149161C5C5ADC0036708A /* SemesterSummary.swift */; };
+		5D6149191C5C5B5F0036708A /* SemesterSummaryConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149181C5C5B5F0036708A /* SemesterSummaryConstants.swift */; };
 		5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63EF111BFC86340036D478 /* SchoolOperations.swift */; };
 		5D757DB51C12381200BDAE61 /* ProfileCheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757DB41C12381200BDAE61 /* ProfileCheckinViewController.swift */; };
 		5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */; };
@@ -256,6 +258,8 @@
 		5D6149101C5B76450036708A /* JoinSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinSemesterView.swift; sourceTree = "<group>"; };
 		5D6149121C5C31090036708A /* NoSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSemesterView.swift; sourceTree = "<group>"; };
 		5D6149141C5C3F0D0036708A /* JoinSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinSemesterViewController.swift; sourceTree = "<group>"; };
+		5D6149161C5C5ADC0036708A /* SemesterSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterSummary.swift; sourceTree = "<group>"; };
+		5D6149181C5C5B5F0036708A /* SemesterSummaryConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterSummaryConstants.swift; sourceTree = "<group>"; };
 		5D63EF111BFC86340036D478 /* SchoolOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolOperations.swift; sourceTree = "<group>"; };
 		5D757DB41C12381200BDAE61 /* ProfileCheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCheckinViewController.swift; sourceTree = "<group>"; };
 		5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailView.swift; sourceTree = "<group>"; };
@@ -448,6 +452,7 @@
 				422334251BC09E0400E863D0 /* User.swift */,
 				422334271BC09E0F00E863D0 /* School.swift */,
 				E4A3C54C1C4D84040000D7D9 /* Semester.swift */,
+				5D6149161C5C5ADC0036708A /* SemesterSummary.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -500,6 +505,7 @@
 				422334301BC0C97E00E863D0 /* SchoolConstants.swift */,
 				E4CF49E51C5462920078A799 /* SemesterConstants.swift */,
 				114953501C190CAA00A74845 /* APIKeys.swift */,
+				5D6149181C5C5B5F0036708A /* SemesterSummaryConstants.swift */,
 			);
 			name = ModelConstants;
 			sourceTree = "<group>";
@@ -903,6 +909,7 @@
 				4254D2931BC5AABF00C831C7 /* KeychainConstants.swift in Sources */,
 				27561FCE1C0D2E0E00DAB74A /* SGButton.swift in Sources */,
 				27D1B6801BE1993700F9D026 /* FormItem.swift in Sources */,
+				5D6149171C5C5ADC0036708A /* SemesterSummary.swift in Sources */,
 				42C4352A1C013F8D000F6671 /* AddSchoolLocationTableViewController.swift in Sources */,
 				4241AF8A1C4BCFCC009BC133 /* SelectHoursEditProfileController.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
@@ -942,6 +949,7 @@
 				5D221C241C18D296008FBD9B /* CheckinTableViewCell.swift in Sources */,
 				42A6CE661C0BDFFD00F97CFF /* UsersTableViewCell.swift in Sources */,
 				27EB32A71C3917D400FD8050 /* EndSemesterViewController.swift in Sources */,
+				5D6149191C5C5B5F0036708A /* SemesterSummaryConstants.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
 				4254C1EB1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift in Sources */,
 				27D1B6841BE1C20C00F9D026 /* FormTextItem.swift in Sources */,

@@ -49,6 +49,7 @@ class JoinSemesterView: UIView {
         self.button.layer.borderWidth = 1
         self.button.layer.cornerRadius = 3
         self.button.setTitleColor(UIColor.secondaryTextColor, forState: .Normal)
+        self.button.titleLabel!.font = UIFont.getDefaultFont(15)
         self.button.sizeToFit()
         self.button.setY(330)
         self.button.centerHorizontally()

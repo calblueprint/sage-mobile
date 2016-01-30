@@ -72,7 +72,6 @@ class AdminTableViewController: UITableViewController {
             case 0:
                 if LoginOperations.getUser()?.role == .President {
                     self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
-               
                 }
             default: break
             }

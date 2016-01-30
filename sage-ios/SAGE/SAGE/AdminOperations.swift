@@ -261,14 +261,13 @@ class AdminOperations {
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         var params = [String: AnyObject]()
-        if announcement.school!.id != -1 {
+        if announcement.school == nil || announcement.school!.id == -1 {
             params = ["announcement":
                 [
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
-                    AnnouncementConstants.kSchoolID: announcement.school!.id,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
+                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
                 ]
             ]
         } else {
@@ -276,8 +275,9 @@ class AdminOperations {
                 [
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: announcement.school!.id,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
+                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
                 ]
             ]
         }

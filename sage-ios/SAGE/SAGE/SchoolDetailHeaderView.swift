@@ -18,6 +18,8 @@ class SchoolDetailHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
+        self.mapView.settings.scrollGestures = false
+        self.mapView.settings.zoomGestures = false
         self.addSubview(self.mapView)
     }
     

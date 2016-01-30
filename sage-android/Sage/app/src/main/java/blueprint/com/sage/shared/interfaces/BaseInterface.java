@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.utility.network.NetworkManager;
 
@@ -18,4 +19,5 @@ public interface BaseInterface {
     NetworkManager getNetworkManager();
     SharedPreferences getSharedPreferences();
     GoogleApiClient getGoogleApiClient();
+    Semester getCurrentSemester();
 }

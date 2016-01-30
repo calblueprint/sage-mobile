@@ -13,6 +13,7 @@ import com.google.android.gms.location.places.Places;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -30,6 +31,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
 
     protected User mUser;
     protected School mSchool;
+    protected Semester mCurrentSemester;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
 
         setUpUser();
         setUpSchool();
+        setUpCurrentSemester();
     }
 
     @Override
@@ -85,9 +88,21 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
         }
     }
 
+    private void setUpCurrentSemester() {
+        String currentSemesterString = mPreferences.getString(getString(R.string.current_semester), "");
+
+        try {
+            ObjectMapper objectMapper = mNetworkManager.getObjectMapper();
+            mCurrentSemester = objectMapper.readValue(currentSemesterString, new TypeReference<Semester>() {});
+        } catch (Exception e) {
+            Log.e(getClass().toString(), e.toString());
+        }
+    }
+
     public User getUser() { return mUser; }
     public void setUser(User user) { mUser = user; }
     public School getSchool() { return mSchool; }
+    public Semester getCurrentSemester() { return mCurrentSemester; }
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public SharedPreferences getSharedPreferences() { return mPreferences; }
     public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }

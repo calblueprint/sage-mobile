@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.main.MainActivity;
+import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.signIn.SignInActivity;
@@ -31,22 +33,23 @@ public class NetworkUtils {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public static void loginUser(Session session, Activity activity) throws Exception {
+    public static void loginUser(Activity activity, Session session) throws Exception {
+        setSession(activity, session);
+        loginUser(activity);
+    }
+
+    public static void setSession(Activity activity, Session session) throws Exception {
         SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
                 Context.MODE_PRIVATE);
 
-        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
-        String schoolString = mapper.writeValueAsString(session.getSchool());
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(activity.getString(R.string.email), session.getEmail());
-        editor.putString(activity.getString(R.string.auth_token), session.getAuthenticationToken());
-        editor.putString(activity.getString(R.string.school), schoolString);
-        editor.apply();
+        sharedPreferences.edit()
+                .putString(activity.getString(R.string.email), session.getEmail())
+                .putString(activity.getString(R.string.auth_token), session.getAuthenticationToken())
+                .apply();
 
         setUser(activity, session.getUser());
-
-        loginUser(activity);
+        setSchool(activity, session.getSchool());
+        setCurrentSemester(activity, session.getCurrentSemester());
     }
 
     public static void setUser(Activity activity, User user) throws Exception {
@@ -58,6 +61,28 @@ public class NetworkUtils {
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(activity.getString(R.string.user), userString).apply();
+    }
+
+    public static void setSchool(Activity activity, School school) throws Exception {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
+                Context.MODE_PRIVATE);
+
+        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+        String schoolString = mapper.writeValueAsString(school);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(activity.getString(R.string.school), schoolString).apply();
+    }
+
+    public static void setCurrentSemester(Activity activity, Semester semester) throws Exception {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
+                Context.MODE_PRIVATE);
+
+        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+        String currentSemesterString = mapper.writeValueAsString(semester);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(activity.getString(R.string.current_semester), currentSemesterString).apply();
     }
 
     public static void loginUser(Activity activity) throws Exception {
@@ -89,6 +114,7 @@ public class NetworkUtils {
         editor.remove(activity.getString(R.string.auth_token));
         editor.remove(activity.getString(R.string.user));
         editor.remove(activity.getString(R.string.school));
+        editor.remove(activity.getString(R.string.current_semester));
         editor.apply();
 
         FragUtils.startActivity(activity, SignInActivity.class);

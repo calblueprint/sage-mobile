@@ -25,4 +25,5 @@
     <!-- Join semester -->
     <string name="join_semester_text">Do you want to join this semester?</string>
     <string name="join_semester">Join</string>
+    <string name="join_semester_success">You've joined this semester - you can now start mentoring sessions.</string>
 </resources>

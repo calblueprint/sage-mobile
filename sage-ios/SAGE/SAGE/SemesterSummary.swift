@@ -92,4 +92,36 @@ class SemesterSummary: NSObject {
         return propertyDict
     }
     
+    func statusToString(status: Status) -> String {
+        switch status {
+        case .Inactive:
+            return "Inactive"
+        default:
+            return "Active"
+        }
+    }
+    
+    static func statusFromInt(number: Int) -> Status {
+        if number == 0 {
+            return Status.Inactive
+        }
+        return Status.Default
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        self.id = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kId)
+        self.completed = aDecoder.decodeObjectForKey(SemesterSummaryConstants.kCompleted) as! Bool
+        self.status = SemesterSummary.statusFromInt(aDecoder.decodeObjectForKey(SemesterSummaryConstants.kStatus) as! Int)
+        self.totalTime = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kTotalTime)
+        self.semesterID = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kSemesterID)
+        super.init()
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeInteger(self.id, forKey: SemesterSummaryConstants.kId)
+        aCoder.encodeObject(self.completed, forKey: SemesterSummaryConstants.kCompleted)
+        aCoder.encodeObject(self.status.rawValue, forKey: SemesterSummaryConstants.kStatus)
+        aCoder.encodeObject(self.totalTime, forKey: SemesterSummaryConstants.kTotalTime)
+        aCoder.encodeObject(self.semesterID, forKey: SemesterSummaryConstants.kSemesterID)
+    }
 }

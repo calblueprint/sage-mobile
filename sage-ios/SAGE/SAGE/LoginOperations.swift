@@ -22,6 +22,33 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
+    static func getState(completion: ((User, Semester?, Semester?) -> Void), failure:((String) -> Void)) {
+        BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
+            let userJSON = data["session"]!!["user"] as! [String: AnyObject]
+            let user = User(propertyDictionary: userJSON)
+            let currentSemesterJSON = data["session"]!!["current_semester"]
+            var currentSemester: Semester? = nil
+            if !(currentSemesterJSON is NSNull) {
+                currentSemester = Semester(propertyDictionary: currentSemesterJSON as! [String: AnyObject])
+            }
+            currentSemester = Semester()
+            let userSemesterJSON = userJSON["user_semester"]
+            var userSemester: Semester? = nil
+            if !(userSemesterJSON is NSNull) {
+                userSemester = Semester(propertyDictionary: userSemesterJSON as! [String: AnyObject])
+            }
+            if !(currentSemester == nil) {
+                KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
+            }
+            if !(userSemester == nil) {
+                KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kUserSemester)
+            }
+            completion(user, currentSemester, userSemester)
+            }) { (operation, error) -> Void in
+                failure("Cannot get user state")
+        }
+    }
+    
     static func verifyUser(completion: ((Bool) -> Void)) {
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if user.verified {
@@ -184,5 +211,7 @@ class LoginOperations: NSObject {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kUser)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kAuthToken)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSchool)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kUserSemester)
     }
 }

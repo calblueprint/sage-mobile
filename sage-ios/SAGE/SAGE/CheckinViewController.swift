@@ -57,6 +57,8 @@ class CheckinViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         // Change mode on loading view depending on whether user is
         // mid-check in or not
         if let storedStartTime = KeychainWrapper.stringForKey(KeychainConstants.kSessionStartTime) {
@@ -67,6 +69,12 @@ class CheckinViewController: UIViewController {
         } else {
             self.presentDefaultMode(0)
             self.inSession = false
+        }
+        
+        if (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) == nil && KeychainWrapper.objectForKey(KeychainConstants.kUserSemester) == nil) {
+            self.view = NoSemesterView()
+        } else if (KeychainWrapper.objectForKey(KeychainConstants.kUserSemester) == nil && KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) != nil) {
+            self.navigationController!.pushViewController(JoinSemesterViewController(), animated: true)
         }
     }
     

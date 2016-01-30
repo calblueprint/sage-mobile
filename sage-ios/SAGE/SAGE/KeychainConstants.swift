@@ -19,5 +19,8 @@ struct KeychainConstants {
     static let kSessionStartTime: String = "Session Start Time"
     static let kSchool: String = "User School"
     
+    static let kCurrentSemester: String = "Current Semester"
+    static let kUserSemester: String = "User Semester"
+    
     
 }

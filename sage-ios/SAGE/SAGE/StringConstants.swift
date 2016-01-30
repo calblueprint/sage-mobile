@@ -25,6 +25,12 @@ struct StringConstants {
     static let kEndpointCheckin = kEndpointBaseURL + "/check_ins"
     static let kEndpointAnnouncements = kEndpointBaseURL + "/announcements"
     
+    static func kEndpointUserState(user: User) -> String {
+        return StringConstants.kEndpointBaseURL + "/users/" + String(user.id) + "/state"
+    }
+    
+    static let kEndpointJoinSemester = kEndpointBaseURL + "/semesters/join"
+    
     static func kEndpointUserCheckins(user: User) -> String {
         return StringConstants.kEndpointCheckin + "?user_id=" + String(user.id)
     }
@@ -42,6 +48,12 @@ struct StringConstants {
     static let kEndpointGetSchools = kEndpointBaseURL + "/schools?"
     static let kEndpointGetSignUpRequests = kEndpointBaseURL + "/users?verified=false"
     
+    static let kEndpointStartSemester = kEndpointBaseURL + "admin/semesters"
+    
+    static func kEndpointEndSemester(id: Int) -> String {
+        return kEndpointBaseURL + "admin/semesters/" + String(id) + "/finish"
+    }
+
     static let defaultErrorMessage = "Sorry, something went wrong."
     
     static func kSchoolDetailURL(id: Int) -> String {

@@ -21,4 +21,8 @@
     <string name="activity_create_semester">create_semester</string>
     <string name="current_semester">current_semester</string>
     <string name="semester_user">user</string>
+
+    <!-- Join semester -->
+    <string name="join_semester_text">Do you want to join this semester?</string>
+    <string name="join_semester">Join</string>
 </resources>

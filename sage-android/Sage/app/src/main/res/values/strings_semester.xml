@@ -23,7 +23,7 @@
     <string name="semester_user">user</string>
 
     <!-- Join semester -->
-    <string name="join_semester_text">Do you want to join this semester?</string>
+    <string name="join_semester_text">Looks like a new semester has started - hit "Join" to start your semester and start your mentoring sessions.</string>
     <string name="join_semester">Join</string>
     <string name="join_semester_success">You've joined this semester - you can now start mentoring sessions.</string>
 </resources>

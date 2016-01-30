@@ -45,7 +45,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         var rootViewControllers = [announcementsViewController, checkInViewController, profileViewController]
         
         if let role = LoginOperations.getUser()?.role {
-            if role == .Admin || role == .Director {
+            if role == .Admin || role == .President {
                 let icon = FAKIonIcons.folderIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)

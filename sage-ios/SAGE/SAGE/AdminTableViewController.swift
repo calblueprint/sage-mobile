@@ -26,7 +26,11 @@ class AdminTableViewController: UITableViewController {
         case 1:
             return 2
         case 2:
-            return 2
+            if LoginOperations.getUser()?.role == .President {
+                return 2
+            } else {
+                return 1
+            }
         default: return 0
         }
     }
@@ -66,10 +70,9 @@ class AdminTableViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                if false { // TODO: check if semester exists
+                if LoginOperations.getUser()?.role == .President {
                     self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
-                } else {
-                    self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
+               
                 }
             default: break
             }
@@ -108,18 +111,11 @@ class AdminTableViewController: UITableViewController {
                 cell.imageView?.image = icon
             }
         case 2:
-            if indexPath.row == 0 {
-                if false { // TODO: check if semester exists
-                    cell.textLabel?.text = "End Fall 2015"
-                    let icon = FAKIonIcons.logOutIconWithSize(iconSize)
-                        .imageWithSize(CGSizeMake(iconSize, iconSize))
-                    cell.imageView?.image = icon
-                } else {
-                    cell.textLabel?.text = "Start new semester"
-                    let icon = FAKIonIcons.logInIconWithSize(iconSize)
-                        .imageWithSize(CGSizeMake(iconSize, iconSize))
-                    cell.imageView?.image = icon
-                }
+            if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
+                cell.textLabel?.text = "End Fall 2015"
+                let icon = FAKIonIcons.logOutIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
+                cell.imageView?.image = icon
             } else {
                 cell.textLabel?.text = "Change hour requirements"
                 let icon = FAKIonIcons.clockIconWithSize(iconSize)

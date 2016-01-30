@@ -50,7 +50,7 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     func loadCheckins() {
-        ProfileOperations.loadCheckins({ (var checkins) -> Void in
+        ProfileOperations.loadCheckins({ (checkins) -> Void in
             self.verifiedCheckins = [Checkin]()
             self.unverifiedCheckins = [Checkin]()
             for checkin in checkins {

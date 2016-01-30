@@ -185,11 +185,26 @@ class AdminOperations {
     
     static func editAnnouncement(announcement: Announcement, completion: ((Announcement) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let params = [
-                AnnouncementConstants.kTitle: announcement.title!,
-                AnnouncementConstants.kText: announcement.text!,
-                AnnouncementConstants.kSchoolID: announcement.school!.id,
-        ]
+        var params: [String: AnyObject]
+        if announcement.school != nil && announcement.school!.id != -1 {
+            params = ["announcement": [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: announcement.school!.id,
+                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
+                ]
+            ]
+        } else {
+            params = [
+                "announcement": [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: 0,
+                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
+                ]
+            ]
+        }
+
         let announcementURLString = StringConstants.kAnnouncementAdminDetailURL(announcement.id!)
         manager.PATCH(announcementURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(announcement)
@@ -255,7 +270,7 @@ class AdminOperations {
                     AnnouncementConstants.kText: announcement.text!,
                     AnnouncementConstants.kSchoolID: announcement.school!.id,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: "school"
+                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
                 ]
             ]
         } else {
@@ -264,7 +279,7 @@ class AdminOperations {
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: "general"
+                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
                 ]
             ]
         }

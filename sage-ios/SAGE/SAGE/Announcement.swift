@@ -10,6 +10,11 @@ import Foundation
 
 class Announcement: NSObject {
     
+    enum Category: String {
+        case General = "general"
+        case School = "school"
+    }
+    
     var id: Int?
     var sender: User?
     var title: String?

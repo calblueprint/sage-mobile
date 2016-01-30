@@ -41,15 +41,7 @@ class CheckinRequestsViewController: UITableViewController {
     }
     
     func loadCheckinRequests() {
-        AdminOperations.loadCheckinRequests({ (var checkinRequests) -> Void in
-            checkinRequests.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
-                let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
-                if comparisonResult == .OrderedDescending {
-                    return true
-                } else {
-                    return false
-                }
-            })
+        AdminOperations.loadCheckinRequests({ (checkinRequests) -> Void in
             self.requests = checkinRequests
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
@@ -133,14 +125,5 @@ class CheckinRequestsViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let checkin = self.requests![indexPath.row]
         return CheckinRequestTableViewCell.heightForCheckinRequest(checkin, width: CGRectGetWidth(self.tableView.frame))
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let request = self.requests![indexPath.row]
-        let vc = CheckinRequestsDetailViewController(checkin: request)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
-        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

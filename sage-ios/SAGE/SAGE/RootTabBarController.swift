@@ -38,14 +38,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
         let announcementsViewController = AnnouncementsViewController(style: .Plain)
         
-        var checkInViewController: UIViewController? = nil
-        
-        // if current semester is nil and user semester is nil
-        if (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) == nil && KeychainWrapper.objectForKey(KeychainConstants.kUserSemester) == nil) {
-            checkInViewController = JoinSemesterViewController()
-        } else {
-            checkInViewController = CheckinViewController()
-        }
+        let checkInViewController = CheckinViewController()
         
         let profileViewController = ProfileViewController(user: LoginOperations.getUser()!)
         
@@ -69,8 +62,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
             navigationController.delegate = self
             navigationController.tabBarItem = UITabBarItem(title: titles[i], image: images[i], tag:i)
             navigationController.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -3) // Offset to move text up
-            // CHANGE THIS BACK TO THE ORIGINAL BY REMOVING THE FORCE UNWRAPPING
-            navigationController.viewControllers = [rootViewControllers[i]!]
+            navigationController.viewControllers = [rootViewControllers[i]]
             
             viewControllers.append(navigationController)
         }

@@ -34,4 +34,12 @@ class SemesterOperations {
                 failure("Could not end semester.")
         }
     }
+    
+    static func joinSemester(completion: (() -> Void)?, failure: (String) -> Void) {
+        BaseOperation.manager().POST(StringConstants.kEndpointJoinSemester, parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure("Could not join semester.")
+        }
+    }
 }

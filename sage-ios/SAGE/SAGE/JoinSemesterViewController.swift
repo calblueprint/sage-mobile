@@ -10,7 +10,7 @@ import Foundation
 import SwiftKeychainWrapper
 
 class JoinSemesterViewController: UIViewController {
-
+    
     var joinSemesterView = JoinSemesterView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
@@ -25,7 +25,18 @@ class JoinSemesterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Check In"
+        let backButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: navigationController, action: nil)
+        navigationItem.leftBarButtonItem = backButton
+        self.joinSemesterView.button.addTarget(self, action: "joinSemester:", forControlEvents: .TouchUpInside)
+    }
+    
+    func joinSemester(sender: UIButton!) {
+        SemesterOperations.joinSemester({ () -> Void in
+            
+            self.navigationController!.pushViewController(CheckinViewController(), animated: true)
+            }) { (errorMessage) -> Void in
+                // error
+        }
     }
     
     init() {

@@ -44,7 +44,7 @@ class LoginOperations: NSObject {
             }
             completion(user, currentSemester, semesterSummary)
             }) { (operation, error) -> Void in
-                failure("Cannot get user state")
+                failure("Cannot get user state.")
         }
     }
     

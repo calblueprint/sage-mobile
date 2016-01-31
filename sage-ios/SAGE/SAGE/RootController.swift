@@ -51,7 +51,16 @@ class RootController: UIViewController {
                     self.pushUnverifiedViewController()
                 }
                 }) { (errorMessage) -> Void in
-                    // error
+                    let alertController = UIAlertController(
+                        title: "Failure",
+                        message: errorMessage as String,
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                        LoginOperations.deleteUserKeychainData()
+                        self.pushLoginViewController()
+                    }))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+
             }
         } else {
             self.pushLoginViewController()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class LoginController: UIViewController {
     
@@ -46,7 +47,11 @@ class LoginController: UIViewController {
         let rootTabBarController = RootTabBarController()
         self.presentViewController(rootTabBarController, animated: false, completion: nil)
     }
-    
+
+    func pushUnverifiedViewController() {
+        let unverifiedController = UnverifiedViewController()
+        self.presentViewController(unverifiedController, animated: true, completion: nil)
+    }
     
     //
     // MARK: - Login validation and logic methods
@@ -66,16 +71,21 @@ class LoginController: UIViewController {
                     (valid: Bool) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if (valid) {
-                            if let verified = LoginOperations.getUser()?.verified {
-                                if verified {
+                            LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
+                                if (user.verified) {
                                     self.pushRootTabBarController()
                                 } else {
-                                    let unverifiedController = UnverifiedViewController()
-                                    self.presentViewController(unverifiedController, animated: true, completion: nil)
+                                    self.pushUnverifiedViewController()
                                 }
-                            } else {
-                                let unverifiedController = UnverifiedViewController()
-                                self.presentViewController(unverifiedController, animated: true, completion: nil)
+                                }) { (errorMessage) -> Void in
+                                    let alertController = UIAlertController(
+                                        title: "Failure",
+                                        message: errorMessage as String,
+                                        preferredStyle: .Alert)
+                                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                                    self.presentViewController(alertController, animated: true, completion: nil)
+                                    LoginOperations.deleteUserKeychainData()
+                                    self.presentViewController(RootController(), animated: true, completion: nil)
                             }
                         } else {
                             self.loginView.loginButton.stopLoading()

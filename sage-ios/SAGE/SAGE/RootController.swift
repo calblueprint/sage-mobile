@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class RootController: UIViewController {
     
@@ -42,16 +43,25 @@ class RootController: UIViewController {
     
     func pushCorrectViewController() {
         if LoginOperations.userIsLoggedIn() {
-            let completion = { (success: Bool) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    if success {
-                        self.pushRootTabBarController()
-                    } else {
-                        self.pushUnverifiedViewController()
-                    }
-                })
+            LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
+                KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
+                if (user.verified) {
+                    self.pushRootTabBarController()
+                } else {
+                    self.pushUnverifiedViewController()
+                }
+                }) { (errorMessage) -> Void in
+                    let alertController = UIAlertController(
+                        title: "Failure",
+                        message: errorMessage as String,
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                        LoginOperations.deleteUserKeychainData()
+                        self.pushLoginViewController()
+                    }))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+
             }
-            LoginOperations.verifyUser(completion)
         } else {
             self.pushLoginViewController()
         }

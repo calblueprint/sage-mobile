@@ -20,6 +20,7 @@
     <!-- Shared Preferences & Activity keys-->
     <string name="activity_create_semester">create_semester</string>
     <string name="semester_user">user</string>
+    <string name="activity_current_semester">activity_current_semester</string>
 
     <!-- Join semester -->
     <string name="join_semester_text">Looks like a new semester has started - hit "Join" to start your semester and start your mentoring sessions.</string>

@@ -47,14 +47,13 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
         if (!NetworkUtils.isVerifiedUser(this, mPreferences))
             NetworkUtils.logoutCurrentUser(this);
 
-        setUpUser();
-        setUpSchool();
-        setUpCurrentSemester();
+        setUpSession();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        setUpSession();
         if (mGoogleApiClient != null)
             mGoogleApiClient.connect();
     }
@@ -64,6 +63,12 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
         super.onStop();
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
             mGoogleApiClient.disconnect();
+    }
+
+    private void setUpSession() {
+        setUpUser();
+        setUpSchool();
+        setUpCurrentSemester();
     }
 
     private void setUpUser() {

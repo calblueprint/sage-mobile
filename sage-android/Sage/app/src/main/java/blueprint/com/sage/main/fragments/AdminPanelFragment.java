@@ -124,9 +124,9 @@ public class AdminPanelFragment extends Fragment {
             return;
         }
 
-        if (mBaseInterface.getSharedPreferences().contains(getString(R.string.current_semester))) {
+        if (mBaseInterface.getSharedPreferences().contains(getString(R.string.activity_current_semester))) {
             String semesterString =
-                    mBaseInterface.getSharedPreferences().getString(getString(R.string.current_semester), "");
+                    mBaseInterface.getSharedPreferences().getString(getString(R.string.activity_current_semester), "");
             setSemester(semesterString);
             mEndSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters == null || mSemesters.size() == 0) {
@@ -141,6 +141,8 @@ public class AdminPanelFragment extends Fragment {
         if (semester == null) return;
         mSemesters = new ArrayList<>();
         mSemesters.add(semester);
+
+        mBaseInterface.setCurrentSemester(semester);
     }
 
     public void onStartSemeseter(Intent data) {
@@ -151,7 +153,7 @@ public class AdminPanelFragment extends Fragment {
 
         mBaseInterface.getSharedPreferences()
                 .edit()
-                .putString(getString(R.string.current_semester), semesterString)
+                .putString(getString(R.string.activity_current_semester), semesterString)
                 .commit();
         toggleSemester();
     }
@@ -159,7 +161,7 @@ public class AdminPanelFragment extends Fragment {
     public void onFinishSemester(Intent data) {
         mBaseInterface.getSharedPreferences()
                 .edit()
-                .remove(getString(R.string.current_semester))
+                .remove(getString(R.string.activity_current_semester))
                 .commit();
         mSemesters = new ArrayList<>();
         toggleSemester();

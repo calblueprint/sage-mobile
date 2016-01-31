@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SemesterSummary: NSObject {
+class SemesterSummary: NSObject, NSCoding {
     
     enum Status: Int {
         case Default = 1
@@ -16,16 +16,16 @@ class SemesterSummary: NSObject {
     }
     
     var id: Int = -1
-    var totalTime: Int = 0
+    var totalMinutes: Int = 0
     var completed: Bool = false
     var status: Status = .Default
     var semesterID: Int = -1
     // var userID: Int?
     // var hoursRequired: Int?
     
-    init(id: Int = -1, totalTime: Int = 0, completed: Bool = false, status: Status = .Default, semesterID: Int = -1) {
+    init(id: Int = -1, totalMinutes: Int = 0, completed: Bool = false, status: Status = .Default, semesterID: Int = -1) {
         self.id = id
-        self.totalTime = totalTime
+        self.totalMinutes = totalMinutes
         self.completed = completed
         self.status = status
         self.semesterID = semesterID
@@ -35,7 +35,7 @@ class SemesterSummary: NSObject {
     init(propertyDictionary: [String: AnyObject]) {
         // set default values
         self.id = -1
-        self.totalTime = 0
+        self.totalMinutes = 0
         self.completed = false
         self.status = Status.Default
         
@@ -63,7 +63,7 @@ class SemesterSummary: NSObject {
                 }
             case UserConstants.kTotalTime:
                 if let val = value as? Int {
-                    self.totalTime = val // in minutes
+                    self.totalMinutes = val
                 }
             default: break
             }
@@ -82,8 +82,8 @@ class SemesterSummary: NSObject {
             default: propertyDict[SemesterSummaryConstants.kStatus] = 1
             }
         }
-        if -1 != self.totalTime {
-            propertyDict[SemesterSummaryConstants.kTotalTime] = self.totalTime // in minutes
+        if -1 != self.totalMinutes {
+            propertyDict[SemesterSummaryConstants.kTotalMinutes] = self.totalMinutes
         }
         if -1 != self.semesterID {
             propertyDict[SemesterSummaryConstants.kSemesterID] = self.semesterID
@@ -110,18 +110,18 @@ class SemesterSummary: NSObject {
     
     required init(coder aDecoder: NSCoder) {
         self.id = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kId)
-        self.completed = aDecoder.decodeObjectForKey(SemesterSummaryConstants.kCompleted) as! Bool
-        self.status = SemesterSummary.statusFromInt(aDecoder.decodeObjectForKey(SemesterSummaryConstants.kStatus) as! Int)
-        self.totalTime = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kTotalTime)
+        self.completed = aDecoder.decodeBoolForKey(SemesterSummaryConstants.kCompleted)
+        self.status = SemesterSummary.statusFromInt(aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kStatus))
+        self.totalMinutes = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kTotalMinutes)
         self.semesterID = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kSemesterID)
         super.init()
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeInteger(self.id, forKey: SemesterSummaryConstants.kId)
-        aCoder.encodeObject(self.completed, forKey: SemesterSummaryConstants.kCompleted)
-        aCoder.encodeObject(self.status.rawValue, forKey: SemesterSummaryConstants.kStatus)
-        aCoder.encodeObject(self.totalTime, forKey: SemesterSummaryConstants.kTotalTime)
-        aCoder.encodeObject(self.semesterID, forKey: SemesterSummaryConstants.kSemesterID)
+        aCoder.encodeBool(self.completed, forKey: SemesterSummaryConstants.kCompleted)
+        aCoder.encodeInteger(self.status.rawValue, forKey: SemesterSummaryConstants.kStatus)
+        aCoder.encodeInteger(self.totalMinutes, forKey: SemesterSummaryConstants.kTotalMinutes)
+        aCoder.encodeInteger(self.semesterID, forKey: SemesterSummaryConstants.kSemesterID)
     }
 }

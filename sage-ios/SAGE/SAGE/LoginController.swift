@@ -77,7 +77,7 @@ class LoginController: UIViewController {
                                     KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
                                 }
                                 if !(userSemester == nil) {
-                                    KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kUserSemester)
+                                    KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kSemesterSummary)
                                 }
                                 if (user.verified) {
                                     self.pushRootTabBarController()

@@ -22,7 +22,7 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
-    static func getState(completion: ((User, Semester?, Semester?) -> Void), failure:((String) -> Void)) {
+    static func getState(completion: ((User, Semester?, SemesterSummary?) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
@@ -31,18 +31,18 @@ class LoginOperations: NSObject {
             if !(currentSemesterJSON is NSNull) {
                 currentSemester = Semester(propertyDictionary: currentSemesterJSON as! [String: AnyObject])
             }
-            let userSemesterJSON = userJSON["user_semester"]
-            var userSemester: Semester? = nil
-            if !(userSemesterJSON is NSNull) {
-                userSemester = Semester(propertyDictionary: userSemesterJSON as! [String: AnyObject])
+            let semesterSummaryJSON = userJSON["user_semester"]
+            var semesterSummary: SemesterSummary? = nil
+            if !(semesterSummaryJSON is NSNull) {
+                semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
             }
             if !(currentSemester == nil) {
                 KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
             }
-            if !(userSemester == nil) {
-                KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kUserSemester)
+            if !(semesterSummary == nil) {
+                KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
             }
-            completion(user, currentSemester, userSemester)
+            completion(user, currentSemester, semesterSummary)
             }) { (operation, error) -> Void in
                 failure("Cannot get user state")
         }
@@ -211,6 +211,6 @@ class LoginOperations: NSObject {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kAuthToken)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSchool)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
-        KeychainWrapper.removeObjectForKey(KeychainConstants.kUserSemester)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
     }
 }

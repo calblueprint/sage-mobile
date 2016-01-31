@@ -13,7 +13,7 @@ struct SemesterSummaryConstants {
     static let kId: String = "id"
     static let kSemesterID: String = "semester_id"
     static let kCompleted: String = "completed"
-    static let kTotalTime: String = "total_time"
+    static let kTotalMinutes: String = "total_time"
     static let kStatus: String = "status"
     
 }

@@ -38,7 +38,13 @@ class SemesterOperations {
     
     static func joinSemester(completion: (() -> Void)?, failure: (String) -> Void) {
         BaseOperation.manager().POST(StringConstants.kEndpointJoinSemester, parameters: nil, success: { (operation, data) -> Void in
-            KeychainWrapper.setObject(Semester(), forKey: KeychainConstants.kUserSemester)
+            let userJSON = data["session"]!!["user"] as! [String: AnyObject]
+            let semesterSummaryJSON = userJSON["user_semester"]
+            var semesterSummary: SemesterSummary? = nil
+            if !(semesterSummaryJSON is NSNull) {
+                semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
+            }
+            KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
             completion?()
             }) { (operation, error) -> Void in
                 failure("Could not join semester.")

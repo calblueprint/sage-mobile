@@ -35,10 +35,11 @@ class NoSemesterView: UIView {
         self.content.fillWidth()
         self.content.fillHeight()
         
+        self.message.font = UIFont.normalFont
         self.message.textAlignment = NSTextAlignment.Center
         self.message.lineBreakMode = NSLineBreakMode.ByWordWrapping
         self.message.numberOfLines = 0
-        self.message.fillWidthWithMargin(30)
+        self.message.fillWidthWithMargin(35)
         self.message.sizeToFit()
         self.message.centerInSuperview()
     }

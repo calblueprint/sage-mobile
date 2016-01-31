@@ -20,7 +20,11 @@ class NoSemesterViewController: UIViewController {
     
     override func loadView() {
         self.view = self.noSemesterView
-        self.title = "Check In"
+    }
+    
+    override func viewDidLoad() {
+        let backButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: navigationController, action: nil)
+        navigationItem.leftBarButtonItem = backButton
     }
     
     init() {

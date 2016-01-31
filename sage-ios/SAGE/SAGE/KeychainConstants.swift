@@ -20,7 +20,7 @@ struct KeychainConstants {
     static let kSchool: String = "User School"
     
     static let kCurrentSemester: String = "Current Semester"
-    static let kUserSemester: String = "User Semester"
+    static let kSemesterSummary: String = "Semester Summary"
     
     
 }

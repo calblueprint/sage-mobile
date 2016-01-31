@@ -11,24 +11,24 @@ import Foundation
 class SemesterSummary: NSObject, NSCoding {
     
     enum Status: Int {
-        case Default = 1
+        case Active = 1
         case Inactive = 0
     }
     
     var id: Int = -1
     var totalMinutes: Int = 0
     var completed: Bool = false
-    var status: Status = .Default
+    var status: Status = .Active
     var semesterID: Int = -1
-    // var userID: Int?
-    // var hoursRequired: Int?
+    var hoursRequired: Int?
     
-    init(id: Int = -1, totalMinutes: Int = 0, completed: Bool = false, status: Status = .Default, semesterID: Int = -1) {
+    init(id: Int = -1, totalMinutes: Int = 0, completed: Bool = false, status: Status = .Active, semesterID: Int = -1, hoursRequired: Int?) {
         self.id = id
         self.totalMinutes = totalMinutes
         self.completed = completed
         self.status = status
         self.semesterID = semesterID
+        self.hoursRequired = hoursRequired
         super.init()
     }
     
@@ -37,7 +37,7 @@ class SemesterSummary: NSObject, NSCoding {
         self.id = -1
         self.totalMinutes = 0
         self.completed = false
-        self.status = Status.Default
+        self.status = Status.Active
         
         for (propertyName, value) in propertyDictionary {
             switch propertyName {
@@ -45,7 +45,7 @@ class SemesterSummary: NSObject, NSCoding {
                 if let val = value as? Int {
                     switch val {
                     case 0: self.status = Status.Inactive
-                    case 1: self.status = Status.Default
+                    case 1: self.status = Status.Active
                     default: break
                     }
                 }
@@ -61,9 +61,13 @@ class SemesterSummary: NSObject, NSCoding {
                 if let intValue = value as? Int {
                     self.semesterID = intValue
                 }
-            case UserConstants.kTotalTime:
+            case SemesterSummaryConstants.kTotalMinutes:
                 if let val = value as? Int {
                     self.totalMinutes = val
+                }
+            case SemesterSummaryConstants.kHoursRequired:
+                if let val = value as? Int {
+                    self.hoursRequired = val
                 }
             default: break
             }
@@ -76,7 +80,7 @@ class SemesterSummary: NSObject, NSCoding {
         if -1 != self.id {
             propertyDict[SemesterSummaryConstants.kId] = id
         }
-        if Status.Default != self.status {
+        if Status.Active != self.status {
             switch self.status {
             case .Inactive: propertyDict[SemesterSummaryConstants.kStatus] = 0
             default: propertyDict[SemesterSummaryConstants.kStatus] = 1
@@ -84,6 +88,9 @@ class SemesterSummary: NSObject, NSCoding {
         }
         if -1 != self.totalMinutes {
             propertyDict[SemesterSummaryConstants.kTotalMinutes] = self.totalMinutes
+        }
+        if -1 != self.hoursRequired {
+            propertyDict[SemesterSummaryConstants.kHoursRequired] = self.hoursRequired
         }
         if -1 != self.semesterID {
             propertyDict[SemesterSummaryConstants.kSemesterID] = self.semesterID
@@ -105,7 +112,7 @@ class SemesterSummary: NSObject, NSCoding {
         if number == 0 {
             return Status.Inactive
         }
-        return Status.Default
+        return Status.Active
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -113,6 +120,7 @@ class SemesterSummary: NSObject, NSCoding {
         self.completed = aDecoder.decodeBoolForKey(SemesterSummaryConstants.kCompleted)
         self.status = SemesterSummary.statusFromInt(aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kStatus))
         self.totalMinutes = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kTotalMinutes)
+        self.hoursRequired = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kHoursRequired)
         self.semesterID = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kSemesterID)
         super.init()
     }
@@ -122,6 +130,7 @@ class SemesterSummary: NSObject, NSCoding {
         aCoder.encodeBool(self.completed, forKey: SemesterSummaryConstants.kCompleted)
         aCoder.encodeInteger(self.status.rawValue, forKey: SemesterSummaryConstants.kStatus)
         aCoder.encodeInteger(self.totalMinutes, forKey: SemesterSummaryConstants.kTotalMinutes)
+        aCoder.encodeInteger(self.hoursRequired!, forKey: SemesterSummaryConstants.kHoursRequired)
         aCoder.encodeInteger(self.semesterID, forKey: SemesterSummaryConstants.kSemesterID)
     }
 }

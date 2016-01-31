@@ -22,7 +22,7 @@ class SemesterOperations {
             let createdSemester = Semester(propertyDictionary: semesterDict)
             completion(createdSemester)
             }) { (operation, error) -> Void in
-                failure("Could not start semester.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -32,7 +32,7 @@ class SemesterOperations {
         BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: nil, success: { (operation, data) -> Void in
             completion()
             }) { (operation, error) -> Void in
-                failure("Could not end semester.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -47,7 +47,7 @@ class SemesterOperations {
             KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not join semester.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
 }

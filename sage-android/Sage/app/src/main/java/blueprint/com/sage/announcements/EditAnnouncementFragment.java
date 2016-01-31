@@ -61,6 +61,10 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
     }
 
     public void onEvent(EditAnnouncementEvent event) {
+        Announcement announcement = event.getMAnnouncement();
+        AnnouncementInterface activity = (AnnouncementInterface) getActivity();
+        activity.setAnnouncement(announcement);
+        activity.setType(AnnouncementActivity.EDITED);
         FragUtils.popBackStack(this);
     }
 }

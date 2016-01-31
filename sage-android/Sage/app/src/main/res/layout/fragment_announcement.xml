@@ -28,11 +28,8 @@
         <TextView
             android:id="@+id/announcement_school_single"
             style="@style/AnnouncementRow"
-            android:text="@string/announcement_school"
-            android:layout_toRightOf="@id/announcement_user_single"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="0dp"
-            android:visibility="invisible"/>
+            android:layout_below="@id/announcement_user_single"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/announcement_time_single"
@@ -40,7 +37,7 @@
             android:textColor="@color/date_gray"
             android:text="2 days ago"
             android:layout_marginBottom="10dp"
-            android:layout_below="@id/announcement_user_single"/>
+            android:layout_below="@id/announcement_school_single"/>
 
         <TextView
             android:id="@+id/announcement_title_single"

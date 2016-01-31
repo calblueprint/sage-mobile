@@ -45,6 +45,9 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     private FormValidator mValidator;
     protected SchoolSpinnerAdapter mSchoolAdapter;
 
+    private final String SCHOOL = "School Announcement";
+    private final String GENERAL = "General Announcement";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +111,8 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     public abstract void initializeViews();
 
     public void initializeSpinners() {
-        String[] categoryList = new String[]{"School Announcement", "General Announcement"};
-        StringArraySpinnerAdapter categoryAdapter = new StringArraySpinnerAdapter(getActivity(), categoryList, android.R.layout.simple_spinner_item, android.R.layout.simple_spinner_item);
+        String[] categoryList = new String[]{SCHOOL, GENERAL};
+        StringArraySpinnerAdapter categoryAdapter = new StringArraySpinnerAdapter(getActivity(), categoryList, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         mAnnouncementCategory.setAdapter(categoryAdapter);
         mAnnouncementCategory.setSelection(1, true);

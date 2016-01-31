@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.AnnouncementActivity;
 import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
@@ -21,6 +24,8 @@ import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -86,7 +91,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mAnnouncementsList.setLayoutManager(llm);
         mAnnouncementsList.setEmptyView(mEmptyView);
-        mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity());
+        mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity(), getParentFragment());
         mAnnouncementsList.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         mEmptyView.setOnRefreshListener(this);
@@ -108,6 +113,39 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @OnClick(R.id.add_announcement_fab)
     public void newAnnouncement() {
         Intent intent = new Intent(getActivity(), CreateAnnouncementActivity.class);
-        startActivity(intent);
+        FragUtils.startActivityForResultFragment(getActivity(), getParentFragment(), CreateAnnouncementActivity.class, FragUtils.CREATE_ANNOUNCEMENT_REQUEST_CODE);
+    }
+
+    public void addAnnouncement(Intent data) {
+        String string = data.getStringExtra(getString(R.string.create_announcement));
+        Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>(){});
+        mAnnouncements.add(0, announcement);
+        mAdapter.setAnnouncements(mAnnouncements);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void changeAnnouncement(Intent data) {
+        int type = data.getIntExtra(getString(R.string.announcement_type), AnnouncementActivity.ORIGINAL);
+        if (type == AnnouncementActivity.DELETED) {
+            String string = data.getStringExtra(getString(R.string.delete_announcement));
+            Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
+            for (int i = 0; i < mAnnouncements.size(); i++) {
+                if (mAnnouncements.get(i).getId() == announcement.getId()) {
+                    mAnnouncements.remove(i);
+                }
+            }
+            mAdapter.setAnnouncements(mAnnouncements);
+            mAdapter.notifyDataSetChanged();
+        } else if (type == AnnouncementActivity.EDITED) {
+            String string = data.getStringExtra(getString(R.string.edit_announcement));
+            Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
+            for (int i = 0; i < mAnnouncements.size(); i++) {
+                if (mAnnouncements.get(i).getId() == announcement.getId()) {
+                    mAnnouncements.set(i, announcement);
+                }
+            }
+            mAdapter.setAnnouncements(mAnnouncements);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }

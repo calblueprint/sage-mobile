@@ -2,6 +2,7 @@ package blueprint.com.sage.announcements;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.MenuItem;
 
 import blueprint.com.sage.R;
@@ -9,7 +10,7 @@ import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
  * Created by kelseylam on 12/5/15.
@@ -22,10 +23,7 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
-                if (validateAndSubmitRequest()) {
-                    onActivityResult(102, Activity.RESULT_OK, createIntent());
-                    getActivity().onBackPressed();
-                }
+                validateAndSubmitRequest();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -56,6 +54,13 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
     }
 
     public void onEvent(CreateAnnouncementEvent event) {
-        FragUtils.popBackStack(this);
+        Announcement announcement = event.getMAnnouncement();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.create_announcement),
+                NetworkUtils.writeAsString(getActivity(), announcement));
+        intent.putExtras(bundle);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().onBackPressed();
     }
 }

@@ -16,6 +16,7 @@ import blueprint.com.sage.events.announcements.DeleteAnnouncementEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -28,6 +29,7 @@ import de.greenrobot.event.EventBus;
 public class AnnouncementFragment extends Fragment {
 
     private Announcement mAnnouncement;
+    private BaseInterface mBaseInterface;
 
     @Bind(R.id.announcement_user_single) TextView mUser;
     @Bind(R.id.announcement_school_single) TextView mSchool;
@@ -45,7 +47,10 @@ public class AnnouncementFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        mBaseInterface = (BaseInterface) getActivity();
+        if (mBaseInterface.getUser().isAdmin()) {
+            setHasOptionsMenu(true);
+        }
     }
 
     @Override
@@ -90,7 +95,7 @@ public class AnnouncementFragment extends Fragment {
         mUser.setText(user.getName());
         if (mAnnouncement.getSchool() != null) {
             mSchool.setVisibility(View.VISIBLE);
-            mSchool.setText("to " + mAnnouncement.getSchool().getName());
+            mSchool.setText(mAnnouncement.getSchool().getName());
         } else {
             mSchool.setVisibility(View.GONE);
         }
@@ -121,6 +126,10 @@ public class AnnouncementFragment extends Fragment {
     }
 
     public void onEvent(DeleteAnnouncementEvent event) {
+        Announcement announcement = event.getMAnnouncement();
+        AnnouncementInterface activity = (AnnouncementInterface) getActivity();
+        activity.setAnnouncement(announcement);
+        activity.setType(AnnouncementActivity.DELETED);
         getActivity().onBackPressed();
     }
 

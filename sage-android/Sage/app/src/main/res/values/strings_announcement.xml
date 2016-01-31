@@ -5,4 +5,8 @@
     <string name="announcement_category">Select recipients</string>
     <string name="announcement_school">to</string>
     <string name="announcement_select_school">School</string>
+    <string name="create_announcement">Create Announcement</string>
+    <string name="delete_announcement">Delete Announcement</string>
+    <string name="edit_announcement">Edit Announcement</string>
+    <string name="announcement_type">Type</string>
 </resources>

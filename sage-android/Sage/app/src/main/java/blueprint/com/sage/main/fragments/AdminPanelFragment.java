@@ -145,7 +145,7 @@ public class AdminPanelFragment extends Fragment {
         mBaseInterface.setCurrentSemester(semester);
     }
 
-    public void onStartSemeseter(Intent data) {
+    public void onStartSemester(Intent data) {
         String semesterString = data.getExtras().getString(getString(R.string.activity_create_semester), "");
         if (semesterString.isEmpty()) return;
 

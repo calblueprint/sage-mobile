@@ -141,7 +141,7 @@ public class MainFragment extends Fragment {
             if (!(fragment instanceof AdminPanelFragment)) continue;
 
             AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
-            adminPanelFragment.onStartSemeseter(data);
+            adminPanelFragment.onStartSemester(data);
         }
     }
 

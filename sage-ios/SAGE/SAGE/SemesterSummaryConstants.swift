@@ -15,6 +15,5 @@ struct SemesterSummaryConstants {
     static let kCompleted: String = "completed"
     static let kTotalMinutes: String = "total_time"
     static let kStatus: String = "status"
-    static let kHoursRequired: String = "hours_required"
-    
+    static let kHoursRequired: String = "hours_required"    
 }

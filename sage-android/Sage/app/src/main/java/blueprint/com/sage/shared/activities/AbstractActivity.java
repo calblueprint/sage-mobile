@@ -102,7 +102,9 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
     public User getUser() { return mUser; }
     public void setUser(User user) { mUser = user; }
     public School getSchool() { return mSchool; }
+    public void setSchool(School school) { mSchool = school; }
     public Semester getCurrentSemester() { return mCurrentSemester; }
+    public void setCurrentSemester(Semester semester) { mCurrentSemester = semester; }
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public SharedPreferences getSharedPreferences() { return mPreferences; }
     public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }

@@ -30,7 +30,7 @@ import org.joda.time.DateTime;
 import blueprint.com.sage.R;
 import blueprint.com.sage.checkIn.CheckInActivity;
 import blueprint.com.sage.checkIn.CheckInTimer;
-import blueprint.com.sage.joinSemester.fragments.JoinSemesterFragment;
+import blueprint.com.sage.joinSemester.JoinSemesterActivity;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.FloatingTextView;
@@ -248,10 +248,10 @@ public class CheckInMapFragment extends Fragment
     @OnClick(R.id.check_in_check_fab)
     public void onCheckInClick(FloatingActionButton button) {
         if (!SemesterUtils.hasCurrentSemester(mBaseInterface)) {
-            Snackbar.make(mContainer, R.string.check_in_no_current_semester, Snackbar.LENGTH_SHORT);
+            Snackbar.make(mContainer, R.string.check_in_no_current_semester, Snackbar.LENGTH_SHORT).show();
         } else if (!SemesterUtils.isPartOfCurrentSemester(mBaseInterface)) {
-            FragUtils.startActivityBackStack(getActivity(), JoinSemesterFragment.class);
-        } if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) {
+            FragUtils.startActivityBackStack(getActivity(), JoinSemesterActivity.class);
+        } else if (CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) {
             showStopCheckInDialog();
         } else {
             showStartCheckInDialog();

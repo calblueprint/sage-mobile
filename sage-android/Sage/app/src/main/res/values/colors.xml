@@ -23,7 +23,7 @@
 
     <!-- Disabled Colors -->
     <color name="green500_disabled">#EE4CAF50</color>
-    <color name="red500">#F44336</color>
+    <color name="red500_disabled">#EEF44336</color>
 
     <!-- Check In Map -->
     <color name="map_circle_stroke">#BFFFC107</color>

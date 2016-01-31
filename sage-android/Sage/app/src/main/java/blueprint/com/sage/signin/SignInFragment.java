@@ -98,7 +98,7 @@ public class SignInFragment extends Fragment {
 
     public void onEvent(SignInEvent event) {
         try {
-            NetworkUtils.loginUser(event.getSession(), getActivity());
+            NetworkUtils.loginUser(getActivity(), event.getSession());
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
             Toast.makeText(getActivity(), "Something went wrong, try again!", Toast.LENGTH_SHORT).show();

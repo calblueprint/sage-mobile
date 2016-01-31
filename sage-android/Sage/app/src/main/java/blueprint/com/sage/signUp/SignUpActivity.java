@@ -76,7 +76,7 @@ public class SignUpActivity extends FragmentActivity {
 
     private void logInUser(Session session) {
         try {
-            NetworkUtils.loginUser(session, this);
+            NetworkUtils.loginUser(this, session);
         } catch (Exception e) {
             Toast.makeText(this, "Something went wrong! Please try again.", Toast.LENGTH_SHORT).show();
         }

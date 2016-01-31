@@ -15,6 +15,6 @@ public class JoinSemesterActivity extends BackAbstractActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragUtils.replace(R.id.main_container, JoinSemesterFragment.newInstance(), this);
+        FragUtils.replace(R.id.container, JoinSemesterFragment.newInstance(), this);
     }
 }

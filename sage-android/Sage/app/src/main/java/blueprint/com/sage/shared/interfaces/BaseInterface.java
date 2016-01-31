@@ -16,8 +16,10 @@ public interface BaseInterface {
     User getUser();
     void setUser(User user);
     School getSchool();
+    void setSchool(School school);
+    Semester getCurrentSemester();
+    void setCurrentSemester(Semester semester);
     NetworkManager getNetworkManager();
     SharedPreferences getSharedPreferences();
     GoogleApiClient getGoogleApiClient();
-    Semester getCurrentSemester();
 }

@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.semesters.JoinSemesterEvent;
+import blueprint.com.sage.models.Session;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkUtils;
-import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -61,10 +61,17 @@ public class JoinSemesterFragment extends Fragment {
     public void onEvent(JoinSemesterEvent event) {
         try {
             NetworkUtils.setSession(getActivity(), event.getSession());
+            setSession(event.getSession());
             Toast.makeText(getActivity(), R.string.join_semester_success, Toast.LENGTH_SHORT).show();
-            FragUtils.popBackStack(this);
+            getActivity().onBackPressed();
         } catch (Exception e) {
             Log.e(getClass().toString(), e.toString());
         }
+    }
+
+    private void setSession(Session session) {
+        mBaseInterface.setUser(session.getUser());
+        mBaseInterface.setSchool(session.getSchool());
+        mBaseInterface.setCurrentSemester(session.getCurrentSemester());
     }
 }

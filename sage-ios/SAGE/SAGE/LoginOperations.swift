@@ -36,10 +36,10 @@ class LoginOperations: NSObject {
             if !(semesterSummaryJSON is NSNull) {
                 semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
             }
-            if !(currentSemester == nil) {
+            if (currentSemester != nil) {
                 KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
             }
-            if !(semesterSummary == nil) {
+            if (semesterSummary != nil) {
                 KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
             }
             completion(user, currentSemester, semesterSummary)
@@ -212,5 +212,6 @@ class LoginOperations: NSObject {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSchool)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
     }
 }

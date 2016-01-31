@@ -73,19 +73,20 @@ class LoginController: UIViewController {
                         if (valid) {
                             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                                 KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
-                                if !(currentSemester == nil) {
-                                    KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
-                                }
-                                if !(userSemester == nil) {
-                                    KeychainWrapper.setObject(userSemester!, forKey: KeychainConstants.kSemesterSummary)
-                                }
                                 if (user.verified) {
                                     self.pushRootTabBarController()
                                 } else {
                                     self.pushUnverifiedViewController()
                                 }
                                 }) { (errorMessage) -> Void in
-                                    // error
+                                    let alertController = UIAlertController(
+                                        title: "Failure",
+                                        message: errorMessage as String,
+                                        preferredStyle: .Alert)
+                                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                                    self.presentViewController(alertController, animated: true, completion: nil)
+                                    LoginOperations.deleteUserKeychainData()
+                                    self.presentViewController(RootController(), animated: true, completion: nil)
                             }
                         } else {
                             self.loginView.loginButton.stopLoading()

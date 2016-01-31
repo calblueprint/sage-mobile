@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.BrowseUserListAdapter;
+import blueprint.com.sage.events.schools.DeleteSchoolEvent;
 import blueprint.com.sage.shared.adapters.models.AbstractUserListAdapter;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
@@ -223,6 +225,11 @@ public class SchoolFragment extends Fragment
         mSchool = event.getSchool();
         mAdapter.setUsers(mSchool.getUsers());
         initializeSchool();
+    }
+
+    public void onEvent(DeleteSchoolEvent event) {
+        Toast.makeText(getActivity(), R.string.delete_school_result, Toast.LENGTH_SHORT).show();
+        FragUtils.popBackStack(this);
     }
 }
 

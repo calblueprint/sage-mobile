@@ -73,14 +73,14 @@ class Semester: NSObject, NSCoding {
     required init(coder aDecoder: NSCoder) {
         self.id = aDecoder.decodeIntegerForKey(SemesterConstants.kId)
         self.startDate = aDecoder.decodeObjectForKey(SemesterConstants.kStartDate) as? NSDate
-        self.term = Semester.termFromInt(aDecoder.decodeObjectForKey(SemesterConstants.kTerm) as! Int)
+        self.term = Semester.termFromInt(aDecoder.decodeIntegerForKey(SemesterConstants.kTerm) as! Int)
         super.init()
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeInteger(self.id, forKey: SemesterConstants.kId)
         aCoder.encodeObject(self.startDate, forKey: SemesterConstants.kStartDate)
-        aCoder.encodeObject(self.term.rawValue, forKey: SemesterConstants.kTerm)
+        aCoder.encodeInteger(self.term.rawValue, forKey: SemesterConstants.kTerm)
     }
 }
 

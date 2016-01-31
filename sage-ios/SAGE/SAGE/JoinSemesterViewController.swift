@@ -20,6 +20,7 @@ class JoinSemesterViewController: UIViewController {
     }
     
     override func loadView() {
+        super.loadView()
         self.view = self.joinSemesterView
     }
     

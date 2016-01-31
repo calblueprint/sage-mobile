@@ -17,8 +17,6 @@ class JoinSemesterView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(self.content)
-        self.content.addSubview(self.message)
-        self.content.addSubview(self.button)
         setupSubviews()
     }
     
@@ -27,6 +25,8 @@ class JoinSemesterView: UIView {
     }
     
     func setupSubviews() {
+        self.content.addSubview(self.message)
+        self.content.addSubview(self.button)
         self.backgroundColor = UIColor.whiteColor()
         self.message.text = "You have not joined the current active semester yet."
         self.button.setTitle("Join Semester", forState: .Normal)

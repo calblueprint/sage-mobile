@@ -19,10 +19,12 @@ class NoSemesterViewController: UIViewController {
     }
     
     override func loadView() {
+        super.loadView()
         self.view = self.noSemesterView
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         let backButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: navigationController, action: nil)
         navigationItem.leftBarButtonItem = backButton
     }

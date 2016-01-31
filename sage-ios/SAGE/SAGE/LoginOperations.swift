@@ -103,9 +103,7 @@ class LoginOperations: NSObject {
             if User.UserRole.Default != user.role {
                 existingUser.role = user.role
             }
-            if 0 != user.totalMinutes {
-                existingUser.totalMinutes = user.totalMinutes
-            }
+            existingUser.semesterSummary = user.semesterSummary
             existingUser.verified = user.verified
             KeychainWrapper.setObject(existingUser, forKey: KeychainConstants.kUser)
         } else {

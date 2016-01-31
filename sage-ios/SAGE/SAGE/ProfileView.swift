@@ -140,7 +140,7 @@ class ProfileView: UIView {
         self.userSchool.text = user.school?.name
         self.userVolunteerLevel.text = user.volunteerLevelToString(user.level)
         
-        let hoursCompletedString = String(user.getTotalHours())
+        let hoursCompletedString = String(user.semesterSummary.getTotalHours())
         let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / 60 \nhours") // ask charles about the 60
         styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
         self.userStatusLabel.attributedText = userStatusString

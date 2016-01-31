@@ -106,7 +106,7 @@ class SemesterSummary: NSObject, NSCoding {
     //
     // MARK: - Public Methods
     //
-    func getRequiredHours() -> Int {
+    func getTotalHours() -> Int {
         return self.totalMinutes / 60
     }
 

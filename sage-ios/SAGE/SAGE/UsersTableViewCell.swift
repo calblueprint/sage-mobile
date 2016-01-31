@@ -43,9 +43,9 @@ class UsersTableViewCell: UITableViewCell {
         self.mentorPicture.setImageWithUser(user)
         self.mentorName.text = user.fullName()
         self.schoolName.text = user.school?.name
-        self.totalHours.text = String(user.getTotalHours())
+        self.totalHours.text = String(user.semesterSummary.getTotalHours())
         self.totalHours.text! += " hour"
-        if user.getTotalHours() != 1 {
+        if user.semesterSummary.getTotalHours() != 1 {
             self.totalHours.text! += "s"
         }
     }

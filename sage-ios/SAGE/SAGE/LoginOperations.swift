@@ -31,7 +31,6 @@ class LoginOperations: NSObject {
             if !(currentSemesterJSON is NSNull) {
                 currentSemester = Semester(propertyDictionary: currentSemesterJSON as! [String: AnyObject])
             }
-            currentSemester = Semester()
             let userSemesterJSON = userJSON["user_semester"]
             var userSemester: Semester? = nil
             if !(userSemesterJSON is NSNull) {

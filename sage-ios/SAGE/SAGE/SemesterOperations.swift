@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class SemesterOperations {
     
@@ -37,6 +38,7 @@ class SemesterOperations {
     
     static func joinSemester(completion: (() -> Void)?, failure: (String) -> Void) {
         BaseOperation.manager().POST(StringConstants.kEndpointJoinSemester, parameters: nil, success: { (operation, data) -> Void in
+            KeychainWrapper.setObject(Semester(), forKey: KeychainConstants.kUserSemester)
             completion?()
             }) { (operation, error) -> Void in
                 failure("Could not join semester.")

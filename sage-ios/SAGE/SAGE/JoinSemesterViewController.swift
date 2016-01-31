@@ -32,8 +32,7 @@ class JoinSemesterViewController: UIViewController {
     
     func joinSemester(sender: UIButton!) {
         SemesterOperations.joinSemester({ () -> Void in
-            
-            self.navigationController!.pushViewController(CheckinViewController(), animated: true)
+            self.navigationController!.popViewControllerAnimated(false)
             }) { (errorMessage) -> Void in
                 // error
         }

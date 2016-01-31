@@ -242,6 +242,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
                 Log.e(getClass().toString(), e.toString());
             }
         }
+
+        initializeSettings();
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 

@@ -61,7 +61,6 @@ public class AdminPanelFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_admin_panel, parent, false);
         ButterKnife.bind(this, view);
-        toggleSemester();
         return view;
     }
 
@@ -69,6 +68,12 @@ public class AdminPanelFragment extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        toggleSemester();
     }
 
     @Override

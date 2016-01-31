@@ -22,6 +22,32 @@ class LoginOperations: NSObject {
         return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
     }
     
+    static func getState(completion: ((User, Semester?, SemesterSummary?) -> Void), failure:((String) -> Void)) {
+        BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
+            let userJSON = data["session"]!!["user"] as! [String: AnyObject]
+            let user = User(propertyDictionary: userJSON)
+            let currentSemesterJSON = data["session"]!!["current_semester"]
+            var currentSemester: Semester? = nil
+            if !(currentSemesterJSON is NSNull) {
+                currentSemester = Semester(propertyDictionary: currentSemesterJSON as! [String: AnyObject])
+            }
+            let semesterSummaryJSON = userJSON["user_semester"]
+            var semesterSummary: SemesterSummary? = nil
+            if !(semesterSummaryJSON is NSNull) {
+                semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
+            }
+            if (currentSemester != nil) {
+                KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
+            }
+            if (semesterSummary != nil) {
+                KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
+            }
+            completion(user, currentSemester, semesterSummary)
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+    
     static func verifyUser(completion: ((Bool) -> Void)) {
         if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
             if user.verified {
@@ -44,6 +70,13 @@ class LoginOperations: NSObject {
         } else {
             completion(false)
         }
+    }
+    
+    static func updateUserRoleInKeychain(role: User.UserRole) -> User {
+        let existingUser = KeychainWrapper.objectForKey(KeychainConstants.kUser) as! User
+        existingUser.role = role
+        KeychainWrapper.setObject(existingUser, forKey: KeychainConstants.kUser)
+        return existingUser
     }
     
     static func storeUserDataInKeychain(user: User, authToken: String? = nil) {
@@ -177,5 +210,8 @@ class LoginOperations: NSObject {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kUser)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kAuthToken)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSchool)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
+        KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
     }
 }

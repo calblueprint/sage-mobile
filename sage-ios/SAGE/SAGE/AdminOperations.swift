@@ -26,7 +26,7 @@ class AdminOperations {
             })
             completion(userArray)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -45,7 +45,7 @@ class AdminOperations {
             })
             completion(userArray)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -64,7 +64,7 @@ class AdminOperations {
             })
             completion(userArray)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -81,7 +81,7 @@ class AdminOperations {
             completion(checkins)
 
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
 
@@ -100,7 +100,7 @@ class AdminOperations {
             })
             completion(schools)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
         
     }
@@ -122,7 +122,7 @@ class AdminOperations {
             completion(school)
             
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -138,7 +138,7 @@ class AdminOperations {
             }
             completion(users)
         }) { (operation, error) -> Void in
-            failure(error.localizedDescription)
+            failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -160,7 +160,7 @@ class AdminOperations {
             let school = School(propertyDictionary: schoolDict)
             completion!(school)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -179,22 +179,37 @@ class AdminOperations {
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(school)
             }) { (operation, error) -> Void in
-                failure("Could not edit school.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
     static func editAnnouncement(announcement: Announcement, completion: ((Announcement) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let params = [
-                AnnouncementConstants.kTitle: announcement.title!,
-                AnnouncementConstants.kText: announcement.text!,
-                AnnouncementConstants.kSchoolID: announcement.school!.id,
-        ]
+        var params: [String: AnyObject]
+        if announcement.school != nil && announcement.school!.id != -1 {
+            params = ["announcement": [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: announcement.school!.id,
+                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
+                ]
+            ]
+        } else {
+            params = [
+                "announcement": [
+                    AnnouncementConstants.kTitle: announcement.title!,
+                    AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: 0,
+                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
+                ]
+            ]
+        }
+
         let announcementURLString = StringConstants.kAnnouncementAdminDetailURL(announcement.id!)
         manager.PATCH(announcementURLString, parameters: params, success: { (operation, data) -> Void in
             completion!(announcement)
             }) { (operation, error) -> Void in
-                failure("Could not edit announcement.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -206,7 +221,7 @@ class AdminOperations {
         manager.POST(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not approve checkin.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -217,7 +232,7 @@ class AdminOperations {
         manager.DELETE(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not remove checkin.")
+                failure(BaseOperation.getErrorMessage(error))
         }
 
     }
@@ -229,7 +244,7 @@ class AdminOperations {
         manager.POST(userURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Couldn't verify user.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     
@@ -239,23 +254,20 @@ class AdminOperations {
         manager.DELETE(userURLString, parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
-                failure("Could not remove user.")
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
-    
-
     
     static func createAnnouncement(announcement: Announcement, completion: (Announcement) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         var params = [String: AnyObject]()
-        if announcement.school!.id != -1 {
+        if announcement.school == nil || announcement.school!.id == -1 {
             params = ["announcement":
                 [
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
-                    AnnouncementConstants.kSchoolID: announcement.school!.id,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: "school"
+                    AnnouncementConstants.kCategory: Announcement.Category.General.rawValue
                 ]
             ]
         } else {
@@ -263,8 +275,9 @@ class AdminOperations {
                 [
                     AnnouncementConstants.kTitle: announcement.title!,
                     AnnouncementConstants.kText: announcement.text!,
+                    AnnouncementConstants.kSchoolID: announcement.school!.id,
                     AnnouncementConstants.kUserID: LoginOperations.getUser()!.id,
-                    AnnouncementConstants.kCategory: "general"
+                    AnnouncementConstants.kCategory: Announcement.Category.School.rawValue
                 ]
             ]
         }
@@ -274,7 +287,7 @@ class AdminOperations {
             let createdAnnouncement = Announcement(properties: announcementDict)
             completion(createdAnnouncement)
             }) { (operation, error) -> Void in
-                failure(error.localizedDescription)
+                failure(BaseOperation.getErrorMessage(error))
         }
     }
     

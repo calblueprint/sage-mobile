@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AFNetworking
 
 class CheckinOperations {
     
@@ -18,12 +19,13 @@ class CheckinOperations {
         checkinDict[CheckinConstants.kSchoolId] = checkin.school!.id
         checkinDict[CheckinConstants.kComment] = checkin.comment
         checkinDict[CheckinConstants.kVerified] = checkin.verified
+
         let params = NSDictionary(dictionary: ["check_in": checkinDict])
         
         BaseOperation.manager().POST(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
             success(checkin)
         }, failure: { (operation, error) -> Void in
-            failure("Could not check in")
+            failure(BaseOperation.getErrorMessage(error))
         })
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import FontAwesomeKit
+import SwiftKeychainWrapper
 
 class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
@@ -36,13 +37,15 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         ]
 
         let announcementsViewController = AnnouncementsViewController(style: .Plain)
+        
         let checkInViewController = CheckinViewController()
+        
         let profileViewController = ProfileViewController(user: LoginOperations.getUser()!)
         
         var rootViewControllers = [announcementsViewController, checkInViewController, profileViewController]
         
         if let role = LoginOperations.getUser()?.role {
-            if role == .Admin || role == .Director {
+            if role == .Admin || role == .President {
                 let icon = FAKIonIcons.folderIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)

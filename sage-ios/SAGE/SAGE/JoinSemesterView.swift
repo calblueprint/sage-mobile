@@ -29,7 +29,7 @@ class JoinSemesterView: UIView {
     func setupSubviews() {
         self.backgroundColor = UIColor.whiteColor()
         self.message.text = "You have not joined the current active semester yet."
-        self.button.setTitle("  Join Semester  ", forState: .Normal)
+        self.button.setTitle("Join Semester", forState: .Normal)
     }
     
     override func layoutSubviews() {
@@ -53,7 +53,10 @@ class JoinSemesterView: UIView {
         self.button.setThemeColor(UIColor.secondaryTextColor)
         self.button.titleLabel!.font = UIFont.normalFont
         self.button.sizeToFit()
-        self.button.setY(330)
+        let width = CGRectGetWidth(self.button.frame)
+        self.button.setWidth(width + 10)
+        let buttonOffsetY = CGRectGetMaxY(self.message.frame)
+        self.button.setY(buttonOffsetY + 20)
         self.button.centerHorizontally()
     }
     

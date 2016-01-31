@@ -72,7 +72,6 @@ class LoginController: UIViewController {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if (valid) {
                             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
-                                KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
                                 if (user.verified) {
                                     self.pushRootTabBarController()
                                 } else {

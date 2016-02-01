@@ -134,8 +134,9 @@ class User: NSObject, NSCoding {
                     self.directorID = intValue
                 }
             case UserConstants.kSemesterSummary:
-                let semesterSummaryDictionary = value as! [String: AnyObject]
-                self.semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryDictionary)
+                if let semesterSummaryJSON = value as? [String: AnyObject] {
+                    self.semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON)
+                }
             default: break
             }
         }

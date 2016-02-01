@@ -1,6 +1,7 @@
 package blueprint.com.sage.announcements;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,6 +48,7 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
 
     private final String SCHOOL = "School Announcement";
     private final String GENERAL = "General Announcement";
+    private final String[] categoryList = new String[]{SCHOOL, GENERAL};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,17 +88,15 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     }
 
     protected boolean isValid() {
-        if (mValidator.hasNonBlankField(mAnnouncementTitle, "Title") &
-                mValidator.hasNonBlankField(mAnnouncementBody, "Body")) {
-            if (mAnnouncement.getCategory() == 0 && mSchoolAdapter.getCount() == 0) {
-                return false;
-            }
-            return true;
+        if (mAnnouncementCategory.getSelectedItemPosition() == 0 && mSchoolAdapter.getCount() == 0) {
+            Snackbar.make(mAnnouncementSchoolList, R.string.school_spinner_error, Snackbar.LENGTH_LONG);
+            return false;
         }
-        return false;
+        return mValidator.hasNonBlankField(mAnnouncementTitle, "Title") &
+                mValidator.hasNonBlankField(mAnnouncementBody, "Body");
     }
 
-    protected abstract boolean validateAndSubmitRequest();
+    protected abstract void validateAndSubmitRequest();
 
     public void onEvent(SchoolListEvent event) {
         mSchools = event.getSchools();
@@ -111,13 +111,10 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     public abstract void initializeViews();
 
     public void initializeSpinners() {
-        String[] categoryList = new String[]{SCHOOL, GENERAL};
         StringArraySpinnerAdapter categoryAdapter = new StringArraySpinnerAdapter(getActivity(), categoryList, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
         mAnnouncementCategory.setAdapter(categoryAdapter);
         mAnnouncementCategory.setSelection(1, true);
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
-        mSchoolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mAnnouncementSchoolList.setAdapter(mSchoolAdapter);
 
         mAnnouncementCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -135,7 +132,7 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
         });
     }
 
-    public void setAnnouncement() {
+    public void setAnnouncementCategoryAndSchool() {
         if (mAnnouncementCategory.getSelectedItemPosition() == 1) {
             mAnnouncement.setCategory(1);
             mAnnouncement.setSchoolId(0);

@@ -6,7 +6,10 @@
     <string name="announcement_school">to</string>
     <string name="announcement_select_school">School</string>
     <string name="create_announcement">Create Announcement</string>
-    <string name="delete_announcement">Delete Announcement</string>
-    <string name="edit_announcement">Edit Announcement</string>
+    <string name="change_announcement">Change Announcement</string>
     <string name="announcement_type">Type</string>
+    <string name="school_spinner_error">No schools to select</string>
+    <string name="confirm_delete">Are you sure you want to delete this announcement?</string>
+    <string name="announcement_yes">Yes</string>
+    <string name="announcement_no">No</string>
 </resources>

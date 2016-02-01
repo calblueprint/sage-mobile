@@ -1,7 +1,9 @@
 package blueprint.com.sage.announcements;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,7 +50,7 @@ public class AnnouncementFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBaseInterface = (BaseInterface) getActivity();
-        if (mBaseInterface.getUser().isAdmin()) {
+        if (mBaseInterface.getUser().isAdmin() && mBaseInterface.getUser().getId() == mAnnouncement.getUser().getId()) {
             setHasOptionsMenu(true);
         }
     }
@@ -77,11 +79,47 @@ public class AnnouncementFragment extends Fragment {
                 FragUtils.replaceBackStack(R.id.container, EditAnnouncementFragment.newInstance(mAnnouncement), getActivity());
                 break;
             case R.id.menu_delete:
-                Requests.Announcements.with(getActivity()).makeDeleteRequest(mAnnouncement);
+                confirmDelete();
                 break;
         }
         return super.onOptionsItemSelected(item);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void confirmDelete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.confirm_delete);
+        builder.setCancelable(true);
+        builder.setPositiveButton(
+                R.string.announcement_yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Requests.Announcements.with(getActivity()).makeDeleteRequest(mAnnouncement);
+                    }
+                });
+
+        builder.setNegativeButton(
+                R.string.announcement_no,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void initializeViews() {
@@ -106,18 +144,6 @@ public class AnnouncementFragment extends Fragment {
 
     public void setAnnouncement(Announcement announcement) {
         mAnnouncement = announcement;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
     public void onEvent(AnnouncementEvent event) {

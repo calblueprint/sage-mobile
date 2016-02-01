@@ -29,28 +29,21 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
         }
     }
 
-    public Intent createIntent() {
-        Intent intent = new Intent(getActivity(), AnnouncementActivity.class);
-        intent.putExtra("Announcement", announcementToString(mAnnouncement));
-        return intent;
-    }
-
     public void initializeViews() {
         getActivity().setTitle("Create Announcement");
         mAnnouncement = new Announcement();
         initializeSpinners();
     }
 
-    protected boolean validateAndSubmitRequest() {
-        setAnnouncement();
+    protected void validateAndSubmitRequest() {
         if (!isValid())
-            return false;
+            return;
+        setAnnouncementCategoryAndSchool();
         mAnnouncement.setTitle(mAnnouncementTitle.getText().toString());
         mAnnouncement.setBody(mAnnouncementBody.getText().toString());
         BaseInterface baseInterface = (BaseInterface) getActivity();
         mAnnouncement.setUserId(baseInterface.getUser().getId());
         Requests.Announcements.with(getActivity()).makeCreateRequest(mAnnouncement);
-        return true;
     }
 
     public void onEvent(CreateAnnouncementEvent event) {

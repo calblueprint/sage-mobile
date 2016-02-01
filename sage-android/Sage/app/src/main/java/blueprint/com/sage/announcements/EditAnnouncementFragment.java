@@ -50,14 +50,13 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
         }
     }
 
-    protected boolean validateAndSubmitRequest() {
-        setAnnouncement();
+    protected void validateAndSubmitRequest() {
         if (!isValid())
-            return false;
+            return;
+        setAnnouncementCategoryAndSchool();
         mAnnouncement.setTitle(mAnnouncementTitle.getText().toString());
         mAnnouncement.setBody(mAnnouncementBody.getText().toString());
         Requests.Announcements.with(getActivity()).makeEditRequest(mAnnouncement);
-        return true;
     }
 
     public void onEvent(EditAnnouncementEvent event) {

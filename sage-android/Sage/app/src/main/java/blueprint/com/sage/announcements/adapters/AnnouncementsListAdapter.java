@@ -61,17 +61,16 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<Announcements
         }
     }
 
-    public void setAnnouncements(ArrayList<Announcement> curList) {
-        mAnnouncementArrayList = curList;
-        notifyDataSetChanged();
-    }
-
     @Override
     public AnnouncementsListViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.announcement_row, viewGroup, false);
         return new AnnouncementsListViewHolder(view, mActivity, mFragment);
     }
 
+    public void setAnnouncements(ArrayList<Announcement> curList) {
+        mAnnouncementArrayList = curList;
+        notifyDataSetChanged();
+    }
 
     public static class AnnouncementsListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

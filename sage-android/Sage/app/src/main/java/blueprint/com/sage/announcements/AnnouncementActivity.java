@@ -30,7 +30,6 @@ public class AnnouncementActivity extends BackAbstractActivity implements Announ
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Announcement announcement = null;
-        mType = ORIGINAL;
         ObjectMapper mapper = new ObjectMapper();
         try {
             announcement = mapper.readValue(getIntent().getStringExtra("Announcement"), Announcement.class);
@@ -64,12 +63,12 @@ public class AnnouncementActivity extends BackAbstractActivity implements Announ
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         String string;
-        if (mType == DELETED) {
-            string = getString(R.string.delete_announcement);
-        } else if (mType == EDITED) {
-            string = getString(R.string.edit_announcement);
-        } else {
-            string = null;
+        switch (mType) {
+            case ORIGINAL:
+                string = null;
+                break;
+            default:
+                string = getString(R.string.change_announcement);
         }
         bundle.putString(string, NetworkUtils.writeAsString(this, mAnnouncement));
         bundle.putInt(getString(R.string.announcement_type), mType);

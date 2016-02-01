@@ -79,6 +79,11 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onRefresh() {
+        makeRequest();
+    }
+
     public void onEvent(AnnouncementsListEvent event) {
         mAnnouncements = event.getMAnnouncements();
         mAdapter.setAnnouncements(mAnnouncements);
@@ -96,11 +101,6 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         mAdapter.notifyDataSetChanged();
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
-    }
-
-    @Override
-    public void onRefresh() {
-        makeRequest();
     }
 
     public void makeRequest() {
@@ -126,26 +126,26 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     public void changeAnnouncement(Intent data) {
         int type = data.getIntExtra(getString(R.string.announcement_type), AnnouncementActivity.ORIGINAL);
-        if (type == AnnouncementActivity.DELETED) {
-            String string = data.getStringExtra(getString(R.string.delete_announcement));
-            Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
-            for (int i = 0; i < mAnnouncements.size(); i++) {
-                if (mAnnouncements.get(i).getId() == announcement.getId()) {
-                    mAnnouncements.remove(i);
-                }
-            }
-            mAdapter.setAnnouncements(mAnnouncements);
-            mAdapter.notifyDataSetChanged();
-        } else if (type == AnnouncementActivity.EDITED) {
-            String string = data.getStringExtra(getString(R.string.edit_announcement));
-            Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
-            for (int i = 0; i < mAnnouncements.size(); i++) {
-                if (mAnnouncements.get(i).getId() == announcement.getId()) {
-                    mAnnouncements.set(i, announcement);
-                }
-            }
-            mAdapter.setAnnouncements(mAnnouncements);
-            mAdapter.notifyDataSetChanged();
+        String string = data.getStringExtra(getString(R.string.change_announcement));
+        Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
+        if (type == AnnouncementActivity.ORIGINAL) {
+            return;
         }
+        int index = 0;
+        for (int i = 0; i < mAnnouncements.size(); i++) {
+            if (mAnnouncements.get(i).getId() == announcement.getId()) {
+                index = i;
+            }
+        }
+        switch (type) {
+            case AnnouncementActivity.DELETED:
+                mAnnouncements.remove(index);
+                break;
+            case AnnouncementActivity.EDITED:
+                mAnnouncements.set(index, announcement);
+                break;
+        }
+        mAdapter.setAnnouncements(mAnnouncements);
+        mAdapter.notifyDataSetChanged();
     }
 }

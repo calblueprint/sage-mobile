@@ -16,13 +16,13 @@ import blueprint.com.sage.network.BaseRequest;
 import blueprint.com.sage.utility.network.NetworkManager;
 
 /**
- * Created by kelseylam on 11/12/15.
+ * Created by kelseylam on 1/7/16.
  */
-public class CreateAnnouncementRequest extends BaseRequest {
+public class DeleteAnnouncementRequest extends BaseRequest {
 
-    public CreateAnnouncementRequest(final Activity activity, Announcement announcement,
-                                    final Response.Listener<Announcement> listener, final Response.Listener<APIError> errorListener) {
-        super(Request.Method.POST, makeUrl(null, "admin", "announcements"), convertToParams(announcement, "announcement", activity),
+    public DeleteAnnouncementRequest(final Activity activity, Announcement announcement,
+                                     final Response.Listener<Announcement> listener, final Response.Listener<APIError> errorListener) {
+        super(Request.Method.DELETE, makeUrl(null, "admin", "announcements", String.valueOf(announcement.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

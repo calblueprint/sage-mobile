@@ -1,5 +1,7 @@
 package blueprint.com.sage.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
@@ -18,18 +20,20 @@ public @Data class Announcement {
     private String body;
     private int schoolId;
     private int userId;
-    private String category;
+    private int category;
     private String userName;
     private String schoolName;
 
     private User user;
     private School school;
 
+    @JsonIgnore
     public String getDate() {
         SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy");
         return format.format(createdAt);
     }
 
+    @JsonIgnore
     public String getTime() {
         DateTime dateTime = new DateTime(getCreatedAt());
         Period period = new Period(dateTime, DateTime.now());

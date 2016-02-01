@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -63,11 +64,7 @@ public class ViewUtils {
 
     @SuppressWarnings("deprecation")
     public static int getColor(Context context, int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return context.getResources().getColor(color, context.getTheme());
-        } else {
-            return context.getResources().getColor(color);
-        }
+        return ContextCompat.getColor(context, color);
     }
 
     @SuppressWarnings("deprecation")

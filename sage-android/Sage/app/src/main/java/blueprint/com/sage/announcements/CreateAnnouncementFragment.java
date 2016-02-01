@@ -1,82 +1,59 @@
 package blueprint.com.sage.announcements;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
-import blueprint.com.sage.utility.view.FragUtils;
-import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
+import blueprint.com.sage.models.Announcement;
+import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
  * Created by kelseylam on 12/5/15.
  */
-public class CreateAnnouncementFragment extends Fragment {
+public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment {
 
     public static CreateAnnouncementFragment newInstance() { return new CreateAnnouncementFragment(); }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        super.onCreateView(inflater, parent, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_create_announcement, parent, false);
-        ButterKnife.bind(this, view);
-//        initializeViews();
-        return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.menu_save, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
-                submitRequest();
+                validateAndSubmitRequest();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
+    public void initializeViews() {
+        getActivity().setTitle("Create Announcement");
+        mAnnouncement = new Announcement();
+        initializeSpinners();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    private void intializeViews() {
-
-    }
-
-    private void submitRequest() {
-
-//        Requests.Announcements.with(getActivity()).makeCreateRequest(   );
+    protected void validateAndSubmitRequest() {
+        if (!isValid())
+            return;
+        setAnnouncementCategoryAndSchool();
+        mAnnouncement.setTitle(mAnnouncementTitle.getText().toString());
+        mAnnouncement.setBody(mAnnouncementBody.getText().toString());
+        BaseInterface baseInterface = (BaseInterface) getActivity();
+        mAnnouncement.setUserId(baseInterface.getUser().getId());
+        Requests.Announcements.with(getActivity()).makeCreateRequest(mAnnouncement);
     }
 
     public void onEvent(CreateAnnouncementEvent event) {
-        FragUtils.popBackStack(this);
+        Announcement announcement = event.getMAnnouncement();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putString(getString(R.string.create_announcement),
+                NetworkUtils.writeAsString(getActivity(), announcement));
+        intent.putExtras(bundle);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().onBackPressed();
     }
-
 }

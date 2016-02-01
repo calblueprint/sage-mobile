@@ -84,6 +84,14 @@
             android:name=".users.info.UserSemesterListActivity"
             android:launchMode="singleTop" />
 
+        <activity
+            android:name=".announcements.CreateAnnouncementActivity"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".announcements.AnnouncementActivity"
+            android:launchMode="singleTop" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="54afb894a34a5e0e989e1cedb236dc72cd0acd8d" />

@@ -12,6 +12,7 @@
     <!-- General Errors -->
     <string name="cannot_be_blank">%1$s cannot be blank.</string>
     <string name="list_empty">Looks like there\'s nothing here!\nPull down to refresh.</string>
+    <string name ="cannot_be_displayed">%1$s cannot be displayed</string>
 
     <!-- General Form -->
     <string name="required">Required</string>

@@ -2,24 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--android:paddingLeft="8dp"-->
-    <!--android:paddingRight="8dp"-->
-    <!--android:background="@color/divider_gray">-->
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/announcement_row"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        app:cardCornerRadius="0dp">
-        <!--card_view:cardUseCompatPadding="true"-->
-        <!--card_view:cardElevation="4dp"-->
-        <!--card_view:cardCornerRadius="3dp">-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:id="@+id/announcement_row">
             <blueprint.com.sage.shared.views.CircleImageView
                 android:id="@+id/announcement_profile_picture"
                 android:layout_width="40dp"
@@ -33,8 +19,20 @@
                 android:id="@+id/announcement_user"
                 style="@style/AnnouncementRow"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
                 android:text="User Name"
                 android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/announcement_school"
+                style="@style/AnnouncementRow"
+                android:text="@string/announcement_school"
+                android:layout_toRightOf="@id/announcement_user"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="0dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/announcement_time"
@@ -72,5 +70,4 @@
                 android:background="@color/divider_gray"
                 android:layout_below="@id/announcement_body"/>
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
 </LinearLayout>

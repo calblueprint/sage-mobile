@@ -120,6 +120,12 @@ public class MainFragment extends Fragment {
             case FragUtils.FINISH_SEMESTER_REQUEST_CODE:
                 clearSemester(data);
                 break;
+            case FragUtils.CREATE_ANNOUNCEMENT_REQUEST_CODE:
+                insertAnnouncement(data);
+                break;
+            case FragUtils.SHOW_ANNOUNCEMENT_REQUEST_CODE:
+                updateAnnouncementList(data);
+                break;
         }
     }
 
@@ -158,6 +164,23 @@ public class MainFragment extends Fragment {
 
             CheckInMapFragment checkInMapFragment = (CheckInMapFragment) fragment;
             checkInMapFragment.setUpMap();
+        }
+    }
+
+    private void insertAnnouncement(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AnnouncementsListFragment)) continue;
+
+            AnnouncementsListFragment announcementsListFragment = (AnnouncementsListFragment) fragment;
+            announcementsListFragment.addAnnouncement(data);
+        }
+    }
+    private void updateAnnouncementList(Intent data) {
+        for (Fragment fragment: getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AnnouncementsListFragment)) continue;
+
+            AnnouncementsListFragment announcementsListFragment = (AnnouncementsListFragment) fragment;
+            announcementsListFragment.changeAnnouncement(data);
         }
     }
 }

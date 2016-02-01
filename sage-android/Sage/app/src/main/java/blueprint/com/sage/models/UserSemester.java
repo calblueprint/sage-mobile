@@ -2,8 +2,6 @@ package blueprint.com.sage.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.List;
-
 import lombok.Data;
 
 /**
@@ -17,8 +15,6 @@ public class UserSemester {
     private boolean completed;
     private int status;
     private int hoursRequired;
-
-    private List<CheckIn> checkIns;
 
     public final static int INACTIVE = 0;
     public final static int ACTIVE = 1;

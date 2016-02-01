@@ -99,7 +99,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
     private void initializeViews() {
         mAdapter = new StringArraySpinnerAdapter(getActivity(),
                                                  Semester.SEASONS,
-                                                 R.layout.simple_spinner_item,
+                                                 R.layout.simple_spinner_header,
                                                  R.layout.simple_spinner_item);
         mSpinner.setAdapter(mAdapter);
     }

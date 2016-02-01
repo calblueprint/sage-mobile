@@ -10,6 +10,7 @@
     <string name="auth_token">auth_token</string>
     <string name="user">user</string>
     <string name="school">school</string>
+    <string name="current_semester">current_semester</string>
     <string name="email_header">X-AUTH-EMAIL</string>
     <string name="auth_header">X-AUTH-TOKEN</string>
 </resources>

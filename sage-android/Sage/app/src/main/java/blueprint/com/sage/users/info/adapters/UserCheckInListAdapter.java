@@ -35,12 +35,13 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         mActivity = activity;
         mUser = user;
-        mItems = new ArrayList<>();
 
         setUpCheckIn();
     }
 
     private void setUpCheckIn() {
+        mItems = new ArrayList<>();
+
         if (mUser.getUserSemester() == null) {
             return;
         }
@@ -94,10 +95,13 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void setHeaderView(HeaderViewHolder viewHolder) {
-        viewHolder.mTotal.setText(mUser.getUserSemester().getTotalTime());
-        viewHolder.mRequired.setText(mUser.getUserSemester().getHoursRequired());
+        viewHolder.mTotal.setText(String.valueOf(mUser.getUserSemester().getTotalTime()));
+        viewHolder.mRequired.setText(String.valueOf(mUser.getUserSemester().getHoursRequired()));
         viewHolder.mComplete.setText(String.valueOf(mUser.getUserSemester().isCompleted()));
-        viewHolder.mNumberCheckIns.setText(mUser.getUserSemester().getCheckIns().size());
+
+        if (mUser.getCheckIns() != null) {
+            viewHolder.mNumberCheckIns.setText(String.valueOf(mUser.getCheckIns().size()));
+        }
     }
 
     @Override
@@ -111,6 +115,7 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void setCheckIns(User user) {
         mUser = user;
         setUpCheckIn();
+        notifyDataSetChanged();
     }
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,7 @@
 package blueprint.com.sage.admin.browse.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.BrowseUserListAdapter;
+import blueprint.com.sage.events.schools.DeleteSchoolEvent;
 import blueprint.com.sage.shared.adapters.models.AbstractUserListAdapter;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
@@ -80,52 +84,10 @@ public class SchoolFragment extends Fragment
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_school, parent, false);
         ButterKnife.bind(this, view);
-        updateSchool();
+//        updateSchool();
         initializeViews(savedInstanceState);
         initializeSchool();
         return view;
-    }
-
-    // TODO: really find a better way to do this
-    private void updateSchool() {
-        if (mSchoolsInterface.getSchools().size() < mPosition)
-            return;
-
-        School school = mSchoolsInterface.getSchools().get(mPosition);
-        if (school.getId() == mSchool.getId()) {
-            mSchool = school;
-        } else {
-            for (int i = 0; i < mSchoolsInterface.getSchools().size(); i++) {
-                school = mSchoolsInterface.getSchools().get(i);
-                if (school.getId() == mSchool.getId()) {
-                    mSchool = school;
-                    mPosition = i;
-                }
-            }
-        }
-    }
-
-    private void initializeViews(Bundle savedInstanceState) {
-        mMapView.onCreate(savedInstanceState);
-        mMapView.getMapAsync(this);
-
-        if (mSchool.getUsers() == null) {
-            mSchool.setUsers(new ArrayList<User>());
-        }
-
-        mAdapter = new BrowseUserListAdapter(getActivity(), mSchool.getUsers());
-
-        mUserList.setEmptyView(mEmptyView);
-        mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mUserList.setAdapter(mAdapter);
-
-        getActivity().setTitle("School");
-        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
-    }
-
-    private void initializeSchool() {
-        mName.setText(mSchool.getName());
-        mAddress.setText(mSchool.getAddress());
     }
 
     @Override
@@ -166,6 +128,7 @@ public class SchoolFragment extends Fragment
                 FragUtils.replaceBackStack(R.id.container, EditSchoolFragment.newInstance(mSchool), getActivity());
                 break;
             case R.id.menu_delete:
+                showDeleteSchoolDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -185,6 +148,67 @@ public class SchoolFragment extends Fragment
         setMapCenter();
     }
 
+    private void showDeleteSchoolDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.delete_school_title)
+                .setMessage(R.string.delete_school_message)
+                .setPositiveButton(R.string.continue_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Requests.Schools.with(getActivity()).makeDeleteRequest(mSchool);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
+    }
+
+//    // TODO: really find a better way to do this
+//    private void updateSchool() {
+//        if (mSchoolsInterface.getSchools().size() < mPosition)
+//            return;
+//
+//        School school = mSchoolsInterface.getSchools().get(mPosition);
+//        if (school.getId() == mSchool.getId()) {
+//            mSchool = school;
+//        } else {
+//            for (int i = 0; i < mSchoolsInterface.getSchools().size(); i++) {
+//                school = mSchoolsInterface.getSchools().get(i);
+//                if (school.getId() == mSchool.getId()) {
+//                    mSchool = school;
+//                    mPosition = i;
+//                }
+//            }
+//        }
+//    }
+
+    private void initializeViews(Bundle savedInstanceState) {
+        mMapView.onCreate(savedInstanceState);
+        mMapView.getMapAsync(this);
+
+        if (mSchool.getUsers() == null) {
+            mSchool.setUsers(new ArrayList<User>());
+        }
+
+        mAdapter = new BrowseUserListAdapter(getActivity(), mSchool.getUsers());
+
+        mUserList.setEmptyView(mEmptyView);
+        mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mUserList.setAdapter(mAdapter);
+
+        getActivity().setTitle("School");
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
+    }
+
+    private void initializeSchool() {
+        mName.setText(mSchool.getName());
+        mAddress.setText(mSchool.getAddress());
+    }
+
     private void setMapCenter() {
         if (mMap == null || !mSchool.hasLatLng())
             return;
@@ -201,6 +225,11 @@ public class SchoolFragment extends Fragment
         mSchool = event.getSchool();
         mAdapter.setUsers(mSchool.getUsers());
         initializeSchool();
+    }
+
+    public void onEvent(DeleteSchoolEvent event) {
+        Toast.makeText(getActivity(), R.string.delete_school_result, Toast.LENGTH_SHORT).show();
+        FragUtils.popBackStack(this);
     }
 }
 

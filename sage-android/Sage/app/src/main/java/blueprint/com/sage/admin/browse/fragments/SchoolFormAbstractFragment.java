@@ -188,7 +188,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         });
 
         mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers,
-                R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+                R.layout.simple_spinner_header, R.layout.simple_spinner_item);
         mDirector.setAdapter(mUserAdapter);
     }
 

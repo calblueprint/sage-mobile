@@ -1,7 +1,9 @@
 package blueprint.com.sage.signUp.fragments;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.APIError;
@@ -18,9 +20,16 @@ import de.greenrobot.event.EventBus;
 public abstract class SignUpAbstractFragment extends Fragment {
 
     @Nullable @Bind(R.id.sign_up_finish) SimpleLoadingLayout mLayout;
+    @Bind(R.id.white_dots_container) View mWhiteDotsLayout;
 
     public SignUpActivity getParentActivity() {
         return (SignUpActivity) getActivity();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        moveDotsLayout();
     }
 
     @Override
@@ -33,6 +42,15 @@ public abstract class SignUpAbstractFragment extends Fragment {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    private void moveDotsLayout() {
+        int resourceId = getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId <= 0) {
+            return;
+        }
+
+        mWhiteDotsLayout.setTranslationY(-getResources().getDimensionPixelSize(resourceId));
     }
 
     @Nullable

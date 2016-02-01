@@ -9,7 +9,6 @@ import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
-import blueprint.com.sage.models.UserSemester;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.fragments.AbstractCheckInListFragment;
 import blueprint.com.sage.users.info.adapters.UserCheckInListAdapter;
@@ -54,6 +53,8 @@ public class UserSemesterFragment extends AbstractCheckInListFragment {
         User user = event.getUser();
         setUser(user);
         ((UserCheckInListAdapter) mAdapter).setCheckIns(mUser);
+        mCheckInRefreshView.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
     }
 
     public void onEvent(APIErrorEvent event) {

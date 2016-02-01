@@ -23,16 +23,17 @@ import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.events.schools.CreateSchoolEvent;
+import blueprint.com.sage.events.schools.DeleteSchoolEvent;
 import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.semesters.FinishSemesterEvent;
+import blueprint.com.sage.events.semesters.JoinSemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.events.semesters.StartSemesterEvent;
 import blueprint.com.sage.events.sessions.SignInEvent;
 import blueprint.com.sage.events.user_semesters.UpdateUserSemesterEvent;
-import blueprint.com.sage.events.user_semesters.UserSemesterListEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
 import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
@@ -59,15 +60,16 @@ import blueprint.com.sage.network.check_ins.CreateCheckInRequest;
 import blueprint.com.sage.network.check_ins.DeleteCheckInRequest;
 import blueprint.com.sage.network.check_ins.VerifyCheckInRequest;
 import blueprint.com.sage.network.schools.CreateSchoolRequest;
+import blueprint.com.sage.network.schools.DeleteSchoolRequest;
 import blueprint.com.sage.network.schools.EditSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.schools.SchoolRequest;
 import blueprint.com.sage.network.semesters.FinishSemesterRequest;
+import blueprint.com.sage.network.semesters.JoinSemesterRequest;
 import blueprint.com.sage.network.semesters.SemesterListRequest;
 import blueprint.com.sage.network.semesters.SemesterRequest;
 import blueprint.com.sage.network.semesters.StartSemesterRequest;
 import blueprint.com.sage.network.user_semesters.UpdateUserSemesterRequest;
-import blueprint.com.sage.network.user_semesters.UserSemesterListRequest;
 import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
@@ -425,6 +427,23 @@ public class Requests {
 
             Requests.addToRequestQueue(mActivity, request);
         }
+
+        public void makeDeleteRequest(School school) {
+            DeleteSchoolRequest request = new DeleteSchoolRequest(mActivity, school,
+                    new Response.Listener<School>() {
+                        @Override
+                        public void onResponse(School school) {
+                            EventBus.getDefault().post(new DeleteSchoolEvent(school));
+                        }
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
     }
 
     public static class Announcements {
@@ -623,6 +642,24 @@ public class Requests {
 
             Requests.addToRequestQueue(mActivity, request);
         }
+
+        public void makeJoinRequest() {
+            Request request = new JoinSemesterRequest(mActivity,
+                    new Response.Listener<Session>() {
+                        @Override
+                        public void onResponse(Session session) {
+                            EventBus.getDefault().post(new JoinSemesterEvent(session));
+                        }
+                    },
+                    new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
     }
 
     public static class UserSemesters {
@@ -638,24 +675,6 @@ public class Requests {
                         @Override
                         public void onResponse(UserSemester userSemester) {
                             EventBus.getDefault().post(new UpdateUserSemesterEvent(userSemester));
-                        }
-                    },
-                    new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
-
-            Requests.addToRequestQueue(mActivity, request);
-        }
-
-        public void makeListRequest(HashMap<String, String> queryParams) {
-            Request request = new UserSemesterListRequest(mActivity, queryParams,
-                    new Response.Listener<List<UserSemester>>() {
-                        @Override
-                        public void onResponse(List<UserSemester> userSemesters) {
-                            EventBus.getDefault().post(new UserSemesterListEvent(userSemesters));
                         }
                     },
                     new Response.Listener<APIError>() {

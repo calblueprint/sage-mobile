@@ -5,11 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/sign_up_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/red500" />
+
     <blueprint.com.sage.signUp.views.NoSwipeViewPager
         android:id="@+id/sign_up_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/red500"
         app:scrollFactor="6.0"/>
 
 </RelativeLayout>

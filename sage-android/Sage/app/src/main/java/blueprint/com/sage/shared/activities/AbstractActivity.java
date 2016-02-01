@@ -13,6 +13,7 @@ import com.google.android.gms.location.places.Places;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkManager;
@@ -30,6 +31,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
 
     protected User mUser;
     protected School mSchool;
+    protected Semester mCurrentSemester;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +47,13 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
         if (!NetworkUtils.isVerifiedUser(this, mPreferences))
             NetworkUtils.logoutCurrentUser(this);
 
-        setUpUser();
-        setUpSchool();
+        setUpSession();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        setUpSession();
         if (mGoogleApiClient != null)
             mGoogleApiClient.connect();
     }
@@ -61,6 +63,12 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
         super.onStop();
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
             mGoogleApiClient.disconnect();
+    }
+
+    private void setUpSession() {
+        setUpUser();
+        setUpSchool();
+        setUpCurrentSemester();
     }
 
     private void setUpUser() {
@@ -85,9 +93,23 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
         }
     }
 
+    private void setUpCurrentSemester() {
+        String currentSemesterString = mPreferences.getString(getString(R.string.current_semester), "");
+
+        try {
+            ObjectMapper objectMapper = mNetworkManager.getObjectMapper();
+            mCurrentSemester = objectMapper.readValue(currentSemesterString, new TypeReference<Semester>() {});
+        } catch (Exception e) {
+            Log.e(getClass().toString(), e.toString());
+        }
+    }
+
     public User getUser() { return mUser; }
     public void setUser(User user) { mUser = user; }
     public School getSchool() { return mSchool; }
+    public void setSchool(School school) { mSchool = school; }
+    public Semester getCurrentSemester() { return mCurrentSemester; }
+    public void setCurrentSemester(Semester semester) { mCurrentSemester = semester; }
     public NetworkManager getNetworkManager() { return mNetworkManager; }
     public SharedPreferences getSharedPreferences() { return mPreferences; }
     public GoogleApiClient getGoogleApiClient() { return mGoogleApiClient; }

@@ -61,7 +61,6 @@ public class AdminPanelFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_admin_panel, parent, false);
         ButterKnife.bind(this, view);
-        toggleSemester();
         return view;
     }
 
@@ -69,6 +68,12 @@ public class AdminPanelFragment extends Fragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        toggleSemester();
     }
 
     @Override
@@ -124,9 +129,9 @@ public class AdminPanelFragment extends Fragment {
             return;
         }
 
-        if (mBaseInterface.getSharedPreferences().contains(getString(R.string.current_semester))) {
+        if (mBaseInterface.getSharedPreferences().contains(getString(R.string.activity_current_semester))) {
             String semesterString =
-                    mBaseInterface.getSharedPreferences().getString(getString(R.string.current_semester), "");
+                    mBaseInterface.getSharedPreferences().getString(getString(R.string.activity_current_semester), "");
             setSemester(semesterString);
             mEndSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters == null || mSemesters.size() == 0) {
@@ -141,9 +146,11 @@ public class AdminPanelFragment extends Fragment {
         if (semester == null) return;
         mSemesters = new ArrayList<>();
         mSemesters.add(semester);
+
+        mBaseInterface.setCurrentSemester(semester);
     }
 
-    public void onStartSemeseter(Intent data) {
+    public void onStartSemester(Intent data) {
         String semesterString = data.getExtras().getString(getString(R.string.activity_create_semester), "");
         if (semesterString.isEmpty()) return;
 
@@ -151,7 +158,7 @@ public class AdminPanelFragment extends Fragment {
 
         mBaseInterface.getSharedPreferences()
                 .edit()
-                .putString(getString(R.string.current_semester), semesterString)
+                .putString(getString(R.string.activity_current_semester), semesterString)
                 .commit();
         toggleSemester();
     }
@@ -159,7 +166,7 @@ public class AdminPanelFragment extends Fragment {
     public void onFinishSemester(Intent data) {
         mBaseInterface.getSharedPreferences()
                 .edit()
-                .remove(getString(R.string.current_semester))
+                .remove(getString(R.string.activity_current_semester))
                 .commit();
         mSemesters = new ArrayList<>();
         toggleSemester();

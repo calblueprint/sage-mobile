@@ -9,6 +9,9 @@
         <item name="colorAccent">@color/amber500</item>
     </style>
 
+    <style name="AppThemeTranslucent" parent="AppTheme">
+    </style>
+
     <!-- ToolBar -->
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="actionMenuTextColor">@color/white</item>
@@ -80,10 +83,11 @@
     <style name="DefaultFAB">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">bottom|end</item>
-        <item name="layout_anchorGravity">bottom|right|end</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:layout_gravity">bottom|end|right</item>
         <item name="borderWidth">0dp</item>
-        <item name="elevation">@dimen/default_elevation</item>
+        <item name="elevation">0dp</item>
+        <item name="layout_anchorGravity">bottom|right|end</item>
         <item name="fabSize">normal</item>
     </style>
 

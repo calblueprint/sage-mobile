@@ -18,7 +18,7 @@ public class SignUpPageTransformer implements ViewPager.PageTransformer {
     public void transformPage(View view, float position) {
         if (position < -1 || position > 1) {
             // This page is way off-screen to the left/right.
-            view.setAlpha(0);
+            view.setAlpha(1);
             return;
         }
 
@@ -31,10 +31,6 @@ public class SignUpPageTransformer implements ViewPager.PageTransformer {
         int pageWidth = view.getWidth();
         int id = view.getId();
 
-        // Counteract default motion
-
-//        view.setTranslationX(-position * pageWidth);
-//        view.setAlpha((1 - Math.abs(position)));
         View whiteDotsLayout = view.findViewById(R.id.white_dots_container);
         whiteDotsLayout.setTranslationX(-position * pageWidth);
 

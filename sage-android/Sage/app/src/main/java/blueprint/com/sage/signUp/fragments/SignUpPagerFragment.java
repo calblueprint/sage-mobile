@@ -26,6 +26,7 @@ import de.greenrobot.event.EventBus;
  */
 public class SignUpPagerFragment extends Fragment {
 
+    @Bind(R.id.sign_up_background) View mBackground;
     @Bind(R.id.sign_up_view_pager) ViewPager mViewPager;
 
     private int[] mColors;
@@ -71,44 +72,39 @@ public class SignUpPagerFragment extends Fragment {
         mViewPagerAdapter.addFragment(SignUpSchoolFragment.newInstance(), getString(R.string.sign_up_school));
         mViewPagerAdapter.addFragment(SignUpProfileFragment.newInstance(), getString(R.string.sign_up_profile));
 
+        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(mViewPagerAdapter);
-        mViewPager.setPageTransformer(true, new SignUpPageTransformer());
+        mViewPager.setPageTransformer(false, new SignUpPageTransformer());
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position < mViewPagerAdapter.getCount() - 1 && position < mColors.length - 1) {
                     Integer value = (Integer) mEvaluator.evaluate(positionOffset, mColors[position], mColors[position + 1]);
-                    mViewPager.setBackgroundColor(value);
+                    mBackground.setBackgroundColor(value);
                 } else {
-                    mViewPager.setBackgroundColor(mColors[mColors.length - 1]);
+                    mBackground.setBackgroundColor(mColors[mColors.length - 1]);
                 }
             }
 
             @Override
-            public void onPageSelected(int position) {
-
-            }
+            public void onPageSelected(int position) {}
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
     }
 
     public void onEvent(BackEvent event) {
         if (mViewPager.getCurrentItem() == 0) {
-            SignUpActivity activity = (SignUpActivity) getActivity();
-            activity.finish();
+            getActivity().finish();
         } else {
             mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
         }
     }
 
     public void goToNextPage() {
-        if (mViewPager.getCurrentItem() == mViewPagerAdapter.getCount() - 1) {
-        } else {
+        if (mViewPager.getCurrentItem() < mViewPagerAdapter.getCount() - 1) {
             mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
         }
     }

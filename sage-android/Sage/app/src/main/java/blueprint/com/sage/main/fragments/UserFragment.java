@@ -56,6 +56,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @Bind(R.id.user_settings_layout) LinearLayout mUserSettingsLayout;
     @Bind(R.id.admin_settings_layout) LinearLayout mAdminSettingsLayout;
+
+    @Nullable @Bind(R.id.admin_user_change_role) LinearLayout mRoleLayout;
     @Nullable @Bind(R.id.admin_user_change_status) LinearLayout mStatusLayout;
 
     private User mUser;
@@ -166,6 +168,10 @@ public class UserFragment extends Fragment implements ListDialogInterface {
             mAdminSettingsLayout.setVisibility(View.VISIBLE);
             mUserSettingsLayout.setVisibility(View.GONE);
         }
+
+        if (!mBaseInterface.getUser().isPresident() && mRoleLayout != null) {
+            mRoleLayout.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.user_check_ins)
@@ -193,12 +199,9 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.admin_user_change_role)
     public void onPromoteClick(View view) {
-        String[] roleArray =
-                mBaseInterface.getUser().isPresident() ?
-                        User.ROLE_SPINNER_PRESIDENT : User.ROLE_SPINNER;
         ListDialog dialog = ListDialog.newInstance(this,
                 R.string.user_promote_dialog_title,
-                roleArray);
+                User.ROLE_SPINNER_PRESIDENT);
         dialog.setTargetFragment(this, PROMOTE_DIALOG_CODE);
         dialog.show(getFragmentManager(), DIALOG_TAG);
     }
@@ -239,6 +242,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
                 Log.e(getClass().toString(), e.toString());
             }
         }
+
+        initializeSettings();
         Snackbar.make(mLayout, "You've change this user's role!", Snackbar.LENGTH_SHORT).show();
     }
 

@@ -55,7 +55,7 @@ public class SignUpProfileFragment extends SignUpAbstractFragment {
 
     @OnClick(R.id.sign_up_profile_picture)
     public void openPhotoDialog() {
-        if (PermissionsUtils.hasIOPermissions(getActivity())) {
+        if (!PermissionsUtils.hasIOPermissions(getActivity())) {
             PermissionsUtils.requestIOPermissions(getActivity());
             return;
         }

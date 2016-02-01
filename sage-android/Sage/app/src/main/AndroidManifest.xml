@@ -13,10 +13,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+    <uses-feature android:name="android.hardware.screen.portrait" />
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize"
@@ -25,7 +26,8 @@
         <activity
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name=".signIn.SignInActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,27 +36,34 @@
 
         <activity
             android:name=".main.MainActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
+            android:theme="@style/AppThemeTranslucent"
             android:name=".signUp.SignUpActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".signUp.UnverifiedActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".checkIn.CheckInActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".admin.browse.BrowseUsersActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".admin.browse.BrowseSchoolsActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".admin.requests.VerifyCheckInRequestsActivity"
@@ -62,7 +71,8 @@
 
         <activity
             android:name=".admin.requests.VerifyUserRequestsActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".users.profile.EditUserActivity"
@@ -70,19 +80,28 @@
 
         <activity
             android:name=".admin.semester.CreateSemesterActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".admin.semester.FinishSemesterActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".admin.semester.SemesterListActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".users.info.UserSemesterListActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".joinSemester.JoinSemesterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".announcements.CreateAnnouncementActivity"

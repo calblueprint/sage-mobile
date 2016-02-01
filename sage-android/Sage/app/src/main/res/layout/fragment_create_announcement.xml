@@ -62,7 +62,7 @@ android:layout_height="match_parent">
             <ImageView
                 style="@style/FormIcon"
                 android:id="@+id/create_school_address_icon"
-                android:src="@drawable/ic_mail_white" />
+                android:src="@drawable/ic_email_white_48dp" />
 
             <LinearLayout style="@style/FormEditLinearLayout">
 

@@ -148,3 +148,12 @@ class SemesterSummary: NSObject, NSCoding {
         aCoder.encodeInteger(self.semesterID, forKey: SemesterSummaryConstants.kSemesterID)
     }
 }
+
+//
+// MARK: - NSCopying
+//
+extension SemesterSummary: NSCopying {
+    func copyWithZone(zone: NSZone) -> AnyObject {
+        return SemesterSummary(id: self.id, totalMinutes: self.totalMinutes, completed: self.completed, status: self.status, semesterID: self.semesterID, hoursRequired: self.hoursRequired)
+    }
+}

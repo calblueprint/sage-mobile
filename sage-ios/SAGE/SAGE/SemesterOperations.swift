@@ -43,6 +43,7 @@ class SemesterOperations {
             var semesterSummary: SemesterSummary? = nil
             if !(semesterSummaryJSON is NSNull) {
                 semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.joinSemesterKey, object: semesterSummary)
             }
             KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
             completion?()

@@ -3,7 +3,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/user_list_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <blueprint.com.sage.shared.views.RecycleViewEmpty
             android:id="@+id/user_list_list"
@@ -15,8 +16,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/user_list_empty_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"

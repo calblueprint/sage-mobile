@@ -1,6 +1,7 @@
 package blueprint.com.sage.main;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.main.fragments.MainFragment;
@@ -24,4 +25,6 @@ public class MainActivity extends AbstractActivity implements ToolbarInterface {
     }
 
     public void setToolbarElevation(float elevation) {}
+    public void showToolbar(Toolbar toolbar) {}
+    public void hideToolbar(Toolbar toolbar) {}
 }

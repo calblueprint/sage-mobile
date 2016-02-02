@@ -3,9 +3,12 @@ package blueprint.com.sage.admin.browse.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,16 +27,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.BrowseUserListAdapter;
 import blueprint.com.sage.events.schools.DeleteSchoolEvent;
-import blueprint.com.sage.shared.adapters.models.AbstractUserListAdapter;
 import blueprint.com.sage.events.schools.SchoolEvent;
+import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.interfaces.SchoolsInterface;
+import blueprint.com.sage.shared.adapters.models.AbstractUserListAdapter;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
 import blueprint.com.sage.utility.view.MapUtils;
@@ -45,7 +50,9 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/20/15.
  */
 public class SchoolFragment extends Fragment
-                            implements OnMapReadyCallback {
+                            implements OnMapReadyCallback,
+                                       SwipeRefreshLayout.OnRefreshListener,
+                                       AppBarLayout.OnOffsetChangedListener {
 
     @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.user_list_list) RecycleViewEmpty mUserList;
@@ -54,28 +61,29 @@ public class SchoolFragment extends Fragment
     @Bind(R.id.school_map) MapView mMapView;
     @Bind(R.id.school_name) TextView mName;
     @Bind(R.id.school_address) TextView mAddress;
+    @Bind(R.id.school_toolbar) Toolbar mSchoolToolbar;
+    @Bind(R.id.school_collapse_toolbar_layout) CollapsingToolbarLayout mCollapseToolbar;
+    @Bind(R.id.school_app_bar_layout) AppBarLayout mAppBarLayout;
 
     private School mSchool;
-    private int mPosition;
     private AbstractUserListAdapter mAdapter;
     private GoogleMap mMap;
-    private SchoolsInterface mSchoolsInterface;
+
+    private ToolbarInterface mToolbarInterface;
 
     public static SchoolFragment newInstance(School school, int position) {
         SchoolFragment fragment = new SchoolFragment();
         fragment.setSchool(school);
-        fragment.setPosition(position);
         return fragment;
     }
 
     public void setSchool(School school) { mSchool = school; }
-    public void setPosition(int position) { mPosition = position; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mSchoolsInterface = (SchoolsInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
         MapsInitializer.initialize(getActivity());
     }
 
@@ -84,7 +92,7 @@ public class SchoolFragment extends Fragment
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_school, parent, false);
         ButterKnife.bind(this, view);
-//        updateSchool();
+        mToolbarInterface.showToolbar(mSchoolToolbar);
         initializeViews(savedInstanceState);
         initializeSchool();
         return view;
@@ -115,6 +123,12 @@ public class SchoolFragment extends Fragment
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mToolbarInterface.hideToolbar(mSchoolToolbar);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu_edit_delete, menu);
@@ -139,12 +153,34 @@ public class SchoolFragment extends Fragment
         mMap = map;
         mMap.getUiSettings().setCompassEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
 
         LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         setMapCenter();
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            mRefreshUsers.setEnabled(true);
+            mEmptyView.setEnabled(true);
+        } else {
+            mRefreshUsers.setEnabled(false);
+            mEmptyView.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onRefresh() { makeUserRequest(); }
+
+    private void makeUserRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("school_id", String.valueOf(mSchool.getId()));
+        queryParams.put("sort_name", "true");
+        Requests.Users.with(getActivity()).makeListRequest(queryParams);
     }
 
     private void showDeleteSchoolDialog() {
@@ -166,25 +202,6 @@ public class SchoolFragment extends Fragment
                 .show();
     }
 
-//    // TODO: really find a better way to do this
-//    private void updateSchool() {
-//        if (mSchoolsInterface.getSchools().size() < mPosition)
-//            return;
-//
-//        School school = mSchoolsInterface.getSchools().get(mPosition);
-//        if (school.getId() == mSchool.getId()) {
-//            mSchool = school;
-//        } else {
-//            for (int i = 0; i < mSchoolsInterface.getSchools().size(); i++) {
-//                school = mSchoolsInterface.getSchools().get(i);
-//                if (school.getId() == mSchool.getId()) {
-//                    mSchool = school;
-//                    mPosition = i;
-//                }
-//            }
-//        }
-//    }
-
     private void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
@@ -199,12 +216,20 @@ public class SchoolFragment extends Fragment
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setAdapter(mAdapter);
 
-        getActivity().setTitle("School");
+        mRefreshUsers.setOnRefreshListener(this);
+        mEmptyView.setOnRefreshListener(this);
+
+        mAppBarLayout.addOnOffsetChangedListener(this);
+
+        mCollapseToolbar.setExpandedTitleTextAppearance(R.style.CollapseToolbarLayoutStyleOpen);
+        mCollapseToolbar.setCollapsedTitleTextAppearance(R.style.CollapseToolbarLayoutStyleClosed);
+
         Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     private void initializeSchool() {
         mName.setText(mSchool.getName());
+        mSchoolToolbar.setTitle(mSchool.getName());
         mAddress.setText(mSchool.getAddress());
     }
 
@@ -224,6 +249,12 @@ public class SchoolFragment extends Fragment
         mSchool = event.getSchool();
         mAdapter.setUsers(mSchool.getUsers());
         initializeSchool();
+    }
+
+    public void onEvent(UserListEvent event) {
+        mAdapter.setUpUsers(event.getUsers());
+        mRefreshUsers.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
     }
 
     public void onEvent(DeleteSchoolEvent event) {

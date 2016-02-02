@@ -4,4 +4,10 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <style name="CollapseToolbarLayoutStyleOpen">
+        <item name="android:textColor">@color/transparent</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">0sp</item>
+    </style>
 </resources>

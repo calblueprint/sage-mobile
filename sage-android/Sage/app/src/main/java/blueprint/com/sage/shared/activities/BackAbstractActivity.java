@@ -51,6 +51,7 @@ public class BackAbstractActivity extends AbstractActivity implements ToolbarInt
         super.onBackPressed();
     }
 
+    @Override
     public void setToolbarElevation(float elevation) {
         ViewUtils.setElevation(mToolbar, elevation);
     }

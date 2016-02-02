@@ -93,7 +93,7 @@
 
     <style name="DefaultMapWindow">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">300dp</item>
+        <item name="android:layout_height">@dimen/map_height</item>
     </style>
 
     <style name="DefaultHeader">

@@ -24,10 +24,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.BrowseUserListAdapter;
 import blueprint.com.sage.events.schools.DeleteSchoolEvent;
+import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.shared.adapters.models.AbstractUserListAdapter;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
@@ -45,7 +47,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/20/15.
  */
 public class SchoolFragment extends Fragment
-                            implements OnMapReadyCallback {
+                            implements OnMapReadyCallback, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.user_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.user_list_list) RecycleViewEmpty mUserList;
@@ -147,6 +149,16 @@ public class SchoolFragment extends Fragment
         setMapCenter();
     }
 
+    @Override
+    public void onRefresh() { makeUserRequest(); }
+
+    private void makeUserRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("school_id", String.valueOf(mSchool.getId()));
+        queryParams.put("sort_name", "true");
+        Requests.Users.with(getActivity()).makeListRequest(queryParams);
+    }
+
     private void showDeleteSchoolDialog() {
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.delete_school_title)
@@ -166,25 +178,6 @@ public class SchoolFragment extends Fragment
                 .show();
     }
 
-//    // TODO: really find a better way to do this
-//    private void updateSchool() {
-//        if (mSchoolsInterface.getSchools().size() < mPosition)
-//            return;
-//
-//        School school = mSchoolsInterface.getSchools().get(mPosition);
-//        if (school.getId() == mSchool.getId()) {
-//            mSchool = school;
-//        } else {
-//            for (int i = 0; i < mSchoolsInterface.getSchools().size(); i++) {
-//                school = mSchoolsInterface.getSchools().get(i);
-//                if (school.getId() == mSchool.getId()) {
-//                    mSchool = school;
-//                    mPosition = i;
-//                }
-//            }
-//        }
-//    }
-
     private void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
@@ -198,6 +191,8 @@ public class SchoolFragment extends Fragment
         mUserList.setEmptyView(mEmptyView);
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setAdapter(mAdapter);
+
+        mRefreshUsers.setOnRefreshListener(this);
 
         getActivity().setTitle("School");
         Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
@@ -224,6 +219,12 @@ public class SchoolFragment extends Fragment
         mSchool = event.getSchool();
         mAdapter.setUsers(mSchool.getUsers());
         initializeSchool();
+    }
+
+    public void onEvent(UserListEvent event) {
+        mAdapter.setUpUsers(event.getUsers());
+        mRefreshUsers.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
     }
 
     public void onEvent(DeleteSchoolEvent event) {

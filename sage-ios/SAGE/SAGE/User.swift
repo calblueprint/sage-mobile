@@ -31,11 +31,10 @@ class User: NSObject, NSCoding {
     var school: School?
     var level: VolunteerLevel = .Default
     var role: UserRole = .Default
-    var totalHours: Int = -1
     var verified: Bool = false
     var imageURL: NSURL?
     var directorID: Int = -1
-    
+    var semesterSummary: SemesterSummary?
     //
     // MARK -- NSCoding
     //
@@ -48,7 +47,6 @@ class User: NSObject, NSCoding {
         self.school = aDecoder.decodeObjectForKey(UserConstants.kSchool) as? School
         self.level = VolunteerLevel(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kLevel))!
         self.role = UserRole(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kRole))!
-        self.totalHours = aDecoder.decodeIntegerForKey(UserConstants.kTotalTime)
         self.verified = aDecoder.decodeBoolForKey(UserConstants.kVerified)
         self.directorID = aDecoder.decodeIntegerForKey(UserConstants.kDirectorID)
         super.init()
@@ -62,12 +60,11 @@ class User: NSObject, NSCoding {
         aCoder.encodeObject(self.school, forKey: UserConstants.kSchool)
         aCoder.encodeInteger(level.rawValue, forKey: UserConstants.kLevel)
         aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
-        aCoder.encodeInteger(self.totalHours, forKey: UserConstants.kTotalTime)
         aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
         aCoder.encodeInteger(self.directorID, forKey: UserConstants.kDirectorID)
     }
     
-    init(id: Int = -1, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, totalHours: Int = -1, verified: Bool = false, imgURL: NSURL? = nil, directorID: Int = -1) {
+    init(id: Int = -1, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, verified: Bool = false, imgURL: NSURL? = nil, directorID: Int = -1, semesterSummary: SemesterSummary? = nil) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -75,17 +72,16 @@ class User: NSObject, NSCoding {
         self.school = school
         self.level = level
         self.role = role
-        self.totalHours = totalHours
         self.verified = verified
         self.imageURL = imgURL
         self.directorID = directorID
+        self.semesterSummary = semesterSummary
         super.init()
     }
     
     init(propertyDictionary: [String: AnyObject]) {
         // set default values
         self.id = -1
-        self.totalHours = -1
         self.verified = false
         self.level = .Default
         self.role = .Default
@@ -136,9 +132,9 @@ class User: NSObject, NSCoding {
                 if let intValue = value as? Int {
                     self.directorID = intValue
                 }
-            case UserConstants.kTotalTime:
-                if let val = value as? Int {
-                    self.totalHours = val / 60 // Value is passed in minutes
+            case UserConstants.kSemesterSummary:
+                if let semesterSummaryJSON = value as? [String: AnyObject] {
+                    self.semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON)
                 }
             default: break
             }
@@ -178,11 +174,11 @@ class User: NSObject, NSCoding {
             default: break
             }
         }
-        if -1 != self.totalHours {
-            propertyDict[UserConstants.kTotalTime] = self.totalHours * 60
-        }
         if -1 != self.directorID {
             propertyDict[UserConstants.kDirectorID] = self.directorID
+        }
+        if let summary = self.semesterSummary {
+            propertyDict[UserConstants.kSemesterSummary] = summary.toDictionary()
         }
         propertyDict[UserConstants.kVerified] = verified
         return propertyDict
@@ -223,6 +219,6 @@ class User: NSObject, NSCoding {
 
 extension User: NSCopying {
     func copyWithZone(zone: NSZone) -> AnyObject {
-        return User(id: self.id, firstName: self.firstName?.copy() as? String, lastName: self.lastName?.copy() as? String, email: self.email?.copy() as? String, school: self.school?.copy() as? School, level: self.level, role: self.role, totalHours: self.totalHours, verified: self.verified, imgURL: self.imageURL?.copy() as? NSURL, directorID: self.directorID)
+        return User(id: self.id, firstName: self.firstName?.copy() as? String, lastName: self.lastName?.copy() as? String, email: self.email?.copy() as? String, school: self.school?.copy() as? School, level: self.level, role: self.role, verified: self.verified, imgURL: self.imageURL?.copy() as? NSURL, directorID: self.directorID, semesterSummary: self.semesterSummary)
     }
 }

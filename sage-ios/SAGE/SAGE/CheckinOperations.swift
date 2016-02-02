@@ -18,6 +18,7 @@ class CheckinOperations {
         checkinDict[CheckinConstants.kUserId] = checkin.user!.id
         checkinDict[CheckinConstants.kSchoolId] = checkin.school!.id
         checkinDict[CheckinConstants.kComment] = checkin.comment
+        checkinDict[CheckinConstants.kVerified] = checkin.verified
 
         let params = NSDictionary(dictionary: ["check_in": checkinDict])
         

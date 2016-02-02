@@ -41,6 +41,11 @@ class RequestHoursViewController: FormController {
             let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
             CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
                 KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                if checkinResponse.verified {
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addVerifiedCheckinKey, object: checkinResponse)
+                } else {
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addUnverifiedCheckinKey, object: checkinResponse)
+                }
                 self.dismiss()
                 }) { (errorMessage) -> Void in
                     self.finishButton?.stopLoading()

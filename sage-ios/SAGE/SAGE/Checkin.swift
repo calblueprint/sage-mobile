@@ -90,6 +90,11 @@ class Checkin: NSObject {
         return propertyDict
     }
     
+    func minuteDuration() -> Int {
+        let secondDuration = Int(self.endTime!.timeIntervalSinceDate(self.startTime!))
+        return secondDuration / 60
+    }
+    
     func stringTimeFromStartDate() -> NSString {
         let formatter = NSDateFormatter()
         formatter.dateFormat = StringConstants.displayDateFormat

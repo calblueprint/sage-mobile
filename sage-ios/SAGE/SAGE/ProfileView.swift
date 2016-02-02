@@ -123,7 +123,8 @@ class ProfileView: UIView {
 
         if name == self.userStatusString {
             string.addAttributes(boldString, range: NSRange(location: 0, length: length))
-            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: length+6, length: 6))
+            let remainderLocation = string.length - 5
+            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: remainderLocation, length: 5))
         }
         
         if name == self.userCommitmentString {
@@ -140,15 +141,16 @@ class ProfileView: UIView {
         self.userSchool.text = user.school?.name
         self.userVolunteerLevel.text = user.volunteerLevelToString(user.level)
         
-        var hoursCompletedString: String
-        if user.totalHours != -1 {
-            hoursCompletedString = String(user.totalHours)
+        if let semesterSummary = user.semesterSummary {
+            self.userStatusLabel.font = UIFont.normalFont
+            let hoursCompletedString = String(semesterSummary.getTotalHours())
+            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / " + String(semesterSummary.hoursRequired) + " \nhours")
+            styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
+            self.userStatusLabel.attributedText = userStatusString
         } else {
-            hoursCompletedString = "0"
+            self.userStatusLabel.font = UIFont.getDefaultFont(24)
+            self.userStatusLabel.text = "Inactive"
         }
-        let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / 60 \nhours") // ask charles about the 60
-        styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
-        self.userStatusLabel.attributedText = userStatusString
         
         let weeklyHoursRequiredString = String(user.getRequiredHours())
         let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")

@@ -21,7 +21,10 @@ class SemesterSummary: NSObject, NSCoding {
     var status: Status = .Active
     var semesterID: Int = -1
     var hoursRequired: Int = 0
-    
+
+    //
+    // MARK: - Initialization
+    //
     init(id: Int = -1, totalMinutes: Int = 0, completed: Bool = false, status: Status = .Active, semesterID: Int = -1, hoursRequired: Int = 0) {
         self.id = id
         self.totalMinutes = totalMinutes
@@ -100,6 +103,13 @@ class SemesterSummary: NSObject, NSCoding {
         return propertyDict
     }
     
+    //
+    // MARK: - Public Methods
+    //
+    func getTotalHours() -> Int {
+        return self.totalMinutes / 60
+    }
+
     func statusToString(status: Status) -> String {
         switch status {
         case .Inactive:
@@ -116,6 +126,9 @@ class SemesterSummary: NSObject, NSCoding {
         return Status.Active
     }
     
+    //
+    // MARK: - NSCoding
+    //
     required init(coder aDecoder: NSCoder) {
         self.id = aDecoder.decodeIntegerForKey(SemesterSummaryConstants.kId)
         self.completed = aDecoder.decodeBoolForKey(SemesterSummaryConstants.kCompleted)

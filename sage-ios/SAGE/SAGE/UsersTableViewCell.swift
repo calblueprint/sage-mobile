@@ -43,8 +43,14 @@ class UsersTableViewCell: UITableViewCell {
         self.mentorPicture.setImageWithUser(user)
         self.mentorName.text = user.fullName()
         self.schoolName.text = user.school?.name
-        if user.totalHours != -1 {
-            self.totalHours.text = String(user.totalHours) + " hours"
+        if let semesterSummary = user.semesterSummary {
+            self.totalHours.text = String(semesterSummary.getTotalHours())
+            self.totalHours.text! += " hour"
+            if semesterSummary.getTotalHours() != 1 {
+                self.totalHours.text! += "s"
+            }
+        } else {
+            self.totalHours.text = "Inactive"
         }
     }
     

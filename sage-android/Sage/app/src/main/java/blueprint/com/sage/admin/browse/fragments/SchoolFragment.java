@@ -138,7 +138,6 @@ public class SchoolFragment extends Fragment
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mMap.getUiSettings().setCompassEnabled(false);
-        mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
 

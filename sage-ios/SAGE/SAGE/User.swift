@@ -34,8 +34,7 @@ class User: NSObject, NSCoding {
     var verified: Bool = false
     var imageURL: NSURL?
     var directorID: Int = -1
-    var semesterSummary: SemesterSummary = SemesterSummary()
-    
+    var semesterSummary: SemesterSummary?
     //
     // MARK -- NSCoding
     //
@@ -65,7 +64,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeInteger(self.directorID, forKey: UserConstants.kDirectorID)
     }
     
-    init(id: Int = -1, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, verified: Bool = false, imgURL: NSURL? = nil, directorID: Int = -1, semesterSummary: SemesterSummary = SemesterSummary()) {
+    init(id: Int = -1, firstName: String? = nil, lastName: String? = nil, email: String? = nil, school: School? = nil, level: VolunteerLevel = .Default, role: UserRole = .Default, verified: Bool = false, imgURL: NSURL? = nil, directorID: Int = -1, semesterSummary: SemesterSummary? = nil) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -177,6 +176,9 @@ class User: NSObject, NSCoding {
         }
         if -1 != self.directorID {
             propertyDict[UserConstants.kDirectorID] = self.directorID
+        }
+        if let summary = self.semesterSummary {
+            propertyDict[UserConstants.kSemesterSummary] = summary.toDictionary()
         }
         propertyDict[UserConstants.kVerified] = verified
         return propertyDict

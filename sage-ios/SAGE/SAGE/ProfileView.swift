@@ -140,10 +140,16 @@ class ProfileView: UIView {
         self.userSchool.text = user.school?.name
         self.userVolunteerLevel.text = user.volunteerLevelToString(user.level)
         
-        let hoursCompletedString = String(user.semesterSummary.getTotalHours())
-        let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / 60 \nhours") // ask charles about the 60
-        styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
-        self.userStatusLabel.attributedText = userStatusString
+        if let semesterSummary = user.semesterSummary {
+            self.userStatusLabel.font = UIFont.normalFont
+            let hoursCompletedString = String(semesterSummary.getTotalHours())
+            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / 60 \nhours") // ask charles about the 60
+            styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
+            self.userStatusLabel.attributedText = userStatusString
+        } else {
+            self.userStatusLabel.font = UIFont.getDefaultFont(24)
+            self.userStatusLabel.text = "Inactive"
+        }
         
         let weeklyHoursRequiredString = String(user.getRequiredHours())
         let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")

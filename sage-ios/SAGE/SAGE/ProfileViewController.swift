@@ -43,7 +43,7 @@ class ProfileViewController: UITableViewController {
     func verifiedCheckinAdded(notification: NSNotification) {
         let checkin = notification.object!.copy() as! Checkin
         if LoginOperations.getUser()?.id == checkin.user?.id {
-            self.user?.semesterSummary.totalMinutes += checkin.minuteDuration()
+            self.user?.semesterSummary?.totalMinutes += checkin.minuteDuration()
             self.profileView.setupWithUser(self.user!)
             self.tableView.reloadData()
         }

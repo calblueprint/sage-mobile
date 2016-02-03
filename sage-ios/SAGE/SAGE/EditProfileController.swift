@@ -12,6 +12,7 @@ class EditProfileController: FormController {
     
     var user: User
     var editProfileView = EditProfileView()
+    var choseNewPhoto = false
     
     init(user: User) {
         self.user = user
@@ -98,7 +99,10 @@ class EditProfileController: FormController {
             self.user.email = self.editProfileView.getEmail()
             self.finishButton?.startLoading()
             let password = editProfileView.getPassword()
-            let photoData = UIImage.encodedPhotoString(self.editProfileView.photoView.image!)
+            var photoData: String? = nil
+            if self.choseNewPhoto {
+                photoData = UIImage.encodedPhotoString(self.editProfileView.photoView.image!)
+            }
             ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, completion: { (updatedUser) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
@@ -125,6 +129,7 @@ class EditProfileController: FormController {
 
 extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        self.choseNewPhoto = true
         let photoView = self.editProfileView.photoView
         photoView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         picker.dismissViewControllerAnimated(true, completion: nil)

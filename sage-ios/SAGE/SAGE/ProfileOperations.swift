@@ -46,31 +46,21 @@ class ProfileOperations: NSObject {
         case .TwoUnit: hours = 2
         default: hours = 0
         }
-        var params: [String: [String: AnyObject]]
-        if let photoData = photoData {
-            params = ["user":
-                [
-                    UserConstants.kFirstName: user.firstName!,
-                    UserConstants.kLastName: user.lastName!,
-                    UserConstants.kEmail: user.email!,
-                    UserConstants.kLevel: hours,
-                    UserConstants.kSchoolID: user.school!.id,
-                    UserConstants.kCurrentPassword: password,
-                    UserConstants.kPhotoData: photoData
-                ]
-            ]
-        } else {
-            params = ["user":
-                [
-                    UserConstants.kFirstName: user.firstName!,
-                    UserConstants.kLastName: user.lastName!,
-                    UserConstants.kEmail: user.email!,
-                    UserConstants.kLevel: hours,
-                    UserConstants.kSchoolID: user.school!.id,
-                    UserConstants.kCurrentPassword: password,
-                ]
-            ]
+        
+        var userJSON: [String: AnyObject] = [
+            UserConstants.kFirstName: user.firstName!,
+            UserConstants.kLastName: user.lastName!,
+            UserConstants.kEmail: user.email!,
+            UserConstants.kLevel: hours,
+            UserConstants.kSchoolID: user.school!.id,
+            UserConstants.kCurrentPassword: password,
+        ]
+        
+        if photoData != nil {
+            userJSON[UserConstants.kPhotoData] = photoData!
         }
+        
+        let params = ["user": userJSON]
         
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
         

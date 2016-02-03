@@ -21,6 +21,7 @@ class ProfileViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterJoined:", name: NotificationConstants.joinSemesterKey, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -48,6 +49,16 @@ class ProfileViewController: UITableViewController {
             self.tableView.reloadData()
         }
 
+    }
+    
+    func semesterJoined(notification: NSNotification) {
+        let summary = notification.object!.copy() as! SemesterSummary
+        if LoginOperations.getUser()?.id == self.user?.id {
+            self.user?.semesterSummary = summary
+            self.profileView.setupWithUser(self.user!)
+            self.tableView.reloadData()
+        }
+        
     }
     
     func setupHeader() {

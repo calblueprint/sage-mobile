@@ -171,16 +171,16 @@ class CheckinViewController: UIViewController {
                 KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
             }
             let alertController = UIAlertController(
-                title: "Hour limited exceeded",
+                title: "Session limit exceeded",
                 message: "You have been in a session for more than 6 hours. Your session has been cancelled.",
                 preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: cancelSessionBlock))
             self.presentViewController(alertController, animated: true, completion: nil)
-        }
-        // get the user's min hours and pass that into percentage
-        self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/self.requiredTime))
-        if (self.inSession) {
-            self.performSelector("updateSessionTime", withObject: nil, afterDelay: 1)
+        } else {
+            self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/self.requiredTime))
+            if (self.inSession) {
+                self.performSelector("updateSessionTime", withObject: nil, afterDelay: 1)
+            }
         }
     }
     

@@ -348,28 +348,15 @@ class ProfileView: UIView {
         } else {
             self.currentUserProfile = false
         }
-        let isAdminOrPresident = (LoginOperations.getUser()!.role == .Admin) || (LoginOperations.getUser()!.role == .President)
-        if isAdminOrPresident && LoginOperations.getUser()!.id != user.id  {
-            if user.role == .Admin && LoginOperations.getUser()!.role == .Admin {
-                self.canPromote = false
-                self.canDemote = true
-            } else if user.role == .Admin && LoginOperations.getUser()!.role == .President {
-                self.canPromote = true
+        self.canPromote = false
+        self.canDemote = false
+        let loggedInUser = LoginOperations.getUser()!
+        if loggedInUser.role == .President && loggedInUser.id != user.id {
+            self.canPromote = true
+            if user.role == .Admin {
                 self.canDemote = true
                 self.showBothButtons = true
-            } else if user.role == .President {
-                self.canPromote = false
-                self.canDemote = false
-            } else if user.verified == false {
-                self.canPromote = false
-                self.canDemote = false
-            } else {
-                self.canPromote = true
-                self.canDemote = false
             }
-        } else {
-            self.canPromote = false
-            self.canDemote = false
         }
         self.layoutSubviews()
     }

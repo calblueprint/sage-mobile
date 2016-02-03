@@ -36,7 +36,7 @@ class ProfileOperations: NSObject {
         }
     }
     
-    static func updateProfile(user: User, password: String, photoData: String, completion: (User) -> Void, failure: (String) -> Void) {
+    static func updateProfile(user: User, password: String, photoData: String?, completion: (User) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
 
         var hours: Int = 0
@@ -47,17 +47,20 @@ class ProfileOperations: NSObject {
         default: hours = 0
         }
         
-        let params = ["user":
-            [
-                UserConstants.kFirstName: user.firstName!,
-                UserConstants.kLastName: user.lastName!,
-                UserConstants.kEmail: user.email!,
-                UserConstants.kLevel: hours,
-                UserConstants.kSchoolID: user.school!.id,
-                UserConstants.kCurrentPassword: password,
-                UserConstants.kPhotoData: photoData
-            ]
+        var userJSON: [String: AnyObject] = [
+            UserConstants.kFirstName: user.firstName!,
+            UserConstants.kLastName: user.lastName!,
+            UserConstants.kEmail: user.email!,
+            UserConstants.kLevel: hours,
+            UserConstants.kSchoolID: user.school!.id,
+            UserConstants.kCurrentPassword: password,
         ]
+        
+        if photoData != nil {
+            userJSON[UserConstants.kPhotoData] = photoData!
+        }
+        
+        let params = ["user": userJSON]
         
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
         

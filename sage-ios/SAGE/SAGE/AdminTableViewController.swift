@@ -11,7 +11,11 @@ import FontAwesomeKit
 
 class AdminTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        if LoginOperations.getUser()?.role == .President {
+            return 3
+        } else {
+            return 2
+        }
     }
     
     override func viewDidLoad() {
@@ -27,9 +31,9 @@ class AdminTableViewController: UITableViewController {
             return 2
         case 2:
             if LoginOperations.getUser()?.role == .President {
-                return 2
-            } else {
                 return 1
+            } else {
+                return 0
             }
         default: return 0
         }
@@ -70,9 +74,7 @@ class AdminTableViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                if LoginOperations.getUser()?.role == .President {
-                    self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
-                }
+                self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
             default: break
             }
         default: break
@@ -110,17 +112,10 @@ class AdminTableViewController: UITableViewController {
                 cell.imageView?.image = icon
             }
         case 2:
-            if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
-                cell.textLabel?.text = "End Fall 2015"
-                let icon = FAKIonIcons.logOutIconWithSize(iconSize)
+            cell.textLabel?.text = "End Fall 2015"
+            let icon = FAKIonIcons.logOutIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
-                cell.imageView?.image = icon
-            } else {
-                cell.textLabel?.text = "Change hour requirements"
-                let icon = FAKIonIcons.clockIconWithSize(iconSize)
-                    .imageWithSize(CGSizeMake(iconSize, iconSize))
-                cell.imageView?.image = icon
-            }
+            cell.imageView?.image = icon
         default: break
         }
         cell.textLabel?.font = UIFont.normalFont

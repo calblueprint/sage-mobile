@@ -30,11 +30,7 @@ class AdminTableViewController: UITableViewController {
         case 1:
             return 2
         case 2:
-            if LoginOperations.getUser()?.role == .President {
-                return 1
-            } else {
-                return 0
-            }
+            return 1
         default: return 0
         }
     }
@@ -72,11 +68,7 @@ class AdminTableViewController: UITableViewController {
             default: break
             }
         case 2:
-            switch indexPath.row {
-            case 0:
-                self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
-            default: break
-            }
+            self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
         default: break
         }
     }

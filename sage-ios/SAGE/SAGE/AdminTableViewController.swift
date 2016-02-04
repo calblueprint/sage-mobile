@@ -99,12 +99,12 @@ class AdminTableViewController: UITableViewController {
             }
         case 1:
             if indexPath.row == 0 {
-                cell.textLabel?.text = "Check ins"
+                cell.textLabel?.text = "Check Ins"
                 let icon = FAKIonIcons.locationIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             } else {
-                cell.textLabel?.text = "Sign ups"
+                cell.textLabel?.text = "Sign Ups"
                 let icon = FAKIonIcons.personAddIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon

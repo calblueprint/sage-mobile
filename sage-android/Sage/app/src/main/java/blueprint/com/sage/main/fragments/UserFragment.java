@@ -129,6 +129,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
         if (mSemester != null) {
             queryParams.put("semester_id", String.valueOf(mSemester.getId()));
+        } else if (mBaseInterface.getCurrentSemester() != null) {
+            queryParams.put("semester_id", String.valueOf(mBaseInterface.getCurrentSemester().getId()));
         }
 
         Requests.Users.with(getActivity()).makeShowRequest(mUser, queryParams);

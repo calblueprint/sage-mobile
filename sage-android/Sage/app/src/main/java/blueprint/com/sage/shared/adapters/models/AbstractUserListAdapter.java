@@ -29,7 +29,6 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
     public AbstractUserListAdapter(FragmentActivity activity, List<User> users) {
         super();
         mActivity = activity;
-        setUpUsers(users);
     }
 
     public abstract void setUpUsers(List<User> users);
@@ -105,7 +104,6 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
             super(v);
             ButterKnife.bind(this, v);
         }
-
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {

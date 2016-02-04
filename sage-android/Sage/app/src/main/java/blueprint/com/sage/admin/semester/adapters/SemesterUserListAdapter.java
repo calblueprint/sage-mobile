@@ -22,6 +22,7 @@ public class SemesterUserListAdapter extends AbstractUserListAdapter {
     public SemesterUserListAdapter(FragmentActivity activity, List<User> users, Semester semester) {
         super(activity, users);
         mSemester = semester;
+        setUpUsers(users);
     }
 
     public void setUpUsers(List<User> users) {

@@ -30,14 +30,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.admin.browse.adapters.BrowseUserListAdapter;
+import blueprint.com.sage.admin.browse.adapters.SchoolUserListAdapter;
 import blueprint.com.sage.events.schools.DeleteSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.adapters.models.AbstractUserListAdapter;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -66,7 +65,7 @@ public class SchoolFragment extends Fragment
     @Bind(R.id.school_app_bar_layout) AppBarLayout mAppBarLayout;
 
     private School mSchool;
-    private AbstractUserListAdapter mAdapter;
+    private SchoolUserListAdapter mAdapter;
     private GoogleMap mMap;
 
     private ToolbarInterface mToolbarInterface;
@@ -210,7 +209,7 @@ public class SchoolFragment extends Fragment
             mSchool.setUsers(new ArrayList<User>());
         }
 
-        mAdapter = new BrowseUserListAdapter(getActivity(), mSchool.getUsers());
+        mAdapter = new SchoolUserListAdapter(getActivity(), mSchool);
 
         mUserList.setEmptyView(mEmptyView);
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -247,7 +246,7 @@ public class SchoolFragment extends Fragment
 
     public void onEvent(SchoolEvent event) {
         mSchool = event.getSchool();
-        mAdapter.setUsers(mSchool.getUsers());
+        mAdapter.setSchool(mSchool);
         initializeSchool();
     }
 
@@ -262,4 +261,3 @@ public class SchoolFragment extends Fragment
         FragUtils.popBackStack(this);
     }
 }
-

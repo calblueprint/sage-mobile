@@ -87,11 +87,6 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.userName.setX(10 + CGRectGetMaxX(self.userPicture.frame))
         self.userName.setY(UIConstants.verticalMargin)
         
-        self.schoolAndHours.textAlignment = NSTextAlignment.Left
-        self.schoolAndHours.sizeToFit()
-        self.schoolAndHours.setX(10 + CGRectGetMaxX(self.userPicture.frame))
-        self.schoolAndHours.setY(CGRectGetMaxY(self.userName.frame))
-        
         self.checkButton.setHeight(buttonSize + buttonInset + buttonInset)
         self.checkButton.setX(self.contentView.frame.width - UIConstants.sideMargin - buttonSize - buttonInset)
         self.checkButton.centerVertically()
@@ -101,6 +96,13 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.xButton.setWidth(buttonSize + buttonInset + buttonInset)
         self.xButton.setX(CGRectGetMinX(self.checkButton.frame) - buttonSize - buttonInset - buttonInset)
         self.xButton.centerVertically()
+        
+        self.schoolAndHours.textAlignment = NSTextAlignment.Left
+        self.schoolAndHours.sizeToFit()
+        self.schoolAndHours.setX(10 + CGRectGetMaxX(self.userPicture.frame))
+        self.schoolAndHours.setY(CGRectGetMaxY(self.userName.frame))
+        self.schoolAndHours.setWidth(self.xButton.frame.origin.x - self.schoolAndHours.frame.origin.x)
+    
     }
     
     deinit {

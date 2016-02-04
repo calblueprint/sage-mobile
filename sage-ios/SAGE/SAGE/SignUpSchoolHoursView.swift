@@ -62,13 +62,13 @@ class SignUpSchoolHoursView: SignUpFormView {
         
         self.chooseSchoolButton.setY(CGRectGetMaxY(self.icon.frame) + 40)
         self.chooseSchoolButton.setX(textOffset + UIConstants.sideMargin)
-        self.chooseSchoolButton.setWidth(screenWidth - textOffset * 2 - 2 * UIConstants.sideMargin)
+        self.chooseSchoolButton.setWidth(screenWidth - textOffset * 2 - 2 * UIConstants.sideMargin - 15)
         self.chooseSchoolButton.setHeight(textFieldHeight)
         
         self.chevronOne.setHeight(15)
         self.chevronOne.setWidth(15)
         self.chevronOne.setY(CGRectGetMaxY(self.chooseSchoolButton.frame) - 28)
-        self.chevronOne.setX(CGRectGetMaxX(self.chooseSchoolButton.frame) - 15)
+        self.chevronOne.setX(CGRectGetMaxX(self.chooseSchoolButton.frame))
         
         self.firstDivider.setX(dividerMargin + UIConstants.sideMargin)
         self.firstDivider.setY(CGRectGetMaxY(self.chooseSchoolButton.frame))

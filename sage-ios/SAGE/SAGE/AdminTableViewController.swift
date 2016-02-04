@@ -75,7 +75,7 @@ class AdminTableViewController: UITableViewController {
                     if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
                         self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
                     } else {
-                        self.presentViewController(StartSemesterViewController(), animated: true, completion: nil)
+                        self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
                     }
                 }
             default: break

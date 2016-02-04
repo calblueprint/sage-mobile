@@ -24,8 +24,12 @@ class LoginOperations: NSObject {
     
     static func getState(completion: ((User, Semester?, SemesterSummary?) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kUser)
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
+            KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
             let currentSemesterJSON = data["session"]!!["current_semester"]
             var currentSemester: Semester? = nil
             if !(currentSemesterJSON is NSNull) {

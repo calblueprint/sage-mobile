@@ -83,6 +83,7 @@ class BrowseMentorsViewController: UITableViewController {
     
     func loadMentors() {
         AdminOperations.loadMentors({ (mentorArray) -> Void in
+            
             let alphabet = "abcdefghijklmnopqrstuvwxyz"
             var charArray = [String: Int]()
             self.mentors = [[User]]()

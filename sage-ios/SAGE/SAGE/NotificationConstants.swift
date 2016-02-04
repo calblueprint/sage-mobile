@@ -18,4 +18,6 @@ struct NotificationConstants {
     static let addVerifiedCheckinKey: String = notificationBaseName + "addVerifiedCheckin"
     static let addUnverifiedCheckinKey: String = notificationBaseName + "addUnverifiedCheckin"
     static let joinSemesterKey: String = notificationBaseName + "joinSemester"
+    static let startSemesterKey: String = notificationBaseName + "startSemester"
+    static let endSemesterKey: String = notificationBaseName + "endSemester"
 }

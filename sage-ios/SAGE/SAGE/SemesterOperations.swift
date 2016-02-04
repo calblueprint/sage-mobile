@@ -20,6 +20,8 @@ class SemesterOperations {
         BaseOperation.manager().POST(StringConstants.kEndpointStartSemester, parameters: params, success: { (operation, data) -> Void in
             let semesterDict = (data as! [String: AnyObject])["semester"] as! [String: AnyObject]
             let createdSemester = Semester(propertyDictionary: semesterDict)
+            KeychainWrapper.setObject(createdSemester, forKey: KeychainConstants.kCurrentSemester)
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.startSemesterKey, object: createdSemester)
             completion(createdSemester)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
@@ -38,6 +40,8 @@ class SemesterOperations {
         ]
 
         BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: params, success: { (operation, data) -> Void in
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.endSemesterKey, object: nil)
             completion()
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

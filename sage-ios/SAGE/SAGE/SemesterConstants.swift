@@ -11,6 +11,7 @@ import Foundation
 struct SemesterConstants {
     
     static let kId: String = "id"
-    static let kStartDate: String = "start_date"
+    static let kStartDate: String = "start"
+    static let kFinishDate: String = "finish"
     static let kTerm: String = "season"
 }

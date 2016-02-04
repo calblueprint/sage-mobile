@@ -27,9 +27,17 @@ class SemesterOperations {
     }
     
     static func endSemester(completion: () -> Void, failure: (String) -> Void) {
-        // TODO: Get semester from keychain
-        let semester = Semester()
-        BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: nil, success: { (operation, data) -> Void in
+        let semester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as! Semester
+
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = StringConstants.displayDateFormat
+        let finishString = formatter.stringFromDate(NSDate())
+
+        let params = [
+            SemesterConstants.kFinishDate: finishString
+        ]
+
+        BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: params, success: { (operation, data) -> Void in
             completion()
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

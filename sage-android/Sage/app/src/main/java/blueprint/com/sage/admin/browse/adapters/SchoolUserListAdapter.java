@@ -47,6 +47,8 @@ public class SchoolUserListAdapter extends AbstractUserListAdapter {
     }
 
     public void setSchool(School school) {
+        mSchool = school;
+        setUpUsers(school.getUsers());
         notifyDataSetChanged();
     }
 }

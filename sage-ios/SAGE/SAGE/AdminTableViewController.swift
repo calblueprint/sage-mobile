@@ -8,6 +8,7 @@
 
 import UIKit
 import FontAwesomeKit
+import SwiftKeychainWrapper
 
 class AdminTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -71,7 +72,11 @@ class AdminTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 if LoginOperations.getUser()?.role == .President {
-                    self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
+                    if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                        self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
+                    } else {
+                        self.presentViewController(StartSemesterViewController(), animated: true, completion: nil)
+                    }
                 }
             default: break
             }
@@ -111,10 +116,17 @@ class AdminTableViewController: UITableViewController {
             }
         case 2:
             if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
-                cell.textLabel?.text = "End Fall 2015"
-                let icon = FAKIonIcons.logOutIconWithSize(iconSize)
-                    .imageWithSize(CGSizeMake(iconSize, iconSize))
-                cell.imageView?.image = icon
+                if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                    cell.textLabel?.text = "End Semester"
+                    let icon = FAKIonIcons.logOutIconWithSize(iconSize)
+                        .imageWithSize(CGSizeMake(iconSize, iconSize))
+                    cell.imageView?.image = icon
+                } else {
+                    cell.textLabel?.text = "Start Semester"
+                    let icon = FAKIonIcons.logInIconWithSize(iconSize)
+                        .imageWithSize(CGSizeMake(iconSize, iconSize))
+                    cell.imageView?.image = icon
+                }
             } else {
                 cell.textLabel?.text = "Change hour requirements"
                 let icon = FAKIonIcons.clockIconWithSize(iconSize)

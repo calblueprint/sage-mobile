@@ -16,6 +16,8 @@ class School: NSObject, NSCoding {
     var director: User?
     var address: String?
     
+    var studentCount: Int = -1
+    
     init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil) {
         self.id = id
         self.name = name
@@ -44,6 +46,8 @@ class School: NSObject, NSCoding {
                     self.students!.append(student)
                 }
                 break
+            case SchoolConstants.kStudentCount:
+                self.studentCount = value as! Int
             case SchoolConstants.kLat:
                 let latitude = Double(value as! String)
                 self.location = CLLocation(latitude: latitude!, longitude: self.location!.coordinate.longitude)

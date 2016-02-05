@@ -148,7 +148,7 @@ class ProfileView: UIView {
             styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
             self.userStatusLabel.attributedText = userStatusString
         } else {
-            self.userStatusLabel.font = UIFont.getDefaultFont(24)
+            self.userStatusLabel.font = UIFont.normalFont
             self.userStatusLabel.text = "Inactive"
         }
         

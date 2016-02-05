@@ -40,6 +40,7 @@ class SemesterOperations {
         ]
 
         BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: params, success: { (operation, data) -> Void in
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
             KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
             KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
             NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.endSemesterKey, object: nil)

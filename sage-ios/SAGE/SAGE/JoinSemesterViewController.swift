@@ -12,13 +12,26 @@ import SwiftKeychainWrapper
 class JoinSemesterViewController: UIViewController {
     
     var joinSemesterView = JoinSemesterView()
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var currentErrorMessage: ErrorView?
+    
+    //
+    // MARK: - Initialization
+    //
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //
+    // MARK: - ViewController Lifecycle
+    //
     override func loadView() {
         super.loadView()
         self.view = self.joinSemesterView
@@ -31,6 +44,9 @@ class JoinSemesterViewController: UIViewController {
         self.joinSemesterView.button.addTarget(self, action: "joinSemester:", forControlEvents: .TouchUpInside)
     }
     
+    //
+    // MARK: - Button event handling
+    //
     func joinSemester(sender: UIButton!) {
         self.joinSemesterView.button.startLoading()
         SemesterOperations.joinSemester({ () -> Void in
@@ -47,7 +63,10 @@ class JoinSemesterViewController: UIViewController {
         }
     }
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    //
+    // MARK: - NSNotificationCenter Handlers
+    //
+    func semesterEnded(notification: NSNotification) {
+        self.navigationController?.popViewControllerAnimated(false)
     }
 }

@@ -46,7 +46,6 @@ class NoSemesterViewController: UIViewController {
     // MARK: - NSNotificationCenter Handlers
     //
     func semesterStarted(notification: NSNotification) {
-        let navigationController = self.navigationController!
-        navigationController.popViewControllerAnimated(false)
+        self.navigationController?.popViewControllerAnimated(false)
     }
 }

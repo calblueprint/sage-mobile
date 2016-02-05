@@ -11,13 +11,48 @@ import FontAwesomeKit
 import SwiftKeychainWrapper
 
 class AdminTableViewController: UITableViewController {
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+
+    //
+    // MARK: - Initialization
+    //
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterStarted:", name: NotificationConstants.startSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //
+    // MARK: - ViewController Lifecycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Admin"
+    }
+    
+    //
+    // MARK: - NSNotificationCenter Handlers
+    //
+    func semesterStarted(notification: NSNotification) {
+        self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .Automatic)
+    }
+    
+    func semesterEnded(notification: NSNotification) {
+        self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .Automatic)
+    }
+    
+    //
+    // MARK: - UITableViewDelegate
+    //
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 4
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

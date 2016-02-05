@@ -27,13 +27,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.SchoolUserListAdapter;
 import blueprint.com.sage.events.schools.DeleteSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
-import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
@@ -173,13 +171,10 @@ public class SchoolFragment extends Fragment
     }
 
     @Override
-    public void onRefresh() { makeUserRequest(); }
+    public void onRefresh() { makeSchoolRequest(); }
 
-    private void makeUserRequest() {
-        HashMap<String, String> queryParams = new HashMap<>();
-        queryParams.put("school_id", String.valueOf(mSchool.getId()));
-        queryParams.put("sort_name", "true");
-        Requests.Users.with(getActivity()).makeListRequest(queryParams);
+    private void makeSchoolRequest() {
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool, null);
     }
 
     private void showDeleteSchoolDialog() {
@@ -223,7 +218,7 @@ public class SchoolFragment extends Fragment
         mCollapseToolbar.setExpandedTitleTextAppearance(R.style.CollapseToolbarLayoutStyleOpen);
         mCollapseToolbar.setCollapsedTitleTextAppearance(R.style.CollapseToolbarLayoutStyleClosed);
 
-        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
+        makeSchoolRequest();
     }
 
     private void initializeSchool() {
@@ -245,15 +240,11 @@ public class SchoolFragment extends Fragment
     }
 
     public void onEvent(SchoolEvent event) {
+        mRefreshUsers.setRefreshing(false);
+        mEmptyView.setRefreshing(false);
         mSchool = event.getSchool();
         mAdapter.setSchool(mSchool);
         initializeSchool();
-    }
-
-    public void onEvent(UserListEvent event) {
-        mAdapter.setUpUsers(event.getUsers());
-        mRefreshUsers.setRefreshing(false);
-        mEmptyView.setRefreshing(false);
     }
 
     public void onEvent(DeleteSchoolEvent event) {

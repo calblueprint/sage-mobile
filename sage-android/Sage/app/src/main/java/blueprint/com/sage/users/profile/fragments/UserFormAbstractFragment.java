@@ -27,6 +27,7 @@ import blueprint.com.sage.shared.adapters.spinners.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.spinners.StringArraySpinnerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.views.CircleImageView;
@@ -71,6 +72,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     private static final String DIALOG_TAG = "UserFormAbstractFragment";
 
     protected BaseInterface mBaseInterface;
+    protected ToolbarInterface mToolbarInterface;
     protected User mUser;
 
     List<School> mSchools;
@@ -82,6 +84,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
         mPhotoPicker = PhotoPicker.newInstance(getActivity(), this);
         mValidator = FormValidator.newInstance(getActivity());
         mBaseInterface = (BaseInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
         mSchools = new ArrayList<>();
         Requests.Schools.with(getActivity()).makeListRequest(null);
     }

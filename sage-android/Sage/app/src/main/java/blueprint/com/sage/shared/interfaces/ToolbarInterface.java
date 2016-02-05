@@ -9,4 +9,6 @@ public interface ToolbarInterface {
     void setToolbarElevation(float elevation);
     void showToolbar(Toolbar toolbar);
     void hideToolbar(Toolbar toolbar);
+    void setTitle(int resId);
+    void setTitle(String string);
 }

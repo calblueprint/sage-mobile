@@ -15,6 +15,7 @@ import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.admin.requests.adapters.VerifyUserListAdapter;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
@@ -33,6 +34,7 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
 
     private VerifyUserListAdapter mUserAdapter;
     private UsersInterface mUsersInterface;
+    private ToolbarInterface mToolbarInterface;
 
     public static VerifyUsersListFragment newInstance() { return new VerifyUsersListFragment(); }
 
@@ -40,6 +42,7 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUsersInterface = (UsersInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
     }
 
     @Override
@@ -73,7 +76,7 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
         mRefreshUser.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
 
-        getActivity().setTitle("Sign Ups");
+        mToolbarInterface.setTitle("Sign Ups");
     }
 
     @Override

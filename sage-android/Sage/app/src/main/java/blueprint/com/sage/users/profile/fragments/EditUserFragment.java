@@ -25,6 +25,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
     public void setUser(User user) { mUser = user; }
 
     public void initializeViews() {
+        mToolbarInterface.setTitle("Edit User");
         mFirstName.setText(mUser.getFirstName());
         mLastName.setText(mUser.getLastName());
         mEmail.setText(mUser.getEmail());

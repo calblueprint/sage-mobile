@@ -67,4 +67,16 @@ public class BackAbstractActivity extends AbstractActivity implements ToolbarInt
         mToolbar.setVisibility(View.VISIBLE);
         initializeToolbar(mToolbar);
     }
+
+    @Override
+    public void setTitle(int resId) {
+        setTitle(getString(resId));
+    }
+
+    @Override
+    public void setTitle(String string) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(string);
+        }
+    }
 }

@@ -27,4 +27,6 @@ public class MainActivity extends AbstractActivity implements ToolbarInterface {
     public void setToolbarElevation(float elevation) {}
     public void showToolbar(Toolbar toolbar) {}
     public void hideToolbar(Toolbar toolbar) {}
+    public void setTitle(int resId) {}
+    public void setTitle(String string) {}
 }

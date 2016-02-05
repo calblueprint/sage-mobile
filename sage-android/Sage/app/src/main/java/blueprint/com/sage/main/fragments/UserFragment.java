@@ -159,7 +159,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);
 
-        getActivity().setTitle("User");
+        mToolbarInterface.setTitle("User");
     }
 
     private void initializeSettings() {

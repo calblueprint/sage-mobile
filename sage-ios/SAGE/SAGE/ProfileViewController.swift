@@ -22,6 +22,7 @@ class ProfileViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterJoined:", name: NotificationConstants.joinSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -60,6 +61,12 @@ class ProfileViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
+    }
+    
+    func semesterEnded(notification: NSNotification) {
+        self.user?.semesterSummary = nil
+        self.profileView.setupWithUser(self.user!)
+        self.tableView.reloadData()
     }
     
     func setupHeader() {

@@ -159,7 +159,11 @@ class ProfileView: UIView {
         
         var roleString = "Mentor"
         if user.role == .Admin {
-            roleString = "Admin"
+            if user.isDirector() {
+                roleString = "Director"
+            } else {
+                roleString = "Admin"
+            }
         } else if user.role == .President {
             roleString = "President"
         } else if user.verified == false {

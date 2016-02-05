@@ -14,7 +14,9 @@ class AdminOperations {
     
     static func loadMentors(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetMentors, parameters: nil, success: { (operation, data) -> Void in
+        let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as! Semester
+        let params = [UserConstants.kSemesterID: currentSemester.id]
+        manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
             var userArray = [User]()
             let userData = data["users"] as! [AnyObject]
             for userDict in userData {

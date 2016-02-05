@@ -106,6 +106,27 @@ class Checkin: NSObject {
         formatter.dateFormat = StringConstants.displayDateFormat
         return formatter.stringFromDate(self.endTime!)
     }
+    
+    func getDisplayText() -> String {
+        if self.startTime == nil || self.endTime == nil {
+            return ""
+        }
+        
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
+        let flags = NSCalendarUnit.Hour
+        let components = calendar!.components(flags, fromDate: self.startTime!, toDate: self.endTime!, options: [])
+        
+        var displayText = String(components.hour) + " h, "
+        
+        let minuteDuration = self.minuteDuration() % 60
+
+        if minuteDuration == 1 {
+            displayText += String(minuteDuration) + " min"
+        } else {
+            displayText += String(minuteDuration) + " mins"
+        }
+        return displayText
+    }
 }
 
 extension Checkin: NSCopying {

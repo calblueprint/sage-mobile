@@ -59,14 +59,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         dateFormatter.dateFormat = "MMMM d"
         let fullDateText = " - " + dateFormatter.stringFromDate(checkin.startTime!)
         
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-        let flags = NSCalendarUnit.Hour
-        let components = calendar!.components(flags, fromDate: checkin.startTime!, toDate: checkin.endTime!, options: [])
-
-        var durationText = String(components.hour) + " hours"
-        if components.hour == 1 {
-            durationText = String(components.hour) + " hour"
-        }
+        let durationText = checkin.getDisplayText()
         
         let fullString = durationText + fullDateText
         let attributedString = NSMutableAttributedString(string: durationText + fullDateText)

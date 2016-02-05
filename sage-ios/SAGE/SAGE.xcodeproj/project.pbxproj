@@ -70,6 +70,7 @@
 		422334511BC0D8D400E863D0 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334501BC0D8D400E863D0 /* libAFNetworking.a */; };
 		422334531BC0D8D900E863D0 /* libFontAwesomeKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */; };
 		422715451BC7359D00FD719C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422715441BC7359D00FD719C /* UIFont.swift */; };
+		422AC8BD1C64956500A30D1C /* NetworkingConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AC8BC1C64956500A30D1C /* NetworkingConstants.swift */; };
 		4241AF791C4BAD52009BC133 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF781C4BAD52009BC133 /* EditProfileController.swift */; };
 		4241AF7B1C4BAF2F009BC133 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF7A1C4BAF2F009BC133 /* FormView.swift */; };
 		4241AF801C4BB430009BC133 /* FormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241AF7F1C4BB430009BC133 /* FormController.swift */; };
@@ -204,6 +205,7 @@
 		422334501BC0D8D400E863D0 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAFNetworking.a; path = "Pods/../build/Debug-iphoneos/libAFNetworking.a"; sourceTree = "<group>"; };
 		422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFontAwesomeKit.a; path = "Pods/../build/Debug-iphoneos/libFontAwesomeKit.a"; sourceTree = "<group>"; };
 		422715441BC7359D00FD719C /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		422AC8BC1C64956500A30D1C /* NetworkingConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingConstants.swift; sourceTree = "<group>"; };
 		4241AF781C4BAD52009BC133 /* EditProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		4241AF7A1C4BAF2F009BC133 /* FormView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		4241AF7F1C4BB430009BC133 /* FormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormController.swift; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				42DE22151C0F92BE00071879 /* NotificationConstants.swift */,
 				4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */,
 				27F990C51BBDD76800D61DA2 /* StringConstants.swift */,
+				422AC8BC1C64956500A30D1C /* NetworkingConstants.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -915,6 +918,7 @@
 				5D6149171C5C5ADC0036708A /* SemesterSummary.swift in Sources */,
 				42C4352A1C013F8D000F6671 /* AddSchoolLocationTableViewController.swift in Sources */,
 				4241AF8A1C4BCFCC009BC133 /* SelectHoursEditProfileController.swift in Sources */,
+				422AC8BD1C64956500A30D1C /* NetworkingConstants.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
 				42C4352C1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift in Sources */,
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,

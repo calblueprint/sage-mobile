@@ -71,7 +71,11 @@ class AdminOperations {
     
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetCheckins, parameters: nil, success: { (operation, data) -> Void in
+        let params = [
+            NetworkingConstants.kSortAttr: CheckinConstants.kStartTime,
+            NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+        ]
+        manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
             var checkins = [Checkin]()
             let checkinArray = data["check_ins"] as! [AnyObject]
             for checkinDict in checkinArray {
@@ -213,13 +217,15 @@ class AdminOperations {
         }
     }
     
-    static func approveCheckin(checkin: Checkin, completion: (() -> Void)?, failure: (String) -> Void) {
+    static func approveCheckin(checkin: Checkin, completion: ((Checkin) -> Void)?, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
         
         let checkinURLString = StringConstants.kCheckinAdminVerifyURL(checkin.id)
         
         manager.POST(checkinURLString, parameters: nil, success: { (operation, data) -> Void in
-            completion?()
+            let verifiedCheckinDict = data["check_in"] as! [String: AnyObject]
+            let verifiedCheckin = Checkin(propertyDictionary: verifiedCheckinDict)
+            completion?(verifiedCheckin)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }

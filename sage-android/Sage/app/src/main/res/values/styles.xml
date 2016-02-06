@@ -95,7 +95,6 @@
     <style name="DefaultFAB">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">0dp</item>
         <item name="android:layout_gravity">bottom|end|right</item>
         <item name="borderWidth">0dp</item>
         <item name="elevation">0dp</item>

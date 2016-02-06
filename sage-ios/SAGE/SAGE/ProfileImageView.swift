@@ -12,7 +12,7 @@ class ProfileImageView: UIView {
 
     private var imageView = UIImageView()
     private var badgeBorder = UIView()
-    private var badgeView = UIImageView()
+    private var badgeView = UILabel()
 
     private let badgeSizeFactor: CGFloat = 1.80
     private let badgeViewPercentage: CGFloat = 0.90
@@ -35,9 +35,13 @@ class ProfileImageView: UIView {
         self.addSubview(self.imageView)
 
         self.badgeBorder.backgroundColor = UIColor.whiteColor()
+        self.badgeBorder.alpha = 0
         self.addSubview(self.badgeBorder)
 
-        self.badgeView.backgroundColor = UIColor.lightRedColor
+        self.badgeView.textColor = UIColor.whiteColor()
+        self.badgeView.font = UIFont.getBoldFont()
+        self.badgeView.textAlignment = .Center
+        self.badgeView.clipsToBounds = true
         self.badgeBorder.addSubview(self.badgeView)
     }
 
@@ -78,6 +82,7 @@ class ProfileImageView: UIView {
         let badgeViewSize = CGFloat(Int(badgeBorderSize * badgeViewPercentage))
         self.badgeView.setSize(width: badgeViewSize, height: badgeViewSize)
         self.badgeView.layer.cornerRadius = badgeViewSize / 2
+        self.badgeView.font = UIFont.getBoldFont(badgeViewSize * 0.90)
 
         self.layoutSubviews()
     }
@@ -87,6 +92,25 @@ class ProfileImageView: UIView {
         self.imageView.image = UIImage.defaultProfileImage()
         if let url = user.imageURL {
             self.imageView.setImageWithURL(url)
+        }
+        switch user.role {
+        case .Volunteer:
+            self.badgeBorder.alpha = 0
+        case .Admin:
+            self.badgeBorder.alpha = 1
+            if user.isDirector() {
+                self.badgeView.text = "D"
+                self.badgeView.backgroundColor = UIColor.lightGrayColor()
+            } else {
+                self.badgeView.text = "A"
+                self.badgeView.backgroundColor = UIColor.lightOrangeColor
+            }
+        case .President:
+            self.badgeBorder.alpha = 1
+            self.badgeView.text = "P"
+            self.badgeView.backgroundColor = UIColor.lightBlueColor
+        default:
+            self.badgeBorder.alpha = 0
         }
     }
 

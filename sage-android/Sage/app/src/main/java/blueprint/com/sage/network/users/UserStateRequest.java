@@ -22,7 +22,7 @@ public class UserStateRequest extends BaseRequest {
     public UserStateRequest(final Activity activity, User user,
                             final Response.Listener<Session> onSuccess,
                             final Response.Listener<APIError> onError) {
-        super(Method.GET, makeUrl(null, "users", String.valueOf(user.getId())), null,
+        super(Method.GET, makeUrl(null, "users", String.valueOf(user.getId()), "state"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

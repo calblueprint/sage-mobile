@@ -24,8 +24,7 @@
         android:screenOrientation="portrait">
 
         <activity
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:name=".signIn.SignInActivity"
+            android:name=".landing.LandingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -33,6 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:name=".signIn.SignInActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".main.MainActivity"

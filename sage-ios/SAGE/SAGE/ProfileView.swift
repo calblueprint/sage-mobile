@@ -12,7 +12,7 @@ class ProfileView: UIView {
     
     let profileContent = UIView()
     let header = UIView()
-    let profileUserImg = UIImageView()
+    let profileUserImg = ProfileImageView()
     let profileUserImgBorder = UIView()
     let profileEditButton = UIButton()
     let promoteButton = SGButton()
@@ -273,8 +273,7 @@ class ProfileView: UIView {
         self.profileUserImgBorder.setY(self.headerHeight/2)
         self.profileUserImgBorder.setX(self.leftMargin)
         
-        self.profileUserImg.setHeight(self.profileImageSize)
-        self.profileUserImg.setWidth(self.profileImageSize)
+        self.profileUserImg.setDiameter(self.profileImageSize)
         let profileUserImgY = CGRectGetMinY(profileUserImgBorder.frame)
         let profileUserImgX = CGRectGetMinX(profileUserImgBorder.frame)
         self.profileUserImg.setY(profileUserImgY + self.profileImageBorder/2)

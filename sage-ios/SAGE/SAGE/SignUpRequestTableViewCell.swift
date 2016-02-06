@@ -14,7 +14,7 @@ private let buttonInset: CGFloat = 10.0
 
 class SignUpRequestTableViewCell: UITableViewCell {
     
-    var userPicture = UIImageView()
+    var userPicture = ProfileImageView()
     var userName = UILabel()
     var schoolAndHours = UILabel()
     var checkButton = UIButton()
@@ -38,8 +38,6 @@ class SignUpRequestTableViewCell: UITableViewCell {
     func configureWithUser(user: User) {
         self.userID = user.id
         self.userPicture.setImageWithUser(user)
-        self.userPicture.layer.cornerRadius = UIConstants.userImageSize/2
-        self.userPicture.clipsToBounds = true
         
         let mentorText = user.firstName! + " " + user.lastName!
         let style = NSMutableParagraphStyle()
@@ -76,8 +74,7 @@ class SignUpRequestTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.userPicture.setHeight(UIConstants.userImageSize)
-        self.userPicture.setWidth(UIConstants.userImageSize)
+        self.userPicture.setDiameter(UIConstants.userImageSize)
         self.userPicture.setX(UIConstants.sideMargin)
         self.userPicture.setY(UIConstants.verticalMargin)
         

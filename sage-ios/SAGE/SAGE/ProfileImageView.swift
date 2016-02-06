@@ -36,6 +36,7 @@ class ProfileImageView: UIView {
         self.badgeBorder.backgroundColor = UIColor.whiteColor()
         self.addSubview(self.badgeBorder)
 
+        self.badgeView.backgroundColor = UIColor.blackColor()
         self.badgeBorder.addSubview(self.badgeView)
     }
 
@@ -86,7 +87,15 @@ class ProfileImageView: UIView {
         }
     }
 
+    func cancelImageRequestOperation() {
+        self.imageView.cancelImageRequestOperation()
+    }
+
     func resetImage() {
         self.imageView.image = UIImage.defaultProfileImage()
+    }
+
+    func image() -> UIImage {
+        return self.imageView.image!
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class AnnouncementsTableViewCell: UITableViewCell {
-    let announcementUserImg = UIImageView()
+    let announcementUserImg = ProfileImageView()
     var announcementUserName = UILabel()
     var announcementTitle = UILabel()
     var announcementTime = UILabel()
@@ -75,8 +75,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     func setUpCellStyle() {
-        announcementUserImg.setHeight(UIConstants.userImageSize)
-        announcementUserImg.setWidth(UIConstants.userImageSize)
+        announcementUserImg.setDiameter(UIConstants.userImageSize)
         
         announcementUserName.font = UIFont.normalFont
         announcementUserName.textAlignment = NSTextAlignment.Left
@@ -96,8 +95,6 @@ class AnnouncementsTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        announcementUserImg.layer.cornerRadius = UIConstants.userImageSize/2
-        announcementUserImg.clipsToBounds = true
         announcementUserImg.setX(UIConstants.sideMargin)
         announcementUserImg.setY(UIConstants.textMargin)
         

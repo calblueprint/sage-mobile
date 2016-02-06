@@ -139,6 +139,7 @@
 		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
 		E4A3C54D1C4D84040000D7D9 /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54C1C4D84040000D7D9 /* Semester.swift */; };
 		E4B250D11C65C764008652FD /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B250D01C65C764008652FD /* ProfileImageView.swift */; };
+		E4B250D31C65D092008652FD /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B250D21C65D092008652FD /* UIImageView.swift */; };
 		E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF49E51C5462920078A799 /* SemesterConstants.swift */; };
 		E4CF49E91C5624690078A799 /* SemesterOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF49E81C5624690078A799 /* SemesterOperations.swift */; };
 /* End PBXBuildFile section */
@@ -278,6 +279,7 @@
 		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
 		E4A3C54C1C4D84040000D7D9 /* Semester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
 		E4B250D01C65C764008652FD /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		E4B250D21C65D092008652FD /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		E4CF49E51C5462920078A799 /* SemesterConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterConstants.swift; sourceTree = "<group>"; };
 		E4CF49E81C5624690078A799 /* SemesterOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterOperations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -413,6 +415,7 @@
 				27F990BF1BBCE3B300D61DA2 /* UIView.swift */,
 				424A137B1BEED27300775E86 /* UIViewController.swift */,
 				422715441BC7359D00FD719C /* UIFont.swift */,
+				E4B250D21C65D092008652FD /* UIImageView.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -954,6 +957,7 @@
 				4254C1EF1BFDD6A200D0D33E /* SignUpRequestsViewController.swift in Sources */,
 				5D221C241C18D296008FBD9B /* CheckinTableViewCell.swift in Sources */,
 				42A6CE661C0BDFFD00F97CFF /* UsersTableViewCell.swift in Sources */,
+				E4B250D31C65D092008652FD /* UIImageView.swift in Sources */,
 				27EB32A71C3917D400FD8050 /* EndSemesterViewController.swift in Sources */,
 				5D6149191C5C5B5F0036708A /* SemesterSummaryConstants.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,

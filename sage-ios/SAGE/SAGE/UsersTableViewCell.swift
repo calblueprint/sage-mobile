@@ -10,7 +10,7 @@ import UIKit
 
 class UsersTableViewCell: UITableViewCell {
     
-    var mentorPicture = UIImageView()
+    var mentorPicture = ProfileImageView()
     var mentorName = UILabel()
     var schoolName = UILabel()
     var totalHours = UILabel()
@@ -23,8 +23,6 @@ class UsersTableViewCell: UITableViewCell {
     
     func setUpSubviews() {
         self.contentView.addSubview(self.mentorPicture)
-        self.mentorPicture.layer.cornerRadius = UIConstants.userImageSize/2
-        self.mentorPicture.clipsToBounds = true
         
         self.contentView.addSubview(self.totalHours)
         self.totalHours.textColor = UIColor.secondaryTextColor

@@ -8,19 +8,55 @@
 
 import UIKit
 import FontAwesomeKit
+import SwiftKeychainWrapper
 
 class AdminTableViewController: UITableViewController {
+
+    //
+    // MARK: - Initialization
+    //
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterStarted:", name: NotificationConstants.startSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //
+    // MARK: - ViewController Lifecycle
+    //
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "Admin"
+    }
+    
+    //
+    // MARK: - NSNotificationCenter Handlers
+    //
+    func semesterStarted(notification: NSNotification) {
+        self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .Automatic)
+    }
+    
+    func semesterEnded(notification: NSNotification) {
+        self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .Automatic)
+    }
+    
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if LoginOperations.getUser()?.role == .President {
             return 3
         } else {
             return 2
         }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = "Admin"
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,7 +104,17 @@ class AdminTableViewController: UITableViewController {
             default: break
             }
         case 2:
-            self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
+            switch indexPath.row {
+            case 0:
+                if LoginOperations.getUser()?.role == .President {
+                    if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                        self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
+                    } else {
+                        self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
+                    }
+                }
+            default: break
+            }
         default: break
         }
     }
@@ -104,11 +150,20 @@ class AdminTableViewController: UITableViewController {
                 cell.imageView?.image = icon
             }
         case 2:
-            cell.textLabel?.text = "End Fall 2015"
-            let icon = FAKIonIcons.logOutIconWithSize(iconSize)
-                    .imageWithSize(CGSizeMake(iconSize, iconSize))
-            cell.imageView?.image = icon
-        default: break
+            if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
+                if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                    cell.textLabel?.text = "End Semester"
+                    let icon = FAKIonIcons.logOutIconWithSize(iconSize)
+                        .imageWithSize(CGSizeMake(iconSize, iconSize))
+                    cell.imageView?.image = icon
+                } else {
+                    cell.textLabel?.text = "Start Semester"
+                    let icon = FAKIonIcons.logInIconWithSize(iconSize)
+                        .imageWithSize(CGSizeMake(iconSize, iconSize))
+                    cell.imageView?.image = icon
+                }
+            }
+            default: break
         }
         cell.textLabel?.font = UIFont.normalFont
         return cell

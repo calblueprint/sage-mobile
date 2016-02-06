@@ -11,13 +11,26 @@ import Foundation
 class NoSemesterViewController: UIViewController {
     
     var noSemesterView = NoSemesterView()
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var currentErrorMessage: ErrorView?
+    
+    //
+    // MARK: - Initialization
+    //
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterStarted:", name: NotificationConstants.startSemesterKey, object: nil)
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //
+    // MARK: - ViewController Life Cycle
+    //
     override func loadView() {
         super.loadView()
         self.view = self.noSemesterView
@@ -29,7 +42,10 @@ class NoSemesterViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButton
     }
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    //
+    // MARK: - NSNotificationCenter Handlers
+    //
+    func semesterStarted(notification: NSNotification) {
+        self.navigationController?.popViewControllerAnimated(false)
     }
 }

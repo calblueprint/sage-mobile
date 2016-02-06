@@ -48,10 +48,10 @@ struct StringConstants {
     static let kEndpointGetSchools = kEndpointBaseURL + "/schools?"
     static let kEndpointGetSignUpRequests = kEndpointBaseURL + "/users?verified=false"
     
-    static let kEndpointStartSemester = kEndpointBaseURL + "admin/semesters"
+    static let kEndpointStartSemester = kEndpointBaseURL + "/admin/semesters"
     
     static func kEndpointEndSemester(id: Int) -> String {
-        return kEndpointBaseURL + "admin/semesters/" + String(id) + "/finish"
+        return kEndpointBaseURL + "/admin/semesters/" + String(id) + "/finish"
     }
 
     static let defaultErrorMessage = "Sorry, something went wrong."

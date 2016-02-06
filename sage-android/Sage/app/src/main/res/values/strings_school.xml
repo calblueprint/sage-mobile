@@ -7,4 +7,8 @@
     <string name="delete_school_title">Delete School</string>
     <string name="delete_school_message">Are you sure you want to continue? All associated check ins will be deleted.</string>
     <string name="delete_school_result">You\'ve deleted the school!</string>
+
+    <string name="school_list_item_school">school</string>
+    <string name="school_list_item_schools">school</string>
+
 </resources>

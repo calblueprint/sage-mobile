@@ -47,6 +47,13 @@ public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.
         final School school = mSchools.get(position);
 
         holder.mSchoolTitle.setText(school.getName());
+        holder.mSchoolAddress.setText(school.getAddress());
+//        TODO: Don't hard code school/schools
+        if (school.getStudentCount() == 1) {
+            holder.mSchoolCount.setText(school.getStudentCount() + " student");
+        } else {
+            holder.mSchoolCount.setText(school.getStudentCount() + " students");
+        }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +73,8 @@ public class SchoolsListAdapter extends RecyclerView.Adapter<SchoolsListAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.schools_list_item_title) TextView mSchoolTitle;
+        @Bind(R.id.schools_list_item_address) TextView mSchoolAddress;
+        @Bind(R.id.schools_list_item_count) TextView mSchoolCount;
 
         View mView;
 

@@ -82,7 +82,7 @@ class ProfileImageView: UIView {
         let badgeViewSize = CGFloat(Int(badgeBorderSize * badgeViewPercentage))
         self.badgeView.setSize(width: badgeViewSize, height: badgeViewSize)
         self.badgeView.layer.cornerRadius = badgeViewSize / 2
-        self.badgeView.font = UIFont.getBoldFont(badgeViewSize * 0.90)
+        self.badgeView.font = UIFont.getBoldFont(badgeViewSize * 0.80)
 
         self.layoutSubviews()
     }

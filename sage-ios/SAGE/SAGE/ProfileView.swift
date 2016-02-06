@@ -148,7 +148,7 @@ class ProfileView: UIView {
             styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
             self.userStatusLabel.attributedText = userStatusString
         } else {
-            self.userStatusLabel.font = UIFont.getDefaultFont(24)
+            self.userStatusLabel.font = UIFont.normalFont
             self.userStatusLabel.text = "Inactive"
         }
         
@@ -159,7 +159,11 @@ class ProfileView: UIView {
         
         var roleString = "Mentor"
         if user.role == .Admin {
-            roleString = "Admin"
+            if user.isDirector() {
+                roleString = "Director"
+            } else {
+                roleString = "Admin"
+            }
         } else if user.role == .President {
             roleString = "President"
         } else if user.verified == false {

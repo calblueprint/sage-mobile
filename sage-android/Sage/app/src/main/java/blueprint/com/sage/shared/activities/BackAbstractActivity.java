@@ -25,18 +25,18 @@ public class BackAbstractActivity extends AbstractActivity implements ToolbarInt
         setContentView(R.layout.activity_back);
         ButterKnife.bind(this);
 
-        initializeViews();
+        initializeToolbar(mToolbar);
     }
 
-    private void initializeViews() {
-        setSupportActionBar(mToolbar);
+    private void initializeToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
@@ -51,7 +51,32 @@ public class BackAbstractActivity extends AbstractActivity implements ToolbarInt
         super.onBackPressed();
     }
 
+    @Override
     public void setToolbarElevation(float elevation) {
         ViewUtils.setElevation(mToolbar, elevation);
+    }
+
+    @Override
+    public void showToolbar(Toolbar toolbar) {
+        mToolbar.setVisibility(View.GONE);
+        initializeToolbar(toolbar);
+    }
+
+    @Override
+    public void hideToolbar(Toolbar toolbar) {
+        mToolbar.setVisibility(View.VISIBLE);
+        initializeToolbar(mToolbar);
+    }
+
+    @Override
+    public void setTitle(int resId) {
+        setTitle(getString(resId));
+    }
+
+    @Override
+    public void setTitle(String string) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(string);
+        }
     }
 }

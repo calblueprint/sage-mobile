@@ -25,6 +25,7 @@ import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.adapters.spinners.StringArraySpinnerAdapter;
 import blueprint.com.sage.shared.fragments.dialogs.DateDialog;
 import blueprint.com.sage.shared.interfaces.DateInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.utility.view.DateUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -45,6 +46,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
 
     private StringArraySpinnerAdapter mAdapter;
     private FormValidator mValidator;
+    private ToolbarInterface mToolbarInterface;
 
     private final int REQUEST_CODE = 200;
     private final String DIALOG_TAG = "CreateSemesterFragment";
@@ -56,6 +58,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mValidator = FormValidator.newInstance(getActivity());
+        mToolbarInterface = (ToolbarInterface) getActivity();
     }
 
     @Override
@@ -102,6 +105,7 @@ public class CreateSemesterFragment extends Fragment implements FormValidation, 
                                                  R.layout.simple_spinner_header,
                                                  R.layout.simple_spinner_item);
         mSpinner.setAdapter(mAdapter);
+        mToolbarInterface.setTitle("Create Semester");
     }
 
     private void showConfirmDialog() {

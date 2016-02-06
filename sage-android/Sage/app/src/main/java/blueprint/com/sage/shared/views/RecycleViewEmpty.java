@@ -83,7 +83,6 @@ public class RecycleViewEmpty extends RecyclerView {
         } else {
             toggleRecyclerView(adapter.getItemCount() > 0);
         }
-
     }
 
     private void toggleRecyclerView(boolean showRecyclerView) {

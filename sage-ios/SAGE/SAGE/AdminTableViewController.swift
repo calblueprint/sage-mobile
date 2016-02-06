@@ -52,7 +52,11 @@ class AdminTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        if LoginOperations.getUser()?.role == .President {
+            return 3
+        } else {
+            return 2
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,11 +66,7 @@ class AdminTableViewController: UITableViewController {
         case 1:
             return 2
         case 2:
-            if LoginOperations.getUser()?.role == .President {
-                return 2
-            } else {
-                return 1
-            }
+            return 1
         default: return 0
         }
     }
@@ -162,13 +162,8 @@ class AdminTableViewController: UITableViewController {
                         .imageWithSize(CGSizeMake(iconSize, iconSize))
                     cell.imageView?.image = icon
                 }
-            } else {
-                cell.textLabel?.text = "Change hour requirements"
-                let icon = FAKIonIcons.clockIconWithSize(iconSize)
-                    .imageWithSize(CGSizeMake(iconSize, iconSize))
-                cell.imageView?.image = icon
             }
-        default: break
+            default: break
         }
         cell.textLabel?.font = UIFont.normalFont
         return cell

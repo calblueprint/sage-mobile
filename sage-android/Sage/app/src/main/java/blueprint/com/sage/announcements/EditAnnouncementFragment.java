@@ -33,7 +33,7 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
     public void setAnnouncement(Announcement announcement) { mAnnouncement = announcement; }
 
     public void initializeViews() {
-        getActivity().setTitle("Edit Announcement");
+        mToolbarInterface.setTitle("Edit Announcement");
         mAnnouncementTitle.setText(mAnnouncement.getTitle());
         mAnnouncementBody.setText(mAnnouncement.getBody());
         initializeSpinners();

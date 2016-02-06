@@ -20,6 +20,7 @@ struct UserConstants {
     static let kVerified: String = "verified"
     static let kImgURL: String = "image_url"
     static let kSemesterSummary: String = "user_semester"
+    static let kSemesterID: String = "semester_id"
     
     static let kPassword: String = "password"
     static let kPhotoData: String = "data"

@@ -34,7 +34,7 @@ public class ViewUtils {
                                                        .getColor(color, activity.getTheme()));
     }
 
-    public static void setToolBarElevation(Activity activity, int elevation) {
+    public static void setToolBarElevation(Activity activity, float elevation) {
         ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
         if (actionBar != null)
             actionBar.setElevation(elevation);

@@ -18,6 +18,7 @@ public class BrowseUserListAdapter extends AbstractUserListAdapter {
 
     public BrowseUserListAdapter(FragmentActivity activity, List<User> users) {
         super(activity, users);
+        setUpUsers(users);
     }
 
     public void setUpUsers(List<User> users) {

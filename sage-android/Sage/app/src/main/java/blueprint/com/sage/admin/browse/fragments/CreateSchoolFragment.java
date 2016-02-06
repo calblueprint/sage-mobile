@@ -13,7 +13,7 @@ public class CreateSchoolFragment extends SchoolFormAbstractFragment implements 
     public static CreateSchoolFragment newInstance() { return new CreateSchoolFragment(); }
 
     public void initializeSchool() {
-        getActivity().setTitle("Create School");
+        mToolbarInterface.setTitle("Create School");
     }
 
     public void makeRequest() {

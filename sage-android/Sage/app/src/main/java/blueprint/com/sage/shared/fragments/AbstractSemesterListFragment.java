@@ -16,6 +16,7 @@ import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.shared.adapters.models.AbstractSemesterListAdapter;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,10 +35,13 @@ public abstract class AbstractSemesterListFragment extends Fragment implements S
     public List<Semester> mSemesters;
     public AbstractSemesterListAdapter mSemesterListAdapter;
 
+    private ToolbarInterface mToolbarInterface;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSemesters = new ArrayList<>();
+        mToolbarInterface = (ToolbarInterface) getActivity();
         makeSemesterListRequest();
     }
 
@@ -73,7 +77,7 @@ public abstract class AbstractSemesterListFragment extends Fragment implements S
         mRefreshSemesters.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
 
-        getActivity().setTitle("Semesters");
+        mToolbarInterface.setTitle("Semesters");
     }
 
     public abstract AbstractSemesterListAdapter getAdapter();

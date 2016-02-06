@@ -18,6 +18,18 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
+    <style name="CollapseToolbarLayoutStyleClosed">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="CollapseToolbarLayoutStyleOpen">
+        <item name="android:textColor">@color/transparent</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">0.1sp</item>
+    </style>
+
     <!-- Arrows -->
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
@@ -93,7 +105,7 @@
 
     <style name="DefaultMapWindow">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">300dp</item>
+        <item name="android:layout_height">@dimen/map_height</item>
     </style>
 
     <style name="DefaultHeader">

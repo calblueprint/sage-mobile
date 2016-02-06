@@ -25,6 +25,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.spinners.StringArraySpinnerAdapter;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,12 +51,15 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     private final String GENERAL = "General Announcement";
     private final String[] categoryList = new String[]{SCHOOL, GENERAL};
 
+    protected ToolbarInterface mToolbarInterface;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mSchools = new ArrayList<>();
         mValidator = FormValidator.newInstance(getActivity());
+        mToolbarInterface = (ToolbarInterface) getActivity();
         Requests.Schools.with(getActivity()).makeListRequest(null);
     }
 

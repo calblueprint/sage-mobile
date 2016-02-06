@@ -1,24 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.gms.maps.MapView
-        style="@style/DefaultMapWindow"
-        android:id="@+id/school_map" />
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/school_app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/default_elevation">
 
-    <TextView
-        android:id="@+id/school_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/school_collapse_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/map_height"
+            android:fitsSystemWindows="true"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-    <TextView
-        android:id="@+id/school_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <include layout="@layout/user_list"/>
+                <com.google.android.gms.maps.MapView
+                    style="@style/DefaultMapWindow"
+                    android:id="@+id/school_map"
+                    app:layout_collapseMode="parallax" />
 
-</LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/map_gradient"/>
+
+                <TextView
+                    android:id="@+id/school_name"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="32dp"
+                    android:textSize="24sp"
+                    android:layout_marginLeft="16dp"/>
+
+                <TextView
+                    android:id="@+id/school_address"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="16dp"/>
+
+            </FrameLayout>
+
+            <android.support.v7.widget.Toolbar
+                style="@style/ToolBarStyle"
+                android:id="@+id/school_toolbar"
+                android:theme="@style/ToolBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/user_list_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <blueprint.com.sage.shared.views.RecycleViewEmpty
+            android:id="@+id/user_list_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/user_list_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/list_empty"
+                android:layout_gravity="center"/>
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -18,6 +18,7 @@ import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -38,12 +39,14 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
 
     private SchoolsListAdapter mAdapter;
     private SchoolsInterface mSchoolsInterface;
+    private ToolbarInterface mToolbarInterface;
 
     public static SchoolListFragment newInstance() { return new SchoolListFragment(); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mToolbarInterface = (ToolbarInterface) getActivity();
         mSchoolsInterface = (SchoolsInterface) getActivity();
     }
 
@@ -78,7 +81,7 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
         mEmptyView.setOnRefreshListener(this);
         mSchoolsRefreshView.setOnRefreshListener(this);
 
-        getActivity().setTitle("Schools");
+        mToolbarInterface.setTitle("Schools");
         getSchoolsListRequest();
     }
 

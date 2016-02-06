@@ -14,4 +14,7 @@
 
     <dimen name="tab_layout_elevation">@dimen/default_elevation</dimen>
     <dimen name="tab_layout_image">24dp</dimen>
+
+    <!-- Map -->
+    <dimen name="map_height">256dp</dimen>
 </resources>

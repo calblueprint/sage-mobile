@@ -129,6 +129,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
         if (mSemester != null) {
             queryParams.put("semester_id", String.valueOf(mSemester.getId()));
+        } else if (mBaseInterface.getCurrentSemester() != null) {
+            queryParams.put("semester_id", String.valueOf(mBaseInterface.getCurrentSemester().getId()));
         }
 
         Requests.Users.with(getActivity()).makeShowRequest(mUser, queryParams);
@@ -157,7 +159,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);
 
-        getActivity().setTitle("User");
+        mToolbarInterface.setTitle("User");
     }
 
     private void initializeSettings() {

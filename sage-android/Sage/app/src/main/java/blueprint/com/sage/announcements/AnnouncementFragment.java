@@ -19,6 +19,7 @@ import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -30,15 +31,16 @@ import de.greenrobot.event.EventBus;
  */
 public class AnnouncementFragment extends Fragment {
 
-    private Announcement mAnnouncement;
-    private BaseInterface mBaseInterface;
-
     @Bind(R.id.announcement_user_single) TextView mUser;
     @Bind(R.id.announcement_school_single) TextView mSchool;
     @Bind(R.id.announcement_time_single) TextView mTime;
     @Bind(R.id.announcement_title_single) TextView mTitle;
     @Bind(R.id.announcement_body_single) TextView mBody;
     @Bind(R.id.announcement_pf_pic_single) CircleImageView mPicture;
+
+    private Announcement mAnnouncement;
+    private BaseInterface mBaseInterface;
+    private ToolbarInterface mToolbarInterface;
 
     public static AnnouncementFragment newInstance(Announcement announcement) {
         AnnouncementFragment fragment = new AnnouncementFragment();
@@ -50,6 +52,7 @@ public class AnnouncementFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBaseInterface = (BaseInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
         if (mBaseInterface.getUser().isAdmin() && mBaseInterface.getUser().getId() == mAnnouncement.getUser().getId()) {
             setHasOptionsMenu(true);
         }
@@ -123,7 +126,7 @@ public class AnnouncementFragment extends Fragment {
     }
 
     public void initializeViews() {
-        getActivity().setTitle("Announcement");
+        mToolbarInterface.setTitle("Announcement");
         Requests.Announcements.with(getActivity()).makeShowRequest(mAnnouncement);
     }
 

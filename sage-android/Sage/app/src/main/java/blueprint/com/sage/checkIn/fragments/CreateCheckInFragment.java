@@ -37,6 +37,7 @@ import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.fragments.dialogs.DateDialog;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.DateInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
@@ -64,6 +65,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
     private static final int REQUEST_CODE = 200;
 
     private BaseInterface mBaseInterface;
+    private ToolbarInterface mToolbarInterface;
 
     public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
@@ -72,6 +74,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mBaseInterface = (BaseInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
     }
 
     @Override
@@ -114,7 +117,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     private void initializeViews() {
         if (!CheckInUtils.hasPreviousRequest(getContext(), mBaseInterface)) {
-            getActivity().setTitle("Create Checkin");
+            mToolbarInterface.setTitle("Create Check In");
             mDeleteRequest.setVisibility(View.GONE);
             return;
         }
@@ -132,7 +135,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
         mEndTime.setText(DateUtils.getFormattedTime(endDate));
         mTotalTime.setText(DateUtils.timeDiff(startDate, endDate));
 
-        getActivity().setTitle("Finish Checkin");
+        mToolbarInterface.setTitle("Finish Checkin");
     }
 
     @OnClick({ R.id.check_in_request_start_field, R.id.check_in_request_end_field})

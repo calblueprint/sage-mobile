@@ -21,6 +21,7 @@ import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,6 +38,7 @@ public class FinishSemesterFragment extends Fragment {
 
     private List<Semester> mSemesters;
     private BaseInterface mBaseInterface;
+    private ToolbarInterface mToolbarInterface;
 
     public static FinishSemesterFragment newInstance() { return new FinishSemesterFragment(); }
 
@@ -44,10 +46,7 @@ public class FinishSemesterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBaseInterface = (BaseInterface) getActivity();
-
-        HashMap<String, String> queryParams = new HashMap<>();
-        queryParams.put("current_semester", "true");
-        Requests.Semesters.with(getActivity()).makeListRequest(queryParams);
+        mToolbarInterface = (ToolbarInterface) getActivity();
     }
 
     @Override
@@ -55,6 +54,7 @@ public class FinishSemesterFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_finish_semester, parent, false);
         ButterKnife.bind(this, view);
+        initializeViews();
         toggleLayout();
         return view;
     }
@@ -69,6 +69,14 @@ public class FinishSemesterFragment extends Fragment {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
+    }
+
+    private void initializeViews() {
+        mToolbarInterface.setTitle("Finish Semester");
+
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("current_semester", "true");
+        Requests.Semesters.with(getActivity()).makeListRequest(queryParams);
     }
 
     private void toggleLayout() {

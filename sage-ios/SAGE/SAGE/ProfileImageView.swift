@@ -87,7 +87,7 @@ class ProfileImageView: UIView {
         self.layoutSubviews()
     }
 
-    func setImageWithUser(user: User) {
+    func setImageWithUser(user: User, showBadge: Bool = true) {
 
         self.imageView.image = UIImage.defaultProfileImage()
         if let url = user.imageURL {
@@ -110,6 +110,9 @@ class ProfileImageView: UIView {
             self.badgeView.text = "P"
             self.badgeView.backgroundColor = UIColor.lightBlueColor
         default:
+            self.badgeBorder.alpha = 0
+        }
+        if !showBadge {
             self.badgeBorder.alpha = 0
         }
     }

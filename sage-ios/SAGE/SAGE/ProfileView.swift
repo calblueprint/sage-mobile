@@ -136,7 +136,7 @@ class ProfileView: UIView {
     func setupWithUser(user: User) {
         self.setButtonVisibility(user)
         
-        self.profileUserImg.setImageWithUser(user)
+        self.profileUserImg.setImageWithUser(user, showBadge: false)
         self.userName.text = user.fullName()
         self.userSchool.text = user.school?.name
         self.userVolunteerLevel.text = user.volunteerLevelToString(user.level)

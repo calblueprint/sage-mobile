@@ -15,7 +15,7 @@ class ProfileImageView: UIView {
     private var badgeView = UIImageView()
 
     private let badgeSizeFactor: CGFloat = 1.80
-    private let badgeViewPercentage: CGFloat = 0.80
+    private let badgeViewPercentage: CGFloat = 0.90
 
     //
     // MARK: - Initialization
@@ -37,7 +37,7 @@ class ProfileImageView: UIView {
         self.badgeBorder.backgroundColor = UIColor.whiteColor()
         self.addSubview(self.badgeBorder)
 
-        self.badgeView.backgroundColor = UIColor.blackColor()
+        self.badgeView.backgroundColor = UIColor.lightRedColor
         self.badgeBorder.addSubview(self.badgeView)
     }
 

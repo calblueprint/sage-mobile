@@ -112,7 +112,6 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     @OnClick(R.id.add_announcement_fab)
     public void newAnnouncement() {
-        Intent intent = new Intent(getActivity(), CreateAnnouncementActivity.class);
         FragUtils.startActivityForResultFragment(getActivity(), getParentFragment(), CreateAnnouncementActivity.class, FragUtils.CREATE_ANNOUNCEMENT_REQUEST_CODE);
     }
 

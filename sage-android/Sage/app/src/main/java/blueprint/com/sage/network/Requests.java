@@ -394,8 +394,8 @@ public class Requests {
             Requests.addToRequestQueue(mActivity, request);
         }
 
-        public void makeShowRequest(School school) {
-            SchoolRequest request = new SchoolRequest(mActivity, school,
+        public void makeShowRequest(School school, HashMap<String, String> queryParams) {
+            SchoolRequest request = new SchoolRequest(mActivity, school, queryParams,
                     new Response.Listener<School>() {
                         @Override
                         public void onResponse(School school) {

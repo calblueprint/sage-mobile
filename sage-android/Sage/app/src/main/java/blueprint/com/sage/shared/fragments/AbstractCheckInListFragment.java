@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,6 +27,14 @@ public abstract class AbstractCheckInListFragment extends Fragment implements Sw
     @Bind(R.id.user_check_in_refresh) public SwipeRefreshLayout mCheckInRefreshView;
 
     public RecyclerView.Adapter mAdapter;
+
+    private ToolbarInterface mToolbarInterface;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mToolbarInterface = (ToolbarInterface) getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -58,6 +67,8 @@ public abstract class AbstractCheckInListFragment extends Fragment implements Sw
         mCheckInList.setAdapter(mAdapter);
 
         mCheckInRefreshView.setOnRefreshListener(this);
+
+        mToolbarInterface.setTitle("Check Ins");
     }
 
     public void onEvent(APIErrorEvent event) {

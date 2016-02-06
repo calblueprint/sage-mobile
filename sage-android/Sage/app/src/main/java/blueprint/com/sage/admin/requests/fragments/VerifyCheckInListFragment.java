@@ -16,6 +16,7 @@ import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.shared.interfaces.CheckInsInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +35,7 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
     private VerifyCheckInListAdapter mCheckInAdapter;
 
     private CheckInsInterface mCheckInInterface;
+    private ToolbarInterface mToolbarInterface;
 
     public static VerifyCheckInListFragment newInstance() { return new VerifyCheckInListFragment(); }
 
@@ -41,6 +43,7 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCheckInInterface = (CheckInsInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
     }
 
     @Override
@@ -76,7 +79,7 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
         mCheckInRefreshLayout.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
 
-        getActivity().setTitle("Check Ins");
+        mToolbarInterface.setTitle("Check Ins");
     }
 
     @Override

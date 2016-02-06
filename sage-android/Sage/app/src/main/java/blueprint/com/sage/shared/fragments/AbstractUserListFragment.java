@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.users.profile.fragments.CreateAdminFragment;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -32,6 +33,14 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
     @Bind(R.id.user_list_fab) public FloatingActionButton mFloatingActionButton;
 
     public RecyclerView.Adapter mUserListAdapter;
+
+    private ToolbarInterface mToolbarInterface;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mToolbarInterface = (ToolbarInterface) getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -67,7 +76,7 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
         mRefreshUsers.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
 
-        getActivity().setTitle("Users");
+        mToolbarInterface.setTitle("Users");
     }
 
     @OnClick(R.id.user_list_fab)

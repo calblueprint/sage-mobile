@@ -1,5 +1,7 @@
 package blueprint.com.sage.admin.browse.fragments;
 
+import android.os.Bundle;
+
 import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.models.School;
@@ -19,14 +21,17 @@ public class EditSchoolFragment extends SchoolFormAbstractFragment {
 
     public void setSchool(School school) { mSchool = school; }
 
+    @Override
+    public void initializeViews(Bundle savedInstanceState) {
+        super.initializeViews(savedInstanceState);
+        mToolbarInterface.setTitle("Edit School");
+        Requests.Schools.with(getActivity()).makeShowRequest(mSchool, null);
+
+    }
     public void initializeSchool() {
         mSchoolName.setText(mSchool.getName());
         mSchoolAddress.setText(mSchool.getAddress());
         setUserSpinner();
-
-        getActivity().setTitle("Edit School");
-
-        Requests.Schools.with(getActivity()).makeShowRequest(mSchool);
     }
 
     public void makeRequest() {

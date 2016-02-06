@@ -1,6 +1,7 @@
 package blueprint.com.sage.admin.browse.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,6 +43,7 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.FormValidation;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
+import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
@@ -72,6 +74,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     private UserSpinnerAdapter mUserAdapter;
 
     private GoogleMap mMap;
+    protected ToolbarInterface mToolbarInterface;
     protected School mSchool;
     protected SchoolsInterface mSchoolsInterface;
     private BaseInterface mBaseInterface;
@@ -90,6 +93,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         mPredictions = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
+        mToolbarInterface = (ToolbarInterface) getActivity();
         mSchoolsInterface = (SchoolsInterface) getActivity();
         mValidator = FormValidator.newInstance(getActivity());
         makeUserListRequest();
@@ -153,7 +157,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         Requests.Users.with(getActivity()).makeListRequest(queryParams);
     }
 
-    private void initializeViews(Bundle savedInstanceState) {
+    public void initializeViews(Bundle savedInstanceState) {
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
 
@@ -230,7 +234,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
             @Override
-            public void onResult(AutocompletePredictionBuffer result) {
+            public void onResult(@NonNull AutocompletePredictionBuffer result) {
                 List<AutocompletePrediction> predictions = new ArrayList<AutocompletePrediction>();
                 for (AutocompletePrediction prediction : result) {
                     predictions.add(prediction.freeze());

@@ -30,7 +30,7 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
     }
 
     public void initializeViews() {
-        getActivity().setTitle("Create Announcement");
+        mToolbarInterface.setTitle("Create Announcement");
         mAnnouncement = new Announcement();
         initializeSpinners();
     }

@@ -14,7 +14,7 @@ class ProfileImageView: UIView {
     private var badgeBorder = UIView()
     private var badgeView = UIImageView()
 
-    private let badgeSizeFactor: CGFloat = 4
+    private let badgeSizeFactor: CGFloat = 1.80
     private let badgeViewPercentage: CGFloat = 0.80
 
     //
@@ -31,6 +31,7 @@ class ProfileImageView: UIView {
 
     private func setupSubviews() {
         self.imageView.contentMode = .ScaleAspectFill
+        self.imageView.clipsToBounds = true
         self.addSubview(self.imageView)
 
         self.badgeBorder.backgroundColor = UIColor.whiteColor()
@@ -47,8 +48,8 @@ class ProfileImageView: UIView {
         super.layoutSubviews()
 
         let radius =  CGRectGetWidth(self.frame) / 2
-        let xTranslation = sqrt(radius)/2
-        let yTranslation = sqrt(radius)/2
+        let xTranslation = radius/sqrt(2)
+        let yTranslation = radius/sqrt(2)
 
         self.imageView.setX(0)
         self.imageView.setY(0)
@@ -56,6 +57,8 @@ class ProfileImageView: UIView {
         self.badgeBorder.centerInSuperview()
         self.badgeBorder.moveX(xTranslation)
         self.badgeBorder.moveY(yTranslation)
+        self.badgeBorder.frame = CGRectIntegral(self.badgeBorder.frame)
+        self.badgeBorder.layer.cornerRadius = CGRectGetWidth(self.badgeBorder.frame)/2
 
         self.badgeView.centerInSuperview()
     }

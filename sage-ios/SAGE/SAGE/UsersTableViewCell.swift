@@ -68,8 +68,7 @@ class UsersTableViewCell: UITableViewCell {
         
         super.layoutSubviews()
         
-        self.mentorPicture.setHeight(UIConstants.userImageSize)
-        self.mentorPicture.setWidth(UIConstants.userImageSize)
+        self.mentorPicture.setDiameter(UIConstants.userImageSize)
         self.mentorPicture.setX(UIConstants.sideMargin)
         self.mentorPicture.setY(UIConstants.verticalMargin)
         

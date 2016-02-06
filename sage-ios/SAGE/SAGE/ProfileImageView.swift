@@ -112,6 +112,13 @@ class ProfileImageView: UIView {
         default:
             self.badgeBorder.alpha = 0
         }
+
+        if user.semesterSummary?.status == .Inactive {
+            self.badgeBorder.alpha = 1
+            self.badgeView.text = "!"
+            self.badgeView.backgroundColor = UIColor.lightRedColor
+        }
+
         if !showBadge {
             self.badgeBorder.alpha = 0
         }

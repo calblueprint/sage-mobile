@@ -23,7 +23,7 @@ class SchoolsTableViewCell: UITableViewCell {
     func setUpSubviews() {
         self.contentView.addSubview(self.numStudents)
         self.numStudents.textColor = UIColor.secondaryTextColor
-        self.numStudents.font = UIFont.getDefaultFont(16)
+        self.numStudents.font = UIFont.getDefaultFont(14)
         
         self.contentView.addSubview(self.schoolName)
         self.schoolName.font = UIFont.getSemiboldFont(16)
@@ -36,15 +36,13 @@ class SchoolsTableViewCell: UITableViewCell {
     func configureWithSchool(school: School) {
         self.schoolName.text = school.name
         self.schoolAddress.text = school.address
-        if school.studentCount != -1 {
-            var labelText = String(school.studentCount)
-            if school.studentCount == 1 {
-                labelText += " student"
-            } else {
-                labelText += " students"
-            }
-            self.numStudents.text = labelText
+        var labelText = String(school.studentCount)
+        if school.studentCount == 1 {
+            labelText += " student"
+        } else {
+            labelText += " students"
         }
+        self.numStudents.text = labelText
 
         self.layoutSubviews()
     }
@@ -64,7 +62,7 @@ class SchoolsTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         self.numStudents.sizeToFit()
-        self.numStudents.centerVertically()
+        self.numStudents.setY(UIConstants.verticalMargin)
         self.numStudents.setX(self.frame.width - self.numStudents.frame.width - UIConstants.sideMargin)
         
         self.schoolName.sizeToFit()
@@ -75,7 +73,7 @@ class SchoolsTableViewCell: UITableViewCell {
         self.schoolAddress.sizeToFit()
         self.schoolAddress.setY(CGRectGetMaxY(self.schoolName.frame))
         self.schoolAddress.setX(UIConstants.sideMargin)
-        self.schoolAddress.setWidth(CGRectGetMinX(self.numStudents.frame) - UIConstants.sideMargin)
+        self.schoolAddress.setWidth(CGRectGetMaxX(self.frame) - UIConstants.sideMargin)
     }
     
     required init?(coder aDecoder: NSCoder) {

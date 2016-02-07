@@ -16,7 +16,7 @@ class School: NSObject, NSCoding {
     var director: User?
     var address: String?
     
-    var studentCount: Int = -1
+    var studentCount: Int = 0
     
     init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil) {
         self.id = id

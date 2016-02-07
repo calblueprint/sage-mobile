@@ -69,11 +69,9 @@ class CheckinRequestsViewController: UITableViewController {
         let alertController = UIAlertController(title: "Approve", message: "Do you want to approve this check-in request?", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            // make a network request here
             self.removeCell(cell, accepted: true)
         }))
         self.presentViewController(alertController, animated: true, completion: nil)
-        // make a network request, remove checkin from data source, and reload table view
     }
     
     func xButtonPressed(sender: UIButton) {
@@ -81,11 +79,9 @@ class CheckinRequestsViewController: UITableViewController {
         let alertController = UIAlertController(title: "Decline", message: "Do you want to decline this check-in request?", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            // make a network request here
             self.removeCell(cell, accepted: false)
         }))
         self.presentViewController(alertController, animated: true, completion: nil)
-        // make a network request, remove checkin from data source, and reload table view
     }
     
     func removeCell(cell: CheckinRequestTableViewCell, accepted: Bool) {
@@ -94,10 +90,13 @@ class CheckinRequestsViewController: UITableViewController {
         self.requests?.removeAtIndex(indexPath.row)
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
-            AdminOperations.approveCheckin(checkin, completion: nil, failure: { (message) -> Void in
-                self.requests?.insert(checkin, atIndex: indexPath.row)
-                self.tableView.reloadData()
-                self.showErrorAndSetMessage(message)
+            AdminOperations.approveCheckin(checkin, completion: { (verifiedCheckin) -> Void in
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addVerifiedCheckinKey, object: verifiedCheckin)
+                
+                }, failure: { (message) -> Void in
+                    self.requests?.insert(checkin, atIndex: indexPath.row)
+                    self.tableView.reloadData()
+                    self.showErrorAndSetMessage(message)
             })
         } else {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)

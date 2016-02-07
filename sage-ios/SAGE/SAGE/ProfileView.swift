@@ -347,7 +347,7 @@ class ProfileView: UIView {
     
     func setButtonVisibility(user: User) {
         self.showBothButtons = false
-        if LoginOperations.getUser()!.id == user.id {
+        if LoginOperations.getUser()?.id == user.id {
             self.currentUserProfile = true
         } else {
             self.currentUserProfile = false

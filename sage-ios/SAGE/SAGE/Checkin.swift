@@ -107,7 +107,7 @@ class Checkin: NSObject {
         return formatter.stringFromDate(self.endTime!)
     }
     
-    func getDisplayText() -> String {
+    func getDurationText() -> String {
         if self.startTime == nil || self.endTime == nil {
             return ""
         }

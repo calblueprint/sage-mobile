@@ -51,7 +51,7 @@ class CheckinTableViewCell: UITableViewCell {
         dateFormatter.dateFormat = "MMMM d, YYYY"
         let fullDateText = " - " + dateFormatter.stringFromDate(checkin.startTime!)
         
-        let durationText = checkin.getDisplayText()
+        let durationText = checkin.getDurationText()
         
         let fullString = durationText + fullDateText
         let attributedString = NSMutableAttributedString(string: durationText + fullDateText)

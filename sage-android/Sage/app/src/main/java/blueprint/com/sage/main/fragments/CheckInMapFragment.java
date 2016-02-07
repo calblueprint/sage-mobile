@@ -131,6 +131,9 @@ public class CheckInMapFragment extends Fragment
     }
 
     public void setUpMap() {
+        if (mMap == null)
+            return;
+
         if (!PermissionsUtils.hasLocationPermissions(getActivity())) {
             LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
             mMap.moveCamera(CameraUpdateFactory .newLatLng(latLng));

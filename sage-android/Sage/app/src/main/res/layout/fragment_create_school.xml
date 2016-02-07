@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.gms.maps.MapView
-            style="@style/SchoolMap"
+            style="@style/CreateSchoolMap"
             android:id="@+id/create_school_map" />
 
         <LinearLayout style="@style/FormContainerLinearLayout">

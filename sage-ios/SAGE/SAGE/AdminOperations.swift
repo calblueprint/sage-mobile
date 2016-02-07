@@ -72,7 +72,7 @@ class AdminOperations {
     static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         let params = [
-            NetworkingConstants.kSortAttr: CheckinConstants.kStartTime,
+            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in

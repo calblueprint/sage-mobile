@@ -28,6 +28,10 @@ class ProfileImageView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    deinit {
+        self.imageView.cancelImageRequestOperation()
+    }
 
     private func setupSubviews() {
         self.imageView.contentMode = .ScaleAspectFill
@@ -61,10 +65,11 @@ class ProfileImageView: UIView {
         self.badgeBorder.centerInSuperview()
         self.badgeBorder.moveX(xTranslation)
         self.badgeBorder.moveY(yTranslation)
-        self.badgeBorder.frame = CGRectIntegral(self.badgeBorder.frame)
-        self.badgeBorder.layer.cornerRadius = CGRectGetWidth(self.badgeBorder.frame)/2
+        self.badgeBorder.frame = CGRectIntegral(self.badgeBorder.frame) // In order to prevent pixelation
+        self.badgeBorder.layer.cornerRadius = CGRectGetWidth(self.badgeBorder.frame)/2 // In order to keep in a circle
 
         self.badgeView.centerInSuperview()
+        self.badgeView.layer.cornerRadius = CGRectGetWidth(self.badgeView.frame) / 2
     }
 
     //
@@ -77,11 +82,9 @@ class ProfileImageView: UIView {
 
         let badgeBorderSize = diameter/badgeSizeFactor
         self.badgeBorder.setSize(width: badgeBorderSize, height: badgeBorderSize)
-        self.badgeBorder.layer.cornerRadius = badgeBorderSize / 2
 
         let badgeViewSize = CGFloat(Int(badgeBorderSize * badgeViewPercentage))
         self.badgeView.setSize(width: badgeViewSize, height: badgeViewSize)
-        self.badgeView.layer.cornerRadius = badgeViewSize / 2
         self.badgeView.font = UIFont.getBoldFont(badgeViewSize * 0.80)
 
         self.layoutSubviews()

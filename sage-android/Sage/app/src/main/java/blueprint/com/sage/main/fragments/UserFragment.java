@@ -219,7 +219,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.admin_user_delete)
     public void onDeleteClick(View view) {
-        NetworkUtils.logoutCurrentUser(getActivity());
+//        NetworkUtils.logoutCurrentUser(getActivity());
     }
 
     public void onEvent(UserEvent event) {

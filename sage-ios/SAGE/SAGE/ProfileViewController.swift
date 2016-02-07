@@ -188,7 +188,7 @@ class ProfileViewController: UITableViewController {
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        editProfileController.editProfileView.photoView.image = self.profileView.profileUserImg.image?.copy() as? UIImage
+        editProfileController.editProfileView.photoView.image = self.profileView.profileUserImg.image().copy() as? UIImage
         self.navigationController?.pushViewController(editProfileController, animated: true)
     }
     

@@ -10,7 +10,7 @@ import Foundation
 
 class AnnouncementsDetailView: UIView {
     var scrollView = UIScrollView()
-    let announcementUserImg = UIImageView()
+    let announcementUserImg = ProfileImageView()
     var announcementUserName = UILabel()
     var announcementTitle = UILabel()
     var announcementTime = UILabel()
@@ -60,8 +60,7 @@ class AnnouncementsDetailView: UIView {
     
     
     func setUpViewStyle() {
-        announcementUserImg.setHeight(UIConstants.userImageSize)
-        announcementUserImg.setWidth(UIConstants.userImageSize)
+        announcementUserImg.setDiameter(UIConstants.userImageSize)
         
         announcementUserName.font = UIFont.normalFont
         announcementUserName.textAlignment = NSTextAlignment.Left
@@ -86,8 +85,6 @@ class AnnouncementsDetailView: UIView {
         scrollView.fillWidth()
         scrollView.fillHeight()
         
-        announcementUserImg.layer.cornerRadius = UIConstants.userImageSize/2
-        announcementUserImg.clipsToBounds = true
         announcementUserImg.setX(UIConstants.sideMargin)
         announcementUserImg.setY(UIConstants.textMargin)
         

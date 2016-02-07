@@ -14,7 +14,7 @@ private let buttonInset: CGFloat = 10.0
 
 class CheckinRequestTableViewCell: UITableViewCell {
 
-    var mentorPicture = UIImageView()
+    var mentorPicture = ProfileImageView()
     var mentorName = UILabel()
     var time = UILabel()
     var content = UILabel()
@@ -46,8 +46,6 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.checkinID = checkin.id
         let user = checkin.user!
         self.mentorPicture.setImageWithUser(user)
-        self.mentorPicture.layer.cornerRadius = UIConstants.userImageSize/2
-        self.mentorPicture.clipsToBounds = true
         
         let mentorText = user.firstName! + " " + user.lastName!
         let style = NSMutableParagraphStyle()
@@ -94,8 +92,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.mentorPicture.setHeight(UIConstants.userImageSize)
-        self.mentorPicture.setWidth(UIConstants.userImageSize)
+        self.mentorPicture.setDiameter(UIConstants.userImageSize)
         self.mentorPicture.setX(UIConstants.sideMargin)
         self.mentorPicture.setY(UIConstants.verticalMargin)
 

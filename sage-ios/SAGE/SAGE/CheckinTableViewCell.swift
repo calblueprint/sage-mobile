@@ -12,7 +12,7 @@ import UIKit
 
 class CheckinTableViewCell: UITableViewCell {
     
-    var userPicture = UIImageView()
+    var userPicture = ProfileImageView()
     var userName = UILabel()
     var time = UILabel()
     
@@ -38,8 +38,6 @@ class CheckinTableViewCell: UITableViewCell {
         self.checkinID = checkin.id
         let user = checkin.user!
         self.userPicture.setImageWithUser(user)
-        self.userPicture.layer.cornerRadius = UIConstants.userImageSize/2
-        self.userPicture.clipsToBounds = true
         
         let userText = user.firstName! + " " + user.lastName!
         let style = NSMutableParagraphStyle()
@@ -70,8 +68,7 @@ class CheckinTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.userPicture.setHeight(UIConstants.userImageSize)
-        self.userPicture.setWidth(UIConstants.userImageSize)
+        self.userPicture.setDiameter(UIConstants.userImageSize)
         self.userPicture.setX(UIConstants.sideMargin)
         self.userPicture.setY(UIConstants.verticalMargin)
         

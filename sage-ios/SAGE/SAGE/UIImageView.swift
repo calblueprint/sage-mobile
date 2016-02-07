@@ -1,15 +1,15 @@
 //
-//  UIColor.swift
+//  UIImageView.swift
 //  SAGE
 //
-//  Created by Andrew on 9/30/15.
-//  Copyright © 2015 Cal Blueprint. All rights reserved.
+//  Created by Andrew Millman on 2/5/16.
+//  Copyright © 2016 Cal Blueprint. All rights reserved.
 //
 
 import UIKit
 
 extension UIImageView {
-    
+
     func setImageWithUser(user: User) {
         self.contentMode = UIViewContentMode.ScaleAspectFill
         self.image = UIImage.defaultProfileImage()

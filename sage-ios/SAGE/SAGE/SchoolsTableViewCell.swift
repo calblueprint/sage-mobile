@@ -11,7 +11,7 @@ import UIKit
 class SchoolsTableViewCell: UITableViewCell {
     
     var schoolName = UILabel()
-    var directorName = UILabel()
+    var schoolAddress = UILabel()
     var numStudents = UILabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -23,35 +23,33 @@ class SchoolsTableViewCell: UITableViewCell {
     func setUpSubviews() {
         self.contentView.addSubview(self.numStudents)
         self.numStudents.textColor = UIColor.secondaryTextColor
-        self.numStudents.font = UIFont.getDefaultFont(16)
+        self.numStudents.font = UIFont.getDefaultFont(14)
         
         self.contentView.addSubview(self.schoolName)
         self.schoolName.font = UIFont.getSemiboldFont(16)
         
-        self.contentView.addSubview(self.directorName)
-        self.directorName.font = UIFont.getDefaultFont(14)
-        self.directorName.textColor = UIColor.secondaryTextColor
+        self.contentView.addSubview(self.schoolAddress)
+        self.schoolAddress.font = UIFont.getDefaultFont(14)
+        self.schoolAddress.textColor = UIColor.secondaryTextColor
     }
     
     func configureWithSchool(school: School) {
         self.schoolName.text = school.name
-        self.directorName.text = school.director?.fullName()
-        if let studentsNum = school.students?.count {
-            var labelText = String(studentsNum)
-            if studentsNum == 1 {
-                labelText += " student"
-            } else {
-                labelText += " students"
-            }
-            self.numStudents.text = labelText
+        self.schoolAddress.text = school.address
+        var labelText = String(school.studentCount)
+        if school.studentCount == 1 {
+            labelText += " student"
+        } else {
+            labelText += " students"
         }
+        self.numStudents.text = labelText
 
         self.layoutSubviews()
     }
     
     override func prepareForReuse() {
         self.schoolName.text = ""
-        self.directorName.text = ""
+        self.schoolAddress.text = ""
         self.numStudents.text = ""
     }
     
@@ -64,7 +62,7 @@ class SchoolsTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         self.numStudents.sizeToFit()
-        self.numStudents.centerVertically()
+        self.numStudents.setY(UIConstants.verticalMargin)
         self.numStudents.setX(self.frame.width - self.numStudents.frame.width - UIConstants.sideMargin)
         
         self.schoolName.sizeToFit()
@@ -72,10 +70,10 @@ class SchoolsTableViewCell: UITableViewCell {
         self.schoolName.setX(UIConstants.sideMargin)
         self.schoolName.setWidth(CGRectGetMinX(self.numStudents.frame) - UIConstants.sideMargin)
         
-        self.directorName.sizeToFit()
-        self.directorName.setY(CGRectGetMaxY(self.schoolName.frame))
-        self.directorName.setX(UIConstants.sideMargin)
-        self.directorName.setWidth(CGRectGetMinX(self.numStudents.frame) - UIConstants.sideMargin)
+        self.schoolAddress.sizeToFit()
+        self.schoolAddress.setY(CGRectGetMaxY(self.schoolName.frame))
+        self.schoolAddress.setX(UIConstants.sideMargin)
+        self.schoolAddress.setWidth(CGRectGetMaxX(self.frame) - UIConstants.sideMargin)
     }
     
     required init?(coder aDecoder: NSCoder) {

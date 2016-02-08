@@ -376,7 +376,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
             message = "Please enter an email."
         } else if !emailPasswordView.emailInput.text!.containsString("berkeley") {
             valid = false
-            message = "Please enter a berkeley.edu email address."
+            message = "Enter a berkeley.edu email address."
         } else if emailPasswordView.passwordInput.text!.characters.count < 8 {
             valid = false
             message = "Your password must be at least 8 characters."

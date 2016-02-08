@@ -115,10 +115,10 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     public abstract void initializeViews();
 
     public void initializeSpinners() {
-        StringArraySpinnerAdapter categoryAdapter = new StringArraySpinnerAdapter(getActivity(), categoryList, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+        StringArraySpinnerAdapter categoryAdapter = new StringArraySpinnerAdapter(getActivity(), categoryList, R.layout.simple_spinner_header, R.layout.simple_spinner_item);
         mAnnouncementCategory.setAdapter(categoryAdapter);
         mAnnouncementCategory.setSelection(1, true);
-        mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.simple_spinner_item, R.layout.simple_spinner_item);
+        mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.simple_spinner_header, R.layout.simple_spinner_item);
         mAnnouncementSchoolList.setAdapter(mSchoolAdapter);
 
         mAnnouncementCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

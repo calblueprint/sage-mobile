@@ -52,6 +52,7 @@ android:layout_height="match_parent">
                 <Spinner
                     style="@style/FormSpinner"
                     android:id="@+id/announcement_school_list"
+                    android:layout_marginTop="8dp"
                     android:visibility="gone"/>
 
             </LinearLayout>

@@ -30,7 +30,6 @@ class ProfileView: UIView {
     let userRoleLabel = UILabel()
     
     // profile page constants
-//    let viewHeight = CGFloat(351.5)
     let viewHeight = CGFloat(355)
     let headerOffset = CGFloat(500)
     let leftMargin = CGFloat(30)

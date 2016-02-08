@@ -131,6 +131,9 @@ public class CheckInMapFragment extends Fragment
     }
 
     public void setUpMap() {
+        if (mMap == null)
+            return;
+
         if (!PermissionsUtils.hasLocationPermissions(getActivity())) {
             LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
             mMap.moveCamera(CameraUpdateFactory .newLatLng(latLng));
@@ -147,7 +150,6 @@ public class CheckInMapFragment extends Fragment
             } else {
                 latLng = new LatLng(location.getLatitude(), location.getLongitude());
             }
-
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         } else {
             LatLng latLng = new LatLng(MapUtils.DEFAULT_LAT, MapUtils.DEFAULT_LONG);
@@ -161,8 +163,7 @@ public class CheckInMapFragment extends Fragment
         LatLng latLng = new LatLng(school.getLat(), school.getLng());
 
         mMap.setMyLocationEnabled(true);
-        mMap.addMarker(MapUtils.getMarkerOptions(latLng));
-        mMap.addCircle(MapUtils.getCircleOptions(getActivity(), latLng, MapUtils.RADIUS));
+        mMap.addMarker(MapUtils.getMarkerOptions(latLng, getActivity()));
     }
 
     private void initializeViews(Bundle savedInstanceState) {

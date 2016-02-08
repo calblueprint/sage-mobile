@@ -30,17 +30,26 @@ class StartSemesterViewController: FormController {
     @objc private func completeForm() {
         if self.startSemesterView.isValid() {
             let finalSemester = self.startSemesterView.exportToSemester()
-            self.finishButton?.startLoading()
-            SemesterOperations.startSemester(finalSemester, completion: { (semester) -> Void in
-                self.navigationController?.popViewControllerAnimated(true)
-                }) { (errorMessage) -> Void in
-                    self.finishButton?.stopLoading()
-                    let alertController = UIAlertController(
-                        title: "Failure",
-                        message: errorMessage,
-                        preferredStyle: .Alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    self.presentViewController(alertController, animated: true, completion: nil)
+            if finalSemester.startDate == nil || !finalSemester.startDate!.timeIntervalSinceNow.isSignMinus {
+                let alertController = UIAlertController(
+                    title: "Error",
+                    message: "Please pick a date in the past.",
+                    preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            } else {
+                self.finishButton?.startLoading()
+                SemesterOperations.startSemester(finalSemester, completion: { (semester) -> Void in
+                    self.navigationController?.popViewControllerAnimated(true)
+                    }) { (errorMessage) -> Void in
+                        self.finishButton?.stopLoading()
+                        let alertController = UIAlertController(
+                            title: "Failure",
+                            message: errorMessage,
+                            preferredStyle: .Alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                }
             }
         } else {
             let alertController = UIAlertController(

@@ -27,7 +27,6 @@ class AnnouncementsOperations {
             ]
         }
 
-
         BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: params, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
             var announcements = [Announcement]()
@@ -40,5 +39,14 @@ class AnnouncementsOperations {
                 failure(BaseOperation.getErrorMessage(error))
         }
     }
+
+    static func deleteAnnouncement(announcement: Announcement, completion: (() -> Void)?, failure: (String) -> Void) {
+        BaseOperation.manager().DELETE(StringConstants.kEndpointDeleteAnnouncement(announcement.id!), parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+
     
 }

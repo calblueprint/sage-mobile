@@ -7,4 +7,5 @@
 /captures
 *.apk
 
+UrlConstants.java
 strings_application.xml

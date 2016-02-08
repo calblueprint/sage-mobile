@@ -73,7 +73,7 @@ class SchoolsTableViewCell: UITableViewCell {
         self.schoolAddress.sizeToFit()
         self.schoolAddress.setY(CGRectGetMaxY(self.schoolName.frame))
         self.schoolAddress.setX(UIConstants.sideMargin)
-        self.schoolAddress.setWidth(CGRectGetMaxX(self.frame) - UIConstants.sideMargin)
+        self.schoolAddress.setWidth(CGRectGetMaxX(self.frame) - 2*UIConstants.sideMargin)
     }
     
     required init?(coder aDecoder: NSCoder) {

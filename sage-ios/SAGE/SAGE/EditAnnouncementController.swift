@@ -11,10 +11,11 @@ import UIKit
 class EditAnnouncementController: AddAnnouncementController {
 
     var announcement: Announcement?
+    let editView = AddAnnouncementView(frame: CGRect(), edit: true)
     
     override func loadView() {
         super.loadView()
-        self.view = AddAnnouncementView(frame: CGRect(), edit: true)
+        self.view = self.editView
     }
     
     override func viewDidLoad() {
@@ -59,7 +60,7 @@ class EditAnnouncementController: AddAnnouncementController {
     }
 
     func deleteAnnouncement(sender: UIButton!) {
-        let view = (self.view as! AddAnnouncementView)
+        let view = self.editView
         view.deleteAnnouncementButton.startLoading()
         AnnouncementsOperations.deleteAnnouncement(self.announcement!, completion: { (announcement) -> Void in
             view.deleteAnnouncementButton.stopLoading()

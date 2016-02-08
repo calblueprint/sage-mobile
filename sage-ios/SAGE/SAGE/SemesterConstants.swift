@@ -14,4 +14,5 @@ struct SemesterConstants {
     static let kStartDate: String = "start"
     static let kFinishDate: String = "finish"
     static let kTerm: String = "season"
+    static let kSemesterId: String = "semester_id"
 }

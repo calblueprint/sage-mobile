@@ -22,18 +22,27 @@ class ProfileOperations: NSObject {
     
     static func loadCheckins(completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointUserCheckins(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
-            var checkins = [Checkin]()
-            let checkinArray = data["check_ins"] as! [AnyObject]
-            for checkinDict in checkinArray {
-                let checkin = Checkin(propertyDictionary: checkinDict as! [String : AnyObject])
-                checkins.append(checkin)
+        let currentSemesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id
+        if let semesterID = currentSemesterID {
+            let params = [
+                SemesterConstants.kSemesterId: semesterID,
+                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+            ]
+            manager.GET(StringConstants.kEndpointUserCheckins(LoginOperations.getUser()!), parameters: params, success: { (operation, data) -> Void in
+                var checkins = [Checkin]()
+                let checkinArray = data["check_ins"] as! [AnyObject]
+                for checkinDict in checkinArray {
+                    let checkin = Checkin(propertyDictionary: checkinDict as! [String : AnyObject])
+                    checkins.append(checkin)
+                }
+                completion(checkins)
+                
+                }) { (operation, error) -> Void in
+                    failure(BaseOperation.getErrorMessage(error))
             }
-            completion(checkins)
-            
-            }) { (operation, error) -> Void in
-                failure(BaseOperation.getErrorMessage(error))
         }
+        completion([])
     }
     
     static func updateProfile(user: User, password: String, photoData: String?, completion: (User) -> Void, failure: (String) -> Void) {

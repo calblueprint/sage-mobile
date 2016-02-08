@@ -25,7 +25,7 @@ public class MainActivity extends AbstractActivity implements ToolbarInterface {
         ButterKnife.bind(this);
         FragUtils.replace(R.id.main_container, MainFragment.newInstance(), this);
 
-        if (!SemesterUtils.isPartOfCurrentSemester(this)) {
+        if (SemesterUtils.hasCurrentSemester(this) && !SemesterUtils.isPartOfCurrentSemester(this)) {
             FragUtils.startActivityBackStack(this, JoinSemesterActivity.class);
         }
     }

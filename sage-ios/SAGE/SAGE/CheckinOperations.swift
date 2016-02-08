@@ -27,7 +27,9 @@ class CheckinOperations {
             let params = NSDictionary(dictionary: ["check_in": checkinDict])
             
             BaseOperation.manager().POST(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
-                success(checkin)
+                let checkinJSON = data["check_in"] as! [String: AnyObject]
+                let checkinResponse = Checkin(propertyDictionary: checkinJSON)
+                success(checkinResponse)
                 }, failure: { (operation, error) -> Void in
                     failure(BaseOperation.getErrorMessage(error))
             })

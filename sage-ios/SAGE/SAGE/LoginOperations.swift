@@ -39,11 +39,19 @@ class LoginOperations: NSObject {
             if !(semesterSummaryJSON is NSNull) {
                 semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
             }
+            let schoolJSON = data["session"]!!["school"]
+            var school: School? = nil
+            if !(schoolJSON is NSNull) {
+                school = School(propertyDictionary: schoolJSON as! [String: AnyObject])
+            }
             if (currentSemester != nil) {
                 KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
             }
             if (semesterSummary != nil) {
                 KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
+            }
+            if (school != nil) {
+                KeychainWrapper.setObject(school!, forKey: KeychainConstants.kSchool)
             }
             completion(user, currentSemester, semesterSummary)
             }) { (operation, error) -> Void in

@@ -64,6 +64,7 @@ class EditAnnouncementController: AddAnnouncementController {
         AnnouncementsOperations.deleteAnnouncement(self.announcement!, completion: { (announcement) -> Void in
             view.button.stopLoading()
             self.navigationController!.popToRootViewControllerAnimated(true)
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteAnnouncementKey, object: self.announcement)
             }) { (errorMessage) -> Void in
                 view.button.stopLoading()
                 let alertController = UIAlertController(

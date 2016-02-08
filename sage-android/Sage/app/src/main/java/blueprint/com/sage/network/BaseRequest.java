@@ -32,8 +32,8 @@ import blueprint.com.sage.utility.network.NetworkUtils;
  */
 public class BaseRequest extends JsonObjectRequest {
 
-    private static final String HTTP = "http";
-    private static final String HOSTNAME = "sage-rails-staging.herokuapp.com";
+    private static final String HTTP = "https";
+    private static final String HOSTNAME = "sage-rails.herokuapp.com";
     private static final String API = "api";
     private static final String VERSION = "v1";
     private Activity mActivity;

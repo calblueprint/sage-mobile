@@ -50,6 +50,10 @@ class AddAnnouncementView: FormView {
         self.commentField.textView.delegate = self
         self.commentField.setHeight(FormTextItem.defaultHeight)
         self.scrollView.addSubview(self.commentField)
+        
+        self.button.setTitle("Delete Announcement", forState: .Normal)
+        self.button.setThemeColor(UIColor.redColor())
+        self.button.titleLabel!.font = UIFont.normalFont
     }
     
     override func layoutSubviews() {
@@ -63,9 +67,6 @@ class AddAnnouncementView: FormView {
         self.commentField.setY(CGRectGetMaxY(self.school.frame))
         self.commentField.fillWidth()
         
-        self.button.setTitle("Delete Announcement", forState: .Normal)
-        self.button.setThemeColor(UIColor.redColor())
-        self.button.titleLabel!.font = UIFont.normalFont
         self.button.sizeToFit()
         let width = CGRectGetWidth(self.button.frame)
         self.button.setWidth(width + 10)

@@ -6,7 +6,6 @@ import android.location.Geocoder;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -52,17 +51,8 @@ public class MapUtils {
         return null;
     }
 
-    public static MarkerOptions getMarkerOptions(LatLng latLng) {
+    public static MarkerOptions getMarkerOptions(LatLng latLng, Activity activity) {
         return new MarkerOptions().position(latLng)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_blue));
-    }
-
-    public static CircleOptions getCircleOptions(Activity activity, LatLng latLng, int radius) {
-        return new CircleOptions()
-                .center(latLng)
-                .radius(radius)
-                .strokeWidth(5.0f)
-                .strokeColor(ViewUtils.getColor(activity, R.color.map_circle_stroke))
-                .fillColor(ViewUtils.getColor(activity, R.color.map_circle_fill));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_blue_48dp));
     }
 }

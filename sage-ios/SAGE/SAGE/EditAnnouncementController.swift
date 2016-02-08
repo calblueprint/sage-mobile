@@ -51,9 +51,13 @@ class EditAnnouncementController: AddAnnouncementController {
             self.announcement?.title = editView.title.textField.text
             self.announcement?.text = editView.commentField.textView.text
             AdminOperations.editAnnouncement(self.announcement!, completion: { (editedAnnouncement) -> Void in
+                self.finishButton?.startLoading()
+                editView.deleteAnnouncementButton.hidden = true
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editAnnouncementKey, object: editedAnnouncement)
                 }, failure: { (message) -> Void in
+                    self.finishButton?.stopLoading()
+                    editView.deleteAnnouncementButton.hidden = false
                     self.showAlertControllerError(message)
             })
         }
@@ -62,12 +66,14 @@ class EditAnnouncementController: AddAnnouncementController {
     func deleteAnnouncement(sender: UIButton!) {
         let view = self.editView
         view.deleteAnnouncementButton.startLoading()
+        self.finishButton?.startLoading()
         AnnouncementsOperations.deleteAnnouncement(self.announcement!, completion: { (announcement) -> Void in
             view.deleteAnnouncementButton.stopLoading()
             self.navigationController!.popToRootViewControllerAnimated(true)
             NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteAnnouncementKey, object: self.announcement)
             }) { (errorMessage) -> Void in
                 view.deleteAnnouncementButton.stopLoading()
+                self.finishButton?.stopLoading()
                 let alertController = UIAlertController(
                     title: "Failure",
                     message: errorMessage as String,

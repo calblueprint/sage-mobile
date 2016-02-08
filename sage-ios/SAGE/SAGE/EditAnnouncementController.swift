@@ -11,7 +11,7 @@ import UIKit
 class EditAnnouncementController: AddAnnouncementController {
 
     var announcement: Announcement?
-    let editView = AddAnnouncementView(frame: CGRect(), edit: true)
+    let editView = AddAnnouncementView()
     
     override func loadView() {
         super.loadView()
@@ -27,6 +27,7 @@ class EditAnnouncementController: AddAnnouncementController {
     func configureWithAnnouncement(announcement: Announcement) {
         self.announcement = announcement.copy() as? Announcement
         let editView = self.view as! AddAnnouncementView
+        (self.view as! AddAnnouncementView).deleteAnnouncementButton.hidden = false
         if let school = self.announcement?.school {
             editView.displayChosenSchool(school)
         } else {

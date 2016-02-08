@@ -18,13 +18,11 @@ class AddAnnouncementView: FormView {
     //
     // MARK: - Initialization
     //
-    init(frame: CGRect, edit: Bool) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.title.textField)
         self.keyboardControls.fields.append(self.commentField.textView)
-        if edit {
-            self.addSubview(self.deleteAnnouncementButton)
-        }
+        self.addSubview(self.deleteAnnouncementButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,6 +49,7 @@ class AddAnnouncementView: FormView {
         self.commentField.setHeight(FormTextItem.defaultHeight)
         self.scrollView.addSubview(self.commentField)
         
+        self.deleteAnnouncementButton.hidden = true
         self.deleteAnnouncementButton.setTitle("Delete Announcement", forState: .Normal)
         self.deleteAnnouncementButton.setThemeColor(UIColor.redColor())
         self.deleteAnnouncementButton.titleLabel!.font = UIFont.normalFont

@@ -135,7 +135,11 @@ class AdminOperations {
     
     static func loadSignUpRequests(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: nil, success: { (operation, data) -> Void in
+        let params = [
+            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+            NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+        ]
+        manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: params, success: { (operation, data) -> Void in
             var users = [User]()
             let userArray = data["users"] as! [AnyObject]
             for userDict in userArray {

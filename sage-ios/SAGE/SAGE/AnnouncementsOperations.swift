@@ -14,10 +14,15 @@ class AnnouncementsOperations {
     static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
         var params: [String: String]
         if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
-            params = [String: String]()
+            params = [
+                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+            ]
         } else {
             let schoolID = LoginOperations.getUser()!.school!.id
             params = [
+                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
                 AnnouncementConstants.kDefault: String(schoolID)
             ]
         }
@@ -30,9 +35,6 @@ class AnnouncementsOperations {
                 let singleAnnouncement = Announcement(properties: item)
                 announcements.append(singleAnnouncement)
             }
-            announcements.sortInPlace({ (announcement1, announcement2) -> Bool in
-                announcement1.isBefore(announcement2)
-            })
             completion(announcements)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

@@ -12,11 +12,17 @@ class EditAnnouncementController: AddAnnouncementController {
 
     var announcement: Announcement?
     
+    override func loadView() {
+        super.loadView()
+        self.view = AddAnnouncementView(frame: CGRect(), edit: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Edit Announcement"
+        (self.view as! AddAnnouncementView).button.addTarget(self, action: "deleteAnnouncement:", forControlEvents: .TouchUpInside)
     }
-
+    
     func configureWithAnnouncement(announcement: Announcement) {
         self.announcement = announcement.copy() as? Announcement
         let editView = self.view as! AddAnnouncementView
@@ -49,6 +55,23 @@ class EditAnnouncementController: AddAnnouncementController {
                 }, failure: { (message) -> Void in
                     self.showAlertControllerError(message)
             })
+        }
+    }
+
+    func deleteAnnouncement(sender: UIButton!) {
+        let view = (self.view as! AddAnnouncementView)
+        view.button.startLoading()
+        AnnouncementsOperations.deleteAnnouncement(self.announcement!, completion: { (announcement) -> Void in
+            view.button.stopLoading()
+            self.navigationController!.popToRootViewControllerAnimated(true)
+            }) { (errorMessage) -> Void in
+                view.button.stopLoading()
+                let alertController = UIAlertController(
+                    title: "Failure",
+                    message: errorMessage as String,
+                    preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
 

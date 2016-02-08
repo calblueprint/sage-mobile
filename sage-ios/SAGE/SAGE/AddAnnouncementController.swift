@@ -10,7 +10,7 @@ import UIKit
 
 class AddAnnouncementController: FormController {
 
-    var addAnnouncementView = AddAnnouncementView()
+    var addAnnouncementView = AddAnnouncementView(frame: CGRect(), edit: false)
     var school: School?
 
     //

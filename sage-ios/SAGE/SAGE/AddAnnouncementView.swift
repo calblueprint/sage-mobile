@@ -13,18 +13,22 @@ class AddAnnouncementView: FormView {
     var title =  FormFieldItem()
     var school = FormButtonItem()
     var commentField = FormTextItem()
+    var button = SGButton()
     
     //
     // MARK: - Initialization
     //
-    override init(frame: CGRect) {
+    init(frame: CGRect, edit: Bool) {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.title.textField)
         self.keyboardControls.fields.append(self.commentField.textView)
+        if edit {
+            self.addSubview(self.button)
+        }
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -58,6 +62,16 @@ class AddAnnouncementView: FormView {
         
         self.commentField.setY(CGRectGetMaxY(self.school.frame))
         self.commentField.fillWidth()
+        
+        self.button.setTitle("Delete Announcement", forState: .Normal)
+        self.button.setThemeColor(UIColor.redColor())
+        self.button.titleLabel!.font = UIFont.normalFont
+        self.button.sizeToFit()
+        let width = CGRectGetWidth(self.button.frame)
+        self.button.setWidth(width + 10)
+        let buttonOffsetY = CGRectGetMaxY(self.commentField.frame)
+        self.button.setY(buttonOffsetY + 20)
+        self.button.centerHorizontally()
         
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.commentField.frame))
     }

@@ -27,8 +27,7 @@ public abstract class AbstractCheckInListFragment extends Fragment implements Sw
     @Bind(R.id.user_check_in_refresh) public SwipeRefreshLayout mCheckInRefreshView;
 
     public RecyclerView.Adapter mAdapter;
-
-    private ToolbarInterface mToolbarInterface;
+    public ToolbarInterface mToolbarInterface;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

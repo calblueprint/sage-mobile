@@ -9,7 +9,6 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.utility.network.NetworkUtils;
-import blueprint.com.sage.utility.view.FragUtils;
 
 /**
  * Created by charlesx on 11/25/15.
@@ -91,6 +90,6 @@ public class EditUserFragment extends UserFormAbstractFragment {
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }
-        FragUtils.popBackStack(this);
+        getActivity().onBackPressed();
     }
 }

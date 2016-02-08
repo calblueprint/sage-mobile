@@ -13,7 +13,7 @@ class AddAnnouncementView: FormView {
     var title =  FormFieldItem()
     var school = FormButtonItem()
     var commentField = FormTextItem()
-    var button = SGButton()
+    var deleteAnnouncementButton = SGButton()
     
     //
     // MARK: - Initialization
@@ -23,7 +23,7 @@ class AddAnnouncementView: FormView {
         self.keyboardControls.fields.append(self.title.textField)
         self.keyboardControls.fields.append(self.commentField.textView)
         if edit {
-            self.addSubview(self.button)
+            self.addSubview(self.deleteAnnouncementButton)
         }
     }
     
@@ -51,9 +51,9 @@ class AddAnnouncementView: FormView {
         self.commentField.setHeight(FormTextItem.defaultHeight)
         self.scrollView.addSubview(self.commentField)
         
-        self.button.setTitle("Delete Announcement", forState: .Normal)
-        self.button.setThemeColor(UIColor.redColor())
-        self.button.titleLabel!.font = UIFont.normalFont
+        self.deleteAnnouncementButton.setTitle("Delete Announcement", forState: .Normal)
+        self.deleteAnnouncementButton.setThemeColor(UIColor.redColor())
+        self.deleteAnnouncementButton.titleLabel!.font = UIFont.normalFont
     }
     
     override func layoutSubviews() {
@@ -67,12 +67,12 @@ class AddAnnouncementView: FormView {
         self.commentField.setY(CGRectGetMaxY(self.school.frame))
         self.commentField.fillWidth()
         
-        self.button.sizeToFit()
-        let width = CGRectGetWidth(self.button.frame)
-        self.button.setWidth(width + 10)
+        self.deleteAnnouncementButton.sizeToFit()
+        let width = CGRectGetWidth(self.deleteAnnouncementButton.frame)
+        self.deleteAnnouncementButton.setWidth(width + 10)
         let buttonOffsetY = CGRectGetMaxY(self.commentField.frame)
-        self.button.setY(buttonOffsetY + 20)
-        self.button.centerHorizontally()
+        self.deleteAnnouncementButton.setY(buttonOffsetY + 20)
+        self.deleteAnnouncementButton.centerHorizontally()
         
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.commentField.frame))
     }

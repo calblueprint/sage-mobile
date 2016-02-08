@@ -20,7 +20,7 @@ class EditAnnouncementController: AddAnnouncementController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Edit Announcement"
-        (self.view as! AddAnnouncementView).button.addTarget(self, action: "deleteAnnouncement:", forControlEvents: .TouchUpInside)
+        (self.view as! AddAnnouncementView).deleteAnnouncementButton.addTarget(self, action: "deleteAnnouncement:", forControlEvents: .TouchUpInside)
     }
     
     func configureWithAnnouncement(announcement: Announcement) {
@@ -60,13 +60,13 @@ class EditAnnouncementController: AddAnnouncementController {
 
     func deleteAnnouncement(sender: UIButton!) {
         let view = (self.view as! AddAnnouncementView)
-        view.button.startLoading()
+        view.deleteAnnouncementButton.startLoading()
         AnnouncementsOperations.deleteAnnouncement(self.announcement!, completion: { (announcement) -> Void in
-            view.button.stopLoading()
+            view.deleteAnnouncementButton.stopLoading()
             self.navigationController!.popToRootViewControllerAnimated(true)
             NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteAnnouncementKey, object: self.announcement)
             }) { (errorMessage) -> Void in
-                view.button.stopLoading()
+                view.deleteAnnouncementButton.stopLoading()
                 let alertController = UIAlertController(
                     title: "Failure",
                     message: errorMessage as String,

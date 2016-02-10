@@ -24,35 +24,35 @@ extension UIFont {
     
     static func getDefaultFont(size: CGFloat = 20) -> UIFont {
         if size < 17 {
-            return UIFont(name: ".SFUIText-Regular", size: size)!
+            return UIFont(name: "SFUIText-Regular", size: size)!
         } else if size < 45 {
-            return UIFont(name: ".SFUIDisplay-Regular", size: size)!
+            return UIFont(name: "SFUIDisplay-Regular", size: size)!
         } else {
-            return UIFont(name: ".SFUIDisplay-Light", size: size)!
+            return UIFont(name: "SFUIDisplay-Light", size: size)!
         }
     }
     
     static func getSemiboldFont(size: CGFloat = 20) -> UIFont {
         if size >= 17 {
-            return UIFont(name: ".SFUIDisplay-Semibold", size: size)!
+            return UIFont(name: "SFUIDisplay-Semibold", size: size)!
         } else {
-            return UIFont(name: ".SFUIText-Semibold", size: size)!
+            return UIFont(name: "SFUIText-Semibold", size: size)!
         }
     }
     
     static func getBoldFont(size: CGFloat = 20) -> UIFont {
         if size >= 17 {
-            return UIFont(name: ".SFUIDisplay-Bold", size: size)!
+            return UIFont(name: "SFUIDisplay-Bold", size: size)!
         } else {
-            return UIFont(name: ".SFUIText-Bold", size: size)!
+            return UIFont(name: "SFUIText-Bold", size: size)!
         }
     }
     
     static func getTitleFont(size: CGFloat = 20) -> UIFont {
         if size < 45 {
-            return UIFont(name: ".SFUIDisplay-Light", size: size)!
+            return UIFont(name: "SFUIDisplay-Light", size: size)!
         } else {
-            return UIFont(name: ".SFUIDisplay-Thin", size: size)!
+            return UIFont(name: "SFUIDisplay-Thin", size: size)!
         }
     }
 }

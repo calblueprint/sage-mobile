@@ -126,6 +126,7 @@ class ProfileImageView: UIView {
 
     func cancelImageRequestOperation() {
         self.imageView.cancelImageRequestOperation()
+        self.resetImage()
     }
 
     func resetImage() {

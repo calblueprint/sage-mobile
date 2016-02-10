@@ -92,7 +92,15 @@ class CheckinViewController: UIViewController {
     // MARK: - Button event handling
     //
     @objc private func userPressedBeginSession() {
-        if CLLocationManager.locationServicesEnabled() {
+        if (self.school == nil) {
+            let alertController = UIAlertController(
+                title: "No School",
+                message: "You are not part of a school. Please join a school.",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+
+        } else if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .AuthorizedWhenInUse, .AuthorizedAlways:
                 // Verify location

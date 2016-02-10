@@ -14,21 +14,24 @@ class AdminOperations {
     
     static func loadMentors(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as! Semester
-        let params = [UserConstants.kSemesterID: currentSemester.id]
-        manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
-            var userArray = [User]()
-            let userData = data["users"] as! [AnyObject]
-            for userDict in userData {
-                let user = User(propertyDictionary: userDict as! [String: AnyObject])
-                userArray.append(user)
+        if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+            let params = [UserConstants.kSemesterID: currentSemester.id]
+            manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
+                var userArray = [User]()
+                let userData = data["users"] as! [AnyObject]
+                for userDict in userData {
+                    let user = User(propertyDictionary: userDict as! [String: AnyObject])
+                    userArray.append(user)
+                }
+                userArray.sortInPlace({ (user1, user2) -> Bool in
+                    user1.isBefore(user2)
+                })
+                completion(userArray)
+                }) { (operation, error) -> Void in
+                    failure(BaseOperation.getErrorMessage(error))
             }
-            userArray.sortInPlace({ (user1, user2) -> Bool in
-                user1.isBefore(user2)
-            })
-            completion(userArray)
-            }) { (operation, error) -> Void in
-                failure(BaseOperation.getErrorMessage(error))
+        } else {
+            completion([])
         }
         
     }

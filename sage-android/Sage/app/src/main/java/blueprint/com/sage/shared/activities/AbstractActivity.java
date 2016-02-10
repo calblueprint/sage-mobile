@@ -74,6 +74,9 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
     private void setUpUser() {
         String userString = mPreferences.getString(getString(R.string.user), "");
 
+        if (userString.isEmpty())
+            return;
+
         try {
             ObjectMapper objectMapper = mNetworkManager.getObjectMapper();
             mUser = objectMapper.readValue(userString, new TypeReference<User>() {});
@@ -85,6 +88,9 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
     private void setUpSchool() {
         String schoolString = mPreferences.getString(getString(R.string.school), "");
 
+        if (schoolString.isEmpty())
+            return;
+
         try {
             ObjectMapper objectMapper = mNetworkManager.getObjectMapper();
             mSchool = objectMapper.readValue(schoolString, new TypeReference<School>() {});
@@ -95,6 +101,9 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
 
     private void setUpCurrentSemester() {
         String currentSemesterString = mPreferences.getString(getString(R.string.current_semester), "");
+
+        if (currentSemesterString.isEmpty())
+            return;
 
         try {
             ObjectMapper objectMapper = mNetworkManager.getObjectMapper();

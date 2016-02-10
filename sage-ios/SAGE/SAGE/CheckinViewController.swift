@@ -16,7 +16,7 @@ class CheckinViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocation()
     var school = School()
-    let distanceTolerance: CLLocationDistance = 2000 // in Meters TODO: Change to 200
+    let distanceTolerance: CLLocationDistance = 200 // in Meters TODO: Change to 200
     
     let checkinView = CheckinView()
     let defaultTitleLabel = UILabel()

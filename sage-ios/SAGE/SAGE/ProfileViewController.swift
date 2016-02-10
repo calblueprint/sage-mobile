@@ -89,7 +89,7 @@ class ProfileViewController: UITableViewController {
         
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.centerHorizontally()
-        self.activityIndicator.setY(self.profileView.headerHeight + CGFloat(65))
+        self.activityIndicator.setY(self.profileView.headerHeight + CGFloat(40))
         self.activityIndicator.startAnimating()
         self.getUser()
     }

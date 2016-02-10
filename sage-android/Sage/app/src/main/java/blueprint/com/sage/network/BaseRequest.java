@@ -32,10 +32,6 @@ import blueprint.com.sage.utility.network.NetworkUtils;
  */
 public class BaseRequest extends JsonObjectRequest {
 
-    private static final String HTTP = "https";
-    private static final String HOSTNAME = "sage-rails.herokuapp.com";
-    private static final String API = "api";
-    private static final String VERSION = "v1";
     private Activity mActivity;
 
     public BaseRequest(int requestType, String url, JSONObject params,
@@ -103,10 +99,10 @@ public class BaseRequest extends JsonObjectRequest {
 
     public static String makeUrl(HashMap<String, String> queryParams, String... paths) {
         Uri.Builder uri = new Uri.Builder();
-        uri = uri.scheme(HTTP)
-                 .authority(HOSTNAME)
-                 .appendPath(API)
-                 .appendPath(VERSION);
+        uri = uri.scheme(UrlConstants.HTTP)
+                 .authority(UrlConstants.HOSTNAME)
+                 .appendPath(UrlConstants.API)
+                 .appendPath(UrlConstants.VERSION);
 
         for (String path : paths)
             uri = uri.appendPath(path);

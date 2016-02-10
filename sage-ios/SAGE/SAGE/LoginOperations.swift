@@ -146,12 +146,11 @@ class LoginOperations: NSObject {
             UserConstants.kLevel: hours,
             UserConstants.kSchoolID: school
         ]
-        
-        let params = ["user": data]
-        
         if photoData != nil {
             data[UserConstants.kPhotoData] = photoData!
         }
+        
+        let params = ["user": data]
         
         operationManager.POST(StringConstants.kEndpointCreateUser, parameters: params, success: { (operation, data) -> Void in
             let userDict = data["session"]!!["user"]!!

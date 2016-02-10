@@ -170,6 +170,7 @@ class ProfileView: UIView {
             roleString = "Unverified"
         }
         self.userRoleLabel.text = roleString
+        self.userRoleLabel.backgroundColor = user.roleColor()
         
         layoutSubviews()
     }
@@ -214,7 +215,12 @@ class ProfileView: UIView {
         self.userName.font = UIFont.getSemiboldFont(20)
         self.userSchool.font = UIFont.normalFont
         self.userVolunteerLevel.font = UIFont.normalFont
-        self.userRoleLabel.font = UIFont.normalFont
+        
+        self.userRoleLabel.font = UIFont.getBoldFont(14)
+        self.userRoleLabel.textAlignment = .Center
+        self.userRoleLabel.textColor = UIColor.whiteColor()
+        self.userRoleLabel.clipsToBounds = true
+        self.userRoleLabel.layer.cornerRadius = 2
         
         self.topBorder.backgroundColor = UIColor.borderColor
         self.bottomBorder.backgroundColor = UIColor.borderColor
@@ -298,9 +304,10 @@ class ProfileView: UIView {
         let userVolunteerLevelY = CGRectGetMaxY(userSchool.frame) + 3
         self.userVolunteerLevel.setY(userVolunteerLevelY)
         
-        self.userRoleLabel.fillWidth()
         self.userRoleLabel.sizeToFit()
-        self.userRoleLabel.setX(self.leftMargin)
+        self.userRoleLabel.increaseWidth(8)
+        self.userRoleLabel.increaseHeight(4)
+        self.userRoleLabel.setX(self.leftMargin - 4)
         let userRoleLabelY = CGRectGetMaxY(userVolunteerLevel.frame) + 3
         self.userRoleLabel.setY(userRoleLabelY)
         

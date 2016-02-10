@@ -198,8 +198,10 @@ class LoginOperations: NSObject {
             let user = User(propertyDictionary: userDict as! [String: AnyObject])
             let authToken = data["session"]!![UserConstants.kAuthToken] as! String
             let schoolDictionary = data["session"]!!["school"]!!
-            let school = School(propertyDictionary: schoolDictionary as! [String : AnyObject])
-            user.school = school
+            if !(schoolDictionary is NSNull) {
+                let school = School(propertyDictionary: schoolDictionary as! [String : AnyObject])
+                user.school = school
+            }
             
             LoginOperations.storeUserDataInKeychain(user, authToken: authToken)
             completion(true)

@@ -106,6 +106,7 @@ class EditProfileController: FormController {
             ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, completion: { (updatedUser) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.changeSchoolKey, object: updatedUser.school!)
                 }) { (errorMessage) -> Void in
                     self.finishButton?.stopLoading()
                     let alertController = UIAlertController(

@@ -26,6 +26,10 @@ class CheckinViewController: UIViewController {
     var inSession: Bool = false
     var requiredTime: NSTimeInterval = 0.0
 
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     //
     // MARK: - ViewController Lifecycle
     //
@@ -59,6 +63,7 @@ class CheckinViewController: UIViewController {
             let marker = GMSMarker(position: self.school!.location!.coordinate)
             marker.map = self.checkinView.mapView
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolChanged:", name: NotificationConstants.changeSchoolKey, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -86,6 +91,18 @@ class CheckinViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.sharedApplication().statusBarStyle = .LightContent
+    }
+    
+    //
+    // MARK: - Notification handling
+    //
+    
+    @objc private func schoolChanged(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        self.school = school
+        self.checkinView.mapView.clear()
+        let marker = GMSMarker(position: self.school!.location!.coordinate)
+        marker.map = self.checkinView.mapView
     }
     
     //

@@ -20,7 +20,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         case TwoUnits = "3 hours/week"
     }
     
-    var modalType: ContentType
+    var modalType: ContentType = .School
     var navigationBar: UINavigationBar?
     weak var parentVC: SignUpController?
     var schools: [School] = []
@@ -29,14 +29,18 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     var volunteerLevelDict = NSMutableDictionary()
     
     init(type: ContentType) {
+        super.init(style: .Plain)
         self.modalType = type
         volunteerLevelDict[VolunteerLevelStrings.ZeroUnits.rawValue] = User.VolunteerLevel.ZeroUnit.rawValue
         volunteerLevelDict[VolunteerLevelStrings.OneUnit.rawValue] = User.VolunteerLevel.OneUnit.rawValue
         volunteerLevelDict[VolunteerLevelStrings.TwoUnits.rawValue] = User.VolunteerLevel.TwoUnit.rawValue
-        super.init(style: .Plain)
         if self.modalType == ContentType.School {
             self.loadSchoolData()
         }
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
     required init?(coder aDecoder: NSCoder) {

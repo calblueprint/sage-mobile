@@ -170,6 +170,7 @@ class ProfileView: UIView {
             roleString = "Unverified"
         }
         self.userRoleLabel.text = roleString
+        self.userRoleLabel.backgroundColor = user.roleColor()
         
         layoutSubviews()
     }
@@ -303,7 +304,6 @@ class ProfileView: UIView {
         let userVolunteerLevelY = CGRectGetMaxY(userSchool.frame) + 3
         self.userVolunteerLevel.setY(userVolunteerLevelY)
         
-        self.userRoleLabel.backgroundColor = UIColor.blackColor()
         self.userRoleLabel.sizeToFit()
         self.userRoleLabel.increaseWidth(8)
         self.userRoleLabel.increaseHeight(4)

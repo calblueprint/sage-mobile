@@ -132,7 +132,7 @@ class EditProfileView: FormView {
         self.email.textField.text = email
     }
     
-    func displaySchoolName(schoolName: String) {
+    func displaySchoolName(schoolName: String?) {
         self.school.button.setTitle(schoolName, forState: .Normal)
         self.school.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }
@@ -172,7 +172,7 @@ class EditProfileView: FormView {
         self.displayFirstName(user.firstName!)
         self.displayLastName(user.lastName!)
         self.displayEmail(user.email!)
-        self.displaySchoolName(user.school!.name!)
+        self.displaySchoolName(user.school?.name)
         self.displayHours(user.level)
         self.setProfileImage(user)
     }

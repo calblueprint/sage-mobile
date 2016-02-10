@@ -76,6 +76,7 @@ class ProfileOperations: NSObject {
         manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in
             let newUserData = (data as! [String: AnyObject])["user"] as! [String: AnyObject]
             let newUser = User(propertyDictionary: newUserData)
+            LoginOperations.storeUserDataInKeychain(newUser)
             completion(newUser)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

@@ -25,6 +25,10 @@ class ProfileViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
     }
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         self.user = User()
         fatalError("init(coder:) has not been implemented")

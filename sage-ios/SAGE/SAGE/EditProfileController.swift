@@ -19,6 +19,11 @@ class EditProfileController: FormController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        self.user = User()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

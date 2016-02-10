@@ -107,8 +107,9 @@ class User: NSObject, NSCoding {
                     }
                 }
             case UserConstants.kSchool:
-                let schoolDictionary = value as! [String: AnyObject]
-                self.school = School(propertyDictionary: schoolDictionary)
+                if let schoolDictionary = value as? [String: AnyObject] {
+                    self.school = School(propertyDictionary: schoolDictionary)
+                }
             case UserConstants.kVerified:
                 if let val = value as? Bool {
                     self.verified = val

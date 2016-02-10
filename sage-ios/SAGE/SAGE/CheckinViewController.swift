@@ -15,7 +15,7 @@ class CheckinViewController: UIViewController {
 
     let locationManager = CLLocationManager()
     var currentLocation = CLLocation()
-    var school = School()
+    var school: School?
     let distanceTolerance: CLLocationDistance = 200 // in Meters TODO: Change to 200
     
     let checkinView = CheckinView()
@@ -35,7 +35,10 @@ class CheckinViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as! School
+        if let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+            self.school = school
+        }
+        
         if let user = LoginOperations.getUser() {
             self.requiredTime = 3600 * Double(user.getRequiredHours())
         } else {
@@ -52,8 +55,10 @@ class CheckinViewController: UIViewController {
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
         self.startGettingCurrentLocation()
-        let marker = GMSMarker(position: self.school.location!.coordinate)
-        marker.map = self.checkinView.mapView
+        if self.school != nil {
+            let marker = GMSMarker(position: self.school!.location!.coordinate)
+            marker.map = self.checkinView.mapView
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -109,7 +114,7 @@ class CheckinViewController: UIViewController {
                 } else {
                     let alertController = UIAlertController(
                         title: "Location too far",
-                        message: "You are too far from \(school.name!). Please move closer to start mentoring.",
+                        message: "You are too far from \(school!.name!). Please move closer to start mentoring.",
                         preferredStyle: .Alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
@@ -150,7 +155,7 @@ class CheckinViewController: UIViewController {
         } else {
             let alertController = UIAlertController(
                 title: "Location too far",
-                message: "You are too far from \(school.name!). Please move closer to finish mentoring.",
+                message: "You are too far from \(school!.name!). Please move closer to finish mentoring.",
                 preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
@@ -227,7 +232,7 @@ class CheckinViewController: UIViewController {
     }
     
     private func currentLocationIsBySchool() -> Bool {
-        let distance: CLLocationDistance = self.school.location!.distanceFromLocation(self.currentLocation)
+        let distance: CLLocationDistance = self.school!.location!.distanceFromLocation(self.currentLocation)
         return  distance < self.distanceTolerance
     }
     

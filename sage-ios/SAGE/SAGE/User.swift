@@ -215,6 +215,27 @@ class User: NSObject, NSCoding {
     func isDirector() -> Bool {
         return (self.role == .Admin || self.role == .President) && self.directorID != -1
     }
+    
+    func roleColor() -> UIColor {
+        var result = UIColor.clearColor()
+        switch self.role {
+        case .Admin:
+            if self.isDirector() {
+                result = UIColor.lightGrayColor()
+            } else {
+                result = UIColor.lightOrangeColor
+            }
+        case .President:
+            result = UIColor.lightBlueColor
+        default:
+            break
+        }
+        
+        if self.semesterSummary?.status == .Inactive {
+            result = UIColor.lightRedColor
+        }
+        return result
+    }
 }
 
 extension User: NSCopying {

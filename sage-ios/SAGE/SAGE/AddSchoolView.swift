@@ -13,11 +13,12 @@ class AddSchoolView: FormView {
     var name =  FormFieldItem()
     var location = FormButtonItem()
     var director = FormButtonItem()
+    var deleteSchoolButton = SGButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.name.textField)
-
+        self.scrollView.addSubview(self.deleteSchoolButton)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,6 +43,11 @@ class AddSchoolView: FormView {
         self.location.button.setTitle("Choose the school's location", forState: .Normal)
         self.location.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.location)
+
+        self.self.deleteSchoolButton.hidden = true
+        self.self.deleteSchoolButton.setTitle("Delete School", forState: .Normal)
+        self.self.deleteSchoolButton.setThemeColor(UIColor.redColor())
+        self.self.deleteSchoolButton.titleLabel!.font = UIFont.normalFont
     }
     
     override func layoutSubviews() {
@@ -55,6 +61,13 @@ class AddSchoolView: FormView {
         self.name.fillWidth()
         self.name.setY(CGRectGetMaxY(self.location.frame))
         
+        self.deleteSchoolButton.sizeToFit()
+        let width = CGRectGetWidth(self.deleteSchoolButton.frame)
+        self.deleteSchoolButton.setWidth(width + 10)
+        let buttonOffsetY = CGRectGetMaxY(self.name.frame)
+        self.deleteSchoolButton.setY(buttonOffsetY + 20)
+        self.deleteSchoolButton.centerHorizontally()
+
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.name.frame))
     }
     

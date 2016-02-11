@@ -18,7 +18,10 @@ class EditProfileView: FormView {
     var email = FormFieldItem()
     var school = FormButtonItem()
     var hours = FormButtonItem()
+    let newPassword = FormFieldItem()
+    let newPasswordConfirmation = FormFieldItem()
     let password = FormFieldItem()
+    let changePasswordLabel = UILabel()
     let profileImageSize = CGFloat(90)
     
     override init(frame: CGRect) {
@@ -26,6 +29,8 @@ class EditProfileView: FormView {
         self.keyboardControls.fields.append(self.firstName.textField)
         self.keyboardControls.fields.append(self.lastName.textField)
         self.keyboardControls.fields.append(self.email.textField)
+        self.keyboardControls.fields.append(self.newPassword.textField)
+        self.keyboardControls.fields.append(self.newPasswordConfirmation.textField)
         self.keyboardControls.fields.append(self.password.textField)
     }
 
@@ -68,6 +73,25 @@ class EditProfileView: FormView {
         self.hours.button.setTitle("Choose your hours", forState: .Normal)
         self.hours.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.hours)
+        
+        self.changePasswordLabel.text = "Change Password"
+        self.changePasswordLabel.font = UIFont.semiboldFont
+        self.changePasswordLabel.textColor = UIColor.blackColor()
+        self.scrollView.addSubview(self.changePasswordLabel)
+        
+        self.newPassword.label.text = "New Password"
+        self.newPassword.textField.delegate = self
+        self.newPassword.textField.placeholder = "Change password (optional)"
+        self.newPassword.setHeight(FormFieldItem.defaultHeight)
+        self.newPassword.textField.secureTextEntry = true
+        self.scrollView.addSubview(self.newPassword)
+        
+        self.newPasswordConfirmation.label.text = "Confirm"
+        self.newPasswordConfirmation.textField.delegate = self
+        self.newPasswordConfirmation.textField.placeholder = "Confirm new password (optional)"
+        self.newPasswordConfirmation.setHeight(FormFieldItem.defaultHeight)
+        self.newPasswordConfirmation.textField.secureTextEntry = true
+        self.scrollView.addSubview(self.newPasswordConfirmation)
         
         self.password.label.text = "Password"
         self.password.textField.delegate = self
@@ -113,6 +137,16 @@ class EditProfileView: FormView {
         
         self.password.fillWidth()
         self.password.setY(CGRectGetMaxY(self.hours.frame))
+        
+        self.changePasswordLabel.sizeToFit()
+        self.changePasswordLabel.setY(CGRectGetMaxY(self.password.frame) + 4*UIConstants.verticalMargin)
+        self.changePasswordLabel.setX(UIConstants.sideMargin)
+        
+        self.newPassword.fillWidth()
+        self.newPassword.setY(CGRectGetMaxY(self.changePasswordLabel.frame) + UIConstants.verticalMargin)
+        
+        self.newPasswordConfirmation.fillWidth()
+        self.newPasswordConfirmation.setY(CGRectGetMaxY(self.newPassword.frame))
 
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.password.frame))
     }

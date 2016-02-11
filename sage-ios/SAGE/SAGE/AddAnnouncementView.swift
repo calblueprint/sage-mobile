@@ -22,7 +22,7 @@ class AddAnnouncementView: FormView {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.title.textField)
         self.keyboardControls.fields.append(self.commentField.textView)
-        self.addSubview(self.deleteAnnouncementButton)
+        self.scrollView.addSubview(self.deleteAnnouncementButton)
     }
     
     required init?(coder aDecoder: NSCoder) {

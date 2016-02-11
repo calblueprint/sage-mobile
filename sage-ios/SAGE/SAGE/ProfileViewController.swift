@@ -95,6 +95,13 @@ class ProfileViewController: UITableViewController {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.setY(self.profileView.headerHeight + CGFloat(40))
         self.activityIndicator.startAnimating()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "getUser", forControlEvents: .ValueChanged)
+        self.view.bringSubviewToFront(self.refreshControl!)
+        
         self.getUser()
     }
     
@@ -179,6 +186,7 @@ class ProfileViewController: UITableViewController {
             
             self.profileView.setupWithUser(user)
             self.activityIndicator.stopAnimating()
+            self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()

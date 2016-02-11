@@ -60,6 +60,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     @Nullable @Bind(R.id.admin_user_change_role) LinearLayout mRoleLayout;
     @Nullable @Bind(R.id.admin_user_change_status) LinearLayout mStatusLayout;
 
+    @Bind(R.id.)
+
     private User mUser;
     private Semester mSemester;
 
@@ -158,6 +160,9 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);
+
+//        Kelsey's stuff
+
 
         mToolbarInterface.setTitle("User");
     }

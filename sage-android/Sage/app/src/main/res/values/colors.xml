@@ -19,7 +19,6 @@
     <color name="yellow500">#FFEB3B</color>
     <color name="green500">#4CAF50</color>
     <color name="blue500">#2196F3</color>
-
     <color name="amber700">#FFA000</color>
 
     <!-- Disabled Colors -->
@@ -33,4 +32,10 @@
         <item>#FFEB3B</item>
         <item>#4CAF50</item>
     </array>
+
+    <!--User Type Icon-->
+    <color name="red_endangered">#E53935</color>
+    <color name="turquoise_director">#00BFA5</color>
+    <color name="orange_admin">#FF9800</color>
+    <color name="blue_president">#03A9F4</color>
 </resources>

@@ -79,7 +79,7 @@ class EditProfileView: FormView {
         self.changePasswordLabel.textColor = UIColor.blackColor()
         self.scrollView.addSubview(self.changePasswordLabel)
         
-        self.newPassword.label.text = "New Password"
+        self.newPassword.label.text = "Password"
         self.newPassword.textField.delegate = self
         self.newPassword.textField.placeholder = "Change password (optional)"
         self.newPassword.setHeight(FormFieldItem.defaultHeight)
@@ -197,6 +197,10 @@ class EditProfileView: FormView {
             return false
         } else if self.password.textField.text == "" {
             return false
+        } else if self.newPassword.textField.text == "" && self.newPasswordConfirmation.textField.text != ""{
+            return false
+        } else if self.newPasswordConfirmation.textField.text == "" && self.newPassword.textField.text != "" {
+            return false
         } else {
             return true
         }
@@ -225,6 +229,14 @@ class EditProfileView: FormView {
     
     func getPassword() -> String {
         return self.password.textField.text!
+    }
+    
+    func getNewPassword() -> String? {
+        return self.newPassword.textField.text
+    }
+    
+    func getPasswordConfirmation() -> String? {
+        return self.newPasswordConfirmation.textField.text
     }
 
 }

@@ -61,14 +61,13 @@ public class MainFragment extends Fragment {
     public void initializeViews() {
         mAdapter = new IconPagerAdapter(getChildFragmentManager(), getActivity());
 
-        mAdapter.addFragment(CheckInMapFragment.newInstance(), R.drawable.ic_place_white_24dp);
         mAdapter.addFragment(AnnouncementsListFragment.newInstance(), R.drawable.ic_announcement_white_24dp);
+        mAdapter.addFragment(CheckInMapFragment.newInstance(), R.drawable.ic_place_white_24dp);
+        mAdapter.addFragment(UserFragment.newInstance(mBaseInterface.getUser()), R.drawable.ic_account_circle_white_24dp);
 
         if (mBaseInterface.getUser().isAdmin() || mBaseInterface.getUser().isPresident()) {
             mAdapter.addFragment(AdminPanelFragment.newInstance(), R.drawable.ic_assignment_white_24dp);
         }
-
-        mAdapter.addFragment(UserFragment.newInstance(mBaseInterface.getUser()), R.drawable.ic_account_circle_white_24dp);
 
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -93,19 +92,18 @@ public class MainFragment extends Fragment {
                     mAdapter.getTabView(position + 1).setImageAlpha(fromAlpha);
                 }
 
-                if ((mAdapter.getItem(position) instanceof AdminPanelFragment && mBaseInterface.getUser().isAdmin()) ||
-                        (mAdapter.getItem(position) instanceof AnnouncementsListFragment && mBaseInterface.getUser().isStudent())) {
+                if (mAdapter.getItem(position) instanceof CheckInMapFragment) {
                     ViewUtils.setElevation(mTabLayout, mMinElevation * (1 - positionOffset));
+                } else if (mAdapter.getItem(position) instanceof UserFragment) {
+                    ViewUtils.setElevation(mTabLayout, mMinElevation * positionOffset);
                 }
             }
 
             @Override
-            public void onPageSelected(int position) {
-            }
+            public void onPageSelected(int position) {}
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
     }
 

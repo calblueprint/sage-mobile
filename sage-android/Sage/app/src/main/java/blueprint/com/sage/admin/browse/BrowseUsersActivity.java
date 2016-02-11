@@ -33,6 +33,7 @@ public class BrowseUsersActivity extends BackAbstractActivity implements UsersIn
 
     public void getUsersListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("current_semester", "true");
         queryParams.put("sort_name", "true");
         Requests.Users.with(this).makeListRequest(queryParams);
     }

@@ -43,9 +43,7 @@ class AddSchoolController: FormController {
     
     func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
-        if self.director == nil {
-            self.showAlertControllerError("Please choose a director.")
-        } else if self.location == nil {
+        if self.location == nil {
             self.showAlertControllerError("Please choose a location.")
         } else if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
             self.showAlertControllerError("What's the school's name?")

@@ -2,18 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SF-UI-Text-Regular.otf</string>
-		<string>SF-UI-Display-Regular.otf</string>
-		<string>SF-UI-Display-Light.otf</string>
-		<string>SF-UI-Display-Semibold.otf</string>
-		<string>SF-UI-Text-Semibold.otf</string>
-		<string>SF-UI-Display-Bold.otf</string>
-		<string>SF-UI-Text-Bold.otf</string>
-		<string>SF-UI-Display-Light.otf</string>
-		<string>SF-UI-Display-Thin.otf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -31,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -47,16 +35,18 @@
 	<string>Your location is needed to verify your check ins.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is needed to verify your check ins.</string>
-	<key>UIRequiredDeviceCapabilities</key>
+	<key>UIAppFonts</key>
 	<array>
-		<string>armv7</string>
+		<string>SF-UI-Text-Regular.otf</string>
+		<string>SF-UI-Display-Regular.otf</string>
+		<string>SF-UI-Display-Light.otf</string>
+		<string>SF-UI-Display-Semibold.otf</string>
+		<string>SF-UI-Text-Semibold.otf</string>
+		<string>SF-UI-Display-Bold.otf</string>
+		<string>SF-UI-Text-Bold.otf</string>
+		<string>SF-UI-Display-Light.otf</string>
+		<string>SF-UI-Display-Thin.otf</string>
 	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>UILaunchImages</key>
 	<array>
 		<dict>
@@ -70,5 +60,15 @@
 			<string>{320, 480}</string>
 		</dict>
 	</array>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

@@ -156,15 +156,20 @@ class AdminOperations {
     }
     
     static func createSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
-        let params = ["school":
-            [
-                SchoolConstants.kName: school.name!,
-                SchoolConstants.kLat: school.location!.coordinate.latitude,
-                SchoolConstants.kLong: school.location!.coordinate.longitude,
-                SchoolConstants.kAddress: school.address!,
-                SchoolConstants.kDirectorID: school.director!.id
-            ]
+        
+        var data: [String: AnyObject] = [
+            SchoolConstants.kName: school.name!,
+            SchoolConstants.kLat: school.location!.coordinate.latitude,
+            SchoolConstants.kLong: school.location!.coordinate.longitude,
+            SchoolConstants.kAddress: school.address!
+            
         ]
+        
+        if school.director != nil {
+            data[SchoolConstants.kDirectorID] = school.director!.id
+        }
+        
+        let params = ["school": data]
         
         let manager = BaseOperation.manager()
         

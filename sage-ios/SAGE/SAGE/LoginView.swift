@@ -58,6 +58,7 @@ class LoginView: UIView {
         self.loginEmailField.textColor = UIColor.whiteColor()
         self.loginEmailField.attributedPlaceholder = NSAttributedString(string:"Email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         self.loginEmailField.returnKeyType = .Next
+        self.loginEmailField.autocorrectionType = .No
         self.containerView.addSubview(self.loginEmailField)
         
         self.firstDivider.backgroundColor = UIColor.whiteColor()

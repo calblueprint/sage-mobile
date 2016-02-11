@@ -29,7 +29,7 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mValidator = FormValidator.newInstance(getParentActivity());
+        mValidator = FormValidator.newInstance(getActivity());
     }
 
     @Override
@@ -42,15 +42,15 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     }
 
     private void initializeViews() {
-        String email = getParentActivity().getUser().getEmail();
+        String email = mSignUpInterface.getUser().getEmail();
         if (email != null && !email.isEmpty())
             mEmail.setText(email);
 
-        String password = getParentActivity().getUser().getPassword();
+        String password = mSignUpInterface.getUser().getPassword();
         if (password != null && !password.isEmpty())
             mPassword.setText(password);
 
-        String passwordConfirm = getParentActivity().getUser().getPasswordConfirmation();
+        String passwordConfirm = mSignUpInterface.getUser().getPasswordConfirmation();
         if (passwordConfirm != null && !passwordConfirm.isEmpty())
             mConfirmation.setText(passwordConfirm);
     }
@@ -63,7 +63,7 @@ public class SignUpEmailFragment extends SignUpAbstractFragment {
     }
 
     public void setUserFields() {
-        User user = getParentActivity().getUser();
+        User user = mSignUpInterface.getUser();
         user.setEmail(mEmail.getText().toString());
         user.setPassword(mPassword.getText().toString());
         user.setPasswordConfirmation(mConfirmation.getText().toString());

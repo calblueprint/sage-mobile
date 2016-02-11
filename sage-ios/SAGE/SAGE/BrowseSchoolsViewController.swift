@@ -44,6 +44,20 @@ class BrowseSchoolsViewController: UITableViewController {
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
+
+    func schoolDeleted(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if self.schools!.count != 0 {
+            for i in 0...(self.schools!.count-1) {
+                let currentSchool = self.schools![i]
+                if school.id == currentSchool.id {
+                    self.schools!.removeAtIndex(i)
+                    self.tableView.reloadData()
+                    break
+                }
+            }
+        }
+    }
     
     func schoolEdited(notification: NSNotification) {
         let school = notification.object!.copy() as! School

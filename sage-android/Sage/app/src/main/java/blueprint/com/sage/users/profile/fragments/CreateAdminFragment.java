@@ -1,6 +1,5 @@
 package blueprint.com.sage.users.profile.fragments;
 
-import android.graphics.Bitmap;
 import android.view.View;
 
 import blueprint.com.sage.R;
@@ -41,13 +40,12 @@ public class CreateAdminFragment extends UserFormAbstractFragment {
         mUser.setVerified(true);
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
-        Bitmap profile = mPhoto.getImageBitmap();
 
         mUser.setRole(mRole.getSelectedItemPosition());
         mUser.setVolunteerType(mType.getSelectedItemPosition());
 
         mUser.setSchoolId(schoolId);
-        mUser.setProfile(profile);
+        mUser.setProfile(mProfileBitmap);
 
         Requests.Users.with(getActivity()).makeCreateAdminRequest(mUser);
     }

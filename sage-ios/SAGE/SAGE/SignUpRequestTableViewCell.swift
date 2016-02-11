@@ -53,7 +53,12 @@ class SignUpRequestTableViewCell: UITableViewCell {
         } else {
             hoursText = "Two Units"
         }
-        self.schoolAndHours.text = user.school!.name! + " - " + hoursText
+        
+        if let name = user.school?.name {
+            self.schoolAndHours.text = name + " - " + hoursText
+        } else {
+            self.schoolAndHours.text = hoursText            
+        }
         self.schoolAndHours.font = UIFont.normalFont
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(buttonSize)

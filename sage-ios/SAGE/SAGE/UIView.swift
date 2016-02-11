@@ -56,6 +56,18 @@ extension UIView {
         self.frame = frame
     }
     
+    func increaseWidth(increase: CGFloat) {
+        var frame = self.frame
+        frame.size.width += increase
+        self.frame = frame
+    }
+    
+    func increaseHeight(increase: CGFloat) {
+        var frame = self.frame
+        frame.size.height += increase
+        self.frame = frame
+    }
+    
     func setSize(size: CGSize) {
         var frame = self.frame
         frame.size = size

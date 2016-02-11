@@ -15,17 +15,23 @@ class AnnouncementsViewController: UITableViewController {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
     
-    
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementDeleted:", name: NotificationConstants.deleteAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -38,6 +44,34 @@ class AnnouncementsViewController: UITableViewController {
         self.announcements.insert(announcement, atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+    }
+    
+    func announcementDeleted(notification: NSNotification) {
+        let announcement = notification.object!.copy() as! Announcement
+        if self.announcements.count != 0 {
+            for i in 0...(self.announcements.count-1) {
+                let currentAnnouncement = self.announcements[i]
+                if announcement.id == currentAnnouncement.id {
+                    self.announcements.removeAtIndex(i)
+                    self.tableView.reloadData()
+                    break
+                }
+            }
+        }
+    }
+    
+    func userEdited(notification: NSNotification) {
+        let user = notification.object!.copy() as! User
+        if self.announcements.count != 0 {
+            for i in 0...(self.announcements.count-1) {
+                let currentAnnouncement = self.announcements[i]
+                if user.id == currentAnnouncement.sender!.id {
+                    currentAnnouncement.sender = user
+                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                }
+            }
+        }
     }
     
     func announcementEdited(notification: NSNotification) {

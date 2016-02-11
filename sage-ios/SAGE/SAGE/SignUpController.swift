@@ -146,14 +146,9 @@ class SignUpController: UIViewController  {
         
         let hours = self.level!
         
-        var photoData: String
+        var photoData: String?
         if let image = photoView.photo.image {
             photoData = UIImage.encodedPhotoString(image)
-        } else {
-            let personIcon = FAKIonIcons.personIconWithSize(200)
-            personIcon.setAttributes([NSForegroundColorAttributeName: UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)])
-            let personImage = personIcon.imageWithSize(CGSizeMake(200, 200))
-            photoData = UIImage.encodedPhotoString(personImage)
         }
         
         LoginOperations.createUser(firstName, lastName: lastName, email: email, password: password, school: school, hours: hours, photoData: photoData, completion: completion)

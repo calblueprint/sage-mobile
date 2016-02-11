@@ -32,7 +32,7 @@ class RootController: UIViewController {
         
         let sageFrame = CGRectMake(0, self.view.frame.height/20, self.view.frame.width, self.view.frame.height)
         let sageLabel = UILabel.init(frame: sageFrame)
-        sageLabel.text = "If you want to be happy, be."
+        sageLabel.text = ""
         sageLabel.textAlignment = .Center
         sageLabel.textColor = UIColor.whiteColor()
         sageLabel.font = UIFont.getDefaultFont(20)

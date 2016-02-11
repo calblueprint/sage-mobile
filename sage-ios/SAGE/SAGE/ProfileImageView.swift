@@ -103,15 +103,12 @@ class ProfileImageView: UIView {
             self.badgeBorder.alpha = 1
             if user.isDirector() {
                 self.badgeView.text = "D"
-                self.badgeView.backgroundColor = UIColor.lightGrayColor()
             } else {
                 self.badgeView.text = "A"
-                self.badgeView.backgroundColor = UIColor.lightOrangeColor
             }
         case .President:
             self.badgeBorder.alpha = 1
             self.badgeView.text = "P"
-            self.badgeView.backgroundColor = UIColor.lightBlueColor
         default:
             self.badgeBorder.alpha = 0
         }
@@ -119,16 +116,17 @@ class ProfileImageView: UIView {
         if user.semesterSummary?.status == .Inactive {
             self.badgeBorder.alpha = 1
             self.badgeView.text = "!"
-            self.badgeView.backgroundColor = UIColor.lightRedColor
         }
 
         if !showBadge {
             self.badgeBorder.alpha = 0
         }
+        self.badgeView.backgroundColor = user.roleColor()
     }
 
     func cancelImageRequestOperation() {
         self.imageView.cancelImageRequestOperation()
+        self.resetImage()
     }
 
     func resetImage() {

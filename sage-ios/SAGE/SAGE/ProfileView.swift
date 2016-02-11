@@ -30,7 +30,7 @@ class ProfileView: UIView {
     let userRoleLabel = UILabel()
     
     // profile page constants
-    let viewHeight = CGFloat(351.5)
+    let viewHeight = CGFloat(355)
     let headerOffset = CGFloat(500)
     let leftMargin = CGFloat(30)
     let headerHeight = CGFloat(120)
@@ -170,6 +170,7 @@ class ProfileView: UIView {
             roleString = "Unverified"
         }
         self.userRoleLabel.text = roleString
+        self.userRoleLabel.backgroundColor = user.roleColor()
         
         layoutSubviews()
     }
@@ -214,7 +215,12 @@ class ProfileView: UIView {
         self.userName.font = UIFont.getSemiboldFont(20)
         self.userSchool.font = UIFont.normalFont
         self.userVolunteerLevel.font = UIFont.normalFont
-        self.userRoleLabel.font = UIFont.normalFont
+        
+        self.userRoleLabel.font = UIFont.getBoldFont(14)
+        self.userRoleLabel.textAlignment = .Center
+        self.userRoleLabel.textColor = UIColor.whiteColor()
+        self.userRoleLabel.clipsToBounds = true
+        self.userRoleLabel.layer.cornerRadius = 2
         
         self.topBorder.backgroundColor = UIColor.borderColor
         self.bottomBorder.backgroundColor = UIColor.borderColor
@@ -281,27 +287,28 @@ class ProfileView: UIView {
         
         // set up basic user information
         self.userName.fillWidth()
-        self.userName.setHeight(20)
+        self.userName.sizeToFit()
         self.userName.setX(self.leftMargin)
         let userNameY = CGRectGetMaxY(profileUserImg.frame) + 20
         self.userName.setY(userNameY)
         
         self.userSchool.fillWidth()
-        self.userSchool.setHeight(12)
+        self.userSchool.sizeToFit()
         self.userSchool.setX(self.leftMargin)
-        let userSchoolY = CGRectGetMaxY(userName.frame) + 7
+        let userSchoolY = CGRectGetMaxY(userName.frame) + 3
         self.userSchool.setY(userSchoolY)
         
         self.userVolunteerLevel.fillWidth()
-        self.userVolunteerLevel.setHeight(12)
+        self.userVolunteerLevel.sizeToFit()
         self.userVolunteerLevel.setX(self.leftMargin)
-        let userVolunteerLevelY = CGRectGetMaxY(userSchool.frame) + 7
+        let userVolunteerLevelY = CGRectGetMaxY(userSchool.frame) + 3
         self.userVolunteerLevel.setY(userVolunteerLevelY)
         
-        self.userRoleLabel.fillWidth()
-        self.userRoleLabel.setHeight(12)
-        self.userRoleLabel.setX(self.leftMargin)
-        let userRoleLabelY = CGRectGetMaxY(userVolunteerLevel.frame) + 7
+        self.userRoleLabel.sizeToFit()
+        self.userRoleLabel.increaseWidth(8)
+        self.userRoleLabel.increaseHeight(4)
+        self.userRoleLabel.setX(self.leftMargin - 4)
+        let userRoleLabelY = CGRectGetMaxY(userVolunteerLevel.frame) + 3
         self.userRoleLabel.setY(userRoleLabelY)
         
         // set up lines

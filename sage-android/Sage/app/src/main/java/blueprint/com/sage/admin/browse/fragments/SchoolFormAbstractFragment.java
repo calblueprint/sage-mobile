@@ -27,7 +27,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.PlacePredictionAdapter;
-import blueprint.com.sage.shared.adapters.spinners.UserSpinnerAdapter;
+import blueprint.com.sage.admin.browse.adapters.SchoolUserSpinnerAdapter;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -71,7 +70,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     @Bind(R.id.create_school_director) Spinner mDirector;
 
     private List<User> mUsers;
-    private UserSpinnerAdapter mUserAdapter;
+    private SchoolUserSpinnerAdapter mUserAdapter;
 
     private GoogleMap mMap;
     protected ToolbarInterface mToolbarInterface;
@@ -191,7 +190,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             }
         });
 
-        mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers,
+        mUserAdapter = new SchoolUserSpinnerAdapter(getActivity(), mUsers,
                 R.layout.simple_spinner_header, R.layout.simple_spinner_item);
         mDirector.setAdapter(mUserAdapter);
     }
@@ -202,7 +201,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mMap.getUiSettings().setCompassEnabled(false);
-        mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
         mMap.getUiSettings().setAllGesturesEnabled(false);
@@ -218,10 +216,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private void moveMapToLatLng(LatLng latLng) {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        MarkerOptions options = new MarkerOptions();
-        options.position(latLng);
-        mMap.addMarker(options);
+        mMap.addMarker(MapUtils.getMarkerOptions(latLng, getActivity()));
     }
 
     private void getPredictions(String address) {
@@ -255,11 +250,13 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         String name = mSchoolName.getText().toString();
         String address = mSchoolAddress.getText().toString();
         LatLng bounds = MapUtils.getLatLngFromAddress(getActivity(), address);
-        User director = (User) mDirector.getSelectedItem();
+        SchoolUserSpinnerAdapter.Item selectedDirector =
+                (SchoolUserSpinnerAdapter.Item) mDirector.getSelectedItem();
 
         mSchool.setName(name);
         mSchool.setAddress(address);
-        mSchool.setDirectorId(director.getId());
+        mSchool.setDirectorId(selectedDirector.toInt());
+
         if (bounds != null) {
             mSchool.setLat((float) bounds.latitude);
             mSchool.setLng((float) bounds.longitude);
@@ -279,8 +276,9 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     public void onEvent(UserListEvent event) {
         mUsers = event.getUsers();
 
-        if (mSchool != null)
+        if (mSchool != null && mSchool.getDirector() != null) {
             mUsers.add(0, mSchool.getDirector());
+        }
 
         mUserAdapter.setUsers(mUsers);
 
@@ -295,7 +293,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         for (int i = 0; i < mUsers.size(); i++)
             if (mUsers.get(i).getId() == director.getId())
-                mDirector.setSelection(i);
+                mDirector.setSelection(i + 1);
     }
 
     private void setPredictions(List<AutocompletePrediction> predictions) {

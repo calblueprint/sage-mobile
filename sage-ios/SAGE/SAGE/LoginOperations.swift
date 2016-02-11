@@ -129,7 +129,7 @@ class LoginOperations: NSObject {
         }
     }
     
-    static func createUser(firstName: String, lastName: String, email: String, password: String, school: Int, hours: Int, photoData: String, completion: ((Bool) -> Void)) {
+    static func createUser(firstName: String, lastName: String, email: String, password: String, school: Int, hours: Int, photoData: String?, completion: ((Bool) -> Void)) {
         
         let operationManager = AFHTTPRequestOperationManager()
         operationManager.requestSerializer = AFJSONRequestSerializer()
@@ -138,17 +138,19 @@ class LoginOperations: NSObject {
         operationManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
         operationManager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let params = ["user":
-            [
-                UserConstants.kFirstName: firstName,
-                UserConstants.kLastName: lastName,
-                UserConstants.kEmail: email,
-                UserConstants.kPassword: password,
-                UserConstants.kLevel: hours,
-                UserConstants.kPhotoData: photoData,
-                UserConstants.kSchoolID: school
-            ]
+        var data: [String: AnyObject] = [
+            UserConstants.kFirstName: firstName,
+            UserConstants.kLastName: lastName,
+            UserConstants.kEmail: email,
+            UserConstants.kPassword: password,
+            UserConstants.kLevel: hours,
+            UserConstants.kSchoolID: school
         ]
+        if photoData != nil {
+            data[UserConstants.kPhotoData] = photoData!
+        }
+        
+        let params = ["user": data]
         
         operationManager.POST(StringConstants.kEndpointCreateUser, parameters: params, success: { (operation, data) -> Void in
             let userDict = data["session"]!!["user"]!!
@@ -198,8 +200,10 @@ class LoginOperations: NSObject {
             let user = User(propertyDictionary: userDict as! [String: AnyObject])
             let authToken = data["session"]!![UserConstants.kAuthToken] as! String
             let schoolDictionary = data["session"]!!["school"]!!
-            let school = School(propertyDictionary: schoolDictionary as! [String : AnyObject])
-            user.school = school
+            if !(schoolDictionary is NSNull) {
+                let school = School(propertyDictionary: schoolDictionary as! [String : AnyObject])
+                user.school = school
+            }
             
             LoginOperations.storeUserDataInKeychain(user, authToken: authToken)
             completion(true)

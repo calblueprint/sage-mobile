@@ -107,8 +107,9 @@ class User: NSObject, NSCoding {
                     }
                 }
             case UserConstants.kSchool:
-                let schoolDictionary = value as! [String: AnyObject]
-                self.school = School(propertyDictionary: schoolDictionary)
+                if let schoolDictionary = value as? [String: AnyObject] {
+                    self.school = School(propertyDictionary: schoolDictionary)
+                }
             case UserConstants.kVerified:
                 if let val = value as? Bool {
                     self.verified = val
@@ -214,6 +215,27 @@ class User: NSObject, NSCoding {
     
     func isDirector() -> Bool {
         return (self.role == .Admin || self.role == .President) && self.directorID != -1
+    }
+    
+    func roleColor() -> UIColor {
+        var result = UIColor.clearColor()
+        switch self.role {
+        case .Admin:
+            if self.isDirector() {
+                result = UIColor.turquoiseColor
+            } else {
+                result = UIColor.lightOrangeColor
+            }
+        case .President:
+            result = UIColor.lightBlueColor
+        default:
+            break
+        }
+        
+        if self.semesterSummary?.status == .Inactive {
+            result = UIColor.lightRedColor
+        }
+        return result
     }
 }
 

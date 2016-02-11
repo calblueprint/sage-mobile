@@ -13,6 +13,7 @@ class AddAnnouncementView: FormView {
     var title =  FormFieldItem()
     var school = FormButtonItem()
     var commentField = FormTextItem()
+    var deleteAnnouncementButton = SGButton()
     
     //
     // MARK: - Initialization
@@ -21,10 +22,11 @@ class AddAnnouncementView: FormView {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.title.textField)
         self.keyboardControls.fields.append(self.commentField.textView)
+        self.addSubview(self.deleteAnnouncementButton)
     }
     
-    
     required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -46,6 +48,11 @@ class AddAnnouncementView: FormView {
         self.commentField.textView.delegate = self
         self.commentField.setHeight(FormTextItem.defaultHeight)
         self.scrollView.addSubview(self.commentField)
+        
+        self.deleteAnnouncementButton.hidden = true
+        self.deleteAnnouncementButton.setTitle("Delete Announcement", forState: .Normal)
+        self.deleteAnnouncementButton.setThemeColor(UIColor.redColor())
+        self.deleteAnnouncementButton.titleLabel!.font = UIFont.normalFont
     }
     
     override func layoutSubviews() {
@@ -58,6 +65,13 @@ class AddAnnouncementView: FormView {
         
         self.commentField.setY(CGRectGetMaxY(self.school.frame))
         self.commentField.fillWidth()
+        
+        self.deleteAnnouncementButton.sizeToFit()
+        let width = CGRectGetWidth(self.deleteAnnouncementButton.frame)
+        self.deleteAnnouncementButton.setWidth(width + 10)
+        let buttonOffsetY = CGRectGetMaxY(self.commentField.frame)
+        self.deleteAnnouncementButton.setY(buttonOffsetY + 20)
+        self.deleteAnnouncementButton.centerHorizontally()
         
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.commentField.frame))
     }

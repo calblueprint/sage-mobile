@@ -27,7 +27,7 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mValidator = FormValidator.newInstance(getParentActivity());
+        mValidator = FormValidator.newInstance(getActivity());
     }
 
     @Override
@@ -40,12 +40,12 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     }
 
     private void initializeViews() {
-        String firstName = getParentActivity().getUser().getFirstName();
+        String firstName = mSignUpInterface.getUser().getFirstName();
         if (firstName != null && !firstName.isEmpty()) {
             mFirstName.setText(firstName);
         }
 
-        String lastName = getParentActivity().getUser().getLastName();
+        String lastName = mSignUpInterface.getUser().getLastName();
         if (lastName != null && !lastName.isEmpty()) {
             mLastName.setText(lastName);
         }
@@ -57,7 +57,7 @@ public class SignUpNameFragment extends SignUpAbstractFragment {
     }
 
     public void setUserFields() {
-        User user = getParentActivity().getUser();
+        User user = mSignUpInterface.getUser();
         user.setFirstName(mFirstName.getText().toString());
         user.setLastName(mLastName.getText().toString());
     }

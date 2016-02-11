@@ -110,6 +110,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         super.onStart();
         EventBus.getDefault().register(this);
         mToolbarInterface.setToolbarElevation(0);
+        initializeUser();
     }
 
     @Override

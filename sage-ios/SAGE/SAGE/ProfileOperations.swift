@@ -20,23 +20,33 @@ class ProfileOperations: NSObject {
         }
     }
     
-    static func loadCheckins(completion: (([Checkin]) -> Void), failure: (String) -> Void){
+    static func loadCheckins(user: User, completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointUserCheckins(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
-            var checkins = [Checkin]()
-            let checkinArray = data["check_ins"] as! [AnyObject]
-            for checkinDict in checkinArray {
-                let checkin = Checkin(propertyDictionary: checkinDict as! [String : AnyObject])
-                checkins.append(checkin)
+        let currentSemesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id
+        if let semesterID = currentSemesterID {
+            let params = [
+                SemesterConstants.kSemesterId: semesterID,
+                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
+                CheckinConstants.kUserId: user.id
+            ]
+            manager.GET(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
+                var checkins = [Checkin]()
+                let checkinArray = data["check_ins"] as! [AnyObject]
+                for checkinDict in checkinArray {
+                    let checkin = Checkin(propertyDictionary: checkinDict as! [String : AnyObject])
+                    checkins.append(checkin)
+                }
+                completion(checkins)
+                
+                }) { (operation, error) -> Void in
+                    failure(BaseOperation.getErrorMessage(error))
             }
-            completion(checkins)
-            
-            }) { (operation, error) -> Void in
-                failure(BaseOperation.getErrorMessage(error))
         }
+        completion([])
     }
     
-    static func updateProfile(user: User, password: String, photoData: String?, completion: (User) -> Void, failure: (String) -> Void) {
+    static func updateProfile(user: User, password: String, photoData: String?, newPassword: String?, passwordConfirmation: String?, completion: (User) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
 
         var hours: Int = 0
@@ -60,6 +70,11 @@ class ProfileOperations: NSObject {
             userJSON[UserConstants.kPhotoData] = photoData!
         }
         
+        if newPassword != nil {
+            userJSON[UserConstants.kPassword] = newPassword!
+            userJSON[UserConstants.kPasswordConfirmation] = passwordConfirmation
+        }
+        
         let params = ["user": userJSON]
         
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
@@ -67,6 +82,7 @@ class ProfileOperations: NSObject {
         manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in
             let newUserData = (data as! [String: AnyObject])["user"] as! [String: AnyObject]
             let newUser = User(propertyDictionary: newUserData)
+            LoginOperations.storeUserDataInKeychain(newUser)
             completion(newUser)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

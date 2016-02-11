@@ -14,14 +14,18 @@ class AnnouncementsOperations {
     static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
         var params: [String: String]
         if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
-            params = [String: String]()
+            params = [
+                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+            ]
         } else {
             let schoolID = LoginOperations.getUser()!.school!.id
             params = [
+                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
                 AnnouncementConstants.kDefault: String(schoolID)
             ]
         }
-
 
         BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: params, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
@@ -30,13 +34,19 @@ class AnnouncementsOperations {
                 let singleAnnouncement = Announcement(properties: item)
                 announcements.append(singleAnnouncement)
             }
-            announcements.sortInPlace({ (announcement1, announcement2) -> Bool in
-                announcement1.isBefore(announcement2)
-            })
             completion(announcements)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
     }
+
+    static func deleteAnnouncement(announcement: Announcement, completion: (() -> Void)?, failure: (String) -> Void) {
+        BaseOperation.manager().DELETE(StringConstants.kEndpointDeleteAnnouncement(announcement.id!), parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+
     
 }

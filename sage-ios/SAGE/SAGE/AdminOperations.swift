@@ -14,21 +14,24 @@ class AdminOperations {
     
     static func loadMentors(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as! Semester
-        let params = [UserConstants.kSemesterID: currentSemester.id]
-        manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
-            var userArray = [User]()
-            let userData = data["users"] as! [AnyObject]
-            for userDict in userData {
-                let user = User(propertyDictionary: userDict as! [String: AnyObject])
-                userArray.append(user)
+        if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+            let params = [UserConstants.kSemesterID: currentSemester.id]
+            manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
+                var userArray = [User]()
+                let userData = data["users"] as! [AnyObject]
+                for userDict in userData {
+                    let user = User(propertyDictionary: userDict as! [String: AnyObject])
+                    userArray.append(user)
+                }
+                userArray.sortInPlace({ (user1, user2) -> Bool in
+                    user1.isBefore(user2)
+                })
+                completion(userArray)
+                }) { (operation, error) -> Void in
+                    failure(BaseOperation.getErrorMessage(error))
             }
-            userArray.sortInPlace({ (user1, user2) -> Bool in
-                user1.isBefore(user2)
-            })
-            completion(userArray)
-            }) { (operation, error) -> Void in
-                failure(BaseOperation.getErrorMessage(error))
+        } else {
+            completion([])
         }
         
     }
@@ -54,7 +57,8 @@ class AdminOperations {
 
     static func loadNonDirectorAdmins(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: nil, success: { (operation, data) -> Void in
+        let params = [UserConstants.kNonDirector: true]
+        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: params, success: { (operation, data) -> Void in
             var userArray = [User]()
             let userData = data["users"] as! [AnyObject]
             for userDict in userData {
@@ -135,7 +139,11 @@ class AdminOperations {
     
     static func loadSignUpRequests(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: nil, success: { (operation, data) -> Void in
+        let params = [
+            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+            NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+        ]
+        manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: params, success: { (operation, data) -> Void in
             var users = [User]()
             let userArray = data["users"] as! [AnyObject]
             for userDict in userArray {
@@ -149,15 +157,20 @@ class AdminOperations {
     }
     
     static func createSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
-        let params = ["school":
-            [
-                SchoolConstants.kName: school.name!,
-                SchoolConstants.kLat: school.location!.coordinate.latitude,
-                SchoolConstants.kLong: school.location!.coordinate.longitude,
-                SchoolConstants.kAddress: school.address!,
-                SchoolConstants.kDirectorID: school.director!.id
-            ]
+        
+        var data: [String: AnyObject] = [
+            SchoolConstants.kName: school.name!,
+            SchoolConstants.kLat: school.location!.coordinate.latitude,
+            SchoolConstants.kLong: school.location!.coordinate.longitude,
+            SchoolConstants.kAddress: school.address!
+            
         ]
+        
+        if school.director != nil {
+            data[SchoolConstants.kDirectorID] = school.director!.id
+        }
+        
+        let params = ["school": data]
         
         let manager = BaseOperation.manager()
         

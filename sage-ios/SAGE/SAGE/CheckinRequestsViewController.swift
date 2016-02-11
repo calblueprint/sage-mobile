@@ -13,6 +13,35 @@ class CheckinRequestsViewController: UITableViewController {
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
+    
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+    }
+    
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    func userEdited(notification: NSNotification) {
+        let user = notification.object!.copy() as! User
+        if self.requests != nil && self.requests!.count != 0 {
+            for i in 0...(self.requests!.count-1) {
+                let currentRequest = self.requests![i]
+                if user.id == currentRequest.user!.id {
+                    currentRequest.user = user
+                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Check In Requests"

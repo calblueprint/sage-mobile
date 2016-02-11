@@ -35,7 +35,7 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.PlacePredictionAdapter;
-import blueprint.com.sage.shared.adapters.spinners.UserSpinnerAdapter;
+import blueprint.com.sage.admin.browse.adapters.SchoolUserSpinnerAdapter;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -71,7 +71,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     @Bind(R.id.create_school_director) Spinner mDirector;
 
     private List<User> mUsers;
-    private UserSpinnerAdapter mUserAdapter;
+    private SchoolUserSpinnerAdapter mUserAdapter;
 
     private GoogleMap mMap;
     protected ToolbarInterface mToolbarInterface;
@@ -191,7 +191,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             }
         });
 
-        mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers,
+        mUserAdapter = new SchoolUserSpinnerAdapter(getActivity(), mUsers,
                 R.layout.simple_spinner_header, R.layout.simple_spinner_item);
         mDirector.setAdapter(mUserAdapter);
     }
@@ -255,11 +255,13 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         String name = mSchoolName.getText().toString();
         String address = mSchoolAddress.getText().toString();
         LatLng bounds = MapUtils.getLatLngFromAddress(getActivity(), address);
-        User director = (User) mDirector.getSelectedItem();
+        SchoolUserSpinnerAdapter.Item selectedDirector =
+                (SchoolUserSpinnerAdapter.Item) mDirector.getSelectedItem();
 
         mSchool.setName(name);
         mSchool.setAddress(address);
-        mSchool.setDirectorId(director.getId());
+        mSchool.setDirectorId(selectedDirector.toInt());
+
         if (bounds != null) {
             mSchool.setLat((float) bounds.latitude);
             mSchool.setLng((float) bounds.longitude);

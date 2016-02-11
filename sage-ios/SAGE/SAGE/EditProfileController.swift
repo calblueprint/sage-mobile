@@ -108,7 +108,10 @@ class EditProfileController: FormController {
             if self.choseNewPhoto {
                 photoData = UIImage.encodedPhotoString(self.editProfileView.photoView.image!)
             }
-            ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, completion: { (updatedUser) -> Void in
+            
+            let newPassword = editProfileView.getNewPassword()
+            let passwordConfirmation = editProfileView.getPasswordConfirmation()
+            ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, newPassword: newPassword, passwordConfirmation: passwordConfirmation, completion: { (updatedUser) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.changeSchoolKey, object: updatedUser.school!)

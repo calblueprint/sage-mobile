@@ -18,6 +18,7 @@ class BrowseSchoolsViewController: UITableViewController {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolAdded:", name: NotificationConstants.addSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolDeleted:", name: NotificationConstants.deleteSchoolKey, object: nil)
     }
     
     deinit {

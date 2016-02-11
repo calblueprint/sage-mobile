@@ -22,4 +22,12 @@ class SchoolOperations {
         })
     }
     
+    static func deleteSchool(school: School, completion: (() -> Void)?, failure: (String) -> Void) {
+        BaseOperation.manager().DELETE(StringConstants.kEndpointDeleteSchool(school.id), parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+
 }

@@ -59,11 +59,13 @@ class EditSchoolController: AddSchoolController {
                 self.school?.address = address
             }
             self.finishButton?.startLoading()
+            (self.view as! AddSchoolView).deleteSchoolButton.hidden = true
             AdminOperations.editSchool(self.school!, completion: { (editedSchool) -> Void in
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editSchoolKey, object: editedSchool)
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
                     self.finishButton?.stopLoading()
+                    (self.view as! AddSchoolView).deleteSchoolButton.hidden = false
                     self.showAlertControllerError(message)
             })
         }

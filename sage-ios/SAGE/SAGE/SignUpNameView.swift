@@ -26,8 +26,12 @@ class SignUpNameView: SignUpFormView {
         
         self.firstNameInput.textColor = UIColor.whiteColor()
         self.firstNameInput.returnKeyType = .Next
+        self.firstNameInput.autocorrectionType = .No
+
         self.lastNameInput.textColor = UIColor.whiteColor()
         self.lastNameInput.returnKeyType = .Next
+        self.lastNameInput.autocorrectionType = .No
+
         self.firstDivider.backgroundColor = UIColor.whiteColor()
         self.secondDivider.backgroundColor = UIColor.whiteColor()
         

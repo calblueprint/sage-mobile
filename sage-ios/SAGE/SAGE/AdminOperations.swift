@@ -176,8 +176,8 @@ class AdminOperations {
         
         manager.POST(StringConstants.kEndpointCreateSchool, parameters: params, success: { (operation, data) -> Void in
             let schoolDict = data["school"] as! [String: AnyObject]
-            let school = School(propertyDictionary: schoolDict)
-            completion!(school)
+            let schoolResult = School(propertyDictionary: schoolDict)
+            completion!(schoolResult)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
@@ -190,12 +190,14 @@ class AdminOperations {
                 SchoolConstants.kLat: school.location!.coordinate.latitude,
                 SchoolConstants.kLong: school.location!.coordinate.longitude,
                 SchoolConstants.kName: school.name!,
-                SchoolConstants.kDirectorID: school.director!.id
+                SchoolConstants.kDirectorID: school.director!.id,
+                SchoolConstants.kAddress: school.address!
             ]
         ]
         let schoolURLString = StringConstants.kSchoolAdminDetailURL(school.id)
         
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
+//            let schoolDict = data["school"] as!
             completion!(school)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

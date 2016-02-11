@@ -61,6 +61,11 @@ class EditProfileController: FormController {
                 self.presentViewController(imagePickerController, animated: true, completion: nil)
             }
         }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Reset to Default", style: .Default, handler: { (alertAction) -> Void in
+            self.editProfileView.photoView.image = UIImage.defaultProfileImage()
+            self.choseNewPhoto = true
+        }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (alertAction) -> Void in
             actionSheet.dismissViewControllerAnimated(true, completion: nil)
         }))

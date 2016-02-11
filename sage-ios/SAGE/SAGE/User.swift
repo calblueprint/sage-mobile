@@ -222,7 +222,7 @@ class User: NSObject, NSCoding {
         switch self.role {
         case .Admin:
             if self.isDirector() {
-                result = UIColor.lightGrayColor()
+                result = UIColor.turquoiseColor
             } else {
                 result = UIColor.lightOrangeColor
             }

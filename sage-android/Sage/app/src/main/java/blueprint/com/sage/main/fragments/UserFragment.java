@@ -99,7 +99,6 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_user, parent, false);
         ButterKnife.bind(this, view);
-        initializeUser();
         initializeSettings();
         initializeSemester();
         return view;

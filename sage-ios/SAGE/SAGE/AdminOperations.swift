@@ -57,7 +57,8 @@ class AdminOperations {
 
     static func loadNonDirectorAdmins(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: nil, success: { (operation, data) -> Void in
+        let params = [UserConstants.kNonDirector: true]
+        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: params, success: { (operation, data) -> Void in
             var userArray = [User]()
             let userData = data["users"] as! [AnyObject]
             for userDict in userData {

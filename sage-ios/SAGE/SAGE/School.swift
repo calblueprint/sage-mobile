@@ -127,6 +127,6 @@ extension School: NSCopying {
                 copiedArray?.append((student.copy() as? User)!)
             }
         }
-        return School(id: self.id, name: self.name?.copy() as? String, location: self.location?.copy() as? CLLocation, students: copiedArray, director: self.director?.copy() as? User)
+        return School(id: self.id, name: self.name?.copy() as? String, location: self.location?.copy() as? CLLocation, students: copiedArray, director: self.director?.copy() as? User, address: self.address)
     }
 }

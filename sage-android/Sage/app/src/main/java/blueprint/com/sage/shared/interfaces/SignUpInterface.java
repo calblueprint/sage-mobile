@@ -1,5 +1,8 @@
 package blueprint.com.sage.shared.interfaces;
 
+import java.util.List;
+
+import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
 
 /**
@@ -8,4 +11,5 @@ import blueprint.com.sage.models.User;
 public interface SignUpInterface {
     void makeUserRequest();
     User getUser();
+    List<School> getSchools();
 }

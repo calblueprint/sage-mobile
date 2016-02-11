@@ -9,15 +9,18 @@
 import UIKit
 
 class ProfileCheckinViewController: UITableViewController {
+    
+    var user: User?
     var verifiedCheckins = [Checkin]()
     var unverifiedCheckins = [Checkin]()
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
-    init() {
+    init(user: User?) {
         super.init(style: .Grouped)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "unverifiedCheckinAdded:", name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
+        self.user = user
     }
     
     deinit {
@@ -60,39 +63,41 @@ class ProfileCheckinViewController: UITableViewController {
     }
     
     func loadCheckins() {
-        ProfileOperations.loadCheckins({ (checkins) -> Void in
-            self.verifiedCheckins = [Checkin]()
-            self.unverifiedCheckins = [Checkin]()
-            for checkin in checkins {
-                if checkin.verified {
-                    self.verifiedCheckins.append(checkin)
-                } else {
-                    self.unverifiedCheckins.append(checkin)
+        if let user = self.user {
+            ProfileOperations.loadCheckins(user, completion: { (checkins) -> Void in
+                self.verifiedCheckins = [Checkin]()
+                self.unverifiedCheckins = [Checkin]()
+                for checkin in checkins {
+                    if checkin.verified {
+                        self.verifiedCheckins.append(checkin)
+                    } else {
+                        self.unverifiedCheckins.append(checkin)
+                    }
                 }
+                self.verifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+                    let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
+                    if comparisonResult == .OrderedDescending {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+                
+                self.unverifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+                    let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
+                    if comparisonResult == .OrderedDescending {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+                self.tableView.reloadData()
+                self.activityIndicator.stopAnimating()
+                self.refreshControl?.endRefreshing()
+                
+                }) { (errorMessage) -> Void in
+                    self.showErrorAndSetMessage(errorMessage)
             }
-            self.verifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
-                let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
-                if comparisonResult == .OrderedDescending {
-                    return true
-                } else {
-                    return false
-                }
-            })
-            
-            self.unverifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
-                let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
-                if comparisonResult == .OrderedDescending {
-                    return true
-                } else {
-                    return false
-                }
-            })
-            self.tableView.reloadData()
-            self.activityIndicator.stopAnimating()
-            self.refreshControl?.endRefreshing()
-            
-            }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage)
         }
     }
     
@@ -101,16 +106,20 @@ class ProfileCheckinViewController: UITableViewController {
     //
     func verifiedCheckinAdded(notification: NSNotification) {
         let checkin = notification.object!.copy() as! Checkin
-        self.verifiedCheckins.insert(checkin, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        if checkin.user?.id == self.user?.id {
+            self.verifiedCheckins.insert(checkin, atIndex: 0)
+            let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
     }
     
     func unverifiedCheckinAdded(notification: NSNotification) {
         let checkin = notification.object!.copy() as! Checkin
-        self.unverifiedCheckins.insert(checkin, atIndex: 0)
-        let indexPath = NSIndexPath(forRow: 0, inSection: 1)
-        self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        if checkin.user?.id == self.user?.id {
+            self.unverifiedCheckins.insert(checkin, atIndex: 0)
+            let indexPath = NSIndexPath(forRow: 0, inSection: 1)
+            self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
     }
     
     //

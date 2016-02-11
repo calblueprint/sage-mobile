@@ -35,10 +35,6 @@ struct StringConstants {
     
     static let kEndpointJoinSemester = kEndpointBaseURL + "/semesters/join"
     
-    static func kEndpointUserCheckins(user: User) -> String {
-        return StringConstants.kEndpointCheckin + "?user_id=" + String(user.id)
-    }
-    
     static func kEndpointUser(user: User) -> String {
         return StringConstants.kEndpointBaseURL + "/users/" + String(user.id)
     }

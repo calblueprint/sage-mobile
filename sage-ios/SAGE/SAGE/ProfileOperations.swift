@@ -20,16 +20,17 @@ class ProfileOperations: NSObject {
         }
     }
     
-    static func loadCheckins(completion: (([Checkin]) -> Void), failure: (String) -> Void){
+    static func loadCheckins(user: User, completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         let currentSemesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id
         if let semesterID = currentSemesterID {
             let params = [
                 SemesterConstants.kSemesterId: semesterID,
                 NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
-                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
+                CheckinConstants.kUserId: user.id
             ]
-            manager.GET(StringConstants.kEndpointUserCheckins(LoginOperations.getUser()!), parameters: params, success: { (operation, data) -> Void in
+            manager.GET(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
                 var checkins = [Checkin]()
                 let checkinArray = data["check_ins"] as! [AnyObject]
                 for checkinDict in checkinArray {

@@ -18,8 +18,8 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -79,16 +79,63 @@ public class PhotoPicker {
     }
 
     public Bitmap pickPhotoResult(Intent data, ImageView imageView) {
-        Bitmap photo = null;
+        Bitmap photo;
         Uri targetUri = data.getData();
 
         try {
-            photo = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(targetUri));
-        } catch(FileNotFoundException e) {
+            final int IMAGE_MAX_SIZE = 100000; // 1.2MP
+            InputStream in = mActivity.getContentResolver().openInputStream(targetUri);
+
+            // Decode image size
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, options);
+            in.close();
+
+            int scale = 1;
+            while ((options.outWidth * options.outHeight) * (1 / Math.pow(scale, 2)) >
+                    IMAGE_MAX_SIZE) {
+                scale++;
+            }
+            Log.e("size", "" + scale);
+            Bitmap bitmap;
+            in = mActivity.getContentResolver().openInputStream(targetUri);
+            if (scale > 1) {
+                options = new BitmapFactory.Options();
+                options.inSampleSize = scale;
+                bitmap = BitmapFactory.decodeStream(in, null, options);
+
+                // resize to desired dimensions
+                int height = bitmap.getHeight();
+                int width = bitmap.getWidth();
+
+                double y = Math.sqrt(IMAGE_MAX_SIZE
+                        / (((double) width) / height));
+                double x = (y / height) * width;
+                Log.e("x & y", "x: " + x + " y: " + y);
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) x,
+                        (int) y, true);
+                bitmap.recycle();
+                photo = scaledBitmap;
+                Log.e("bitmap size", photo.getByteCount() + "");
+                in.close();
+                return photo;
+
+            } else {
+                photo = BitmapFactory.decodeStream(in);
+                Log.e("bitmap size", photo.getByteCount() + "");
+
+                in.close();
+                return photo;
+            }
+
+
+
+        } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }
 
-        return insertPhoto(photo);
+        return null;
     }
 
     public Bitmap takePhotoResult(Intent data, ImageView imageView) {
@@ -105,7 +152,8 @@ public class PhotoPicker {
         int photoW = options.outWidth;
 
         int scaleFactor = 0;
-        if (targetH > 0 && targetW > 0) scaleFactor = Math.min(photoH/targetH, photoW/targetW );
+        if (targetH > 0 && targetW > 0)
+            scaleFactor = Math.min(photoH/targetH, photoW/targetW );
 
         options.inJustDecodeBounds = false;
         options.inSampleSize = scaleFactor;
@@ -120,15 +168,17 @@ public class PhotoPicker {
         if (photo == null)
             return null;
 
-        int height = photo.getHeight() / 2;
-        int width = photo.getWidth() / 2;
-
-        return Bitmap.createScaledBitmap(photo, width, height, false);
+        int height = photo.getHeight() / 4;
+        int width = photo.getWidth() / 4;
+        Bitmap bitmap =Bitmap.createScaledBitmap(photo, width, height, false);
+        Log.e("bitmap scaled size", bitmap.getByteCount() + "");
+        return bitmap;
     }
 
     public static class PhotoOptionDialog extends DialogFragment {
 
-        private static String[] mOptions = { "Choose a photo", "Take a picture" };
+//        private static String[] mOptions = { "Choose a photo", "Take a picture" };
+        private static String[] mOptions = { "Choose a photo" };
         private PhotoPicker mPicker;
 
         public static PhotoOptionDialog newInstance(PhotoPicker picker) {

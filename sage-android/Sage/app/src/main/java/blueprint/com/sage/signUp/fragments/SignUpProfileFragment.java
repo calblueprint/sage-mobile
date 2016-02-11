@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.shared.views.CircleImageView;
@@ -86,5 +87,10 @@ public class SignUpProfileFragment extends SignUpAbstractFragment {
     public void setUserFields() {
         User user = mSignUpInterface.getUser();
         user.setProfile(mProfileBitmap);
+    }
+
+    public void onEvent(APIErrorEvent event) {
+        if (mLayout != null)
+            mLayout.stopSpinning();
     }
 }

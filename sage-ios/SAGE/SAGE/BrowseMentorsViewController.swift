@@ -16,6 +16,7 @@ class BrowseMentorsViewController: UITableViewController {
     
     init() {
         super.init(style: .Plain)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -24,6 +25,23 @@ class BrowseMentorsViewController: UITableViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func userEdited(notification: NSNotification) {
+        let newUser = notification.object!.copy() as! User
+        var users = [User]()
+        if self.mentors != nil && self.mentors!.count != 0 {
+            for subArray in self.mentors! {
+                for oldUser in subArray {
+                    if oldUser.id == newUser.id {
+                        users.append(newUser)
+                    } else {
+                        users.append(oldUser)
+                    }
+                }
+            }
+        }
+        self.alphabetizeAndLoad(users)
     }
     
     override func viewDidLoad() {
@@ -87,31 +105,34 @@ class BrowseMentorsViewController: UITableViewController {
     
     func loadMentors() {
         AdminOperations.loadMentors({ (mentorArray) -> Void in
-            
-            let alphabet = "abcdefghijklmnopqrstuvwxyz"
-            var charArray = [String: Int]()
-            self.mentors = [[User]]()
-            for i in 0...25 {
-                self.mentors!.append([User]())
-                let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
-                let letterString = String(letterChar)
-                charArray[letterString] = i
-            }
-            
-            for mentor in mentorArray {
-                let firstName = mentor.firstName!
-                let firstLetter = String(firstName[firstName.startIndex.advancedBy(0)]).lowercaseString
-                let firstLetterIndex = charArray[firstLetter]
-                self.mentors![firstLetterIndex!].append(mentor)
-            }
-            
-            self.tableView.reloadData()
-            self.activityIndicator.stopAnimating()
-            self.refreshControl?.endRefreshing()
+            self.alphabetizeAndLoad(mentorArray)
             
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }
+    }
+    
+    func alphabetizeAndLoad(mentorArray: [User]) {
+        let alphabet = "abcdefghijklmnopqrstuvwxyz"
+        var charArray = [String: Int]()
+        self.mentors = [[User]]()
+        for i in 0...25 {
+            self.mentors!.append([User]())
+            let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
+            let letterString = String(letterChar)
+            charArray[letterString] = i
+        }
+        
+        for mentor in mentorArray {
+            let firstName = mentor.firstName!
+            let firstLetter = String(firstName[firstName.startIndex.advancedBy(0)]).lowercaseString
+            let firstLetterIndex = charArray[firstLetter]
+            self.mentors![firstLetterIndex!].append(mentor)
+        }
+        
+        self.tableView.reloadData()
+        self.activityIndicator.stopAnimating()
+        self.refreshControl?.endRefreshing()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

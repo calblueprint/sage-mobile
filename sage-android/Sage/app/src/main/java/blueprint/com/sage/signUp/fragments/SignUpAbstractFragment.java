@@ -7,8 +7,8 @@ import android.view.View;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.APIError;
+import blueprint.com.sage.shared.interfaces.SignUpInterface;
 import blueprint.com.sage.shared.views.SimpleLoadingLayout;
-import blueprint.com.sage.signUp.SignUpActivity;
 import butterknife.Bind;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -22,8 +22,12 @@ public abstract class SignUpAbstractFragment extends Fragment {
     @Nullable @Bind(R.id.sign_up_finish) SimpleLoadingLayout mLayout;
     @Bind(R.id.white_dots_container) View mWhiteDotsLayout;
 
-    public SignUpActivity getParentActivity() {
-        return (SignUpActivity) getActivity();
+    public SignUpInterface mSignUpInterface;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSignUpInterface = (SignUpInterface) getActivity();
     }
 
     @Override
@@ -68,7 +72,7 @@ public abstract class SignUpAbstractFragment extends Fragment {
         if (mLayout != null)
             mLayout.startSpinning();
         setUserFields();
-        getParentActivity().makeUserRequest();
+        mSignUpInterface.makeUserRequest();
     }
 
     public void onEvent(APIError error) {

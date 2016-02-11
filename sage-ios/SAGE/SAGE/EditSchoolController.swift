@@ -75,9 +75,8 @@ class EditSchoolController: AddSchoolController {
         let deleteHandler: (UIAlertAction) -> Void = { _ in
             view.deleteSchoolButton.startLoading()
             self.finishButton?.startLoading()
-            SchoolOperations.deleteSchool(self.school!, completion: { (announcement) -> Void in
-//                self.dismissViewControllerAnimated(true, completion: nil)
-//                self.navigationController!.popToRootViewControllerAnimated(true)
+            SchoolOperations.deleteSchool(self.school!, completion: { (school) -> Void in
+                self.navigationController!.popToViewController(self.navigationController!.viewControllers[self.navigationController!.viewControllers.count-3], animated: true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteSchoolKey, object: self.school)
                 }) { (errorMessage) -> Void in
                     view.deleteSchoolButton.stopLoading()

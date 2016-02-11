@@ -28,6 +28,7 @@ public class SignUpProfileFragment extends SignUpAbstractFragment {
     private static final int DIALOG_CODE = 200;
     private static final String DIALOG_TAG = "SignUpProfileFragment";
 
+    private Bitmap mProfileBitmap;
     private PhotoPicker mPhotoPicker;
 
     public static SignUpProfileFragment newInstance() { return new SignUpProfileFragment(); }
@@ -35,7 +36,7 @@ public class SignUpProfileFragment extends SignUpAbstractFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPhotoPicker = PhotoPicker.newInstance(getParentActivity(), getParentFragment());
+        mPhotoPicker = PhotoPicker.newInstance(getActivity(), getParentFragment());
     }
 
     @Override
@@ -48,7 +49,7 @@ public class SignUpProfileFragment extends SignUpAbstractFragment {
     }
 
     private void initializeViews() {
-        Bitmap bitmap = getParentActivity().getUser().getProfile();
+        Bitmap bitmap = mSignUpInterface.getUser().getProfile();
         if (bitmap != null)
             mProfile.setImageBitmap(bitmap);
     }
@@ -65,13 +66,25 @@ public class SignUpProfileFragment extends SignUpAbstractFragment {
         dialog.show(getParentFragment().getFragmentManager(), DIALOG_TAG);
     }
 
-    public void pickPhotoResult(Intent data) { mPhotoPicker.pickPhotoResult(data, mProfile); }
-    public void takePhotoResult(Intent data) { mPhotoPicker.takePhotoResult(data, mProfile); }
+    public void pickPhotoResult(Intent data) {
+        mProfileBitmap = mPhotoPicker.pickPhotoResult(data, mProfile);
+        setProfileImage();
+    }
+
+    public void takePhotoResult(Intent data) {
+        mProfileBitmap = mPhotoPicker.takePhotoResult(data, mProfile);
+        setProfileImage();
+    }
+
+    private void setProfileImage() {
+        if (mProfileBitmap != null)
+            mProfile.setImageBitmap(mProfileBitmap);
+    }
 
     public boolean hasValidFields() { return true; }
 
     public void setUserFields() {
-        User user = getParentActivity().getUser();
-        user.setProfile(mProfile.getImageBitmap());
+        User user = mSignUpInterface.getUser();
+        user.setProfile(mProfileBitmap);
     }
 }

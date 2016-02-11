@@ -70,6 +70,8 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
 
         if (user.getSchool() != null) {
             viewHolder.mSchool.setText(user.getSchool().getName());
+        } else {
+            viewHolder.mSchool.setVisibility(View.GONE);
         }
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {

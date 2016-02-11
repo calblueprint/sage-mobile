@@ -2,6 +2,7 @@ package blueprint.com.sage.users.profile.fragments;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -60,6 +61,8 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     @Bind(R.id.create_user_type) Spinner mType;
     @Bind(R.id.create_user_role) Spinner mRole;
     @Bind(R.id.create_user_photo) CircleImageView mPhoto;
+
+    protected Bitmap mProfileBitmap;
 
     private PhotoPicker mPhotoPicker;
     protected FormValidator mValidator;
@@ -137,11 +140,19 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
 
         switch (requestCode) {
             case PhotoPicker.CAMERA_REQUEST:
-                mPhotoPicker.takePhotoResult(data, mPhoto);
+                mProfileBitmap = mPhotoPicker.takePhotoResult(data, mPhoto);
+                setImageBitmap();
                 break;
             case PhotoPicker.PICK_PHOTO_REQUEST:
-                mPhotoPicker.pickPhotoResult(data, mPhoto);
+                mProfileBitmap = mPhotoPicker.pickPhotoResult(data, mPhoto);
+                setImageBitmap();
                 break;
+        }
+    }
+
+    private void setImageBitmap() {
+        if (mProfileBitmap != null) {
+            mPhoto.setImageBitmap(mProfileBitmap);
         }
     }
 

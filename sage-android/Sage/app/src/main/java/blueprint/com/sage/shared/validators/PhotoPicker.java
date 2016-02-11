@@ -78,7 +78,7 @@ public class PhotoPicker {
         return image;
     }
 
-    public void pickPhotoResult(Intent data, ImageView imageView) {
+    public Bitmap pickPhotoResult(Intent data, ImageView imageView) {
         Bitmap photo = null;
         Uri targetUri = data.getData();
 
@@ -88,10 +88,10 @@ public class PhotoPicker {
             Log.e(getClass().toString(), e.toString());
         }
 
-        insertPhoto(photo, imageView);
+        return insertPhoto(photo);
     }
 
-    public void takePhotoResult(Intent data, ImageView imageView) {
+    public Bitmap takePhotoResult(Intent data, ImageView imageView) {
         Bitmap photo;
 
         int targetH = imageView.getHeight();
@@ -113,18 +113,17 @@ public class PhotoPicker {
 
         photo = BitmapFactory.decodeFile(mPhotoPath, options);
 
-        insertPhoto(photo, imageView);
+        return insertPhoto(photo);
     }
 
-    private void insertPhoto(Bitmap photo, ImageView imageView) {
+    private Bitmap insertPhoto(Bitmap photo) {
         if (photo == null)
-            return;
+            return null;
 
         int height = photo.getHeight() / 2;
         int width = photo.getWidth() / 2;
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
 
-        imageView.setImageBitmap(scaledBitmap);
+        return Bitmap.createScaledBitmap(photo, width, height, false);
     }
 
     public static class PhotoOptionDialog extends DialogFragment {

@@ -27,7 +27,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -217,10 +216,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private void moveMapToLatLng(LatLng latLng) {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        MarkerOptions options = new MarkerOptions();
-        options.position(latLng);
-        mMap.addMarker(options);
+        mMap.addMarker(MapUtils.getMarkerOptions(latLng, getActivity()));
     }
 
     private void getPredictions(String address) {
@@ -280,8 +276,9 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     public void onEvent(UserListEvent event) {
         mUsers = event.getUsers();
 
-        if (mSchool != null)
+        if (mSchool != null && mSchool.getDirector() != null) {
             mUsers.add(0, mSchool.getDirector());
+        }
 
         mUserAdapter.setUsers(mUsers);
 
@@ -296,7 +293,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         for (int i = 0; i < mUsers.size(); i++)
             if (mUsers.get(i).getId() == director.getId())
-                mDirector.setSelection(i);
+                mDirector.setSelection(i + 1);
     }
 
     private void setPredictions(List<AutocompletePrediction> predictions) {

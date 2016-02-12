@@ -44,12 +44,12 @@ class AddSchoolView: FormView {
         self.location.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.location)
 
-        self.self.deleteSchoolButton.hidden = true
-        self.self.deleteSchoolButton.setTitle("Delete School", forState: .Normal)
-        self.self.deleteSchoolButton.setThemeColor(UIColor.redColor())
-        self.self.deleteSchoolButton.titleLabel!.font = UIFont.normalFont
+        self.deleteSchoolButton.hidden = true
+        self.deleteSchoolButton.setTitle("Delete School", forState: .Normal)
+        self.deleteSchoolButton.setThemeColor(UIColor.redColor())
+        self.deleteSchoolButton.titleLabel!.font = UIFont.normalFont
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         

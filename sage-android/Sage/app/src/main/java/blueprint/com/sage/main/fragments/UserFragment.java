@@ -60,7 +60,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     @Nullable @Bind(R.id.admin_user_change_role) LinearLayout mRoleLayout;
     @Nullable @Bind(R.id.admin_user_change_status) LinearLayout mStatusLayout;
 
-    @Bind(R.id.)
+    @Bind(R.id.user_type_rect) TextView mUserType;
 
     private User mUser;
     private Semester mSemester;
@@ -161,9 +161,31 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);
 
-//        Kelsey's stuff
+//        Kelsey's stuffswitch(requestCode) {
 
-
+        int role = mUser.getRole();
+        if (mUser.getDirectorId() != 0) {
+            role = 3;
+        }
+        mUserType.setVisibility(View.VISIBLE);
+        switch(role) {
+            case 0:
+//                if (mUser.getHoursString())
+                mUserType.setVisibility(View.GONE);
+                break;
+            case 1:
+                mUserType.setText("Admin");
+                mUserType.setBackgroundColor(getResources().getColor(R.color.orange_admin));
+                break;
+            case 2:
+                mUserType.setText("President");
+                mUserType.setBackgroundColor(getResources().getColor(R.color.blue_president));
+                break;
+            case 3:
+                mUserType.setText("Director");
+                mUserType.setBackgroundColor(getResources().getColor(R.color.turquoise_director));
+                break;
+        }
         mToolbarInterface.setTitle("User");
     }
 

@@ -89,6 +89,7 @@ class SchoolDetailViewController: UITableViewController {
             self.school = newSchool
             self.configureWithCompleteSchool(newSchool)
             self.title = newSchool.name
+            self.tableView.reloadData()
         }
     }
     

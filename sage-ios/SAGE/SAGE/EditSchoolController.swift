@@ -15,11 +15,14 @@ class EditSchoolController: AddSchoolController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Edit School"
+        (self.view as! AddSchoolView).deleteSchoolButton.addTarget(self, action: "deleteSchool:", forControlEvents: .TouchUpInside)
     }
     
     func configureWithSchool(school: School?) {
         self.school = school?.copy() as? School
         (self.view as! AddSchoolView).displaySchoolName(school?.name)
+        (self.view as! AddSchoolView).deleteSchoolButton.hidden = false
+
         if let director = self.school?.director {
             self.didSelectDirector(director)
         }
@@ -55,12 +58,46 @@ class EditSchoolController: AddSchoolController {
             if let address = self.address {
                 self.school?.address = address
             }
+            self.finishButton?.startLoading()
+            (self.view as! AddSchoolView).deleteSchoolButton.hidden = true
             AdminOperations.editSchool(self.school!, completion: { (editedSchool) -> Void in
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editSchoolKey, object: editedSchool)
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
+                    self.finishButton?.stopLoading()
+                    (self.view as! AddSchoolView).deleteSchoolButton.hidden = false
                     self.showAlertControllerError(message)
             })
         }
+    }
+
+    func deleteSchool(sender: UIButton!) {
+        let view = (self.view as! AddSchoolView)
+
+        let deleteHandler: (UIAlertAction) -> Void = { _ in
+            view.deleteSchoolButton.startLoading()
+            self.finishButton?.startLoading()
+            SchoolOperations.deleteSchool(self.school!, completion: { (school) -> Void in
+                self.navigationController!.popToViewController(self.navigationController!.viewControllers[self.navigationController!.viewControllers.count-3], animated: true)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteSchoolKey, object: self.school)
+                }) { (errorMessage) -> Void in
+                    view.deleteSchoolButton.stopLoading()
+                    self.finishButton?.stopLoading()
+                    let alertController = UIAlertController(
+                        title: "Failure",
+                        message: errorMessage as String,
+                        preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+            }
+        }
+
+        let alertController = UIAlertController(
+            title: "Delete School",
+            message: "Are you sure you want to delete this school? This action cannot be undone.",
+            preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Delete", style: .Default, handler: deleteHandler))
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 }

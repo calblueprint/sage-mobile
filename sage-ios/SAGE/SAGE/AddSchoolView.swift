@@ -60,17 +60,15 @@ class AddSchoolView: FormView {
         
         self.name.fillWidth()
         self.name.setY(CGRectGetMaxY(self.location.frame))
-        
-        self.deleteSchoolButton.sizeToFit()
-        let width = CGRectGetWidth(self.deleteSchoolButton.frame)
-        self.deleteSchoolButton.setWidth(width + 10)
-        let buttonOffsetY = CGRectGetMaxY(self.name.frame)
-        self.deleteSchoolButton.setY(buttonOffsetY + 20)
-        self.deleteSchoolButton.centerHorizontally()
 
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.name.frame))
+        self.deleteSchoolButton.sizeToFit()
+        self.deleteSchoolButton.fillWidth()
+        self.deleteSchoolButton.increaseHeight(40)
+        self.deleteSchoolButton.setY(CGRectGetMaxY(self.name.frame))
+
+        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.deleteSchoolButton.frame))
     }
-    
+
     func displayChosenDirector(director: User) {
         self.director.button.setTitle(director.fullName(), forState: .Normal)
         self.director.button.setTitleColor(UIColor.blackColor(), forState: .Normal)

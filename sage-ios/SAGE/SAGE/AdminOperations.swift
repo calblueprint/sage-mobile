@@ -119,7 +119,7 @@ class AdminOperations {
         let requestURL = StringConstants.kSchoolDetailURL(id)
         let manager = BaseOperation.manager()
         manager.GET(requestURL, parameters: nil, success: { (operation, data) -> Void in
-            var schoolDict = data["school"] as! [String: AnyObject]
+            let schoolDict = data["school"] as! [String: AnyObject]
             let school = School(propertyDictionary: schoolDict)
             completion(school)
             }) { (operation, error) -> Void in

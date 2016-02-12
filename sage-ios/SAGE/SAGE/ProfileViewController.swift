@@ -20,6 +20,7 @@ class ProfileViewController: UITableViewController {
         self.user = user
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterJoined:", name: NotificationConstants.joinSemesterKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
@@ -44,6 +45,14 @@ class ProfileViewController: UITableViewController {
             LoginOperations.storeUserDataInKeychain(newUser)
             self.profileView.setupWithUser(newUser)
             self.tableView.reloadData()
+        }
+    }
+    
+    func schoolEdited(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if self.user?.school?.id == school.id {
+            self.user?.school = school
+            self.profileView.setupWithUser(self.user!)
         }
     }
     

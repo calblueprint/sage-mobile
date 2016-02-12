@@ -20,6 +20,8 @@ class AnnouncementsViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementDeleted:", name: NotificationConstants.deleteAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+
     }
     
     deinit {
@@ -53,6 +55,20 @@ class AnnouncementsViewController: UITableViewController {
                     self.announcements.removeAtIndex(i)
                     self.tableView.reloadData()
                     break
+                }
+            }
+        }
+    }
+    
+    func userEdited(notification: NSNotification) {
+        let user = notification.object!.copy() as! User
+        if self.announcements.count != 0 {
+            for i in 0...(self.announcements.count-1) {
+                let currentAnnouncement = self.announcements[i]
+                if user.id == currentAnnouncement.sender!.id {
+                    currentAnnouncement.sender = user
+                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 }
             }
         }

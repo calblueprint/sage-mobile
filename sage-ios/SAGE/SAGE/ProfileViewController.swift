@@ -20,6 +20,7 @@ class ProfileViewController: UITableViewController {
         self.user = user
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterJoined:", name: NotificationConstants.joinSemesterKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
@@ -41,9 +42,16 @@ class ProfileViewController: UITableViewController {
         let newUser = notification.object!.copy() as! User
         if self.user?.id == newUser.id {
             self.user = newUser
-            LoginOperations.storeUserDataInKeychain(newUser)
             self.profileView.setupWithUser(newUser)
             self.tableView.reloadData()
+        }
+    }
+    
+    func schoolEdited(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if self.user?.school?.id == school.id {
+            self.user?.school = school
+            self.profileView.setupWithUser(self.user!)
         }
     }
     
@@ -95,6 +103,13 @@ class ProfileViewController: UITableViewController {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.setY(self.profileView.headerHeight + CGFloat(40))
         self.activityIndicator.startAnimating()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "getUser", forControlEvents: .ValueChanged)
+        self.view.bringSubviewToFront(self.refreshControl!)
+        
         self.getUser()
     }
     
@@ -179,6 +194,7 @@ class ProfileViewController: UITableViewController {
             
             self.profileView.setupWithUser(user)
             self.activityIndicator.stopAnimating()
+            self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
@@ -209,6 +225,8 @@ class ProfileViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if LoginOperations.getUser()!.id == self.user!.id {
             return 2
+        } else if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
+            return 1
         }
         return 0
     }
@@ -243,7 +261,7 @@ class ProfileViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            let view = ProfileCheckinViewController()
+            let view = ProfileCheckinViewController(user: self.user)
             self.navigationController!.pushViewController(view, animated: true)
         } else if indexPath.section == 1 {
 

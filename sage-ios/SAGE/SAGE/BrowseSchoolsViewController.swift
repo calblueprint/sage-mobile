@@ -18,6 +18,7 @@ class BrowseSchoolsViewController: UITableViewController {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolAdded:", name: NotificationConstants.addSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolDeleted:", name: NotificationConstants.deleteSchoolKey, object: nil)
     }
     
     deinit {
@@ -41,6 +42,20 @@ class BrowseSchoolsViewController: UITableViewController {
             self.schools!.insert(school, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+
+    func schoolDeleted(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if self.schools!.count != 0 {
+            for i in 0...(self.schools!.count-1) {
+                let currentSchool = self.schools![i]
+                if school.id == currentSchool.id {
+                    self.schools!.removeAtIndex(i)
+                    self.tableView.reloadData()
+                    break
+                }
+            }
         }
     }
     

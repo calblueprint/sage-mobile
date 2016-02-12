@@ -61,6 +61,11 @@ class EditProfileController: FormController {
                 self.presentViewController(imagePickerController, animated: true, completion: nil)
             }
         }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Reset to Default", style: .Default, handler: { (alertAction) -> Void in
+            self.editProfileView.photoView.image = UIImage.defaultProfileImage()
+            self.choseNewPhoto = true
+        }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (alertAction) -> Void in
             actionSheet.dismissViewControllerAnimated(true, completion: nil)
         }))
@@ -108,7 +113,10 @@ class EditProfileController: FormController {
             if self.choseNewPhoto {
                 photoData = UIImage.encodedPhotoString(self.editProfileView.photoView.image!)
             }
-            ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, completion: { (updatedUser) -> Void in
+            
+            let newPassword = editProfileView.getNewPassword()
+            let passwordConfirmation = editProfileView.getPasswordConfirmation()
+            ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, newPassword: newPassword, passwordConfirmation: passwordConfirmation, completion: { (updatedUser) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.changeSchoolKey, object: updatedUser.school!)

@@ -57,7 +57,8 @@ class AdminOperations {
 
     static func loadNonDirectorAdmins(completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: nil, success: { (operation, data) -> Void in
+        let params = [UserConstants.kNonDirector: true]
+        manager.GET(StringConstants.kEndpointGetNonDirectorAdmin, parameters: params, success: { (operation, data) -> Void in
             var userArray = [User]()
             let userData = data["users"] as! [AnyObject]
             for userDict in userData {
@@ -118,18 +119,9 @@ class AdminOperations {
         let requestURL = StringConstants.kSchoolDetailURL(id)
         let manager = BaseOperation.manager()
         manager.GET(requestURL, parameters: nil, success: { (operation, data) -> Void in
-            var schoolDict = data["school"] as! [String: AnyObject]
-            let userDict = schoolDict["users"] as! [AnyObject]
-            schoolDict.removeValueForKey("users")
+            let schoolDict = data["school"] as! [String: AnyObject]
             let school = School(propertyDictionary: schoolDict)
-            var students = [User]()
-            for user in userDict {
-                let user = User(propertyDictionary: user as! [String: AnyObject])
-                students.append(user)
-            }
-            school.students = students
             completion(school)
-            
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
@@ -175,8 +167,8 @@ class AdminOperations {
         
         manager.POST(StringConstants.kEndpointCreateSchool, parameters: params, success: { (operation, data) -> Void in
             let schoolDict = data["school"] as! [String: AnyObject]
-            let school = School(propertyDictionary: schoolDict)
-            completion!(school)
+            let schoolResult = School(propertyDictionary: schoolDict)
+            completion!(schoolResult)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
@@ -184,18 +176,32 @@ class AdminOperations {
     
     static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        
-        let params = ["school": [
-                SchoolConstants.kLat: school.location!.coordinate.latitude,
-                SchoolConstants.kLong: school.location!.coordinate.longitude,
-                SchoolConstants.kName: school.name!,
-                SchoolConstants.kDirectorID: school.director!.id
-            ]
+
+        var data: [String: AnyObject] = [
+            SchoolConstants.kName: school.name!,
+            SchoolConstants.kLat: school.location!.coordinate.latitude,
+            SchoolConstants.kLong: school.location!.coordinate.longitude,
+            SchoolConstants.kAddress: school.address!
+
         ]
+
+        if school.director != nil {
+            data[SchoolConstants.kDirectorID] = school.director!.id
+        }
+
+        let params = ["school": data]
+
         let schoolURLString = StringConstants.kSchoolAdminDetailURL(school.id)
-        
+
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
-            completion!(school)
+            let schoolDict = data["school"] as! [String: AnyObject]
+            let schoolResult = School(propertyDictionary: schoolDict)
+            if let currentSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+                if currentSchool.id == schoolResult.id {
+                    KeychainWrapper.setObject(schoolResult, forKey: KeychainConstants.kSchool)
+                }
+            }
+            completion!(schoolResult)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }

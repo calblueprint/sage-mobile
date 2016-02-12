@@ -185,20 +185,27 @@ class AdminOperations {
     
     static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        
-        let params = ["school": [
-                SchoolConstants.kLat: school.location!.coordinate.latitude,
-                SchoolConstants.kLong: school.location!.coordinate.longitude,
-                SchoolConstants.kName: school.name!,
-                SchoolConstants.kDirectorID: school.director!.id,
-                SchoolConstants.kAddress: school.address!
-            ]
+
+        var data: [String: AnyObject] = [
+            SchoolConstants.kName: school.name!,
+            SchoolConstants.kLat: school.location!.coordinate.latitude,
+            SchoolConstants.kLong: school.location!.coordinate.longitude,
+            SchoolConstants.kAddress: school.address!
+
         ]
+
+        if school.director != nil {
+            data[SchoolConstants.kDirectorID] = school.director!.id
+        }
+
+        let params = ["school": data]
+
         let schoolURLString = StringConstants.kSchoolAdminDetailURL(school.id)
-        
+
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
-//            let schoolDict = data["school"] as!
-            completion!(school)
+            let schoolDict = data["school"] as! [String: AnyObject]
+            let schoolResult = School(propertyDictionary: schoolDict)
+            completion!(schoolResult)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }

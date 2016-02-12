@@ -196,6 +196,11 @@ class AdminOperations {
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
             let schoolDict = data["school"] as! [String: AnyObject]
             let schoolResult = School(propertyDictionary: schoolDict)
+            if let currentSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+                if currentSchool.id == schoolResult.id {
+                    KeychainWrapper.setObject(schoolResult, forKey: KeychainConstants.kSchool)
+                }
+            }
             completion!(schoolResult)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

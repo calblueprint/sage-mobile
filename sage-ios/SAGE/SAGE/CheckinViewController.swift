@@ -64,6 +64,7 @@ class CheckinViewController: UIViewController {
             marker.map = self.checkinView.mapView
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolChanged:", name: NotificationConstants.changeSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -105,6 +106,18 @@ class CheckinViewController: UIViewController {
         marker.map = self.checkinView.mapView
     }
     
+    @objc private func schoolEdited(notification: NSNotification) {
+        let school = notification.object!.copy() as! School
+        if let currentSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+            if currentSchool.id == school.id {
+                self.school = school
+                self.checkinView.mapView.clear()
+                let marker = GMSMarker(position: self.school!.location!.coordinate)
+                marker.map = self.checkinView.mapView
+            }
+        }
+    }
+
     //
     // MARK: - Button event handling
     //

@@ -35,6 +35,7 @@ public class PhotoPicker {
 
     public static final int CAMERA_REQUEST = 1337;
     public static final int PICK_PHOTO_REQUEST = 9001;
+    public static final int IMAGE_MAX_SIZE = 100000; // 100 KB
 
     public PhotoPicker(Activity activity, Fragment fragment) {
         mActivity = activity;
@@ -83,20 +84,15 @@ public class PhotoPicker {
         Uri targetUri = data.getData();
 
         try {
-            final int IMAGE_MAX_SIZE = 100000; // 1.2MP
             InputStream in = mActivity.getContentResolver().openInputStream(targetUri);
 
             // Decode image size
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(in, null, options);
-            in.close();
+            closeStream(in);
 
-            int scale = 1;
-            while ((options.outWidth * options.outHeight) * (1 / Math.pow(scale, 2)) >
-                    IMAGE_MAX_SIZE) {
-                scale++;
-            }
+            int scale = getScaleFactor(options);
             Log.e("size", "" + scale);
             Bitmap bitmap;
             in = mActivity.getContentResolver().openInputStream(targetUri);
@@ -104,32 +100,21 @@ public class PhotoPicker {
                 options = new BitmapFactory.Options();
                 options.inSampleSize = scale;
                 bitmap = BitmapFactory.decodeStream(in, null, options);
-
+                closeStream(in);
                 // resize to desired dimensions
-                int height = bitmap.getHeight();
-                int width = bitmap.getWidth();
 
-                double y = Math.sqrt(IMAGE_MAX_SIZE
-                        / (((double) width) / height));
-                double x = (y / height) * width;
-                Log.e("x & y", "x: " + x + " y: " + y);
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) x,
-                        (int) y, true);
-                bitmap.recycle();
-                photo = scaledBitmap;
+
+                photo = getScaledBitmap(bitmap);
                 Log.e("bitmap size", photo.getByteCount() + "");
-                in.close();
                 return photo;
 
             } else {
                 photo = BitmapFactory.decodeStream(in);
+                closeStream(in);
                 Log.e("bitmap size", photo.getByteCount() + "");
 
-                in.close();
                 return photo;
             }
-
-
 
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
@@ -141,44 +126,53 @@ public class PhotoPicker {
     public Bitmap takePhotoResult(Intent data, ImageView imageView) {
         Bitmap photo;
 
-        int targetH = imageView.getHeight();
-        int targetW = imageView.getWidth();
-
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mPhotoPath, options);
 
-        int photoH = options.outHeight;
-        int photoW = options.outWidth;
-
-        int scaleFactor = 0;
-        if (targetH > 0 && targetW > 0)
-            scaleFactor = Math.min(photoH/targetH, photoW/targetW );
-
         options.inJustDecodeBounds = false;
-        options.inSampleSize = scaleFactor;
-        options.inPurgeable = true;
+        options.inSampleSize = getScaleFactor(options);
 
-        photo = BitmapFactory.decodeFile(mPhotoPath, options);
-
-        return insertPhoto(photo);
+        photo = getScaledBitmap(BitmapFactory.decodeFile(mPhotoPath, options));
+        Log.e("bitmap scaled size", photo.getByteCount() + "");
+        return photo;
     }
 
-    private Bitmap insertPhoto(Bitmap photo) {
-        if (photo == null)
-            return null;
+    private Bitmap getScaledBitmap(Bitmap bitmap) {
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
 
-        int height = photo.getHeight() / 4;
-        int width = photo.getWidth() / 4;
-        Bitmap bitmap =Bitmap.createScaledBitmap(photo, width, height, false);
-        Log.e("bitmap scaled size", bitmap.getByteCount() + "");
-        return bitmap;
+        double y = Math.sqrt(IMAGE_MAX_SIZE
+                / (((double) width) / height));
+        double x = (y / height) * width;
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) x, (int) y, true);
+        bitmap.recycle();
+        return scaledBitmap;
+    }
+
+
+    private int getScaleFactor(BitmapFactory.Options options) {
+        int scale = 1;
+        while ((options.outWidth * options.outHeight) * (1 / Math.pow(scale, 2)) >
+                IMAGE_MAX_SIZE) {
+            scale++;
+        }
+        return scale;
+    }
+
+    private void closeStream(InputStream inputStream) {
+        try {
+            if (inputStream != null)
+                inputStream.close();
+        } catch (IOException e) {
+            Log.e(getClass().toString(), e.toString());
+        }
     }
 
     public static class PhotoOptionDialog extends DialogFragment {
 
-//        private static String[] mOptions = { "Choose a photo", "Take a picture" };
-        private static String[] mOptions = { "Choose a photo" };
+        private static String[] mOptions = { "Choose a photo", "Take a picture" };
+//        private static String[] mOptions = { "Choose a photo" };
         private PhotoPicker mPicker;
 
         public static PhotoOptionDialog newInstance(PhotoPicker picker) {

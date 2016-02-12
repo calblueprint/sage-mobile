@@ -120,17 +120,8 @@ class AdminOperations {
         let manager = BaseOperation.manager()
         manager.GET(requestURL, parameters: nil, success: { (operation, data) -> Void in
             var schoolDict = data["school"] as! [String: AnyObject]
-            let userDict = schoolDict["users"] as! [AnyObject]
-            schoolDict.removeValueForKey("users")
             let school = School(propertyDictionary: schoolDict)
-            var students = [User]()
-            for user in userDict {
-                let user = User(propertyDictionary: user as! [String: AnyObject])
-                students.append(user)
-            }
-            school.students = students
             completion(school)
-            
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }

@@ -42,7 +42,6 @@ class ProfileViewController: UITableViewController {
         let newUser = notification.object!.copy() as! User
         if self.user?.id == newUser.id {
             self.user = newUser
-            LoginOperations.storeUserDataInKeychain(newUser)
             self.profileView.setupWithUser(newUser)
             self.tableView.reloadData()
         }

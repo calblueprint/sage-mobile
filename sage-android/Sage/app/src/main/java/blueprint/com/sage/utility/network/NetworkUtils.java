@@ -21,6 +21,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.signIn.SignInActivity;
 import blueprint.com.sage.signUp.UnverifiedActivity;
 import blueprint.com.sage.utility.view.FragUtils;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by kelseylam on 10/17/15.
@@ -167,5 +168,9 @@ public class NetworkUtils {
             Log.e(NetworkUtils.class.toString(), e.toString());
         }
         return null;
+    }
+
+    public static <T> T getStickyEvent(Class<T> className) {
+        return EventBus.getDefault().getStickyEvent(className);
     }
 }

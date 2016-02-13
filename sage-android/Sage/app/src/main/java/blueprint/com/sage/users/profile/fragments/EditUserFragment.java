@@ -53,7 +53,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
         mUser.setSchoolId(schoolId);
         mUser.setProfile(mProfileBitmap);
 
-        Requests.Users.with(getActivity()).makeEditRequest(mUser);
+        Requests.Users.with(getActivity()).makeStickyEditRequest(mUser);
     }
 
     public boolean isValidUser() {

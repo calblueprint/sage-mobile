@@ -100,7 +100,6 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         View view = inflater.inflate(R.layout.fragment_user, parent, false);
         ButterKnife.bind(this, view);
         initializeSettings();
-        initializeUser();
         initializeSemester();
         return view;
     }
@@ -110,6 +109,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         super.onStart();
         EventBus.getDefault().register(this);
         mToolbarInterface.setToolbarElevation(0);
+        initializeUser();
     }
 
     @Override

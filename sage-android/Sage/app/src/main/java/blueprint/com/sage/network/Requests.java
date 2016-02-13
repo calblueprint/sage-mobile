@@ -92,7 +92,7 @@ public class Requests {
         NetworkManager.getInstance(context).getRequestQueue().add(request);
     }
 
-    public void postEvent(Object event, boolean isSticky) {
+    public static void postEvent(Object event, boolean isSticky) {
         if (isSticky) {
             EventBus.getDefault().postSticky(event);
         } else {
@@ -189,7 +189,7 @@ public class Requests {
                     new Response.Listener<User>() {
                         @Override
                         public void onResponse(User user) {
-                            EventBus.getDefault().post(new EditUserEvent(user));
+                            Requests.postEvent(new EditUserEvent(user), false);
                         }
                     }, new Response.Listener<APIError>() {
                         @Override
@@ -205,7 +205,7 @@ public class Requests {
                     new Response.Listener<User>() {
                         @Override
                         public void onResponse(User user) {
-                            EventBus.getDefault().postSticky(new EditUserEvent(user));
+                            Requests.postEvent(new EditUserEvent(user), true);
                         }
                     }, new Response.Listener<APIError>() {
                 @Override

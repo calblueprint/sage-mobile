@@ -1,6 +1,8 @@
 package blueprint.com.sage.main.fragments;
 
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -60,7 +62,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     @Nullable @Bind(R.id.admin_user_change_role) LinearLayout mRoleLayout;
     @Nullable @Bind(R.id.admin_user_change_status) LinearLayout mStatusLayout;
 
-    @Bind(R.id.user_type_rect) TextView mUserType;
+    @Bind(R.id.user_type) TextView mUserType;
 
     private User mUser;
     private Semester mSemester;
@@ -71,6 +73,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     private static final int PROMOTE_DIALOG_CODE = 200;
     private static final int STATUS_DIALOG_CODE = 300;
     private static final String DIALOG_TAG = "UserFragment";
+    public final static String[] ROLES = { "Inactive", "Admin", "President", "Director" };
 
     public static UserFragment newInstance(User user) {
         UserFragment fragment = new UserFragment();
@@ -161,29 +164,27 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);
 
-//        Kelsey's stuffswitch(requestCode) {
-
+//        Kelsey's stuff
         int role = mUser.getRole();
         if (mUser.getDirectorId() != 0) {
             role = 3;
         }
         mUserType.setVisibility(View.VISIBLE);
+        mUserType.setTypeface(null, Typeface.BOLD);
+        GradientDrawable shape = (GradientDrawable) mUserType.getBackground();
+        mUserType.setText(ROLES[role]);
         switch(role) {
             case 0:
-//                if (mUser.getHoursString())
                 mUserType.setVisibility(View.GONE);
                 break;
             case 1:
-                mUserType.setText("Admin");
-                mUserType.setBackgroundColor(getResources().getColor(R.color.orange_admin));
+                shape.setColor(getResources().getColor(R.color.orange_admin));
                 break;
             case 2:
-                mUserType.setText("President");
-                mUserType.setBackgroundColor(getResources().getColor(R.color.blue_president));
+                shape.setColor(getResources().getColor(R.color.blue_president));
                 break;
             case 3:
-                mUserType.setText("Director");
-                mUserType.setBackgroundColor(getResources().getColor(R.color.turquoise_director));
+                shape.setColor(getResources().getColor(R.color.turquoise_director));
                 break;
         }
         mToolbarInterface.setTitle("User");

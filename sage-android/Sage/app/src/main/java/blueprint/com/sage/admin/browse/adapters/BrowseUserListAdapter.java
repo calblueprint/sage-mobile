@@ -26,7 +26,7 @@ public class BrowseUserListAdapter extends AbstractUserListAdapter {
         List<Item> inactiveUsers = new ArrayList<>();
 
         for (User user : users) {
-            Item item = new Item(user, null, false);
+            Item item = new Item(user, null);
             allUsers.add(item);
 
             if (user.getUserSemester() != null && !user.getUserSemester().isActive())
@@ -36,12 +36,12 @@ public class BrowseUserListAdapter extends AbstractUserListAdapter {
         mItemList = new ArrayList<>();
 
         if (inactiveUsers.size() != 0) {
-            mItemList.add(new Item(null, "Inactive Users", true));
+            mItemList.add(new Item(null, "Inactive Users"));
             mItemList.addAll(inactiveUsers);
         }
 
         if (allUsers.size() != 0) {
-            mItemList.add(new Item(null, "All Users", true));
+            mItemList.add(new Item(null, "All Users"));
             mItemList.addAll(allUsers);
         }
     }

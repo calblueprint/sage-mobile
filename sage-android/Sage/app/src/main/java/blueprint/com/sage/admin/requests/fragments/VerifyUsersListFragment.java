@@ -67,7 +67,7 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
     }
 
     private void initializeViews() {
-        mUserAdapter = new VerifyUserListAdapter(getActivity(), R.layout.verify_users_list_item, mUsersInterface.getUsers());
+        mUserAdapter = new VerifyUserListAdapter(getActivity(), mUsersInterface.getUsers());
 
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setEmptyView(mEmptyView);

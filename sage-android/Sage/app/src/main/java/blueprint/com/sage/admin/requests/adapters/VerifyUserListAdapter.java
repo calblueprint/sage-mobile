@@ -9,8 +9,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
@@ -28,6 +28,8 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Activity mActivity;
     private List<Item> mItems;
 
+    private static final int HEADER_VIEW = 0;
+    private static final int USER_VIEW = 1;
     private final static String NO_SCHOOL = "No School";
 
     public VerifyUserListAdapter(Activity activity, List<User> users) {
@@ -40,24 +42,24 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private void setUpUsers(List<User> users) {
         mItems = new ArrayList<>();
 
-        HashMap<String, List<Item>> userMap = new HashMap<>();
+        TreeMap<String, List<Item>> userMap = new TreeMap<>();
 
         for (User user : users) {
             if (user.getSchool() == null) {
-                if (userMap.containsKey(NO_SCHOOL))
+                if (!userMap.containsKey(NO_SCHOOL))
                     userMap.put(NO_SCHOOL, new ArrayList<Item>());
-                userMap.get(NO_SCHOOL).add(new Item(user, null, false));
+                userMap.get(NO_SCHOOL).add(new Item(user, null));
                 continue;
             }
 
-            if (userMap.containsKey(user.getSchool().getName())) {
+            if (!userMap.containsKey(user.getSchool().getName())) {
                 userMap.put(user.getSchool().getName(), new ArrayList<Item>());
             }
-            userMap.get(user.getSchool().getName()).add(new Item(user, null, false));
+            userMap.get(user.getSchool().getName()).add(new Item(user, null));
         }
 
         for (String key : userMap.keySet()) {
-            mItems.add(new Item(null, key, true));
+            mItems.add(new Item(null, key));
 
             for (Item item : userMap.get(key))
                 mItems.add(item);
@@ -65,15 +67,21 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        Item item = mItems.get(position);
-        if (item.isHeader()) {
-            View view = LayoutInflater.from(mActivity).inflate(R.layout.user_header_list_item, parent, false);
-            return new HeaderViewHolder(view);
-        } else {
-            View view = LayoutInflater.from(mActivity).inflate(R.layout.verify_users_list_item, parent, false);
-            return new UserViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+        View view;
+        switch (type) {
+            case HEADER_VIEW:
+                view = LayoutInflater.from(mActivity).inflate(R.layout.user_header_list_item, parent, false);
+                return new HeaderViewHolder(view);
+            default:
+                view = LayoutInflater.from(mActivity).inflate(R.layout.verify_users_list_item, parent, false);
+                return new UserViewHolder(view);
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mItems.get(position).isHeader() ? HEADER_VIEW : USER_VIEW;
     }
 
     @Override
@@ -162,12 +170,12 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class Item {
         private User user;
         private String header;
-        private boolean isHeader;
 
-        public Item(User user, String header, boolean isHeader) {
+        public Item(User user, String header) {
             this.user = user;
             this.header = header;
-            this.isHeader = isHeader;
         }
+
+        public boolean isHeader() { return header != null; }
     }
 }

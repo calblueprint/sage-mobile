@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
@@ -26,14 +28,40 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Activity mActivity;
     private List<Item> mItems;
 
+    private final static String NO_SCHOOL = "No School";
+
     public VerifyUserListAdapter(Activity activity, List<User> users) {
         super();
         mActivity = activity;
         setUpUsers(users);
     }
 
+    // TODO: Sets up similar schools together - will fix this later
     private void setUpUsers(List<User> users) {
+        mItems = new ArrayList<>();
 
+        HashMap<String, List<Item>> userMap = new HashMap<>();
+
+        for (User user : users) {
+            if (user.getSchool() == null) {
+                if (userMap.containsKey(NO_SCHOOL))
+                    userMap.put(NO_SCHOOL, new ArrayList<Item>());
+                userMap.get(NO_SCHOOL).add(new Item(user, null, false));
+                continue;
+            }
+
+            if (userMap.containsKey(user.getSchool().getName())) {
+                userMap.put(user.getSchool().getName(), new ArrayList<Item>());
+            }
+            userMap.get(user.getSchool().getName()).add(new Item(user, null, false));
+        }
+
+        for (String key : userMap.keySet()) {
+            mItems.add(new Item(null, key, true));
+
+            for (Item item : userMap.get(key))
+                mItems.add(item);
+        }
     }
 
     @Override
@@ -135,5 +163,11 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private User user;
         private String header;
         private boolean isHeader;
+
+        public Item(User user, String header, boolean isHeader) {
+            this.user = user;
+            this.header = header;
+            this.isHeader = isHeader;
+        }
     }
 }

@@ -33,15 +33,15 @@ public class SchoolUserListAdapter extends AbstractUserListAdapter {
         mItemList = new ArrayList<>();
 
         if (mSchool.getDirector() != null) {
-            mItemList.add(new Item(null, "Director", true));
-            mItemList.add(new Item(mSchool.getDirector(), null, false));
+            mItemList.add(new Item(null, "Director"));
+            mItemList.add(new Item(mSchool.getDirector(), null));
         }
 
         if (mSchool.getUsers() != null && mSchool.getUsers().size() > 0) {
-            mItemList.add(new Item(null, "Mentors", true));
+            mItemList.add(new Item(null, "Mentors"));
 
             for (User user : mSchool.getUsers()) {
-                mItemList.add(new Item(user, null, false));
+                mItemList.add(new Item(user, null));
             }
         }
     }

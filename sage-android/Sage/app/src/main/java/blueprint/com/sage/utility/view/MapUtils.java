@@ -22,7 +22,7 @@ public class MapUtils {
     public final static int ZOOM = 16;
 
     // Radius of circle boundary of school
-    public final static int DISTANCE = Integer.MAX_VALUE;
+    public final static int DISTANCE = 200;
     public final static int RADIUS = 50; /* 50 meters */
     public final static float DEFAULT_LONG = -122.26f;
     public final static float DEFAULT_LAT = 37.87f;

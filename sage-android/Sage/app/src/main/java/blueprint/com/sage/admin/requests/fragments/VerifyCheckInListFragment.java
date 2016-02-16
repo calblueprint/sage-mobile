@@ -68,9 +68,7 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
     }
 
     private void initializeViews() {
-        mCheckInAdapter = new VerifyCheckInListAdapter(getActivity(),
-                                                 R.layout.verify_check_in_list_item,
-                                                 mCheckInInterface.getCheckIns());
+        mCheckInAdapter = new VerifyCheckInListAdapter(getActivity(), mCheckInInterface.getCheckIns());
 
         mCheckInList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCheckInList.setEmptyView(mEmptyView);

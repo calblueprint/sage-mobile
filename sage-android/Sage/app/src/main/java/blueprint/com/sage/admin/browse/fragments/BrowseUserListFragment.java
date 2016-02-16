@@ -3,12 +3,9 @@ package blueprint.com.sage.admin.browse.fragments;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
-import java.util.List;
-
 import blueprint.com.sage.admin.browse.adapters.BrowseUserListAdapter;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserListEvent;
-import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.fragments.AbstractUserListFragment;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 
@@ -35,7 +32,6 @@ public class BrowseUserListFragment extends AbstractUserListFragment {
     }
 
     public void onEvent(UserListEvent event) {
-        List<User> list = event.getUsers();
         mUsersInterface.setUsers(event.getUsers());
         ((BrowseUserListAdapter) mUserListAdapter).setUsers(mUsersInterface.getUsers());
         mRefreshUsers.setRefreshing(false);

@@ -143,6 +143,13 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     }
 
     private void initializeUser() {
+        EditUserEvent event = NetworkUtils.getStickyEvent(EditUserEvent.class);
+
+        if (event != null && event.getUser().getId() == mUser.getId()) {
+            mUser = event.getUser();
+            EventBus.getDefault().removeStickyEvent(event);
+        }
+
         mUser.loadUserImage(getActivity(), mPhoto);
         mName.setText(mUser.getName());
 
@@ -223,12 +230,6 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     }
 
     public void onEvent(UserEvent event) {
-        mUser = event.getUser();
-        initializeUser();
-        initializeSemester();
-    }
-
-    public void onEvent(EditUserEvent event) {
         mUser = event.getUser();
         initializeUser();
         initializeSemester();

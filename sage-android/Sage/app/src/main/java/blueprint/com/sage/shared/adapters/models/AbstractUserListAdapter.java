@@ -14,6 +14,7 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import lombok.Data;
 
 /**
  * Created by charlesx on 11/17/15.
@@ -124,20 +125,17 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
 
     }
 
+    @Data
     public static class Item {
 
-        private User mUser;
-        private String mHeader;
-        private boolean mIsHeader;
+        private User user;
+        private String header;
 
-        public Item(User user, String header, boolean isHeader) {
-            mUser = user;
-            mHeader = header;
-            mIsHeader = isHeader;
+        public Item(User user, String header) {
+            this.user = user;
+            this.header = header;
         }
 
-        public User getUser() { return mUser; }
-        public String getHeader() { return mHeader; }
-        public boolean isHeader() { return mIsHeader; }
+        public boolean isHeader() { return header != null; }
     }
 }

@@ -28,6 +28,7 @@
             android:id="@+id/user_type_circle"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="30dp"

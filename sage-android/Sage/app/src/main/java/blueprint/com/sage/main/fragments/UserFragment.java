@@ -1,8 +1,6 @@
 package blueprint.com.sage.main.fragments;
 
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -32,6 +30,7 @@ import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.users.info.UserSemesterListActivity;
 import blueprint.com.sage.users.profile.EditUserActivity;
+import blueprint.com.sage.utility.model.UserUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -73,7 +72,6 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     private static final int PROMOTE_DIALOG_CODE = 200;
     private static final int STATUS_DIALOG_CODE = 300;
     private static final String DIALOG_TAG = "UserFragment";
-    public final static String[] ROLES = { "Inactive", "Admin", "President", "Director" };
 
     public static UserFragment newInstance(User user) {
         UserFragment fragment = new UserFragment();
@@ -165,28 +163,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mSchool.setText(schoolString);
 
 //        Kelsey's stuff
-        int role = mUser.getRole();
-        if (mUser.getDirectorId() != 0) {
-            role = 3;
-        }
-        mUserType.setVisibility(View.VISIBLE);
-        mUserType.setTypeface(null, Typeface.BOLD);
-        GradientDrawable shape = (GradientDrawable) mUserType.getBackground();
-        mUserType.setText(ROLES[role]);
-        switch(role) {
-            case 0:
-                mUserType.setVisibility(View.GONE);
-                break;
-            case 1:
-                shape.setColor(getResources().getColor(R.color.orange_admin));
-                break;
-            case 2:
-                shape.setColor(getResources().getColor(R.color.blue_president));
-                break;
-            case 3:
-                shape.setColor(getResources().getColor(R.color.turquoise_director));
-                break;
-        }
+        UserUtils.setType(getActivity(), mUser, mUserType, null, mUser.ROLES_LABEL);
         mToolbarInterface.setTitle("User");
     }
 

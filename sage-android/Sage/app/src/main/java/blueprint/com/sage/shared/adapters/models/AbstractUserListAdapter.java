@@ -1,7 +1,5 @@
 package blueprint.com.sage.shared.adapters.models;
 
-import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +13,7 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.model.UserUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -28,8 +27,6 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
 
     private static final int HEADER_VIEW = 0;
     private static final int USER_VIEW = 1;
-    public final static String[] ROLES = { "!", "A", "P", "D" };
-
 
     public AbstractUserListAdapter(FragmentActivity activity, List<User> users) {
         super();
@@ -85,34 +82,7 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
         });
         user.loadUserImage(mActivity, viewHolder.mImage);
 
-        int role = user.getRole();
-        if (user.getDirectorId() != 0) {
-            role = 3;
-        }
-        viewHolder.mUserType.setVisibility(View.VISIBLE);
-        viewHolder.mBorder.setVisibility(View.VISIBLE);
-        viewHolder.mUserType.setTypeface(null, Typeface.BOLD);
-        GradientDrawable shape = (GradientDrawable) viewHolder.mUserType.getBackground();
-        viewHolder.mUserType.setText(ROLES[role]);
-        switch(role) {
-            case 0:
-                if (user.getUserSemester() != null && !user.getUserSemester().isActive()) {
-                    shape.setColor(mActivity.getResources().getColor(R.color.red_endangered));
-                } else {
-                    viewHolder.mBorder.setVisibility(View.GONE);
-                    viewHolder.mUserType.setVisibility(View.GONE);
-                }
-                break;
-            case 1:
-                shape.setColor(mActivity.getResources().getColor(R.color.orange_admin));
-                break;
-            case 2:
-                shape.setColor(mActivity.getResources().getColor(R.color.blue_president));
-                break;
-            case 3:
-                shape.setColor(mActivity.getResources().getColor(R.color.turquoise_director));
-                break;
-        }
+        UserUtils.setType(mActivity, user, viewHolder.mUserType, viewHolder.mBorder, user.ABBREV_ROLES_LABEL);
     }
 
     public abstract void onItemClick(User user);

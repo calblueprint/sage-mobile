@@ -34,7 +34,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginLeft="30dp"
             android:textColor="@color/white"
-            android:background="@drawable/white_circle"/>
+            android:background="@drawable/white_circle_user_type"/>
+
     </FrameLayout>
 =======
     <blueprint.com.sage.shared.views.CircleImageView

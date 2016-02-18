@@ -21,6 +21,7 @@ import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -107,6 +108,11 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         HashMap<String, String> map = new HashMap<>();
         map.put("sort[attr]", "created_at");
         map.put("sort[order]", "desc");
+        User user = mBaseInterface.getUser();
+        if (user.isStudent() && user.getSchoolId() != 0) {
+            int id = user.getSchoolId();
+            map.put("default", Integer.toString(id));
+        }
         Requests.Announcements.with(getActivity()).makeListRequest(map);
     }
 

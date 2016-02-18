@@ -11,6 +11,7 @@ import Foundation
 class MenuController: UIViewController {
 
     var menuView = MenuView()
+    var menuList = [MenuItem]()
 
     //
     // MARK: - Initialization
@@ -32,8 +33,20 @@ class MenuController: UIViewController {
         self.view = self.menuView
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.menuView.createMenuList(self.menuList)
+    }
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.menuView.appear()
+    }
+
+    //
+    // MARK: - Public Methods
+    //
+    func addMenuItem(item: MenuItem) {
+        self.menuList.append(item)
     }
 }

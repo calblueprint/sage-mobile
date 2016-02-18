@@ -45,6 +45,7 @@ class MenuView: UIView {
             for var i = 0; i < list.count; i++ {
                 let menuItem = list[i]
                 menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i))
+                menuItem.fillWidth()
             }
         }
     }
@@ -52,15 +53,13 @@ class MenuView: UIView {
     //
     // MARK: - Public methods
     //
-    func setMenuList(list: [MenuItem]) {
+    func createMenuList(list: [MenuItem]) {
         if self.menuList == nil {
             self.menuList = list
             for menuItem in list {
                 self.addSubview(menuItem)
             }
             self.layoutSubviews()
-        } else {
-            fatalError("Menu list already set for menu view")
         }
     }
 
@@ -68,5 +67,21 @@ class MenuView: UIView {
         UIView.animateWithDuration(UIConstants.normalAnimationTime) { () -> Void in
             self.backgroundView.alpha = 1
         }
+
+        let itemOffset: CGFloat = 200
+        for var i = 0; i < self.menuList?.count; i++ {
+            let menuItem = self.menuList![i]
+            menuItem.moveY(itemOffset)
+            UIView.animateWithDuration(UIConstants.longAnimationTime,
+                delay: Double(i) * 0.10,
+                usingSpringWithDamping: UIConstants.defaultSpringDampening,
+                initialSpringVelocity: UIConstants.defaultSpringVelocity,
+                options: [],
+                animations: { () -> Void in
+                    menuItem.moveY(-itemOffset)
+                },
+                completion: nil)
+        }
+
     }
 }

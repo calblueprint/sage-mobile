@@ -20,6 +20,9 @@ class MenuItem: UIView {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.whiteColor()
         self.setupSubviews()
+
+        self.titleLabel.text = title
+        self.handler = handler
     }
 
     required init?(coder aDecoder: NSCoder) {

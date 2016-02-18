@@ -20,7 +20,7 @@ extension UIViewController {
         } else {
             size = 64.0
         }
-        let errorView = ErrorView(height: size, messageString: message, color: color, alpha: alpha)
+        let errorView = ErrorView(height: size, messageString: message, color: color, alpha: alpha, centered: centered)
         self.view.addSubview(errorView)
         self.view.bringSubviewToFront(errorView)
         errorView.setX(0)

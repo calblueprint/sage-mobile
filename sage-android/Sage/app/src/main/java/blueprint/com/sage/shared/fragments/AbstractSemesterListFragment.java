@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public abstract class AbstractSemesterListFragment extends Fragment implements S
     @Bind(R.id.semester_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.semester_list_list) RecycleViewEmpty mSemesterList;
     @Bind(R.id.semester_list_refresh) SwipeRefreshLayout mRefreshSemesters;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
 
     public List<Semester> mSemesters;
     public AbstractSemesterListAdapter mSemesterListAdapter;
@@ -71,6 +73,7 @@ public abstract class AbstractSemesterListFragment extends Fragment implements S
     private void initializeViews() {
         mSemesterListAdapter = getAdapter();
         mSemesterList.setEmptyView(mEmptyView);
+        mSemesterList.setProgressBar(mProgressBar);
         mSemesterList.setAdapter(mSemesterListAdapter);
         mSemesterList.setLayoutManager(new LinearLayoutManager(getActivity()));
 

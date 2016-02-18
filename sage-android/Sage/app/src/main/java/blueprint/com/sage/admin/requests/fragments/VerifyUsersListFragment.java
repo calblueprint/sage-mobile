@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
@@ -31,6 +32,7 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
     @Bind(R.id.verify_user_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.verify_user_list_list) RecycleViewEmpty mUserList;
     @Bind(R.id.verify_user_list_refresh) SwipeRefreshLayout mRefreshUser;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
 
     private VerifyUserListAdapter mUserAdapter;
     private UsersInterface mUsersInterface;
@@ -71,6 +73,7 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
 
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setEmptyView(mEmptyView);
+        mUserList.setProgressBar(mProgressBar);
         mUserList.setAdapter(mUserAdapter);
 
         mRefreshUser.setOnRefreshListener(this);

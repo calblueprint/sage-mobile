@@ -63,7 +63,7 @@ class EditProfileController: FormController {
             }
         }))
         
-        actionSheet.addAction(UIAlertAction(title: "Reset to Default", style: .Default, handler: { (alertAction) -> Void in
+        actionSheet.addAction(UIAlertAction(title: "Remove Photo", style: .Default, handler: { (alertAction) -> Void in
             self.editProfileView.photoView.image = UIImage.defaultProfileImage()
             self.resetPhoto = true
         }))

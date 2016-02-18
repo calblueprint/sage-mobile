@@ -139,6 +139,8 @@
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
 		E44611991C754AE6006E90FA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44611981C754AE6006E90FA /* MenuController.swift */; };
 		E446119B1C754CC4006E90FA /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119A1C754CC4006E90FA /* MenuView.swift */; };
+		E446119E1C7568C5006E90FA /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119D1C7568C5006E90FA /* MenuItem.swift */; };
+		E44611A01C756A73006E90FA /* ExpandMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119F1C756A73006E90FA /* ExpandMenuItem.swift */; };
 		E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */; };
 		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
 		E4A3C54D1C4D84040000D7D9 /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54C1C4D84040000D7D9 /* Semester.swift */; };
@@ -304,6 +306,8 @@
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E44611981C754AE6006E90FA /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		E446119A1C754CC4006E90FA /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		E446119D1C7568C5006E90FA /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		E446119F1C756A73006E90FA /* ExpandMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandMenuItem.swift; sourceTree = "<group>"; };
 		E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterView.swift; sourceTree = "<group>"; };
 		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
 		E4A3C54C1C4D84040000D7D9 /* Semester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
@@ -745,6 +749,8 @@
 			isa = PBXGroup;
 			children = (
 				E446119A1C754CC4006E90FA /* MenuView.swift */,
+				E446119D1C7568C5006E90FA /* MenuItem.swift */,
+				E446119F1C756A73006E90FA /* ExpandMenuItem.swift */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -1041,6 +1047,7 @@
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,
 				42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,
+				E446119E1C7568C5006E90FA /* MenuItem.swift in Sources */,
 				422715451BC7359D00FD719C /* UIFont.swift in Sources */,
 				5D916A1D1C01353D003959CE /* ProfileView.swift in Sources */,
 				4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */,
@@ -1097,6 +1104,7 @@
 				42C393411BC45DEC00630F93 /* RootController.swift in Sources */,
 				42F71DF61BF80478004E1B3B /* CheckinRequestTableViewCell.swift in Sources */,
 				5D916A1B1C013529003959CE /* ProfileViewController.swift in Sources */,
+				E44611A01C756A73006E90FA /* ExpandMenuItem.swift in Sources */,
 				4254D2991BC62B4500C831C7 /* LoginView.swift in Sources */,
 				422334281BC09E0F00E863D0 /* School.swift in Sources */,
 				42F85EDA1C0132CB00F62C37 /* AddSchoolView.swift in Sources */,

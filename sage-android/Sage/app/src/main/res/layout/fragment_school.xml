@@ -95,5 +95,4 @@
 
         </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
-
 </android.support.design.widget.CoordinatorLayout>

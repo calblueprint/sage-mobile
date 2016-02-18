@@ -52,6 +52,8 @@ public @Data class User {
     public final static String[] VOLUNTEER_SPINNER = { "Volunteer", "One Unit", "Two Units" };
     public final static String[] ROLE_SPINNER = { "Student", "Admin" };
     public final static String[] ROLE_SPINNER_PRESIDENT = { "Student", "Admin", "President" };
+    public final static String[] ROLES_LABEL = { "Inactive", "Admin", "President", "Director" };
+    public final static String[] ABBREV_ROLES_LABEL = { "!", "A", "P", "D" };
 
     public User() {}
 

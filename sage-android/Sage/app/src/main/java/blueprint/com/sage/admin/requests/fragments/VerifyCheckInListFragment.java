@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.requests.adapters.VerifyCheckInListAdapter;
@@ -31,6 +32,7 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
     @Bind(R.id.verify_check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
     @Bind(R.id.verify_check_in_list_list) RecycleViewEmpty mCheckInList;
     @Bind(R.id.verify_check_in_list_empty_view) SwipeRefreshLayout mEmptyView;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
 
     private VerifyCheckInListAdapter mCheckInAdapter;
 
@@ -72,6 +74,7 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
 
         mCheckInList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCheckInList.setEmptyView(mEmptyView);
+        mCheckInList.setProgressBar(mProgressBar);
         mCheckInList.setAdapter(mCheckInAdapter);
 
         mCheckInRefreshLayout.setOnRefreshListener(this);

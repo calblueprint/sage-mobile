@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
@@ -25,6 +26,7 @@ public abstract class AbstractCheckInListFragment extends Fragment implements Sw
     @Bind(R.id.user_check_in_list) public RecycleViewEmpty mCheckInList;
     @Bind(R.id.user_check_in_empty_view) public SwipeRefreshLayout mEmptyView;
     @Bind(R.id.user_check_in_refresh) public SwipeRefreshLayout mCheckInRefreshView;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
 
     public RecyclerView.Adapter mAdapter;
     public ToolbarInterface mToolbarInterface;
@@ -62,6 +64,7 @@ public abstract class AbstractCheckInListFragment extends Fragment implements Sw
     public void initializeViews() {
         mAdapter = getAdapter();
         mCheckInList.setEmptyView(mEmptyView);
+        mCheckInList.setProgressBar(mProgressBar);
         mCheckInList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCheckInList.setAdapter(mAdapter);
 

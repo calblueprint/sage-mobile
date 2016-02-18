@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
@@ -31,6 +32,8 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
     @Bind(R.id.user_list_list) public RecycleViewEmpty mUserList;
     @Bind(R.id.user_list_refresh) public SwipeRefreshLayout mRefreshUsers;
     @Bind(R.id.user_list_fab) public FloatingActionButton mFloatingActionButton;
+    @Bind(R.id.list_progress_bar)
+    ProgressBar mProgressBar;
 
     public RecyclerView.Adapter mUserListAdapter;
 
@@ -71,6 +74,7 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
 
         mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mUserList.setEmptyView(mEmptyView);
+        mUserList.setProgressBar(mProgressBar);
         mUserList.setAdapter(mUserListAdapter);
 
         mRefreshUsers.setOnRefreshListener(this);

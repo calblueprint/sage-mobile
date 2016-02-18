@@ -67,10 +67,16 @@ public class RecycleViewEmpty extends RecyclerView {
             }
         };
 
+        showProgressBar();
     }
 
     public void setEmptyView(View view) {
         mEmptyView = view;
+        refreshLayout();
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        mProgressBar = progressBar;
         refreshLayout();
     }
 
@@ -96,15 +102,20 @@ public class RecycleViewEmpty extends RecyclerView {
     }
 
     private void showProgressBar() {
+        if (mProgressBar != null) {
+            ValueAnimator fadeIn = getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION);
+            fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
+            fadeIn.start();
+        }
+
         ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
         fadeOut.addListener(getAnimationListener(this, View.GONE));
-        fadeOut.start();
 
         if (mEmptyView != null) {
-            ValueAnimator fadeOut = getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION);
             fadeOut.addListener(getAnimationListener(mEmptyView, View.GONE));
-            fadeOut.start();
         }
+
+        fadeOut.start();
     }
 
     private void showRecyclerView() {
@@ -112,24 +123,35 @@ public class RecycleViewEmpty extends RecyclerView {
         fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
         fadeIn.start();
 
+        ValueAnimator fadeOut = getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION);
+
         if (mEmptyView != null) {
-            ValueAnimator fadeOut = getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION);
             fadeOut.addListener(getAnimationListener(mEmptyView, View.GONE));
-            fadeOut.start();
         }
+
+        if (mProgressBar != null) {
+            fadeOut.addListener(getAnimationListener(mProgressBar, View.GONE));
+        }
+
+        fadeOut.start();
     }
 
     private void showEmptyView() {
         if (mEmptyView == null)
             return;
 
-        ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
-        fadeOut.addListener(getAnimationListener(this, View.GONE));
-        fadeOut.start();
-
         ValueAnimator fadeIn = getObjectAnimator(mEmptyView, 0, 1).setDuration(ANIMATION_DURATION);
         fadeIn.addListener(getAnimationListener(mEmptyView, View.VISIBLE));
         fadeIn.start();
+
+        ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
+        fadeOut.addListener(getAnimationListener(this, View.GONE));
+
+        if (mProgressBar != null) {
+            fadeOut.addListener(getAnimationListener(mProgressBar, View.GONE));
+        }
+
+        fadeOut.start();
     }
 
     private ValueAnimator getObjectAnimator(View target, int start, int end) {

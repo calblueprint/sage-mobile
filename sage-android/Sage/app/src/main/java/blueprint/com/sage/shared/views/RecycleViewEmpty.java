@@ -7,6 +7,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ProgressBar;
 
 /**
  * Created by charlesx on 11/5/15.
@@ -18,6 +19,7 @@ public class RecycleViewEmpty extends RecyclerView {
     private AdapterDataObserver mObserver;
 
     private View mEmptyView;
+    private ProgressBar mProgressBar;
 
     public RecycleViewEmpty(Context context) {
         super(context);
@@ -79,7 +81,7 @@ public class RecycleViewEmpty extends RecyclerView {
             toggleRecyclerView(true);
 
         if (adapter == null) {
-            showRecyclerView();
+            showProgressBar();
         } else {
             toggleRecyclerView(adapter.getItemCount() > 0);
         }
@@ -90,6 +92,18 @@ public class RecycleViewEmpty extends RecyclerView {
             showRecyclerView();
         } else if (mEmptyView != null && mEmptyView.getVisibility() == View.GONE && !showRecyclerView) {
             showEmptyView();
+        }
+    }
+
+    private void showProgressBar() {
+        ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
+        fadeOut.addListener(getAnimationListener(this, View.GONE));
+        fadeOut.start();
+
+        if (mEmptyView != null) {
+            ValueAnimator fadeOut = getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION);
+            fadeOut.addListener(getAnimationListener(mEmptyView, View.GONE));
+            fadeOut.start();
         }
     }
 

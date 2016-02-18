@@ -10,6 +10,9 @@ import android.widget.AutoCompleteTextView;
  * Created by kelseylam on 2/17/16.
  */
 public class DelayAutoCompleteTextView extends AutoCompleteTextView {
+    private static final int MESSAGE_TEXT_CHANGED = 0;
+    private static final int DEFAULT_AUTOCOMPLETE_DELAY = 250;
+
     public DelayAutoCompleteTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -23,7 +26,7 @@ public class DelayAutoCompleteTextView extends AutoCompleteTextView {
 
     @Override
     protected void performFiltering(CharSequence text, int keyCode) {
-        mHandler.removeMessages(0);
-        mHandler.sendMessageDelayed(mHandler.obtainMessage(0, keyCode, 0, text), 750);
+        mHandler.removeMessages(MESSAGE_TEXT_CHANGED);
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_TEXT_CHANGED, keyCode, MESSAGE_TEXT_CHANGED, text), DEFAULT_AUTOCOMPLETE_DELAY);
     }
 }

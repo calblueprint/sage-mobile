@@ -55,10 +55,6 @@ import de.greenrobot.event.EventBus;
 public abstract class SchoolFormAbstractFragment extends Fragment
           implements FormValidation, OnMapReadyCallback {
 
-    private final int SW_LAT = 37;
-    private final int SW_LNG = -123;
-    private final int NE_LAT = 38;
-    private final int NE_LNG = -122;
     private final int THRESHOLD = 3;
 
     private List<AutocompletePrediction> mPredictions;
@@ -164,20 +160,20 @@ public abstract class SchoolFormAbstractFragment extends Fragment
                 R.layout.place_prediction_list_item, getPredictions());
         mSchoolAddress.setAdapter(mPlaceAdapter);
         mSchoolAddress.setThreshold(THRESHOLD);
-        mSchoolAddress.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 2) getPredictions(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
+//        mSchoolAddress.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if (charSequence.length() > 2) getPredictions(charSequence.toString());
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//            }
+//        });
 
         mSchoolAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -217,27 +213,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     private void moveMapToLatLng(LatLng latLng) {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.addMarker(MapUtils.getMarkerOptions(latLng, getActivity()));
-    }
-
-    private void getPredictions(String address) {
-        PendingResult<AutocompletePredictionBuffer> result =
-                Places.GeoDataApi.getAutocompletePredictions(mBaseInterface.getGoogleApiClient(), address,
-                        MapUtils.createBounds(SW_LAT, SW_LNG, NE_LAT, NE_LNG), null);
-
-        if (result == null)
-            return;
-
-        result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
-            @Override
-            public void onResult(@NonNull AutocompletePredictionBuffer result) {
-                List<AutocompletePrediction> predictions = new ArrayList<AutocompletePrediction>();
-                for (AutocompletePrediction prediction : result) {
-                    predictions.add(prediction.freeze());
-                }
-                result.release();
-                setPredictions(predictions);
-            }
-        });
     }
 
     public void validateAndSubmitRequest() {

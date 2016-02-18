@@ -26,6 +26,10 @@ public class MapUtils {
     public final static int RADIUS = 50; /* 50 meters */
     public final static float DEFAULT_LONG = -122.26f;
     public final static float DEFAULT_LAT = 37.87f;
+    public final static int SW_LAT = 37;
+    public final static int SW_LNG = -123;
+    public final static int NE_LAT = 38;
+    public final static int NE_LNG = -122;
 
     public static LatLngBounds createBounds(int swLat, int swLng, int neLat, int neLng) {
         return new LatLngBounds(new LatLng(swLat, swLng), new LatLng(neLat, neLng));

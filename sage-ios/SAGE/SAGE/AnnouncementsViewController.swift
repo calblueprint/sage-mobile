@@ -131,6 +131,9 @@ class AnnouncementsViewController: UITableViewController {
     
     func showFilterOptions() {
         let menuController = MenuController(title: "Filter Options")
+        menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
+            
+        }))
         self.presentViewController(menuController, animated: false, completion: nil)
     }
     

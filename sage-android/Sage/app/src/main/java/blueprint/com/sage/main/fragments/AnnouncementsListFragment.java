@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -44,6 +45,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Bind(R.id.announcements_recycler) RecycleViewEmpty mAnnouncementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
     @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
@@ -93,12 +95,13 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     public void initializeViews() {
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mAnnouncementsList.setLayoutManager(llm);
+        mAnnouncementsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAnnouncementsList.setEmptyView(mEmptyView);
+        mAnnouncementsList.setProgressBar(mProgressBar);
+
         mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity(), getParentFragment());
         mAnnouncementsList.setAdapter(mAdapter);
+
         mAdapter.notifyDataSetChanged();
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);

@@ -37,12 +37,18 @@ class SchoolsTableViewCell: UITableViewCell {
         self.schoolName.text = school.name
         self.schoolAddress.text = school.address
         var labelText = String(school.studentCount)
+        
         if school.studentCount == 1 {
             labelText += " student"
         } else {
             labelText += " students"
         }
         self.numStudents.text = labelText
+        self.numStudents.alpha = 1
+        
+        if school.studentCount == 0 {
+            self.numStudents.alpha = 0
+        }
 
         self.layoutSubviews()
     }
@@ -74,6 +80,11 @@ class SchoolsTableViewCell: UITableViewCell {
         self.schoolAddress.setY(CGRectGetMaxY(self.schoolName.frame))
         self.schoolAddress.setX(UIConstants.sideMargin)
         self.schoolAddress.setWidth(CGRectGetMaxX(self.frame) - 2*UIConstants.sideMargin)
+        
+        if self.schoolAddress.text == nil {
+            self.schoolAddress.setHeight(0)
+            self.schoolName.centerVertically()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

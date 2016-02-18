@@ -54,8 +54,7 @@ public @Data class User {
     public final static String[] ROLE_SPINNER_PRESIDENT = { "Student", "Admin", "President" };
     public final static String[] ROLES_LABEL = { "Inactive", "Admin", "President", "Director" };
     public final static String[] ABBREV_ROLES_LABEL = { "!", "A", "P", "D" };
-
-
+    
     public User() {}
 
     @JsonIgnore
@@ -76,6 +75,10 @@ public @Data class User {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         profile.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
+    }
+
+    public boolean getRemoveImage() {
+        return profile == null;
     }
 
     /**

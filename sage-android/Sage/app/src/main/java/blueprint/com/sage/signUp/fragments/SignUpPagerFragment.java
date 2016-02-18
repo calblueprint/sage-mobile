@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.BackEvent;
 import blueprint.com.sage.shared.adapters.pagers.SimplePagerAdapter;
+import blueprint.com.sage.shared.interfaces.PhotoPickerInterface;
 import blueprint.com.sage.shared.validators.PhotoPicker;
 import blueprint.com.sage.signUp.SignUpActivity;
 import blueprint.com.sage.signUp.animation.SignUpPageTransformer;
@@ -24,7 +25,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 10/12/15.
  * Fragment that contains the viewpager
  */
-public class SignUpPagerFragment extends Fragment {
+public class SignUpPagerFragment extends Fragment implements PhotoPickerInterface {
 
     @Bind(R.id.sign_up_background) View mBackground;
     @Bind(R.id.sign_up_view_pager) ViewPager mViewPager;
@@ -88,10 +89,12 @@ public class SignUpPagerFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
     }
 
@@ -142,6 +145,16 @@ public class SignUpPagerFragment extends Fragment {
 
             SignUpProfileFragment profFragment = (SignUpProfileFragment) fragment;
             profFragment.takePhotoResult(data);
+        }
+    }
+
+    public void onRemovePhotoResult() {
+        if (getChildFragmentManager().getFragments() == null) return;
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof SignUpProfileFragment)) continue;
+
+            SignUpProfileFragment profFragment = (SignUpProfileFragment) fragment;
+            profFragment.removePhotoResult();
         }
     }
 }

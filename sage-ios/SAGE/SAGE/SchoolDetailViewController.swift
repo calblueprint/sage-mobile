@@ -13,6 +13,7 @@ class SchoolDetailViewController: UITableViewController {
     
     private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     private var school: School?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     
     // MARK: - Initialization
@@ -20,6 +21,8 @@ class SchoolDetailViewController: UITableViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "deletedSchool:", name: NotificationConstants.deleteSchoolKey, object: nil)
     }
     
     deinit {
@@ -41,6 +44,9 @@ class SchoolDetailViewController: UITableViewController {
         self.title = school.name!
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
             self.configureWithCompleteSchool(updatedSchool)
+            self.activityIndicator.stopAnimating()
+            self.schoolDetailHeaderView.mapView.hidden = false
+
             }) { (message) -> Void in }
     }
     
@@ -59,6 +65,9 @@ class SchoolDetailViewController: UITableViewController {
         self.tableView.tableHeaderView = schoolDetailHeaderView
         self.tableView.tableFooterView = UIView()
         
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        
         let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
         editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
         let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
@@ -70,6 +79,13 @@ class SchoolDetailViewController: UITableViewController {
             marker.map = self.schoolDetailHeaderView.mapView
             self.schoolDetailHeaderView.mapView.moveCamera(GMSCameraUpdate.setTarget(coordinate))
         }
+        
+        self.schoolDetailHeaderView.mapView.hidden = true
+    }
+    
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
     }
     
     func editSchool() {

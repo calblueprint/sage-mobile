@@ -30,6 +30,7 @@ import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.users.info.UserSemesterListActivity;
 import blueprint.com.sage.users.profile.EditUserActivity;
+import blueprint.com.sage.utility.model.UserUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
@@ -59,6 +60,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @Nullable @Bind(R.id.admin_user_change_role) LinearLayout mRoleLayout;
     @Nullable @Bind(R.id.admin_user_change_status) LinearLayout mStatusLayout;
+
+    @Bind(R.id.user_type) TextView mUserType;
 
     private User mUser;
     private Semester mSemester;
@@ -166,6 +169,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);
 
+//        Kelsey's stuff
+        UserUtils.setType(getActivity(), mUser, mUserType, null, mUser.ROLES_LABEL);
         mToolbarInterface.setTitle("User");
     }
 

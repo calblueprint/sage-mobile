@@ -12,6 +12,7 @@ class MenuView: UIView {
     
     private var backgroundView = UIView()
     private var menuList: [MenuItem]?
+    private var navbar = UINavigationBar()
     
     static let menuItemHeight: CGFloat = 60.0
     
@@ -28,9 +29,16 @@ class MenuView: UIView {
     }
     
     func setupSubviews() {
-        self.backgroundView.backgroundColor = UIColor(white: 0, alpha: 0.35)
+        self.backgroundView.backgroundColor = UIColor(white: 0, alpha: 0.40)
         self.backgroundView.alpha = 0
         self.addSubview(self.backgroundView)
+        
+        self.navbar.barTintColor = UIColor.whiteColor()
+        self.navbar.tintColor = UIColor.blackColor()
+        self.navbar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blackColor()]
+        self.navbar.setHeight(UIConstants.navbarHeight)
+        self.navbar.alpha = 0
+        self.addSubview(self.navbar)
     }
 
     //
@@ -40,11 +48,13 @@ class MenuView: UIView {
         super.layoutSubviews()
         self.backgroundView.frame = self.bounds
         
+        self.navbar.fillWidth()
+        
         let startingOffset = UIConstants.navbarHeight
         if let list = self.menuList {
             for var i = 0; i < list.count; i++ {
                 let menuItem = list[i]
-                menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i))
+                menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i) + CGFloat(i) + 1)
                 menuItem.fillWidth()
             }
         }
@@ -53,10 +63,16 @@ class MenuView: UIView {
     //
     // MARK: - Public methods
     //
+    func setTitle(title: String) {
+        let navigationItem = UINavigationItem(title: title)
+        self.navbar.setItems([navigationItem], animated: false)
+    }
+    
     func createMenuList(list: [MenuItem]) {
         if self.menuList == nil {
             self.menuList = list
             for menuItem in list {
+                menuItem.alpha = 0
                 self.addSubview(menuItem)
             }
             self.layoutSubviews()
@@ -68,6 +84,19 @@ class MenuView: UIView {
             self.backgroundView.alpha = 1
         }
         
+        self.navbar.moveY(-UIConstants.navbarHeight)
+        self.navbar.alpha = 1
+        UIView.animateWithDuration(UIConstants.longAnimationTime,
+            delay: 0,
+            usingSpringWithDamping: UIConstants.defaultSpringDampening,
+            initialSpringVelocity: UIConstants.defaultSpringVelocity,
+            options: [],
+            animations: { () -> Void in
+                self.navbar.moveY(UIConstants.navbarHeight)
+            },
+            completion: nil)
+
+        
         let itemOffset: CGFloat = 200
         for var i = 0; i < self.menuList?.count; i++ {
             let menuItem = self.menuList![i]
@@ -78,6 +107,7 @@ class MenuView: UIView {
                 initialSpringVelocity: UIConstants.defaultSpringVelocity,
                 options: [],
                 animations: { () -> Void in
+                    menuItem.alpha = 1
                     menuItem.moveY(-itemOffset)
                 },
                 completion: nil)

@@ -23,6 +23,7 @@ class MenuItem: UIView {
         
         self.titleLabel.text = title
         self.handler = handler
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,8 +33,8 @@ class MenuItem: UIView {
     func setupSubviews() {
         self.setHeight(MenuView.menuItemHeight)
         
-        self.titleLabel.textColor = UIColor.secondaryTextColor
-        self.titleLabel.font = UIFont.normalFont
+        self.titleLabel.textColor = UIColor.blackColor()
+        self.titleLabel.font = UIFont.getSemiboldFont(16)
         self.addSubview(self.titleLabel)
     }
     

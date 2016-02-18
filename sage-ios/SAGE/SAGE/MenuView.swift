@@ -29,6 +29,15 @@ class MenuView: UIView {
         self.backgroundView.alpha = 0
         self.addSubview(self.backgroundView)
     }
+
+    //
+    // MARK: - Layout
+    //
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.backgroundView.frame = self.bounds
+    }
     
     //
     // MARK: - Public methods

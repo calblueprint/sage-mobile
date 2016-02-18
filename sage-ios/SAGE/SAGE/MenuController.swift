@@ -18,6 +18,7 @@ class MenuController: UIViewController {
     required init(title: String?) {
         super.init(nibName: nil, bundle: nil)
         self.title = title
+        self.modalPresentationStyle = .OverFullScreen
     }
 
     required init?(coder aDecoder: NSCoder) {

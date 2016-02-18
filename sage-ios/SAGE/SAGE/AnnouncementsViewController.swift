@@ -138,7 +138,7 @@ class AnnouncementsViewController: UITableViewController {
     
     func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
+        let errorView = super.showError(message, currentError: error, color: UIColor.lightRedColor)
         self.currentErrorMessage = errorView
     }
     

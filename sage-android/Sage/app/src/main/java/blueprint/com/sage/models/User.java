@@ -77,6 +77,10 @@ public @Data class User {
         return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
     }
 
+    public boolean getRemoveImage() {
+        return profile == null;
+    }
+
     /**
      * Loads user image into imageview
      */

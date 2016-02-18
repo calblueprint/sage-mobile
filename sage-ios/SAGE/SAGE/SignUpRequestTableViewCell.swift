@@ -16,7 +16,7 @@ class SignUpRequestTableViewCell: UITableViewCell {
     
     var userPicture = ProfileImageView()
     var userName = UILabel()
-    var schoolAndHours = UILabel()
+    var school = UILabel()
     var checkButton = UIButton()
     var xButton = UIButton()
     var userID: Int?
@@ -25,7 +25,7 @@ class SignUpRequestTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(self.userPicture)
         self.contentView.addSubview(self.userName)
-        self.contentView.addSubview(self.schoolAndHours)
+        self.contentView.addSubview(self.school)
         self.contentView.addSubview(self.checkButton)
         self.contentView.addSubview(self.xButton)
         self.selectionStyle = .None
@@ -55,11 +55,11 @@ class SignUpRequestTableViewCell: UITableViewCell {
         }
         
         if let name = user.school?.name {
-            self.schoolAndHours.text = name + " - " + hoursText
+            self.school.text = name
         } else {
-            self.schoolAndHours.text = hoursText            
+            self.school.text = hoursText
         }
-        self.schoolAndHours.font = UIFont.normalFont
+        self.school.font = UIFont.normalFont
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(buttonSize)
         checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
@@ -99,11 +99,11 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.xButton.setX(CGRectGetMinX(self.checkButton.frame) - buttonSize - buttonInset - buttonInset)
         self.xButton.centerVertically()
         
-        self.schoolAndHours.textAlignment = NSTextAlignment.Left
-        self.schoolAndHours.sizeToFit()
-        self.schoolAndHours.setX(10 + CGRectGetMaxX(self.userPicture.frame))
-        self.schoolAndHours.setY(CGRectGetMaxY(self.userName.frame))
-        self.schoolAndHours.setWidth(self.xButton.frame.origin.x - self.schoolAndHours.frame.origin.x)
+        self.school.textAlignment = NSTextAlignment.Left
+        self.school.sizeToFit()
+        self.school.setX(10 + CGRectGetMaxX(self.userPicture.frame))
+        self.school.setY(CGRectGetMaxY(self.userName.frame))
+        self.school.setWidth(self.xButton.frame.origin.x - self.school.frame.origin.x)
     
     }
     

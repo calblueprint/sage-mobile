@@ -89,7 +89,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
     
     func showErrorAndSetMessage(message: String, size: CGFloat) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error)
+        let errorView = super.showError(message, currentError: error, alpha: 0.4, centered: false)
         self.currentErrorMessage = errorView
     }
 

@@ -31,6 +31,7 @@ class MenuController: UIViewController {
     //
     override func loadView() {
         self.view = self.menuView
+        self.menuView.setTitle("Filter Options")
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -40,7 +41,13 @@ class MenuController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        UIApplication.sharedApplication().statusBarStyle = .Default
         self.menuView.appear()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
 
     //

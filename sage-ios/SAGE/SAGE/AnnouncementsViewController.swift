@@ -134,6 +134,13 @@ class AnnouncementsViewController: UITableViewController {
         menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
 
         }))
+        menuController.addMenuItem(MenuItem(title: "Only General", handler: { (_) -> Void in
+
+        }))
+        menuController.addMenuItem(MenuItem(title: "School", handler: { (_) -> Void in
+
+        }))
+
         self.presentViewController(menuController, animated: false, completion: nil)
     }
 

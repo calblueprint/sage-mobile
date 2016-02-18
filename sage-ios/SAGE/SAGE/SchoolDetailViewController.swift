@@ -22,7 +22,6 @@ class SchoolDetailViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "deletedSchool:", name: NotificationConstants.deleteSchoolKey, object: nil)
     }
     
     deinit {
@@ -37,6 +36,31 @@ class SchoolDetailViewController: UITableViewController {
         super.init(coder: aDecoder)
     }
     
+    func editedProfile(notification: NSNotification) {
+        let newUser = notification.object!.copy() as! User
+        if let school = self.school {
+            var reload = false
+
+            if newUser.id == school.director?.id {
+                reload = true
+                school.director = newUser
+            }
+            if var students = school.students {
+                for var index = 0; index < students.count; ++index {
+                    let student = students[index]
+                    if student.id == newUser.id {
+                        reload = true
+                        self.school!.students![index] = newUser
+                    }
+                }
+            }
+
+            if reload {
+                self.tableView.reloadData()
+            }
+        }
+    }
+
     //
     // MARK: - Configuration
     //

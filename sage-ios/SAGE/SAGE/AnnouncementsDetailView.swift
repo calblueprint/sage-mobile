@@ -11,6 +11,7 @@ import Foundation
 class AnnouncementsDetailView: UIView {
     var scrollView = UIScrollView()
     let announcementUserImg = ProfileImageView()
+    let announcementUserButton = UIButton()
     var announcementUserName = UILabel()
     var announcementTitle = UILabel()
     var announcementTime = UILabel()
@@ -20,6 +21,7 @@ class AnnouncementsDetailView: UIView {
         super.init(frame: frame)
         self.scrollView.alwaysBounceVertical = true
         self.scrollView.addSubview(announcementUserImg)
+        self.scrollView.addSubview(announcementUserButton)
         self.scrollView.addSubview(announcementUserName)
         self.scrollView.addSubview(announcementTime)
         self.scrollView.addSubview(announcementTitle)
@@ -61,6 +63,8 @@ class AnnouncementsDetailView: UIView {
     
     func setUpViewStyle() {
         announcementUserImg.setDiameter(UIConstants.userImageSize)
+        announcementUserButton.setHeight(UIConstants.userImageSize)
+        announcementUserButton.setWidth(UIConstants.userImageSize)
         
         announcementUserName.font = UIFont.normalFont
         announcementUserName.textAlignment = NSTextAlignment.Left
@@ -87,6 +91,8 @@ class AnnouncementsDetailView: UIView {
         
         announcementUserImg.setX(UIConstants.sideMargin)
         announcementUserImg.setY(UIConstants.textMargin)
+        announcementUserButton.setX(UIConstants.sideMargin)
+        announcementUserButton.setY(UIConstants.textMargin)
         
         let announcementUserImgRight = CGRectGetMaxX(announcementUserImg.frame)
         announcementUserName.setX(announcementUserImgRight+UIConstants.textMargin)

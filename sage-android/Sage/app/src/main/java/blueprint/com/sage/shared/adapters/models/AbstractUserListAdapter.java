@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.utility.model.UserUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Data;
@@ -82,6 +84,8 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
             }
         });
         user.loadUserImage(mActivity, viewHolder.mImage);
+
+        UserUtils.setType(mActivity, user, viewHolder.mUserType, viewHolder.mBorder, user.ABBREV_ROLES_LABEL);
     }
 
     public abstract void onItemClick(User user);
@@ -114,6 +118,8 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
         @Bind(R.id.user_list_name) TextView mName;
         @Bind(R.id.user_list_school) TextView mSchool;
         @Bind(R.id.user_list_photo) CircleImageView mImage;
+        @Bind(R.id.user_type_circle) TextView mUserType;
+        @Bind(R.id.user_type_circle_border) ImageView mBorder;
 
         View mView;
 

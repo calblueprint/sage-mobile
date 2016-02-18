@@ -13,7 +13,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -24,31 +23,33 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import blueprint.com.sage.shared.interfaces.PhotoPickerInterface;
+
 /**
  * Created by charlesx on 11/18/15.
  */
 public class PhotoPicker {
 
     private Activity mActivity;
-    private Fragment mFragment;
+    private PhotoPickerInterface mPhotoPickerInterface;
     private String mPhotoPath;
 
     public static final int CAMERA_REQUEST = 1337;
     public static final int PICK_PHOTO_REQUEST = 9001;
     public static final int IMAGE_MAX_SIZE = 100000; // 100 KB
 
-    public PhotoPicker(Activity activity, Fragment fragment) {
+    public PhotoPicker(Activity activity, PhotoPickerInterface photoPickerInterface) {
         mActivity = activity;
-        mFragment = fragment;
+        mPhotoPickerInterface = photoPickerInterface;
     }
 
-    public static PhotoPicker newInstance(Activity activity, Fragment fragment) {
-        return new PhotoPicker(activity, fragment);
+    public static PhotoPicker newInstance(Activity activity, PhotoPickerInterface photoPickerInterface) {
+        return new PhotoPicker(activity, photoPickerInterface);
     }
 
     public void onSelectPhotoButton() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        mFragment.startActivityForResult(intent, PICK_PHOTO_REQUEST);
+        mPhotoPickerInterface.startActivityForResult(intent, PICK_PHOTO_REQUEST);
     }
 
     public void onTakePhotoButton() {
@@ -65,9 +66,13 @@ public class PhotoPicker {
 
             if (photoFile != null) {
                 takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                mFragment.startActivityForResult(takePhotoIntent, CAMERA_REQUEST);
+                mPhotoPickerInterface.startActivityForResult(takePhotoIntent, CAMERA_REQUEST);
             }
         }
+    }
+
+    public void onRemovePhotoButton() {
+        mPhotoPickerInterface.onRemovePhotoResult();
     }
 
     private File createImageFile() throws IOException {
@@ -171,8 +176,7 @@ public class PhotoPicker {
 
     public static class PhotoOptionDialog extends DialogFragment {
 
-        private static String[] mOptions = { "Choose a photo", "Take a picture" };
-//        private static String[] mOptions = { "Choose a photo" };
+        private static String[] mOptions = { "Choose a photo", "Take a picture", "Remove photo" };
         private PhotoPicker mPicker;
 
         public static PhotoOptionDialog newInstance(PhotoPicker picker) {
@@ -191,8 +195,17 @@ public class PhotoPicker {
             builder.setItems(mOptions, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (which == 0) mPicker.onSelectPhotoButton();
-                    else mPicker.onTakePhotoButton();
+                    switch (which) {
+                        case 0:
+                            mPicker.onSelectPhotoButton();
+                            break;
+                        case 1:
+                            mPicker.onTakePhotoButton();
+                            break;
+                        case 2:
+                            mPicker.onRemovePhotoButton();
+                            break;
+                    }
                 }
             });
 

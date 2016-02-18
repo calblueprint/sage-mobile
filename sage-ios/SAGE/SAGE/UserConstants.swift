@@ -29,4 +29,6 @@ struct UserConstants {
     static let kPasswordConfirmation: String = "password_confirmation"
     
     static let kCurrentPassword: String = "current_password"
+
+    static let kResetImage: String = "reset_image"
 }

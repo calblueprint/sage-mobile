@@ -46,7 +46,7 @@ class ProfileOperations: NSObject {
         completion([])
     }
     
-    static func updateProfile(user: User, password: String, photoData: String?, newPassword: String?, passwordConfirmation: String?, completion: (User) -> Void, failure: (String) -> Void) {
+    static func updateProfile(user: User, password: String, photoData: String?, newPassword: String?, passwordConfirmation: String?, resetPhoto: Bool, completion: (User) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
 
         var hours: Int = 0
@@ -75,6 +75,10 @@ class ProfileOperations: NSObject {
             userJSON[UserConstants.kPasswordConfirmation] = passwordConfirmation
         }
         
+        if resetPhoto {
+            userJSON[UserConstants.kResetImage] = true
+        }
+
         let params = ["user": userJSON]
         
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)

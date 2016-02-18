@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FontAwesomeKit
 import SwiftKeychainWrapper
 
 class AnnouncementsViewController: UITableViewController {
@@ -92,9 +93,15 @@ class AnnouncementsViewController: UITableViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
 
+        let filterIcon = FAKIonIcons.androidMoreVerticalIconWithSize(UIConstants.barbuttonIconSize)
+        let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+
         if let role = LoginOperations.getUser()?.role {
             if role == .Admin || role == .President {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
+                self.navigationItem.rightBarButtonItems = [filterButton, UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")]
+            } else {
+                self.navigationItem.rightBarButtonItems = [filterButton]
             }
         }
         
@@ -122,6 +129,11 @@ class AnnouncementsViewController: UITableViewController {
         self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
     
+    func showFilterOptions() {
+        let menuController = MenuController(title: "Filter Options")
+        self.presentViewController(menuController, animated: false, completion: nil)
+    }
+
     func getAnnouncements() {
         AnnouncementsOperations.loadAnnouncements({ (announcements) -> Void in
             self.announcements = announcements

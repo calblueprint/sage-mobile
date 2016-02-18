@@ -31,6 +31,15 @@ class MenuView: UIView {
     }
 
     //
+    // MARK: - Layout
+    //
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.backgroundView.frame = self.bounds
+    }
+
+    //
     // MARK: - Public methods
     //
     func appear() {

@@ -10,7 +10,10 @@ import UIKit
 
 class MenuView: UIView {
     
-    var backgroundView = UIView()
+    private var backgroundView = UIView()
+    private var menuList: [MenuItem]?
+    
+    static let menuItemHeight: CGFloat = 60.0
     
     //
     // MARK: - Initialization and Setup
@@ -35,13 +38,32 @@ class MenuView: UIView {
     //
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         self.backgroundView.frame = self.bounds
+        
+        let startingOffset = UIConstants.navbarHeight
+        if let list = self.menuList {
+            for var i = 0; i < list.count; i++ {
+                let menuItem = list[i]
+                menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i))
+            }
+        }
     }
     
     //
     // MARK: - Public methods
     //
+    func setMenuList(list: [MenuItem]) {
+        if self.menuList == nil {
+            self.menuList = list
+            for menuItem in list {
+                self.addSubview(menuItem)
+            }
+            self.layoutSubviews()
+        } else {
+            fatalError("Menu list already set for menu view")
+        }
+    }
+    
     func appear() {
         UIView.animateWithDuration(UIConstants.normalAnimationTime) { () -> Void in
             self.backgroundView.alpha = 1

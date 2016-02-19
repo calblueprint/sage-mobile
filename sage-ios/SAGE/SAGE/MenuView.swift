@@ -13,6 +13,7 @@ class MenuView: UIView {
     private var backgroundView = UIView()
     private var menuList: [MenuItem]?
     private var navbar = UINavigationBar()
+    private var darkenStatusBar = false
 
     static let menuItemHeight: CGFloat = 60.0
 
@@ -33,6 +34,7 @@ class MenuView: UIView {
         self.backgroundView.alpha = 0
         self.addSubview(self.backgroundView)
 
+        self.navbar.translucent = false
         self.navbar.barTintColor = UIColor.whiteColor()
         self.navbar.tintColor = UIColor.blackColor()
         self.navbar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blackColor()]
@@ -66,9 +68,18 @@ class MenuView: UIView {
     //
     // MARK: - Public methods
     //
-    func setTitle(title: String) {
-        let navigationItem = UINavigationItem(title: title)
+    func setTitle(title: String?) {
+        if title == nil {
+            self.navbar.translucent = true
+            self.navbar.barTintColor = UIColor.clearColor()
+            self.navbar.tintColor = UIColor.whiteColor()
+            self.navbar.layer.shadowOpacity = 0
+            self.darkenStatusBar = false
+            return
+        }
+        let navigationItem = UINavigationItem(title: title!)
         self.navbar.setItems([navigationItem], animated: false)
+        self.darkenStatusBar = true
     }
 
     func createMenuList(list: [MenuItem]) {
@@ -83,7 +94,9 @@ class MenuView: UIView {
     }
 
     func appear() {
-        UIApplication.sharedApplication().statusBarStyle = .Default
+        if self.darkenStatusBar {
+            UIApplication.sharedApplication().statusBarStyle = .Default
+        }
 
         UIView.animateWithDuration(UIConstants.normalAnimationTime) { () -> Void in
             self.backgroundView.alpha = 1

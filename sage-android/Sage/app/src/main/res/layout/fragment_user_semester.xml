@@ -12,7 +12,8 @@
         <blueprint.com.sage.shared.views.RecycleViewEmpty
             android:id="@+id/user_check_in_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

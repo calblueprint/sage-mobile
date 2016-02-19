@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -40,10 +41,12 @@ public class RecycleViewEmpty extends RecyclerView {
     public void setAdapter(Adapter adapter) {
         super.setAdapter(adapter);
 
-        if (adapter != null)
+        if (adapter != null) {
             adapter.registerAdapterDataObserver(mObserver);
-
-//        refreshLayout();
+            if (adapter.getItemCount() > 0) {
+                refreshLayout();
+            }
+        }
     }
 
     private void initView() {
@@ -102,6 +105,7 @@ public class RecycleViewEmpty extends RecyclerView {
     }
 
     private void showProgressBar() {
+        Log.e("show progress", "yay");
         if (mProgressBar != null) {
             ValueAnimator fadeIn = getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION);
             fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
@@ -119,6 +123,7 @@ public class RecycleViewEmpty extends RecyclerView {
     }
 
     private void showRecyclerView() {
+        Log.e("show recycler", "yay");
         ValueAnimator fadeIn = getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION);
         fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
         fadeIn.start();
@@ -137,6 +142,7 @@ public class RecycleViewEmpty extends RecyclerView {
     }
 
     private void showEmptyView() {
+        Log.e("show empty", "yay");
         if (mEmptyView == null)
             return;
 

@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
@@ -16,36 +18,92 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.CircleImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import lombok.Data;
 
 /**
  * Created by charlesx on 11/14/15.
  */
-public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAdapter.ViewHolder> {
+public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity mActivity;
-    private int mLayoutId;
-    private List<User> mUsers;
+    private List<Item> mItems;
 
-    public VerifyUserListAdapter(Activity activity, int layoutId, List<User> users) {
+    private static final int HEADER_VIEW = 0;
+    private static final int USER_VIEW = 1;
+    private final static String NO_SCHOOL = "No School";
+
+    public VerifyUserListAdapter(Activity activity, List<User> users) {
         super();
         mActivity = activity;
-        mLayoutId = layoutId;
-        mUsers = users;
+        setUpUsers(users);
+    }
+
+    // TODO: Sets up similar schools together - will fix this later
+    private void setUpUsers(List<User> users) {
+        mItems = new ArrayList<>();
+
+        TreeMap<String, List<Item>> userMap = new TreeMap<>();
+
+        for (User user : users) {
+            if (user.getSchool() == null) {
+                if (!userMap.containsKey(NO_SCHOOL))
+                    userMap.put(NO_SCHOOL, new ArrayList<Item>());
+                userMap.get(NO_SCHOOL).add(new Item(user, null));
+                continue;
+            }
+
+            if (!userMap.containsKey(user.getSchool().getName())) {
+                userMap.put(user.getSchool().getName(), new ArrayList<Item>());
+            }
+            userMap.get(user.getSchool().getName()).add(new Item(user, null));
+        }
+
+        for (String key : userMap.keySet()) {
+            mItems.add(new Item(null, key));
+
+            for (Item item : userMap.get(key))
+                mItems.add(item);
+        }
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = LayoutInflater.from(mActivity).inflate(mLayoutId, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+        View view;
+        switch (type) {
+            case HEADER_VIEW:
+                view = LayoutInflater.from(mActivity).inflate(R.layout.user_header_list_item, parent, false);
+                return new HeaderViewHolder(view);
+            default:
+                view = LayoutInflater.from(mActivity).inflate(R.layout.verify_users_list_item, parent, false);
+                return new UserViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+    public int getItemViewType(int position) {
+        return mItems.get(position).isHeader() ? HEADER_VIEW : USER_VIEW;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         if (getItemCount() == 0 || position < 0 || position >= getItemCount())
             return;
 
-        final User user = mUsers.get(position);
+        Item item = mItems.get(position);
 
+        if (item.isHeader()) {
+            bindHeaderHolder((HeaderViewHolder) viewHolder, item);
+        } else {
+            bindUserHolder((UserViewHolder) viewHolder, item);
+        }
+    }
+
+    private void bindHeaderHolder(HeaderViewHolder viewHolder, Item item) {
+        viewHolder.mHeader.setText(item.getHeader());
+    }
+
+    private void bindUserHolder(UserViewHolder viewHolder, final Item item) {
+        final User user = item.getUser();
         viewHolder.mName.setText(user.getName());
 
         if (user.getSchool() != null) {
@@ -55,7 +113,7 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = mUsers.indexOf(user);
+                int position = mItems.indexOf(item);
                 Requests.Users.with(mActivity).makeVerifyRequest(user, position);
             }
         });
@@ -63,7 +121,7 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
         viewHolder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = mUsers.indexOf(user);
+                int position = mItems.indexOf(item);
                 Requests.Users.with(mActivity).makeDeleteRequest(user, position);
             }
         });
@@ -72,19 +130,29 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
     }
 
     @Override
-    public int getItemCount() { return mUsers.size(); }
+    public int getItemCount() { return mItems.size(); }
 
     public void setUsers(List<User> users) {
-        mUsers = users;
+        setUpUsers(users);
         notifyDataSetChanged();
     }
 
     public void removeUser(int position) {
-        mUsers.remove(position);
+        mItems.remove(position);
         notifyItemRemoved(position);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.user_header_list_name) TextView mHeader;
+
+        public HeaderViewHolder(View v) {
+            super(v);
+            ButterKnife.bind(this, v);
+        }
+    }
+
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.verify_user_list_photo) CircleImageView mImage;
         @Bind(R.id.verify_user_list_name) TextView mName;
@@ -92,9 +160,22 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<VerifyUserListAd
         @Bind(R.id.verify_user_list_item_verify) ImageButton mVerify;
         @Bind(R.id.verify_user_list_item_delete) ImageButton mDelete;
 
-        public ViewHolder(View v) {
+        public UserViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
         }
+    }
+
+    @Data
+    public static class Item {
+        private User user;
+        private String header;
+
+        public Item(User user, String header) {
+            this.user = user;
+            this.header = header;
+        }
+
+        public boolean isHeader() { return header != null; }
     }
 }

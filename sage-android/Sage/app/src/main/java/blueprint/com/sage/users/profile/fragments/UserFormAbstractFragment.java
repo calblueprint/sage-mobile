@@ -2,6 +2,8 @@ package blueprint.com.sage.users.profile.fragments;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import blueprint.com.sage.shared.adapters.spinners.RoleSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.spinners.StringArraySpinnerAdapter;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.interfaces.PhotoPickerInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import blueprint.com.sage.shared.validators.PhotoPicker;
@@ -41,7 +44,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by charlesx on 11/25/15.
  */
-public abstract class UserFormAbstractFragment extends Fragment implements FormValidation {
+public abstract class UserFormAbstractFragment extends Fragment implements FormValidation, PhotoPickerInterface {
     @Bind(R.id.create_user_layout) LinearLayout mLayout;
 
     @Bind(R.id.create_user_first_name) EditText mFirstName;
@@ -60,6 +63,8 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     @Bind(R.id.create_user_type) Spinner mType;
     @Bind(R.id.create_user_role) Spinner mRole;
     @Bind(R.id.create_user_photo) CircleImageView mPhoto;
+
+    protected Bitmap mProfileBitmap;
 
     private PhotoPicker mPhotoPicker;
     protected FormValidator mValidator;
@@ -137,11 +142,32 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
 
         switch (requestCode) {
             case PhotoPicker.CAMERA_REQUEST:
-                mPhotoPicker.takePhotoResult(data, mPhoto);
+                mProfileBitmap = mPhotoPicker.takePhotoResult(data, mPhoto);
+                setImageBitmap();
                 break;
             case PhotoPicker.PICK_PHOTO_REQUEST:
-                mPhotoPicker.pickPhotoResult(data, mPhoto);
+                mProfileBitmap = mPhotoPicker.pickPhotoResult(data, mPhoto);
+                setImageBitmap();
                 break;
+        }
+    }
+
+    public void onRemovePhotoResult() {
+        mProfileBitmap = null;
+        setProfileImage();
+    }
+
+    private void setProfileImage() {
+        Bitmap bitmap = mProfileBitmap == null ?
+                BitmapFactory.decodeResource(getResources(), R.drawable.default_profile) :
+                mProfileBitmap;
+
+        mPhoto.setImageBitmap(bitmap);
+    }
+
+    private void setImageBitmap() {
+        if (mProfileBitmap != null) {
+            mPhoto.setImageBitmap(mProfileBitmap);
         }
     }
 

@@ -16,6 +16,7 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.interfaces.SignUpInterface;
 import blueprint.com.sage.signUp.fragments.SignUpPagerFragment;
 import blueprint.com.sage.utility.network.NetworkManager;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -27,7 +28,7 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 10/12/15.
  * Activity for signups
  */
-public class SignUpActivity extends FragmentActivity {
+public class SignUpActivity extends FragmentActivity implements SignUpInterface {
 
     private User mUser;
     private List<School> mSchools;

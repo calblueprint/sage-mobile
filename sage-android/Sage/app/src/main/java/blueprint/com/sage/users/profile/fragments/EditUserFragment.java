@@ -1,6 +1,5 @@
 package blueprint.com.sage.users.profile.fragments;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 
@@ -50,12 +49,11 @@ public class EditUserFragment extends UserFormAbstractFragment {
         }
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
-        Bitmap profile = mPhoto.getImageBitmap();
 
         mUser.setSchoolId(schoolId);
-        mUser.setProfile(profile);
+        mUser.setProfile(mProfileBitmap);
 
-        Requests.Users.with(getActivity()).makeEditRequest(mUser);
+        Requests.Users.with(getActivity()).makeStickyEditRequest(mUser);
     }
 
     public boolean isValidUser() {

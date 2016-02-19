@@ -6,7 +6,9 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 /**
  * Created by charlesx on 11/5/15.
@@ -18,6 +20,7 @@ public class RecycleViewEmpty extends RecyclerView {
     private AdapterDataObserver mObserver;
 
     private View mEmptyView;
+    private ProgressBar mProgressBar;
 
     public RecycleViewEmpty(Context context) {
         super(context);
@@ -38,10 +41,12 @@ public class RecycleViewEmpty extends RecyclerView {
     public void setAdapter(Adapter adapter) {
         super.setAdapter(adapter);
 
-        if (adapter != null)
+        if (adapter != null) {
             adapter.registerAdapterDataObserver(mObserver);
-
-        refreshLayout();
+            if (adapter.getItemCount() > 0) {
+                refreshLayout();
+            }
+        }
     }
 
     private void initView() {
@@ -65,10 +70,16 @@ public class RecycleViewEmpty extends RecyclerView {
             }
         };
 
+        showProgressBar();
     }
 
     public void setEmptyView(View view) {
         mEmptyView = view;
+        refreshLayout();
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        mProgressBar = progressBar;
         refreshLayout();
     }
 
@@ -79,7 +90,7 @@ public class RecycleViewEmpty extends RecyclerView {
             toggleRecyclerView(true);
 
         if (adapter == null) {
-            showRecyclerView();
+            showProgressBar();
         } else {
             toggleRecyclerView(adapter.getItemCount() > 0);
         }
@@ -93,29 +104,60 @@ public class RecycleViewEmpty extends RecyclerView {
         }
     }
 
+    private void showProgressBar() {
+        Log.e("show progress", "yay");
+        if (mProgressBar != null) {
+            ValueAnimator fadeIn = getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION);
+            fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
+            fadeIn.start();
+        }
+
+        ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
+        fadeOut.addListener(getAnimationListener(this, View.GONE));
+
+        if (mEmptyView != null) {
+            fadeOut.addListener(getAnimationListener(mEmptyView, View.GONE));
+        }
+
+        fadeOut.start();
+    }
+
     private void showRecyclerView() {
+        Log.e("show recycler", "yay");
         ValueAnimator fadeIn = getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION);
         fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
         fadeIn.start();
 
+        ValueAnimator fadeOut = getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION);
+
         if (mEmptyView != null) {
-            ValueAnimator fadeOut = getObjectAnimator(mEmptyView, 1, 0).setDuration(ANIMATION_DURATION);
             fadeOut.addListener(getAnimationListener(mEmptyView, View.GONE));
-            fadeOut.start();
         }
+
+        if (mProgressBar != null) {
+            fadeOut.addListener(getAnimationListener(mProgressBar, View.GONE));
+        }
+
+        fadeOut.start();
     }
 
     private void showEmptyView() {
+        Log.e("show empty", "yay");
         if (mEmptyView == null)
             return;
-
-        ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
-        fadeOut.addListener(getAnimationListener(this, View.GONE));
-        fadeOut.start();
 
         ValueAnimator fadeIn = getObjectAnimator(mEmptyView, 0, 1).setDuration(ANIMATION_DURATION);
         fadeIn.addListener(getAnimationListener(mEmptyView, View.VISIBLE));
         fadeIn.start();
+
+        ValueAnimator fadeOut = getObjectAnimator(this, 1, 0).setDuration(ANIMATION_DURATION);
+        fadeOut.addListener(getAnimationListener(this, View.GONE));
+
+        if (mProgressBar != null) {
+            fadeOut.addListener(getAnimationListener(mProgressBar, View.GONE));
+        }
+
+        fadeOut.start();
     }
 
     private ValueAnimator getObjectAnimator(View target, int start, int end) {

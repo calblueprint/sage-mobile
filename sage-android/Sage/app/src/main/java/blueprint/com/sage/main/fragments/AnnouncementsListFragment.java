@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -21,6 +22,7 @@ import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -43,6 +45,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Bind(R.id.announcements_recycler) RecycleViewEmpty mAnnouncementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
     @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
@@ -92,13 +95,13 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     public void initializeViews() {
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mAnnouncementsList.setLayoutManager(llm);
+        mAnnouncementsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAnnouncementsList.setEmptyView(mEmptyView);
+        mAnnouncementsList.setProgressBar(mProgressBar);
+
         mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity(), getParentFragment());
         mAnnouncementsList.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
     }
@@ -107,6 +110,11 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         HashMap<String, String> map = new HashMap<>();
         map.put("sort[attr]", "created_at");
         map.put("sort[order]", "desc");
+        User user = mBaseInterface.getUser();
+        if (user.isStudent() && user.getSchoolId() != 0) {
+            int id = user.getSchoolId();
+            map.put("default", Integer.toString(id));
+        }
         Requests.Announcements.with(getActivity()).makeListRequest(map);
     }
 

@@ -95,6 +95,13 @@ class ProfileViewController: UITableViewController {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.setY(self.profileView.headerHeight + CGFloat(40))
         self.activityIndicator.startAnimating()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "getUser", forControlEvents: .ValueChanged)
+        self.view.bringSubviewToFront(self.refreshControl!)
+        
         self.getUser()
     }
     
@@ -179,6 +186,7 @@ class ProfileViewController: UITableViewController {
             
             self.profileView.setupWithUser(user)
             self.activityIndicator.stopAnimating()
+            self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
@@ -209,6 +217,8 @@ class ProfileViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if LoginOperations.getUser()!.id == self.user!.id {
             return 2
+        } else if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
+            return 1
         }
         return 0
     }
@@ -243,7 +253,7 @@ class ProfileViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            let view = ProfileCheckinViewController()
+            let view = ProfileCheckinViewController(user: self.user)
             self.navigationController!.pushViewController(view, animated: true)
         } else if indexPath.section == 1 {
 

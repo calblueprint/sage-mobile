@@ -7,10 +7,35 @@
     android:gravity="center_vertical"
     android:padding="8dp">
 
-    <blueprint.com.sage.shared.views.CircleImageView
-        android:id="@+id/user_list_photo"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <blueprint.com.sage.shared.views.CircleImageView
+            android:id="@+id/user_list_photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <ImageView
+            android:id="@+id/user_type_circle_border"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginLeft="28dp"
+            android:background="@drawable/white_circle"/>
+
+        <TextView
+            android:id="@+id/user_type_circle"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/white"
+            android:background="@drawable/white_circle_user_type"/>
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -50,24 +50,24 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
 
     private void initializeFields() {
         mSchoolAdapter =
-                new SchoolSpinnerAdapter(getParentActivity(),
-                                               getParentActivity().getSchools(),
+                new SchoolSpinnerAdapter(getActivity(),
+                                               mSignUpInterface.getSchools(),
                                                R.layout.sign_in_spinner_item,
                                                R.layout.sign_in_spinner_drop_item);
         mSchoolSpinner.setAdapter(mSchoolAdapter);
 
-        int selectedSchool = getParentActivity().getUser().getSchoolSelected();
+        int selectedSchool = mSignUpInterface.getUser().getSchoolSelected();
         if (selectedSchool > -1) {
             mSchoolSpinner.setSelection(selectedSchool);
         }
 
         mTypeAdapter =
-                new StringArraySpinnerAdapter(getParentActivity(),
+                new StringArraySpinnerAdapter(getActivity(),
                                        User.VOLUNTEER_SPINNER,
                                        R.layout.sign_in_spinner_item,
                                        R.layout.sign_in_spinner_drop_item);
         mVolunteerTypeSpinner.setAdapter(mTypeAdapter);
-        mVolunteerTypeSpinner.setSelection(getParentActivity().getUser().getVolunteerType());
+        mVolunteerTypeSpinner.setSelection(mSignUpInterface.getUser().getVolunteerType());
     }
 
     public boolean hasValidFields() {
@@ -75,7 +75,7 @@ public class SignUpSchoolFragment extends SignUpAbstractFragment {
     }
 
     public void setUserFields() {
-        User user = getParentActivity().getUser();
+        User user = mSignUpInterface.getUser();
         user.setSchoolId(((School) mSchoolSpinner.getSelectedItem()).getId());
 
         user.setSchoolSelected(mSchoolSpinner.getSelectedItemPosition());

@@ -31,7 +31,7 @@ class MenuController: UIViewController {
     //
     override func loadView() {
         self.view = self.menuView
-        self.menuView.setTitle("Filter Options")
+        self.menuView.setTitle(self.title)
     }
     
     override func viewWillAppear(animated: Bool) {

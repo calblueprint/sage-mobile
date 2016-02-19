@@ -47,10 +47,22 @@
 
         <TextView
             style="@style/UserProfileText"
-            android:id="@+id/user_volunteer"
-            android:layout_marginBottom="16dp"/>
+            android:id="@+id/user_volunteer" />
+
+        <TextView
+            style="@style/UserProfileText"
+            android:id="@+id/user_type"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/white"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/user_type_rectangle"/>
 
         <TableLayout
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="*">

@@ -36,8 +36,11 @@ class MenuView: UIView {
         self.navbar.barTintColor = UIColor.whiteColor()
         self.navbar.tintColor = UIColor.blackColor()
         self.navbar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blackColor()]
-        self.navbar.setHeight(UIConstants.navbarHeight)
+        self.navbar.layer.shadowOffset = CGSizeMake(0, 3)
+        self.navbar.layer.shadowRadius = 2
+        self.navbar.layer.shadowOpacity = 0.15
         self.navbar.alpha = 0
+        self.navbar.setHeight(UIConstants.navbarHeight)
         self.addSubview(self.navbar)
     }
 
@@ -54,7 +57,7 @@ class MenuView: UIView {
         if let list = self.menuList {
             for var i = 0; i < list.count; i++ {
                 let menuItem = list[i]
-                menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i) + CGFloat(i) + 1)
+                menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i))
                 menuItem.fillWidth()
             }
         }
@@ -73,7 +76,7 @@ class MenuView: UIView {
             self.menuList = list
             for menuItem in list {
                 menuItem.alpha = 0
-                self.addSubview(menuItem)
+                self.insertSubview(menuItem, atIndex: 1)
             }
             self.layoutSubviews()
         }

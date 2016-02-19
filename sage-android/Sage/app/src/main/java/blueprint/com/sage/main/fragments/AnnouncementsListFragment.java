@@ -102,7 +102,6 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity(), getParentFragment());
         mAnnouncementsList.setAdapter(mAdapter);
 
-        mAdapter.notifyDataSetChanged();
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
     }

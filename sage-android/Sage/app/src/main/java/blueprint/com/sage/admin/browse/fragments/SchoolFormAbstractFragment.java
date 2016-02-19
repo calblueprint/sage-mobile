@@ -160,20 +160,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
                 R.layout.place_prediction_list_item, getPredictions());
         mSchoolAddress.setAdapter(mPlaceAdapter);
         mSchoolAddress.setThreshold(THRESHOLD);
-//        mSchoolAddress.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                if (charSequence.length() > 2) getPredictions(charSequence.toString());
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//            }
-//        });
 
         mSchoolAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

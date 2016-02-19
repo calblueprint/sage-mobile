@@ -83,6 +83,8 @@ class MenuView: UIView {
     }
     
     func appear() {
+        UIApplication.sharedApplication().statusBarStyle = .Default
+        
         UIView.animateWithDuration(UIConstants.normalAnimationTime) { () -> Void in
             self.backgroundView.alpha = 1
         }
@@ -115,6 +117,36 @@ class MenuView: UIView {
                 },
                 completion: nil)
         }
+    }
+    
+    func disappear(completion: () -> Void) {
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         
+        UIView.animateWithDuration(UIConstants.normalAnimationTime) { () -> Void in
+            self.backgroundView.alpha = 0
+        }
+        
+        UIView.animateWithDuration(UIConstants.fastAnimationTime, animations: { () -> Void in
+            self.navbar.moveY(-UIConstants.navbarHeight-10)
+        }, completion: nil)
+        
+        let itemOffset: CGFloat = 200
+        for var i = self.menuList!.count - 1; i >= 0; i-- {
+            let menuItem = self.menuList![i]
+            UIView.animateWithDuration(UIConstants.longAnimationTime,
+                delay: Double(i) * 0.10,
+                usingSpringWithDamping: UIConstants.defaultSpringDampening,
+                initialSpringVelocity: UIConstants.defaultSpringVelocity,
+                options: [],
+                animations: { () -> Void in
+                    menuItem.alpha = 0
+                    menuItem.moveY(itemOffset)
+                }) { (completed) -> Void in
+                    if (menuItem == self.menuList?.first) {
+                        completion()
+                    }
+            }
+
+        }
     }
 }

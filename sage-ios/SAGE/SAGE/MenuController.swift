@@ -41,19 +41,20 @@ class MenuController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.sharedApplication().statusBarStyle = .Default
         self.menuView.appear()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     //
     // MARK: - Public Methods
     //
     func addMenuItem(item: MenuItem) {
+        item.controller = self
         self.menuList.append(item)
+    }
+    
+    func dismiss() {
+        self.menuView.disappear { () -> Void in
+            self.dismissViewControllerAnimated(false, completion: nil)
+        }
     }
 }

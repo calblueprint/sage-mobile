@@ -43,7 +43,7 @@ public class RecycleViewEmpty extends RecyclerView {
         if (adapter != null)
             adapter.registerAdapterDataObserver(mObserver);
 
-        refreshLayout();
+//        refreshLayout();
     }
 
     private void initView() {

@@ -41,10 +41,12 @@ public class RecycleViewEmpty extends RecyclerView {
     public void setAdapter(Adapter adapter) {
         super.setAdapter(adapter);
 
-        if (adapter != null)
+        if (adapter != null) {
             adapter.registerAdapterDataObserver(mObserver);
-
-//        refreshLayout();
+            if (adapter.getItemCount() > 0) {
+                refreshLayout();
+            }
+        }
     }
 
     private void initView() {

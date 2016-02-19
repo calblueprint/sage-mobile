@@ -11,6 +11,7 @@ import UIKit
 class MenuItem: UIView {
     
     var titleLabel = UILabel()
+    var divider = UIView()
     var handler: (AnyObject) -> Void = { _ in }
     
     //
@@ -36,6 +37,10 @@ class MenuItem: UIView {
         self.titleLabel.textColor = UIColor.blackColor()
         self.titleLabel.font = UIFont.getSemiboldFont(16)
         self.addSubview(self.titleLabel)
+        
+        self.divider.backgroundColor = UIColor.borderColor
+        self.divider.setHeight(UIConstants.dividerHeight())
+        self.addSubview(self.divider)
     }
     
     //
@@ -47,5 +52,8 @@ class MenuItem: UIView {
         self.titleLabel.setX(UIConstants.sideMargin)
         self.titleLabel.fillWidth()
         self.titleLabel.fillHeight()
+        
+        self.divider.fillWidth()
+        self.divider.alignBottomWithMargin(0)
     }
 }

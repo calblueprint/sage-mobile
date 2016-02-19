@@ -14,6 +14,8 @@ class MenuItem: UIView {
     var divider = UIView()
     var handler: (AnyObject) -> Void = { _ in }
 
+    weak var controller: MenuController?
+
     //
     // MARK: - Initialization and Setup
     //
@@ -25,6 +27,8 @@ class MenuItem: UIView {
         self.titleLabel.text = title
         self.handler = handler
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: "itemTapped:")
+        self.addGestureRecognizer(tapGesture)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -55,5 +59,13 @@ class MenuItem: UIView {
 
         self.divider.fillWidth()
         self.divider.alignBottomWithMargin(0)
+    }
+
+    //
+    // MARK: - Gesture Recognizer
+    //
+    func itemTapped(sender: UIGestureRecognizer) {
+        self.controller?.dismiss()
+        self.handler(NSObject())
     }
 }

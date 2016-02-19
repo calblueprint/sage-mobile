@@ -10,7 +10,7 @@ import UIKit
 
 class MenuView: UIView {
     
-    private var backgroundView = UIView()
+    var backgroundView = UIView()
     private var menuList: [MenuItem]?
     private var navbar = UINavigationBar()
     private var darkenStatusBar = false
@@ -147,7 +147,7 @@ class MenuView: UIView {
         for var i = self.menuList!.count - 1; i >= 0; i-- {
             let menuItem = self.menuList![i]
             UIView.animateWithDuration(UIConstants.longAnimationTime,
-                delay: Double(i) * 0.10,
+                delay: Double(self.menuList!.count - 1 - i) * 0.10,
                 usingSpringWithDamping: UIConstants.defaultSpringDampening,
                 initialSpringVelocity: UIConstants.defaultSpringVelocity,
                 options: [],

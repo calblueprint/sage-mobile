@@ -32,6 +32,9 @@ class MenuController: UIViewController {
     override func loadView() {
         self.view = self.menuView
         self.menuView.setTitle(self.title)
+        
+        let dismissGesture = UITapGestureRecognizer(target: self, action: "dismiss")
+        self.menuView.backgroundView.addGestureRecognizer(dismissGesture)
     }
     
     override func viewWillAppear(animated: Bool) {

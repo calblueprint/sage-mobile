@@ -36,7 +36,11 @@
             android:background="@drawable/white_circle_user_type"/>
 
     </FrameLayout>
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> parent of 4c371c8... Revert "User Role for UserFragment and UserList"
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

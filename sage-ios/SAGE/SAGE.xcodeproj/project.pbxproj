@@ -132,6 +132,8 @@
 		5D8AF98F1BEF059D0008D2C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */; };
 		5D916A1B1C013529003959CE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D916A1A1C013529003959CE /* ProfileViewController.swift */; };
 		5D916A1D1C01353D003959CE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D916A1C1C01353D003959CE /* ProfileView.swift */; };
+		5DBE8FAB1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE8FAA1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift */; };
+		5DBE8FAD1C7A6ECE009EE20C /* AddSchoolRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */; };
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
@@ -292,6 +294,8 @@
 		5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5D916A1A1C013529003959CE /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5D916A1C1C01353D003959CE /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5DBE8FAA1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolRadiusViewController.swift; sourceTree = "<group>"; };
+		5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolRadiusView.swift; sourceTree = "<group>"; };
 		5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewCell.swift; sourceTree = "<group>"; };
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
@@ -606,6 +610,7 @@
 			children = (
 				42F85ED91C0132CB00F62C37 /* AddSchoolView.swift */,
 				4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */,
+				5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -620,6 +625,7 @@
 				42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */,
 				42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */,
 				42F85ED71C01328700F62C37 /* AddSchoolController.swift */,
+				5DBE8FAA1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -1014,6 +1020,7 @@
 				42C4352A1C013F8D000F6671 /* AddSchoolLocationTableViewController.swift in Sources */,
 				4241AF8A1C4BCFCC009BC133 /* SelectHoursEditProfileController.swift in Sources */,
 				422AC8BD1C64956500A30D1C /* NetworkingConstants.swift in Sources */,
+				5DBE8FAD1C7A6ECE009EE20C /* AddSchoolRadiusView.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
 				42C4352C1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift in Sources */,
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,
@@ -1054,6 +1061,7 @@
 				5D6149191C5C5B5F0036708A /* SemesterSummaryConstants.swift in Sources */,
 				2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */,
 				4254C1EB1BFDCCC200D0D33E /* BrowseSchoolsViewController.swift in Sources */,
+				5DBE8FAB1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift in Sources */,
 				27D1B6841BE1C20C00F9D026 /* FormTextItem.swift in Sources */,
 				4223342D1BC0C96000E863D0 /* AnnouncementConstants.swift in Sources */,
 				114953511C190CAA00A74845 /* APIKeys.swift in Sources */,

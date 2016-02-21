@@ -137,7 +137,7 @@ class AnnouncementsViewController: UITableViewController {
         menuController.addMenuItem(MenuItem(title: "Only General", handler: { (_) -> Void in
             
         }))
-        menuController.addMenuItem(MenuItem(title: "School", handler: { (_) -> Void in
+        menuController.addMenuItem(ExpandMenuItem(title: "School", list: [Announcement](), handler: { (_) -> Void in
             
         }))
         

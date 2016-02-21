@@ -13,8 +13,6 @@ class AddSchoolRadiusViewController: UIViewController {
     let defaultCenter = CLLocationCoordinate2D()
     let locationManager = CLLocationManager()
     var schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: CLLocationCoordinate2D())
-    var sliderView = UIView()
-    var slider = UISlider()
     weak var parentVC: AddSchoolController?
     
     init(center: CLLocationCoordinate2D) {

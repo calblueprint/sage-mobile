@@ -17,13 +17,18 @@ class AddSchoolRadiusView: UIView {
 
     init(frame: CGRect, center: CLLocationCoordinate2D) {
         super.init(frame: frame)
-        self.radiusCenter = center
         self.backgroundColor = UIColor.whiteColor()
+        self.radiusCenter = center
+        self.slider.addTarget(self, action: "sliderValueDidChange:", forControlEvents: .ValueChanged)
         self.setupSubviews()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+
+    func sliderValueDidChange(sender: UISlider!) {
+        print("value--\(self.slider.value)")
     }
 
     override func layoutSubviews() {

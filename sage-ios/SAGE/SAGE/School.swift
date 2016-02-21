@@ -16,8 +16,9 @@ class School: NSObject, NSCoding {
     var director: User?
     var address: String?
     var studentCount: Int = 0
+    var radius: CLLocationDistance = -1
     
-    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil, studentCount: Int = 0) {
+    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil, studentCount: Int = 0, radius: CLLocationDistance = -1) {
         self.id = id
         self.name = name
         self.location = location
@@ -25,6 +26,7 @@ class School: NSObject, NSCoding {
         self.director = director
         self.address = address
         self.studentCount = studentCount
+        self.radius = radius
         super.init()
     }
     
@@ -64,6 +66,8 @@ class School: NSObject, NSCoding {
                 break
             case SchoolConstants.kAddress:
                 self.address = value as? String
+            case SchoolConstants.kRadius:
+                self.radius = value as! CLLocationDistance
             default: break
             }
         }
@@ -75,6 +79,10 @@ class School: NSObject, NSCoding {
         self.name = aDecoder.decodeObjectForKey(SchoolConstants.kName) as? String
         self.location = aDecoder.decodeObjectForKey(SchoolConstants.kLocation) as? CLLocation
         self.address = aDecoder.decodeObjectForKey(SchoolConstants.kAddress) as? String
+        let possibleRadius = aDecoder.decodeObjectForKey(SchoolConstants.kRadius) as? CLLocationDistance
+        if let radius = possibleRadius {
+            self.radius = radius
+        }
         super.init()
     }
     
@@ -83,6 +91,7 @@ class School: NSObject, NSCoding {
         aCoder.encodeObject(self.name, forKey: SchoolConstants.kName)
         aCoder.encodeObject(self.location, forKey: SchoolConstants.kLocation)
         aCoder.encodeObject(self.address, forKey: SchoolConstants.kAddress)
+        aCoder.encodeObject(self.radius, forKey: SchoolConstants.kRadius)
     }
     
     func toDictionary() -> [String: AnyObject]{
@@ -110,11 +119,18 @@ class School: NSObject, NSCoding {
         if let address = self.address {
             propertyDict[SchoolConstants.kAddress] = address
         }
+        if self.radius != -1 {
+            propertyDict[SchoolConstants.kRadius] = radius
+        }
         return propertyDict
     }
     
     func isBefore(otherSchool: School) -> Bool {
         return self.name < otherSchool.name
+    }
+    
+    func getDefaultRadius() -> CLLocationDistance {
+        return 200
     }
 }
 
@@ -127,6 +143,6 @@ extension School: NSCopying {
                 copiedArray?.append((student.copy() as? User)!)
             }
         }
-        return School(id: self.id, name: self.name?.copy() as? String, location: self.location?.copy() as? CLLocation, students: copiedArray, director: self.director?.copy() as? User, address: self.address, studentCount: self.studentCount)
+        return School(id: self.id, name: self.name?.copy() as? String, location: self.location?.copy() as? CLLocation, students: copiedArray, director: self.director?.copy() as? User, address: self.address, studentCount: self.studentCount, radius: self.radius)
     }
 }

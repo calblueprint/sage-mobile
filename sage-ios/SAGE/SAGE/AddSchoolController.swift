@@ -13,7 +13,7 @@ class AddSchoolController: FormController {
     var director: User?
     var location: CLLocation?
     var address: String?
-    var radius: CLLocationCoordinate2D?
+    var radiusCenter: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +44,12 @@ class AddSchoolController: FormController {
     }
     
     func radiusButtonTapped() {
-        let center = CLLocationCoordinate2D()
-        let viewController = AddSchoolRadiusViewController(center: center)
+        if let center = self.location?.coordinate {
+            self.radiusCenter = center
+        } else {
+            self.radiusCenter = CLLocationCoordinate2D()
+        }
+        let viewController = AddSchoolRadiusViewController(center: radiusCenter!)
         viewController.parentVC = self
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

@@ -6,6 +6,8 @@
 //  Copyright © 2016 Cal Blueprint. All rights reserved.
 //
 
+import FontAwesomeKit
+
 class ExpandMenuItem<Element>: MenuItem {
     
     var list = [Element]()
@@ -32,8 +34,13 @@ class ExpandMenuItem<Element>: MenuItem {
     override func setupSubviews() {
         super.setupSubviews()
         
-        self.expandCaret.backgroundColor = UIColor.redColor()
-        self.expandCaret.setSize(CGSizeMake(22, 22))
+        let caretSize: CGFloat = 18
+        let chevron = FAKIonIcons.chevronDownIconWithSize(caretSize)
+        chevron.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor)
+        let icon = chevron.imageWithSize(CGSizeMake(caretSize, caretSize))
+        self.expandCaret.image = icon
+        self.expandCaret.contentMode = .Center
+        self.expandCaret.setSize(CGSizeMake(caretSize, caretSize))
         self.addSubview(self.expandCaret)
         
         self.topDivider.backgroundColor = UIColor.borderColor
@@ -61,6 +68,10 @@ class ExpandMenuItem<Element>: MenuItem {
         if self.expanded {
             self.expanded = false
             
+            UIView.animateWithDuration(UIConstants.fastAnimationTime, animations: { () -> Void in
+                self.expandCaret.transform = CGAffineTransformIdentity
+                }, completion: nil)
+            
             UIView.animateWithDuration(UIConstants.longAnimationTime,
                 delay: 0,
                 usingSpringWithDamping: UIConstants.defaultSpringDampening,
@@ -78,6 +89,11 @@ class ExpandMenuItem<Element>: MenuItem {
             self.originalYPosition = CGRectGetMinY(self.frame)
             self.superview!.insertSubview(self, atIndex: self.superview!.subviews.count - 2) // Bring it right under navbar
             self.topDivider.alpha = 1
+            
+            UIView.animateWithDuration(UIConstants.fastAnimationTime, animations: { () -> Void in
+                let pi: CGFloat = CGFloat(M_PI)
+                self.expandCaret.transform = CGAffineTransformMakeRotation(pi)
+                }, completion: nil)
 
             UIView.animateWithDuration(UIConstants.longAnimationTime,
                 delay: 0,

@@ -13,6 +13,7 @@ class AddSchoolController: FormController {
     var director: User?
     var location: CLLocation?
     var address: String?
+    var radius: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class AddSchoolController: FormController {
         self.title = "Add School"
         addSchoolView.location.button.addTarget(self, action: "locationButtonTapped", forControlEvents: .TouchUpInside)
         addSchoolView.director.button.addTarget(self, action: "directorButtonTapped", forControlEvents: .TouchUpInside)
+        addSchoolView.radius.button.addTarget(self, action: "radiusButtonTapped", forControlEvents: .TouchUpInside)
     }
     
     func locationButtonTapped() {
@@ -41,6 +43,16 @@ class AddSchoolController: FormController {
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
+    func radiusButtonTapped() {
+        let center = CLLocationCoordinate2D()
+        let viewController = AddSchoolRadiusViewController(center: center)
+        viewController.parentVC = self
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+
     func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
         if self.location == nil {

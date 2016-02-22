@@ -16,7 +16,7 @@ class AddSchoolRadiusView: UIView {
     var mapView: GMSMapView = GMSMapView()
     var circle = GMSCircle()
     var radiusCenter = CLLocationCoordinate2D()
-    var radius = CLLocationDistance()
+    var radius = CLLocationDistance(200)
     var sliderView = UIView()
     var slider = UISlider()
     var radiusLabel = UILabel()
@@ -25,10 +25,8 @@ class AddSchoolRadiusView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
         self.radiusCenter = center
-        if let _ = radius {
+        if radius != nil {
             self.radius = radius!
-        } else {
-            self.radius = CLLocationDistance(200)
         }
         self.slider.addTarget(self, action: "sliderValueDidChange:", forControlEvents: .ValueChanged)
         self.setupSubviews()

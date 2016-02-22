@@ -96,6 +96,20 @@ class AddSchoolView: FormView {
         }
     }
     
+    func displayRadius(radius: CLLocationDistance) {
+        let value = radius
+        var index = 1
+        if (value >= 10 && value < 100) {
+            index = 2
+        } else if (value >= 100) {
+            index = 3
+        }
+        let roundedValueString: String = (String(value) as NSString).substringToIndex(index)
+        let radiusString = roundedValueString + " meters"
+        self.radius.button.setTitle(radiusString, forState: .Normal)
+        self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+    }
+
     func displaySchoolName(name: String?) {
         self.name.textField.text = name
     }

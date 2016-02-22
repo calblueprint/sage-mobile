@@ -10,7 +10,7 @@ import FontAwesomeKit
 
 class ExpandMenuItem<Element>: MenuItem {
     
-    var list = [Element]()
+    var expandedListController: ExpandedTableViewController<Element>
     
     private var expandCaret = UIImageView()
     private var topDivider = UIView()
@@ -23,9 +23,9 @@ class ExpandMenuItem<Element>: MenuItem {
     //
     // MARK: - Initialization and Setup
     //
-    required init(title: String, list:[Element], handler: (AnyObject) -> Void) {
-        super.init(title: title, handler: handler)
-        self.list = list
+    required init(title: String, list:[Element], displayText: (Element) -> String, handler: (Element) -> Void) {
+        self.expandedListController = ExpandedTableViewController(list: list, displayText: displayText, handler: handler)
+        super.init(title: title, handler: {_ in })
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -50,6 +50,7 @@ class ExpandMenuItem<Element>: MenuItem {
         self.addSubview(self.topDivider)
         
         self.listContainerView.backgroundColor = UIColor.whiteColor()
+        self.listContainerView.clipsToBounds = true
         self.addSubview(self.listContainerView)
     }
     
@@ -93,10 +94,20 @@ class ExpandMenuItem<Element>: MenuItem {
             }
         } else {
             self.expanded = true
+
+            let expandedListHeight = CGRectGetHeight(self.superview!.frame) - CGRectGetHeight(self.frame) - UIConstants.navbarHeight
+            
             self.originalSubviewIndex = self.superview!.subviews.indexOf(self)!
             self.originalYPosition = CGRectGetMinY(self.frame)
             self.superview!.insertSubview(self, atIndex: self.superview!.subviews.count - 2) // Bring it right under navbar
             self.topDivider.alpha = 1
+            self.controller?.addChildViewController(self.expandedListController)
+            
+            self.listContainerView.addSubview(self.expandedListController.view)
+            self.expandedListController.beginAppearanceTransition(true, animated: false)
+            self.expandedListController.view.setY(0)
+            self.expandedListController.view.fillWidth()
+            self.expandedListController.view.setHeight(expandedListHeight)
             
             UIView.animateWithDuration(UIConstants.fastAnimationTime, animations: { () -> Void in
                 let pi: CGFloat = CGFloat(M_PI)
@@ -111,9 +122,24 @@ class ExpandMenuItem<Element>: MenuItem {
                 animations: { () -> Void in
                     self.superview!.layoutIfNeeded()
                     self.setY(UIConstants.navbarHeight)
-                    self.listContainerView.setHeight(CGRectGetHeight(self.superview!.frame) - CGRectGetHeight(self.frame) - UIConstants.navbarHeight)
+                    self.listContainerView.setHeight(expandedListHeight)
                 }) { (completed) -> Void in
             }
         }
+    }
+    
+    //
+    // MARK: - Bounds Hit Test Adjustment
+    //
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        
+        // Convert the point to the target view's coordinate system.
+        let pointForTargetView = self.listContainerView.convertPoint(point, fromView: self)
+        
+        // Allow for any gestures on the listContainerView
+        if CGRectContainsPoint(self.listContainerView.bounds, pointForTargetView) {
+            return self.listContainerView.hitTest(pointForTargetView, withEvent:event)
+        }
+        return super.hitTest(point, withEvent: event)
     }
 }

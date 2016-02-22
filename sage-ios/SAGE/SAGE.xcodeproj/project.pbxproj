@@ -144,6 +144,7 @@
 		E4A3C54D1C4D84040000D7D9 /* Semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54C1C4D84040000D7D9 /* Semester.swift */; };
 		E4B250D11C65C764008652FD /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B250D01C65C764008652FD /* ProfileImageView.swift */; };
 		E4B250D31C65D092008652FD /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B250D21C65D092008652FD /* UIImageView.swift */; };
+		E4B347E01C7B0C540026D43D /* ExpandedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B347DF1C7B0C540026D43D /* ExpandedTableViewController.swift */; };
 		E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF49E51C5462920078A799 /* SemesterConstants.swift */; };
 		E4CF49E91C5624690078A799 /* SemesterOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF49E81C5624690078A799 /* SemesterOperations.swift */; };
 		E4D8DC931C6ABDB0003C0637 /* SF-UI-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC7E1C6ABDB0003C0637 /* SF-UI-Display-Black.otf */; };
@@ -309,6 +310,7 @@
 		E4A3C54C1C4D84040000D7D9 /* Semester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Semester.swift; sourceTree = "<group>"; };
 		E4B250D01C65C764008652FD /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		E4B250D21C65D092008652FD /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		E4B347DF1C7B0C540026D43D /* ExpandedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedTableViewController.swift; sourceTree = "<group>"; };
 		E4CF49E51C5462920078A799 /* SemesterConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterConstants.swift; sourceTree = "<group>"; };
 		E4CF49E81C5624690078A799 /* SemesterOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterOperations.swift; sourceTree = "<group>"; };
 		E4D8DC7E1C6ABDB0003C0637 /* SF-UI-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Black.otf"; sourceTree = "<group>"; };
@@ -745,6 +747,7 @@
 				E446119A1C754CC4006E90FA /* MenuView.swift */,
 				E446119D1C7568C5006E90FA /* MenuItem.swift */,
 				E446119F1C756A73006E90FA /* ExpandMenuItem.swift */,
+				E4B347DF1C7B0C540026D43D /* ExpandedTableViewController.swift */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -1046,6 +1049,7 @@
 				4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */,
 				E4CF49E91C5624690078A799 /* SemesterOperations.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
+				E4B347E01C7B0C540026D43D /* ExpandedTableViewController.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
 				27EB32A91C3917E900FD8050 /* EndSemesterView.swift in Sources */,

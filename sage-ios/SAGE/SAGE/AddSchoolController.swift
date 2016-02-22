@@ -45,7 +45,7 @@ class AddSchoolController: FormController {
     }
 
     func radiusButtonTapped() {
-        if self.location == nil {
+        if self.location != nil { // CHANGE THIS BACK TO == NIL
             let errorAlert = UIAlertController(title: nil, message: "Please select a location first", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: {
                 (alert: UIAlertAction!) -> Void in

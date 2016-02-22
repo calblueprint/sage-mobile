@@ -15,10 +15,11 @@ class AddSchoolRadiusView: UIView {
     let maximumRadius = Float(700.0)
     let defaultRadius = Float(350.0)
     var mapView: GMSMapView = GMSMapView()
+    var circle = GMSCircle()
     var radiusCenter = CLLocationCoordinate2D()
+    var sliderView = UIView()
     var slider = UISlider()
     var radiusLabel = UILabel()
-    var circle = GMSCircle()
 
     init(frame: CGRect, center: CLLocationCoordinate2D) {
         super.init(frame: frame)
@@ -55,20 +56,33 @@ class AddSchoolRadiusView: UIView {
         self.mapView.fillWidth()
         self.mapView.fillHeight()
 
+        self.sliderView.fillWidth()
+        self.sliderView.setHeight(self.sliderHeight + 20)
+        self.sliderView.centerHorizontally()
+        self.sliderView.setY(CGRectGetMaxY(self.mapView.frame) - CGRectGetHeight(self.sliderView.frame))
+
+        self.sliderView.backgroundColor = UIColor.whiteColor()
+
+//        let gradient: CAGradientLayer = CAGradientLayer()
+//        gradient.frame = self.sliderView.bounds
+//        gradient.colors = [UIColor.whiteColor().colorWithAlphaComponent(0).CGColor, UIColor.whiteColor().colorWithAlphaComponent(0.65).CGColor]
+//        self.sliderView.layer.insertSublayer(gradient, atIndex: 0)
+
         self.slider.fillWidthWithMargin(self.leftMargin)
         self.slider.setHeight(self.sliderHeight)
-        self.slider.centerHorizontally()
-        self.slider.setY(CGRectGetMaxY(self.mapView.frame) - self.sliderHeight - UIConstants.sideMargin)
+        self.slider.centerInSuperview()
+        self.slider.setY(CGRectGetMinY(self.slider.frame) + 10)
 
         self.radiusLabel.sizeToFit()
         self.radiusLabel.setX(self.leftMargin)
-        self.radiusLabel.setY(CGRectGetMinY(self.slider.frame) - 15.0)
+        self.radiusLabel.setY(CGRectGetMinY(self.slider.frame) - 12)
     }
 
     private func setupSubviews() {
         self.addSubview(self.mapView)
-        self.addSubview(self.slider)
-        self.addSubview(self.radiusLabel)
+        self.addSubview(self.sliderView)
+        self.sliderView.addSubview(self.slider)
+        self.sliderView.addSubview(self.radiusLabel)
 
         self.mapView.mapType = kGMSTypeHybrid
 
@@ -92,6 +106,8 @@ class AddSchoolRadiusView: UIView {
         self.circle.position = circleCenter
         self.circle.radius = CLLocationDistance(self.slider.value)
         self.circle.map = self.mapView
+
+        self.layoutSubviews()
     }
 
 }

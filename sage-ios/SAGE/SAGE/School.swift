@@ -128,10 +128,6 @@ class School: NSObject, NSCoding {
     func isBefore(otherSchool: School) -> Bool {
         return self.name < otherSchool.name
     }
-
-    func getDefaultRadius() -> CLLocationDistance {
-        return 200
-    }
 }
 
 extension School: NSCopying {

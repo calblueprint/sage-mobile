@@ -57,7 +57,8 @@ class AnnouncementsDetailViewController: UIViewController {
             }
         }
 
-        self.detailView.announcementUserButton.addTarget(self, action: "showProfile", forControlEvents: .TouchUpInside)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "showProfile")
+        self.detailView.announcementUserImg.addGestureRecognizer(tapGestureRecognizer)
     }
 
     func showProfile() {

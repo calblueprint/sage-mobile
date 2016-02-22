@@ -39,24 +39,19 @@ class SchoolDetailViewController: UITableViewController {
     func editedProfile(notification: NSNotification) {
         let newUser = notification.object!.copy() as! User
         if let school = self.school {
-            var reload = false
 
             if newUser.id == school.director?.id {
-                reload = true
                 school.director = newUser
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
             }
             if var students = school.students {
                 for var index = 0; index < students.count; ++index {
                     let student = students[index]
                     if student.id == newUser.id {
-                        reload = true
                         self.school!.students![index] = newUser
+                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
                     }
                 }
-            }
-
-            if reload {
-                self.tableView.reloadData()
             }
         }
     }

@@ -14,8 +14,9 @@ class ExpandMenuItem<Element>: MenuItem {
     
     private var expandCaret = UIImageView()
     private var topDivider = UIView()
-    private var expanded = false
+    private var listContainerView = UIView()
     
+    private var expanded = false
     private var originalSubviewIndex = 0
     private var originalYPosition: CGFloat = 0
     
@@ -47,6 +48,9 @@ class ExpandMenuItem<Element>: MenuItem {
         self.topDivider.setHeight(UIConstants.dividerHeight())
         self.topDivider.alpha = 0
         self.addSubview(self.topDivider)
+        
+        self.listContainerView.backgroundColor = UIColor.whiteColor()
+        self.addSubview(self.listContainerView)
     }
     
     //
@@ -59,6 +63,9 @@ class ExpandMenuItem<Element>: MenuItem {
         self.expandCaret.centerVertically()
         
         self.topDivider.fillWidth()
+        
+        self.listContainerView.fillWidth()
+        self.listContainerView.setY(CGRectGetHeight(self.frame))
     }
     
     //
@@ -79,6 +86,7 @@ class ExpandMenuItem<Element>: MenuItem {
                 options: [],
                 animations: { () -> Void in
                     self.setY(self.originalYPosition)
+                    self.listContainerView.setHeight(0)
                 }) { (completed) -> Void in
                     self.superview!.insertSubview(self, atIndex: self.originalSubviewIndex)
                     self.topDivider.alpha = 0
@@ -103,6 +111,7 @@ class ExpandMenuItem<Element>: MenuItem {
                 animations: { () -> Void in
                     self.superview!.layoutIfNeeded()
                     self.setY(UIConstants.navbarHeight)
+                    self.listContainerView.setHeight(CGRectGetHeight(self.superview!.frame) - CGRectGetHeight(self.frame) - UIConstants.navbarHeight)
                 }) { (completed) -> Void in
             }
         }

@@ -16,7 +16,7 @@ class SignUpRequestTableViewCell: UITableViewCell {
     
     var userPicture = ProfileImageView()
     var userName = UILabel()
-    var school = UILabel()
+    var schoolLabel = UILabel()
     var checkButton = UIButton()
     var xButton = UIButton()
     var userID: Int?
@@ -25,7 +25,7 @@ class SignUpRequestTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(self.userPicture)
         self.contentView.addSubview(self.userName)
-        self.contentView.addSubview(self.school)
+        self.contentView.addSubview(self.schoolLabel)
         self.contentView.addSubview(self.checkButton)
         self.contentView.addSubview(self.xButton)
         self.selectionStyle = .None
@@ -55,11 +55,11 @@ class SignUpRequestTableViewCell: UITableViewCell {
         }
         
         if let name = user.school?.name {
-            self.school.text = name
+            self.schoolLabel.text = name
         } else {
-            self.school.text = hoursText
+            self.schoolLabel.text = hoursText
         }
-        self.school.font = UIFont.normalFont
+        self.schoolLabel.font = UIFont.normalFont
         
         let checkIcon = FAKIonIcons.androidDoneIconWithSize(buttonSize)
         checkIcon.setAttributes([NSForegroundColorAttributeName: UIColor.lightGreenColor])
@@ -99,11 +99,11 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.xButton.setX(CGRectGetMinX(self.checkButton.frame) - buttonSize - buttonInset - buttonInset)
         self.xButton.centerVertically()
         
-        self.school.textAlignment = NSTextAlignment.Left
-        self.school.sizeToFit()
-        self.school.setX(10 + CGRectGetMaxX(self.userPicture.frame))
-        self.school.setY(CGRectGetMaxY(self.userName.frame))
-        self.school.setWidth(self.xButton.frame.origin.x - self.school.frame.origin.x)
+        self.schoolLabel.textAlignment = NSTextAlignment.Left
+        self.schoolLabel.sizeToFit()
+        self.schoolLabel.setX(10 + CGRectGetMaxX(self.userPicture.frame))
+        self.schoolLabel.setY(CGRectGetMaxY(self.userName.frame))
+        self.schoolLabel.setWidth(self.xButton.frame.origin.x - self.schoolLabel.frame.origin.x)
     
     }
     

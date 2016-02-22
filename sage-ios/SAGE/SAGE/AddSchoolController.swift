@@ -13,6 +13,7 @@ class AddSchoolController: FormController {
     var director: User?
     var location: CLLocation?
     var address: String?
+    var radius: CLLocationDistance?
     var radiusCenter: CLLocationCoordinate2D?
 
     override func viewDidLoad() {
@@ -44,17 +45,21 @@ class AddSchoolController: FormController {
     }
     
     func radiusButtonTapped() {
-        if let center = self.location?.coordinate {
-            self.radiusCenter = center
+        if self.location == nil {
+            // error
         } else {
-            self.radiusCenter = CLLocationCoordinate2D()
+            if let center = self.location?.coordinate {
+                self.radiusCenter = center
+            } else {
+                self.radiusCenter = CLLocationCoordinate2D()
+            }
+            let viewController = AddSchoolRadiusViewController(center: radiusCenter!)
+            viewController.parentVC = self
+            if let topItem = self.navigationController?.navigationBar.topItem {
+                topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+            }
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
-        let viewController = AddSchoolRadiusViewController(center: radiusCenter!)
-        viewController.parentVC = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
-        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func completeForm() {
@@ -65,7 +70,7 @@ class AddSchoolController: FormController {
             self.showAlertControllerError("What's the school's name?")
         } else {
             self.finishButton?.startLoading()
-            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director, address: self.address)
+            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director, address: self.address, radius: self.radius!)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addSchoolKey, object: createdSchool)
@@ -74,6 +79,11 @@ class AddSchoolController: FormController {
                     self.showAlertControllerError(message)
             })
         }
+    }
+    
+    func didSelectRadius(radius: CLLocationDistance) {
+        self.radius = radius
+        (self.view as! AddSchoolView).displayRadius(radius)
     }
     
     func didSelectDirector(director: User) {

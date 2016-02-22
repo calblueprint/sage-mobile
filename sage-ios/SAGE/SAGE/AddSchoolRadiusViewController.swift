@@ -32,6 +32,8 @@ class AddSchoolRadiusViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = self.schoolRadiusView
+        let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveRadius:")
+        self.navigationItem.rightBarButtonItem = saveButton
     }
     
     override func viewDidLoad() {
@@ -46,6 +48,11 @@ class AddSchoolRadiusViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.sharedApplication().statusBarStyle = .LightContent
+    }
+    
+    func saveRadius(sender: UIBarButtonItem) {
+        self.parentVC?.didSelectRadius(CLLocationDistance(self.schoolRadiusView.slider.value))
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
 }

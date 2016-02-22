@@ -181,8 +181,8 @@ class AdminOperations {
             SchoolConstants.kName: school.name!,
             SchoolConstants.kLat: school.location!.coordinate.latitude,
             SchoolConstants.kLong: school.location!.coordinate.longitude,
-            SchoolConstants.kAddress: school.address!
-
+            SchoolConstants.kAddress: school.address!,
+            SchoolConstants.kRadius: school.radius
         ]
 
         if school.director != nil {

@@ -13,18 +13,23 @@ class AddSchoolRadiusView: UIView {
     let leftMargin = CGFloat(35.0)
     let sliderHeight = CGFloat(45.0)
     let maximumRadius = Float(700.0)
-    let defaultRadius = Float(350.0)
     var mapView: GMSMapView = GMSMapView()
     var circle = GMSCircle()
     var radiusCenter = CLLocationCoordinate2D()
+    var radius = CLLocationDistance()
     var sliderView = UIView()
     var slider = UISlider()
     var radiusLabel = UILabel()
     
-    init(frame: CGRect, center: CLLocationCoordinate2D) {
+    init(frame: CGRect, center: CLLocationCoordinate2D, radius: CLLocationDistance?) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
         self.radiusCenter = center
+        if let radiusValue = radius {
+            self.radius = radiusValue
+        } else {
+            self.radius = CLLocationDistance(200)
+        }
         self.slider.addTarget(self, action: "sliderValueDidChange:", forControlEvents: .ValueChanged)
         self.setupSubviews()
     }
@@ -33,17 +38,22 @@ class AddSchoolRadiusView: UIView {
         super.init(coder: aDecoder)
     }
     
-    func sliderValueDidChange(sender: UISlider!) {
-        print("value--\(self.slider.value)")
-        let value = sender.value
+    func radiusToString(radius: Float) -> String {
         var index = 1
-        if (value >= 10 && value < 100) {
+        if (radius >= 10 && radius < 100) {
             index = 2
-        } else if (value >= 100) {
+        } else if (radius >= 100) {
             index = 3
         }
-        let roundedValueString: String = (String(sender.value) as NSString).substringToIndex(index)
-        self.radiusLabel.text = roundedValueString + " meters"
+        let roundedValueString: String = (String(radius) as NSString).substringToIndex(index)
+        return roundedValueString + " meters"
+
+    }
+    
+    func sliderValueDidChange(sender: UISlider!) {
+        print("value--\(self.slider.value)")
+        let radiusLabelString = radiusToString(sender.value)
+        self.radiusLabel.text = radiusLabelString
         self.radiusLabel.sizeToFit()
         if self.slider.value > 5 {
             self.circle.radius = CLLocationDistance(self.slider.value)
@@ -90,10 +100,10 @@ class AddSchoolRadiusView: UIView {
         self.slider.maximumValue = self.maximumRadius
         self.slider.continuous = true
         self.slider.tintColor = UIColor.lightBlueColor
-        self.slider.value = self.defaultRadius
+        self.slider.value = Float(self.radius)
         
         self.radiusLabel.font = UIFont.normalFont
-        self.radiusLabel.text = "200 meters"
+        self.radiusLabel.text = radiusToString(self.slider.value)
         
         let marker = GMSMarker(position: self.radiusCenter)
         marker.map = self.mapView

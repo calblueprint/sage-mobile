@@ -12,16 +12,16 @@ class AddSchoolRadiusViewController: UIViewController {
     
     let defaultCenter = CLLocationCoordinate2D()
     let locationManager = CLLocationManager()
-    var schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: CLLocationCoordinate2D())
+    var schoolRadiusView: AddSchoolRadiusView?
     weak var parentVC: AddSchoolController?
     
-    init(center: CLLocationCoordinate2D) {
-        self.schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: center)
+    init(center: CLLocationCoordinate2D, radius: CLLocationDistance?) {
+        self.schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: center, radius: radius)
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: self.defaultCenter)
+        self.schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: self.defaultCenter, radius: nil)
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -32,7 +32,7 @@ class AddSchoolRadiusViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = self.schoolRadiusView
-        let saveButton : UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveRadius:")
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveRadius:")
         self.navigationItem.rightBarButtonItem = saveButton
     }
     
@@ -51,7 +51,7 @@ class AddSchoolRadiusViewController: UIViewController {
     }
     
     func saveRadius(sender: UIBarButtonItem) {
-        self.parentVC?.didSelectRadius(CLLocationDistance(self.schoolRadiusView.slider.value))
+        self.parentVC?.didSelectRadius(CLLocationDistance(self.schoolRadiusView!.slider.value))
         self.navigationController?.popViewControllerAnimated(true)
     }
 

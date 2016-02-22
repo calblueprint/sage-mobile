@@ -30,13 +30,14 @@ class AddSchoolRadiusViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = self.schoolRadiusView
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "saveRadius:")
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Finish", style: UIBarButtonItemStyle.Plain, target: self, action: "saveRadius:")
+        saveButton.setTitleTextAttributes([NSFontAttributeName: UIFont.getSemiboldFont(17)], forState: .Normal)
         self.navigationItem.rightBarButtonItem = saveButton
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Set School Radius"
+        self.title = "Choose School Radius"
     }
 
     override func viewWillAppear(animated: Bool) {

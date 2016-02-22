@@ -10,8 +10,6 @@ import Foundation
 
 class AddSchoolRadiusViewController: UIViewController {
     
-    let defaultCenter = CLLocationCoordinate2D()
-    let locationManager = CLLocationManager()
     var schoolRadiusView: AddSchoolRadiusView?
     weak var parentVC: AddSchoolController?
     
@@ -21,7 +19,7 @@ class AddSchoolRadiusViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: self.defaultCenter, radius: nil)
+        self.schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: CLLocationCoordinate2D(), radius: nil)
         fatalError("init(coder:) has not been implemented")
     }
     

@@ -8,46 +8,60 @@
 
 import UIKit
 
-class AddSchoolLocationTableViewController: UITableViewController {
+class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var autocompleteSuggestions: [GMSAutocompletePrediction] = [GMSAutocompletePrediction]()
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let placesClient: GMSPlacesClient = GMSPlacesClient.sharedClient()
+    var locationView = AddSchoolLocationSelectorView()
+    var school: School?
     
     weak var parentVC: AddSchoolController?
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureWithSchool(school: School) {
+        self.school = school
+        self.locationView.configureWithSchool(school)
+    }
+    
+    override func loadView() {
+        self.view = self.locationView
+        self.locationView.tableView.dataSource = self
+        self.locationView.tableView.delegate = self
+        self.locationView.searchBar.delegate = self
+        self.locationView.returnToMapButton.addTarget(self, action: "returnToMap", forControlEvents: .TouchUpInside)
+    }
+    
+    func returnToMap() {
+        self.locationView.mapView.hidden = false
+        self.locationView.tableView.hidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Search for Schools"
-        let searchBar = UISearchBar()
-        searchBar.setHeight(44)
-        searchBar.tintColor = UIColor.whiteColor()
-        searchBar.backgroundColor = UIColor.mainColor
-        searchBar.barTintColor = UIColor.whiteColor()
-        searchBar.searchBarStyle = .Minimal
-        searchBar.delegate = self
-        self.tableView.tableHeaderView = searchBar
-        
-        self.view.addSubview(self.activityIndicator)
-        self.activityIndicator.hidden = true
-        
-        self.tableView.tableFooterView = UIView()
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return autocompleteSuggestions.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("DefaultTableViewCell")
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = self.locationView.tableView.dequeueReusableCellWithIdentifier("DefaultTableViewCell")
         if cell == nil {
             cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultTableViewCell")
         }
@@ -62,7 +76,7 @@ class AddSchoolLocationTableViewController: UITableViewController {
         return cell!
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.parentVC?.didSelectPlace(self.autocompleteSuggestions[indexPath.row])
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -72,12 +86,12 @@ class AddSchoolLocationTableViewController: UITableViewController {
 //
 // MARK: - UISearchBarDelegate
 //
-extension AddSchoolLocationTableViewController: UISearchBarDelegate {
+extension AddSchoolLocationSelectorController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        self.activityIndicator.centerHorizontally()
-        self.activityIndicator.centerVertically()
-        self.activityIndicator.startAnimating()
-        self.activityIndicator.hidden = false
+        self.locationView.activityIndicator.startAnimating()
+        self.locationView.activityIndicator.hidden = false
+        self.locationView.tableView.hidden = false
+        self.locationView.mapView.hidden = true
         
         let filter = GMSAutocompleteFilter()
         filter.type = GMSPlacesAutocompleteTypeFilter.Establishment
@@ -90,14 +104,13 @@ extension AddSchoolLocationTableViewController: UISearchBarDelegate {
                         self.autocompleteSuggestions.append(result)
                     }
                 }
-                self.tableView.reloadData()
+                self.locationView.tableView.reloadData()
             } else {
                 
             }
-            self.activityIndicator.stopAnimating()
+            self.locationView.activityIndicator.stopAnimating()
         })
     }
-    
 }
 
 

@@ -24,12 +24,12 @@ class AddSchoolController: FormController {
     }
     
     func locationButtonTapped() {
-        let tableViewController = AddSchoolLocationTableViewController()
-        tableViewController.parentVC = self
+        let vc = AddSchoolLocationSelectorController()
+        vc.parentVC = self
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
-        self.navigationController?.pushViewController(tableViewController, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func directorButtonTapped() {
@@ -75,6 +75,10 @@ class AddSchoolController: FormController {
                 (self.view as! AddSchoolView).displayChosenPlace(place)
             }
         }
+    }
+    
+    func didSelectCoordinate(coordinate: CLLocationCoordinate2D) {
+        self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
     }
 
 }

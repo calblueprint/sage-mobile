@@ -37,7 +37,7 @@ class AddSchoolRadiusViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Choose School Radius"
+        self.title = "Choose Radius"
     }
     
     override func viewWillAppear(animated: Bool) {

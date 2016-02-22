@@ -65,18 +65,18 @@ class AddSchoolRadiusView: UIView {
         self.mapView.fillHeight()
         
         self.sliderView.fillWidth()
-        self.sliderView.setHeight(self.sliderHeight + 20)
+        self.sliderView.setHeight(self.sliderHeight + 10)
         self.sliderView.centerHorizontally()
         self.sliderView.setY(CGRectGetMaxY(self.mapView.frame) - CGRectGetHeight(self.sliderView.frame))
         
-        self.slider.fillWidthWithMargin(self.leftMargin)
-        self.slider.setHeight(self.sliderHeight)
-        self.slider.centerInSuperview()
-        self.slider.setY(CGRectGetMinY(self.slider.frame) + 10)
-        
-        self.radiusLabel.sizeToFit()
         self.radiusLabel.setX(self.leftMargin)
-        self.radiusLabel.setY(CGRectGetMinY(self.slider.frame) - 12)
+        self.radiusLabel.centerVertically()
+        self.radiusLabel.sizeToFit()
+        
+        self.slider.setX(CGRectGetMaxX(self.radiusLabel.frame) + UIConstants.sideMargin)
+        self.slider.centerVertically()
+        self.slider.setHeight(self.sliderHeight)
+        self.slider.setWidth(CGRectGetWidth(self.sliderView.frame) - CGRectGetMinX(self.slider.frame) - self.leftMargin)
     }
     
     private func setupSubviews() {
@@ -84,8 +84,6 @@ class AddSchoolRadiusView: UIView {
         self.addSubview(self.sliderView)
         self.sliderView.addSubview(self.slider)
         self.sliderView.addSubview(self.radiusLabel)
-        
-        self.mapView.mapType = kGMSTypeHybrid
         
         self.sliderView.backgroundColor = UIColor.whiteColor()
         
@@ -103,8 +101,8 @@ class AddSchoolRadiusView: UIView {
         self.mapView.camera = GMSCameraPosition(target: self.radiusCenter, zoom: 15, bearing: 0, viewingAngle: 0)
         
         let circleCenter = self.radiusCenter
-        self.circle.fillColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.25)
-        self.circle.strokeColor = UIColor.whiteColor()
+        self.circle.fillColor = UIColor.colorWithIntRed(74, green: 144, blue: 226, alpha: 0.15)
+        self.circle.strokeColor = UIColor.lightBlueColor
         self.circle.strokeWidth = 1
         self.circle.position = circleCenter
         self.circle.radius = CLLocationDistance(self.slider.value)

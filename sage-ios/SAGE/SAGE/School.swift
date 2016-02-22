@@ -79,8 +79,7 @@ class School: NSObject, NSCoding {
         self.name = aDecoder.decodeObjectForKey(SchoolConstants.kName) as? String
         self.location = aDecoder.decodeObjectForKey(SchoolConstants.kLocation) as? CLLocation
         self.address = aDecoder.decodeObjectForKey(SchoolConstants.kAddress) as? String
-        let possibleRadius = aDecoder.decodeObjectForKey(SchoolConstants.kRadius) as? CLLocationDistance
-        if let radius = possibleRadius {
+        if let radius = aDecoder.decodeObjectForKey(SchoolConstants.kRadius) as? CLLocationDistance {
             self.radius = radius
         }
         super.init()

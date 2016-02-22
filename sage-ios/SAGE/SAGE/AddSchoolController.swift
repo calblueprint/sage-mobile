@@ -48,8 +48,8 @@ class AddSchoolController: FormController {
         if self.location == nil {
             self.showAlertControllerError("Please choose a location first.")
         } else {
-            if let center = self.location?.coordinate {
-                self.radiusCenter = center
+            if self.location?.coordinate != nil {
+                self.radiusCenter = self.location!.coordinate
             }
             let viewController = AddSchoolRadiusViewController(center: self.radiusCenter!, radius: self.radius)
             viewController.parentVC = self

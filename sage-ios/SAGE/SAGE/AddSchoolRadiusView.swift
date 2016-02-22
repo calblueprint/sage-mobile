@@ -25,8 +25,8 @@ class AddSchoolRadiusView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
         self.radiusCenter = center
-        if let radiusValue = radius {
-            self.radius = radiusValue
+        if let _ = radius {
+            self.radius = radius!
         } else {
             self.radius = CLLocationDistance(200)
         }

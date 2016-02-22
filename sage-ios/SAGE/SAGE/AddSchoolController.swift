@@ -46,7 +46,12 @@ class AddSchoolController: FormController {
 
     func radiusButtonTapped() {
         if self.location == nil {
-            // error
+            let errorAlert = UIAlertController(title: nil, message: "Please select a location first", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: {
+                (alert: UIAlertAction!) -> Void in
+            })
+            errorAlert.addAction(cancelAction)
+            self.presentViewController(errorAlert, animated: true, completion: nil)
         } else {
             if let center = self.location?.coordinate {
                 self.radiusCenter = center

@@ -48,8 +48,7 @@ class AddSchoolRadiusView: UIView {
     }
     
     func sliderValueDidChange(sender: UISlider!) {
-        let radiusLabelString = radiusToString(sender.value)
-        self.radiusLabel.text = radiusLabelString
+        self.radiusLabel.text = radiusToString(sender.value)
         self.radiusLabel.sizeToFit()
         if self.slider.value > 5 {
             self.circle.radius = CLLocationDistance(self.slider.value)

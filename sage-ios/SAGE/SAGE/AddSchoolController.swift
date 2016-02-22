@@ -14,7 +14,7 @@ class AddSchoolController: FormController {
     var location: CLLocation?
     var address: String?
     var radius: CLLocationDistance? = nil
-    var radiusCenter: CLLocationCoordinate2D?
+    var radiusCenter: CLLocationCoordinate2D? = CLLocationCoordinate2D()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,17 +46,10 @@ class AddSchoolController: FormController {
     
     func radiusButtonTapped() {
         if self.location == nil {
-            let errorAlert = UIAlertController(title: nil, message: "Please select a location first", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: {
-                (alert: UIAlertAction!) -> Void in
-            })
-            errorAlert.addAction(cancelAction)
-            self.presentViewController(errorAlert, animated: true, completion: nil)
+            self.showAlertControllerError("Please choose a location first.")
         } else {
             if let center = self.location?.coordinate {
                 self.radiusCenter = center
-            } else {
-                self.radiusCenter = CLLocationCoordinate2D()
             }
             let viewController = AddSchoolRadiusViewController(center: self.radiusCenter!, radius: self.radius)
             viewController.parentVC = self
@@ -71,9 +64,12 @@ class AddSchoolController: FormController {
         let addSchoolView = (self.view as! AddSchoolView)
         if self.location == nil {
             self.showAlertControllerError("Please choose a location.")
+        } else if self.radius == nil {
+            self.showAlertControllerError("Please choose a radius.")
         } else if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
             self.showAlertControllerError("What's the school's name?")
-        } else {
+        }
+        else {
             self.finishButton?.startLoading()
             let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director, address: self.address, radius: self.radius!)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in

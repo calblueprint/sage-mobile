@@ -10,9 +10,9 @@ import Foundation
 
 class AddSchoolRadiusView: UIView {
     
-    let leftMargin = CGFloat(35.0)
-    let sliderHeight = CGFloat(45.0)
-    let maximumRadius = Float(700.0)
+    let leftMargin = CGFloat(35)
+    let sliderHeight = CGFloat(45)
+    let maximumRadius = Float(700)
     var mapView: GMSMapView = GMSMapView()
     var circle = GMSCircle()
     var radiusCenter = CLLocationCoordinate2D()
@@ -47,11 +47,9 @@ class AddSchoolRadiusView: UIView {
         }
         let roundedValueString: String = (String(radius) as NSString).substringToIndex(index)
         return roundedValueString + " meters"
-
     }
     
     func sliderValueDidChange(sender: UISlider!) {
-        print("value--\(self.slider.value)")
         let radiusLabelString = radiusToString(sender.value)
         self.radiusLabel.text = radiusLabelString
         self.radiusLabel.sizeToFit()
@@ -71,13 +69,6 @@ class AddSchoolRadiusView: UIView {
         self.sliderView.centerHorizontally()
         self.sliderView.setY(CGRectGetMaxY(self.mapView.frame) - CGRectGetHeight(self.sliderView.frame))
         
-        self.sliderView.backgroundColor = UIColor.whiteColor()
-        
-//        let gradient: CAGradientLayer = CAGradientLayer()
-//        gradient.frame = self.sliderView.bounds
-//        gradient.colors = [UIColor.whiteColor().colorWithAlphaComponent(0).CGColor, UIColor.whiteColor().colorWithAlphaComponent(0.65).CGColor]
-//        self.sliderView.layer.insertSublayer(gradient, atIndex: 0)
-        
         self.slider.fillWidthWithMargin(self.leftMargin)
         self.slider.setHeight(self.sliderHeight)
         self.slider.centerInSuperview()
@@ -95,6 +86,8 @@ class AddSchoolRadiusView: UIView {
         self.sliderView.addSubview(self.radiusLabel)
         
         self.mapView.mapType = kGMSTypeHybrid
+        
+        self.sliderView.backgroundColor = UIColor.whiteColor()
         
         self.slider.minimumValue = 0
         self.slider.maximumValue = self.maximumRadius

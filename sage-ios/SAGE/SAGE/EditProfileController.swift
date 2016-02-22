@@ -49,6 +49,14 @@ class EditProfileController: FormController {
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = false
         
+        if (self.user.imageURL != nil && !self.resetPhoto) || self.choseNewPhoto {
+            actionSheet.addAction(UIAlertAction(title: "Remove Photo", style: .Destructive, handler: { (alertAction) -> Void in
+                self.editProfileView.photoView.image = UIImage.defaultProfileImage()
+                self.choseNewPhoto = false
+                self.resetPhoto = true
+            }))
+        }
+
         actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .Default, handler: { (alertAction) -> Void in
             if UIImagePickerController.isSourceTypeAvailable(.Camera) {
                 imagePickerController.sourceType = .Camera
@@ -63,10 +71,6 @@ class EditProfileController: FormController {
             }
         }))
         
-        actionSheet.addAction(UIAlertAction(title: "Remove Photo", style: .Default, handler: { (alertAction) -> Void in
-            self.editProfileView.photoView.image = UIImage.defaultProfileImage()
-            self.resetPhoto = true
-        }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (alertAction) -> Void in
             actionSheet.dismissViewControllerAnimated(true, completion: nil)
         }))
@@ -145,6 +149,7 @@ class EditProfileController: FormController {
 extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         self.choseNewPhoto = true
+        self.resetPhoto = false
         let photoView = self.editProfileView.photoView
         photoView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         picker.dismissViewControllerAnimated(true, completion: nil)

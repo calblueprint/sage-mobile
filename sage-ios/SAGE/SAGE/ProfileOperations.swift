@@ -69,18 +69,18 @@ class ProfileOperations: NSObject {
         if photoData != nil {
             userJSON[UserConstants.kPhotoData] = photoData!
         }
-        
-        if newPassword != nil {
-            userJSON[UserConstants.kPassword] = newPassword!
-            userJSON[UserConstants.kPasswordConfirmation] = passwordConfirmation
-        }
-        
+
         if resetPhoto {
             userJSON[UserConstants.kResetImage] = true
         }
 
+        if newPassword != nil {
+            userJSON[UserConstants.kPassword] = newPassword!
+            userJSON[UserConstants.kPasswordConfirmation] = passwordConfirmation
+        }
+
         let params = ["user": userJSON]
-        
+
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
         
         manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in

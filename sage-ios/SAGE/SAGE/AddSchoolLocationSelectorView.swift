@@ -14,7 +14,6 @@ class AddSchoolLocationSelectorView: UIView {
     var mapView = GMSMapView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var searchBar = UISearchBar()
-    var marker = GMSMarker(position: CLLocationCoordinate2DMake(0, 0))
     var returnToMapButton = UIButton()
     
     override init(frame: CGRect) {
@@ -34,7 +33,6 @@ class AddSchoolLocationSelectorView: UIView {
         
         self.addSubview(self.mapView)
         self.mapView.camera = GMSCameraPosition(target: CLLocationCoordinate2DMake(0, 0), zoom: 15, bearing: 0, viewingAngle: 0)
-        self.marker.map = self.mapView
         
         self.searchBar.setHeight(44)
         self.searchBar.tintColor = UIColor.whiteColor()
@@ -47,19 +45,8 @@ class AddSchoolLocationSelectorView: UIView {
         self.activityIndicator.hidden = true
     }
     
-    func configureWithSchool(school: School) {
-        if let coordinate = school.location?.coordinate {
-            self.mapView.camera = GMSCameraPosition(target: coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-            self.resetMarkerPosition(coordinate)
-        } else {
-            self.mapView.camera = GMSCameraPosition(target: CLLocationCoordinate2DMake(0, 0), zoom: 15, bearing: 0, viewingAngle: 0)
-        }
-    }
-    
-    func resetMarkerPosition(coordinate: CLLocationCoordinate2D) {
-        self.marker.map = nil
-        self.marker = GMSMarker(position: coordinate)
-        self.marker.map = self.mapView
+    func configureWithLocation(location: CLLocation) {
+        self.mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
     }
     
     override func layoutSubviews() {

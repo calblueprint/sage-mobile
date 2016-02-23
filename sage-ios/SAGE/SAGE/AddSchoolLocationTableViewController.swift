@@ -13,7 +13,7 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
     var autocompleteSuggestions: [GMSAutocompletePrediction] = [GMSAutocompletePrediction]()
     let placesClient: GMSPlacesClient = GMSPlacesClient.sharedClient()
     var locationView = AddSchoolLocationSelectorView()
-    var school: School?
+    var marker = GMSMarker()
     
     weak var parentVC: AddSchoolController?
     
@@ -25,17 +25,25 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureWithSchool(school: School) {
-        self.school = school
-        self.locationView.configureWithSchool(school)
+    func configureWithLocation(location: CLLocation) {
+        self.locationView.configureWithLocation(location)
+        self.placeMarkerAt(location.coordinate)
     }
     
     override func loadView() {
         self.view = self.locationView
+        self.locationView.mapView.delegate = self
+        self.placeMarkerAt(CLLocationCoordinate2D(latitude: 0, longitude: 0))
         self.locationView.tableView.dataSource = self
         self.locationView.tableView.delegate = self
         self.locationView.searchBar.delegate = self
         self.locationView.returnToMapButton.addTarget(self, action: "returnToMap", forControlEvents: .TouchUpInside)
+    }
+    
+    func placeMarkerAt(coordinate: CLLocationCoordinate2D) {
+        self.marker.map = nil
+        self.marker = GMSMarker(position: coordinate)
+        self.marker.map = self.locationView.mapView
     }
     
     func returnToMap() {
@@ -77,8 +85,19 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.parentVC?.didSelectPlace(self.autocompleteSuggestions[indexPath.row])
-        self.navigationController?.popViewControllerAnimated(true)
+        self.locationView.activityIndicator.startAnimating()
+        let placeID = self.autocompleteSuggestions[indexPath.row].placeID
+        let placeClient = GMSPlacesClient.sharedClient()
+        placeClient.lookUpPlaceID(placeID) { (predictedPlace, error) -> Void in
+            if let place = predictedPlace {
+                let coordinate = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+                self.locationView.mapView.camera = GMSCameraPosition(target: coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+                self.parentVC?.didSelectPlace(place)
+                self.locationView.activityIndicator.stopAnimating()
+                self.locationView.mapView.hidden = false
+                self.locationView.tableView.hidden = true
+            }
+        }
     }
 
 }
@@ -110,6 +129,30 @@ extension AddSchoolLocationSelectorController: UISearchBarDelegate {
             }
             self.locationView.activityIndicator.stopAnimating()
         })
+    }
+}
+
+extension AddSchoolLocationSelectorController: GMSMapViewDelegate {
+    func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
+        let centerPoint = self.locationView.mapView.center
+        let coordinate = self.locationView.mapView.projection.coordinateForPoint(centerPoint)
+        
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) { (placemarks, error) -> Void in
+            
+            if error == nil {
+                if placemarks?.count > 0 {
+                    let pm = placemarks![0]
+                    self.parentVC?.selectPlacemarkData(pm, coordinate: coordinate)
+                }
+            }
+        }
+        self.parentVC?.didSelectCoordinate(coordinate)
+    }
+    
+    func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
+        let centerPoint = self.locationView.mapView.center
+        let coordinate = self.locationView.mapView.projection.coordinateForPoint(centerPoint)
+        self.placeMarkerAt(coordinate)
     }
 }
 

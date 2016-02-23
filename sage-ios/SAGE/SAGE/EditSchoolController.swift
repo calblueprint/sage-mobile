@@ -46,8 +46,10 @@ class EditSchoolController: AddSchoolController {
     override func locationButtonTapped() {
         let vc = AddSchoolLocationSelectorController()
         vc.parentVC = self
-        if let school = self.school {
-            vc.configureWithSchool(school)
+        if let location = self.location {
+            vc.configureWithLocation(location)
+        } else if let location = self.school?.location {
+            vc.configureWithLocation(location)
         }
         if let topItem = self.navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

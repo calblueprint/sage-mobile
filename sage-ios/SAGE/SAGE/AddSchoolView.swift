@@ -80,6 +80,7 @@ class AddSchoolView: FormView {
         self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }
     
+    
     func displayAddressText(text: String?) {
         if let addressText = text {
             self.location.button.setTitle(addressText, forState: .Normal)

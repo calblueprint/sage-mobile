@@ -14,7 +14,6 @@ class AddSchoolController: FormController {
     var location: CLLocation?
     var address: String?
     var radius: CLLocationDistance? = nil
-    var radiusCenter: CLLocationCoordinate2D? = CLLocationCoordinate2D()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +47,7 @@ class AddSchoolController: FormController {
         if self.location == nil {
             self.showAlertControllerError("Please choose a location first.")
         } else {
-            if self.location?.coordinate != nil {
-                self.radiusCenter = self.location!.coordinate
-            }
-            let viewController = AddSchoolRadiusViewController(center: self.radiusCenter!, radius: self.radius)
+            let viewController = AddSchoolRadiusViewController(center: self.location!.coordinate, radius: self.radius)
             viewController.parentVC = self
             if let topItem = self.navigationController?.navigationBar.topItem {
                 topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)

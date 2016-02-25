@@ -24,7 +24,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -234,9 +233,8 @@ public class SchoolFragment extends Fragment
         LatLng latLng = new LatLng(mSchool.getLat(), mSchool.getLng());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-        MarkerOptions options = new MarkerOptions();
-        options.position(latLng);
-        mMap.addMarker(options);
+        mMap.addMarker(MapUtils.getMarkerOptions(latLng, getActivity()));
+        mMap.addCircle(MapUtils.getCircleOptions(getActivity(), latLng, mSchool.getRadius()));
     }
 
     public void onEvent(SchoolEvent event) {
@@ -245,6 +243,10 @@ public class SchoolFragment extends Fragment
         mSchool = event.getSchool();
         mAdapter.setSchool(mSchool);
         initializeSchool();
+        if (mMap != null) {
+            mMap.clear();
+            onMapReady(mMap);
+        }
     }
 
     public void onEvent(DeleteSchoolEvent event) {

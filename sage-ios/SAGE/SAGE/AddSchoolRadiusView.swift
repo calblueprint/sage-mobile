@@ -37,14 +37,8 @@ class AddSchoolRadiusView: UIView {
     }
     
     func radiusToString(radius: Float) -> String {
-        var index = 1
-        if (radius >= 10 && radius < 100) {
-            index = 2
-        } else if (radius >= 100) {
-            index = 3
-        }
-        let roundedValueString: String = (String(radius) as NSString).substringToIndex(index)
-        return roundedValueString + " meters"
+        let intRadiusString = String(Int(radius)) + " meters"
+        return intRadiusString
     }
     
     func sliderValueDidChange(sender: UISlider!) {

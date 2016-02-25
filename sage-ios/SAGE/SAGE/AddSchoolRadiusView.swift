@@ -104,8 +104,6 @@ class AddSchoolRadiusView: UIView {
         self.circle.position = circleCenter
         self.circle.radius = CLLocationDistance(self.slider.value)
         self.circle.map = self.mapView
-        
-        self.layoutSubviews()
     }
 
 }

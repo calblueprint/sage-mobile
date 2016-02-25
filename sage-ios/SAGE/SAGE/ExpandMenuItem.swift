@@ -30,7 +30,7 @@ class ExpandMenuItem<Element>: MenuItem {
     
     convenience init(title: String, listRetriever:(ExpandedTableViewController<Element>) -> Void, displayText: (Element) -> String, handler: (Element) -> Void) {
         self.init(title: title, list: [Element](), displayText: displayText, handler: handler)
-        listRetriever(self.expandedListController)
+        self.expandedListController = ExpandedTableViewController(listRetriever: listRetriever, displayText: displayText, handler: handler)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -80,6 +80,7 @@ class ExpandMenuItem<Element>: MenuItem {
     override func itemTapped(sender: UIGestureRecognizer) {
         if self.expanded {
             self.expanded = false
+            self.expandedListController.beginAppearanceTransition(false, animated: true)
             
             UIView.animateWithDuration(UIConstants.fastAnimationTime, animations: { () -> Void in
                 self.expandCaret.transform = CGAffineTransformIdentity
@@ -109,10 +110,10 @@ class ExpandMenuItem<Element>: MenuItem {
             self.controller?.addChildViewController(self.expandedListController)
             
             self.listContainerView.addSubview(self.expandedListController.view)
-            self.expandedListController.beginAppearanceTransition(true, animated: false)
+            self.expandedListController.view.setX(0)
             self.expandedListController.view.setY(0)
             self.expandedListController.view.fillWidth()
-            self.expandedListController.view.setHeight(expandedListHeight)
+            self.expandedListController.beginAppearanceTransition(true, animated: true)
             
             UIView.animateWithDuration(UIConstants.fastAnimationTime, animations: { () -> Void in
                 let pi: CGFloat = CGFloat(M_PI)
@@ -128,6 +129,7 @@ class ExpandMenuItem<Element>: MenuItem {
                     self.superview!.layoutIfNeeded()
                     self.setY(UIConstants.navbarHeight)
                     self.listContainerView.setHeight(expandedListHeight)
+                    self.expandedListController.view.setHeight(expandedListHeight)
                 }) { (completed) -> Void in
             }
         }

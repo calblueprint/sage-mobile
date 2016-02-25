@@ -15,7 +15,7 @@ class MenuItem: UIView {
     
     private var titleLabel = UILabel()
     private var divider = UIView()
-    
+
     //
     // MARK: - Initialization and Setup
     //

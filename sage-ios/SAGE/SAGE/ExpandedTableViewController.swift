@@ -10,9 +10,9 @@ import Foundation
 
 class ExpandedTableViewController<Element> : UITableViewController {
 
-    var list = [Element]()
-    var displayText: (Element) -> String = {_ in return ""}
-    var handler: (Element) -> Void = {_ in }
+    private(set) var list = [Element]()
+    private(set) var displayText: (Element) -> String = {_ in return ""}
+    private(set) var handler: (Element) -> Void = {_ in }
 
     //
     // MARK: - Initialization

@@ -10,11 +10,11 @@ import UIKit
 
 class MenuItem: UIView {
 
-    var titleLabel = UILabel()
-    var handler: (AnyObject) -> Void = { _ in }
+    private(set) var handler: (AnyObject) -> Void = { _ in }
     weak var controller: MenuController?
-    private var divider = UIView()
 
+    private var titleLabel = UILabel()
+    private var divider = UIView()
 
     //
     // MARK: - Initialization and Setup

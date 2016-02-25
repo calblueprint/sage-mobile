@@ -22,7 +22,6 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -209,7 +208,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         }
 
         mRadiusInt.setText(initialRadius + " m");
-        mMapView.setRadius(initialRadius);
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override

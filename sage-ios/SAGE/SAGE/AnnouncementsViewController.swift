@@ -137,12 +137,17 @@ class AnnouncementsViewController: UITableViewController {
         menuController.addMenuItem(MenuItem(title: "Only General", handler: { (_) -> Void in
 
         }))
-        menuController.addMenuItem(ExpandMenuItem(title: "School",
-            list: [School]([School(name: "Test1"), School(name: "Test2"), School(name: "Test3")]),
-            displayText: { (school) in
+
+        menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
+            SchoolOperations.loadSchools({ (schools) -> Void in
+                controller.setList(schools)
+                }, failure: { (errorMessage) -> Void in
+
+            })
+            }, displayText: { (school: School) -> String in
                 return school.name!
             }, handler: { (selectedSchool) -> Void in
-                print("s")
+                print("yay")
         }))
 
         self.presentViewController(menuController, animated: false, completion: nil)

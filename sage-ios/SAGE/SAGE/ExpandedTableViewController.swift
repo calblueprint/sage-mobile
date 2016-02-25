@@ -12,7 +12,10 @@ class ExpandedTableViewController<Element> : UITableViewController {
 
     private(set) var list = [Element]()
     private(set) var displayText: (Element) -> String = {_ in return ""}
+    private(set) var listRetriever: (ExpandedTableViewController<Element>) -> Void = { _ in }
     private(set) var handler: (Element) -> Void = {_ in }
+
+    private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
 
     //
     // MARK: - Initialization
@@ -24,12 +27,38 @@ class ExpandedTableViewController<Element> : UITableViewController {
         self.handler = handler
     }
 
+    convenience init(listRetriever:(ExpandedTableViewController<Element>) -> Void, displayText: (Element) -> String, handler: (Element) -> Void) {
+        self.init(list: [Element](), displayText: displayText, handler: handler)
+        self.listRetriever = listRetriever
+    }
+
     //
     // MARK: - View Controller Life Cycle
     //
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
+
+        self.listRetriever(self)
+
+        self.tableView.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
+    }
+
+    //
+    // MARK: - Public Methods
+    //
+    func setList(list:[Element]) {
+        self.list = list
+        self.activityIndicator.stopAnimating()
+        self.tableView.reloadData()
+        self.tableView.layoutIfNeeded()
     }
 
     //

@@ -580,8 +580,8 @@
 		4241AF7E1C4BB40C009BC133 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				E4B347E11C7E7CD90026D43D /* Menu */,
 				4241AF7F1C4BB430009BC133 /* FormController.swift */,
-				E44611981C754AE6006E90FA /* MenuController.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -753,6 +753,14 @@
 				E446119A1C754CC4006E90FA /* MenuView.swift */,
 				E446119D1C7568C5006E90FA /* MenuItem.swift */,
 				E446119F1C756A73006E90FA /* ExpandMenuItem.swift */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		E4B347E11C7E7CD90026D43D /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				E44611981C754AE6006E90FA /* MenuController.swift */,
 				E4B347DF1C7B0C540026D43D /* ExpandedTableViewController.swift */,
 			);
 			name = Menu;

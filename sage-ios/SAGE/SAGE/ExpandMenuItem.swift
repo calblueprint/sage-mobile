@@ -10,13 +10,13 @@ import FontAwesomeKit
 
 class ExpandMenuItem<Element>: MenuItem {
     
-    var expandedListController: ExpandedTableViewController<Element>
+    private(set) var expandedListController: ExpandedTableViewController<Element>
     
     private var expandCaret = UIImageView()
     private var topDivider = UIView()
     private var listContainerView = UIView()
     
-    private var expanded = false
+    private(set) var expanded = false
     private var originalSubviewIndex = 0
     private var originalYPosition: CGFloat = 0
     
@@ -26,6 +26,11 @@ class ExpandMenuItem<Element>: MenuItem {
     required init(title: String, list:[Element], displayText: (Element) -> String, handler: (Element) -> Void) {
         self.expandedListController = ExpandedTableViewController(list: list, displayText: displayText, handler: handler)
         super.init(title: title, handler: {_ in })
+    }
+    
+    convenience init(title: String, listRetriever:(ExpandedTableViewController<Element>) -> Void, displayText: (Element) -> String, handler: (Element) -> Void) {
+        self.init(title: title, list: [Element](), displayText: displayText, handler: handler)
+        listRetriever(self.expandedListController)
     }
     
     required init?(coder aDecoder: NSCoder) {

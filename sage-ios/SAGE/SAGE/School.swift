@@ -16,9 +16,9 @@ class School: NSObject, NSCoding {
     var director: User?
     var address: String?
     var studentCount: Int = 0
-    var radius: CLLocationDistance = -1
+    var radius: CLLocationDistance = 200
     
-    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil, studentCount: Int = 0, radius: CLLocationDistance = -1) {
+    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil, studentCount: Int = 0, radius: CLLocationDistance = 200) {
         self.id = id
         self.name = name
         self.location = location
@@ -118,9 +118,7 @@ class School: NSObject, NSCoding {
         if let address = self.address {
             propertyDict[SchoolConstants.kAddress] = address
         }
-        if self.radius != -1 {
-            propertyDict[SchoolConstants.kRadius] = radius
-        }
+        propertyDict[SchoolConstants.kRadius] = radius
         return propertyDict
     }
     

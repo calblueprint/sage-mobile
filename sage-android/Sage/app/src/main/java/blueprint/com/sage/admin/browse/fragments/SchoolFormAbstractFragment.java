@@ -208,6 +208,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         }
 
         mRadiusInt.setText(initialRadius + " m");
+        mMapView.setRadius(initialRadius);
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override

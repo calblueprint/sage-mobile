@@ -10,7 +10,7 @@ import Foundation
 
 class AddSchoolRadiusViewController: UIViewController {
     
-    var schoolRadiusView: AddSchoolRadiusView?
+    var schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: CLLocationCoordinate2D(), radius: nil)
     weak var parentVC: AddSchoolController?
     
     init(center: CLLocationCoordinate2D, radius: CLLocationDistance?) {
@@ -19,7 +19,6 @@ class AddSchoolRadiusViewController: UIViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.schoolRadiusView = AddSchoolRadiusView(frame: CGRect(), center: CLLocationCoordinate2D(), radius: nil)
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -50,7 +49,7 @@ class AddSchoolRadiusViewController: UIViewController {
     }
     
     func saveRadius(sender: UIBarButtonItem) {
-        self.parentVC?.didSelectRadius(CLLocationDistance(self.schoolRadiusView!.slider.value))
+        self.parentVC?.didSelectRadius(CLLocationDistance(self.schoolRadiusView.slider.value))
         self.navigationController?.popViewControllerAnimated(true)
     }
 

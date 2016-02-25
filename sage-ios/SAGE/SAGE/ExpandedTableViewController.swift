@@ -12,7 +12,7 @@ class ExpandedTableViewController<Element> : UITableViewController {
 
     private(set) var list = [Element]()
     private(set) var displayText: (Element) -> String = {_ in return ""}
-    private(set) var listRetriever: (ExpandedTableViewController<Element>) -> Void = { _ in }
+    private(set) var listRetriever: ((ExpandedTableViewController<Element>) -> Void)?
     private(set) var handler: (Element) -> Void = {_ in }
 
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -39,7 +39,7 @@ class ExpandedTableViewController<Element> : UITableViewController {
         super.viewDidLoad()
         self.tableView.tableFooterView = UIView()
 
-        self.listRetriever(self)
+        self.listRetriever?(self)
 
         self.tableView.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()

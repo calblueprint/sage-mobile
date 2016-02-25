@@ -208,7 +208,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             initialRadius = 0;
         }
 
-        mRadiusInt.setText(Integer.toString(initialRadius) + " m");
+        mRadiusInt.setText(initialRadius + " m");
         mMapView.setRadius(initialRadius);
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
@@ -223,7 +223,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 int radius = progress;
                 mMapView.setRadius(radius);
-                mRadiusInt.setText(Integer.toString(radius) + " m");
+                mRadiusInt.setText(radius + " m");
             }
 
             @Override

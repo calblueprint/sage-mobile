@@ -69,11 +69,11 @@ public class LoadingView extends LinearLayout {
 
 
     private ObjectAnimator getUpAnimator(View view) {
-        return getTranslateAnimator(view, getHeight() - getPaddingBottom() - view.getHeight(), getPaddingTop() + view.getHeight());
+        return getTranslateAnimator(view, getHeight() - getPaddingBottom() - view.getHeight(), getPaddingTop());
     }
 
     private ObjectAnimator getDownAnimator(View view) {
-        return getTranslateAnimator(view, getPaddingTop() + view.getHeight(), getHeight() - getPaddingBottom() - view.getHeight());
+        return getTranslateAnimator(view, getPaddingTop(), getHeight() - getPaddingBottom() - view.getHeight());
     }
 
     private ObjectAnimator getTranslateAnimator(View view, int start, int end) {
@@ -98,7 +98,7 @@ public class LoadingView extends LinearLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                set.setStartDelay(0);
+                set.setStartDelay(100);
                 set.start();
             }
 

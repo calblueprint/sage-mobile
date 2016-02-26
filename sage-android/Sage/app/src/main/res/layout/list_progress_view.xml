@@ -7,15 +7,16 @@
     android:gravity="center|bottom"
     android:padding="16dp">
 
-    <blueprint.com.sage.shared.views.CircleImageView
+    <View
         style="@style/ListProgressCircle"
         android:id="@+id/list_progress_circle_1" />
 
-    <blueprint.com.sage.shared.views.CircleImageView
+    <View
         style="@style/ListProgressCircle"
         android:id="@+id/list_progress_circle_2" />
 
-    <blueprint.com.sage.shared.views.CircleImageView
+    <View
         style="@style/ListProgressCircle"
         android:id="@+id/list_progress_circle_3" />
+
 </LinearLayout>

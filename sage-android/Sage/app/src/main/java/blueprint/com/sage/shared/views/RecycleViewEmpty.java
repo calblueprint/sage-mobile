@@ -123,7 +123,6 @@ public class RecycleViewEmpty extends RecyclerView {
     }
 
     private void showRecyclerView() {
-        Log.e("show recycler", "yay");
         ValueAnimator fadeIn = getObjectAnimator(this, 0, 1).setDuration(ANIMATION_DURATION);
         fadeIn.addListener(getAnimationListener(this, View.VISIBLE));
         fadeIn.start();

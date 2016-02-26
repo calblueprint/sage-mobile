@@ -121,7 +121,7 @@ public class LoadingView extends LinearLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                set.setStartDelay(0);
+                set.setStartDelay(100);
                 set.start();
             }
 

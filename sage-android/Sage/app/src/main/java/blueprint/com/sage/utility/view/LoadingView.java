@@ -1,10 +1,13 @@
 package blueprint.com.sage.utility.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import blueprint.com.sage.R;
@@ -20,8 +23,9 @@ public class LoadingView extends LinearLayout {
     @Bind(R.id.list_progress_circle_2) View mCircleTwo;
     @Bind(R.id.list_progress_circle_3) View mCircleThree;
 
-    private TranslateAnimation mUpAnimation;
-    private TranslateAnimation mDownAnimation;
+    private AnimatorSet mCircleOneAnimationSet;
+    private AnimatorSet mCircleTwoAnimationSet;
+    private AnimatorSet mCircleThreeAnimationSet;
 
     public LoadingView(Context context) {
         super(context);
@@ -41,36 +45,68 @@ public class LoadingView extends LinearLayout {
         inflate(context, R.layout.list_progress_view, this);
         ButterKnife.bind(this);
 
-//        mDownAnimation = AnimationUtils.getYTranslationAnimator();
-//        mUpAnimation = AnimationUtils.getYTranslationAnimator();
+        setGravity(Gravity.BOTTOM | Gravity.CENTER);
+    }
 
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
         initializeAnimators();
     }
 
     private void initializeAnimators() {
-        mCircleOne.setAnimation(getTranslationAnimator(mCircleOne));
-        mCircleTwo.setAnimation(getTranslationAnimator(mCircleTwo));
-        mCircleThree.setAnimation(getTranslationAnimator(mCircleThree));
+        mCircleOneAnimationSet = getAnimatiorSet(mCircleOne);
+        mCircleTwoAnimationSet = getAnimatiorSet(mCircleTwo);
+        mCircleThreeAnimationSet = getAnimatiorSet(mCircleThree);
+
+        mCircleTwoAnimationSet.setStartDelay(100);
+        mCircleThreeAnimationSet.setStartDelay(200);
+
+        mCircleOneAnimationSet.start();
+        mCircleTwoAnimationSet.start();
+        mCircleThreeAnimationSet.start();
     }
 
-    private Animation getTranslationAnimator(View view) {
-        mUpAnimation.setAnimationListener(getAnimationListener(view));
-        return mUpAnimation;
+
+    private ObjectAnimator getUpAnimator(View view) {
+        return getTranslateAnimator(view, getHeight() - getPaddingBottom() - view.getHeight(), getPaddingTop() + view.getHeight());
     }
 
-    private Animation.AnimationListener getAnimationListener(final View view) {
-        return new Animation.AnimationListener() {
+    private ObjectAnimator getDownAnimator(View view) {
+        return getTranslateAnimator(view, getPaddingTop() + view.getHeight(), getHeight() - getPaddingBottom() - view.getHeight());
+    }
+
+    private ObjectAnimator getTranslateAnimator(View view, int start, int end) {
+        return AnimationUtils.getYTranslationAnimator(view, start, end);
+    }
+
+    private AnimatorSet getAnimatiorSet(View view) {
+        AnimatorSet set = new AnimatorSet();
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.play(getUpAnimator(view)).before(getDownAnimator(view));
+        set.setDuration(500);
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.addListener(getAnimationListener(set));
+
+        return set;
+    }
+
+    private Animator.AnimatorListener getAnimationListener(final AnimatorSet set) {
+        return new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-                view.setAnimation(mDownAnimation);
-                mDownAnimation.start();
+            public void onAnimationStart(Animator animator) {}
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                set.setStartDelay(0);
+                set.start();
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {}
+            public void onAnimationCancel(Animator animator) {}
 
             @Override
-            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationRepeat(Animator animator) {}
         };
     }
 }

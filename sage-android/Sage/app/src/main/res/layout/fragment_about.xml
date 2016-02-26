@@ -5,6 +5,6 @@
 
     <blueprint.com.sage.utility.view.LoadingView
         android:layout_width="match_parent"
-        android:padding="8dp"
+        android:padding="12dp"
         android:layout_height="48dp" />
 </LinearLayout>

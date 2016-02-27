@@ -28,6 +28,7 @@ import org.joda.time.DateTime;
 import java.util.Calendar;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.checkIns.CheckInEvent;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
@@ -66,6 +67,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     private BaseInterface mBaseInterface;
     private ToolbarInterface mToolbarInterface;
+    private MenuItem mItem;
 
     public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
@@ -107,6 +109,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
                 validateAndSubmitRequest();
@@ -223,6 +226,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
             Snackbar.make(mLayout, R.string.check_in_request_blank, Snackbar.LENGTH_SHORT).show();
         }
 
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         CheckIn checkIn = new CheckIn(startDate.toDate(), endDate.toDate(), user, school, comment);
         Requests.CheckIns.with(getActivity()).makeCreateRequest(checkIn);
     }
@@ -239,7 +243,13 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
         getActivity().onBackPressed();
     }
 
-    public void onEvent(CheckInEvent event) { resetCheckIn(); }
+    public void onEvent(CheckInEvent event) {
+        mItem.setActionView(null);
+        resetCheckIn(); }
+
+    public void onEvent(APIErrorEvent event) {
+        mItem.setActionView(null);
+    }
 
     /**
      * Pickers for both date and time

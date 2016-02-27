@@ -21,6 +21,7 @@ public class CreateSchoolFragment extends SchoolFormAbstractFragment implements 
     }
 
     public void onEvent(CreateSchoolEvent event) {
+        mItem.setActionView(null);
         FragUtils.popBackStack(this);
     }
 }

@@ -42,7 +42,7 @@ public class LoadingView extends LinearLayout {
     }
 
     private void initializeViews(Context context, AttributeSet attributeSet) {
-        inflate(context, R.layout.list_progress_view, this);
+        inflate(context, R.layout.loading_view, this);
         ButterKnife.bind(this);
 
         setGravity(Gravity.BOTTOM | Gravity.CENTER);
@@ -55,6 +55,9 @@ public class LoadingView extends LinearLayout {
     }
 
     private void initializeAnimators() {
+        if (hasSetAnimations())
+            return;
+
         mCircleOneAnimationSet = getAnimatiorSet(mCircleOne);
         mCircleTwoAnimationSet = getAnimatiorSet(mCircleTwo);
         mCircleThreeAnimationSet = getAnimatiorSet(mCircleThree);
@@ -65,6 +68,10 @@ public class LoadingView extends LinearLayout {
         mCircleOneAnimationSet.start();
         mCircleTwoAnimationSet.start();
         mCircleThreeAnimationSet.start();
+    }
+
+    private boolean hasSetAnimations() {
+        return mCircleOneAnimationSet != null && mCircleTwoAnimationSet != null && mCircleThreeAnimationSet != null;
     }
 
 

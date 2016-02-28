@@ -56,6 +56,9 @@ class ExpandMenuItem<Element>: MenuItem {
 
         self.listContainerView.backgroundColor = UIColor.whiteColor()
         self.listContainerView.clipsToBounds = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: "expandedItemTapped:")
+        tapGesture.cancelsTouchesInView = false
+        self.listContainerView.addGestureRecognizer(tapGesture)
         self.addSubview(self.listContainerView)
     }
 
@@ -133,6 +136,10 @@ class ExpandMenuItem<Element>: MenuItem {
                 }) { (completed) -> Void in
             }
         }
+    }
+
+    func expandedItemTapped(sender: UIGestureRecognizer) {
+        self.controller?.dismiss()
     }
 
     //

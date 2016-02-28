@@ -135,14 +135,13 @@ class AnnouncementsViewController: UITableViewController {
 
         }))
         menuController.addMenuItem(MenuItem(title: "Only General", handler: { (_) -> Void in
-
+            print("ass")
         }))
 
         menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
             SchoolOperations.loadSchools({ (schools) -> Void in
                 controller.setList(schools)
                 }, failure: { (errorMessage) -> Void in
-
             })
             }, displayText: { (school: School) -> String in
                 return school.name!

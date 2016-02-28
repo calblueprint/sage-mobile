@@ -26,6 +26,9 @@
     <color name="red500_disabled">#EEF44336</color>
 
     <!-- Check In Map -->
+    <color name="map_circle_stroke">#BFFFC107</color>
+    <color name="map_circle_fill">#80FFC107</color>
+    
     <array name="sign_up_colors">
         <item>#F44336</item>
         <item>#FFC107</item>

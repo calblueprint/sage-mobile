@@ -24,7 +24,9 @@ import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.PaginationInstance;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.shared.listeners.EndlessRecyclerViewScrollListener;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -38,9 +40,12 @@ import de.greenrobot.event.EventBus;
  */
 public class AnnouncementsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private LinearLayoutManager mLinearLayoutManager;
+    private PaginationInstance mPaginationInstance;
     private ArrayList<Announcement> mAnnouncements;
     private AnnouncementsListAdapter mAdapter;
     private BaseInterface mBaseInterface;
+
 
     @Bind(R.id.announcements_recycler) RecycleViewEmpty mAnnouncementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
@@ -62,9 +67,6 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_announcements_list, container, false);
         ButterKnife.bind(this, view);
-        if (!mBaseInterface.getUser().isAdmin()) {
-            mAddAnnouncementButton.setVisibility(View.GONE);
-        }
         initializeViews();
         makeRequest();
         return view;
@@ -84,20 +86,41 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     @Override
     public void onRefresh() {
+        mPaginationInstance.resetPage();
         makeRequest();
     }
 
     public void onEvent(AnnouncementsListEvent event) {
-        mAnnouncements = event.getMAnnouncements();
-        mAdapter.setAnnouncements(mAnnouncements);
+        mAnnouncements = event.getAnnouncements();
+
+        if (mPaginationInstance.hasResetPage()) {
+            mAdapter.resetAnnouncements(mAnnouncements);
+        } else {
+            mAdapter.setAnnouncements(mAnnouncements);
+        }
+
         mEmptyView.setRefreshing(false);
         mAnnouncementsRefreshView.setRefreshing(false);
+        mPaginationInstance.incrementCurrentPage();
     }
 
     public void initializeViews() {
-        mAnnouncementsList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (!mBaseInterface.getUser().isAdmin()) {
+            mAddAnnouncementButton.setVisibility(View.GONE);
+        }
+
+        mPaginationInstance = PaginationInstance.newInstance();
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mAnnouncementsList.setLayoutManager(mLinearLayoutManager);
         mAnnouncementsList.setEmptyView(mEmptyView);
         mAnnouncementsList.setProgressBar(mProgressBar);
+        mAnnouncementsList.addOnScrollListener(
+                new EndlessRecyclerViewScrollListener(mLinearLayoutManager, mPaginationInstance) {
+                    @Override
+                    public void onLoadMore() {
+                        makeRequest();
+                    }
+                });
 
         mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity(), getParentFragment());
         mAnnouncementsList.setAdapter(mAdapter);
@@ -110,6 +133,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         HashMap<String, String> map = new HashMap<>();
         map.put("sort[attr]", "created_at");
         map.put("sort[order]", "desc");
+        map.put("page", "" + mPaginationInstance.getCurrentPage());
         User user = mBaseInterface.getUser();
         if (user.isStudent() && user.getSchoolId() != 0) {
             int id = user.getSchoolId();

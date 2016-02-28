@@ -28,6 +28,7 @@ class MenuItem: UIView {
         self.handler = handler
         
         let tapGesture = UITapGestureRecognizer(target: self, action: "itemTapped:")
+        tapGesture.cancelsTouchesInView = false
         self.addGestureRecognizer(tapGesture)
     }
     

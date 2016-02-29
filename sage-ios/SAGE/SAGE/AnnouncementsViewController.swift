@@ -116,7 +116,7 @@ class AnnouncementsViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "getAnnouncements", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "getAnnouncementsWithFilter:reset:", forControlEvents: .ValueChanged)
         
         self.getAnnouncements()
     }
@@ -132,10 +132,11 @@ class AnnouncementsViewController: UITableViewController {
     func showFilterOptions() {
         let menuController = MenuController(title: "Filter Options")
         menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
-
+            self.getAnnouncements(reset: true)
         }))
         menuController.addMenuItem(MenuItem(title: "Only General", handler: { (_) -> Void in
-            print("ass")
+            let filter = [AnnouncementConstants.kCategory: Announcement.Category.General.rawValue]
+            self.getAnnouncements(filter: filter, reset: true)
         }))
         
         menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
@@ -146,14 +147,21 @@ class AnnouncementsViewController: UITableViewController {
             }, displayText: { (school: School) -> String in
                 return school.name!
             }, handler: { (selectedSchool) -> Void in
-                print("yay")
+                let filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+                self.getAnnouncements(filter: filter, reset: true)
         }))
         
         self.presentViewController(menuController, animated: false, completion: nil)
     }
-    
-    func getAnnouncements() {
-        AnnouncementsOperations.loadAnnouncements({ (announcements) -> Void in
+        
+    func getAnnouncements(filter filter: [String: String]? = nil, reset: Bool = false) {
+        if reset {
+            self.announcements = [Announcement]()
+            self.tableView.reloadData()
+            self.activityIndicator.startAnimating()
+        }
+        
+        AnnouncementsOperations.loadAnnouncements(filter: filter, completion: { (announcements) -> Void in
             self.announcements = announcements
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()

@@ -71,7 +71,7 @@ class ProfileOperations: NSObject {
         }
 
         if resetPhoto {
-            userJSON[UserConstants.kResetImage] = true
+            userJSON[UserConstants.kRemoveImage] = true
         }
 
         if newPassword != nil {

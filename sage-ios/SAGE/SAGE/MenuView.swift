@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class MenuView: UIView {
     
     var backgroundView = UIView()
+    var closeButton = UIButton()
     private var menuList: [MenuItem]?
     private var navbar = UINavigationBar()
     private var darkenStatusBar = false
@@ -44,6 +46,13 @@ class MenuView: UIView {
         self.navbar.alpha = 0
         self.navbar.setHeight(UIConstants.navbarHeight)
         self.addSubview(self.navbar)
+        
+        self.closeButton.setWidth(UIConstants.barbuttonSize)
+        self.closeButton.setHeight(UIConstants.barbuttonSize)
+        let filterIcon = FAKIonIcons.androidCloseIconWithSize(UIConstants.barbuttonIconSize)
+        let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        self.closeButton.setImage(filterImage, forState: .Normal)
+        self.navbar.addSubview(self.closeButton)
     }
 
     //
@@ -54,6 +63,8 @@ class MenuView: UIView {
         self.backgroundView.frame = self.bounds
         
         self.navbar.fillWidth()
+        self.closeButton.alignRightWithMargin(0)
+        self.closeButton.alignBottomWithMargin(0)
         
         let startingOffset = UIConstants.navbarHeight
         if let list = self.menuList {
@@ -69,11 +80,19 @@ class MenuView: UIView {
     // MARK: - Public methods
     //
     func setTitle(title: String?) {
-        if title == nil {
+        if title == nil || title!.characters.count == 0 {
             self.navbar.translucent = true
             self.navbar.barTintColor = UIColor.clearColor()
             self.navbar.tintColor = UIColor.whiteColor()
             self.navbar.layer.shadowOpacity = 0
+            
+            self.closeButton.setWidth(UIConstants.barbuttonSize)
+            self.closeButton.setHeight(UIConstants.barbuttonSize)
+            let filterIcon = FAKIonIcons.androidCloseIconWithSize(UIConstants.barbuttonIconSize)
+            filterIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
+            let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+            self.closeButton.setImage(filterImage, forState: .Normal)
+            
             self.darkenStatusBar = false
             return
         }

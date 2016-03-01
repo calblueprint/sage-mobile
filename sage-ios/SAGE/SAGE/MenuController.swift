@@ -37,6 +37,8 @@ class MenuController: UIViewController {
         
         let dismissGesture = UITapGestureRecognizer(target: self, action: "dismiss")
         self.menuView.backgroundView.addGestureRecognizer(dismissGesture)
+        
+        self.menuView.closeButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {

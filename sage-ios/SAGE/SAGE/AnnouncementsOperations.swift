@@ -11,8 +11,8 @@ import AFNetworking
 
 class AnnouncementsOperations {
     
-    static func loadAnnouncements(filter filter: [String: String]? = nil, completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
-        var params = [
+    static func loadAnnouncements(filter filter: [String: AnyObject]? = nil, completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
+        var params: [String: AnyObject] = [
             NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
@@ -22,7 +22,7 @@ class AnnouncementsOperations {
                 params[AnnouncementConstants.kDefault] = String(schoolID)
             }
         }
-        if let filter = filter as [String: String]! {
+        if let filter = filter as [String: AnyObject]! {
             for (key, value) in filter {
                 params[key] = value
             }

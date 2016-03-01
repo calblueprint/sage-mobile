@@ -10,9 +10,9 @@ import Foundation
 
 class Announcement: NSObject {
     
-    enum Category: String {
-        case General = "general"
-        case School = "school"
+    enum Category: Int {
+        case General = 0
+        case School = 1
     }
     
     var id: Int?

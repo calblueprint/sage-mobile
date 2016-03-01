@@ -89,6 +89,9 @@ class AnnouncementsViewController: UITableViewController {
         }
     }
     
+    //
+    // MARK: - ViewController LifeCycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
@@ -121,6 +124,9 @@ class AnnouncementsViewController: UITableViewController {
         self.getAnnouncements()
     }
     
+    //
+    // MARK: - Public Methods
+    //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
         if let topItem = self.navigationController?.navigationBar.topItem {
@@ -134,27 +140,32 @@ class AnnouncementsViewController: UITableViewController {
         menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
             self.getAnnouncements(reset: true)
         }))
-        menuController.addMenuItem(MenuItem(title: "Only General", handler: { (_) -> Void in
-            let filter = [AnnouncementConstants.kCategory: Announcement.Category.General.rawValue]
-            self.getAnnouncements(filter: filter, reset: true)
-        }))
 
-        menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
-            SchoolOperations.loadSchools({ (schools) -> Void in
-                controller.setList(schools)
-                }, failure: { (errorMessage) -> Void in
-            })
-            }, displayText: { (school: School) -> String in
-                return school.name!
-            }, handler: { (selectedSchool) -> Void in
-                let filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+        if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                let filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
                 self.getAnnouncements(filter: filter, reset: true)
-        }))
+            }))
+        }
+
+        if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
+            menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
+                SchoolOperations.loadSchools({ (schools) -> Void in
+                    controller.setList(schools)
+                    }, failure: { (errorMessage) -> Void in
+                })
+                }, displayText: { (school: School) -> String in
+                    return school.name!
+                }, handler: { (selectedSchool) -> Void in
+                    let filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+                    self.getAnnouncements(filter: filter, reset: true)
+            }))
+        }
 
         self.presentViewController(menuController, animated: false, completion: nil)
     }
 
-    func getAnnouncements(filter filter: [String: String]? = nil, reset: Bool = false) {
+    func getAnnouncements(filter filter: [String: AnyObject]? = nil, reset: Bool = false) {
         if reset {
             self.announcements = [Announcement]()
             self.tableView.reloadData()
@@ -180,6 +191,9 @@ class AnnouncementsViewController: UITableViewController {
         self.currentErrorMessage = errorView
     }
     
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return AnnouncementsTableViewCell.heightForAnnouncement(announcements[indexPath.row], width: CGRectGetWidth(tableView.frame))
     }

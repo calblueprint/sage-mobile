@@ -165,20 +165,24 @@ class MenuView: UIView {
         let itemOffset: CGFloat = 200
         for var i = self.menuList!.count - 1; i >= 0; i-- {
             let menuItem = self.menuList![i]
-            UIView.animateWithDuration(UIConstants.longAnimationTime,
-                delay: Double(self.menuList!.count - 1 - i) * 0.10,
-                usingSpringWithDamping: UIConstants.defaultSpringDampening,
-                initialSpringVelocity: UIConstants.defaultSpringVelocity,
+            let delay = Double(self.menuList!.count - 1 - i) * 0.07
+            UIView.animateWithDuration(UIConstants.normalAnimationTime,
+                delay: delay,
                 options: [],
                 animations: { () -> Void in
                     menuItem.alpha = 0
-                    menuItem.moveY(itemOffset)
+            }, completion: nil)
+
+            UIView.animateWithDuration(UIConstants.longAnimationTime,
+                delay: delay,
+                options: [],
+                animations: { () -> Void in
+                    menuItem.moveY(itemOffset*2)
                 }) { (completed) -> Void in
                     if (menuItem == self.menuList?.first) {
                         completion()
                     }
-            }
-
+                }
         }
     }
 }

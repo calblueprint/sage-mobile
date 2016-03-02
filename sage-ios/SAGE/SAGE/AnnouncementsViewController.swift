@@ -13,9 +13,10 @@ import SwiftKeychainWrapper
 class AnnouncementsViewController: UITableViewController {
     
     var announcements = [Announcement]()
+    var filter: [String: AnyObject]?
+    
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
-    
     var titleView = SGTitleView(title: "Announcements", subtitle: "All")
     
     override init(style: UITableViewStyle) {
@@ -121,7 +122,7 @@ class AnnouncementsViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "getAnnouncementsWithFilter:reset:", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "getAnnouncementsWithReset:", forControlEvents: .ValueChanged)
         
         self.getAnnouncements()
     }
@@ -140,14 +141,15 @@ class AnnouncementsViewController: UITableViewController {
     func showFilterOptions() {
         let menuController = MenuController(title: "Filter Options")
         menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
+            self.filter = nil
             self.getAnnouncements(reset: true)
             self.titleView.setSubtitle("All")
         }))
         
         if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
-                let filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
-                self.getAnnouncements(filter: filter, reset: true)
+                self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
+                self.getAnnouncements(reset: true)
                 self.titleView.setSubtitle(userSchool.name!)
             }))
         }
@@ -161,8 +163,8 @@ class AnnouncementsViewController: UITableViewController {
                 }, displayText: { (school: School) -> String in
                     return school.name!
                 }, handler: { (selectedSchool) -> Void in
-                    let filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
-                    self.getAnnouncements(filter: filter, reset: true)
+                    self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+                    self.getAnnouncements(reset: true)
                     self.titleView.setSubtitle(selectedSchool.name!)
             }))
         }
@@ -170,14 +172,14 @@ class AnnouncementsViewController: UITableViewController {
         self.presentViewController(menuController, animated: false, completion: nil)
     }
         
-    func getAnnouncements(filter filter: [String: AnyObject]? = nil, reset: Bool = false) {
+    func getAnnouncements(reset reset: Bool = false) {
         if reset {
             self.announcements = [Announcement]()
             self.tableView.reloadData()
             self.activityIndicator.startAnimating()
         }
         
-        AnnouncementsOperations.loadAnnouncements(filter: filter, completion: { (announcements) -> Void in
+        AnnouncementsOperations.loadAnnouncements(filter: self.filter, completion: { (announcements) -> Void in
             self.announcements = announcements
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()

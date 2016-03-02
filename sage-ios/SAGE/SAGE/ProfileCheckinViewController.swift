@@ -101,6 +101,16 @@ class ProfileCheckinViewController: UITableViewController {
                         self.unverifiedCheckins.append(checkin)
                     }
                 }
+
+                self.verifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
+                    let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
+                    if comparisonResult == .OrderedDescending {
+                        return true
+                        } else {
+                    return false
+                        }
+                    })
+
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()

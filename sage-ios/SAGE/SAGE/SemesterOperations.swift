@@ -13,7 +13,13 @@ class SemesterOperations {
     
     static func loadSemesters(completion: (([Semester]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        manager.GET(StringConstants.kEndpointSemesters, parameters: nil, success: { (operation, data) -> Void in
+
+        let params: [String: AnyObject] = [
+            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+            NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+        ]
+
+        manager.GET(StringConstants.kEndpointSemesters, parameters: params, success: { (operation, data) -> Void in
             var semesters = [Semester]()
             let semesterArray = data["semesters"] as! [AnyObject]
             for semesterDict in semesterArray {

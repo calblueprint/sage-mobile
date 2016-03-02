@@ -96,7 +96,7 @@ class AnnouncementsViewController: UITableViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
 
-        let filterIcon = FAKIonIcons.androidMoreVerticalIconWithSize(UIConstants.barbuttonIconSize)
+        let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
         let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
 

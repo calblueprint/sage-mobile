@@ -91,7 +91,7 @@ class ProfileCheckinViewController: UITableViewController {
         }
         
         if let user = self.user {
-            ProfileOperations.loadCheckins(user, completion: { (checkins) -> Void in
+            ProfileOperations.loadCheckins(filter: self.filter, user: user, completion: { (checkins) -> Void in
                 self.verifiedCheckins = [Checkin]()
                 self.unverifiedCheckins = [Checkin]()
                 for checkin in checkins {
@@ -101,28 +101,12 @@ class ProfileCheckinViewController: UITableViewController {
                         self.unverifiedCheckins.append(checkin)
                     }
                 }
-                self.verifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
-                    let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
-                    if comparisonResult == .OrderedDescending {
-                        return true
-                    } else {
-                        return false
-                    }
-                })
-                
-                self.unverifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
-                    let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
-                    if comparisonResult == .OrderedDescending {
-                        return true
-                    } else {
-                        return false
-                    }
-                })
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
                 
                 }) { (errorMessage) -> Void in
+                    self.activityIndicator.stopAnimating()
                     self.showErrorAndSetMessage(errorMessage)
             }
         }

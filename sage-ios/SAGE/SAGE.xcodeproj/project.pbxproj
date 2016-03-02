@@ -147,6 +147,7 @@
 		E4B250D11C65C764008652FD /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B250D01C65C764008652FD /* ProfileImageView.swift */; };
 		E4B250D31C65D092008652FD /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B250D21C65D092008652FD /* UIImageView.swift */; };
 		E4B347E01C7B0C540026D43D /* ExpandedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B347DF1C7B0C540026D43D /* ExpandedTableViewController.swift */; };
+		E4B347E31C866E990026D43D /* SGTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B347E21C866E990026D43D /* SGTitleView.swift */; };
 		E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF49E51C5462920078A799 /* SemesterConstants.swift */; };
 		E4CF49E91C5624690078A799 /* SemesterOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF49E81C5624690078A799 /* SemesterOperations.swift */; };
 		E4D8DC931C6ABDB0003C0637 /* SF-UI-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC7E1C6ABDB0003C0637 /* SF-UI-Display-Black.otf */; };
@@ -315,6 +316,7 @@
 		E4B250D01C65C764008652FD /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		E4B250D21C65D092008652FD /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		E4B347DF1C7B0C540026D43D /* ExpandedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedTableViewController.swift; sourceTree = "<group>"; };
+		E4B347E21C866E990026D43D /* SGTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGTitleView.swift; sourceTree = "<group>"; };
 		E4CF49E51C5462920078A799 /* SemesterConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterConstants.swift; sourceTree = "<group>"; };
 		E4CF49E81C5624690078A799 /* SemesterOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterOperations.swift; sourceTree = "<group>"; };
 		E4D8DC7E1C6ABDB0003C0637 /* SF-UI-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Black.otf"; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 				27561FCD1C0D2E0E00DAB74A /* SGButton.swift */,
 				27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */,
 				E4B250D01C65C764008652FD /* ProfileImageView.swift */,
+				E4B347E21C866E990026D43D /* SGTitleView.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -1080,6 +1083,7 @@
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
 				5D6149151C5C3F0D0036708A /* JoinSemesterViewController.swift in Sources */,
 				278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */,
+				E4B347E31C866E990026D43D /* SGTitleView.swift in Sources */,
 				429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */,
 				42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */,
 				5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */,

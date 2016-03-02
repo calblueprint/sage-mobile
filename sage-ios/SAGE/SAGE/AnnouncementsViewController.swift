@@ -16,6 +16,8 @@ class AnnouncementsViewController: UITableViewController {
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
     
+    var titleView = SGTitleView(title: "Announcements", subtitle: "All")
+    
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
@@ -108,7 +110,7 @@ class AnnouncementsViewController: UITableViewController {
             }
         }
         
-        self.title = "Announcements"
+        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
@@ -137,14 +139,16 @@ class AnnouncementsViewController: UITableViewController {
     
     func showFilterOptions() {
         let menuController = MenuController(title: "Filter Options")
-        menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
+        menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.getAnnouncements(reset: true)
+            self.titleView.setSubtitle("All")
         }))
         
         if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 let filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
                 self.getAnnouncements(filter: filter, reset: true)
+                self.titleView.setSubtitle(userSchool.name!)
             }))
         }
         
@@ -159,6 +163,7 @@ class AnnouncementsViewController: UITableViewController {
                 }, handler: { (selectedSchool) -> Void in
                     let filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
                     self.getAnnouncements(filter: filter, reset: true)
+                    self.titleView.setSubtitle(selectedSchool.name!)
             }))
         }
         

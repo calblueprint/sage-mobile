@@ -19,6 +19,9 @@ class AnnouncementsViewController: UITableViewController {
     var currentErrorMessage: ErrorView?
     var titleView = SGTitleView(title: "Announcements", subtitle: "All")
 
+    //
+    // MARK: - Initialization
+    //
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)

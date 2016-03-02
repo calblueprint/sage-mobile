@@ -11,6 +11,22 @@ import SwiftKeychainWrapper
 
 class SemesterOperations {
     
+    static func loadSemesters(completion: (([Semester]) -> Void), failure: (String) -> Void){
+        let manager = BaseOperation.manager()
+        manager.GET(StringConstants.kEndpointSemesters, parameters: nil, success: { (operation, data) -> Void in
+            var semesters = [Semester]()
+            let semesterArray = data["semesters"] as! [AnyObject]
+            for semesterDict in semesterArray {
+                let semester = Semester(propertyDictionary: semesterDict as! [String: AnyObject])
+                semesters.append(semester)
+            }
+            completion(semesters)
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+
+    }
+
     static func startSemester(semester: Semester, completion: (Semester) -> Void, failure: (String) -> Void) {
         let params = [
             SemesterConstants.kStartDate: semester.dateStringFromStartDate(),

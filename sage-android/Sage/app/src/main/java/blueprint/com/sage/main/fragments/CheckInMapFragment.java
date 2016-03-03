@@ -361,7 +361,7 @@ public class CheckInMapFragment extends Fragment
                 school.getLng(),
                 results);
 
-        return results[0] <= MapUtils.DISTANCE;
+        return results[0] <= school.getRadius();
     }
 
     private Location getLocation() {

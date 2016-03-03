@@ -86,7 +86,10 @@ public class EditUserFragment extends UserFormAbstractFragment {
     public void onEvent(EditUserEvent event) {
         try {
             NetworkUtils.setUser(getActivity(), event.getUser());
+            NetworkUtils.setSchool(getActivity(), event.getUser().getSchool());
+
             mBaseInterface.setUser(event.getUser());
+            mBaseInterface.setSchool(event.getUser().getSchool());
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }

@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -29,6 +31,7 @@ import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.listeners.EndlessRecyclerViewScrollListener;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.AnimationUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,12 +49,15 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     private AnnouncementsListAdapter mAdapter;
     private BaseInterface mBaseInterface;
 
-
+    @Bind(R.id.announcement_list_container) ViewGroup mContainer;
     @Bind(R.id.announcements_recycler) RecycleViewEmpty mAnnouncementsList;
     @Bind(R.id.announcements_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;
     @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
     @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
+    @Bind(R.id.filter_view) LinearLayout mFilterButton;
+
+    private View mFilterView;
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
 
@@ -65,8 +71,14 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_announcements_list, container, false);
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_announcements_list, container, false);
+
         ButterKnife.bind(this, view);
+
+        mFilterView = inflater.inflate(R.layout.fragment_announcements_filter, view, false);
+        mContainer.addView(mFilterView);
+        mFilterView.setVisibility(View.GONE);
+
         initializeViews();
         makeRequest();
         return view;
@@ -127,6 +139,13 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
+    }
+
+    @OnClick(R.id.filter_view)
+    public void onFilterViewClick() {
+        Animation animation = AnimationUtils.getBounceSlideUpAnimator(getActivity());
+        mFilterView.startAnimation(animation);
+        mFilterView.setVisibility(View.VISIBLE);
     }
 
     public void makeRequest() {

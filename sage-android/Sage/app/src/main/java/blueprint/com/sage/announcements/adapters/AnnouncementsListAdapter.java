@@ -97,7 +97,6 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<RecyclerView.
                 onBindAnnouncementViewHolder((AnnouncementsListViewHolder) viewHolder, item.getAnnouncement());
                 break;
             case LOADING_VIEW:
-                Log.e("what", "what");
                 break;
         }
     }

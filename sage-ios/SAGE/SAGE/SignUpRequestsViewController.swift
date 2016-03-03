@@ -9,7 +9,7 @@
 import UIKit
 import FontAwesomeKit
 
-class SignUpRequestsViewController: UITableViewController {
+class SignUpRequestsViewController: SGTableViewController {
     var requests: [User]?
     var filter: [String: AnyObject]?
 

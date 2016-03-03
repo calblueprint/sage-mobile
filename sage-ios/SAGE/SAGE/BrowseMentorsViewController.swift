@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseMentorsViewController: UITableViewController {
+class BrowseMentorsViewController: SGTableViewController {
     
     var mentors: [[User]]?
     var currentErrorMessage: ErrorView?

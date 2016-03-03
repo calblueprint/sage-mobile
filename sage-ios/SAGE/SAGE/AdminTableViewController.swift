@@ -10,7 +10,7 @@ import UIKit
 import FontAwesomeKit
 import SwiftKeychainWrapper
 
-class AdminTableViewController: UITableViewController {
+class AdminTableViewController: SGTableViewController {
 
     //
     // MARK: - Initialization

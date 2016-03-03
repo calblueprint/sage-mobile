@@ -9,8 +9,7 @@
 import UIKit
 import FontAwesomeKit
 
-class CheckinRequestsViewController: UITableViewController {
-
+class CheckinRequestsViewController: SGTableViewController {
     var requests: [Checkin]?
     var filter: [String: AnyObject]?
 

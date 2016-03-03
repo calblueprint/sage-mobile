@@ -9,7 +9,7 @@
 import Foundation
 import SwiftKeychainWrapper
 
-class ProfileViewController: UITableViewController {
+class ProfileViewController: SGTableViewController {
 
     var user: User?
     var profileView = ProfileView()

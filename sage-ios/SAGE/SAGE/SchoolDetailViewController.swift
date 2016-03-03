@@ -9,7 +9,7 @@
 import UIKit
 import FontAwesomeKit
 
-class SchoolDetailViewController: UITableViewController {
+class SchoolDetailViewController: SGTableViewController {
     
     private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     private var school: School?

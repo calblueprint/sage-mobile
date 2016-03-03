@@ -10,8 +10,8 @@ import Foundation
 import FontAwesomeKit
 import SwiftKeychainWrapper
 
-class AnnouncementsViewController: UITableViewController {
-
+class AnnouncementsViewController: SGTableViewController {
+    
     var announcements = [Announcement]()
     var filter: [String: AnyObject]?
 
@@ -28,7 +28,7 @@ class AnnouncementsViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementDeleted:", name: NotificationConstants.deleteAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
-
+        self.setNoContentMessage("No announcements could be found :(")
     }
     
     deinit {
@@ -183,6 +183,7 @@ class AnnouncementsViewController: UITableViewController {
 
     func getAnnouncements(reset reset: Bool = false) {
         if reset {
+            self.showNoContentView()
             self.announcements = [Announcement]()
             self.tableView.reloadData()
             self.activityIndicator.startAnimating()
@@ -194,10 +195,17 @@ class AnnouncementsViewController: UITableViewController {
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
 
+            if self.announcements.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage("Could not load announcements.")
+                self.showNoContentView()
         }
     }
     

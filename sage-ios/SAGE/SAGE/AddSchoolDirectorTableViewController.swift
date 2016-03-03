@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddSchoolDirectorTableViewController: UITableViewController {
+class AddSchoolDirectorTableViewController: SGTableViewController {
     
     var directors: [[User]]?
     var currentErrorMessage: ErrorView?

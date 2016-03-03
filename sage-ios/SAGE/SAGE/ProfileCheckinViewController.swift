@@ -154,7 +154,20 @@ class ProfileCheckinViewController: UITableViewController {
     //
     func verifiedCheckinAdded(notification: NSNotification) {
         let checkin = notification.object!.copy() as! Checkin
+
+        var add: Bool = false
         if checkin.user?.id == self.user?.id {
+            if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+                if let filter = self.filter {
+                    if currentSemester.id == Int(filter[SemesterConstants.kSemesterId] as! String) {
+                        add = true
+                    }
+                } else {
+                    add = true
+                }
+            }
+        }
+        if add {
             self.verifiedCheckins.insert(checkin, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -163,9 +176,22 @@ class ProfileCheckinViewController: UITableViewController {
     
     func unverifiedCheckinAdded(notification: NSNotification) {
         let checkin = notification.object!.copy() as! Checkin
+
+        var add: Bool = false
         if checkin.user?.id == self.user?.id {
+            if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+                if let filter = self.filter {
+                    if currentSemester.id == Int(filter[SemesterConstants.kSemesterId] as! String) {
+                        add = true
+                    }
+                } else {
+                    add = true
+                }
+            }
+        }
+        if add {
             self.unverifiedCheckins.insert(checkin, atIndex: 0)
-            let indexPath = NSIndexPath(forRow: 0, inSection: 1)
+            let indexPath = NSIndexPath(forRow: 0, inSection:1)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }

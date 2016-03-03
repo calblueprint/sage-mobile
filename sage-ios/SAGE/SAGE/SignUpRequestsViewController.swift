@@ -7,16 +7,29 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class SignUpRequestsViewController: UITableViewController {
+    
     var requests: [User]?
+    var filter: [String: AnyObject]?
+
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var titleView = SGTitleView(title: "Sign Up Requests", subtitle: "All")
     
+    //
+    // MARK: - ViewController Lifecycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Sign Up Requests"
+        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
+        
+        let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
+        let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+        self.navigationItem.rightBarButtonItem = filterButton
         
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
@@ -24,7 +37,7 @@ class SignUpRequestsViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadSignUpRequests", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "loadSignUpRequestsWithReset:", forControlEvents: .ValueChanged)
         
         self.loadSignUpRequests()
     }
@@ -34,14 +47,23 @@ class SignUpRequestsViewController: UITableViewController {
         self.activityIndicator.centerVertically()
     }
     
+    //
+    // MARK: - Public Methods
+    //
     func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
         let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
-    func loadSignUpRequests() {
-        AdminOperations.loadSignUpRequests({ (signUpRequests) -> Void in
+    func loadSignUpRequests(reset reset: Bool = false) {
+        if reset {
+            self.requests = nil
+            self.tableView.reloadData()
+            self.activityIndicator.startAnimating()
+        }
+
+        AdminOperations.loadSignUpRequests(filter: self.filter, completion: { (signUpRequests) -> Void in
             self.requests = signUpRequests
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
@@ -52,6 +74,34 @@ class SignUpRequestsViewController: UITableViewController {
         }
     }
     
+    func showFilterOptions() {
+        let menuController = MenuController(title: "Filter Options")
+        
+        menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
+            self.filter = nil
+            self.loadSignUpRequests(reset: true)
+            self.titleView.setSubtitle("All")
+        }))
+        
+        menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
+            SchoolOperations.loadSchools({ (schools) -> Void in
+                controller.setList(schools)
+                }, failure: { (errorMessage) -> Void in
+            })
+            }, displayText: { (school: School) -> String in
+                return school.name!
+            }, handler: { (selectedSchool) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+                self.loadSignUpRequests(reset: true)
+                self.titleView.setSubtitle(selectedSchool.name!)
+        }))
+        
+        self.presentViewController(menuController, animated: false, completion: nil)
+    }
+    
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let requests = self.requests {
             return requests.count

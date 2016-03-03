@@ -60,7 +60,9 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<RecyclerView.
             mItems.add(new Item(announcement, "", ANNOUNCEMENT_VIEW));
         }
 
-        mItems.add(new Item(null, "", LOADING_VIEW));
+        if (announcements.size() != 0) {
+            mItems.add(new Item(null, "", LOADING_VIEW));
+        }
     }
 
     @Override

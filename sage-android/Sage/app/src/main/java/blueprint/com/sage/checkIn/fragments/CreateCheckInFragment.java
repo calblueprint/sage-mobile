@@ -114,7 +114,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
         mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
-                validateAndSubmitschoolRequest();
+                validateAndSubmitRequest();
             default:
                 return super.onOptionsItemSelected(item);
         }

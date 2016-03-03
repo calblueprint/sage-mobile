@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckinRequestsViewController: UITableViewController {
+class CheckinRequestsViewController: SGTableViewController {
     var requests: [Checkin]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

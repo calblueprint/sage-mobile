@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpRequestsViewController: UITableViewController {
+class SignUpRequestsViewController: SGTableViewController {
     var requests: [User]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseSchoolsViewController: UITableViewController {
+class BrowseSchoolsViewController: SGTableViewController {
     
     var schools: [School]?
     var currentErrorMessage: ErrorView?

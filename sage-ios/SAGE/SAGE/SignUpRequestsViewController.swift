@@ -10,7 +10,6 @@ import UIKit
 import FontAwesomeKit
 
 class SignUpRequestsViewController: UITableViewController {
-
     var requests: [User]?
     var filter: [String: AnyObject]?
 
@@ -108,10 +107,10 @@ class SignUpRequestsViewController: UITableViewController {
                 self.loadSignUpRequests(reset: true)
                 self.titleView.setSubtitle(selectedSchool.name!)
         }))
-
+    
         self.presentViewController(menuController, animated: false, completion: nil)
     }
-
+    
     //
     // MARK: - UITableViewDelegate
     //

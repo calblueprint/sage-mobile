@@ -141,10 +141,10 @@ class CheckinRequestsViewController: UITableViewController {
                 self.loadCheckinRequests(reset: true)
                 self.titleView.setSubtitle(selectedSchool.name!)
         }))
-
+        
         self.presentViewController(menuController, animated: false, completion: nil)
     }
-
+    
     //
     // MARK: - UITableViewDelegate
     //

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.joda.time.DateTime;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -33,5 +34,11 @@ public @Data class Semester {
     @Override
     public String toString() {
         return String.format("%s %d", SEASONS[season], getYear());
+    }
+
+    @JsonIgnore
+    public String getDateRange() {
+        SimpleDateFormat format = new SimpleDateFormat("M/dd/yy");
+        return format.format(start) + " to " + format.format(finish);
     }
 }

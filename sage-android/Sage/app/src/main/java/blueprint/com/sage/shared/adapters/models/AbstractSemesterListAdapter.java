@@ -41,6 +41,7 @@ public abstract class AbstractSemesterListAdapter extends RecyclerView.Adapter<A
 
         final Semester semester = mSemesters.get(position);
         viewHolder.mSemesterTitle.setText(semester.toString());
+        viewHolder.mSemesterDate.setText(semester.getDateRange());
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +65,7 @@ public abstract class AbstractSemesterListAdapter extends RecyclerView.Adapter<A
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.semester_list_item_title) TextView mSemesterTitle;
+        @Bind(R.id.semester_list_item_date) TextView mSemesterDate;
         View mView;
 
         public ViewHolder(View v) {

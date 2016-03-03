@@ -14,7 +14,7 @@ class AddSchoolLocationSelectorView: UIView {
     var mapView = GMSMapView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var searchBar = UISearchBar()
-    var returnToMapButton = UIButton()
+    var pinImage = UIImageView(image: UIImage(named: "GMSPin"))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,16 +23,12 @@ class AddSchoolLocationSelectorView: UIView {
     
     func setupSubviews() {
         self.addSubview(self.tableView)
-        self.tableView.hidden = true
         self.tableView.tableFooterView = UIView()
-        
-        self.returnToMapButton.setTitle("Return to map", forState: .Normal)
-        self.returnToMapButton.setTitleColor(UIColor.lightBlueColor, forState: .Normal)
-        self.returnToMapButton.titleLabel?.font = UIFont.normalFont
-        self.addSubview(self.returnToMapButton)
         
         self.addSubview(self.mapView)
         self.mapView.camera = GMSCameraPosition(target: CLLocationCoordinate2DMake(0, 0), zoom: 15, bearing: 0, viewingAngle: 0)
+        self.mapView.alpha = 0.0
+        self.mapView.userInteractionEnabled = false
         
         self.searchBar.setHeight(44)
         self.searchBar.tintColor = UIColor.whiteColor()
@@ -40,6 +36,9 @@ class AddSchoolLocationSelectorView: UIView {
         self.searchBar.barTintColor = UIColor.whiteColor()
         self.searchBar.searchBarStyle = .Minimal
         self.addSubview(self.searchBar)
+        
+        self.mapView.addSubview(self.pinImage)
+        self.pinImage.contentMode = .ScaleAspectFit
         
         self.addSubview(self.activityIndicator)
         self.activityIndicator.hidden = true
@@ -56,16 +55,14 @@ class AddSchoolLocationSelectorView: UIView {
         self.mapView.fillHeight()
         self.mapView.fillWidth()
         
+        self.pinImage.center = self.mapView.center
+        self.pinImage.setWidth(50)
+        
         self.searchBar.fillWidth()
         self.searchBar.setHeight(44.0)
         
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
-        
-        self.returnToMapButton.sizeToFit()
-        self.returnToMapButton.centerHorizontally()
-        self.returnToMapButton.setHeight(44)
-        self.returnToMapButton.setY(CGRectGetMaxY(self.frame) - 80)
     }
 
     required init?(coder aDecoder: NSCoder) {

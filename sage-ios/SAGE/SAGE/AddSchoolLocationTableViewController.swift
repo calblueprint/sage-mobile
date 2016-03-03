@@ -13,43 +13,58 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
     var autocompleteSuggestions: [GMSAutocompletePrediction] = [GMSAutocompletePrediction]()
     let placesClient: GMSPlacesClient = GMSPlacesClient.sharedClient()
     var locationView = AddSchoolLocationSelectorView()
-    var marker = GMSMarker()
-    
     weak var parentVC: AddSchoolController?
+    var rightMapButton = UIBarButtonItem()
+    var rightSearchButton = UIBarButtonItem()
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.rightMapButton = UIBarButtonItem(title: "Map", style: .Done, target: self, action: "returnToMap")
+        self.rightSearchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: "goToSearch")
+        self.navigationItem.rightBarButtonItem = self.rightMapButton
+        
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func configureWithLocation(location: CLLocation) {
         self.locationView.configureWithLocation(location)
-        self.placeMarkerAt(location.coordinate)
     }
     
     override func loadView() {
         self.view = self.locationView
         self.locationView.mapView.delegate = self
-        self.placeMarkerAt(CLLocationCoordinate2D(latitude: 0, longitude: 0))
         self.locationView.tableView.dataSource = self
         self.locationView.tableView.delegate = self
         self.locationView.searchBar.delegate = self
-        self.locationView.returnToMapButton.addTarget(self, action: "returnToMap", forControlEvents: .TouchUpInside)
-    }
-    
-    func placeMarkerAt(coordinate: CLLocationCoordinate2D) {
-        self.marker.map = nil
-        self.marker = GMSMarker(position: coordinate)
-        self.marker.map = self.locationView.mapView
     }
     
     func returnToMap() {
-        self.locationView.mapView.hidden = false
-        self.locationView.tableView.hidden = true
+        self.locationView.mapView.alpha = 1.0
+        UIView.animateWithDuration(UIConstants.fastAnimationTime) { () -> Void in
+            self.locationView.tableView.alpha = 0.0
+            self.locationView.searchBar.alpha = 0.0
+        }
+        self.locationView.mapView.userInteractionEnabled = true
+        self.locationView.tableView.userInteractionEnabled = false
+        self.locationView.searchBar.userInteractionEnabled = false
+        self.navigationItem.rightBarButtonItem = self.rightSearchButton
     }
+    
+    func goToSearch() {
+        self.locationView.tableView.alpha = 1.0
+        self.locationView.searchBar.alpha = 1.0
+        UIView.animateWithDuration(UIConstants.fastAnimationTime) { () -> Void in
+            self.locationView.mapView.alpha = 0.0
+        }
+        self.locationView.mapView.userInteractionEnabled = false
+        self.locationView.tableView.userInteractionEnabled = true
+        self.locationView.searchBar.userInteractionEnabled = true
+        self.navigationItem.rightBarButtonItem = self.rightMapButton
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,8 +109,7 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
                 self.locationView.mapView.camera = GMSCameraPosition(target: coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
                 self.parentVC?.didSelectPlace(place)
                 self.locationView.activityIndicator.stopAnimating()
-                self.locationView.mapView.hidden = false
-                self.locationView.tableView.hidden = true
+                self.returnToMap()
             }
         }
     }
@@ -109,8 +123,6 @@ extension AddSchoolLocationSelectorController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.locationView.activityIndicator.startAnimating()
         self.locationView.activityIndicator.hidden = false
-        self.locationView.tableView.hidden = false
-        self.locationView.mapView.hidden = true
         
         let filter = GMSAutocompleteFilter()
         filter.type = GMSPlacesAutocompleteTypeFilter.Establishment
@@ -147,12 +159,6 @@ extension AddSchoolLocationSelectorController: GMSMapViewDelegate {
             }
         }
         self.parentVC?.didSelectCoordinate(coordinate)
-    }
-    
-    func mapView(mapView: GMSMapView!, didChangeCameraPosition position: GMSCameraPosition!) {
-        let centerPoint = self.locationView.mapView.center
-        let coordinate = self.locationView.mapView.projection.coordinateForPoint(centerPoint)
-        self.placeMarkerAt(coordinate)
     }
 }
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.joda.time.DateTime;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public @Data class Semester {
     private List<User> users;
 
     public static final String[] SEASONS = { "Fall", "Spring" };
+    public static final String PRESENT = "Present";
 
     @JsonIgnore
     public int getYear() {
@@ -33,5 +35,18 @@ public @Data class Semester {
     @Override
     public String toString() {
         return String.format("%s %d", SEASONS[season], getYear());
+    }
+
+    @JsonIgnore
+    public String getDateRange() {
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
+        String startDate = format.format(start);
+        String finishDate;
+        if (finish != null) {
+            finishDate = format.format(finish);
+        } else {
+            finishDate = PRESENT;
+        }
+        return startDate + " - " + finishDate;
     }
 }

@@ -40,7 +40,8 @@ class MenuItem: UIView {
         self.setHeight(MenuView.menuItemHeight)
 
         self.titleLabel.textColor = UIColor.blackColor()
-        self.titleLabel.font = UIFont.getSemiboldFont(16)
+        self.titleLabel.font = UIFont.getDefaultFont(15)
+        self.titleLabel.textAlignment = .Center
         self.addSubview(self.titleLabel)
 
         self.divider.backgroundColor = UIColor.borderColor
@@ -55,7 +56,7 @@ class MenuItem: UIView {
         super.layoutSubviews()
 
         self.titleLabel.setX(UIConstants.sideMargin)
-        self.titleLabel.fillWidth()
+        self.titleLabel.fillWidthWithMargin(UIConstants.sideMargin)
         self.titleLabel.fillHeight()
 
         self.divider.fillWidth()

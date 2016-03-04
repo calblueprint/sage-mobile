@@ -39,6 +39,11 @@ class SignUpRequestsViewController: UITableViewController {
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "loadSignUpRequestsWithReset:", forControlEvents: .ValueChanged)
         
+
+        if LoginOperations.getUser()!.isDirector() {
+            self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+            self.titleView.setSubtitle("My School")
+        }
         self.loadSignUpRequests()
     }
     
@@ -82,6 +87,14 @@ class SignUpRequestsViewController: UITableViewController {
             self.loadSignUpRequests(reset: true)
             self.titleView.setSubtitle("All")
         }))
+
+        if LoginOperations.getUser()!.isDirector() {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.loadSignUpRequests(reset: true)
+                self.titleView.setSubtitle("My School")
+            }))
+        }
 
         menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
             SchoolOperations.loadSchools({ (schools) -> Void in

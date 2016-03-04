@@ -44,7 +44,6 @@ public class EditSchoolFragment extends SchoolFormAbstractFragment {
     }
 
     public void onEvent(EditSchoolEvent event) {
-        mItem.setActionView(null);
         FragUtils.popBackStack(this);
     }
 }

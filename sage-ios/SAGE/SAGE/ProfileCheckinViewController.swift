@@ -10,7 +10,7 @@ import UIKit
 import FontAwesomeKit
 import SwiftKeychainWrapper
 
-class ProfileCheckinViewController: UITableViewController {
+class ProfileCheckinViewController: SGTableViewController {
     
     var user: User?
     var verifiedCheckins = [Checkin]()
@@ -29,6 +29,7 @@ class ProfileCheckinViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "unverifiedCheckinAdded:", name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
         self.user = user
+        self.setNoContentMessage("You have no checkins. Go volunteer!")
     }
     
     deinit {
@@ -84,6 +85,7 @@ class ProfileCheckinViewController: UITableViewController {
     
     func loadCheckins(reset reset: Bool = false) {
         if reset {
+            self.showNoContentView()
             self.verifiedCheckins = [Checkin]()
             self.unverifiedCheckins = [Checkin]()
             self.tableView.reloadData()
@@ -115,7 +117,14 @@ class ProfileCheckinViewController: UITableViewController {
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
                 
+                if self.verifiedCheckins.count == 0 && self.unverifiedCheckins.count == 0 {
+                    self.showNoContentView()
+                } else {
+                    self.hideNoContentView()
+                }
+                
                 }) { (errorMessage) -> Void in
+                    self.showNoContentView()
                     self.activityIndicator.stopAnimating()
                     self.showErrorAndSetMessage(errorMessage)
             }
@@ -168,6 +177,7 @@ class ProfileCheckinViewController: UITableViewController {
             }
         }
         if add {
+            self.hideNoContentView()
             self.verifiedCheckins.insert(checkin, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -190,6 +200,7 @@ class ProfileCheckinViewController: UITableViewController {
             }
         }
         if add {
+            self.hideNoContentView()
             self.unverifiedCheckins.insert(checkin, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection:1)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

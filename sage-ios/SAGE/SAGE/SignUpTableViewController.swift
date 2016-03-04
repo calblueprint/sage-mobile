@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpTableViewController: UITableViewController, UINavigationBarDelegate {
+class SignUpTableViewController: SGTableViewController, UINavigationBarDelegate {
     enum ContentType: Int {
         case School
         case Hours
@@ -37,6 +37,7 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
         if self.modalType == ContentType.School {
             self.loadSchoolData()
         }
+        self.setNoContentMessage("No schools could be found.")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -82,7 +83,13 @@ class SignUpTableViewController: UITableViewController, UINavigationBarDelegate 
             }
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
+            if self.schools.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
             }) { (errorMessage) -> Void in
+                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
     }

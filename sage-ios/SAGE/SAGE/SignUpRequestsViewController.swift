@@ -9,14 +9,23 @@
 import UIKit
 import FontAwesomeKit
 
-class SignUpRequestsViewController: UITableViewController {
-    
+class SignUpRequestsViewController: SGTableViewController {
+
     var requests: [User]?
     var filter: [String: AnyObject]?
 
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var titleView = SGTitleView(title: "Sign Up Requests", subtitle: "All")
+    
+    override init(style: UITableViewStyle) {
+        super.init(style: style)
+        self.setNoContentMessage("No new sign up requests!")
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //
     // MARK: - ViewController Lifecycle
@@ -69,7 +78,14 @@ class SignUpRequestsViewController: UITableViewController {
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
             
+            if self.requests == nil || self.requests?.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+            
             }) { (errorMessage) -> Void in
+                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }
@@ -119,11 +135,9 @@ class SignUpRequestsViewController: UITableViewController {
         let alertController = UIAlertController(title: "Approve", message: "Do you want to approve this sign up request?", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            // make a network request here
             self.removeCell(cell, accepted: true)
         }))
         self.presentViewController(alertController, animated: true, completion: nil)
-        // make a network request, remove checkin from data source, and reload table view
     }
     
     func xButtonPressed(sender: UIButton) {
@@ -131,11 +145,9 @@ class SignUpRequestsViewController: UITableViewController {
         let alertController = UIAlertController(title: "Decline", message: "Do you want to decline this sign up request?", preferredStyle: .Alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            // make a network request here
             self.removeCell(cell, accepted: false)
         }))
         self.presentViewController(alertController, animated: true, completion: nil)
-        // make a network request, remove checkin from data source, and reload table view
     }
     
     
@@ -148,6 +160,7 @@ class SignUpRequestsViewController: UITableViewController {
             AdminOperations.verifyUser(user, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(user, atIndex: indexPath.row)
                 self.tableView.reloadData()
+                self.hideNoContentView()
                 self.showErrorAndSetMessage(message)
             })
         } else {
@@ -155,8 +168,12 @@ class SignUpRequestsViewController: UITableViewController {
             AdminOperations.denyUser(user, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(user, atIndex: indexPath.row)
                 self.tableView.reloadData()
+                self.hideNoContentView()
                 self.showErrorAndSetMessage(message)
             })
+        }
+        if self.requests?.count == 0 {
+            self.showNoContentView()
         }
     }
     

@@ -75,12 +75,19 @@ class AdminOperations {
         
     }
     
-    static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
+    static func loadCheckinRequests(filter filter: [String: AnyObject]? = nil, completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let params = [
+        var params: [String: AnyObject] = [
             NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
+        
+        if let filter = filter {
+            for (key, value) in filter {
+                params[key] = value
+            }
+        }
+        
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
             var checkins = [Checkin]()
             let checkinArray = data["check_ins"] as! [AnyObject]
@@ -128,12 +135,19 @@ class AdminOperations {
     }
     
     
-    static func loadSignUpRequests(completion: (([User]) -> Void), failure: (String) -> Void){
+    static func loadSignUpRequests(filter filter: [String: AnyObject]? = nil, completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let params = [
+        var params: [String: AnyObject] = [
             NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
+        
+        if let filter = filter {
+            for (key, value) in filter {
+                params[key] = value
+            }
+        }
+        
         manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: params, success: { (operation, data) -> Void in
             var users = [User]()
             let userArray = data["users"] as! [AnyObject]

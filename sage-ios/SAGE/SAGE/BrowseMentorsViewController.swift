@@ -17,6 +17,7 @@ class BrowseMentorsViewController: SGTableViewController {
     init() {
         super.init(style: .Plain)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+        self.setNoContentMessage("No mentors at the moment :(")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -108,6 +109,7 @@ class BrowseMentorsViewController: SGTableViewController {
             self.alphabetizeAndLoad(mentorArray)
             
             }) { (errorMessage) -> Void in
+                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }
@@ -128,6 +130,19 @@ class BrowseMentorsViewController: SGTableViewController {
             let firstLetter = String(firstName[firstName.startIndex.advancedBy(0)]).lowercaseString
             let firstLetterIndex = charArray[firstLetter]
             self.mentors![firstLetterIndex!].append(mentor)
+        }
+        
+        var empty = true
+        for mentorArray in self.mentors! {
+            if mentorArray.count != 0 {
+                empty = false
+            }
+        }
+        
+        if empty {
+            self.showNoContentView()
+        } else {
+            self.hideNoContentView()
         }
         
         self.tableView.reloadData()

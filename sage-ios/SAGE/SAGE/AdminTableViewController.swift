@@ -104,7 +104,7 @@ class AdminTableViewController: SGTableViewController {
             case 0:
                 self.navigationController?.pushViewController(CheckinRequestsViewController(), animated: true)
             case 1:
-                self.navigationController?.pushViewController(SignUpRequestsViewController(), animated: true)
+                self.navigationController?.pushViewController(SignUpRequestsViewController(style: .Plain), animated: true)
             default: break
             }
         case 2:

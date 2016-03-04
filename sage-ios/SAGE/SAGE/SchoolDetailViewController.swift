@@ -22,6 +22,7 @@ class SchoolDetailViewController: SGTableViewController {
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+        self.setNoContentMessage("School could not be loaded.")
     }
     
     deinit {
@@ -62,11 +63,14 @@ class SchoolDetailViewController: SGTableViewController {
     func configureWithSchool(school: School) {
         self.title = school.name!
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
+            self.hideNoContentView()
             self.configureWithCompleteSchool(updatedSchool)
             self.activityIndicator.stopAnimating()
             self.schoolDetailHeaderView.mapView.hidden = false
 
-            }) { (message) -> Void in }
+            }) { (message) -> Void in
+                self.showNoContentView()
+        }
     }
     
     private func configureWithCompleteSchool(school: School) {

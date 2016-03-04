@@ -149,7 +149,13 @@ class AnnouncementsViewController: UITableViewController {
             self.titleView.setSubtitle("All")
         }))
 
-        if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+        if LoginOperations.getUser()!.isDirector() {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.getAnnouncements(reset: true)
+                self.titleView.setSubtitle("My School")
+            }))
+        } else if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
                 self.getAnnouncements(reset: true)

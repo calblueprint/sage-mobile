@@ -177,6 +177,7 @@ class ProfileCheckinViewController: SGTableViewController {
             }
         }
         if add {
+            self.hideNoContentView()
             self.verifiedCheckins.insert(checkin, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -199,6 +200,7 @@ class ProfileCheckinViewController: SGTableViewController {
             }
         }
         if add {
+            self.hideNoContentView()
             self.unverifiedCheckins.insert(checkin, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection:1)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

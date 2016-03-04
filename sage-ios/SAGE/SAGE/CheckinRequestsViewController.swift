@@ -17,6 +17,7 @@ class CheckinRequestsViewController: SGTableViewController {
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+        self.setNoContentMessage("No new checkin requests!")
     }
     
 
@@ -34,6 +35,7 @@ class CheckinRequestsViewController: SGTableViewController {
             for i in 0...(self.requests!.count-1) {
                 let currentRequest = self.requests![i]
                 if user.id == currentRequest.user!.id {
+                    self.hideNoContentView()
                     currentRequest.user = user
                     let indexPath = NSIndexPath(forRow: i, inSection: 0)
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
@@ -75,8 +77,15 @@ class CheckinRequestsViewController: SGTableViewController {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
+            
+            if self.requests == nil || self.requests?.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
 
             }) { (errorMessage) -> Void in
+                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }
@@ -124,6 +133,7 @@ class CheckinRequestsViewController: SGTableViewController {
                 
                 }, failure: { (message) -> Void in
                     self.requests?.insert(checkin, atIndex: indexPath.row)
+                    self.hideNoContentView()
                     self.tableView.reloadData()
                     self.showErrorAndSetMessage(message)
             })
@@ -131,9 +141,13 @@ class CheckinRequestsViewController: SGTableViewController {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             AdminOperations.denyCheckin(checkin, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(checkin, atIndex: indexPath.row)
+                self.hideNoContentView()
                 self.tableView.reloadData()
                 self.showErrorAndSetMessage(message)
             })
+        }
+        if self.requests?.count == 0 {
+            self.showNoContentView()
         }
     }
     

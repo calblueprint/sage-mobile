@@ -21,6 +21,7 @@ class SGTableViewController: UITableViewController {
         super.viewDidLayoutSubviews()
         self.noContentView.fillWidth()
         self.noContentView.fillHeight()
+        self.view.bringSubviewToFront(self.noContentView)
     }
 
     func showNoContentView() {

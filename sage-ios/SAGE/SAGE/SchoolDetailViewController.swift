@@ -46,6 +46,7 @@ class SchoolDetailViewController: UITableViewController {
     
     private func configureWithCompleteSchool(school: School) {
         self.school = school
+        self.schoolDetailHeaderView.mapView.clear()
         let marker = GMSMarker(position: self.school!.location!.coordinate)
         marker.map = self.schoolDetailHeaderView.mapView
         self.schoolDetailHeaderView.mapView.camera = GMSCameraPosition(target: self.school!.location!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
@@ -89,6 +90,7 @@ class SchoolDetailViewController: UITableViewController {
             self.school = newSchool
             self.configureWithCompleteSchool(newSchool)
             self.title = newSchool.name
+            self.tableView.reloadData()
         }
     }
     

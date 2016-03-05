@@ -13,11 +13,12 @@ class AddSchoolView: FormView {
     var name =  FormFieldItem()
     var location = FormButtonItem()
     var director = FormButtonItem()
+    var deleteSchoolButton = SGButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.name.textField)
-
+        self.scrollView.addSubview(self.deleteSchoolButton)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,8 +43,13 @@ class AddSchoolView: FormView {
         self.location.button.setTitle("Choose the school's location", forState: .Normal)
         self.location.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.location)
+
+        self.deleteSchoolButton.hidden = true
+        self.deleteSchoolButton.setTitle("Delete School", forState: .Normal)
+        self.deleteSchoolButton.setThemeColor(UIColor.redColor())
+        self.deleteSchoolButton.titleLabel!.font = UIFont.normalFont
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -54,10 +60,15 @@ class AddSchoolView: FormView {
         
         self.name.fillWidth()
         self.name.setY(CGRectGetMaxY(self.location.frame))
-        
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.name.frame))
+
+        self.deleteSchoolButton.sizeToFit()
+        self.deleteSchoolButton.fillWidth()
+        self.deleteSchoolButton.increaseHeight(40)
+        self.deleteSchoolButton.setY(CGRectGetMaxY(self.name.frame))
+
+        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.deleteSchoolButton.frame))
     }
-    
+
     func displayChosenDirector(director: User) {
         self.director.button.setTitle(director.fullName(), forState: .Normal)
         self.director.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
@@ -68,6 +79,7 @@ class AddSchoolView: FormView {
         self.name.textField.text = place.name
         self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }
+    
     
     func displayAddressText(text: String?) {
         if let addressText = text {

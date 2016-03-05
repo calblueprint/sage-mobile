@@ -15,16 +15,16 @@ class School: NSObject, NSCoding {
     var students: [User]?
     var director: User?
     var address: String?
-    
     var studentCount: Int = 0
     
-    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil) {
+    init(id: Int = -1, name: String? = nil, location: CLLocation? = nil, students: [User]? = nil, director: User? = nil, address: String? = nil, studentCount: Int = 0) {
         self.id = id
         self.name = name
         self.location = location
         self.students = students
         self.director = director
         self.address = address
+        self.studentCount = studentCount
         super.init()
     }
     
@@ -127,6 +127,6 @@ extension School: NSCopying {
                 copiedArray?.append((student.copy() as? User)!)
             }
         }
-        return School(id: self.id, name: self.name?.copy() as? String, location: self.location?.copy() as? CLLocation, students: copiedArray, director: self.director?.copy() as? User)
+        return School(id: self.id, name: self.name?.copy() as? String, location: self.location?.copy() as? CLLocation, students: copiedArray, director: self.director?.copy() as? User, address: self.address, studentCount: self.studentCount)
     }
 }

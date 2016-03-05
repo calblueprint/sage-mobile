@@ -96,6 +96,8 @@
 		42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */; };
 		42A6CE641C0BDFC700F97CFF /* SchoolsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6CE631C0BDFC700F97CFF /* SchoolsTableViewCell.swift */; };
 		42A6CE661C0BDFFD00F97CFF /* UsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6CE651C0BDFFD00F97CFF /* UsersTableViewCell.swift */; };
+		42AD42691C794ECB00E70B39 /* AddSchoolLocationSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD42681C794ECB00E70B39 /* AddSchoolLocationSelectorView.swift */; };
+		42AD426B1C7C64B600E70B39 /* CLPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AD426A1C7C64B600E70B39 /* CLPlacemark.swift */; };
 		42B82B451C0478630076892A /* FormButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B82B441C0478630076892A /* FormButtonItem.swift */; };
 		42C1D1C51C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1D1C41C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift */; };
 		42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C3933E1BC45DB900630F93 /* LoginController.swift */; };
@@ -256,6 +258,8 @@
 		42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolDetailViewController.swift; sourceTree = "<group>"; };
 		42A6CE631C0BDFC700F97CFF /* SchoolsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolsTableViewCell.swift; sourceTree = "<group>"; };
 		42A6CE651C0BDFFD00F97CFF /* UsersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersTableViewCell.swift; sourceTree = "<group>"; };
+		42AD42681C794ECB00E70B39 /* AddSchoolLocationSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolLocationSelectorView.swift; sourceTree = "<group>"; };
+		42AD426A1C7C64B600E70B39 /* CLPlacemark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CLPlacemark.swift; sourceTree = "<group>"; };
 		42B82B441C0478630076892A /* FormButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormButtonItem.swift; sourceTree = "<group>"; };
 		42C1D1C41C0522B800625B35 /* SelectAnnouncementSchoolTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectAnnouncementSchoolTableViewController.swift; sourceTree = "<group>"; };
 		42C3933E1BC45DB900630F93 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -459,6 +463,7 @@
 				424A137B1BEED27300775E86 /* UIViewController.swift */,
 				422715441BC7359D00FD719C /* UIFont.swift */,
 				E4B250D21C65D092008652FD /* UIImageView.swift */,
+				42AD426A1C7C64B600E70B39 /* CLPlacemark.swift */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -606,6 +611,7 @@
 			children = (
 				42F85ED91C0132CB00F62C37 /* AddSchoolView.swift */,
 				4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */,
+				42AD42681C794ECB00E70B39 /* AddSchoolLocationSelectorView.swift */,
 			);
 			name = Browse;
 			sourceTree = "<group>";
@@ -1028,6 +1034,7 @@
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
 				27EB32A91C3917E900FD8050 /* EndSemesterView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
+				42AD42691C794ECB00E70B39 /* AddSchoolLocationSelectorView.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
 				4241AF791C4BAD52009BC133 /* EditProfileController.swift in Sources */,
@@ -1078,6 +1085,7 @@
 				42F85EDA1C0132CB00F62C37 /* AddSchoolView.swift in Sources */,
 				424A13781BEEBC0B00775E86 /* AnnouncementsOperations.swift in Sources */,
 				424DEC001BF4B8810099CCE0 /* LoginOperations.swift in Sources */,
+				42AD426B1C7C64B600E70B39 /* CLPlacemark.swift in Sources */,
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
 				42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */,
@@ -1257,6 +1265,7 @@
 				INFOPLIST_FILE = SAGE/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.berkeley-blueprint.SAGE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1280,6 +1289,7 @@
 				INFOPLIST_FILE = SAGE/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.berkeley-blueprint.SAGE";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

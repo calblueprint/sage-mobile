@@ -6,6 +6,15 @@ import java.util.HashMap;
  * Created by charlesx on 3/6/16.
  */
 public abstract class Filter {
-    public abstract HashMap<String, String> getQueryParams();
-    public abstract void resetFilters();
+
+    protected HashMap<String, String> mQueryParams;
+
+    public HashMap<String, String> getQueryParams(HashMap<String, String> queryParams) {
+        mQueryParams.putAll(queryParams);
+        return mQueryParams;
+    }
+
+    public void resetFilters() {
+        mQueryParams = new HashMap<>();
+    }
 }

@@ -177,7 +177,7 @@ class AnnouncementsViewController: SGTableViewController {
         
     func getAnnouncements(reset reset: Bool = false) {
         if reset {
-            self.showNoContentView()
+            self.hideNoContentView()
             self.announcements = [Announcement]()
             self.tableView.reloadData()
             self.activityIndicator.startAnimating()

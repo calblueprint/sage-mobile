@@ -67,6 +67,7 @@ class SignUpRequestsViewController: SGTableViewController {
     
     func loadSignUpRequests(reset reset: Bool = false) {
         if reset {
+            self.hideNoContentView()
             self.requests = nil
             self.tableView.reloadData()
             self.activityIndicator.startAnimating()

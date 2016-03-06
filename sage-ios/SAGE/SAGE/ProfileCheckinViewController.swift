@@ -83,9 +83,10 @@ class ProfileCheckinViewController: SGTableViewController {
         self.currentErrorMessage = errorView
     }
     
+    
     func loadCheckins(reset reset: Bool = false) {
         if reset {
-            self.showNoContentView()
+            self.hideNoContentView()
             self.verifiedCheckins = [Checkin]()
             self.unverifiedCheckins = [Checkin]()
             self.tableView.reloadData()

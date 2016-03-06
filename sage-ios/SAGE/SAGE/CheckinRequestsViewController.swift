@@ -96,6 +96,7 @@ class CheckinRequestsViewController: SGTableViewController {
             self.requests = nil
             self.tableView.reloadData()
             self.activityIndicator.startAnimating()
+            self.hideNoContentView()
         }
         
         AdminOperations.loadCheckinRequests(filter: self.filter, completion: { (checkinRequests) -> Void in

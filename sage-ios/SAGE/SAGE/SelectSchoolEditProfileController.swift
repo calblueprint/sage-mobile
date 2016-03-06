@@ -18,7 +18,15 @@ class SelectSchoolEditProfileController: SelectAnnouncementSchoolTableViewContro
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
+            
+            if self.schools?.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+            
             }) { (errorMessage) -> Void in
+                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }

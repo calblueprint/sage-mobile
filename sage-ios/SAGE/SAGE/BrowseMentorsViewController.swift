@@ -13,6 +13,7 @@ class BrowseMentorsViewController: UITableViewController {
     var mentors: [[User]]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var filter: [String: AnyObject]?
     
     init() {
         super.init(style: .Plain)
@@ -104,9 +105,8 @@ class BrowseMentorsViewController: UITableViewController {
     }
     
     func loadMentors() {
-        AdminOperations.loadMentors({ (mentorArray) -> Void in
+        AdminOperations.loadMentors(filter: self.filter, completion: { (mentorArray) -> Void in
             self.alphabetizeAndLoad(mentorArray)
-            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }

@@ -11,7 +11,7 @@ import FontAwesomeKit
 import SwiftKeychainWrapper
 
 class AdminTableViewController: UITableViewController {
-
+    
     //
     // MARK: - Initialization
     //
@@ -28,7 +28,7 @@ class AdminTableViewController: UITableViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -57,9 +57,9 @@ class AdminTableViewController: UITableViewController {
     //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if LoginOperations.getUser()?.role == .President {
-            return 3
+            return 4
         } else {
-            return 2
+            return 3
         }
     }
     
@@ -71,10 +71,12 @@ class AdminTableViewController: UITableViewController {
             return 2
         case 2:
             return 1
+        case 3:
+            return 1
         default: return 0
         }
     }
-
+    
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
@@ -83,6 +85,8 @@ class AdminTableViewController: UITableViewController {
         case 1:
             return "Requests"
         case 2:
+            return "History"
+        case 3:
             return "SAGE Settings"
         default: return ""
         }
@@ -108,6 +112,15 @@ class AdminTableViewController: UITableViewController {
             default: break
             }
         case 2:
+            switch indexPath.row {
+            case 0:
+                //                let pastSemestersViewController = PastSemestersViewController()
+                //                let vc = UINavigationController(rootViewController: pastSemestersViewController)
+                //                self.presentViewController(vc, animated: true, completion: nil)
+                self.navigationController?.pushViewController(PastSemestersViewController(), animated: true)
+            default: break
+            }
+        case 3:
             switch indexPath.row {
             case 0:
                 if LoginOperations.getUser()?.role == .President {
@@ -154,6 +167,13 @@ class AdminTableViewController: UITableViewController {
                 cell.imageView?.image = icon
             }
         case 2:
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Past Semesters"
+                let icon = FAKIonIcons.locationIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
+                cell.imageView?.image = icon
+            }
+        case 3:
             if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
                 if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
                     cell.textLabel?.text = "End Semester"
@@ -167,7 +187,7 @@ class AdminTableViewController: UITableViewController {
                     cell.imageView?.image = icon
                 }
             }
-            default: break
+        default: break
         }
         cell.textLabel?.font = UIFont.normalFont
         return cell

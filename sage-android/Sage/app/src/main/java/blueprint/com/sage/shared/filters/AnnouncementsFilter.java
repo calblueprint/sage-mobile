@@ -2,17 +2,12 @@ package blueprint.com.sage.shared.filters;
 
 import java.util.HashMap;
 
-import blueprint.com.sage.shared.interfaces.BaseInterface;
-
 /**
  * Created by charlesx on 3/6/16.
  */
 public class AnnouncementsFilter extends Filter {
 
-    private HashMap<String, String> mQueryParams;
-    private BaseInterface mBaseInterface;
-
-    public AnnouncementsFilter(BaseInterface baseInterface) {
+    public AnnouncementsFilter() {
         mQueryParams = new HashMap<>();
     }
 
@@ -34,9 +29,5 @@ public class AnnouncementsFilter extends Filter {
 
     public HashMap<String, String> getQueryParams() {
         return mQueryParams;
-    }
-
-    public void resetFilters() {
-        mQueryParams = new HashMap<>();
     }
 }

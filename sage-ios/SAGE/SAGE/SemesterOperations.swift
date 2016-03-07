@@ -30,7 +30,6 @@ class SemesterOperations {
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
-
     }
 
     static func startSemester(semester: Semester, completion: (Semester) -> Void, failure: (String) -> Void) {

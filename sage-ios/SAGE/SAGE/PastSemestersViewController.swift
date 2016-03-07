@@ -35,8 +35,10 @@ class PastSemestersViewController: UITableViewController {
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        self.previousVC?.navigationController?.navigationBar.barTintColor = UIColor.mainColor
+    deinit {
+        UIView.animateWithDuration(UIConstants.fastAnimationTime) { () -> Void in
+            self.previousVC?.navigationController?.navigationBar.barTintColor = UIColor.mainColor
+        }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -66,7 +68,15 @@ class PastSemestersViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if let _ = self.semesters {
+            let semesterID = self.semesters![indexPath.row].id
+            let vc = BrowseMentorsViewController()
+            vc.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
+            if let topItem = self.navigationController!.navigationBar.topItem {
+                topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+            }
+            vc.filter = [SemesterConstants.kSemesterId: String(semesterID)]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
-    
 }

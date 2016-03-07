@@ -10,13 +10,26 @@ import Foundation
 
 class PastSemestersViewController: UITableViewController {
     
+    var semesters: [Semester]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Past Semesters"
         self.tableView.tableFooterView = UIView()
         self.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
-        let closeButton: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "")
-        self.navigationItem.rightBarButtonItem = closeButton
+//        let closeButton: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "")
+//        self.navigationItem.rightBarButtonItem = closeButton
+        
+        self.loadSemesters()
+    }
+    
+    func loadSemesters() {
+        SemesterOperations.loadSemesters({ (semestersArray) -> Void in
+            self.semesters = semestersArray
+            self.tableView.reloadData()
+            }) { (errorMessage) -> Void in
+                // ok later
+        }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -28,16 +41,21 @@ class PastSemestersViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if let semesters = self.semesters {
+            return semesters.count
+        }
+        return 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Semester")
-        cell.selectionStyle = .None
-        cell.textLabel!.text = "Spring 2016"
-        cell.textLabel!.font = UIFont.normalFont
-        //        cell.textLabel!.text = semesters[indexPath.row]
-        return cell
+        var cell = tableView.dequeueReusableCellWithIdentifier("Semester")
+        if (cell == nil) {
+            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Semester")
+        }
+        cell!.selectionStyle = .None
+        cell!.textLabel!.text = self.semesters![indexPath.row].displayText()
+        cell!.textLabel!.font = UIFont.normalFont
+        return cell!
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

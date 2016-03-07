@@ -13,11 +13,14 @@ class PastSemestersViewController: UITableViewController {
     var semesters: [Semester]?
     var previousVC: UIViewController?
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Past Semesters"
         self.tableView.tableFooterView = UIView()
-        self.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
         let n: Int! = self.navigationController?.viewControllers.count
         self.previousVC = self.navigationController!.viewControllers[n-2]
         self.loadSemesters()

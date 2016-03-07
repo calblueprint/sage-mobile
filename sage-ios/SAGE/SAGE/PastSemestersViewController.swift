@@ -11,15 +11,15 @@ import Foundation
 class PastSemestersViewController: UITableViewController {
     
     var semesters: [Semester]?
+    var previousVC: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Past Semesters"
         self.tableView.tableFooterView = UIView()
         self.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
-//        let closeButton: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "")
-//        self.navigationItem.rightBarButtonItem = closeButton
-        
+        let n: Int! = self.navigationController?.viewControllers.count
+        self.previousVC = self.navigationController!.viewControllers[n-2]
         self.loadSemesters()
     }
     
@@ -30,6 +30,10 @@ class PastSemestersViewController: UITableViewController {
             }) { (errorMessage) -> Void in
                 // ok later
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.previousVC?.navigationController?.navigationBar.barTintColor = UIColor.mainColor
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

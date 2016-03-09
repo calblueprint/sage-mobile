@@ -20,16 +20,27 @@ class ProfileOperations: NSObject {
         }
     }
     
-    static func loadCheckins(user: User, completion: (([Checkin]) -> Void), failure: (String) -> Void){
+    // Default behavior is to load checkins from current semester is filter is nil
+    static func loadCheckins(filter filter: [String: AnyObject]? = nil, user: User, completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let currentSemesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id
-        if let semesterID = currentSemesterID {
-            let params = [
-                SemesterConstants.kSemesterId: semesterID,
-                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
-                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
-                CheckinConstants.kUserId: user.id
-            ]
+        var params: [String: AnyObject] = [
+            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+            NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
+            CheckinConstants.kUserId: user.id
+        ]
+
+        var makeRequest = true
+        if (filter == nil) || filter?.count == 0 {
+            if let semesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id {
+                params[SemesterConstants.kSemesterId] = semesterID
+            } else {
+                makeRequest = false
+            }
+        } else {
+            params.appendDictionary(filter)
+        }
+
+        if makeRequest {
             manager.GET(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
                 var checkins = [Checkin]()
                 let checkinArray = data["check_ins"] as! [AnyObject]
@@ -38,15 +49,15 @@ class ProfileOperations: NSObject {
                     checkins.append(checkin)
                 }
                 completion(checkins)
-                
                 }) { (operation, error) -> Void in
                     failure(BaseOperation.getErrorMessage(error))
             }
+        } else {
+           completion([])
         }
-        completion([])
     }
     
-    static func updateProfile(user: User, password: String, photoData: String?, newPassword: String?, passwordConfirmation: String?, completion: (User) -> Void, failure: (String) -> Void) {
+    static func updateProfile(user: User, password: String, photoData: String?, newPassword: String?, passwordConfirmation: String?, resetPhoto: Bool, completion: (User) -> Void, failure: (String) -> Void) {
         let manager = BaseOperation.manager()
 
         var hours: Int = 0
@@ -69,14 +80,18 @@ class ProfileOperations: NSObject {
         if photoData != nil {
             userJSON[UserConstants.kPhotoData] = photoData!
         }
-        
+
+        if resetPhoto {
+            userJSON[UserConstants.kRemoveImage] = true
+        }
+
         if newPassword != nil {
             userJSON[UserConstants.kPassword] = newPassword!
             userJSON[UserConstants.kPasswordConfirmation] = passwordConfirmation
         }
-        
+
         let params = ["user": userJSON]
-        
+
         let updateProfileURLString = StringConstants.kUserDetailURL(user.id)
         
         manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in

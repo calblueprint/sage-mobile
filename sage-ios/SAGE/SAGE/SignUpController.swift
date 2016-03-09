@@ -339,7 +339,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
     
     func showErrorAndSetMessage(message: String) {
         let error = (self.view as! SignUpView).currentErrorMessage
-        let errorView = super.showError(message, currentError: error)
+        let errorView = super.showError(message, currentError: error, alpha: 0.4, centered: false)
         (self.view as! SignUpView).currentErrorMessage = errorView
     }
     

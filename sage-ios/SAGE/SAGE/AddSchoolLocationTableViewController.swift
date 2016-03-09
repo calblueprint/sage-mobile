@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddSchoolLocationTableViewController: UITableViewController {
+class AddSchoolLocationTableViewController: SGTableViewController {
 
     var autocompleteSuggestions: [GMSAutocompletePrediction] = [GMSAutocompletePrediction]()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

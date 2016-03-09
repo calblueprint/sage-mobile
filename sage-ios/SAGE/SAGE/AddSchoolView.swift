@@ -13,11 +13,13 @@ class AddSchoolView: FormView {
     var name =  FormFieldItem()
     var location = FormButtonItem()
     var director = FormButtonItem()
+    var radius = FormButtonItem()
+    var deleteSchoolButton = SGButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.name.textField)
-
+        self.scrollView.addSubview(self.deleteSchoolButton)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -42,8 +44,18 @@ class AddSchoolView: FormView {
         self.location.button.setTitle("Choose the school's location", forState: .Normal)
         self.location.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.location)
+
+        self.radius.label.text = "Radius"
+        self.radius.button.setTitle("Choose the radius tolerance", forState: .Normal)
+        self.radius.setHeight(FormFieldItem.defaultHeight)
+        self.scrollView.addSubview(self.radius)
+
+        self.deleteSchoolButton.hidden = true
+        self.deleteSchoolButton.setTitle("Delete School", forState: .Normal)
+        self.deleteSchoolButton.setThemeColor(UIColor.redColor())
+        self.deleteSchoolButton.titleLabel!.font = UIFont.normalFont
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -52,12 +64,20 @@ class AddSchoolView: FormView {
         self.location.setY(CGRectGetMaxY(self.director.frame))
         self.location.fillWidth()
         
+        self.radius.fillWidth()
+        self.radius.setY(CGRectGetMaxY(self.location.frame))
+
         self.name.fillWidth()
-        self.name.setY(CGRectGetMaxY(self.location.frame))
-        
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.name.frame))
+        self.name.setY(CGRectGetMaxY(self.radius.frame))
+
+        self.deleteSchoolButton.sizeToFit()
+        self.deleteSchoolButton.fillWidth()
+        self.deleteSchoolButton.increaseHeight(40)
+        self.deleteSchoolButton.setY(CGRectGetMaxY(self.name.frame))
+
+        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.deleteSchoolButton.frame))
     }
-    
+
     func displayChosenDirector(director: User) {
         self.director.button.setTitle(director.fullName(), forState: .Normal)
         self.director.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
@@ -75,7 +95,13 @@ class AddSchoolView: FormView {
             self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
         }
     }
-    
+
+    func displayRadius(radius: CLLocationDistance) {
+        let intRadiusString = String(Int(radius)) + " meters"
+        self.radius.button.setTitle(intRadiusString, forState: .Normal)
+        self.radius.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+    }
+
     func displaySchoolName(name: String?) {
         self.name.textField.text = name
     }

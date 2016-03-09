@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectHoursEditProfileController: UITableViewController {
+class SelectHoursEditProfileController: SGTableViewController {
     
     weak var parentVCEditProfile: EditProfileController?
     

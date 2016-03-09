@@ -13,6 +13,7 @@ import SwiftKeychainWrapper
 class AdminOperations {
     
     static func loadMentors(completion: (([User]) -> Void), failure: (String) -> Void){
+
         let manager = BaseOperation.manager()
         if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
             let params = [UserConstants.kSemesterID: currentSemester.id]
@@ -75,12 +76,15 @@ class AdminOperations {
         
     }
     
-    static func loadCheckinRequests(completion: (([Checkin]) -> Void), failure: (String) -> Void){
+    static func loadCheckinRequests(filter filter: [String: AnyObject]? = nil, completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let params = [
+        var params: [String: AnyObject] = [
             NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
+
+        params.appendDictionary(filter)
+        
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
             var checkins = [Checkin]()
             let checkinArray = data["check_ins"] as! [AnyObject]
@@ -119,30 +123,24 @@ class AdminOperations {
         let requestURL = StringConstants.kSchoolDetailURL(id)
         let manager = BaseOperation.manager()
         manager.GET(requestURL, parameters: nil, success: { (operation, data) -> Void in
-            var schoolDict = data["school"] as! [String: AnyObject]
-            let userDict = schoolDict["users"] as! [AnyObject]
-            schoolDict.removeValueForKey("users")
+            let schoolDict = data["school"] as! [String: AnyObject]
             let school = School(propertyDictionary: schoolDict)
-            var students = [User]()
-            for user in userDict {
-                let user = User(propertyDictionary: user as! [String: AnyObject])
-                students.append(user)
-            }
-            school.students = students
             completion(school)
-            
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
     }
     
     
-    static func loadSignUpRequests(completion: (([User]) -> Void), failure: (String) -> Void){
+    static func loadSignUpRequests(filter filter: [String: AnyObject]? = nil, completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let params = [
+        var params: [String: AnyObject] = [
             NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
+
+        params.appendDictionary(filter)
+
         manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: params, success: { (operation, data) -> Void in
             var users = [User]()
             let userArray = data["users"] as! [AnyObject]
@@ -162,8 +160,8 @@ class AdminOperations {
             SchoolConstants.kName: school.name!,
             SchoolConstants.kLat: school.location!.coordinate.latitude,
             SchoolConstants.kLong: school.location!.coordinate.longitude,
-            SchoolConstants.kAddress: school.address!
-            
+            SchoolConstants.kAddress: school.address!,
+            SchoolConstants.kRadius: school.radius
         ]
         
         if school.director != nil {
@@ -176,8 +174,8 @@ class AdminOperations {
         
         manager.POST(StringConstants.kEndpointCreateSchool, parameters: params, success: { (operation, data) -> Void in
             let schoolDict = data["school"] as! [String: AnyObject]
-            let school = School(propertyDictionary: schoolDict)
-            completion!(school)
+            let schoolResult = School(propertyDictionary: schoolDict)
+            completion!(schoolResult)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
@@ -185,18 +183,32 @@ class AdminOperations {
     
     static func editSchool(school: School, completion: ((School) -> Void)?, failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        
-        let params = ["school": [
-                SchoolConstants.kLat: school.location!.coordinate.latitude,
-                SchoolConstants.kLong: school.location!.coordinate.longitude,
-                SchoolConstants.kName: school.name!,
-                SchoolConstants.kDirectorID: school.director!.id
-            ]
+
+        var data: [String: AnyObject] = [
+            SchoolConstants.kName: school.name!,
+            SchoolConstants.kLat: school.location!.coordinate.latitude,
+            SchoolConstants.kLong: school.location!.coordinate.longitude,
+            SchoolConstants.kAddress: school.address!,
+            SchoolConstants.kRadius: school.radius
         ]
+
+        if school.director != nil {
+            data[SchoolConstants.kDirectorID] = school.director!.id
+        }
+
+        let params = ["school": data]
+
         let schoolURLString = StringConstants.kSchoolAdminDetailURL(school.id)
-        
+
         manager.PATCH(schoolURLString, parameters: params, success: { (operation, data) -> Void in
-            completion!(school)
+            let schoolDict = data["school"] as! [String: AnyObject]
+            let schoolResult = School(propertyDictionary: schoolDict)
+            if let currentSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+                if currentSchool.id == schoolResult.id {
+                    KeychainWrapper.setObject(schoolResult, forKey: KeychainConstants.kSchool)
+                }
+            }
+            completion!(schoolResult)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }

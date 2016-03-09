@@ -123,7 +123,7 @@ class CheckinRequestsViewController: UITableViewController {
 
         if LoginOperations.getUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
-                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.filter = [CheckinConstants.kSchoolId: String(LoginOperations.getUser()!.directorID)]
                 self.loadCheckinRequests(reset: true)
                 self.titleView.setSubtitle("My School")
             }))

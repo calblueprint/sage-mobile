@@ -9,9 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -23,15 +24,19 @@ import blueprint.com.sage.announcements.AnnouncementActivity;
 import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
+import blueprint.com.sage.main.filters.AnnouncementsAllFilter;
+import blueprint.com.sage.main.filters.AnnouncementsGeneralFilter;
+import blueprint.com.sage.main.filters.AnnouncementsSchoolFilter;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.PaginationInstance;
+import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
+import blueprint.com.sage.shared.filters.FilterController;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.listeners.EndlessRecyclerViewScrollListener;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.utility.network.NetworkUtils;
-import blueprint.com.sage.utility.view.AnimationUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,6 +62,14 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
     @Bind(R.id.filter_view) LinearLayout mFilterButton;
 
+    // Filter related ui
+    @Bind(R.id.announcement_filter_all) RadioButton mFilterAll;
+    @Bind(R.id.announcement_filter_general) RadioButton mFilterGeneral;
+    @Bind(R.id.announcement_filter_school) RadioButton mFilterSchool;
+    @Bind(R.id.announcement_filter_school_spinner) Spinner mFilterSchoolSpinner;
+
+    private SchoolSpinnerAdapter mSchoolAdapter;
+    private FilterController mFilterController;
     private View mFilterView;
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
@@ -73,14 +86,13 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_announcements_list, container, false);
 
-        ButterKnife.bind(this, view);
 
         mFilterView = inflater.inflate(R.layout.fragment_announcements_filter, view, false);
-        mContainer.addView(mFilterView);
-        mFilterView.setVisibility(View.GONE);
+        view.addView(mFilterView);
+        ButterKnife.bind(this, view);
 
         initializeViews();
-        makeRequest();
+        initializeFilters();
         return view;
     }
 
@@ -99,7 +111,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Override
     public void onRefresh() {
         mPaginationInstance.resetPage();
-        makeRequest();
+        makeAnnouncementsRequest();
     }
 
     public void onEvent(AnnouncementsListEvent event) {
@@ -130,7 +142,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
                 new EndlessRecyclerViewScrollListener(mLinearLayoutManager, mPaginationInstance) {
                     @Override
                     public void onLoadMore() {
-                        makeRequest();
+                        makeAnnouncementsRequest();
                     }
                 });
 
@@ -139,16 +151,23 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
+
+        makeAnnouncementsRequest();
     }
 
-    @OnClick(R.id.filter_view)
-    public void onFilterViewClick() {
-        Animation animation = AnimationUtils.getBounceSlideUpAnimator(getActivity());
-        mFilterView.startAnimation(animation);
-        mFilterView.setVisibility(View.VISIBLE);
+    private void initializeFilters() {
+        mFilterView.setVisibility(View.GONE);
+
+        AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll);
+        AnnouncementsGeneralFilter generalFilter = new AnnouncementsGeneralFilter(mFilterGeneral);
+        AnnouncementsSchoolFilter schoolFilter = new AnnouncementsSchoolFilter(mFilterSchool, mFilterSchoolSpinner);
+
+        mFilterController = new FilterController();
+        mFilterController.addFilters(allFilter, generalFilter, schoolFilter);
+
     }
 
-    public void makeRequest() {
+    public void makeAnnouncementsRequest() {
         HashMap<String, String> map = new HashMap<>();
         map.put("sort[attr]", "created_at");
         map.put("sort[order]", "desc");
@@ -197,5 +216,18 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         }
         mAdapter.setAnnouncements(mAnnouncements);
         mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Filtering section
+     */
+
+    @OnClick(R.id.filter_view)
+    public void onFilterViewShow() {
+
+    }
+
+    public void onFilterViewHide() {
+
     }
 }

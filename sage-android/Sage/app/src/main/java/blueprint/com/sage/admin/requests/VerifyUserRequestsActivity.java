@@ -37,7 +37,7 @@ public class VerifyUserRequestsActivity extends BackAbstractActivity implements 
     public void getUsersListRequest() {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("verified", "false");
-        queryParams.put("sort_name", "true");
+        queryParams.put("sort_school", "true");
 
         Requests.Users.with(this).makeListRequest(queryParams);
     }

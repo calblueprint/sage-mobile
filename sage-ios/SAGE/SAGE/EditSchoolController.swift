@@ -26,6 +26,12 @@ class EditSchoolController: AddSchoolController {
         if let director = self.school?.director {
             self.didSelectDirector(director)
         }
+        if let radius = self.school?.radius {
+            self.didSelectRadius(radius)
+        }
+        if let location = self.school?.location {
+            self.location = location
+        }
         if let address = self.school?.address {
             (self.view as! AddSchoolView).displayAddressText(address)
         } else {
@@ -71,6 +77,9 @@ class EditSchoolController: AddSchoolController {
             }
             if let address = self.address {
                 self.school?.address = address
+            }
+            if let radius = self.radius {
+                self.school?.radius = radius
             }
             self.finishButton?.startLoading()
             (self.view as! AddSchoolView).deleteSchoolButton.hidden = true

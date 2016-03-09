@@ -49,7 +49,13 @@ class Semester: NSObject, NSCoding {
     //
     // MARK: - Public Methods
     //
-    func dateStringFromStartDate() -> NSString {
+    func displayText() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy"
+        return Semester.stringFromTerm(self.term) + " " + formatter.stringFromDate(self.startDate!)
+    }
+
+    func dateStringFromStartDate() -> String {
         let formatter = NSDateFormatter()
         formatter.dateFormat = StringConstants.displayDateFormat
         return formatter.stringFromDate(self.startDate!)
@@ -70,6 +76,9 @@ class Semester: NSObject, NSCoding {
         }
     }
     
+    //
+    // MARK: - NSCoding
+    //
     required init(coder aDecoder: NSCoder) {
         self.id = aDecoder.decodeIntegerForKey(SemesterConstants.kId)
         self.startDate = aDecoder.decodeObjectForKey(SemesterConstants.kStartDate) as? NSDate

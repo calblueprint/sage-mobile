@@ -27,7 +27,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +34,8 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.PlacePredictionAdapter;
-import blueprint.com.sage.shared.adapters.spinners.UserSpinnerAdapter;
+import blueprint.com.sage.admin.browse.adapters.SchoolUserSpinnerAdapter;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -56,10 +56,6 @@ import de.greenrobot.event.EventBus;
 public abstract class SchoolFormAbstractFragment extends Fragment
           implements FormValidation, OnMapReadyCallback {
 
-    private final int SW_LAT = 37;
-    private final int SW_LNG = -123;
-    private final int NE_LAT = 38;
-    private final int NE_LNG = -122;
     private final int THRESHOLD = 3;
 
     private List<AutocompletePrediction> mPredictions;
@@ -71,7 +67,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     @Bind(R.id.create_school_director) Spinner mDirector;
 
     private List<User> mUsers;
-    private UserSpinnerAdapter mUserAdapter;
+    private SchoolUserSpinnerAdapter mUserAdapter;
 
     private GoogleMap mMap;
     protected ToolbarInterface mToolbarInterface;
@@ -80,6 +76,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     private BaseInterface mBaseInterface;
     private PlacePredictionAdapter mPlaceAdapter;
     private FormValidator mValidator;
+    protected MenuItem mItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,6 +115,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
                 validateAndSubmitRequest();
@@ -165,20 +163,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
                 R.layout.place_prediction_list_item, getPredictions());
         mSchoolAddress.setAdapter(mPlaceAdapter);
         mSchoolAddress.setThreshold(THRESHOLD);
-        mSchoolAddress.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 2) getPredictions(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
 
         mSchoolAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -191,7 +175,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             }
         });
 
-        mUserAdapter = new UserSpinnerAdapter(getActivity(), mUsers,
+        mUserAdapter = new SchoolUserSpinnerAdapter(getActivity(), mUsers,
                 R.layout.simple_spinner_header, R.layout.simple_spinner_item);
         mDirector.setAdapter(mUserAdapter);
     }
@@ -202,7 +186,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     public void onMapReady(GoogleMap map) {
         mMap = map;
         mMap.getUiSettings().setCompassEnabled(false);
-        mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
         mMap.getUiSettings().setAllGesturesEnabled(false);
@@ -218,31 +201,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     private void moveMapToLatLng(LatLng latLng) {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        MarkerOptions options = new MarkerOptions();
-        options.position(latLng);
-        mMap.addMarker(options);
-    }
-
-    private void getPredictions(String address) {
-        PendingResult<AutocompletePredictionBuffer> result =
-                Places.GeoDataApi.getAutocompletePredictions(mBaseInterface.getGoogleApiClient(), address,
-                        MapUtils.createBounds(SW_LAT, SW_LNG, NE_LAT, NE_LNG), null);
-
-        if (result == null)
-            return;
-
-        result.setResultCallback(new ResultCallback<AutocompletePredictionBuffer>() {
-            @Override
-            public void onResult(@NonNull AutocompletePredictionBuffer result) {
-                List<AutocompletePrediction> predictions = new ArrayList<AutocompletePrediction>();
-                for (AutocompletePrediction prediction : result) {
-                    predictions.add(prediction.freeze());
-                }
-                result.release();
-                setPredictions(predictions);
-            }
-        });
+        mMap.addMarker(MapUtils.getMarkerOptions(latLng, getActivity()));
     }
 
     public void validateAndSubmitRequest() {
@@ -255,16 +214,19 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         String name = mSchoolName.getText().toString();
         String address = mSchoolAddress.getText().toString();
         LatLng bounds = MapUtils.getLatLngFromAddress(getActivity(), address);
-        User director = (User) mDirector.getSelectedItem();
+        SchoolUserSpinnerAdapter.Item selectedDirector =
+                (SchoolUserSpinnerAdapter.Item) mDirector.getSelectedItem();
 
         mSchool.setName(name);
         mSchool.setAddress(address);
-        mSchool.setDirectorId(director.getId());
+        mSchool.setDirectorId(selectedDirector.toInt());
+
         if (bounds != null) {
             mSchool.setLat((float) bounds.latitude);
             mSchool.setLng((float) bounds.longitude);
         }
 
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         makeRequest();
     }
 
@@ -279,8 +241,9 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     public void onEvent(UserListEvent event) {
         mUsers = event.getUsers();
 
-        if (mSchool != null)
+        if (mSchool != null && mSchool.getDirector() != null) {
             mUsers.add(0, mSchool.getDirector());
+        }
 
         mUserAdapter.setUsers(mUsers);
 
@@ -295,7 +258,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         for (int i = 0; i < mUsers.size(); i++)
             if (mUsers.get(i).getId() == director.getId())
-                mDirector.setSelection(i);
+                mDirector.setSelection(i + 1);
     }
 
     private void setPredictions(List<AutocompletePrediction> predictions) {
@@ -304,4 +267,8 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             mPlaceAdapter.setPredictions(predictions);
     }
     private List<AutocompletePrediction> getPredictions() { return mPredictions; }
+
+    public void onEvent(APIErrorEvent event) {
+        mItem.setActionView(null);
+    }
 }

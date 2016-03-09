@@ -1,9 +1,9 @@
 package blueprint.com.sage.users.profile.fragments;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -50,12 +50,12 @@ public class EditUserFragment extends UserFormAbstractFragment {
         }
 
         int schoolId = ((School) mSchool.getSelectedItem()).getId();
-        Bitmap profile = mPhoto.getImageBitmap();
 
         mUser.setSchoolId(schoolId);
-        mUser.setProfile(profile);
+        mUser.setProfile(mProfileBitmap);
 
-        Requests.Users.with(getActivity()).makeEditRequest(mUser);
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
+        Requests.Users.with(getActivity()).makeStickyEditRequest(mUser);
     }
 
     public boolean isValidUser() {
@@ -90,6 +90,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }
+        mItem.setActionView(null);
         getActivity().onBackPressed();
     }
 }

@@ -16,7 +16,7 @@ class CheckinViewController: UIViewController {
     let locationManager = CLLocationManager()
     var currentLocation = CLLocation()
     var school: School?
-    let distanceTolerance: CLLocationDistance = 200 // in Meters TODO: Change to 200
+    var distanceTolerance: CLLocationDistance?
     
     let checkinView = CheckinView()
     let defaultTitleLabel = UILabel()
@@ -41,6 +41,7 @@ class CheckinViewController: UIViewController {
         super.viewDidLoad()
         if let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             self.school = school
+            self.distanceTolerance = school.radius
         }
         
         if let user = LoginOperations.getUser() {
@@ -101,6 +102,7 @@ class CheckinViewController: UIViewController {
     @objc private func schoolChanged(notification: NSNotification) {
         let school = notification.object!.copy() as! School
         self.school = school
+        self.distanceTolerance = school.radius
         self.checkinView.mapView.clear()
         let marker = GMSMarker(position: self.school!.location!.coordinate)
         marker.map = self.checkinView.mapView
@@ -111,13 +113,15 @@ class CheckinViewController: UIViewController {
         if let currentSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             if currentSchool.id == school.id {
                 self.school = school
+
+                self.distanceTolerance = school.radius
                 self.checkinView.mapView.clear()
                 let marker = GMSMarker(position: self.school!.location!.coordinate)
                 marker.map = self.checkinView.mapView
             }
         }
     }
-    
+
     //
     // MARK: - Button event handling
     //

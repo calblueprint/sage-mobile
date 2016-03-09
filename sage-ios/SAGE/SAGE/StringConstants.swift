@@ -19,7 +19,7 @@ struct StringConstants {
     #else
         static let kEndpointBaseURL = "http://sage-rails.herokuapp.com/api/v1"
     #endif
-    
+
     static let kEndpointCreateUser = kEndpointBaseURL + "/users"
     static let kEndpointLogin = kEndpointBaseURL + "/users/sign_in"
     static let kEndpointLogout = kEndpointBaseURL + "/users/sign_out"
@@ -27,6 +27,7 @@ struct StringConstants {
     static let kEndpointCreateSchool = kEndpointBaseURL + "/admin/schools"
     static let kEndpointCheckin = kEndpointBaseURL + "/check_ins"
     static let kEndpointAnnouncements = kEndpointBaseURL + "/announcements"
+    static let kEndpointSemesters = kEndpointBaseURL + "/semesters"
     
     static func kEndpointDeleteAnnouncement(announcementID: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/admin/announcements/" + String(announcementID)

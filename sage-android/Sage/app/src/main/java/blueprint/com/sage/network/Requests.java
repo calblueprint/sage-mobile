@@ -92,6 +92,14 @@ public class Requests {
         NetworkManager.getInstance(context).getRequestQueue().add(request);
     }
 
+    public static void postEvent(Object event, boolean isSticky) {
+        if (isSticky) {
+            EventBus.getDefault().postSticky(event);
+        } else {
+            EventBus.getDefault().post(event);
+        }
+    }
+
     public static void postError(APIError error) {
         EventBus.getDefault().post(new APIErrorEvent(error));
     }
@@ -181,7 +189,7 @@ public class Requests {
                     new Response.Listener<User>() {
                         @Override
                         public void onResponse(User user) {
-                            EventBus.getDefault().post(new EditUserEvent(user));
+                            Requests.postEvent(new EditUserEvent(user), false);
                         }
                     }, new Response.Listener<APIError>() {
                         @Override
@@ -189,6 +197,22 @@ public class Requests {
                             Requests.postError(apiError);
                         }
                     });
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeStickyEditRequest(User user) {
+            EditUserRequest request = new EditUserRequest(mActivity, user,
+                    new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User user) {
+                            Requests.postEvent(new EditUserEvent(user), true);
+                        }
+                    }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
             Requests.addToRequestQueue(mActivity, request);
         }
 

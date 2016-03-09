@@ -13,16 +13,17 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import blueprint.com.sage.shared.interfaces.PhotoPickerInterface;
 
 /**
  * Created by charlesx on 11/18/15.
@@ -30,24 +31,25 @@ import java.util.Locale;
 public class PhotoPicker {
 
     private Activity mActivity;
-    private Fragment mFragment;
+    private PhotoPickerInterface mPhotoPickerInterface;
     private String mPhotoPath;
 
     public static final int CAMERA_REQUEST = 1337;
     public static final int PICK_PHOTO_REQUEST = 9001;
+    public static final int IMAGE_MAX_SIZE = 100000; // 100 KB
 
-    public PhotoPicker(Activity activity, Fragment fragment) {
+    public PhotoPicker(Activity activity, PhotoPickerInterface photoPickerInterface) {
         mActivity = activity;
-        mFragment = fragment;
+        mPhotoPickerInterface = photoPickerInterface;
     }
 
-    public static PhotoPicker newInstance(Activity activity, Fragment fragment) {
-        return new PhotoPicker(activity, fragment);
+    public static PhotoPicker newInstance(Activity activity, PhotoPickerInterface photoPickerInterface) {
+        return new PhotoPicker(activity, photoPickerInterface);
     }
 
     public void onSelectPhotoButton() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        mFragment.startActivityForResult(intent, PICK_PHOTO_REQUEST);
+        mPhotoPickerInterface.startActivityForResult(intent, PICK_PHOTO_REQUEST);
     }
 
     public void onTakePhotoButton() {
@@ -64,9 +66,13 @@ public class PhotoPicker {
 
             if (photoFile != null) {
                 takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                mFragment.startActivityForResult(takePhotoIntent, CAMERA_REQUEST);
+                mPhotoPickerInterface.startActivityForResult(takePhotoIntent, CAMERA_REQUEST);
             }
         }
+    }
+
+    public void onRemovePhotoButton() {
+        mPhotoPickerInterface.onRemovePhotoResult();
     }
 
     private File createImageFile() throws IOException {
@@ -78,58 +84,99 @@ public class PhotoPicker {
         return image;
     }
 
-    public void pickPhotoResult(Intent data, ImageView imageView) {
-        Bitmap photo = null;
+    public Bitmap pickPhotoResult(Intent data, ImageView imageView) {
+        Bitmap photo;
         Uri targetUri = data.getData();
 
         try {
-            photo = BitmapFactory.decodeStream(mActivity.getContentResolver().openInputStream(targetUri));
-        } catch(FileNotFoundException e) {
+            InputStream in = mActivity.getContentResolver().openInputStream(targetUri);
+
+            // Decode image size
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, options);
+            closeStream(in);
+
+            int scale = getScaleFactor(options);
+            Log.e("size", "" + scale);
+            Bitmap bitmap;
+            in = mActivity.getContentResolver().openInputStream(targetUri);
+            if (scale > 1) {
+                options = new BitmapFactory.Options();
+                options.inSampleSize = scale;
+                bitmap = BitmapFactory.decodeStream(in, null, options);
+                closeStream(in);
+                // resize to desired dimensions
+
+
+                photo = getScaledBitmap(bitmap);
+                Log.e("bitmap size", photo.getByteCount() + "");
+                return photo;
+
+            } else {
+                photo = BitmapFactory.decodeStream(in);
+                closeStream(in);
+                Log.e("bitmap size", photo.getByteCount() + "");
+
+                return photo;
+            }
+
+        } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }
 
-        insertPhoto(photo, imageView);
+        return null;
     }
 
-    public void takePhotoResult(Intent data, ImageView imageView) {
+    public Bitmap takePhotoResult(Intent data, ImageView imageView) {
         Bitmap photo;
-
-        int targetH = imageView.getHeight();
-        int targetW = imageView.getWidth();
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mPhotoPath, options);
 
-        int photoH = options.outHeight;
-        int photoW = options.outWidth;
-
-        int scaleFactor = 0;
-        if (targetH > 0 && targetW > 0) scaleFactor = Math.min(photoH/targetH, photoW/targetW );
-
         options.inJustDecodeBounds = false;
-        options.inSampleSize = scaleFactor;
-        options.inPurgeable = true;
+        options.inSampleSize = getScaleFactor(options);
 
-        photo = BitmapFactory.decodeFile(mPhotoPath, options);
-
-        insertPhoto(photo, imageView);
+        photo = getScaledBitmap(BitmapFactory.decodeFile(mPhotoPath, options));
+        Log.e("bitmap scaled size", photo.getByteCount() + "");
+        return photo;
     }
 
-    private void insertPhoto(Bitmap photo, ImageView imageView) {
-        if (photo == null)
-            return;
+    private Bitmap getScaledBitmap(Bitmap bitmap) {
+        int height = bitmap.getHeight();
+        int width = bitmap.getWidth();
 
-        int height = photo.getHeight() / 2;
-        int width = photo.getWidth() / 2;
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(photo, width, height, false);
+        double y = Math.sqrt(IMAGE_MAX_SIZE
+                / (((double) width) / height));
+        double x = (y / height) * width;
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) x, (int) y, true);
+        bitmap.recycle();
+        return scaledBitmap;
+    }
 
-        imageView.setImageBitmap(scaledBitmap);
+
+    private int getScaleFactor(BitmapFactory.Options options) {
+        int scale = 1;
+        while ((options.outWidth * options.outHeight) * (1 / Math.pow(scale, 2)) >
+                IMAGE_MAX_SIZE) {
+            scale++;
+        }
+        return scale;
+    }
+
+    private void closeStream(InputStream inputStream) {
+        try {
+            if (inputStream != null)
+                inputStream.close();
+        } catch (IOException e) {
+            Log.e(getClass().toString(), e.toString());
+        }
     }
 
     public static class PhotoOptionDialog extends DialogFragment {
 
-        private static String[] mOptions = { "Choose a photo", "Take a picture" };
+        private static String[] mOptions = { "Choose a photo", "Take a picture", "Remove photo" };
         private PhotoPicker mPicker;
 
         public static PhotoOptionDialog newInstance(PhotoPicker picker) {
@@ -148,8 +195,17 @@ public class PhotoPicker {
             builder.setItems(mOptions, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (which == 0) mPicker.onSelectPhotoButton();
-                    else mPicker.onTakePhotoButton();
+                    switch (which) {
+                        case 0:
+                            mPicker.onSelectPhotoButton();
+                            break;
+                        case 1:
+                            mPicker.onTakePhotoButton();
+                            break;
+                        case 2:
+                            mPicker.onRemovePhotoButton();
+                            break;
+                    }
                 }
             });
 

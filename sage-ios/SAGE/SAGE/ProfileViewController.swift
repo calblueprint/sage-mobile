@@ -54,7 +54,7 @@ class ProfileViewController: UITableViewController {
             self.profileView.setupWithUser(self.user!)
         }
     }
-    
+
     func verifiedCheckinAdded(notification: NSNotification) {
         let checkin = notification.object!.copy() as! Checkin
         if LoginOperations.getUser()?.id == checkin.user?.id {

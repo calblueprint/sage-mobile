@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.HashMap;
 
@@ -35,6 +36,8 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
     @Bind(R.id.schools_list_list) RecycleViewEmpty mSchoolsList;
     @Bind(R.id.schools_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.schools_list_refresh) SwipeRefreshLayout mSchoolsRefreshView;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
+
     @Bind(R.id.school_list_fab) FloatingActionButton mCreateButton;
 
     private SchoolsListAdapter mAdapter;
@@ -76,6 +79,7 @@ public class SchoolListFragment extends Fragment implements OnRefreshListener {
 
         mSchoolsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSchoolsList.setEmptyView(mEmptyView);
+        mSchoolsList.setProgressBar(mProgressBar);
         mSchoolsList.setAdapter(mAdapter);
 
         mEmptyView.setOnRefreshListener(this);

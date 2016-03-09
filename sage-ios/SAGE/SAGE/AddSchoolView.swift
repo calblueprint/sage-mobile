@@ -13,6 +13,7 @@ class AddSchoolView: FormView {
     var name =  FormFieldItem()
     var location = FormButtonItem()
     var director = FormButtonItem()
+    var radius = FormButtonItem()
     var deleteSchoolButton = SGButton()
     
     override init(frame: CGRect) {
@@ -44,6 +45,12 @@ class AddSchoolView: FormView {
         self.location.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.location)
 
+
+        self.radius.label.text = "Radius"
+        self.radius.button.setTitle("Choose the radius tolerance", forState: .Normal)
+        self.radius.setHeight(FormFieldItem.defaultHeight)
+        self.scrollView.addSubview(self.radius)
+
         self.deleteSchoolButton.hidden = true
         self.deleteSchoolButton.setTitle("Delete School", forState: .Normal)
         self.deleteSchoolButton.setThemeColor(UIColor.redColor())
@@ -58,8 +65,11 @@ class AddSchoolView: FormView {
         self.location.setY(CGRectGetMaxY(self.director.frame))
         self.location.fillWidth()
         
+        self.radius.fillWidth()
+        self.radius.setY(CGRectGetMaxY(self.location.frame))
+
         self.name.fillWidth()
-        self.name.setY(CGRectGetMaxY(self.location.frame))
+        self.name.setY(CGRectGetMaxY(self.radius.frame))
 
         self.deleteSchoolButton.sizeToFit()
         self.deleteSchoolButton.fillWidth()
@@ -87,7 +97,13 @@ class AddSchoolView: FormView {
             self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
         }
     }
-    
+
+    func displayRadius(radius: CLLocationDistance) {
+        let intRadiusString = String(Int(radius)) + " meters"
+        self.radius.button.setTitle(intRadiusString, forState: .Normal)
+        self.radius.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+    }
+
     func displaySchoolName(name: String?) {
         self.name.textField.text = name
     }

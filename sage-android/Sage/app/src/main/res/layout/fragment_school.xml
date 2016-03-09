@@ -71,6 +71,7 @@
             android:id="@+id/user_list_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             />
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -95,5 +96,4 @@
 
         </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
-
 </android.support.design.widget.CoordinatorLayout>

@@ -13,6 +13,7 @@ class SchoolDetailViewController: UITableViewController {
     
     private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     private var school: School?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     
     // MARK: - Initialization
@@ -20,6 +21,7 @@ class SchoolDetailViewController: UITableViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
     }
     
     deinit {
@@ -34,6 +36,26 @@ class SchoolDetailViewController: UITableViewController {
         super.init(coder: aDecoder)
     }
     
+    func editedProfile(notification: NSNotification) {
+        let newUser = notification.object!.copy() as! User
+        if let school = self.school {
+
+            if newUser.id == school.director?.id {
+                school.director = newUser
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+            }
+            if var students = school.students {
+                for var index = 0; index < students.count; ++index {
+                    let student = students[index]
+                    if student.id == newUser.id {
+                        self.school!.students![index] = newUser
+                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                    }
+                }
+            }
+        }
+    }
+
     //
     // MARK: - Configuration
     //
@@ -41,6 +63,9 @@ class SchoolDetailViewController: UITableViewController {
         self.title = school.name!
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
             self.configureWithCompleteSchool(updatedSchool)
+            self.activityIndicator.stopAnimating()
+            self.schoolDetailHeaderView.mapView.hidden = false
+
             }) { (message) -> Void in }
     }
     
@@ -59,6 +84,9 @@ class SchoolDetailViewController: UITableViewController {
         self.tableView.tableHeaderView = schoolDetailHeaderView
         self.tableView.tableFooterView = UIView()
         
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+
         let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
         editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
         let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
@@ -70,6 +98,13 @@ class SchoolDetailViewController: UITableViewController {
             marker.map = self.schoolDetailHeaderView.mapView
             self.schoolDetailHeaderView.mapView.moveCamera(GMSCameraUpdate.setTarget(coordinate))
         }
+
+        self.schoolDetailHeaderView.mapView.hidden = true
+    }
+
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
     }
     
     func editSchool() {

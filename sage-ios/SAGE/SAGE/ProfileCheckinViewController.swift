@@ -49,8 +49,6 @@ class ProfileCheckinViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let blah = KeychainWrapper.objectForKey(KeychainConstants.kSemesterSummary) as? SemesterSummary
-        
         if self.filter != nil {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
             self.setSemesterTitle(semesterID)

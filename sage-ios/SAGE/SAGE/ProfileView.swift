@@ -83,22 +83,6 @@ class ProfileView: UIView {
         }
     }
     
-    var pastSemester: Bool {
-        get {
-            return true
-        }
-        set (viewingPastSemester) {
-            if viewingPastSemester {
-                self.header.backgroundColor = UIColor.lightGrayColor
-                self.demoteButton.hidden = true
-                self.promoteButton.hidden = true
-                self.profileEditButton.hidden = true
-            } else {
-                self.header.backgroundColor = UIColor.mainColor
-            }
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(self.profileContent)
@@ -193,7 +177,6 @@ class ProfileView: UIView {
     
     func setupSubviews() {
         self.backgroundColor = UIColor.whiteColor()
-        self.header.backgroundColor = UIColor.mainColor
         
         self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
         self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
@@ -394,6 +377,10 @@ class ProfileView: UIView {
     
     deinit {
         self.profileUserImg.cancelImageRequestOperation()
+    }
+    
+    func setHeaderBackgroundColor(color: UIColor) {
+        self.header.backgroundColor = color
     }
     
     func startPromoting() {

@@ -70,6 +70,7 @@ class PastSemestersViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let _ = self.semesters {
             let semesterID = self.semesters![indexPath.row].id
+            let semesterTitle = self.semesters![indexPath.row].displayText()
             let vc = BrowseMentorsViewController()
             vc.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
             if let topItem = self.navigationController!.navigationBar.topItem {

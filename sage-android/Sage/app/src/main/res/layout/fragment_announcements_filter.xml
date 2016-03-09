@@ -4,6 +4,64 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue500">
+    android:gravity="center"
+    android:background="@color/black72"
+    android:clickable="true">
 
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <FrameLayout style="@style/FilterLayout">
+
+            <TextView
+                style="@style/FilterText"
+                android:text="@string/announcement_filter_default"/>
+
+            <RadioButton
+                style="@style/FilterRadioButton"
+                android:id="@+id/announcement_filter_default"/>
+
+        </FrameLayout>
+
+        <FrameLayout style="@style/FilterLayout">
+
+            <TextView
+                style="@style/FilterText"
+                android:text="@string/announcement_filter_all"/>
+
+            <RadioButton
+                style="@style/FilterRadioButton"
+                android:id="@+id/announcement_filter_all"/>
+
+        </FrameLayout>
+
+        <FrameLayout style="@style/FilterLayout">
+
+            <TextView
+                style="@style/FilterText"
+                android:text="@string/announcement_filter_general"/>
+
+            <RadioButton
+                style="@style/FilterRadioButton"
+                android:id="@+id/announcement_filter_general"/>
+
+        </FrameLayout>
+
+        <FrameLayout style="@style/FilterLayout">
+
+            <Spinner
+                style="@style/FilterSpinner"
+                android:id="@+id/announcement_filter_school_spinner" />
+
+            <RadioButton
+                style="@style/FilterRadioButton"
+                android:id="@+id/announcement_filter_school"/>
+
+        </FrameLayout>
+
+        <include layout="@layout/filter_buttons" />
+    </LinearLayout>
 </LinearLayout>

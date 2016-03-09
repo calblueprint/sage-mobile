@@ -108,9 +108,11 @@ class ProfileViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         if self.filter != nil {
             self.refreshControl?.backgroundColor = UIColor.lightGrayColor
-            self.profileView.header.backgroundColor = UIColor.lightGrayColor // this is the only place i could put it where there wasn't any delay
+            self.profileView.setHeaderBackgroundColor(UIColor.lightGrayColor)
+            // self.profileView.header.backgroundColor = UIColor.lightGrayColor // this is the only place i could put it where there wasn't any delay
         } else {
             self.refreshControl?.backgroundColor = UIColor.mainColor
+            self.profileView.setHeaderBackgroundColor(UIColor.mainColor)
         }
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "getUser", forControlEvents: .ValueChanged)

@@ -1,23 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp">
 
     <TextView
-        android:id="@+id/check_in_list_item_school"
+        android:id="@+id/check_in_list_item_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/check_in_list_item_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/check_in_at"
+        android:layout_toRightOf="@id/check_in_list_item_user" />
+
+    <TextView
+        android:id="@+id/check_in_list_item_total"
+        android:padding="6dp"
+        android:textColor="@color/black"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/check_in_list_item_total"
+        android:id="@+id/check_in_list_item_school"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/check_in_list_item_at"
+        android:layout_marginRight="100dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/check_in_list_item_date_time"
+        android:layout_marginTop="2dp"
+        android:layout_below="@id/check_in_list_item_school"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/check_in_list_item_comment"
+        android:text="No comment"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-</LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="1dp"
+        android:background="@color/divider_gray"
+        android:layout_below="@id/check_in_list_item_date_time"/>
+</RelativeLayout>

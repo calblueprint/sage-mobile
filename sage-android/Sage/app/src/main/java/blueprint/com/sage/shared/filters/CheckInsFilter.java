@@ -1,15 +1,13 @@
 package blueprint.com.sage.shared.filters;
 
-import java.util.HashMap;
-
 /**
  * Created by charlesx on 3/6/16.
  */
-public class CheckInsFilter extends Filter {
+public class CheckInsFilter extends FilterController {
 
-    public CheckInsFilter() {
-        mQueryParams = new HashMap<>();
-    }
+    public CheckInsFilter() { super(); }
+
+    public void onFilter() {}
 
     public void addAllFilter() {
         resetFilters();

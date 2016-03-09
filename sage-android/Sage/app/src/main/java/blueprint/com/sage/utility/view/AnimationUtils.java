@@ -17,8 +17,14 @@ public class AnimationUtils {
         return ObjectAnimator.ofFloat(view, "y", start, end);
     }
 
-    public static Animation getBounceSlideUpAnimator(Context context) {
+    public static Animation getBounceSlideDownAnimator(Context context) {
         Animation animation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.slide_from_top);
+        animation.setInterpolator(new CustomBounceInterpolator());
+        return animation;
+    }
+
+    public static Animation getBounceSlideUpAnimator(Context context) {
+        Animation animation = android.view.animation.AnimationUtils.loadAnimation(context, R.anim.slide_from_bottom);
         animation.setInterpolator(new CustomBounceInterpolator());
         return animation;
     }

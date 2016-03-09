@@ -1,20 +1,30 @@
 package blueprint.com.sage.shared.filters;
 
-import java.util.HashMap;
+import android.widget.RadioButton;
 
 /**
- * Created by charlesx on 3/6/16.
+ * Created by charlesx on 3/8/16.
  */
 public abstract class Filter {
 
-    protected HashMap<String, String> mQueryParams;
+    private RadioButton mRadioButton;
 
-    public HashMap<String, String> getQueryParams(HashMap<String, String> queryParams) {
-        mQueryParams.putAll(queryParams);
-        return mQueryParams;
+    public Filter(RadioButton radioButton) {
+        mRadioButton = radioButton;
     }
 
-    public void resetFilters() {
-        mQueryParams = new HashMap<>();
+    public int getId() {
+        return mRadioButton.getId();
     }
+
+    public boolean isChecked() {
+        return mRadioButton.isChecked();
+    }
+
+    public void setChecked(boolean checked) {
+        mRadioButton.setChecked(checked);
+    }
+
+    public abstract String getFilterKey();
+    public abstract String getFilterValue();
 }

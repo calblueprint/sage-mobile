@@ -9,9 +9,16 @@
 import SwiftKeychainWrapper
 import AFNetworking
 
-class ProfileOperations: NSObject { 
-    static func getUser(user: User, completion: ((User) -> Void), failure:((String) -> Void)) {
-        BaseOperation.manager().GET(StringConstants.kEndpointUser(user), parameters: nil, success: { (operation, data) -> Void in
+class ProfileOperations: NSObject {
+    
+    static func getUser(filter filter: [String: AnyObject]? = nil, user: User, completion: ((User) -> Void), failure:((String) -> Void)) {
+        var params = [String: AnyObject]()
+        if let filter = filter as [String: AnyObject]! {
+            for (key, value) in filter {
+                params[key] = String(value)
+            }
+        }
+        BaseOperation.manager().GET(StringConstants.kEndpointUser(user), parameters: params, success: { (operation, data) -> Void in
             let userJSON = data["user"]!! as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
             completion(user)
@@ -20,16 +27,29 @@ class ProfileOperations: NSObject {
         }
     }
     
-    static func loadCheckins(user: User, completion: (([Checkin]) -> Void), failure: (String) -> Void){
+    // Default behavior is to load checkins from current semester is filter is nil
+    static func loadCheckins(filter filter: [String: AnyObject]? = nil, user: User, completion: (([Checkin]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        let currentSemesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id
-        if let semesterID = currentSemesterID {
-            let params = [
-                SemesterConstants.kSemesterId: semesterID,
-                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
-                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
-                CheckinConstants.kUserId: user.id
-            ]
+        var params: [String: AnyObject] = [
+            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+            NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
+            CheckinConstants.kUserId: user.id
+        ]
+
+        var makeRequest = true
+        if (filter == nil) || filter?.count == 0 {
+            if let semesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id {
+                params[SemesterConstants.kSemesterId] = semesterID
+            } else {
+                makeRequest = false
+            }
+        } else {
+            for (key, value) in filter! {
+                params[key] = value
+            }
+        }
+
+        if makeRequest {
             manager.GET(StringConstants.kEndpointCheckin, parameters: params, success: { (operation, data) -> Void in
                 var checkins = [Checkin]()
                 let checkinArray = data["check_ins"] as! [AnyObject]
@@ -38,12 +58,12 @@ class ProfileOperations: NSObject {
                     checkins.append(checkin)
                 }
                 completion(checkins)
-                
                 }) { (operation, error) -> Void in
                     failure(BaseOperation.getErrorMessage(error))
             }
+        } else {
+           completion([])
         }
-        completion([])
     }
     
     static func updateProfile(user: User, password: String, photoData: String?, newPassword: String?, passwordConfirmation: String?, resetPhoto: Bool, completion: (User) -> Void, failure: (String) -> Void) {

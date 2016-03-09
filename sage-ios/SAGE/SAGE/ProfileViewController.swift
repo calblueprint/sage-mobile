@@ -15,6 +15,7 @@ class ProfileViewController: UITableViewController {
     var profileView = ProfileView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
+    var filter: [String: AnyObject]?
     
     init(user: User) {
         self.user = user
@@ -42,7 +43,7 @@ class ProfileViewController: UITableViewController {
         let newUser = notification.object!.copy() as! User
         if self.user?.id == newUser.id {
             self.user = newUser
-            self.profileView.setupWithUser(newUser)
+            self.profileView.setupWithUser(newUser, pastSemester: self.filter != nil)
             self.tableView.reloadData()
         }
     }
@@ -51,7 +52,7 @@ class ProfileViewController: UITableViewController {
         let school = notification.object!.copy() as! School
         if self.user?.school?.id == school.id {
             self.user?.school = school
-            self.profileView.setupWithUser(self.user!)
+            self.profileView.setupWithUser(self.user!, pastSemester: self.filter != nil)
         }
     }
 
@@ -59,7 +60,7 @@ class ProfileViewController: UITableViewController {
         let checkin = notification.object!.copy() as! Checkin
         if LoginOperations.getUser()?.id == checkin.user?.id {
             self.user?.semesterSummary?.totalMinutes += checkin.minuteDuration()
-            self.profileView.setupWithUser(self.user!)
+            self.profileView.setupWithUser(self.user!, pastSemester: self.filter != nil)
             self.tableView.reloadData()
         }
 
@@ -69,7 +70,7 @@ class ProfileViewController: UITableViewController {
         let summary = notification.object!.copy() as! SemesterSummary
         if LoginOperations.getUser()?.id == self.user?.id {
             self.user?.semesterSummary = summary
-            self.profileView.setupWithUser(self.user!)
+            self.profileView.setupWithUser(self.user!, pastSemester: self.filter != nil)
             self.tableView.reloadData()
         }
         
@@ -77,7 +78,7 @@ class ProfileViewController: UITableViewController {
     
     func semesterEnded(notification: NSNotification) {
         self.user?.semesterSummary = nil
-        self.profileView.setupWithUser(self.user!)
+        self.profileView.setupWithUser(self.user!, pastSemester: self.filter != nil)
         self.tableView.reloadData()
     }
     
@@ -104,8 +105,15 @@ class ProfileViewController: UITableViewController {
         self.activityIndicator.setY(self.profileView.headerHeight + CGFloat(40))
         self.activityIndicator.startAnimating()
         
+        if self.filter != nil {
+            self.refreshControl?.backgroundColor = UIColor.lightGrayColor
+            self.profileView.setHeaderBackgroundColor(UIColor.lightGrayColor)
+        } else {
+            self.refreshControl?.backgroundColor = UIColor.mainColor
+            self.profileView.setHeaderBackgroundColor(UIColor.mainColor)
+        }
+        
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "getUser", forControlEvents: .ValueChanged)
         self.view.bringSubviewToFront(self.refreshControl!)
@@ -157,7 +165,7 @@ class ProfileViewController: UITableViewController {
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: existingUser)
             }
             self.user = updatedUser
-            self.profileView.setupWithUser(updatedUser)
+            self.profileView.setupWithUser(updatedUser, pastSemester: self.filter != nil)
             self.profileView.promoteButton.stopLoading()
             }, failure: { (message) -> Void in
                 self.showErrorAndSetMessage(message)
@@ -174,7 +182,7 @@ class ProfileViewController: UITableViewController {
             self.profileView.startDemoting()
             ProfileOperations.demote(self.user!, completion: { (updatedUser) -> Void in
                 self.user = updatedUser
-                self.profileView.setupWithUser(updatedUser)
+                self.profileView.setupWithUser(updatedUser, pastSemester: self.filter != nil)
                 self.profileView.demoteButton.stopLoading()
 
                 }, failure: { (message) -> Void in
@@ -188,11 +196,9 @@ class ProfileViewController: UITableViewController {
     }
     
     func getUser() {
-        ProfileOperations.getUser(self.user!, completion: { (user) -> Void in
+        ProfileOperations.getUser(filter: self.filter, user: self.user!, completion: { (user) -> Void in
             self.user = user
-
-            
-            self.profileView.setupWithUser(user)
+            self.profileView.setupWithUser(user, pastSemester: self.filter != nil)
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
@@ -214,7 +220,11 @@ class ProfileViewController: UITableViewController {
     
     func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
+        var color = UIColor.mainColor
+        if self.filter != nil {
+            color = UIColor.lightGrayColor
+        }
+        let errorView = super.showError(message, currentError: error, color: color)
         self.currentErrorMessage = errorView
     }
     
@@ -223,9 +233,9 @@ class ProfileViewController: UITableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if LoginOperations.getUser()!.id == self.user!.id {
+        if LoginOperations.getUser()!.id == self.user!.id && self.filter == nil {
             return 2
-        } else if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
+        } else if (LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President) {
             return 1
         }
         return 0
@@ -261,8 +271,9 @@ class ProfileViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            let view = ProfileCheckinViewController(user: self.user)
-            self.navigationController!.pushViewController(view, animated: true)
+            let vc = ProfileCheckinViewController(user: self.user)
+            vc.filter = self.filter
+            self.navigationController!.pushViewController(vc, animated: true)
         } else if indexPath.section == 1 {
 
             let logoutAlert = UIAlertController(title: nil, message: "Are you sure you want to log out?", preferredStyle: .ActionSheet)
@@ -282,7 +293,6 @@ class ProfileViewController: UITableViewController {
             logoutAlert.addAction(cancelAction)
             
             self.presentViewController(logoutAlert, animated: true, completion: nil)
-                
         }
     }
     

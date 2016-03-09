@@ -7,14 +7,21 @@
 //
 
 import Foundation
+import FontAwesomeKit
 import SwiftKeychainWrapper
 
 class AnnouncementsViewController: UITableViewController {
-    
+
     var announcements = [Announcement]()
+    var filter: [String: AnyObject]?
+
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
-    
+    var titleView = SGTitleView(title: "Announcements", subtitle: "All")
+
+    //
+    // MARK: - Initialization
+    //
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
@@ -88,17 +95,26 @@ class AnnouncementsViewController: UITableViewController {
         }
     }
     
+    //
+    // MARK: - ViewController LifeCycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
 
+        let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
+        let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+
         if let role = LoginOperations.getUser()?.role {
             if role == .Admin || role == .President {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
+                self.navigationItem.rightBarButtonItems = [filterButton, UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")]
+            } else {
+                self.navigationItem.rightBarButtonItems = [filterButton]
             }
         }
         
-        self.title = "Announcements"
+        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
@@ -109,11 +125,14 @@ class AnnouncementsViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "getAnnouncements", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "getAnnouncementsWithReset:", forControlEvents: .ValueChanged)
         
         self.getAnnouncements()
     }
     
+    //
+    // MARK: - Public Methods
+    //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
         if let topItem = self.navigationController?.navigationBar.topItem {
@@ -121,9 +140,55 @@ class AnnouncementsViewController: UITableViewController {
         }
         self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
-    
-    func getAnnouncements() {
-        AnnouncementsOperations.loadAnnouncements({ (announcements) -> Void in
+
+    func showFilterOptions() {
+        let menuController = MenuController(title: "Filter Options")
+        menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
+            self.filter = nil
+            self.getAnnouncements(reset: true)
+            self.titleView.setSubtitle("All")
+        }))
+
+        if LoginOperations.getUser()!.isDirector() {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.getAnnouncements(reset: true)
+                self.titleView.setSubtitle("My School")
+            }))
+        } else if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
+                self.getAnnouncements(reset: true)
+                self.titleView.setSubtitle(userSchool.name!)
+            }))
+        }
+
+        if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
+            menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
+                SchoolOperations.loadSchools({ (schools) -> Void in
+                    controller.setList(schools)
+                    }, failure: { (errorMessage) -> Void in
+                })
+                }, displayText: { (school: School) -> String in
+                    return school.name!
+                }, handler: { (selectedSchool) -> Void in
+                    self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+                    self.getAnnouncements(reset: true)
+                    self.titleView.setSubtitle(selectedSchool.name!)
+            }))
+        }
+
+        self.presentViewController(menuController, animated: false, completion: nil)
+    }
+
+    func getAnnouncements(reset reset: Bool = false) {
+        if reset {
+            self.announcements = [Announcement]()
+            self.tableView.reloadData()
+            self.activityIndicator.startAnimating()
+        }
+
+        AnnouncementsOperations.loadAnnouncements(filter: self.filter, completion: { (announcements) -> Void in
             self.announcements = announcements
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
@@ -142,6 +207,9 @@ class AnnouncementsViewController: UITableViewController {
         self.currentErrorMessage = errorView
     }
     
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return AnnouncementsTableViewCell.heightForAnnouncement(announcements[indexPath.row], width: CGRectGetWidth(tableView.frame))
     }

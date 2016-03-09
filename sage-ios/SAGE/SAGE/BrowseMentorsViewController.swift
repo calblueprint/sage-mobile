@@ -13,6 +13,8 @@ class BrowseMentorsViewController: UITableViewController {
     var mentors: [[User]]?
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var titleView = SGTitleView(title: "Mentors", subtitle: "")
+    var filter: [String: AnyObject]?
     
     init() {
         super.init(style: .Plain)
@@ -44,10 +46,25 @@ class BrowseMentorsViewController: UITableViewController {
         self.alphabetizeAndLoad(users)
     }
     
+    func setSemesterTitle(semesterID: String) {
+        SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
+            self.titleView.setSubtitle(semester.displayText())
+            }) { (errorMessage) -> Void in
+                self.showErrorAndSetMessage(errorMessage)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if self.filter != nil {
+            let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
+            self.setSemesterTitle(semesterID)
+        } else {
+            self.titleView.setSubtitle("This Semester")
+        }
+        self.navigationItem.titleView = self.titleView
+        
         self.tableView.sectionIndexColor = UIColor.mainColor
-        self.title = "Mentors"
         self.tableView.tableFooterView = UIView()
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
@@ -55,7 +72,11 @@ class BrowseMentorsViewController: UITableViewController {
         self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.backgroundColor = UIColor.mainColor
+        if self.filter != nil {
+            self.refreshControl?.backgroundColor = UIColor.lightGrayColor
+        } else {
+            self.refreshControl?.backgroundColor = UIColor.mainColor
+        }
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "loadMentors", forControlEvents: .ValueChanged)
         
@@ -104,9 +125,8 @@ class BrowseMentorsViewController: UITableViewController {
     }
     
     func loadMentors() {
-        AdminOperations.loadMentors({ (mentorArray) -> Void in
+        AdminOperations.loadMentors(filter: self.filter, completion: { (mentorArray) -> Void in
             self.alphabetizeAndLoad(mentorArray)
-            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }
@@ -176,6 +196,9 @@ class BrowseMentorsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let mentor = self.mentors![indexPath.section][indexPath.row]
         let vc = ProfileViewController(user: mentor)
+        if self.filter != nil {
+            vc.filter = self.filter
+        }
         if let topItem = self.navigationController!.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }

@@ -10,6 +10,8 @@ import Foundation
 
 class PastSemestersViewController: UITableViewController {
     
+    var currentErrorMessage: ErrorView?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var semesters: [Semester]?
     var previousVC: UIViewController?
     
@@ -23,23 +25,41 @@ class PastSemestersViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         let n: Int! = self.navigationController?.viewControllers.count
         self.previousVC = self.navigationController!.viewControllers[n-2]
+        
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.lightGrayColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "loadSemesters", forControlEvents: .ValueChanged)
+        
         self.loadSemesters()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.activityIndicator.centerInSuperview()
     }
     
     func loadSemesters() {
         SemesterOperations.loadSemesters({ (semestersArray) -> Void in
             self.semesters = semestersArray
             self.tableView.reloadData()
+            self.activityIndicator.stopAnimating()
+            self.refreshControl?.endRefreshing()
             }) { (errorMessage) -> Void in
-                // ok later
+                self.activityIndicator.stopAnimating()
+                self.refreshControl?.endRefreshing()
+                self.showErrorAndSetMessage(errorMessage)
         }
     }
     
-//    deinit {
-//        UIView.animateWithDuration(UIConstants.fastAnimationTime) { () -> Void in
-//            self.previousVC?.navigationController?.navigationBar.barTintColor = UIColor.mainColor
-//        }
-//    }
+    func showErrorAndSetMessage(message: String) {
+        let error = self.currentErrorMessage
+        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
+        self.currentErrorMessage = errorView
+    }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44.0
@@ -70,7 +90,6 @@ class PastSemestersViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let _ = self.semesters {
             let semesterID = self.semesters![indexPath.row].id
-            let semesterTitle = self.semesters![indexPath.row].displayText()
             let vc = BrowseMentorsViewController()
             vc.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
             if let topItem = self.navigationController!.navigationBar.topItem {

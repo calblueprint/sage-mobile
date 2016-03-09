@@ -58,7 +58,6 @@ class ProfileCheckinViewController: UITableViewController {
         self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
-        // do you want to be able to filter by semester when on a specific past semester...?
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
         let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")

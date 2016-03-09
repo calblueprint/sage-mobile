@@ -13,6 +13,7 @@ import SwiftKeychainWrapper
 class AdminOperations {
     
     static func loadMentors(completion: (([User]) -> Void), failure: (String) -> Void){
+
         let manager = BaseOperation.manager()
         if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
             let params = [UserConstants.kSemesterID: currentSemester.id]
@@ -82,11 +83,7 @@ class AdminOperations {
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
 
-        if let filter = filter {
-            for (key, value) in filter {
-                params[key] = value
-            }
-        }
+        params.appendDictionary(filter)
 
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
             var checkins = [Checkin]()
@@ -142,11 +139,7 @@ class AdminOperations {
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
 
-        if let filter = filter {
-            for (key, value) in filter {
-                params[key] = value
-            }
-        }
+        params.appendDictionary(filter)
 
         manager.GET(StringConstants.kEndpointGetSignUpRequests, parameters: params, success: { (operation, data) -> Void in
             var users = [User]()

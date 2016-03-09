@@ -37,9 +37,7 @@ class ProfileOperations: NSObject {
                 makeRequest = false
             }
         } else {
-            for (key, value) in filter! {
-                params[key] = value
-            }
+            params.appendDictionary(filter)
         }
 
         if makeRequest {

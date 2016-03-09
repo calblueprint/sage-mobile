@@ -22,11 +22,7 @@ class AnnouncementsOperations {
                 params[AnnouncementConstants.kDefault] = String(schoolID)
             }
         }
-        if let filter = filter as [String: AnyObject]! {
-            for (key, value) in filter {
-                params[key] = value
-            }
-        }
+        params.appendDictionary(filter)
 
         BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: params, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]

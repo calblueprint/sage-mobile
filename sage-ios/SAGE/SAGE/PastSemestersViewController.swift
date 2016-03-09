@@ -35,11 +35,11 @@ class PastSemestersViewController: UITableViewController {
         }
     }
     
-    deinit {
-        UIView.animateWithDuration(UIConstants.fastAnimationTime) { () -> Void in
-            self.previousVC?.navigationController?.navigationBar.barTintColor = UIColor.mainColor
-        }
-    }
+//    deinit {
+//        UIView.animateWithDuration(UIConstants.fastAnimationTime) { () -> Void in
+//            self.previousVC?.navigationController?.navigationBar.barTintColor = UIColor.mainColor
+//        }
+//    }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44.0

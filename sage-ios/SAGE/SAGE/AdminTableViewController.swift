@@ -36,6 +36,10 @@ class AdminTableViewController: UITableViewController {
     //
     // MARK: - ViewController Lifecycle
     //
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.barTintColor = UIColor.mainColor
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Admin"

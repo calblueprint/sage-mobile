@@ -46,7 +46,7 @@ class ProfileView: UIView {
         get {
             return self.currentUserProfile
         }
-        set(isCurrentUser) {
+        set (isCurrentUser) {
             if isCurrentUser {
                 self.profileEditButton.hidden = false
             } else {
@@ -79,6 +79,22 @@ class ProfileView: UIView {
                 self.demoteButton.hidden = false
             } else {
                 self.demoteButton.hidden = true
+            }
+        }
+    }
+    
+    var pastSemester: Bool {
+        get {
+            return true
+        }
+        set (viewingPastSemester) {
+            if viewingPastSemester {
+                self.header.backgroundColor = UIColor.lightGrayColor
+                self.demoteButton.hidden = true
+                self.promoteButton.hidden = true
+                self.profileEditButton.hidden = true
+            } else {
+                self.header.backgroundColor = UIColor.mainColor
             }
         }
     }
@@ -133,8 +149,8 @@ class ProfileView: UIView {
         }
     }
     
-    func setupWithUser(user: User) {
-        self.setButtonVisibility(user)
+    func setupWithUser(user: User, pastSemester: Bool = false) {
+        self.setButtonVisibility(user, pastSemester: pastSemester)
         
         self.profileUserImg.setImageWithUser(user, showBadge: false)
         self.userName.text = user.fullName()
@@ -351,7 +367,7 @@ class ProfileView: UIView {
         self.setHeight(height)
     }
     
-    func setButtonVisibility(user: User) {
+    func setButtonVisibility(user: User, pastSemester: Bool = false) {
         self.showBothButtons = false
         if LoginOperations.getUser()?.id == user.id {
             self.currentUserProfile = true
@@ -367,6 +383,11 @@ class ProfileView: UIView {
                 self.canDemote = true
                 self.showBothButtons = true
             }
+        }
+        if pastSemester {
+            self.currentUserProfile = false
+            self.canPromote = false
+            self.canDemote = false
         }
         self.layoutSubviews()
     }

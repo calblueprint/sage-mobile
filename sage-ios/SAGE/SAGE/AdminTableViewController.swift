@@ -49,11 +49,11 @@ class AdminTableViewController: SGTableViewController {
     // MARK: - NSNotificationCenter Handlers
     //
     func semesterStarted(notification: NSNotification) {
-        self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .Automatic)
+        self.tableView.reloadData()
     }
     
     func semesterEnded(notification: NSNotification) {
-        self.tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .Automatic)
+        self.tableView.reloadData()
     }
     
     //

@@ -18,17 +18,20 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.AnnouncementActivity;
 import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
+import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.main.filters.AnnouncementsAllFilter;
+import blueprint.com.sage.main.filters.AnnouncementsDefaultFilter;
 import blueprint.com.sage.main.filters.AnnouncementsGeneralFilter;
 import blueprint.com.sage.main.filters.AnnouncementsSchoolFilter;
 import blueprint.com.sage.models.Announcement;
-import blueprint.com.sage.models.User;
+import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.PaginationInstance;
 import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
@@ -63,14 +66,16 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Bind(R.id.filter_view) LinearLayout mFilterButton;
 
     // Filter related ui
+    @Bind(R.id.announcement_filter_container) View mFilterView;
+    @Bind(R.id.announcement_filter_default) RadioButton mFilterDefault;
     @Bind(R.id.announcement_filter_all) RadioButton mFilterAll;
     @Bind(R.id.announcement_filter_general) RadioButton mFilterGeneral;
     @Bind(R.id.announcement_filter_school) RadioButton mFilterSchool;
     @Bind(R.id.announcement_filter_school_spinner) Spinner mFilterSchoolSpinner;
 
     private SchoolSpinnerAdapter mSchoolAdapter;
+    private List<School> mSchools;
     private FilterController mFilterController;
-    private View mFilterView;
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
 
@@ -78,6 +83,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAnnouncements = new ArrayList<>();
+        mSchools = new ArrayList<>();
         mBaseInterface = (BaseInterface) getActivity();
     }
 
@@ -85,11 +91,8 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_announcements_list, container, false);
-
-
-        mFilterView = inflater.inflate(R.layout.fragment_announcements_filter, view, false);
-        view.addView(mFilterView);
         ButterKnife.bind(this, view);
+        mFilterView.setVisibility(View.GONE);
 
         initializeViews();
         initializeFilters();
@@ -114,26 +117,14 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         makeAnnouncementsRequest();
     }
 
-    public void onEvent(AnnouncementsListEvent event) {
-        mAnnouncements = event.getAnnouncements();
-
-        if (mPaginationInstance.hasResetPage()) {
-            mAdapter.resetAnnouncements(mAnnouncements);
-        } else {
-            mAdapter.setAnnouncements(mAnnouncements);
-        }
-
-        mEmptyView.setRefreshing(false);
-        mAnnouncementsRefreshView.setRefreshing(false);
-        mPaginationInstance.incrementCurrentPage();
-    }
-
     public void initializeViews() {
         if (!mBaseInterface.getUser().isAdmin()) {
             mAddAnnouncementButton.setVisibility(View.GONE);
         }
 
+        mFilterController = new FilterController();
         mPaginationInstance = PaginationInstance.newInstance();
+
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mAnnouncementsList.setLayoutManager(mLinearLayoutManager);
         mAnnouncementsList.setEmptyView(mEmptyView);
@@ -156,15 +147,19 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     private void initializeFilters() {
-        mFilterView.setVisibility(View.GONE);
-
+        AnnouncementsDefaultFilter defaultFilter = new AnnouncementsDefaultFilter(mFilterDefault, mBaseInterface.getSchool());
         AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll);
         AnnouncementsGeneralFilter generalFilter = new AnnouncementsGeneralFilter(mFilterGeneral);
         AnnouncementsSchoolFilter schoolFilter = new AnnouncementsSchoolFilter(mFilterSchool, mFilterSchoolSpinner);
+        mFilterController.addFilters(defaultFilter, allFilter, generalFilter, schoolFilter);
 
-        mFilterController = new FilterController();
-        mFilterController.addFilters(allFilter, generalFilter, schoolFilter);
+        // Default to default scope
+        mFilterController.onFilterChecked(mFilterDefault.getId());
 
+        mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.filter_spinner_header, R.layout.filter_spinner_item);
+        mFilterSchoolSpinner.setAdapter(mSchoolAdapter);
+
+        makeSchoolsRequest();
     }
 
     public void makeAnnouncementsRequest() {
@@ -172,12 +167,16 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         map.put("sort[attr]", "created_at");
         map.put("sort[order]", "desc");
         map.put("page", "" + mPaginationInstance.getCurrentPage());
-        User user = mBaseInterface.getUser();
-        if (user.isStudent() && user.getSchoolId() != 0) {
-            int id = user.getSchoolId();
-            map.put("default", Integer.toString(id));
-        }
+        map.putAll(mFilterController.onFilter());
+
         Requests.Announcements.with(getActivity()).makeListRequest(map);
+    }
+
+    public void makeSchoolsRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("sort[attr]", "lower(name)");
+        queryParams.put("sort[order]", "asc");
+        Requests.Schools.with(getActivity()).makeListRequest(queryParams);
     }
 
     @OnClick(R.id.add_announcement_fab)
@@ -187,7 +186,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     public void addAnnouncement(Intent data) {
         String string = data.getStringExtra(getString(R.string.create_announcement));
-        Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>(){});
+        Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
         mAnnouncements.add(0, announcement);
         mAdapter.setAnnouncements(mAnnouncements);
         mAdapter.notifyDataSetChanged();
@@ -218,16 +217,50 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         mAdapter.notifyDataSetChanged();
     }
 
+    public void onEvent(AnnouncementsListEvent event) {
+        mAnnouncements = event.getAnnouncements();
+
+        if (mPaginationInstance.hasResetPage()) {
+            mAdapter.resetAnnouncements(mAnnouncements);
+        } else {
+            mAdapter.setAnnouncements(mAnnouncements);
+        }
+
+        mEmptyView.setRefreshing(false);
+        mAnnouncementsRefreshView.setRefreshing(false);
+        mPaginationInstance.incrementCurrentPage();
+    }
+
+    public void onEvent(SchoolListEvent event) {
+        mSchools = event.getSchools();
+        mSchoolAdapter.setSchools(mSchools);
+    }
+
     /**
      * Filtering section
      */
 
     @OnClick(R.id.filter_view)
     public void onFilterViewShow() {
-
+        mFilterController.showFilter(getActivity(), mFilterView);
     }
 
+    @OnClick(R.id.filter_cancel)
     public void onFilterViewHide() {
+        mFilterController.hideFilter(getActivity(), mFilterView);
+    }
 
+    @OnClick({ R.id.announcement_filter_default, R.id.announcement_filter_all, R.id.announcement_filter_general, R.id.announcement_filter_school })
+    public void onRadioButtonClick(View view) {
+        mFilterController.onFilterChecked(view.getId());
+    }
+
+    @OnClick(R.id.filter_confirm)
+    public void onFilterClick() {
+        mPaginationInstance.resetPage();
+        mEmptyView.setRefreshing(true);
+        mAnnouncementsRefreshView.setRefreshing(true);
+        makeAnnouncementsRequest();
+        onFilterViewHide();
     }
 }

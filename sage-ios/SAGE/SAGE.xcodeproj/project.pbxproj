@@ -107,6 +107,8 @@
 		42C4352C1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */; };
 		42DE22161C0F92BE00071879 /* NotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE22151C0F92BE00071879 /* NotificationConstants.swift */; };
 		42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EDBDED1BDF38420092D5F5 /* UIImage.swift */; };
+		42EF02D21C91340F00C36926 /* SignUpEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF02D11C91340F00C36926 /* SignUpEmailView.swift */; };
+		42EF02D41C91341B00C36926 /* SignUpPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF02D31C91341B00C36926 /* SignUpPasswordView.swift */; };
 		42EFD6721BC7A9EA0063FD78 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */; };
 		42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6731BC9E6F30063FD78 /* SignUpView.swift */; };
 		42EFD6771BC9EC540063FD78 /* SignUpNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EFD6761BC9EC540063FD78 /* SignUpNameView.swift */; };
@@ -279,6 +281,8 @@
 		42C4352B1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolDirectorTableViewController.swift; sourceTree = "<group>"; };
 		42DE22151C0F92BE00071879 /* NotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationConstants.swift; sourceTree = "<group>"; };
 		42EDBDED1BDF38420092D5F5 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		42EF02D11C91340F00C36926 /* SignUpEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpEmailView.swift; sourceTree = "<group>"; };
+		42EF02D31C91341B00C36926 /* SignUpPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpPasswordView.swift; sourceTree = "<group>"; };
 		42EFD6711BC7A9EA0063FD78 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
 		42EFD6731BC9E6F30063FD78 /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		42EFD6761BC9EC540063FD78 /* SignUpNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpNameView.swift; sourceTree = "<group>"; };
@@ -707,6 +711,8 @@
 				42EFD6781BC9EC630063FD78 /* SignUpEmailPasswordView.swift */,
 				42EFD67A1BC9EC830063FD78 /* SignUpSchoolHoursView.swift */,
 				42EFD67C1BC9EC900063FD78 /* SignUpPhotoView.swift */,
+				42EF02D11C91340F00C36926 /* SignUpEmailView.swift */,
+				42EF02D31C91341B00C36926 /* SignUpPasswordView.swift */,
 			);
 			name = "Sign Up Views";
 			sourceTree = "<group>";
@@ -1098,6 +1104,7 @@
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
 				4241AF791C4BAD52009BC133 /* EditProfileController.swift in Sources */,
+				42EF02D41C91341B00C36926 /* SignUpPasswordView.swift in Sources */,
 				42EDBDEE1BDF38420092D5F5 /* UIImage.swift in Sources */,
 				5D757DB51C12381200BDAE61 /* ProfileCheckinViewController.swift in Sources */,
 				5D6149131C5C31090036708A /* NoSemesterView.swift in Sources */,
@@ -1115,6 +1122,7 @@
 				E44611991C754AE6006E90FA /* MenuController.swift in Sources */,
 				4223342B1BC0C94600E863D0 /* UserConstants.swift in Sources */,
 				2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */,
+				42EF02D21C91340F00C36926 /* SignUpEmailView.swift in Sources */,
 				4254C1EF1BFDD6A200D0D33E /* SignUpRequestsViewController.swift in Sources */,
 				5D221C241C18D296008FBD9B /* CheckinTableViewCell.swift in Sources */,
 				42A6CE661C0BDFFD00F97CFF /* UsersTableViewCell.swift in Sources */,

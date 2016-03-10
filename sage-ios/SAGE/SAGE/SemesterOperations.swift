@@ -15,7 +15,7 @@ class SemesterOperations {
         let manager = BaseOperation.manager()
 
         let params: [String: AnyObject] = [
-            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+            NetworkingConstants.kSortAttr: SemesterConstants.kStartDate,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
 

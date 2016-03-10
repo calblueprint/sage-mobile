@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.Semester;
+import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -41,7 +44,8 @@ public abstract class AbstractSemesterListAdapter extends RecyclerView.Adapter<A
 
         final Semester semester = mSemesters.get(position);
         viewHolder.mSemesterTitle.setText(semester.toString());
-
+        viewHolder.mSemesterDate.setText(DateUtils.getDateRange(new DateTime(semester.getStart()),
+                                            new DateTime(semester.getFinish()), DateUtils.ABBREV_YEAR_FORMAT));
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

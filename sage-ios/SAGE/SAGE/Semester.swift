@@ -9,8 +9,8 @@
 import Foundation
 
 enum Term: Int {
-    case Spring = 0
-    case Fall = 1
+    case Fall = 0
+    case Spring = 1
 }
 
 class Semester: NSObject, NSCoding {
@@ -80,9 +80,9 @@ class Semester: NSObject, NSCoding {
     
     static func termFromInt(number: Int) -> Term {
         if number == 0 {
-            return Term.Spring
+            return Term.Fall
         }
-        return Term.Fall
+        return Term.Spring
     }
     
     static func stringFromTerm(term: Term) -> String {
@@ -100,7 +100,7 @@ class Semester: NSObject, NSCoding {
         self.id = aDecoder.decodeIntegerForKey(SemesterConstants.kId)
         self.startDate = aDecoder.decodeObjectForKey(SemesterConstants.kStartDate) as? NSDate
         self.finishDate = aDecoder.decodeObjectForKey(SemesterConstants.kFinishDate) as? NSDate
-        self.term = Semester.termFromInt(aDecoder.decodeIntegerForKey(SemesterConstants.kTerm) as! Int)
+        self.term = Semester.termFromInt(aDecoder.decodeIntegerForKey(SemesterConstants.kTerm))
         super.init()
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseSchoolsViewController: UITableViewController {
+class BrowseSchoolsViewController: SGTableViewController {
     
     var schools: [School]?
     var currentErrorMessage: ErrorView?
@@ -19,6 +19,7 @@ class BrowseSchoolsViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolAdded:", name: NotificationConstants.addSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolDeleted:", name: NotificationConstants.deleteSchoolKey, object: nil)
+        self.setNoContentMessage("No schools currently exist.")
     }
     
     deinit {
@@ -39,6 +40,7 @@ class BrowseSchoolsViewController: UITableViewController {
     func schoolAdded(notification: NSNotification) {
         let school = notification.object!.copy() as! School
         if let _ = self.schools {
+            self.hideNoContentView()
             self.schools!.insert(school, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -52,6 +54,9 @@ class BrowseSchoolsViewController: UITableViewController {
                 let currentSchool = self.schools![i]
                 if school.id == currentSchool.id {
                     self.schools!.removeAtIndex(i)
+                    if self.schools!.count == 0 {
+                        self.showNoContentView()
+                    }
                     self.tableView.reloadData()
                     break
                 }
@@ -117,6 +122,13 @@ class BrowseSchoolsViewController: UITableViewController {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
+            
+            if self.schools == nil || self.schools?.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }

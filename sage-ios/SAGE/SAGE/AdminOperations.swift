@@ -84,7 +84,7 @@ class AdminOperations {
         ]
 
         params.appendDictionary(filter)
-
+        
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
             var checkins = [Checkin]()
             let checkinArray = data["check_ins"] as! [AnyObject]

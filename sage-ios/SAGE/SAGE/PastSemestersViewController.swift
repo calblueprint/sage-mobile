@@ -86,11 +86,7 @@ class PastSemestersViewController: UITableViewController {
         }
         let semester = self.semesters![indexPath.row]
         cell!.textLabel!.text = semester.displayText()
-        var semesterFinishDateString = "Present"
-        if semester.finishDate != nil {
-            semesterFinishDateString = semester.dateStringFromFinishDate()
-        }
-        cell!.detailTextLabel!.text = semester.dateStringFromStartDate() + " - " + semesterFinishDateString
+        cell!.detailTextLabel!.text = semester.dateStringFromStartDate() + " - " + semester.dateStringFromFinishDate()
         return cell!
     }
     

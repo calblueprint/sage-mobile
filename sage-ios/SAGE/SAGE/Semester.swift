@@ -72,6 +72,9 @@ class Semester: NSObject, NSCoding {
     func dateStringFromFinishDate() -> String {
         let formatter = NSDateFormatter()
         formatter.dateStyle = NSDateFormatterStyle.LongStyle
+        if self.finishDate == nil {
+            return "Present"
+        }
         return formatter.stringFromDate(self.finishDate!)
     }
     

@@ -82,7 +82,7 @@ class ProfileCheckinViewController: UITableViewController {
         SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
             self.titleView.setSubtitle(semester.displayText())
             }) { (errorMessage) -> Void in
-                self.showErrorAndSetMessage(errorMessage)
+                self.titleView.setSubtitle("Past Semester")
         }
     }
     

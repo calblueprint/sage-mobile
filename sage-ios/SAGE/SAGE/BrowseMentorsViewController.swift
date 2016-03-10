@@ -50,7 +50,7 @@ class BrowseMentorsViewController: UITableViewController {
         SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
             self.titleView.setSubtitle(semester.displayText())
             }) { (errorMessage) -> Void in
-                self.titleView.setSubtitle("Past Semesters")
+                self.titleView.setSubtitle("Past Semester")
         }
     }
     

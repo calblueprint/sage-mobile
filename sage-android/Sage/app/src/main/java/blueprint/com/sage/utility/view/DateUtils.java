@@ -12,6 +12,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class DateUtils {
 
     public static String DATE_FORMAT = "MMM dd, yyyy hh:mm a";
+    public static String DATE_FORMAT_ABBREV = "MMM d, yyyy, h:mm a";
     public static String TIME_FORMAT = "hh:mm a";
     public static String DAY_FORMAT = "MMM dd, yyyy";
 
@@ -48,17 +49,20 @@ public class DateUtils {
 
 
     public static String getFormattedDay(DateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(DAY_FORMAT);
-        return formatter.print(dateTime);
+        return forPattern(dateTime, DAY_FORMAT);
+
     }
 
     public static String getFormattedTime(DateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(TIME_FORMAT);
-        return formatter.print(dateTime);
+        return forPattern(dateTime, TIME_FORMAT);
     }
 
     public static String getFormattedDateNow() {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
-        return formatter.print(DateTime.now());
+        return forPattern(DateTime.now(), DATE_FORMAT);
+    }
+
+    public static String forPattern(DateTime dateTime, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
+        return formatter.print(dateTime);
     }
 }

@@ -78,10 +78,11 @@ class PastSemestersViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("Semester")
         if (cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Semester")
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Semester")
             cell!.selectionStyle = .None
-            cell!.textLabel!.font = UIFont.normalFont
+            cell!.textLabel!.font = UIFont.semiboldFont
             cell!.detailTextLabel!.font = UIFont.normalFont
+            cell!.detailTextLabel!.textColor = UIColor.secondaryTextColor
         }
         let semester = self.semesters![indexPath.row]
         cell!.textLabel!.text = semester.displayText()

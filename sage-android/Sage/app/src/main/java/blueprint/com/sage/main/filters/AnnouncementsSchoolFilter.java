@@ -18,12 +18,6 @@ public class AnnouncementsSchoolFilter extends Filter {
         mSchoolSpinner = schoolSpinner;
     }
 
-    @Override
-    public void setChecked(boolean checked) {
-        super.setChecked(checked);
-        mSchoolSpinner.setEnabled(checked);
-    }
-
     public String getFilterKey() {
         return "school_id";
     }

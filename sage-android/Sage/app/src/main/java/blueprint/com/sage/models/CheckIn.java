@@ -45,7 +45,7 @@ public @Data class CheckIn {
 
     @JsonIgnore
     public String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy, h:mm a", Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.DATE_FORMAT_ABBREV, Locale.US);
         return dateFormat.format(start);
     }
 

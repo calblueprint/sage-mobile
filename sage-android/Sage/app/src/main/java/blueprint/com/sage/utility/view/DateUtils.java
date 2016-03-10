@@ -12,6 +12,7 @@ import org.joda.time.format.DateTimeFormatter;
 public class DateUtils {
 
     public static String DATE_FORMAT = "MMM dd, yyyy hh:mm a";
+    public static String DATE_FORMAT_ABBREV = "MMM d, yyyy, h:mm a";
     public static String TIME_FORMAT = "hh:mm a";
     public static String DAY_FORMAT = "MMM dd, yyyy";
 

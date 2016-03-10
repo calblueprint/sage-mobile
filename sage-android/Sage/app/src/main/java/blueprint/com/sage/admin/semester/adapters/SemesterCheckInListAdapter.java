@@ -57,7 +57,6 @@ public class SemesterCheckInListAdapter extends RecyclerView.Adapter<SemesterChe
         }
 
         viewHolder.mDateTime.setText(DateUtils.forPattern(new DateTime(checkIn.getStart()), DateUtils.DATE_FORMAT_ABBREV));
-        viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
         viewHolder.mTotalTime.setText(checkIn.getTotalTime());
         viewHolder.mComment.setText(checkIn.getComment());
     }

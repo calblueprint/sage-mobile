@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import java.util.Date;
 import java.util.List;
 
+import blueprint.com.sage.utility.view.DateUtils;
 import lombok.Data;
 
 /**
@@ -23,7 +24,6 @@ public @Data class Semester {
     private List<User> users;
 
     public static final String[] SEASONS = { "Fall", "Spring" };
-    public static final String PRESENT = "Present";
 
     @JsonIgnore
     public int getYear() {

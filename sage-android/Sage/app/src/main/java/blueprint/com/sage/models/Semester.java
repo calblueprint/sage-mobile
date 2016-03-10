@@ -35,17 +35,4 @@ public @Data class Semester {
     public String toString() {
         return String.format("%s %d", SEASONS[season], getYear());
     }
-
-    @JsonIgnore
-    public String getDateRange() {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
-        String startDate = format.format(start);
-        String finishDate;
-        if (finish != null) {
-            finishDate = format.format(finish);
-        } else {
-            finishDate = PRESENT;
-        }
-        return startDate + " - " + finishDate;
-    }
 }

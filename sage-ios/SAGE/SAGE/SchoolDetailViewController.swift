@@ -67,6 +67,7 @@ class SchoolDetailViewController: SGTableViewController {
             self.configureWithCompleteSchool(updatedSchool)
             self.activityIndicator.stopAnimating()
             self.schoolDetailHeaderView.mapView.hidden = false
+            self.refreshControl?.endRefreshing()
 
             }) { (message) -> Void in
                 self.showNoContentView()
@@ -104,6 +105,15 @@ class SchoolDetailViewController: SGTableViewController {
         }
 
         self.schoolDetailHeaderView.mapView.hidden = true
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "reload", forControlEvents: .ValueChanged)
+    }
+    
+    func reload() {
+        self.configureWithSchool(self.school!)
     }
 
     override func viewWillLayoutSubviews() {

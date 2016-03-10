@@ -89,7 +89,6 @@ class AddSchoolDirectorTableViewController: SGTableViewController {
             self.refreshControl?.endRefreshing()
             
             }) { (errorMessage) -> Void in
-                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }

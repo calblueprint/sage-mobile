@@ -10,8 +10,8 @@ import UIKit
 
 class NoContentView: UIView {
 
-    var message = "No content was found."
-    var label = UILabel()
+    private var message = "No content was found."
+    private var label = UILabel()
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,7 +43,7 @@ class NoContentView: UIView {
         self.backgroundColor = color
     }
     
-    func showMessage(message: String) {
+    func setMessageText(message: String) {
         self.label.text = message
     }
 

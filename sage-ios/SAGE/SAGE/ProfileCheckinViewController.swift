@@ -29,7 +29,7 @@ class ProfileCheckinViewController: SGTableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "unverifiedCheckinAdded:", name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
         self.user = user
-        self.setNoContentMessage("You have no checkins. Go volunteer!")
+        self.setNoContentMessage("You have no checkins from this semester.")
     }
     
     deinit {
@@ -85,7 +85,6 @@ class ProfileCheckinViewController: SGTableViewController {
     
     func loadCheckins(reset reset: Bool = false) {
         if reset {
-            self.showNoContentView()
             self.verifiedCheckins = [Checkin]()
             self.unverifiedCheckins = [Checkin]()
             self.tableView.reloadData()
@@ -124,7 +123,6 @@ class ProfileCheckinViewController: SGTableViewController {
                 }
                 
                 }) { (errorMessage) -> Void in
-                    self.showNoContentView()
                     self.activityIndicator.stopAnimating()
                     self.showErrorAndSetMessage(errorMessage)
             }

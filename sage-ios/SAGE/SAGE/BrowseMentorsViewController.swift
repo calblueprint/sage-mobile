@@ -109,7 +109,6 @@ class BrowseMentorsViewController: SGTableViewController {
             self.alphabetizeAndLoad(mentorArray)
             
             }) { (errorMessage) -> Void in
-                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }

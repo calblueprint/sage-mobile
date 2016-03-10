@@ -86,7 +86,8 @@ class SignUpRequestsViewController: SGTableViewController {
             }
             
             }) { (errorMessage) -> Void in
-                self.showNoContentView()
+                self.activityIndicator.stopAnimating()
+                self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }

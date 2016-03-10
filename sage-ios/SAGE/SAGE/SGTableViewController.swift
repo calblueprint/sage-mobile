@@ -41,7 +41,7 @@ class SGTableViewController: UITableViewController {
     }
     
     func setNoContentMessage(message: String) {
-        self.noContentView.showMessage(message)
+        self.noContentView.setMessageText(message)
     }
 
 }

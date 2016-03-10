@@ -130,7 +130,6 @@ class BrowseSchoolsViewController: SGTableViewController {
             }
             
             }) { (errorMessage) -> Void in
-                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage)
         }
     }

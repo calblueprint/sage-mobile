@@ -6,19 +6,19 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.filters.Filter;
 
 /**
- * Created by charlesx on 3/8/16.
+ * Created by charlesx on 3/10/16.
  */
-public class AnnouncementsDefaultFilter extends Filter {
+public class AnnouncementsMySchoolFilter extends Filter {
 
     private School mSchool;
 
-    public AnnouncementsDefaultFilter(RadioButton radioButton, School school) {
+    public AnnouncementsMySchoolFilter(RadioButton radioButton, School school) {
         super(radioButton);
         mSchool = school;
     }
 
     public String getFilterKey() {
-        return "default";
+        return "school_id";
     }
 
     public String getFilterValue() {

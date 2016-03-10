@@ -13,15 +13,9 @@ import SwiftKeychainWrapper
 class AdminOperations {
     
     static func loadMentors(filter filter: [String: AnyObject]? = nil, completion: (([User]) -> Void), failure: (String) -> Void){
-        var params = [String: AnyObject]()
-        if let filter = filter as [String: AnyObject]! {
-            for (key, value) in filter {
-                params[key] = String(value)
-            }
-        }
         let manager = BaseOperation.manager()
         if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
-            manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
+            manager.GET(StringConstants.kEndpointGetMentors, parameters: filter, success: { (operation, data) -> Void in
                 var userArray = [User]()
                 let userData = data["users"] as! [AnyObject]
                 for userDict in userData {

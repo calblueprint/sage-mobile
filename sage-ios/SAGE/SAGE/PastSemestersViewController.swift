@@ -23,8 +23,7 @@ class PastSemestersViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "Past Semesters"
         self.tableView.tableFooterView = UIView()
-        let n: Int! = self.navigationController?.viewControllers.count
-        self.previousVC = self.navigationController!.viewControllers[n-2]
+        self.previousVC = self
         
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
@@ -79,11 +78,18 @@ class PastSemestersViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("Semester")
         if (cell == nil) {
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Semester")
+            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "Semester")
+            cell!.selectionStyle = .None
+            cell!.textLabel!.font = UIFont.normalFont
+            cell!.detailTextLabel!.font = UIFont.normalFont
         }
-        cell!.selectionStyle = .None
-        cell!.textLabel!.text = self.semesters![indexPath.row].displayText()
-        cell!.textLabel!.font = UIFont.normalFont
+        let semester = self.semesters![indexPath.row]
+        cell!.textLabel!.text = semester.displayText()
+        var semesterFinishDateString = "Present"
+        if semester.finishDate != nil {
+            semesterFinishDateString = semester.dateStringFromFinishDate()
+        }
+        cell!.detailTextLabel!.text = semester.dateStringFromStartDate() + " - " + semesterFinishDateString
         return cell!
     }
     

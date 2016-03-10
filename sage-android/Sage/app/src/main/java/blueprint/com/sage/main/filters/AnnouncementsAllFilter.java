@@ -2,6 +2,8 @@ package blueprint.com.sage.main.filters;
 
 import android.widget.RadioButton;
 
+import blueprint.com.sage.models.School;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.filters.Filter;
 
 /**
@@ -9,15 +11,20 @@ import blueprint.com.sage.shared.filters.Filter;
  */
 public class AnnouncementsAllFilter extends Filter {
 
-    public AnnouncementsAllFilter(RadioButton radioButton) {
+    private User mUser;
+    private School mSchool;
+
+    public AnnouncementsAllFilter(RadioButton radioButton, User user, School school) {
         super(radioButton);
+        mUser = user;
+        mSchool = school;
     }
 
     public String getFilterKey() {
-        return "";
+        return mUser.isAdmin() ? ""  : "default";
     }
 
     public String getFilterValue() {
-        return "";
+        return mUser.isAdmin() || mSchool == null ? "" : "" + mSchool.getId();
     }
 }

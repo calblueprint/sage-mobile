@@ -27,8 +27,8 @@ import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.main.filters.AnnouncementsAllFilter;
-import blueprint.com.sage.main.filters.AnnouncementsDefaultFilter;
 import blueprint.com.sage.main.filters.AnnouncementsGeneralFilter;
+import blueprint.com.sage.main.filters.AnnouncementsMySchoolFilter;
 import blueprint.com.sage.main.filters.AnnouncementsSchoolFilter;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.School;
@@ -67,10 +67,10 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     // Filter related ui
     @Bind(R.id.announcement_filter_container) View mFilterView;
-    @Bind(R.id.announcement_filter_default) RadioButton mFilterDefault;
     @Bind(R.id.announcement_filter_all) RadioButton mFilterAll;
     @Bind(R.id.announcement_filter_general) RadioButton mFilterGeneral;
     @Bind(R.id.announcement_filter_school) RadioButton mFilterSchool;
+    @Bind(R.id.announcement_filter_my_school) RadioButton mFilterMySchool;
     @Bind(R.id.announcement_filter_school_spinner) Spinner mFilterSchoolSpinner;
 
     private SchoolSpinnerAdapter mSchoolAdapter;
@@ -147,17 +147,16 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     }
 
     private void initializeFilters() {
-        AnnouncementsDefaultFilter defaultFilter = new AnnouncementsDefaultFilter(mFilterDefault, mBaseInterface.getSchool());
-        AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll);
+        AnnouncementsMySchoolFilter mySchoolFilter = new AnnouncementsMySchoolFilter(mFilterMySchool, mBaseInterface.getSchool());
+        AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll, mBaseInterface.getUser(), mBaseInterface.getSchool());
         AnnouncementsGeneralFilter generalFilter = new AnnouncementsGeneralFilter(mFilterGeneral);
         AnnouncementsSchoolFilter schoolFilter = new AnnouncementsSchoolFilter(mFilterSchool, mFilterSchoolSpinner);
-        mFilterController.addFilters(defaultFilter, allFilter, generalFilter, schoolFilter);
-
-        // Default to default scope
-        mFilterController.onFilterChecked(mFilterDefault.getId());
+        mFilterController.addFilters(mySchoolFilter, allFilter, generalFilter, schoolFilter);
 
         mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.filter_spinner_header, R.layout.filter_spinner_item);
         mFilterSchoolSpinner.setAdapter(mSchoolAdapter);
+
+        mFilterController.onFilterChecked(mFilterAll.getId());
 
         makeSchoolsRequest();
     }
@@ -250,7 +249,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         mFilterController.hideFilter(getActivity(), mFilterView);
     }
 
-    @OnClick({ R.id.announcement_filter_default, R.id.announcement_filter_all, R.id.announcement_filter_general, R.id.announcement_filter_school })
+    @OnClick({ R.id.announcement_filter_my_school, R.id.announcement_filter_all, R.id.announcement_filter_general, R.id.announcement_filter_school })
     public void onRadioButtonClick(View view) {
         mFilterController.onFilterChecked(view.getId());
     }

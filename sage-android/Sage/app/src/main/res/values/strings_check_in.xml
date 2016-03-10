@@ -59,4 +59,5 @@
     <!--Check In List-->
     <string name ="check_in_at">\u0020at\u0020</string>
     <string name="check_in_hours_required">\u0020hours required</string>
+    <string name="check_in_summary">Summary</string>
 </resources>

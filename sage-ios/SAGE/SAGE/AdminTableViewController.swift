@@ -118,9 +118,6 @@ class AdminTableViewController: UITableViewController {
         case 2:
             switch indexPath.row {
             case 0:
-                //                let pastSemestersViewController = PastSemestersViewController()
-                //                let vc = UINavigationController(rootViewController: pastSemestersViewController)
-                //                self.presentViewController(vc, animated: true, completion: nil)
                 self.navigationController?.pushViewController(PastSemestersViewController(), animated: true)
             default: break
             }

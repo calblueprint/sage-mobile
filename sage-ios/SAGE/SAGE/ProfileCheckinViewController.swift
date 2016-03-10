@@ -19,7 +19,7 @@ class ProfileCheckinViewController: SGTableViewController {
 
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Check Ins", subtitle: "This Semester")
+    var titleView = SGTitleView(title: "Check Ins", subtitle: "")
     
     //
     // MARK: - Initialization
@@ -49,7 +49,13 @@ class ProfileCheckinViewController: SGTableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if self.filter != nil {
+            let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
+            self.setSemesterTitle(semesterID)
+        } else {
+            self.titleView.setSubtitle("This Semester")
+        }
         self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
@@ -62,11 +68,23 @@ class ProfileCheckinViewController: SGTableViewController {
         self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.backgroundColor = UIColor.mainColor
+        if self.filter != nil {
+            self.refreshControl?.backgroundColor = UIColor.lightGrayColor
+        } else {
+            self.refreshControl?.backgroundColor = UIColor.mainColor
+        }
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "loadCheckinsWithReset:", forControlEvents: .ValueChanged)
         
         self.loadCheckins()
+    }
+    
+    func setSemesterTitle(semesterID: String) {
+        SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
+            self.titleView.setSubtitle(semester.displayText())
+            }) { (errorMessage) -> Void in
+                self.titleView.setSubtitle("Past Semester")
+        }
     }
     
     override func viewWillLayoutSubviews() {

@@ -28,7 +28,7 @@ class AdminTableViewController: SGTableViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -36,6 +36,10 @@ class AdminTableViewController: SGTableViewController {
     //
     // MARK: - ViewController Lifecycle
     //
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.barTintColor = UIColor.mainColor
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Admin"
@@ -57,9 +61,9 @@ class AdminTableViewController: SGTableViewController {
     //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if LoginOperations.getUser()?.role == .President {
-            return 3
+            return 4
         } else {
-            return 2
+            return 3
         }
     }
     
@@ -71,10 +75,12 @@ class AdminTableViewController: SGTableViewController {
             return 2
         case 2:
             return 1
+        case 3:
+            return 1
         default: return 0
         }
     }
-
+    
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
@@ -83,6 +89,8 @@ class AdminTableViewController: SGTableViewController {
         case 1:
             return "Requests"
         case 2:
+            return "History"
+        case 3:
             return "SAGE Settings"
         default: return ""
         }
@@ -108,6 +116,12 @@ class AdminTableViewController: SGTableViewController {
             default: break
             }
         case 2:
+            switch indexPath.row {
+            case 0:
+                self.navigationController?.pushViewController(PastSemestersViewController(), animated: true)
+            default: break
+            }
+        case 3:
             switch indexPath.row {
             case 0:
                 if LoginOperations.getUser()?.role == .President {
@@ -154,6 +168,13 @@ class AdminTableViewController: SGTableViewController {
                 cell.imageView?.image = icon
             }
         case 2:
+            if indexPath.row == 0 {
+                cell.textLabel?.text = "Past Semesters"
+                let icon = FAKIonIcons.locationIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
+                cell.imageView?.image = icon
+            }
+        case 3:
             if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
                 if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
                     cell.textLabel?.text = "End Semester"
@@ -167,7 +188,7 @@ class AdminTableViewController: SGTableViewController {
                     cell.imageView?.image = icon
                 }
             }
-            default: break
+        default: break
         }
         cell.textLabel?.font = UIFont.normalFont
         return cell

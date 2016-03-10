@@ -34,6 +34,18 @@ public class FilterController {
         }
     }
 
+    public HashMap<String, String> onFilter() {
+        resetFilters();
+
+        for (Filter filter : mFilters) {
+            if (filter.isChecked()) {
+                mQueryParams.put(filter.getFilterKey(), filter.getFilterValue());
+            }
+        }
+
+        return mQueryParams;
+    }
+
     public HashMap<String, String> getQueryParams(HashMap<String, String> queryParams) {
         mQueryParams.putAll(queryParams);
         return mQueryParams;

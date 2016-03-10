@@ -58,9 +58,9 @@ public class LoadingView extends LinearLayout {
         if (hasSetAnimations())
             return;
 
-        mCircleOneAnimationSet = getAnimatiorSet(mCircleOne);
-        mCircleTwoAnimationSet = getAnimatiorSet(mCircleTwo);
-        mCircleThreeAnimationSet = getAnimatiorSet(mCircleThree);
+        mCircleOneAnimationSet = getAnimatorSet(mCircleOne);
+        mCircleTwoAnimationSet = getAnimatorSet(mCircleTwo);
+        mCircleThreeAnimationSet = getAnimatorSet(mCircleThree);
 
         mCircleTwoAnimationSet.setStartDelay(100);
         mCircleThreeAnimationSet.setStartDelay(200);
@@ -87,7 +87,7 @@ public class LoadingView extends LinearLayout {
         return AnimationUtils.getYTranslationAnimator(view, start, end);
     }
 
-    private AnimatorSet getAnimatiorSet(View view) {
+    private AnimatorSet getAnimatorSet(View view) {
         AnimatorSet set = new AnimatorSet();
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.play(getUpAnimator(view)).before(getDownAnimator(view));

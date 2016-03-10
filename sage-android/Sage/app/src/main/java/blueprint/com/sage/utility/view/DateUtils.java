@@ -17,6 +17,9 @@ public class DateUtils {
 
     public static String HOUR_FORMAT = "HH:mm";
     public static String YEAR_FORMAT = "yyyy/MM/dd";
+    public static String ABBREV_YEAR_FORMAT = "MM/dd/yy";
+
+    public static String PRESENT = "Present";
 
     public static DateTime stringToDate(String time) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);

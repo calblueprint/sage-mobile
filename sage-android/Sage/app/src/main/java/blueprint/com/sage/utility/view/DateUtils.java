@@ -46,7 +46,6 @@ public class DateUtils {
         return formatter.parseDateTime(dateTimeString);
     }
 
-
     public static String getFormattedDay(DateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(DAY_FORMAT);
         return formatter.print(dateTime);
@@ -60,5 +59,17 @@ public class DateUtils {
     public static String getFormattedDateNow() {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DATE_FORMAT);
         return formatter.print(DateTime.now());
+    }
+
+    public static String getDateRange(DateTime start, DateTime finish, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
+        String startDate = formatter.print(start);
+        String finishDate;
+        if (finish != null) {
+            finishDate = formatter.print(finish);
+        } else {
+            finishDate = DateUtils.PRESENT;
+        }
+        return startDate + " - " + finishDate;
     }
 }

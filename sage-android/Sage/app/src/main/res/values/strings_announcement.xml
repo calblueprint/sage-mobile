@@ -14,8 +14,8 @@
     <string name="announcement_no">No</string>
 
     <!-- Announcement filter -->
-    <string name="announcement_filter_default">Default</string>
     <string name="announcement_filter_all">All</string>
     <string name="announcement_filter_general">General</string>
+    <string name="announcement_filter_my_school">My School</string>
     <string name="announcement_filter_school">School</string>
 </resources>

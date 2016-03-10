@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
+import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -53,7 +56,7 @@ public class SemesterCheckInListAdapter extends RecyclerView.Adapter<SemesterChe
             viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
         }
 
-        viewHolder.mDateTime.setText(checkIn.getDateTime());
+        viewHolder.mDateTime.setText(DateUtils.forPattern(new DateTime(checkIn.getStart()), DateUtils.DATE_FORMAT_ABBREV));
         viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
         viewHolder.mTotalTime.setText(checkIn.getTotalTime());
         viewHolder.mComment.setText(checkIn.getComment());

@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import blueprint.com.sage.utility.view.DateUtils;
 import lombok.Data;
 
 /**
@@ -35,18 +33,5 @@ public @Data class Semester {
     @Override
     public String toString() {
         return String.format("%s %d", SEASONS[season], getYear());
-    }
-
-    @JsonIgnore
-    public String getDateRange() {
-        SimpleDateFormat format = new SimpleDateFormat(DateUtils.ABBREV_YEAR_FORMAT);
-        String startDate = format.format(start);
-        String finishDate;
-        if (finish != null) {
-            finishDate = format.format(finish);
-        } else {
-            finishDate = DateUtils.PRESENT;
-        }
-        return startDate + " - " + finishDate;
     }
 }

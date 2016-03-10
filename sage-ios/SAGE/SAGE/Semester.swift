@@ -65,13 +65,13 @@ class Semester: NSObject, NSCoding {
 
     func dateStringFromStartDate() -> String {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = StringConstants.displayDateFormat
+        formatter.dateStyle = NSDateFormatterStyle.LongStyle
         return formatter.stringFromDate(self.startDate!)
     }
     
     func dateStringFromFinishDate() -> String {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = StringConstants.displayDateFormat
+        formatter.dateStyle = NSDateFormatterStyle.LongStyle
         return formatter.stringFromDate(self.finishDate!)
     }
     

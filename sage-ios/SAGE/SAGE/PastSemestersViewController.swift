@@ -61,7 +61,7 @@ class PastSemestersViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44.0
+        return 52.0
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

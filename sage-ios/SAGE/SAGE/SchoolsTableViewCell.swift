@@ -26,7 +26,7 @@ class SchoolsTableViewCell: UITableViewCell {
         self.numStudents.font = UIFont.getDefaultFont(14)
         
         self.contentView.addSubview(self.schoolName)
-        self.schoolName.font = UIFont.getSemiboldFont(16)
+        self.schoolName.font = UIFont.semiboldFont
         
         self.contentView.addSubview(self.schoolAddress)
         self.schoolAddress.font = UIFont.getDefaultFont(14)

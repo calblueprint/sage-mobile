@@ -12,12 +12,10 @@ import SwiftKeychainWrapper
 
 class AdminOperations {
     
-    static func loadMentors(completion: (([User]) -> Void), failure: (String) -> Void){
-
+    static func loadMentors(filter filter: [String: AnyObject]? = nil, completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
         if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
-            let params = [UserConstants.kSemesterID: currentSemester.id]
-            manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
+            manager.GET(StringConstants.kEndpointGetMentors, parameters: filter, success: { (operation, data) -> Void in
                 var userArray = [User]()
                 let userData = data["users"] as! [AnyObject]
                 for userDict in userData {
@@ -84,7 +82,7 @@ class AdminOperations {
         ]
 
         params.appendDictionary(filter)
-
+        
         manager.GET(StringConstants.kEndpointGetCheckins, parameters: params, success: { (operation, data) -> Void in
             var checkins = [Checkin]()
             let checkinArray = data["check_ins"] as! [AnyObject]

@@ -9,7 +9,7 @@
 import UIKit
 import FontAwesomeKit
 
-class SchoolDetailViewController: UITableViewController {
+class SchoolDetailViewController: SGTableViewController {
     
     private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     private var school: School?
@@ -22,6 +22,7 @@ class SchoolDetailViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+        self.setNoContentMessage("School could not be loaded.")
     }
     
     deinit {
@@ -62,11 +63,15 @@ class SchoolDetailViewController: UITableViewController {
     func configureWithSchool(school: School) {
         self.title = school.name!
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
+            self.hideNoContentView()
             self.configureWithCompleteSchool(updatedSchool)
             self.activityIndicator.stopAnimating()
             self.schoolDetailHeaderView.mapView.hidden = false
+            self.refreshControl?.endRefreshing()
 
-            }) { (message) -> Void in }
+            }) { (message) -> Void in
+                self.showNoContentView()
+        }
     }
     
     private func configureWithCompleteSchool(school: School) {
@@ -100,6 +105,15 @@ class SchoolDetailViewController: UITableViewController {
         }
 
         self.schoolDetailHeaderView.mapView.hidden = true
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "reload", forControlEvents: .ValueChanged)
+    }
+    
+    func reload() {
+        self.configureWithSchool(self.school!)
     }
 
     override func viewWillLayoutSubviews() {

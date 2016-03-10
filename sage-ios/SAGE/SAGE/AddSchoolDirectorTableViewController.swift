@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddSchoolDirectorTableViewController: UITableViewController {
+class AddSchoolDirectorTableViewController: SGTableViewController {
     
     var directors: [[User]]?
     var currentErrorMessage: ErrorView?
@@ -17,6 +17,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     
     init() {
         super.init(style: .Plain)
+        self.setNoContentMessage("No potential directors could be found.")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -69,6 +70,20 @@ class AddSchoolDirectorTableViewController: UITableViewController {
                 let firstLetterIndex = charArray[firstLetter]
                 self.directors![firstLetterIndex!].append(director)
             }
+            
+            var empty = true
+            for directorArray in self.directors! {
+                if directorArray.count != 0 {
+                    empty = false
+                }
+            }
+            
+            if empty {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+            
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()

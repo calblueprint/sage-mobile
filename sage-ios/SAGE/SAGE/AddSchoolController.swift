@@ -26,7 +26,7 @@ class AddSchoolController: FormController {
     }
     
     func locationButtonTapped() {
-        let vc = AddSchoolLocationSelectorController()
+        let vc = AddSchoolLocationTableViewController()
         vc.parentVC = self
         if let location = self.location {
             vc.configureWithLocation(location)

@@ -17,14 +17,16 @@ class Semester: NSObject, NSCoding {
     
     var id: Int = -1
     var startDate: NSDate?
+    var finishDate: NSDate?
     var term: Term = .Spring
     
     //
     // MARK: - Initialization
     //
-    init(id: Int = -1, startDate: NSDate? = nil, term: Term = .Spring) {
+    init(id: Int = -1, startDate: NSDate? = nil, finishDate: NSDate? = nil, term: Term = .Spring) {
         self.id = id
         self.startDate = startDate
+        self.finishDate = finishDate
         self.term = term
         super.init()
     }
@@ -38,6 +40,12 @@ class Semester: NSObject, NSCoding {
                 let formatter = NSDateFormatter()
                 formatter.dateFormat = StringConstants.JSONdateFormat
                 self.startDate = formatter.dateFromString(value as! String)
+            case SemesterConstants.kFinishDate:
+                let formatter = NSDateFormatter()
+                formatter.dateFormat = StringConstants.JSONdateFormat
+                if self.finishDate != nil {
+                    self.finishDate = formatter.dateFromString(value as! String)
+                }
             case SemesterConstants.kTerm:
                 self.term = Semester.termFromInt(value as! Int)
             default: break
@@ -57,8 +65,17 @@ class Semester: NSObject, NSCoding {
 
     func dateStringFromStartDate() -> String {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = StringConstants.displayDateFormat
+        formatter.dateStyle = NSDateFormatterStyle.LongStyle
         return formatter.stringFromDate(self.startDate!)
+    }
+    
+    func dateStringFromFinishDate() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.LongStyle
+        if self.finishDate == nil {
+            return "Present"
+        }
+        return formatter.stringFromDate(self.finishDate!)
     }
     
     static func termFromInt(number: Int) -> Term {
@@ -82,6 +99,7 @@ class Semester: NSObject, NSCoding {
     required init(coder aDecoder: NSCoder) {
         self.id = aDecoder.decodeIntegerForKey(SemesterConstants.kId)
         self.startDate = aDecoder.decodeObjectForKey(SemesterConstants.kStartDate) as? NSDate
+        self.finishDate = aDecoder.decodeObjectForKey(SemesterConstants.kFinishDate) as? NSDate
         self.term = Semester.termFromInt(aDecoder.decodeIntegerForKey(SemesterConstants.kTerm) as! Int)
         super.init()
     }
@@ -89,6 +107,7 @@ class Semester: NSObject, NSCoding {
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeInteger(self.id, forKey: SemesterConstants.kId)
         aCoder.encodeObject(self.startDate, forKey: SemesterConstants.kStartDate)
+        aCoder.encodeObject(self.finishDate, forKey: SemesterConstants.kFinishDate)
         aCoder.encodeInteger(self.term.rawValue, forKey: SemesterConstants.kTerm)
     }
 }

@@ -63,11 +63,9 @@ class CheckinRequestTableViewCell: UITableViewCell {
         let attributedString = NSMutableAttributedString(string: durationText + fullDateText)
         let dateRange = (fullString as NSString).rangeOfString(fullDateText)
         let durationRange = (fullString as NSString).rangeOfString(durationText)
-        let fullRange = (fullString as NSString).rangeOfString(fullString)
         attributedString.addAttribute(NSFontAttributeName, value: UIFont.getBoldFont(14), range: durationRange)
         attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: dateRange)
         attributedString.addAttribute(NSFontAttributeName, value: UIFont.getDefaultFont(14), range: dateRange)
-        attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: fullRange)
         time.attributedText = attributedString
 
         self.content.text = checkin.comment
@@ -121,7 +119,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.content.lineBreakMode = NSLineBreakMode.ByWordWrapping
         self.content.font = UIFont.normalFont
         self.content.textAlignment = NSTextAlignment.Left
-        self.content.setY(-5 + CGRectGetMaxY(self.time.frame))
+        self.content.setY(CGRectGetMaxY(self.time.frame)+UIConstants.textMargin)
         let contentX = 10 + CGRectGetMaxX(self.mentorPicture.frame)
         self.content.setX(contentX)
         self.content.fillWidthWithMargin(UIConstants.sideMargin)
@@ -129,7 +127,7 @@ class CheckinRequestTableViewCell: UITableViewCell {
         self.content.setSize(self.content.sizeThatFits(CGSizeMake(width, CGFloat.max)))
         
         if self.content.text == "" || self.content.text == nil {
-            self.setHeight(CGRectGetMaxY(self.time.frame)-UIConstants.textMargin)
+            self.setHeight(CGRectGetMaxY(self.time.frame)+UIConstants.textMargin)
         } else {
             self.setHeight(CGRectGetMaxY(self.content.frame)+UIConstants.textMargin)
         }

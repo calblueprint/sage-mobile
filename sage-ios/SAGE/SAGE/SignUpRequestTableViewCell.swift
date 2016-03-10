@@ -104,7 +104,7 @@ class SignUpRequestTableViewCell: UITableViewCell {
         self.schoolLabel.setX(10 + CGRectGetMaxX(self.userPicture.frame))
         self.schoolLabel.setY(CGRectGetMaxY(self.userName.frame))
         self.schoolLabel.setWidth(self.xButton.frame.origin.x - self.schoolLabel.frame.origin.x)
-    
+        
     }
     
     deinit {

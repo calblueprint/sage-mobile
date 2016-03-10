@@ -30,7 +30,18 @@ class SemesterOperations {
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
-
+    }
+    
+    static func getSemester(semesterID: String, completion: (Semester) -> Void, failure: (String) -> Void) {
+        let manager = BaseOperation.manager()
+        let endpoint = StringConstants.kEndpointSemesters + "/" + semesterID
+        
+        manager.GET(endpoint, parameters: nil, success: { (operation, data) -> Void in
+            var semester = Semester(propertyDictionary: data["semester"] as! [String: AnyObject])
+            completion(semester)
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
     }
 
     static func startSemester(semester: Semester, completion: (Semester) -> Void, failure: (String) -> Void) {
@@ -87,4 +98,5 @@ class SemesterOperations {
                 failure(BaseOperation.getErrorMessage(error))
         }
     }
+    
 }

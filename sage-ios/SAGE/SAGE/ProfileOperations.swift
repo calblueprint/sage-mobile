@@ -9,9 +9,16 @@
 import SwiftKeychainWrapper
 import AFNetworking
 
-class ProfileOperations: NSObject { 
-    static func getUser(user: User, completion: ((User) -> Void), failure:((String) -> Void)) {
-        BaseOperation.manager().GET(StringConstants.kEndpointUser(user), parameters: nil, success: { (operation, data) -> Void in
+class ProfileOperations: NSObject {
+    
+    static func getUser(filter filter: [String: AnyObject]? = nil, user: User, completion: ((User) -> Void), failure:((String) -> Void)) {
+        var params = [String: AnyObject]()
+        if let filter = filter as [String: AnyObject]! {
+            for (key, value) in filter {
+                params[key] = String(value)
+            }
+        }
+        BaseOperation.manager().GET(StringConstants.kEndpointUser(user), parameters: params, success: { (operation, data) -> Void in
             let userJSON = data["user"]!! as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
             completion(user)

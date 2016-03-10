@@ -10,7 +10,7 @@ import UIKit
 import FontAwesomeKit
 import SwiftKeychainWrapper
 
-class ProfileCheckinViewController: UITableViewController {
+class ProfileCheckinViewController: SGTableViewController {
     
     var user: User?
     var verifiedCheckins = [Checkin]()
@@ -19,7 +19,7 @@ class ProfileCheckinViewController: UITableViewController {
 
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Check Ins", subtitle: "This Semester")
+    var titleView = SGTitleView(title: "Check Ins", subtitle: "")
     
     //
     // MARK: - Initialization
@@ -29,6 +29,7 @@ class ProfileCheckinViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "unverifiedCheckinAdded:", name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
         self.user = user
+        self.setNoContentMessage("You have no checkins from this semester.")
     }
     
     deinit {
@@ -48,7 +49,13 @@ class ProfileCheckinViewController: UITableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if self.filter != nil {
+            let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
+            self.setSemesterTitle(semesterID)
+        } else {
+            self.titleView.setSubtitle("This Semester")
+        }
         self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
@@ -61,11 +68,23 @@ class ProfileCheckinViewController: UITableViewController {
         self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.backgroundColor = UIColor.mainColor
+        if self.filter != nil {
+            self.refreshControl?.backgroundColor = UIColor.lightGrayColor
+        } else {
+            self.refreshControl?.backgroundColor = UIColor.mainColor
+        }
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "loadCheckinsWithReset:", forControlEvents: .ValueChanged)
         
         self.loadCheckins()
+    }
+    
+    func setSemesterTitle(semesterID: String) {
+        SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
+            self.titleView.setSubtitle(semester.displayText())
+            }) { (errorMessage) -> Void in
+                self.titleView.setSubtitle("Past Semester")
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -123,6 +142,12 @@ class ProfileCheckinViewController: UITableViewController {
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
                 
+                if self.verifiedCheckins.count == 0 && self.unverifiedCheckins.count == 0 {
+                    self.showNoContentView()
+                } else {
+                    self.hideNoContentView()
+                }
+                
                 }) { (errorMessage) -> Void in
                     self.activityIndicator.stopAnimating()
                     self.showErrorAndSetMessage(errorMessage)
@@ -176,6 +201,7 @@ class ProfileCheckinViewController: UITableViewController {
             }
         }
         if add {
+            self.hideNoContentView()
             self.verifiedCheckins.insert(checkin, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection: 0)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -198,6 +224,7 @@ class ProfileCheckinViewController: UITableViewController {
             }
         }
         if add {
+            self.hideNoContentView()
             self.unverifiedCheckins.insert(checkin, atIndex: 0)
             let indexPath = NSIndexPath(forRow: 0, inSection:1)
             self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

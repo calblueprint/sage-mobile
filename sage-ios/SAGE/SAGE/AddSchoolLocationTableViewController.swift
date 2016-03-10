@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddSchoolLocationTableViewController: SGTableViewController {
 
     var autocompleteSuggestions: [GMSAutocompletePrediction] = [GMSAutocompletePrediction]()
     let placesClient: GMSPlacesClient = GMSPlacesClient.sharedClient()
@@ -17,12 +17,16 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
     var rightMapButton = UIBarButtonItem()
     var rightSearchButton = UIBarButtonItem()
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    init() {
+        super.init(style: .Plain)
         self.rightMapButton = UIBarButtonItem(title: "Map", style: .Done, target: self, action: "returnToMap")
         self.rightSearchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: "goToSearch")
         self.navigationItem.rightBarButtonItem = self.rightMapButton
-        
+        self.setNoContentMessage("No potential directors could be found.")
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -73,17 +77,17 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
 
     // MARK: - Table view data source
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return autocompleteSuggestions.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = self.locationView.tableView.dequeueReusableCellWithIdentifier("DefaultTableViewCell")
         if cell == nil {
             cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "DefaultTableViewCell")
@@ -99,7 +103,7 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
         return cell!
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.locationView.activityIndicator.startAnimating()
         let placeID = self.autocompleteSuggestions[indexPath.row].placeID
         let placeClient = GMSPlacesClient.sharedClient()
@@ -119,7 +123,7 @@ class AddSchoolLocationSelectorController: UIViewController, UITableViewDelegate
 //
 // MARK: - UISearchBarDelegate
 //
-extension AddSchoolLocationSelectorController: UISearchBarDelegate {
+extension AddSchoolLocationTableViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.locationView.activityIndicator.startAnimating()
         self.locationView.activityIndicator.hidden = false
@@ -144,7 +148,7 @@ extension AddSchoolLocationSelectorController: UISearchBarDelegate {
     }
 }
 
-extension AddSchoolLocationSelectorController: GMSMapViewDelegate {
+extension AddSchoolLocationTableViewController: GMSMapViewDelegate {
     func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
         let centerPoint = self.locationView.mapView.center
         let coordinate = self.locationView.mapView.projection.coordinateForPoint(centerPoint)

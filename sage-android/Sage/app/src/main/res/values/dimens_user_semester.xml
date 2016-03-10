@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="user_semester_progress_bar_height">100dp</dimen>
-    <dimen name="user_semester_progress_bar_width">100dp</dimen>
-</resources>

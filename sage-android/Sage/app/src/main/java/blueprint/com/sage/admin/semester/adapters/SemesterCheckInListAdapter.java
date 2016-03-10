@@ -52,6 +52,10 @@ public class SemesterCheckInListAdapter extends RecyclerView.Adapter<SemesterChe
         }
         if (checkIn.getSchool() == null) {
             viewHolder.mSchoolText.setVisibility(View.GONE);
+            if (checkIn.getUser() != null) {
+                viewHolder.mAt.setVisibility(View.GONE);
+                viewHolder.mSchoolText.setVisibility(View.INVISIBLE);
+            }
         } else {
             viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
         }

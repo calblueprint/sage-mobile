@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import blueprint.com.sage.utility.view.DateUtils;
 import lombok.Data;
@@ -41,12 +39,6 @@ public @Data class CheckIn {
     @JsonIgnore
     public String getTotalTime() {
         return DateUtils.timeDiff(new DateTime(start), new DateTime(finish));
-    }
-
-    @JsonIgnore
-    public String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtils.DATE_FORMAT_ABBREV, Locale.US);
-        return dateFormat.format(start);
     }
 
     public String getComment() { return comment == null ? null : comment; }

@@ -7,8 +7,6 @@ public class CheckInsFilter extends FilterController {
 
     public CheckInsFilter() { super(); }
 
-    public void onFilter() {}
-
     public void addAllFilter() {
         resetFilters();
     }

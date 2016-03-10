@@ -7,8 +7,6 @@ public class UsersFilter extends FilterController {
 
     public UsersFilter() { super(); }
 
-    public void onFilter() {}
-
     public void addSchoolFilter(int schoolId) {
         mQueryParams.put("school_id", "" + schoolId);
     }

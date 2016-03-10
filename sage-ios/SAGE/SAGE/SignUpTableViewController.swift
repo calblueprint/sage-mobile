@@ -89,7 +89,6 @@ class SignUpTableViewController: SGTableViewController, UINavigationBarDelegate 
                 self.hideNoContentView()
             }
             }) { (errorMessage) -> Void in
-                self.showNoContentView()
                 self.showErrorAndSetMessage(errorMessage, size: 64.0)
         }
     }

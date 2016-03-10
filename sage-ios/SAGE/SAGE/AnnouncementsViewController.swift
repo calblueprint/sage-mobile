@@ -205,7 +205,6 @@ class AnnouncementsViewController: SGTableViewController {
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage("Could not load announcements.")
-                self.showNoContentView()
         }
     }
     

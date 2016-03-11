@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class BrowseMentorsViewController: SGTableViewController {
     
@@ -19,7 +20,6 @@ class BrowseMentorsViewController: SGTableViewController {
     init() {
         super.init(style: .Plain)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
-        self.setNoContentMessage("No mentors found :(")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -126,6 +126,16 @@ class BrowseMentorsViewController: SGTableViewController {
     }
     
     func loadMentors() {
+        if filter == nil {
+            if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                self.setNoContentMessage("No mentors found :(")
+            } else {
+                self.setNoContentMessage("There is currently no semester!")
+            }
+        } else {
+            self.setNoContentMessage("No mentors found :(")
+        }
+        
         AdminOperations.loadMentors(filter: self.filter, completion: { (mentorArray) -> Void in
             self.alphabetizeAndLoad(mentorArray)
             }) { (errorMessage) -> Void in

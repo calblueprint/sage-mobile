@@ -124,9 +124,6 @@ class SchoolDetailViewController: SGTableViewController {
     func editSchool() {
         let editSchoolController = EditSchoolController()
         editSchoolController.configureWithSchool(self.school)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(editSchoolController, animated: true)
     }
     
@@ -211,9 +208,6 @@ class SchoolDetailViewController: SGTableViewController {
             userProfile = self.school!.students![indexPath.row]
         }
         let viewController = ProfileViewController(user: userProfile)
-        if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController!.pushViewController(viewController, animated: true)
     }
 

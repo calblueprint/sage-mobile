@@ -134,9 +134,6 @@ class AnnouncementsViewController: SGTableViewController {
     //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
 
@@ -241,9 +238,6 @@ class AnnouncementsViewController: SGTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let announcement = self.announcements[indexPath.row]
         let view = AnnouncementsDetailViewController(announcement: announcement)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(view, animated: true)
     }
 }

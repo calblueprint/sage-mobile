@@ -95,9 +95,6 @@ class PastSemestersViewController: UITableViewController {
             let semesterID = self.semesters![indexPath.row].id
             let vc = BrowseMentorsViewController()
             vc.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
-            if let topItem = self.navigationController!.navigationBar.topItem {
-                topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-            }
             vc.filter = [SemesterConstants.kSemesterId: String(semesterID)]
             self.navigationController?.pushViewController(vc, animated: true)
         }

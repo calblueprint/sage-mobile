@@ -10,8 +10,8 @@ import UIKit
 import FontAwesomeKit
 
 class CheckinRequestsViewController: SGTableViewController {
+    
     var requests: [Checkin]?
-    var filter: [String: AnyObject]?
 
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

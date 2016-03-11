@@ -10,6 +10,7 @@ import UIKit
 
 class SGTableViewController: UITableViewController {
     
+    var filter: [String: AnyObject]?
     var noContentView = NoContentView()
 
     override func viewDidLoad() {

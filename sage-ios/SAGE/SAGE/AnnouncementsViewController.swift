@@ -13,7 +13,6 @@ import SwiftKeychainWrapper
 class AnnouncementsViewController: SGTableViewController {
     
     var announcements = [Announcement]()
-    var filter: [String: AnyObject]?
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?

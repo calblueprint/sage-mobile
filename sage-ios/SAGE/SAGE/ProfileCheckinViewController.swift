@@ -15,7 +15,6 @@ class ProfileCheckinViewController: SGTableViewController {
     var user: User?
     var verifiedCheckins = [Checkin]()
     var unverifiedCheckins = [Checkin]()
-    var filter: [String: AnyObject]?
 
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

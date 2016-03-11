@@ -10,8 +10,8 @@ import UIKit
 import FontAwesomeKit
 
 class SignUpRequestsViewController: SGTableViewController {
+    
     var requests: [User]?
-    var filter: [String: AnyObject]?
 
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

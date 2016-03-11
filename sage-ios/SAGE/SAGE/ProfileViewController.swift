@@ -15,7 +15,6 @@ class ProfileViewController: SGTableViewController {
     var profileView = ProfileView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var currentErrorMessage: ErrorView?
-    var filter: [String: AnyObject]?
     
     init(user: User) {
         self.user = user

@@ -15,7 +15,6 @@ class BrowseMentorsViewController: SGTableViewController {
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var titleView = SGTitleView(title: "Mentors", subtitle: "")
-    var filter: [String: AnyObject]?
     
     init() {
         super.init(style: .Plain)

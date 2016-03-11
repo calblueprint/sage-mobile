@@ -20,11 +20,10 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     }
     
     private func setupTabs() {
-        let titles = [
+        var titles = [
             NSLocalizedString("Announcements", comment: "Announcements"),
             NSLocalizedString("Check In", comment: "Check In"),
-            NSLocalizedString("Profile", comment: "Profile"),
-            NSLocalizedString("Admin", comment: "Admin")
+            NSLocalizedString("Profile", comment: "Profile")
         ];
         
         var images = [
@@ -49,9 +48,19 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 let icon = FAKIonIcons.folderIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)
+                titles.append(NSLocalizedString("Admin", comment: "Admin"))
                 
                 let adminViewController = AdminTableViewController(style: .Grouped)
                 rootViewControllers.append(adminViewController)
+            } else if let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) {
+                let icon = FAKIonIcons.androidHomeIconWithSize(UIConstants.tabBarIconSize)
+                    .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
+                images.append(icon)
+                titles.append(NSLocalizedString("School", comment: "School"))
+
+                let schoolViewController = SchoolDetailViewController()
+                schoolViewController.configureWithSchool(school as! School)
+                rootViewControllers.append(schoolViewController)
             }
         }
         

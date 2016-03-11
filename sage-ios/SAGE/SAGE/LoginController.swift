@@ -59,7 +59,7 @@ class LoginController: UIViewController {
     
     func showErrorAndSetMessage(message: String) {
         let error = self.loginView.currentErrorMessage
-        let errorView = super.showError(message, currentError: error)
+        let errorView = super.showError(message, currentError: error, alpha: 0.4, centered: false)
         self.loginView.currentErrorMessage = errorView
     }
 

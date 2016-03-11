@@ -13,12 +13,13 @@ struct SchoolConstants {
     static let kId: String = "id"
     static let kName: String = "name"
     static let kLocation: String = "location"
-    static let kStudents: String = "students"
+    static let kStudents: String = "users"
     static let kDirector: String = "director"
     static let kDirectorID: String = "director_id"
     static let kLat: String = "lat"
     static let kLong: String = "lng"
     static let kAddress: String = "address"
     static let kStudentCount: String = "student_count"
+    static let kRadius: String = "radius"
     
 }

@@ -9,10 +9,11 @@
 import UIKit
 import FontAwesomeKit
 
-class SchoolDetailViewController: UITableViewController {
+class SchoolDetailViewController: SGTableViewController {
     
     private var schoolDetailHeaderView: SchoolDetailHeaderView = SchoolDetailHeaderView()
     private var school: School?
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     
     // MARK: - Initialization
@@ -20,6 +21,8 @@ class SchoolDetailViewController: UITableViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+        self.setNoContentMessage("School could not be loaded.")
     }
     
     deinit {
@@ -34,18 +37,46 @@ class SchoolDetailViewController: UITableViewController {
         super.init(coder: aDecoder)
     }
     
+    func editedProfile(notification: NSNotification) {
+        let newUser = notification.object!.copy() as! User
+        if let school = self.school {
+
+            if newUser.id == school.director?.id {
+                school.director = newUser
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+            }
+            if var students = school.students {
+                for var index = 0; index < students.count; ++index {
+                    let student = students[index]
+                    if student.id == newUser.id {
+                        self.school!.students![index] = newUser
+                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 1)], withRowAnimation: .Automatic)
+                    }
+                }
+            }
+        }
+    }
+
     //
     // MARK: - Configuration
     //
     func configureWithSchool(school: School) {
         self.title = school.name!
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
+            self.hideNoContentView()
             self.configureWithCompleteSchool(updatedSchool)
-            }) { (message) -> Void in }
+            self.activityIndicator.stopAnimating()
+            self.schoolDetailHeaderView.mapView.hidden = false
+            self.refreshControl?.endRefreshing()
+
+            }) { (message) -> Void in
+                self.showNoContentView()
+        }
     }
     
     private func configureWithCompleteSchool(school: School) {
         self.school = school
+        self.schoolDetailHeaderView.mapView.clear()
         let marker = GMSMarker(position: self.school!.location!.coordinate)
         marker.map = self.schoolDetailHeaderView.mapView
         self.schoolDetailHeaderView.mapView.camera = GMSCameraPosition(target: self.school!.location!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
@@ -58,6 +89,9 @@ class SchoolDetailViewController: UITableViewController {
         self.tableView.tableHeaderView = schoolDetailHeaderView
         self.tableView.tableFooterView = UIView()
         
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+
         let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
         editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
         let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
@@ -69,6 +103,22 @@ class SchoolDetailViewController: UITableViewController {
             marker.map = self.schoolDetailHeaderView.mapView
             self.schoolDetailHeaderView.mapView.moveCamera(GMSCameraUpdate.setTarget(coordinate))
         }
+
+        self.schoolDetailHeaderView.mapView.hidden = true
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.backgroundColor = UIColor.mainColor
+        self.refreshControl?.tintColor = UIColor.whiteColor()
+        self.refreshControl?.addTarget(self, action: "reload", forControlEvents: .ValueChanged)
+    }
+    
+    func reload() {
+        self.configureWithSchool(self.school!)
+    }
+
+    override func viewWillLayoutSubviews() {
+        self.activityIndicator.centerHorizontally()
+        self.activityIndicator.centerVertically()
     }
     
     func editSchool() {
@@ -89,6 +139,7 @@ class SchoolDetailViewController: UITableViewController {
             self.school = newSchool
             self.configureWithCompleteSchool(newSchool)
             self.title = newSchool.name
+            self.tableView.reloadData()
         }
     }
     

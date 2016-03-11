@@ -12,12 +12,13 @@ class ErrorView: UIView {
 
     var message: UILabel = UILabel()
     var background: UIView = UIView()
+    var centered: Bool = true
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    convenience init(height: CGFloat, messageString: String, color: UIColor = UIColor.whiteColor()) {
+    convenience init(height: CGFloat, messageString: String, color: UIColor = UIColor.whiteColor(), alpha: CGFloat? = 1.0, centered: Bool? = true) {
         let screenRect = UIScreen.mainScreen().bounds;
         let screenWidth = screenRect.size.width;
         let newFrame = CGRectMake(0, 0, screenWidth, height)
@@ -25,7 +26,7 @@ class ErrorView: UIView {
         
         self.addSubview(self.background)
         self.background.backgroundColor = color
-        self.background.alpha = 0.4
+        self.background.alpha = alpha!
         
         self.addSubview(self.message)
         self.message.text = messageString
@@ -33,7 +34,8 @@ class ErrorView: UIView {
         self.message.font = UIFont.normalFont
         self.message.lineBreakMode = .ByWordWrapping
         self.message.numberOfLines = 2
-        
+        self.centered = centered!
+
         self.userInteractionEnabled = true
         let errorTapRecognizer = UITapGestureRecognizer()
         errorTapRecognizer.addTarget(self, action: "errorMessageTapped")
@@ -48,8 +50,9 @@ class ErrorView: UIView {
         self.message.sizeToFit()
         self.message.centerHorizontally()
         self.message.centerVertically()
-        self.message.setY(self.message.frame.origin.y + 10)
-        
+        if !self.centered {
+            self.message.setY(self.message.frame.origin.y + 10)
+        }
         self.background.frame = self.frame
     }
     

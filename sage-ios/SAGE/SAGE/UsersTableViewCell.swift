@@ -26,10 +26,10 @@ class UsersTableViewCell: UITableViewCell {
         
         self.contentView.addSubview(self.totalHours)
         self.totalHours.textColor = UIColor.secondaryTextColor
-        self.totalHours.font = UIFont.getDefaultFont(16)
+        self.totalHours.font = UIFont.getDefaultFont(14)
         
         self.contentView.addSubview(self.mentorName)
-        self.mentorName.font = UIFont.getSemiboldFont(16)
+        self.mentorName.font = UIFont.semiboldFont
         
         self.contentView.addSubview(self.schoolName)
         self.schoolName.font = UIFont.getDefaultFont(14)

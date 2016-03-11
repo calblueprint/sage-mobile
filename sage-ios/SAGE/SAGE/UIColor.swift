@@ -23,6 +23,7 @@ extension UIColor {
     @nonobjc static let lightBlueColor = UIColor.colorWithIntRed(74, green: 144, blue: 226, alpha: 1)
     @nonobjc static let turquoiseColor = UIColor.colorWithIntRed(26, green: 188, blue: 156, alpha: 1)
     @nonobjc static let lightPurpleColor = UIColor.colorWithIntRed(155, green: 89, blue: 182, alpha: 1)
+    @nonobjc static let lightGrayColor = UIColor(white: 0.7, alpha: 1)
     
     //
     // MARK: - Helper Methods

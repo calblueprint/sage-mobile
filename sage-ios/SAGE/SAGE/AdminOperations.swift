@@ -14,7 +14,15 @@ class AdminOperations {
     
     static func loadMentors(filter filter: [String: AnyObject]? = nil, completion: (([User]) -> Void), failure: (String) -> Void){
         let manager = BaseOperation.manager()
-        if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+        var params: [String: AnyObject] = [String: AnyObject]()
+        
+        if filter != nil {
+            params.appendDictionary(filter)
+        } else if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+            params[SemesterConstants.kSemesterId] = currentSemester.id
+        }
+        
+        if params.count > 0 {
             manager.GET(StringConstants.kEndpointGetMentors, parameters: filter, success: { (operation, data) -> Void in
                 var userArray = [User]()
                 let userData = data["users"] as! [AnyObject]

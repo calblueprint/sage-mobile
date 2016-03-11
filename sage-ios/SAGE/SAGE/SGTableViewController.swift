@@ -14,6 +14,10 @@ class SGTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let emptyBackButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = emptyBackButton
+        
         self.view.addSubview(self.noContentView)
     }
     

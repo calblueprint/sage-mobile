@@ -19,7 +19,7 @@ class BrowseMentorsViewController: SGTableViewController {
     init() {
         super.init(style: .Plain)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
-        self.setNoContentMessage("No mentors at the moment :(")
+        self.setNoContentMessage("No mentors found :(")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {

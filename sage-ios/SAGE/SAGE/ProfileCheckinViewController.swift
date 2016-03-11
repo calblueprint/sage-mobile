@@ -29,7 +29,6 @@ class ProfileCheckinViewController: SGTableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "unverifiedCheckinAdded:", name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
         self.user = user
-        self.setNoContentMessage("You have no checkins from this semester.")
     }
     
     deinit {
@@ -110,6 +109,16 @@ class ProfileCheckinViewController: SGTableViewController {
         }
 
         if let user = self.user {
+            if filter == nil {
+                if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                    self.setNoContentMessage("No checkins found from this semester!")
+                } else {
+                    self.setNoContentMessage("There is currently no semester!")
+                }
+            } else {
+                self.setNoContentMessage("No checkins found from this semester!")
+            }
+            
             ProfileOperations.loadCheckins(filter: self.filter, user: user, completion: { (checkins) -> Void in
                 self.verifiedCheckins = [Checkin]()
                 self.unverifiedCheckins = [Checkin]()

@@ -45,6 +45,7 @@ class NoContentView: UIView {
     
     func setMessageText(message: String) {
         self.label.text = message
+        self.layoutSubviews()
     }
 
 }

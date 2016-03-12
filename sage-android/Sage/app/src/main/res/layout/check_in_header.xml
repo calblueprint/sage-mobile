@@ -11,7 +11,7 @@
         android:id="@+id/user_semester_summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/blue500"
+        android:textStyle="bold"
         android:textSize="24sp"
         android:text="@string/check_in_summary"
         android:layout_marginBottom="4dp"/>

@@ -18,6 +18,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.utility.view.DateUtils;
+import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Data;
@@ -122,10 +123,14 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         viewHolder.mStringRequired.setText(String.valueOf(mUser.getUserSemester().getHoursRequired()));
 
         if (mUser.getUserSemester().isCompleted()) {
-            viewHolder.mComplete.setTextColor(mActivity.getResources().getColor(R.color.green500));
+            if (android.os.Build.VERSION.SDK_INT >= 21) {
+                viewHolder.mProgressBar.getProgressDrawable().setTint(ViewUtils.getColor(mActivity, R.color.green500));
+            }
             viewHolder.mComplete.setText(COMPLETE);
         } else {
-            viewHolder.mComplete.setTextColor(mActivity.getResources().getColor(R.color.red500));
+            if (android.os.Build.VERSION.SDK_INT >= 21) {
+                viewHolder.mProgressBar.getProgressDrawable().setTint(ViewUtils.getColor(mActivity, R.color.red500));
+            }
             viewHolder.mComplete.setText(INCOMPLETE);
         }
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PastSemestersViewController: UITableViewController {
+class PastSemestersViewController: SGTableViewController {
     
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)

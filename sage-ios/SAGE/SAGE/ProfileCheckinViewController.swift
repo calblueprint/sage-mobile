@@ -13,6 +13,7 @@ import SwiftKeychainWrapper
 class ProfileCheckinViewController: SGTableViewController {
     
     var user: User?
+    var userCheckinSummary = ProfileCheckinSummaryView()
     var verifiedCheckins = [Checkin]()
     var unverifiedCheckins = [Checkin]()
     var filter: [String: AnyObject]?
@@ -46,8 +47,20 @@ class ProfileCheckinViewController: SGTableViewController {
     //
     // MARK: - ViewController LifeCycle
     //
+    func setupHeader() {
+        self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
+        self.tableView.tableHeaderView = self.userCheckinSummary
+        let headerOffset = CGFloat(100)
+        var headerFrame = self.tableView.tableHeaderView!.frame
+        headerFrame.size.height = headerOffset
+        self.userCheckinSummary.frame = headerFrame
+        self.userCheckinSummary.setupWithUser(user!, pastSemester: self.filter != nil)
+        self.tableView.tableHeaderView = self.userCheckinSummary
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupHeader()
         
         if self.filter != nil {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String

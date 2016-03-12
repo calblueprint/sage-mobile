@@ -101,9 +101,7 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         viewHolder.mUser.setText(checkIn.getUser().getName());
 
-        String timeText = mActivity.getString(R.string.check_in_total_time,
-                checkIn.getSchool().getName(), checkIn.getTotalTime());
-        viewHolder.mTotalTime.setText(timeText);
+        viewHolder.mTotalTime.setText(checkIn.getTotalTime());
 
         String comment = checkIn.getComment() == null || checkIn.getComment().isEmpty() ?
                 "No Comment" : checkIn.getComment();

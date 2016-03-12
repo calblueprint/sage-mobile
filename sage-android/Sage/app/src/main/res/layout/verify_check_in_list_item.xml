@@ -43,6 +43,8 @@
 
         <TextView
             android:id="@+id/verify_check_in_list_item_user"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

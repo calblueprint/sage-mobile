@@ -24,7 +24,6 @@ class SGTitleView: UIView {
         super.init(frame: CGRectMake(0, 0, maxWidth, UIConstants.barbuttonSize))
         self.setupSubviews()
         self.setTitle(title)
-        self.backgroundColor = UIColor.redColor()
         self.setSubtitle(subtitle)
     }
 
@@ -65,9 +64,17 @@ class SGTitleView: UIView {
     //
     //  MARK: - Public Methods
     //
+    func title() -> String? {
+        return self.titleLabel.text
+    }
+    
     func setTitle(title: String?) {
         self.titleLabel.text = title
         self.setProperWidth()
+    }
+    
+    func subtitle() -> String? {
+        return self.subtitleLabel.text
     }
 
     func setSubtitle(subtitle: String?) {

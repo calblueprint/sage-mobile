@@ -1,60 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/announcement_list_container"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/announcements_list_refresh"
+    <include
+        layout="@layout/filter_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/filter_layout_height"
+        android:layout_gravity="top" />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_below="@id/filter_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <blueprint.com.sage.shared.views.RecycleViewEmpty
-            android:id="@+id/announcements_recycler"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/announcements_list_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <ScrollView
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/announcements_list_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/list_empty"
-                android:layout_gravity="center"/>
+            <blueprint.com.sage.shared.views.RecycleViewEmpty
+                android:id="@+id/announcements_recycler"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
 
-        </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/announcements_list_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/filter_view"
+            android:visibility="gone">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:id="@+id/list_progress_bar"
-        android:indeterminate="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        style="@style/DefaultFAB"
-        android:id="@+id/add_announcement_fab"
-        android:src="@drawable/ic_add_white"
-        android:layout_margin="16dp"
-        app:backgroundTint="@color/blue500"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/list_empty"
+                    android:layout_gravity="center"/>
 
-</android.support.design.widget.CoordinatorLayout>
+            </ScrollView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:id="@+id/list_progress_bar"
+            android:indeterminate="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <android.support.design.widget.FloatingActionButton
+            style="@style/DefaultFAB"
+            android:id="@+id/add_announcement_fab"
+            android:src="@drawable/ic_add_white"
+            android:layout_margin="16dp"
+            app:backgroundTint="@color/blue500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include
+        layout="@layout/announcements_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

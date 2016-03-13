@@ -10,10 +10,10 @@ import lombok.Data;
  */
 public @Data class AnnouncementsListEvent {
 
-    private ArrayList<Announcement> mAnnouncements;
+    private ArrayList<Announcement> announcements;
 
     public AnnouncementsListEvent(ArrayList<Announcement> announcements) {
-        mAnnouncements = announcements;
+        this.announcements = announcements;
     }
     
 }

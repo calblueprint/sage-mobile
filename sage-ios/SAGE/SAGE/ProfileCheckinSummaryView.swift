@@ -92,34 +92,6 @@ class ProfileCheckinSummaryView: UIView {
         }
     }
     
-//    func setupWithUser(user: User, pastSemester: Bool = false) {
-//        if let semesterSummary = user.semesterSummary {
-//            self.userStatusLabel.font = UIFont.normalFont
-//            let hoursCompletedString = String(semesterSummary.getTotalHours())
-//            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / " + String(semesterSummary.hoursRequired) + " \nhours")
-//            var userHoursStringColor = UIColor.blackColor()
-//            if pastSemester {
-//                if semesterSummary.completed {
-//                    userHoursStringColor = UIColor.lightGreenColor
-//                } else {
-//                    userHoursStringColor = UIColor.lightRedColor
-//                }
-//            }
-//            styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count, userHoursStringColor: userHoursStringColor)
-//            self.userStatusLabel.attributedText = userStatusString
-//        } else {
-//            self.userStatusLabel.font = UIFont.normalFont
-//            self.userStatusLabel.text = "Inactive"
-//        }
-//        
-//        let weeklyHoursRequiredString = String(user.getRequiredHours())
-//        let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")
-//        styleAttributedString(self.userCommitmentString, string: userCommitmentString, length: weeklyHoursRequiredString.characters.count)
-//        self.userCommitmentLabel.attributedText = userCommitmentString
-//        
-//        layoutSubviews()
-//    }
-    
     func setupWithUser(user: User, pastSemester: Bool = false) {
         if let semesterSummary = user.semesterSummary {
             self.userStatusLabel.font = UIFont.normalFont
@@ -134,14 +106,15 @@ class ProfileCheckinSummaryView: UIView {
                 }
             }
             self.userStatusLabel.attributedText = userStatusString
-            let hoursCompletedPercentage = Int(Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)*100)
-            self.hoursPercentageLabel.text = String(hoursCompletedPercentage) + "%"
+            let hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
+            self.hoursPercentageLabel.text = String(Int(hoursCompletedPercentage * 100)) + "%"
             self.userStatusIcon.image = FAKIonIcons.checkmarkIconWithSize(iconSize)
-                    .imageWithSize(CGSizeMake(iconSize, iconSize))
+                .imageWithSize(CGSizeMake(iconSize, iconSize))
+            self.progressArc.path = self.createArcWithPercentage(CGFloat(hoursCompletedPercentage * 0.75))
         } else {
             self.userStatusLabel.font = UIFont.normalFont
             self.userStatusLabel.text = "Inactive"
-            self.hoursPercentageLabel.text = "100%"
+            self.hoursPercentageLabel.text = "0%"
             self.userStatusIcon.image = FAKIonIcons.flagIconWithSize(self.iconSize)
                 .imageWithSize(CGSizeMake(self.iconSize, self.iconSize))
         }
@@ -174,7 +147,7 @@ class ProfileCheckinSummaryView: UIView {
         self.timerArc.path = self.createArcWithPercentage(3/4)
         
         self.progressArc.fillColor = UIColor.lightGrayColor.CGColor
-        self.progressArc.path = self.createArcWithPercentage(3/4 * 0.65)
+        self.progressArc.path = self.createArcWithPercentage(0)
         
         self.userCommitmentLabel.font = UIFont.normalFont
         self.userStatusLabel.font = UIFont.normalFont

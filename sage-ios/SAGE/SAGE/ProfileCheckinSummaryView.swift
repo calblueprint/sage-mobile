@@ -13,26 +13,56 @@ class ProfileCheckinSummaryView: UIView {
     let topBorder = UIView()
     let bottomBorder = UIView()
     let centerBorder = UIView()
-    let userStatusContainer = UIView()
+    let userInformationContainer = UIView()
     let userStatusLabel = UILabel()
-    let userCommitmentContainer = UIView()
     let userCommitmentLabel = UILabel()
-    let leftMargin = CGFloat(30)
+    
+    let progressContainer = UIView()
+    let hoursPercentageLabel = UILabel()
+    let sideMargin = CGFloat(30)
     let titleFontSize = CGFloat(22)
     let boxHeight = CGFloat(100)
     
+    private let timerSize: CGFloat = 60.0
+    var timerView: UIView = UIView()
+    var timerLabel: UILabel = UILabel()
+    var timerArc: CAShapeLayer = CAShapeLayer()
+    var progressArc: CAShapeLayer = CAShapeLayer()
+    
     let userStatusString = "User Status String"
     let userCommitmentString = "User Commitment String"
+    
+    private func createArcWithPercentage(percentage: CGFloat) -> CGPath {
+        let pi: CGFloat = CGFloat(M_PI)
+        let arc = CGPathCreateMutable()
+        CGPathMoveToPoint(arc, nil, self.timerSize/2, 0)
+        CGPathAddArc(arc,
+            nil,
+            self.timerSize/2, self.timerSize/2,             // center.x, center.y
+            self.timerSize/2,                               // radius
+            -pi/2,                                          // start angle
+            -pi/2 + min(2*pi, max(0.30,2*pi*percentage)),   // end angle
+            false)                                          // counter clockwise?
+        let strokedArc = CGPathCreateCopyByStrokingPath(arc, nil,
+            5.0,                                            // lineWidth
+            .Round,                                         // line cap
+            .Round,                                         // edge join
+            10)                                             // thickness
+        return strokedArc!
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(self.topBorder)
         self.addSubview(self.bottomBorder)
-        self.addSubview(self.centerBorder)
-        self.addSubview(self.userStatusContainer)
-        self.userStatusContainer.addSubview(self.userStatusLabel)
-        self.addSubview(self.userCommitmentContainer)
-        self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
+        self.addSubview(self.progressContainer)
+        self.progressContainer.addSubview(self.hoursPercentageLabel)
+        self.progressContainer.addSubview(self.timerView)
+        self.timerView.layer.addSublayer(self.timerArc)
+        self.timerView.layer.addSublayer(self.progressArc)
+        self.addSubview(self.userInformationContainer)
+        self.userInformationContainer.addSubview(self.userCommitmentLabel)
+        self.userInformationContainer.addSubview(self.userStatusLabel)
         setupSubviews()
     }
     
@@ -56,11 +86,39 @@ class ProfileCheckinSummaryView: UIView {
         }
     }
     
+//    func setupWithUser(user: User, pastSemester: Bool = false) {
+//        if let semesterSummary = user.semesterSummary {
+//            self.userStatusLabel.font = UIFont.normalFont
+//            let hoursCompletedString = String(semesterSummary.getTotalHours())
+//            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / " + String(semesterSummary.hoursRequired) + " \nhours")
+//            var userHoursStringColor = UIColor.blackColor()
+//            if pastSemester {
+//                if semesterSummary.completed {
+//                    userHoursStringColor = UIColor.lightGreenColor
+//                } else {
+//                    userHoursStringColor = UIColor.lightRedColor
+//                }
+//            }
+//            styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count, userHoursStringColor: userHoursStringColor)
+//            self.userStatusLabel.attributedText = userStatusString
+//        } else {
+//            self.userStatusLabel.font = UIFont.normalFont
+//            self.userStatusLabel.text = "Inactive"
+//        }
+//        
+//        let weeklyHoursRequiredString = String(user.getRequiredHours())
+//        let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")
+//        styleAttributedString(self.userCommitmentString, string: userCommitmentString, length: weeklyHoursRequiredString.characters.count)
+//        self.userCommitmentLabel.attributedText = userCommitmentString
+//        
+//        layoutSubviews()
+//    }
+    
     func setupWithUser(user: User, pastSemester: Bool = false) {
         if let semesterSummary = user.semesterSummary {
             self.userStatusLabel.font = UIFont.normalFont
             let hoursCompletedString = String(semesterSummary.getTotalHours())
-            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / " + String(semesterSummary.hoursRequired) + " \nhours")
+            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " of " + String(semesterSummary.hoursRequired) + " hours completed")
             var userHoursStringColor = UIColor.blackColor()
             if pastSemester {
                 if semesterSummary.completed {
@@ -69,16 +127,17 @@ class ProfileCheckinSummaryView: UIView {
                     userHoursStringColor = UIColor.lightRedColor
                 }
             }
-            styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count, userHoursStringColor: userHoursStringColor)
             self.userStatusLabel.attributedText = userStatusString
+            let hoursCompletedPercentage = semesterSummary.getTotalHours()/semesterSummary.hoursRequired
+            self.hoursPercentageLabel.text = String(hoursCompletedPercentage) + "%"
         } else {
             self.userStatusLabel.font = UIFont.normalFont
             self.userStatusLabel.text = "Inactive"
+            self.hoursPercentageLabel.text = "0%"
         }
         
         let weeklyHoursRequiredString = String(user.getRequiredHours())
-        let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")
-        styleAttributedString(self.userCommitmentString, string: userCommitmentString, length: weeklyHoursRequiredString.characters.count)
+        let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " hours per week")
         self.userCommitmentLabel.attributedText = userCommitmentString
         
         layoutSubviews()
@@ -87,54 +146,66 @@ class ProfileCheckinSummaryView: UIView {
     func setupSubviews() {
         self.backgroundColor = UIColor.whiteColor()
         
+        self.topBorder.setHeight(UIConstants.dividerHeight())
         self.topBorder.backgroundColor = UIColor.borderColor
-        self.bottomBorder.backgroundColor = UIColor.borderColor
-        self.centerBorder.backgroundColor = UIColor.borderColor
         
-        self.userStatusLabel.font = UIFont.normalFont
-        self.userStatusLabel.numberOfLines = 0
-        self.userStatusLabel.textAlignment = .Center
+        self.bottomBorder.setHeight(UIConstants.dividerHeight())
+        self.bottomBorder.backgroundColor = UIColor.borderColor
+        
+        self.progressContainer.setWidth(self.timerSize)
+        self.progressContainer.setHeight(self.timerSize)
+        
+        self.timerView.setWidth(self.timerSize)
+        self.timerView.setHeight(self.timerSize)
+        self.timerView.layer.cornerRadius = self.timerSize/2
+        self.timerArc.fillColor = UIColor.lighterGrayColor.CGColor
+        self.timerArc.path = self.createArcWithPercentage(3/4)
+        
+        self.progressArc.fillColor = UIColor.lightGrayColor.CGColor
+        self.progressArc.path = self.createArcWithPercentage(3/4 * 0.65)
         
         self.userCommitmentLabel.font = UIFont.normalFont
-        self.userCommitmentLabel.numberOfLines = 0
-        self.userCommitmentLabel.textAlignment = .Center
+        self.userStatusLabel.font = UIFont.normalFont
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.topBorder.setHeight(UIConstants.dividerHeight())
+        self.setHeight(self.boxHeight)
+        
         self.topBorder.fillWidth()
         self.topBorder.setX(0)
-        let topBorderY = CGFloat(0)
-        self.topBorder.setY(topBorderY)
+        self.topBorder.setY(0)
         
-        self.bottomBorder.setHeight(UIConstants.dividerHeight())
         self.bottomBorder.fillWidth()
         self.bottomBorder.setX(0)
-        self.bottomBorder.setY(topBorderY + self.boxHeight)
+        self.bottomBorder.setY(self.boxHeight)
         
-        self.centerBorder.setHeight(self.boxHeight)
-        self.centerBorder.setWidth(UIConstants.dividerHeight())
-        let middle = CGRectGetWidth(topBorder.frame)/2
-        self.centerBorder.setX(middle)
-        self.centerBorder.setY(topBorderY)
+        self.timerView.transform = CGAffineTransformIdentity
+        self.timerView.setX(0)
+        self.timerView.centerVertically()
+        self.timerView.transform = CGAffineTransformMakeRotation(-3*CGFloat(M_PI)/4)
         
-        // set up stats containers
-        self.userStatusContainer.setX(0)
-        self.userStatusContainer.setY(topBorderY+1)
-        self.userStatusContainer.setHeight(self.boxHeight-1)
-        self.userStatusContainer.setWidth(middle)
+        let progressViewX = CGRectGetWidth(self.bottomBorder.frame) - CGRectGetWidth(self.timerView.frame)
+        self.progressContainer.setX(progressViewX)
+        self.progressContainer.centerVertically()
         
-        self.userCommitmentContainer.setX(middle+1)
-        self.userCommitmentContainer.setY(topBorderY+1)
-        self.userCommitmentContainer.setWidth(middle)
-        self.userCommitmentContainer.setHeight(self.boxHeight-1)
+        self.hoursPercentageLabel.sizeToFit()
+        self.hoursPercentageLabel.centerInSuperview()
         
-        self.userCommitmentLabel.sizeToFit()
-        self.userCommitmentLabel.centerInSuperview()
+        self.userStatusLabel.setHeight(self.timerSize/2)
+        self.userStatusLabel.fillWidth()
+        self.userStatusLabel.setX(0)
+        self.userStatusLabel.setY(0)
         
-        self.userStatusLabel.sizeToFit()
-        self.userStatusLabel.centerInSuperview()
+        self.userCommitmentLabel.setHeight(self.timerSize/2)
+        self.userCommitmentLabel.fillWidth()
+        self.userCommitmentLabel.setX(0)
+        self.userCommitmentLabel.setY(CGRectGetMaxY(self.userStatusLabel.frame) - 8)
+        
+        self.userInformationContainer.setWidth(300)
+        self.userInformationContainer.setHeight(60)
+        self.userInformationContainer.setX(self.sideMargin)
+        self.userInformationContainer.centerVertically()
     }
 }

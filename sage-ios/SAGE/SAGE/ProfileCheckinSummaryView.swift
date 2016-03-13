@@ -19,20 +19,17 @@ class ProfileCheckinSummaryView: UIView {
     let userStatusIcon = UIImageView()
     let userCommitmentLabel = UILabel()
     let userCommitmentIcon = UIImageView()
-    
     let progressContainer = UIView()
     let hoursPercentageLabel = UILabel()
     let sideMargin = CGFloat(30)
     let titleFontSize = CGFloat(22)
     let boxHeight = CGFloat(100)
     let iconSize = CGFloat(14)
-    
     private let timerSize: CGFloat = 60.0
     var timerView: UIView = UIView()
     var timerLabel: UILabel = UILabel()
     var timerArc: CAShapeLayer = CAShapeLayer()
     var progressArc: CAShapeLayer = CAShapeLayer()
-    
     let userStatusString = "User Status String"
     let userCommitmentString = "User Commitment String"
     
@@ -97,19 +94,23 @@ class ProfileCheckinSummaryView: UIView {
             self.userStatusLabel.font = UIFont.normalFont
             let hoursCompletedString = String(semesterSummary.getTotalHours())
             let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " of " + String(semesterSummary.hoursRequired) + " hours completed")
-            var userHoursStringColor = UIColor.blackColor()
-            if pastSemester {
-                if semesterSummary.completed {
-                    userHoursStringColor = UIColor.lightGreenColor
-                } else {
-                    userHoursStringColor = UIColor.lightRedColor
-                }
-            }
             self.userStatusLabel.attributedText = userStatusString
             let hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
             self.hoursPercentageLabel.text = String(Int(hoursCompletedPercentage * 100)) + "%"
             self.userStatusIcon.image = FAKIonIcons.checkmarkIconWithSize(iconSize)
                 .imageWithSize(CGSizeMake(iconSize, iconSize))
+            var progressArcColor = UIColor.lightGrayColor.CGColor
+            if pastSemester {
+                if semesterSummary.completed {
+                    progressArcColor = UIColor.lightGreenColor.CGColor
+                } else {
+                    progressArcColor = UIColor.lightRedColor.CGColor
+                }
+            }
+            if hoursCompletedPercentage == 0 {
+                progressArcColor = UIColor.lighterGrayColor.CGColor
+            }
+            self.progressArc.fillColor = progressArcColor
             self.progressArc.path = self.createArcWithPercentage(CGFloat(hoursCompletedPercentage * 0.75))
         } else {
             self.userStatusLabel.font = UIFont.normalFont
@@ -146,7 +147,7 @@ class ProfileCheckinSummaryView: UIView {
         self.timerArc.fillColor = UIColor.lighterGrayColor.CGColor
         self.timerArc.path = self.createArcWithPercentage(3/4)
         
-        self.progressArc.fillColor = UIColor.lightGrayColor.CGColor
+        self.progressArc.fillColor = UIColor.lighterGrayColor.CGColor
         self.progressArc.path = self.createArcWithPercentage(0)
         
         self.userCommitmentLabel.font = UIFont.normalFont
@@ -154,18 +155,13 @@ class ProfileCheckinSummaryView: UIView {
         
         self.userStatusIcon.image = FAKIonIcons.checkmarkIconWithSize(self.iconSize)
             .imageWithSize(CGSizeMake(self.iconSize, self.iconSize))
+        
         self.userCommitmentIcon.image = FAKIonIcons.androidTimeIconWithSize(self.iconSize)
             .imageWithSize(CGSizeMake(self.iconSize, self.iconSize))
-        
-        self.userStatusIcon.sizeToFit()
-        self.userCommitmentIcon.sizeToFit()
-        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        self.setHeight(self.boxHeight)
         
         self.topBorder.fillWidth()
         self.topBorder.setX(0)
@@ -199,8 +195,11 @@ class ProfileCheckinSummaryView: UIView {
         
         self.userStatusIcon.setX(0)
         self.userStatusIcon.setY(8)
+        self.userStatusIcon.sizeToFit()
+        
         self.userCommitmentIcon.setX(0)
         self.userCommitmentIcon.setY(CGRectGetMaxY(self.userStatusLabel.frame))
+        self.userCommitmentIcon.sizeToFit()
         
         self.userInformationContainer.setWidth(300)
         self.userInformationContainer.setHeight(60)

@@ -90,7 +90,7 @@ class ProfileCheckinSummaryView: UIView {
     }
     
     func setupWithUser(user: User, pastSemester: Bool = false) {
-        var progressArcColor = UIColor.lighterGrayColor.CGColor
+        var progressArcColor = UIColor.lightGrayColor.CGColor
         if let semesterSummary = user.semesterSummary {
             self.userStatusLabel.font = UIFont.normalFont
             let hoursCompletedString = String(semesterSummary.getTotalHours())
@@ -107,8 +107,8 @@ class ProfileCheckinSummaryView: UIView {
                     progressArcColor = UIColor.lightRedColor.CGColor
                 }
             }
-            if hoursCompletedPercentage > 0 {
-                progressArcColor = UIColor.lightGrayColor.CGColor
+            if hoursCompletedPercentage == 0 {
+                progressArcColor = UIColor.lighterGrayColor.CGColor
             }
             self.progressArc.path = self.createArcWithPercentage(CGFloat(hoursCompletedPercentage * 0.75))
         } else {
@@ -117,6 +117,7 @@ class ProfileCheckinSummaryView: UIView {
             self.hoursPercentageLabel.text = "0%"
             self.userStatusIcon.image = FAKIonIcons.flagIconWithSize(self.iconSize)
                 .imageWithSize(CGSizeMake(self.iconSize, self.iconSize))
+            progressArcColor = UIColor.lighterGrayColor.CGColor
         }
         
         let weeklyHoursRequiredString = String(user.getRequiredHours())

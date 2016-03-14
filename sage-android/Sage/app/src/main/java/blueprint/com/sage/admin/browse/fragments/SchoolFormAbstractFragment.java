@@ -75,6 +75,10 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     private FormValidator mValidator;
     protected MenuItem mItem;
 
+    LatLng mBounds;
+
+    public final int MAX_RADIUS = 1000;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -90,6 +90,7 @@ class ProfileCheckinSummaryView: UIView {
     }
     
     func setupWithUser(user: User, pastSemester: Bool = false) {
+        var progressArcColor = UIColor.lighterGrayColor.CGColor
         if let semesterSummary = user.semesterSummary {
             self.userStatusLabel.font = UIFont.normalFont
             let hoursCompletedString = String(semesterSummary.getTotalHours())
@@ -99,7 +100,6 @@ class ProfileCheckinSummaryView: UIView {
             self.hoursPercentageLabel.text = String(Int(hoursCompletedPercentage * 100)) + "%"
             self.userStatusIcon.image = FAKIonIcons.checkmarkIconWithSize(iconSize)
                 .imageWithSize(CGSizeMake(iconSize, iconSize))
-            var progressArcColor = UIColor.lightGrayColor.CGColor
             if pastSemester {
                 if semesterSummary.completed {
                     progressArcColor = UIColor.lightGreenColor.CGColor
@@ -107,10 +107,9 @@ class ProfileCheckinSummaryView: UIView {
                     progressArcColor = UIColor.lightRedColor.CGColor
                 }
             }
-            if hoursCompletedPercentage == 0 {
-                progressArcColor = UIColor.lighterGrayColor.CGColor
+            if hoursCompletedPercentage > 0 {
+                progressArcColor = UIColor.lightGrayColor.CGColor
             }
-            self.progressArc.fillColor = progressArcColor
             self.progressArc.path = self.createArcWithPercentage(CGFloat(hoursCompletedPercentage * 0.75))
         } else {
             self.userStatusLabel.font = UIFont.normalFont
@@ -123,6 +122,11 @@ class ProfileCheckinSummaryView: UIView {
         let weeklyHoursRequiredString = String(user.getRequiredHours())
         let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " hours per week")
         self.userCommitmentLabel.attributedText = userCommitmentString
+        self.userCommitmentIcon.image = FAKIonIcons.androidTimeIconWithSize(iconSize)
+            .imageWithSize(CGSizeMake(iconSize, iconSize))
+        self.progressArc.fillColor = progressArcColor
+        self.timerArc.fillColor = UIColor.lighterGrayColor.CGColor
+        self.topBorder.backgroundColor = UIColor.borderColor
         
         layoutSubviews()
     }
@@ -131,7 +135,7 @@ class ProfileCheckinSummaryView: UIView {
         self.backgroundColor = UIColor.whiteColor()
         
         self.topBorder.setHeight(UIConstants.dividerHeight())
-        self.topBorder.backgroundColor = UIColor.borderColor
+        self.topBorder.backgroundColor = UIColor.whiteColor()
         
         self.bottomBorder.setHeight(UIConstants.dividerHeight())
         self.bottomBorder.backgroundColor = UIColor.borderColor
@@ -144,20 +148,18 @@ class ProfileCheckinSummaryView: UIView {
         self.timerView.setWidth(self.timerSize)
         self.timerView.setHeight(self.timerSize)
         self.timerView.layer.cornerRadius = self.timerSize/2
-        self.timerArc.fillColor = UIColor.lighterGrayColor.CGColor
+        self.timerArc.fillColor = UIColor.whiteColor().CGColor
         self.timerArc.path = self.createArcWithPercentage(3/4)
         
-        self.progressArc.fillColor = UIColor.lighterGrayColor.CGColor
         self.progressArc.path = self.createArcWithPercentage(0)
+        self.progressArc.fillColor = UIColor.whiteColor().CGColor
         
         self.userCommitmentLabel.font = UIFont.normalFont
         self.userStatusLabel.font = UIFont.normalFont
         
-        self.userStatusIcon.image = FAKIonIcons.checkmarkIconWithSize(self.iconSize)
-            .imageWithSize(CGSizeMake(self.iconSize, self.iconSize))
+        self.userStatusIcon.image = UIImage()
         
-        self.userCommitmentIcon.image = FAKIonIcons.androidTimeIconWithSize(self.iconSize)
-            .imageWithSize(CGSizeMake(self.iconSize, self.iconSize))
+        self.userCommitmentIcon.image = UIImage()
     }
     
     override func layoutSubviews() {

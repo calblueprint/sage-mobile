@@ -93,8 +93,7 @@ class ProfileCheckinSummaryView: UIView {
         var progressArcColor = UIColor.lightGrayColor.CGColor
         if let semesterSummary = user.semesterSummary {
             self.userStatusLabel.font = UIFont.normalFont
-            let hoursCompletedString = String(semesterSummary.getTotalHours())
-            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " of " + String(semesterSummary.hoursRequired) + " hours completed")
+            let userStatusString = NSMutableAttributedString(string: semesterSummary.getTotalHoursAsString() + " of " + String(semesterSummary.hoursRequired) + " hours completed")
             self.userStatusLabel.attributedText = userStatusString
             let hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
             self.hoursPercentageLabel.text = String(Int(hoursCompletedPercentage * 100)) + "%"
@@ -145,6 +144,7 @@ class ProfileCheckinSummaryView: UIView {
         self.progressContainer.setHeight(self.timerSize)
         
         self.hoursPercentageLabel.font = UIFont.normalFont
+        self.hoursPercentageLabel.textColor = UIColor.grayColor()
         
         self.timerView.setWidth(self.timerSize)
         self.timerView.setHeight(self.timerSize)

@@ -115,6 +115,13 @@ class ProfileCheckinViewController: SGTableViewController {
     
     func loadCheckins(reset reset: Bool = false) {
         if reset {
+            ProfileOperations.getUser(filter: self.filter, user: self.user!, completion: { (user) -> Void in
+                self.user = user
+                self.userCheckinSummary.setupWithUser(self.user!, pastSemester: self.filter != nil)
+                }) { (errorMessage) -> Void in
+                    //
+            }
+
             self.verifiedCheckins = [Checkin]()
             self.unverifiedCheckins = [Checkin]()
             self.tableView.reloadData()

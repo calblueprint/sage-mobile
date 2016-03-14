@@ -73,22 +73,6 @@ class ProfileCheckinSummaryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func styleAttributedString(name: String, string: NSMutableAttributedString, length: Int, userHoursStringColor: UIColor = UIColor.blackColor()) {
-        let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(30)]
-        
-        if name == self.userStatusString {
-            string.addAttributes(boldString, range: NSRange(location: 0, length: length))
-            string.addAttribute(NSForegroundColorAttributeName, value: userHoursStringColor, range: NSRange(location: 0, length: length))
-            let remainderLocation = string.length - 5
-            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: remainderLocation, length: 5))
-        }
-        
-        if name == self.userCommitmentString {
-            string.addAttributes(boldString, range: NSRange(location: 0, length: length))
-            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: 3, length: 10))
-        }
-    }
-    
     func setupWithUser(user: User, pastSemester: Bool = false) {
         var progressArcColor = UIColor.lightGrayColor.CGColor
         if let semesterSummary = user.semesterSummary {

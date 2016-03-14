@@ -17,4 +17,8 @@
 
     <!-- Map -->
     <dimen name="map_height">256dp</dimen>
+
+    <!-- Filter -->
+    <dimen name="filter_layout_height">42dp</dimen>
+    <dimen name="filter_layout_padding">8dp</dimen>
 </resources>

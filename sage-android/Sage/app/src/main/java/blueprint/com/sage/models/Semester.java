@@ -23,6 +23,7 @@ public @Data class Semester {
     private List<User> users;
 
     public static final String[] SEASONS = { "Fall", "Spring" };
+    public static final String PRESENT = "Present";
 
     @JsonIgnore
     public int getYear() {

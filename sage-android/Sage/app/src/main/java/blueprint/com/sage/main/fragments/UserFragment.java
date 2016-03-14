@@ -19,6 +19,7 @@ import blueprint.com.sage.events.user_semesters.UpdateUserSemesterEvent;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
+import blueprint.com.sage.main.AboutActivity;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.models.UserSemester;
@@ -203,7 +204,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.user_about)
     public void onAboutClick(View view) {
-        // TODO: add about fragment
+        FragUtils.startActivityBackStack(getActivity(), AboutActivity.class);
     }
 
     @OnClick(R.id.user_log_out)

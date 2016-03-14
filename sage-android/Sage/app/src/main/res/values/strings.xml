@@ -30,4 +30,8 @@
     <string name="shared_preferences">SAGE_ANDROID</string>
     <string name="shared_preference_email">email</string>
     <string name="shared_preference_auth_token">auth_token</string>
+
+    <!-- Filter -->
+    <string name="filter">Filter</string>
+    <string name="show_filters">Show Filters</string>
 </resources>

@@ -116,15 +116,10 @@ class SemesterSummary: NSObject, NSCoding {
         if totalHours == 0 {
             hoursCompletedString = "0"
         } else {
-            hoursCompletedString = String(totalHours)
-            let index = hoursCompletedString.startIndex.distanceTo(hoursCompletedString.rangeOfString(".")!.endIndex)
-            var decimalPlaces: Int?
-            if hoursCompletedString.characters.count - index >= 2 {
-                decimalPlaces = 2
-            } else {
-                decimalPlaces = hoursCompletedString.characters.count - index
-            }
-            hoursCompletedString = (hoursCompletedString as NSString).substringWithRange(NSRange(location: 0, length: index+decimalPlaces!))
+            let formatter = NSNumberFormatter()
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = 1
+            hoursCompletedString = String(format: "%.1f", totalHours)
         }
         return hoursCompletedString
     }

@@ -95,7 +95,7 @@ class ProfileCheckinSummaryView: UIView {
             self.userStatusLabel.font = UIFont.normalFont
             let userStatusString = NSMutableAttributedString(string: semesterSummary.getTotalHoursAsString() + " of " + String(semesterSummary.hoursRequired) + " hours completed")
             self.userStatusLabel.attributedText = userStatusString
-            let hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
+            var hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
             self.hoursPercentageLabel.text = String(Int(hoursCompletedPercentage * 100)) + "%"
             self.userStatusIcon.image = FAKIonIcons.checkmarkIconWithSize(iconSize)
                 .imageWithSize(CGSizeMake(iconSize, iconSize))
@@ -108,6 +108,9 @@ class ProfileCheckinSummaryView: UIView {
             }
             if hoursCompletedPercentage == 0 {
                 progressArcColor = UIColor.lighterGrayColor.CGColor
+            }
+            if hoursCompletedPercentage > 1 {
+                hoursCompletedPercentage = 1
             }
             self.progressArc.path = self.createArcWithPercentage(CGFloat(hoursCompletedPercentage * 0.75))
         } else {

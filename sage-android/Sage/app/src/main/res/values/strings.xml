@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Sage</string>
-
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="save">Save</string>

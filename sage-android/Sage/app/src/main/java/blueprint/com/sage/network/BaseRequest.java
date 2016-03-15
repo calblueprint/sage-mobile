@@ -32,7 +32,7 @@ import blueprint.com.sage.utility.network.NetworkUtils;
  */
 public class BaseRequest extends JsonObjectRequest {
 
-    private Activity mActivity;
+    private static Activity mActivity;
 
     public BaseRequest(int requestType, String url, JSONObject params,
                        Response.Listener onSuccess, final Response.Listener<APIError> onFailure, final Activity activity) {
@@ -99,10 +99,10 @@ public class BaseRequest extends JsonObjectRequest {
 
     public static String makeUrl(HashMap<String, String> queryParams, String... paths) {
         Uri.Builder uri = new Uri.Builder();
-        uri = uri.scheme(UrlConstants.HTTP)
-                 .authority(UrlConstants.HOSTNAME)
-                 .appendPath(UrlConstants.API)
-                 .appendPath(UrlConstants.VERSION);
+        uri = uri.scheme(mActivity.getString(R.string.http))
+                 .authority(mActivity.getString(R.string.hostname))
+                 .appendPath(mActivity.getString(R.string.api))
+                 .appendPath(mActivity.getString(R.string.version));
 
         for (String path : paths)
             uri = uri.appendPath(path);

@@ -47,6 +47,16 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
+
+    productFlavors {
+        staging {
+            applicationId "blueprint.com.sage.staging"
+        }
+
+        production {
+            applicationId "blueprint.com.sage.production"
+        }
+    }
 }
 
 dependencies {

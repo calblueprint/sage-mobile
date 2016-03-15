@@ -76,16 +76,4 @@ public class DateUtils {
         }
         return startDate + " - " + finishDate;
     }
-
-    public static String getDateRange(DateTime start, DateTime finish, String pattern) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
-        String startDate = formatter.print(start);
-        String finishDate;
-        if (finish != null) {
-            finishDate = formatter.print(finish);
-        } else {
-            finishDate = DateUtils.PRESENT;
-        }
-        return startDate + " - " + finishDate;
-    }
 }

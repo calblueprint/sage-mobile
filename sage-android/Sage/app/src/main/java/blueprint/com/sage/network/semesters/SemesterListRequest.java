@@ -25,7 +25,7 @@ public class SemesterListRequest extends BaseRequest {
     public SemesterListRequest(final Activity activity, HashMap<String, String> queryParams,
                                  final Response.Listener<List<Semester>> onSuccess,
                                  final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(queryParams, "semesters"), null,
+        super(Method.GET, makeUrl(activity, queryParams, "semesters"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

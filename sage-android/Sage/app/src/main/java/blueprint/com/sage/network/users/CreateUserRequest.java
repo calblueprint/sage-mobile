@@ -23,7 +23,7 @@ public class CreateUserRequest extends BaseRequest {
     public CreateUserRequest(final Activity activity, User user,
                              final Response.Listener<Session> onSuccess,
                              final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "users"), convertToParams(user, "user", activity),
+        super(Method.POST, makeUrl(activity, null, "users"), convertToParams(user, "user", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

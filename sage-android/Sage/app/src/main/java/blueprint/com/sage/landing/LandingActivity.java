@@ -3,6 +3,8 @@ package blueprint.com.sage.landing;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -14,6 +16,8 @@ import blueprint.com.sage.shared.activities.AbstractActivity;
 import blueprint.com.sage.signIn.SignInActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
+import blueprint.com.sage.utility.view.LoadingView;
+import butterknife.Bind;
 import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 
@@ -21,6 +25,10 @@ import io.fabric.sdk.android.Fabric;
  * Created by kelseylam on 2/3/16.
  */
 public class LandingActivity extends AbstractActivity {
+
+    @Bind(R.id.landing_loading_view) LoadingView mLoadingView;
+    @Bind(R.id.landing_layout) FrameLayout mLandingLayout;
+    @Bind(R.id.landing_splash) ImageView mLandingSplash;
 
     private SharedPreferences mPreferences;
 

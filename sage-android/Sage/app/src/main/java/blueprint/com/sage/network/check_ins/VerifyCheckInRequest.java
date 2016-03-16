@@ -21,7 +21,7 @@ public class VerifyCheckInRequest extends BaseRequest {
     public VerifyCheckInRequest(final Activity activity, CheckIn checkIn,
                                 final Response.Listener<CheckIn> onSuccess,
                                 final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(checkIn), null,
+        super(Method.POST, makeUrl(activity, checkIn), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {
@@ -43,7 +43,7 @@ public class VerifyCheckInRequest extends BaseRequest {
                 }, activity);
     }
 
-    private static String makeUrl(CheckIn checkIn) {
-        return makeUrl(null, "admin", "check_ins", String.valueOf(checkIn.getId()), "verify");
+    private static String makeUrl(Activity activity, CheckIn checkIn) {
+        return makeUrl(activity, null, "admin", "check_ins", String.valueOf(checkIn.getId()), "verify");
     }
 }

@@ -97,12 +97,12 @@ public class BaseRequest extends JsonObjectRequest {
         return headers;
     }
 
-    public static String makeUrl(HashMap<String, String> queryParams, String... paths) {
+    public static String makeUrl(Context context, HashMap<String, String> queryParams, String... paths) {
         Uri.Builder uri = new Uri.Builder();
-        uri = uri.scheme(mActivity.getString(R.string.http))
-                 .authority(mActivity.getString(R.string.hostname))
-                 .appendPath(mActivity.getString(R.string.api))
-                 .appendPath(mActivity.getString(R.string.version));
+        uri = uri.scheme(context.getString(R.string.http))
+                .authority(context.getString(R.string.hostname))
+                 .appendPath(context.getString(R.string.api))
+                 .appendPath(context.getString(R.string.version));
 
         for (String path : paths)
             uri = uri.appendPath(path);

@@ -26,7 +26,7 @@ public class    UserListRequest extends BaseRequest {
                            HashMap<String, String> queryParams,
                            final Response.Listener<ArrayList<User>> onSuccess,
                            final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(queryParams, "users"), null,
+        super(Method.GET, makeUrl(activity, queryParams, "users"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

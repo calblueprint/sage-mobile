@@ -21,7 +21,7 @@ public class CreateSchoolRequest extends BaseRequest {
     public CreateSchoolRequest(final Activity activity, School school,
                                final Response.Listener<School> onSuccess,
                                final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "admin", "schools"), convertToParams(school, "school", activity),
+        super(Method.POST, makeUrl(activity, null, "admin", "schools"), convertToParams(school, "school", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

@@ -304,7 +304,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
             handledCase = true
         }
         
-        if !handledCase && scrollView.contentOffset.x > 3 * signUpView.frame.width {
+        if !handledCase && scrollView.contentOffset.x > 4 * signUpView.frame.width {
             scrollView.setContentOffset(CGPointMake(4 * signUpView.frame.width, 0), animated: false)
             handledCase = true
         }
@@ -314,7 +314,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         var tuple = self.schoolHoursValid()
         valid = tuple.0
         message = tuple.1
-        if !handledCase && scrollView.contentOffset.x > screenWidth * 2 && !valid {
+        if !handledCase && scrollView.contentOffset.x > 3 * screenWidth && !valid {
             scrollView.setContentOffset(CGPointMake(3 * signUpView.frame.width, 0), animated: false)
             self.showErrorAndSetMessage(message)
             handledCase = true
@@ -323,7 +323,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         tuple = self.passwordValid()
         valid = tuple.0
         message = tuple.1
-        if !handledCase && scrollView.contentOffset.x > screenWidth && !valid {
+        if !handledCase && scrollView.contentOffset.x > 2 * screenWidth && !valid {
             scrollView.setContentOffset(CGPointMake(2 * signUpView.frame.width, 0), animated: false)
             self.showErrorAndSetMessage(message)
             handledCase = true

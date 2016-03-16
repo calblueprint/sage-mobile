@@ -13,6 +13,7 @@ class EditProfileController: FormController {
     var user: User
     var editProfileView = EditProfileView()
     var choseNewPhoto = false
+    var resetPhoto = false
     
     init(user: User) {
         self.user = user
@@ -48,6 +49,14 @@ class EditProfileController: FormController {
         imagePickerController.delegate = self
         imagePickerController.allowsEditing = false
         
+        if (self.user.imageURL != nil && !self.resetPhoto) || self.choseNewPhoto {
+            actionSheet.addAction(UIAlertAction(title: "Remove Photo", style: .Destructive, handler: { (alertAction) -> Void in
+                self.editProfileView.photoView.image = UIImage.defaultProfileImage()
+                self.choseNewPhoto = false
+                self.resetPhoto = true
+            }))
+        }
+
         actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .Default, handler: { (alertAction) -> Void in
             if UIImagePickerController.isSourceTypeAvailable(.Camera) {
                 imagePickerController.sourceType = .Camera
@@ -62,10 +71,6 @@ class EditProfileController: FormController {
             }
         }))
         
-        actionSheet.addAction(UIAlertAction(title: "Reset to Default", style: .Default, handler: { (alertAction) -> Void in
-            self.editProfileView.photoView.image = UIImage.defaultProfileImage()
-            self.choseNewPhoto = true
-        }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (alertAction) -> Void in
             actionSheet.dismissViewControllerAnimated(true, completion: nil)
         }))
@@ -116,7 +121,7 @@ class EditProfileController: FormController {
             
             let newPassword = editProfileView.getNewPassword()
             let passwordConfirmation = editProfileView.getPasswordConfirmation()
-            ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, newPassword: newPassword, passwordConfirmation: passwordConfirmation, completion: { (updatedUser) -> Void in
+            ProfileOperations.updateProfile(self.user, password: password, photoData: photoData, newPassword: newPassword, passwordConfirmation: passwordConfirmation, resetPhoto: self.resetPhoto, completion: { (updatedUser) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.changeSchoolKey, object: updatedUser.school!)
@@ -144,6 +149,7 @@ class EditProfileController: FormController {
 extension EditProfileController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         self.choseNewPhoto = true
+        self.resetPhoto = false
         let photoView = self.editProfileView.photoView
         photoView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         picker.dismissViewControllerAnimated(true, completion: nil)

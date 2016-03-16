@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectAnnouncementSchoolTableViewController: UITableViewController {
+class SelectAnnouncementSchoolTableViewController: SGTableViewController {
     
     var schools: [School]?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
@@ -18,6 +18,7 @@ class SelectAnnouncementSchoolTableViewController: UITableViewController {
     
     init() {
         super.init(style: .Plain)
+        self.setNoContentMessage("Could not find any schools.")
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -51,6 +52,13 @@ class SelectAnnouncementSchoolTableViewController: UITableViewController {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
+            
+            if self.schools?.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }

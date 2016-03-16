@@ -36,11 +36,14 @@ class SignUpController: UIViewController  {
     func setDelegates() {
         let signUpView = (self.view as! SignUpView)
         let nameView = signUpView.nameView
-        let emailPasswordView = signUpView.emailPasswordView
+        let emailView = signUpView.emailView
+        let passwordView = signUpView.passwordView
         nameView.firstNameInput.delegate = self
         nameView.lastNameInput.delegate = self
-        emailPasswordView.emailInput.delegate = self
-        emailPasswordView.passwordInput.delegate = self
+        emailView.emailInput.delegate = self
+        emailView.emailConfirmationInput.delegate = self
+        passwordView.password.delegate = self
+        passwordView.passwordConfirmation.delegate = self
         
     }
     
@@ -134,13 +137,14 @@ class SignUpController: UIViewController  {
     func makeAccount(completion: ((Bool) -> Void)) {
         let signUpView = (self.view as! SignUpView)
         let nameView = signUpView.nameView
-        let emailPasswordView = signUpView.emailPasswordView
+        let emailView = signUpView.emailView
+        let passwordView = signUpView.passwordView
         let photoView = signUpView.photoView
         
         let firstName = nameView.firstNameInput.text!
         let lastName = nameView.lastNameInput.text!
-        let email = emailPasswordView.emailInput.text!
-        let password = emailPasswordView.passwordInput.text!
+        let email = emailView.emailInput.text!
+        let password = passwordView.password.text!
         
         let school = self.school!.id
         
@@ -236,11 +240,14 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         let signUpView = (self.view as! SignUpView)
         let nameView = signUpView.nameView
-        let emailPasswordView = signUpView.emailPasswordView
+        let emailView = signUpView.emailView
+        let passwordView = signUpView.passwordView
         let firstName = nameView.firstNameInput
         let lastName = nameView.lastNameInput
-        let email = emailPasswordView.emailInput
-        let password = emailPasswordView.passwordInput
+        let email = emailView.emailInput
+        let emailConfirmation = emailView.emailConfirmationInput
+        let password = passwordView.password
+        let passwordConfirmation = passwordView.passwordConfirmation
         let screenRect = UIScreen.mainScreen().bounds
         let screenWidth = screenRect.size.width
         
@@ -260,7 +267,11 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
                 self.showErrorAndSetMessage("Please fill out your first and last name!")
             }
         } else if textField == email {
+            emailConfirmation.becomeFirstResponder()
+        } else if textField == emailConfirmation {
             password.becomeFirstResponder()
+        }  else if textField == password {
+            passwordConfirmation.becomeFirstResponder()
         } else {
             if password.text! != "" && self.isValidEmail(email.text!) {
             
@@ -293,8 +304,8 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
             handledCase = true
         }
         
-        if !handledCase && scrollView.contentOffset.x > 3 * signUpView.frame.width {
-            scrollView.setContentOffset(CGPointMake(3 * signUpView.frame.width, 0), animated: false)
+        if !handledCase && scrollView.contentOffset.x > 4 * signUpView.frame.width {
+            scrollView.setContentOffset(CGPointMake(4 * signUpView.frame.width, 0), animated: false)
             handledCase = true
         }
         
@@ -303,13 +314,22 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         var tuple = self.schoolHoursValid()
         valid = tuple.0
         message = tuple.1
-        if !handledCase && scrollView.contentOffset.x > screenWidth * 2 && !valid {
+        if !handledCase && scrollView.contentOffset.x > 3 * screenWidth && !valid {
+            scrollView.setContentOffset(CGPointMake(3 * signUpView.frame.width, 0), animated: false)
+            self.showErrorAndSetMessage(message)
+            handledCase = true
+        }
+        
+        tuple = self.passwordValid()
+        valid = tuple.0
+        message = tuple.1
+        if !handledCase && scrollView.contentOffset.x > 2 * screenWidth && !valid {
             scrollView.setContentOffset(CGPointMake(2 * signUpView.frame.width, 0), animated: false)
             self.showErrorAndSetMessage(message)
             handledCase = true
         }
         
-        tuple = self.emailPasswordValid()
+        tuple = self.emailValid()
         valid = tuple.0
         message = tuple.1
         if !handledCase && scrollView.contentOffset.x > screenWidth && !valid {
@@ -339,7 +359,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
     
     func showErrorAndSetMessage(message: String) {
         let error = (self.view as! SignUpView).currentErrorMessage
-        let errorView = super.showError(message, currentError: error)
+        let errorView = super.showError(message, currentError: error, alpha: 0.4, centered: false)
         (self.view as! SignUpView).currentErrorMessage = errorView
     }
     
@@ -361,20 +381,38 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
         return (valid, message)
     }
     
-    func emailPasswordValid() -> (Bool, String) {
+    func emailValid() -> (Bool, String) {
         let signUpView = (self.view as! SignUpView)
-        let emailPasswordView = signUpView.emailPasswordView
+        let emailView = signUpView.emailView
         var valid = true
         var message: String = ""
-        if emailPasswordView.emailInput.text! == "" {
+        if emailView.emailInput.text! == "" {
             valid = false
             message = "Please enter an email."
-        } else if !emailPasswordView.emailInput.text!.containsString("berkeley") {
+        } else if !emailView.emailInput.text!.containsString("berkeley") {
             valid = false
             message = "Enter a berkeley.edu email address."
-        } else if emailPasswordView.passwordInput.text!.characters.count < 8 {
+        } else if emailView.emailInput.text != emailView.emailConfirmationInput.text {
             valid = false
-            message = "Your password must be at least 8 characters."
+            message = "Your email must match your email confirmation."
+        }
+        return (valid, message)
+    }
+    
+    func passwordValid() -> (Bool, String) {
+        let signUpView = (self.view as! SignUpView)
+        let passwordView = signUpView.passwordView
+        var valid = true
+        var message: String = ""
+        if passwordView.password.text! == "" {
+            valid = false
+            message = "Please enter a password."
+        } else if passwordView.password.text!.characters.count < 8  {
+            valid = false
+            message = "Password must be at least 8 characters."
+        } else if passwordView.password.text != passwordView.passwordConfirmation.text {
+            valid = false
+            message = "Your password must match your password confirmation."
         }
         return (valid, message)
     }

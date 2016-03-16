@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    func showError(message: String, currentError: ErrorView?, color: UIColor = UIColor.whiteColor()) -> ErrorView {
+    func showError(message: String, currentError: ErrorView?, color: UIColor = UIColor.whiteColor(), alpha: CGFloat? = 1.0, centered: Bool? = true) -> ErrorView {
         if currentError != nil {
             currentError?.removeFromSuperview()
         }
@@ -20,7 +20,7 @@ extension UIViewController {
         } else {
             size = 64.0
         }
-        let errorView = ErrorView(height: size, messageString: message, color: color)
+        let errorView = ErrorView(height: size, messageString: message, color: color, alpha: alpha, centered: centered)
         self.view.addSubview(errorView)
         self.view.bringSubviewToFront(errorView)
         errorView.setX(0)

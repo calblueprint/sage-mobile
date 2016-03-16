@@ -22,7 +22,7 @@ class AddAnnouncementView: FormView {
         super.init(frame: frame)
         self.keyboardControls.fields.append(self.title.textField)
         self.keyboardControls.fields.append(self.commentField.textView)
-        self.addSubview(self.deleteAnnouncementButton)
+        self.scrollView.addSubview(self.deleteAnnouncementButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -67,13 +67,11 @@ class AddAnnouncementView: FormView {
         self.commentField.fillWidth()
         
         self.deleteAnnouncementButton.sizeToFit()
-        let width = CGRectGetWidth(self.deleteAnnouncementButton.frame)
-        self.deleteAnnouncementButton.setWidth(width + 10)
-        let buttonOffsetY = CGRectGetMaxY(self.commentField.frame)
-        self.deleteAnnouncementButton.setY(buttonOffsetY + 20)
-        self.deleteAnnouncementButton.centerHorizontally()
+        self.deleteAnnouncementButton.fillWidth()
+        self.deleteAnnouncementButton.increaseHeight(40)
+        self.deleteAnnouncementButton.setY(CGRectGetMaxY(self.commentField.frame))
         
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.commentField.frame))
+        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetMaxY(self.deleteAnnouncementButton.frame))
     }
     
     func isValid() -> Bool {

@@ -27,6 +27,8 @@ struct UserConstants {
     static let kDirectorID: String = "director_id"
     static let kNonDirector: String = "non_director"
     static let kPasswordConfirmation: String = "password_confirmation"
-    
+
     static let kCurrentPassword: String = "current_password"
+
+    static let kRemoveImage: String = "remove_image"
 }

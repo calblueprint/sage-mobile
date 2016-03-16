@@ -46,7 +46,7 @@ class ProfileView: UIView {
         get {
             return self.currentUserProfile
         }
-        set(isCurrentUser) {
+        set (isCurrentUser) {
             if isCurrentUser {
                 self.profileEditButton.hidden = false
             } else {
@@ -133,8 +133,8 @@ class ProfileView: UIView {
         }
     }
     
-    func setupWithUser(user: User) {
-        self.setButtonVisibility(user)
+    func setupWithUser(user: User, pastSemester: Bool = false) {
+        self.setButtonVisibility(user, pastSemester: pastSemester)
         
         self.profileUserImg.setImageWithUser(user, showBadge: false)
         self.userName.text = user.fullName()
@@ -177,7 +177,6 @@ class ProfileView: UIView {
     
     func setupSubviews() {
         self.backgroundColor = UIColor.whiteColor()
-        self.header.backgroundColor = UIColor.mainColor
         
         self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
         self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
@@ -351,7 +350,7 @@ class ProfileView: UIView {
         self.setHeight(height)
     }
     
-    func setButtonVisibility(user: User) {
+    func setButtonVisibility(user: User, pastSemester: Bool = false) {
         self.showBothButtons = false
         if LoginOperations.getUser()?.id == user.id {
             self.currentUserProfile = true
@@ -368,11 +367,20 @@ class ProfileView: UIView {
                 self.showBothButtons = true
             }
         }
+        if pastSemester {
+            self.currentUserProfile = false
+            self.canPromote = false
+            self.canDemote = false
+        }
         self.layoutSubviews()
     }
     
     deinit {
         self.profileUserImg.cancelImageRequestOperation()
+    }
+    
+    func setHeaderBackgroundColor(color: UIColor) {
+        self.header.backgroundColor = color
     }
     
     func startPromoting() {

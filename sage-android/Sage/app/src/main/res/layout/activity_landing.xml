@@ -10,14 +10,14 @@
         android:id="@+id/landing_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splash"/>
+        android:src="@drawable/splash"
+        android:scaleType="fitXY"/>
 
     <blueprint.com.sage.utility.view.LoadingView
         android:id="@+id/landing_loading_view"
         android:layout_width="wrap_content"
         android:padding="12dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
         android:layout_gravity="center_horizontal|bottom"/>
 
 </FrameLayout>

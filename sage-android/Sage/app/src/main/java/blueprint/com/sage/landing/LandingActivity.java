@@ -5,9 +5,12 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -16,9 +19,13 @@ import java.util.TimerTask;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.SessionEvent;
+import blueprint.com.sage.main.MainActivity;
+import blueprint.com.sage.models.Session;
+import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.activities.AbstractActivity;
+import blueprint.com.sage.signIn.SignInActivity;
+import blueprint.com.sage.signUp.UnverifiedActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
-import blueprint.com.sage.utility.view.AnimationUtils;
 import blueprint.com.sage.utility.view.LoadingView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,18 +56,18 @@ public class LandingActivity extends AbstractActivity {
 
         initializeViews();
 
-//        if (!NetworkUtils.isConnectedToInternet(this)) {
-//            Toast.makeText(this, "You're not connected to the internet!", Toast.LENGTH_SHORT).show();
-//            finish();
-//            return;
-//        }
-//
-//        if (!NetworkUtils.isVerifiedUser(this, getSharedPreferences())) {
-//            FragUtils.startActivity(this, SignInActivity.class);
-//            return;
-//        }
-//
-//        Requests.Users.with(this).makeStateRequest(getUser());
+        if (!NetworkUtils.isConnectedToInternet(this)) {
+            Toast.makeText(this, "You're not connected to the internet!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        if (!NetworkUtils.isVerifiedUser(this, getSharedPreferences())) {
+            startAnimation(SignInActivity.class);
+            return;
+        }
+
+        Requests.Users.with(this).makeStateRequest(getUser());
     }
 
     @Override
@@ -84,13 +91,15 @@ public class LandingActivity extends AbstractActivity {
     }
 
     private void startAnimation(final Class<?> cls) {
-        Animation fadeOutAnimation = AnimationUtils.getFadeOutAnimation(this);
+        Animation fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        fadeOutAnimation.setDuration(500);
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {}
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                mLoadingView.setVisibility(View.GONE);
                 mAnimationDrawable.start();
 
                 TimerTask timerTask = new TimerTask() {
@@ -116,12 +125,18 @@ public class LandingActivity extends AbstractActivity {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         startActivity(intent);
-        overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     public void onEvent(SessionEvent event) {
         try {
-            NetworkUtils.loginUser(this, event.getSession());
+            Session session = event.getSession();
+            NetworkUtils.setSession(this, session);
+            if (session.getUser().isVerified()) {
+                startAnimation(MainActivity.class);
+            } else {
+                startAnimation(UnverifiedActivity.class);
+            }
         } catch (Exception e) {
             Log.e(getClass().toString(), e.toString());
         }

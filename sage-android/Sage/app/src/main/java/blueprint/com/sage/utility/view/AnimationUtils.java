@@ -28,4 +28,12 @@ public class AnimationUtils {
         animation.setInterpolator(new CustomBounceInterpolator());
         return animation;
     }
+
+    public static Animation getFadeInAnimation(Context context) {
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_in);
+    }
+
+    public static Animation getFadeOutAnimation(Context context) {
+        return android.view.animation.AnimationUtils.loadAnimation(context, R.anim.fade_out);
+    }
 }

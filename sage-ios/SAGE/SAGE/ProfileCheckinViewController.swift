@@ -50,10 +50,10 @@ class ProfileCheckinViewController: SGTableViewController {
     func setupHeader() {
         self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
         self.tableView.tableHeaderView = self.userCheckinSummary
-        let headerOffset = CGFloat(100)
+        let headerOffset = self.userCheckinSummary.boxHeight
         var headerFrame = self.tableView.tableHeaderView!.frame
         headerFrame.size.height = headerOffset
-        self.userCheckinSummary.frame = headerFrame
+        self.userCheckinSummary.setHeight(headerOffset)
         self.userCheckinSummary.setupWithUser(user!, pastSemester: self.filter != nil)
         self.tableView.tableHeaderView = self.userCheckinSummary
     }

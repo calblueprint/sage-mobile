@@ -255,7 +255,7 @@ class ProfileView: UIView {
         
         let topBorderY = CGRectGetMaxY(userRoleLabel.frame) + 20
         self.userCheckinSummary.setY(topBorderY)
-        self.userCheckinSummary.setHeight(100)
+        self.userCheckinSummary.setHeight(self.userCheckinSummary.boxHeight)
         self.userCheckinSummary.fillWidth()
         
         let height = CGRectGetMaxY(self.userCheckinSummary.frame)

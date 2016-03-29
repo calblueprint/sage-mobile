@@ -119,7 +119,7 @@ class ProfileCheckinViewController: SGTableViewController {
                 self.user = user
                 self.userCheckinSummary.setupWithUser(self.user!, pastSemester: self.filter != nil)
                 }) { (errorMessage) -> Void in
-                    //
+                    self.showErrorAndSetMessage(errorMessage)
             }
 
             self.verifiedCheckins = [Checkin]()

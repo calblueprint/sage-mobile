@@ -26,10 +26,10 @@ class ProfileCheckinSummaryView: UIView {
     let boxHeight = CGFloat(100)
     let iconSize = CGFloat(14)
     private let timerSize: CGFloat = 60.0
-    var timerView: UIView = UIView()
-    var timerLabel: UILabel = UILabel()
-    var timerArc: CAShapeLayer = CAShapeLayer()
+    var progressView: UIView = UIView()
+    var progressLabel: UILabel = UILabel()
     var progressArc: CAShapeLayer = CAShapeLayer()
+    var completedProgressArc: CAShapeLayer = CAShapeLayer()
     let userStatusString = "User Status String"
     let userCommitmentString = "User Commitment String"
     
@@ -58,9 +58,9 @@ class ProfileCheckinSummaryView: UIView {
         self.addSubview(self.bottomBorder)
         self.addSubview(self.progressContainer)
         self.progressContainer.addSubview(self.hoursPercentageLabel)
-        self.progressContainer.addSubview(self.timerView)
-        self.timerView.layer.addSublayer(self.timerArc)
-        self.timerView.layer.addSublayer(self.progressArc)
+        self.progressContainer.addSubview(self.progressView)
+        self.progressView.layer.addSublayer(self.progressArc)
+        self.progressView.layer.addSublayer(self.completedProgressArc)
         self.addSubview(self.userInformationContainer)
         self.userInformationContainer.addSubview(self.userCommitmentLabel)
         self.userInformationContainer.addSubview(self.userCommitmentIcon)
@@ -93,7 +93,7 @@ class ProfileCheckinSummaryView: UIView {
             if hoursCompletedPercentage == 0 {
                 progressArcColor = UIColor.lighterGrayColor.CGColor
             }
-            self.progressArc.path = self.createArcWithPercentage(CGFloat(min(1, hoursCompletedPercentage) * 0.75))
+            self.completedProgressArc.path = self.createArcWithPercentage(CGFloat(min(1, hoursCompletedPercentage) * 0.75))
         } else {
             self.userStatusLabel.font = UIFont.normalFont
             self.userStatusLabel.text = "Inactive"
@@ -108,8 +108,8 @@ class ProfileCheckinSummaryView: UIView {
         self.userCommitmentLabel.attributedText = userCommitmentString
         self.userCommitmentIcon.image = FAKIonIcons.androidTimeIconWithSize(iconSize)
             .imageWithSize(CGSizeMake(iconSize, iconSize))
-        self.progressArc.fillColor = progressArcColor
-        self.timerArc.fillColor = UIColor.lighterGrayColor.CGColor
+        self.completedProgressArc.fillColor = progressArcColor
+        self.progressArc.fillColor = UIColor.lighterGrayColor.CGColor
         self.topBorder.backgroundColor = UIColor.borderColor
         
         layoutSubviews()
@@ -130,14 +130,14 @@ class ProfileCheckinSummaryView: UIView {
         self.hoursPercentageLabel.font = UIFont.normalFont
         self.hoursPercentageLabel.textColor = UIColor.grayColor()
         
-        self.timerView.setWidth(self.timerSize)
-        self.timerView.setHeight(self.timerSize)
-        self.timerView.layer.cornerRadius = self.timerSize/2
-        self.timerArc.fillColor = UIColor.whiteColor().CGColor
-        self.timerArc.path = self.createArcWithPercentage(3/4)
-        
-        self.progressArc.path = self.createArcWithPercentage(0)
+        self.progressView.setWidth(self.timerSize)
+        self.progressView.setHeight(self.timerSize)
+        self.progressView.layer.cornerRadius = self.timerSize/2
         self.progressArc.fillColor = UIColor.whiteColor().CGColor
+        self.progressArc.path = self.createArcWithPercentage(3/4)
+        
+        self.completedProgressArc.path = self.createArcWithPercentage(0)
+        self.completedProgressArc.fillColor = UIColor.whiteColor().CGColor
         
         self.userCommitmentLabel.font = UIFont.normalFont
         self.userStatusLabel.font = UIFont.normalFont
@@ -158,12 +158,12 @@ class ProfileCheckinSummaryView: UIView {
         self.bottomBorder.setX(0)
         self.bottomBorder.setY(self.boxHeight)
         
-        self.timerView.transform = CGAffineTransformIdentity
-        self.timerView.setX(0)
-        self.timerView.centerVertically()
-        self.timerView.transform = CGAffineTransformMakeRotation(-3*CGFloat(M_PI)/4)
+        self.progressView.transform = CGAffineTransformIdentity
+        self.progressView.setX(0)
+        self.progressView.centerVertically()
+        self.progressView.transform = CGAffineTransformMakeRotation(-3*CGFloat(M_PI)/4)
         
-        let progressViewX = CGRectGetWidth(self.bottomBorder.frame) - CGRectGetWidth(self.timerView.frame)
+        let progressViewX = CGRectGetWidth(self.bottomBorder.frame) - CGRectGetWidth(self.progressView.frame)
         self.progressContainer.setX(progressViewX)
         self.progressContainer.centerVertically()
         

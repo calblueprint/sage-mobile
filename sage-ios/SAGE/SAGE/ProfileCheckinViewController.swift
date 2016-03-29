@@ -119,6 +119,7 @@ class ProfileCheckinViewController: SGTableViewController {
                 self.user = user
                 self.userCheckinSummary.setupWithUser(self.user!, pastSemester: self.filter != nil)
                 }) { (errorMessage) -> Void in
+                    self.activityIndicator.stopAnimating()
                     self.showErrorAndSetMessage(errorMessage)
             }
 

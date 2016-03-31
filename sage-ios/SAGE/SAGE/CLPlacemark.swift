@@ -12,7 +12,7 @@ extension CLPlacemark {
     
     func makeAddressString() -> String {
         var address = ""
-        if subThoroughfare != nil { address = address + " " + subThoroughfare! }
+        if subThoroughfare != nil { address = subThoroughfare! }
         if thoroughfare != nil { address = address + " " + thoroughfare! }
         if locality != nil { address = address + " " + locality! }
         return address

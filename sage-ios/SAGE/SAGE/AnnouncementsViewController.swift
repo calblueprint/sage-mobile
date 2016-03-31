@@ -15,7 +15,6 @@ class AnnouncementsViewController: SGTableViewController {
     var announcements = [Announcement]()
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var currentErrorMessage: ErrorView?
     var titleView = SGTitleView(title: "Announcements", subtitle: "All")
 
     //
@@ -202,12 +201,6 @@ class AnnouncementsViewController: SGTableViewController {
                 self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage("Could not load announcements.")
         }
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.lightRedColor)
-        self.currentErrorMessage = errorView
     }
     
     //

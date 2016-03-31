@@ -13,7 +13,6 @@ class SignUpRequestsViewController: SGTableViewController {
     
     var requests: [User]?
 
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var titleView = SGTitleView(title: "Sign Up Requests", subtitle: "All")
     
@@ -60,12 +59,6 @@ class SignUpRequestsViewController: SGTableViewController {
     //
     // MARK: - Public Methods
     //
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
     func loadSignUpRequests(reset reset: Bool = false) {
         if reset {
             self.requests = nil

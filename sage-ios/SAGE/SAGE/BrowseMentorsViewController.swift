@@ -12,7 +12,6 @@ import SwiftKeychainWrapper
 class BrowseMentorsViewController: SGTableViewController {
     
     var mentors: [[User]]?
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var titleView = SGTitleView(title: "Mentors", subtitle: "")
     
@@ -93,13 +92,7 @@ class BrowseMentorsViewController: SGTableViewController {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
     }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
+
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         var charArray = [String]()

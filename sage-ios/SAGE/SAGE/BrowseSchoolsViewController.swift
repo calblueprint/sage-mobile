@@ -11,7 +11,6 @@ import UIKit
 class BrowseSchoolsViewController: SGTableViewController {
     
     var schools: [School]?
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     override init(style: UITableViewStyle) {
@@ -105,12 +104,6 @@ class BrowseSchoolsViewController: SGTableViewController {
     func addSchool() {
         let addSchoolController = AddSchoolController()
         self.navigationController?.pushViewController(addSchoolController, animated: true)
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     func loadSchools() {

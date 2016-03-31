@@ -11,8 +11,7 @@ import UIKit
 class AddSchoolDirectorTableViewController: SGTableViewController {
     
     var directors: [[User]]?
-    var currentErrorMessage: ErrorView?
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     weak var parentVC: AddSchoolController?
     
     init() {
@@ -108,12 +107,6 @@ class AddSchoolDirectorTableViewController: SGTableViewController {
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         let letterChar = alphabet[alphabet.startIndex.advancedBy(section)]
         return String(letterChar)
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

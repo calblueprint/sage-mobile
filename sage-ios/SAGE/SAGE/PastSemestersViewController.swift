@@ -10,10 +10,9 @@ import Foundation
 
 class PastSemestersViewController: SGTableViewController {
     
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var semesters: [Semester]?
-    var previousVC: UIViewController?
+    weak var previousVC: UIViewController?
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
@@ -52,12 +51,6 @@ class PastSemestersViewController: SGTableViewController {
                 self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage(errorMessage)
         }
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

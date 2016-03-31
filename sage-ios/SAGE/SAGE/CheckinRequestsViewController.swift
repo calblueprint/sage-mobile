@@ -13,7 +13,6 @@ class CheckinRequestsViewController: SGTableViewController {
     
     var requests: [Checkin]?
 
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var titleView = SGTitleView(title: "Check In Requests", subtitle: "All")
     
@@ -89,11 +88,6 @@ class CheckinRequestsViewController: SGTableViewController {
     //
     // MARK: - Public Methods
     //
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
     
     func loadCheckinRequests(reset reset: Bool = false) {
         if reset {

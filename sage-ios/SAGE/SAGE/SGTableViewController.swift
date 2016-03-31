@@ -12,6 +12,7 @@ class SGTableViewController: UITableViewController {
     
     var filter: [String: AnyObject]?
     var noContentView = NoContentView()
+    var errorView: ErrorView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,5 +49,10 @@ class SGTableViewController: UITableViewController {
     func setNoContentMessage(message: String) {
         self.noContentView.setMessageText(message)
     }
-
+    
+    func showErrorAndSetMessage(message: String) {
+        let error = self.errorView
+        let errorView = super.showError(message, currentError: error, color: UIColor.lightRedColor)
+        self.errorView = errorView
+    }
 }

@@ -16,7 +16,6 @@ class ProfileCheckinViewController: SGTableViewController {
     var verifiedCheckins = [Checkin]()
     var unverifiedCheckins = [Checkin]()
 
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var titleView = SGTitleView(title: "Check Ins", subtitle: "")
     
@@ -93,12 +92,6 @@ class ProfileCheckinViewController: SGTableViewController {
     //
     // MARK: - Public Methods
     //
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
     func loadCheckins(reset reset: Bool = false) {
         if reset {
             self.verifiedCheckins = [Checkin]()

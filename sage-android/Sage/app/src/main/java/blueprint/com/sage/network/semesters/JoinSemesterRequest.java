@@ -22,7 +22,7 @@ public class JoinSemesterRequest extends BaseRequest {
     public JoinSemesterRequest(final Activity activity,
                                final Response.Listener<Session> onSuccess,
                                final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "semesters", "join"), null,
+        super(Method.POST, makeUrl(activity, null, "semesters", "join"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

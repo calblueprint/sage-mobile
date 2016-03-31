@@ -22,7 +22,7 @@ public class CreateCheckInRequest extends BaseRequest {
     public CreateCheckInRequest(final Activity activity, final CheckIn checkIn,
                                final Response.Listener<CheckIn> onSuccess,
                                final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "check_ins"), convertToParams(checkIn, "check_in", activity),
+        super(Method.POST, makeUrl(activity, null, "check_ins"), convertToParams(checkIn, "check_in", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

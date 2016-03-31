@@ -52,12 +52,15 @@ public class SemesterCheckInListAdapter extends RecyclerView.Adapter<SemesterChe
         }
         if (checkIn.getSchool() == null) {
             viewHolder.mSchoolText.setVisibility(View.GONE);
+            if (checkIn.getUser() != null) {
+                viewHolder.mAt.setVisibility(View.GONE);
+                viewHolder.mSchoolText.setVisibility(View.INVISIBLE);
+            }
         } else {
             viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
         }
 
         viewHolder.mDateTime.setText(DateUtils.forPattern(new DateTime(checkIn.getStart()), DateUtils.DATE_FORMAT_ABBREV));
-        viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
         viewHolder.mTotalTime.setText(checkIn.getTotalTime());
         viewHolder.mComment.setText(checkIn.getComment());
     }

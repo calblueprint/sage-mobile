@@ -21,7 +21,7 @@ public class EditUserRequest extends BaseRequest {
     public EditUserRequest(final Activity activity, User user,
                            final Response.Listener<User> onSuccess,
                            final Response.Listener<APIError> onFailure) {
-        super(Method.PUT, makeUrl(null, "users", String.valueOf(user.getId())), convertToParams(user, "user", activity),
+        super(Method.PUT, makeUrl(activity, null, "users", String.valueOf(user.getId())), convertToParams(user, "user", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

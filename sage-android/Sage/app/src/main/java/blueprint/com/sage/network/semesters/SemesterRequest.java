@@ -21,7 +21,7 @@ public class SemesterRequest extends BaseRequest {
     public SemesterRequest(final Activity activity, Semester semester,
                            final Response.Listener<Semester> onSuccess,
                            final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(null, "semesters", String.valueOf(semester.getId())), null,
+        super(Method.GET, makeUrl(activity, null, "semesters", String.valueOf(semester.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

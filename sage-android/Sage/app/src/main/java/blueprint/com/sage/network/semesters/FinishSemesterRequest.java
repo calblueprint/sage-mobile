@@ -21,7 +21,7 @@ public class FinishSemesterRequest extends BaseRequest {
     public FinishSemesterRequest(final Activity activity, Semester semester,
                                 final Response.Listener<Semester> onSuccess,
                                 final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "admin", "semesters", String.valueOf(semester.getId()), "finish"),
+        super(Method.POST, makeUrl(activity, null, "admin", "semesters", String.valueOf(semester.getId()), "finish"),
                 convertToParams(semester, "semester", activity),
                 new Response.Listener<JSONObject>() {
                     @Override

@@ -12,6 +12,11 @@ import SwiftKeychainWrapper
 
 class AdminTableViewController: SGTableViewController {
 
+    var checkinRequestCell = UITableViewCell()
+    var checkinRequestNotificationCircle = NotificationCircle()
+    var signupRequestCell = UITableViewCell()
+    var signupRequestNotificationCircle = NotificationCircle()
+
     //
     // MARK: - Initialization
     //
@@ -157,15 +162,19 @@ class AdminTableViewController: SGTableViewController {
             }
         case 1:
             if indexPath.row == 0 {
+                self.checkinRequestCell = cell
                 cell.textLabel?.text = "Check Ins"
                 let icon = FAKIonIcons.locationIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+                cell.accessoryView = self.checkinRequestNotificationCircle
             } else {
+                self.signupRequestCell = cell
                 cell.textLabel?.text = "Sign Ups"
                 let icon = FAKIonIcons.personAddIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+                cell.accessoryView = self.signupRequestNotificationCircle
             }
         case 2:
             if indexPath.row == 0 {

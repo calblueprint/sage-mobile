@@ -14,7 +14,6 @@ class CheckinRequestsViewController: SGTableViewController {
     var requests: [Checkin]?
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Check In Requests", subtitle: "All")
     
     //
     // MARK: - Init
@@ -57,7 +56,6 @@ class CheckinRequestsViewController: SGTableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -75,7 +73,7 @@ class CheckinRequestsViewController: SGTableViewController {
         
         if LoginOperations.getUser()!.isDirector() {
             self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
-            self.titleView.setSubtitle("My School")
+            self.changeSubtitle("My School")
         }
         self.loadCheckinRequests()
     }
@@ -119,14 +117,14 @@ class CheckinRequestsViewController: SGTableViewController {
         menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
             self.filter = nil
             self.loadCheckinRequests(reset: true)
-            self.titleView.setSubtitle("All")
+            self.changeSubtitle("All")
         }))
 
         if LoginOperations.getUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [CheckinConstants.kSchoolId: String(LoginOperations.getUser()!.directorID)]
                 self.loadCheckinRequests(reset: true)
-                self.titleView.setSubtitle("My School")
+                self.changeSubtitle("My School")
             }))
         }
 
@@ -140,7 +138,7 @@ class CheckinRequestsViewController: SGTableViewController {
             }, handler: { (selectedSchool) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
                 self.loadCheckinRequests(reset: true)
-                self.titleView.setSubtitle(selectedSchool.name!)
+                self.changeSubtitle(selectedSchool.name!)
         }))
         
         self.presentViewController(menuController, animated: false, completion: nil)

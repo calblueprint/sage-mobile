@@ -79,7 +79,7 @@ class BrowseSchoolsViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Schools"
+        self.changeTitle("Schools")
         self.tableView.tableFooterView = UIView()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSchool")

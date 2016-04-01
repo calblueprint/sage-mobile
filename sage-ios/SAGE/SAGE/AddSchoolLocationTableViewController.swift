@@ -18,7 +18,7 @@ class AddSchoolLocationTableViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Search for Schools"
+        self.changeTitle("Search for Schools")
         let searchBar = UISearchBar()
         searchBar.setHeight(44)
         searchBar.tintColor = UIColor.whiteColor()

@@ -30,7 +30,7 @@ class AddSchoolDirectorTableViewController: SGTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.sectionIndexColor = UIColor.mainColor
-        self.title = "Choose Director"
+        self.changeTitle("Choose Director")
         self.tableView.tableFooterView = UIView()
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         

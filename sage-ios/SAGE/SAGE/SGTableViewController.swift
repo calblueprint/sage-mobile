@@ -11,11 +11,13 @@ import UIKit
 class SGTableViewController: UITableViewController {
     
     var filter: [String: AnyObject]?
-    var noContentView = NoContentView()
-    var errorView: ErrorView?
+    private var noContentView = NoContentView()
+    private var errorView: ErrorView?
+    private var titleView = SGTitleView(title: nil, subtitle: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.titleView = self.titleView
         
         let emptyBackButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = emptyBackButton
@@ -30,6 +32,9 @@ class SGTableViewController: UITableViewController {
         self.view.bringSubviewToFront(self.noContentView)
     }
 
+    //
+    // MARK: - No Content View
+    //
     func showNoContentView() {
         if self.noContentView.alpha != 1.0 {
             UIView.animateWithDuration(UIConstants.fastAnimationTime) { () -> Void in
@@ -50,9 +55,38 @@ class SGTableViewController: UITableViewController {
         self.noContentView.setMessageText(message)
     }
     
+    //
+    // MARK: - Error Message
+    //
     func showErrorAndSetMessage(message: String) {
         let error = self.errorView
         let errorView = super.showError(message, currentError: error, color: UIColor.lightRedColor)
         self.errorView = errorView
+    }
+    
+    //
+    // MARK: - Title
+    //
+    func setTitle(title: String?, subtitle: String?) {
+        self.changeTitle(title)
+        self.changeSubtitle(subtitle)
+    }
+    
+    func changeTitle(title: String?) {
+        if self.navigationItem.titleView != self.titleView {
+            self.navigationItem.titleView = self.titleView
+        }
+        self.titleView.setTitle(title)
+    }
+    
+    func changeSubtitle(subtitle: String?) {
+        if self.navigationItem.titleView != self.titleView {
+            self.navigationItem.titleView = self.titleView
+        }
+        self.titleView.setSubtitle(subtitle)
+    }
+    
+    func removeSubtitle() {
+        self.changeSubtitle(nil)
     }
 }

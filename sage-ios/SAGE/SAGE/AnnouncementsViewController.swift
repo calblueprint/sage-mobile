@@ -15,7 +15,6 @@ class AnnouncementsViewController: SGTableViewController {
     var announcements = [Announcement]()
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Announcements", subtitle: "All")
 
     //
     // MARK: - Initialization
@@ -98,6 +97,7 @@ class AnnouncementsViewController: SGTableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setTitle("Announcements", subtitle: "All")
         self.view.backgroundColor = UIColor.whiteColor()
 
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -112,7 +112,6 @@ class AnnouncementsViewController: SGTableViewController {
             }
         }
         
-        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
@@ -141,20 +140,20 @@ class AnnouncementsViewController: SGTableViewController {
         menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.filter = nil
             self.getAnnouncements(reset: true)
-            self.titleView.setSubtitle("All")
+            self.changeSubtitle("All")
         }))
 
         if LoginOperations.getUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
                 self.getAnnouncements(reset: true)
-                self.titleView.setSubtitle("My School")
+                self.changeSubtitle("My School")
             }))
         } else if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
                 self.getAnnouncements(reset: true)
-                self.titleView.setSubtitle(userSchool.name!)
+                self.changeSubtitle(userSchool.name!)
             }))
         }
 
@@ -169,7 +168,7 @@ class AnnouncementsViewController: SGTableViewController {
                 }, handler: { (selectedSchool) -> Void in
                     self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
                     self.getAnnouncements(reset: true)
-                    self.titleView.setSubtitle(selectedSchool.name!)
+                    self.changeSubtitle(selectedSchool.name!)
             }))
         }
 

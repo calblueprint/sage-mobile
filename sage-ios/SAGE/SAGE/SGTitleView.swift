@@ -82,7 +82,6 @@ class SGTitleView: UIView {
         if subtitle == nil || subtitle!.characters.count == 0 {
             self.titleLabel.font = normalTitleFont
             self.subtitleLabel.hidden = true
-            
         } else {
             self.titleLabel.font = smallTitleFont
             self.subtitleLabel.hidden = false

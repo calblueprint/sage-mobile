@@ -30,7 +30,7 @@ class SelectAnnouncementSchoolTableViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Choose School"
+        self.changeTitle("Choose School")
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)

@@ -14,7 +14,6 @@ class SignUpRequestsViewController: SGTableViewController {
     var requests: [User]?
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Sign Up Requests", subtitle: "All")
     
     override init(style: UITableViewStyle) {
         super.init(style: style)
@@ -27,7 +26,6 @@ class SignUpRequestsViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -46,7 +44,7 @@ class SignUpRequestsViewController: SGTableViewController {
 
         if LoginOperations.getUser()!.isDirector() {
             self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
-            self.titleView.setSubtitle("My School")
+            self.changeSubtitle("My School")
         }
         self.loadSignUpRequests()
     }
@@ -91,14 +89,14 @@ class SignUpRequestsViewController: SGTableViewController {
         menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
             self.filter = nil
             self.loadSignUpRequests(reset: true)
-            self.titleView.setSubtitle("All")
+            self.changeSubtitle("All")
         }))
 
         if LoginOperations.getUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
                 self.loadSignUpRequests(reset: true)
-                self.titleView.setSubtitle("My School")
+                self.changeSubtitle("My School")
             }))
         }
 
@@ -112,7 +110,7 @@ class SignUpRequestsViewController: SGTableViewController {
             }, handler: { (selectedSchool) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
                 self.loadSignUpRequests(reset: true)
-                self.titleView.setSubtitle(selectedSchool.name!)
+                self.changeSubtitle(selectedSchool.name!)
         }))
     
         self.presentViewController(menuController, animated: false, completion: nil)

@@ -13,7 +13,6 @@ class BrowseMentorsViewController: SGTableViewController {
     
     var mentors: [[User]]?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Mentors", subtitle: "")
     
     init() {
         super.init(style: .Plain)
@@ -47,20 +46,20 @@ class BrowseMentorsViewController: SGTableViewController {
     
     func setSemesterTitle(semesterID: String) {
         SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
-            self.titleView.setSubtitle(semester.displayText())
+            self.changeSubtitle(semester.displayText())
             }) { (errorMessage) -> Void in
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.changeTitle("Mentors")
         if self.filter != nil {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
             self.setSemesterTitle(semesterID)
         } else {
-            self.titleView.setSubtitle("This Semester")
+            self.changeSubtitle("This Semester")
         }
-        self.navigationItem.titleView = self.titleView
         
         self.tableView.sectionIndexColor = UIColor.mainColor
         self.tableView.tableFooterView = UIView()

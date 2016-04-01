@@ -17,7 +17,6 @@ class ProfileCheckinViewController: SGTableViewController {
     var unverifiedCheckins = [Checkin]()
 
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Check Ins", subtitle: "")
     
     //
     // MARK: - Initialization
@@ -51,9 +50,8 @@ class ProfileCheckinViewController: SGTableViewController {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
             self.setSemesterTitle(semesterID)
         } else {
-            self.titleView.setSubtitle("This Semester")
+            self.changeSubtitle("This Semester")
         }
-        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -78,9 +76,9 @@ class ProfileCheckinViewController: SGTableViewController {
     
     func setSemesterTitle(semesterID: String) {
         SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
-            self.titleView.setSubtitle(semester.displayText())
+            self.changeSubtitle(semester.displayText())
             }) { (errorMessage) -> Void in
-                self.titleView.setSubtitle("Past Semester")
+                self.changeSubtitle("Past Semester")
         }
     }
     
@@ -155,7 +153,7 @@ class ProfileCheckinViewController: SGTableViewController {
             menuController.addMenuItem(MenuItem(title: "This Semester", handler: { (_) -> Void in
                 self.filter = nil
                 self.loadCheckins(reset: true)
-                self.titleView.setSubtitle("This Semester")
+                self.changeSubtitle("This Semester")
             }))
         }
 
@@ -169,7 +167,7 @@ class ProfileCheckinViewController: SGTableViewController {
             }, handler: { (selectedSemester) -> Void in
                 self.filter = [SemesterConstants.kSemesterId: String(selectedSemester.id)]
                 self.loadCheckins(reset: true)
-                self.titleView.setSubtitle(selectedSemester.displayText())
+                self.changeSubtitle(selectedSemester.displayText())
         }))
 
         self.presentViewController(menuController, animated: false, completion: nil)

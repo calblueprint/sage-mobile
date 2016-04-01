@@ -42,7 +42,7 @@ class UsersTableViewCell: UITableViewCell {
         self.mentorName.text = user.fullName()
         self.schoolName.text = user.school?.name
         if let semesterSummary = user.semesterSummary {
-            self.totalHours.text = String(semesterSummary.getTotalHours())
+            self.totalHours.text = String(semesterSummary.getTotalHoursAsString())
             self.totalHours.text! += " hour"
             if semesterSummary.getTotalHours() != 1 {
                 self.totalHours.text! += "s"

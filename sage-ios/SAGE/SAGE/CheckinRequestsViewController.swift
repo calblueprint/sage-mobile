@@ -23,7 +23,7 @@ class CheckinRequestsViewController: SGTableViewController {
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
-        self.setNoContentMessage("No new checkin requests!")
+        self.setNoContentMessage("No new check in requests!")
     }
     
 

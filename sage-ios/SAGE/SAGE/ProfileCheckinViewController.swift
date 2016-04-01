@@ -13,6 +13,7 @@ import SwiftKeychainWrapper
 class ProfileCheckinViewController: SGTableViewController {
     
     var user: User?
+    var userCheckinSummary = ProfileCheckinSummaryView()
     var verifiedCheckins = [Checkin]()
     var unverifiedCheckins = [Checkin]()
     var filter: [String: AnyObject]?
@@ -46,8 +47,20 @@ class ProfileCheckinViewController: SGTableViewController {
     //
     // MARK: - ViewController LifeCycle
     //
+    func setupHeader() {
+        self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
+        self.tableView.tableHeaderView = self.userCheckinSummary
+        let headerOffset = self.userCheckinSummary.boxHeight
+        var headerFrame = self.tableView.tableHeaderView!.frame
+        headerFrame.size.height = headerOffset
+        self.userCheckinSummary.setHeight(headerOffset)
+        self.userCheckinSummary.setupWithUser(user!, pastSemester: self.filter != nil)
+        self.tableView.tableHeaderView = self.userCheckinSummary
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupHeader()
         
         if self.filter != nil {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
@@ -102,6 +115,14 @@ class ProfileCheckinViewController: SGTableViewController {
     
     func loadCheckins(reset reset: Bool = false) {
         if reset {
+            ProfileOperations.getUser(filter: self.filter, user: self.user!, completion: { (user) -> Void in
+                self.user = user
+                self.userCheckinSummary.setupWithUser(self.user!, pastSemester: self.filter != nil)
+                }) { (errorMessage) -> Void in
+                    self.activityIndicator.stopAnimating()
+                    self.showErrorAndSetMessage(errorMessage)
+            }
+
             self.verifiedCheckins = [Checkin]()
             self.unverifiedCheckins = [Checkin]()
             self.tableView.reloadData()

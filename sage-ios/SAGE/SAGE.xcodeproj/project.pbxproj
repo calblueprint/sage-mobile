@@ -120,6 +120,7 @@
 		42F85ED81C01328700F62C37 /* AddSchoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F85ED71C01328700F62C37 /* AddSchoolController.swift */; };
 		42F85EDA1C0132CB00F62C37 /* AddSchoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F85ED91C0132CB00F62C37 /* AddSchoolView.swift */; };
 		584CDC4300AD746DE61B3744 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		5D1745F01C94B95D00C4696A /* ProfileCheckinSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1745EF1C94B95D00C4696A /* ProfileCheckinSummaryView.swift */; };
 		5D221C241C18D296008FBD9B /* CheckinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D221C231C18D296008FBD9B /* CheckinTableViewCell.swift */; };
 		5D6149111C5B76450036708A /* JoinSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149101C5B76450036708A /* JoinSemesterView.swift */; };
 		5D6149131C5C31090036708A /* NoSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149121C5C31090036708A /* NoSemesterView.swift */; };
@@ -292,6 +293,7 @@
 		42F85ED71C01328700F62C37 /* AddSchoolController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolController.swift; sourceTree = "<group>"; };
 		42F85ED91C0132CB00F62C37 /* AddSchoolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolView.swift; sourceTree = "<group>"; };
 		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		5D1745EF1C94B95D00C4696A /* ProfileCheckinSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCheckinSummaryView.swift; sourceTree = "<group>"; };
 		5D221C231C18D296008FBD9B /* CheckinTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinTableViewCell.swift; sourceTree = "<group>"; };
 		5D6149101C5B76450036708A /* JoinSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinSemesterView.swift; sourceTree = "<group>"; };
 		5D6149121C5C31090036708A /* NoSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSemesterView.swift; sourceTree = "<group>"; };
@@ -737,6 +739,7 @@
 			children = (
 				5D916A1C1C01353D003959CE /* ProfileView.swift */,
 				4241AF831C4BB65F009BC133 /* EditProfileView.swift */,
+				5D1745EF1C94B95D00C4696A /* ProfileCheckinSummaryView.swift */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1065,6 +1068,7 @@
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
 				E48082491C8F980500A38E57 /* Dictionary.swift in Sources */,
 				27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */,
+				5D1745F01C94B95D00C4696A /* ProfileCheckinSummaryView.swift in Sources */,
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
 				E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */,
 				42EFD6791BC9EC630063FD78 /* SignUpEmailPasswordView.swift in Sources */,

@@ -1,7 +1,6 @@
 package blueprint.com.sage.admin.requests.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,13 +8,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.requests.adapters.VerifyCheckInListAdapter;
+import blueprint.com.sage.admin.requests.filters.CheckInAllFilter;
+import blueprint.com.sage.admin.requests.filters.CheckInSchoolFilter;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
+import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.models.School;
+import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
+import blueprint.com.sage.shared.fragments.ListFilterFragment;
 import blueprint.com.sage.shared.interfaces.CheckInsInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -28,17 +40,24 @@ import de.greenrobot.event.EventBus;
  * Created by charlesx on 11/10/15.
  * Gets list of unverified checkins
  */
-public class VerifyCheckInListFragment extends Fragment implements OnRefreshListener {
+public class VerifyCheckInListFragment extends ListFilterFragment implements OnRefreshListener {
 
     @Bind(R.id.verify_check_in_list_refresh) SwipeRefreshLayout mCheckInRefreshLayout;
     @Bind(R.id.verify_check_in_list_list) RecycleViewEmpty mCheckInList;
     @Bind(R.id.verify_check_in_list_empty_view) SwipeRefreshLayout mEmptyView;
     @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
 
+    @Bind(R.id.check_in_filter_all) RadioButton mCheckInFilterAll;
+    @Bind(R.id.check_in_filter_school) RadioButton mCheckInSchoolButton;
+    @Bind(R.id.check_in_filter_school_spinner) Spinner mCheckInSchoolSpinner;
+
     private VerifyCheckInListAdapter mCheckInAdapter;
 
     private CheckInsInterface mCheckInInterface;
     private ToolbarInterface mToolbarInterface;
+
+    private List<School> mSchools;
+    private SchoolSpinnerAdapter mSchoolsAdapter;
 
     public static VerifyCheckInListFragment newInstance() { return new VerifyCheckInListFragment(); }
 
@@ -47,6 +66,7 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
         super.onCreate(savedInstanceState);
         mCheckInInterface = (CheckInsInterface) getActivity();
         mToolbarInterface = (ToolbarInterface) getActivity();
+        mSchools = new ArrayList<>();
     }
 
     @Override
@@ -84,6 +104,23 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
         mToolbarInterface.setTitle("Check Ins");
     }
 
+    public void initializeFilters() {
+        CheckInAllFilter checkInAllFilter = new CheckInAllFilter(mCheckInFilterAll);
+        CheckInSchoolFilter checkInSchoolFilter = new CheckInSchoolFilter(mCheckInSchoolButton, mCheckInSchoolSpinner);
+        mFilterController.addFilters(checkInAllFilter, checkInSchoolFilter);
+
+        mSchoolsAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.filter_spinner_header, R.layout.filter_spinner_item);
+
+        makeSchoolsRequest();
+    }
+
+    public void makeSchoolsRequest() {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("sort[attr]", "lower(name)");
+        queryParams.put("sort[order]", "asc");
+        Requests.Schools.with(getActivity()).makeListRequest(queryParams);
+    }
+
     @Override
     public void onRefresh() { mCheckInInterface.getCheckInListRequest(); }
 
@@ -109,5 +146,14 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
     public void onEvent(APIErrorEvent event) {
         mCheckInRefreshLayout.setRefreshing(false);
         mEmptyView.setRefreshing(false);
+    }
+
+    public void onEvent(SchoolListEvent event) {
+        mSchools = event.getSchools();
+        mSchoolsAdapter.setSchools(mSchools);
+    }
+
+    public void onFilterClick() {
+
     }
 }

@@ -3,13 +3,11 @@ package blueprint.com.sage.main.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -36,6 +34,7 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.PaginationInstance;
 import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.filters.FilterController;
+import blueprint.com.sage.shared.fragments.ListFilterFragment;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.listeners.EndlessRecyclerViewScrollListener;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
@@ -49,7 +48,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by kelseylam on 10/24/15.
  */
-public class AnnouncementsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class AnnouncementsListFragment extends ListFilterFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private LinearLayoutManager mLinearLayoutManager;
     private PaginationInstance mPaginationInstance;
@@ -63,10 +62,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     @Bind(R.id.announcements_list_refresh) SwipeRefreshLayout mAnnouncementsRefreshView;
     @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
     @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
-    @Bind(R.id.filter_view) LinearLayout mFilterButton;
 
-    // Filter related ui
-    @Bind(R.id.announcement_filter_container) View mFilterView;
     @Bind(R.id.announcement_filter_all) RadioButton mFilterAll;
     @Bind(R.id.announcement_filter_general) RadioButton mFilterGeneral;
     @Bind(R.id.announcement_filter_school) RadioButton mFilterSchool;
@@ -75,7 +71,6 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
 
     private SchoolSpinnerAdapter mSchoolAdapter;
     private List<School> mSchools;
-    private FilterController mFilterController;
 
     public static AnnouncementsListFragment newInstance() { return new AnnouncementsListFragment(); }
 
@@ -146,7 +141,7 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
         makeAnnouncementsRequest();
     }
 
-    private void initializeFilters() {
+    public void initializeFilters() {
         AnnouncementsMySchoolFilter mySchoolFilter = new AnnouncementsMySchoolFilter(mFilterMySchool, mBaseInterface.getSchool());
         AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll, mBaseInterface.getUser(), mBaseInterface.getSchool());
         AnnouncementsGeneralFilter generalFilter = new AnnouncementsGeneralFilter(mFilterGeneral);
@@ -238,23 +233,11 @@ public class AnnouncementsListFragment extends Fragment implements SwipeRefreshL
     /**
      * Filtering section
      */
-
-    @OnClick(R.id.filter_view)
-    public void onFilterViewShow() {
-        mFilterController.showFilter(getActivity(), mFilterView);
-    }
-
-    @OnClick(R.id.filter_cancel)
-    public void onFilterViewHide() {
-        mFilterController.hideFilter(getActivity(), mFilterView);
-    }
-
     @OnClick({ R.id.announcement_filter_my_school, R.id.announcement_filter_all, R.id.announcement_filter_general, R.id.announcement_filter_school })
     public void onRadioButtonClick(View view) {
         mFilterController.onFilterChecked(view.getId());
     }
 
-    @OnClick(R.id.filter_confirm)
     public void onFilterClick() {
         mPaginationInstance.resetPage();
         mEmptyView.setRefreshing(true);

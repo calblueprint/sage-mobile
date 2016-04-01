@@ -3,6 +3,7 @@ package blueprint.com.sage.landing;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,6 +78,21 @@ public class LandingActivity extends AbstractActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        mAnimationDrawable.stop();
+        for (int i = 0; i < mAnimationDrawable.getNumberOfFrames(); i++) {
+            BitmapDrawable drawable = (BitmapDrawable) mAnimationDrawable.getFrame(i);
+            drawable.getBitmap().recycle();
+            drawable.setCallback(null);
+        }
+
+        mAnimationDrawable.setCallback(null);
+        mAnimationDrawable = null;
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
@@ -95,7 +111,8 @@ public class LandingActivity extends AbstractActivity {
         fadeOutAnimation.setDuration(500);
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -113,10 +130,12 @@ public class LandingActivity extends AbstractActivity {
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
 
-        mLoadingView.setAnimation(fadeOutAnimation);
+        mLoadingView.setVisibility(View.VISIBLE);
+        mLoadingView.startAnimation(fadeOutAnimation);
     }
 
     private void startActivity(Class<?> cls) {

@@ -25,4 +25,8 @@
     <declare-styleable name="NoSwipeViewPager">
         <attr name="scrollFactor" format="float" />
     </declare-styleable>
+    
+    <declare-styleable name="LoadingView">
+        <attr name="circleDrawable" format="reference" />
+    </declare-styleable>
 </resources>

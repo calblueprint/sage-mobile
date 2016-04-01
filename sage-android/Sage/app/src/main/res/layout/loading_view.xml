@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <View
+    <blueprint.com.sage.shared.views.CircleImageView
         style="@style/ListProgressCircle"
         android:id="@+id/list_progress_circle_1" />
 
-    <View
+    <blueprint.com.sage.shared.views.CircleImageView
         style="@style/ListProgressCircle"
         android:id="@+id/list_progress_circle_2" />
 
-    <View
+    <blueprint.com.sage.shared.views.CircleImageView
         style="@style/ListProgressCircle"
         android:id="@+id/list_progress_circle_3" />
 

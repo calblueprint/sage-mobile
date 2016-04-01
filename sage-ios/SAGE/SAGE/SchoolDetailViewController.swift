@@ -61,7 +61,7 @@ class SchoolDetailViewController: SGTableViewController {
     // MARK: - Configuration
     //
     func configureWithSchool(school: School) {
-        self.title = school.name!
+        self.changeTitle(school.name!)
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
             self.hideNoContentView()
             self.configureWithCompleteSchool(updatedSchool)
@@ -135,7 +135,7 @@ class SchoolDetailViewController: SGTableViewController {
         if newSchool.id == self.school!.id {
             self.school = newSchool
             self.configureWithCompleteSchool(newSchool)
-            self.title = newSchool.name
+            self.changeTitle(newSchool.name)
             self.tableView.reloadData()
         }
     }

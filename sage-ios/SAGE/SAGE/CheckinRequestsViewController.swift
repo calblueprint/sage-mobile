@@ -56,6 +56,7 @@ class CheckinRequestsViewController: SGTableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.changeTitle("Check In Requests")
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)

@@ -26,6 +26,7 @@ class SignUpRequestsViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.changeTitle("Sign Up Requests")
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)

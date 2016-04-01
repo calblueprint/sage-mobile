@@ -20,7 +20,7 @@ class PastSemestersViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Past Semesters"
+        self.changeTitle("Past Semesters")
         self.tableView.tableFooterView = UIView()
         self.previousVC = self
         

@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -27,6 +29,8 @@ public class LoadingView extends LinearLayout {
     private AnimatorSet mCircleTwoAnimationSet;
     private AnimatorSet mCircleThreeAnimationSet;
 
+    private Drawable mCircleDrawable;
+
     public LoadingView(Context context) {
         super(context);
     }
@@ -44,6 +48,19 @@ public class LoadingView extends LinearLayout {
     private void initializeViews(Context context, AttributeSet attributeSet) {
         inflate(context, R.layout.loading_view, this);
         ButterKnife.bind(this);
+
+        TypedArray attributes =
+                context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.LoadingView, 0, 0);
+
+        mCircleDrawable = attributes.getDrawable(R.styleable.LoadingView_circleDrawable);
+
+        if (mCircleDrawable == null) {
+            mCircleDrawable = getContext().getDrawable(R.drawable.list_progress_circle);
+        }
+
+        mCircleOne.setBackground(mCircleDrawable);
+        mCircleTwo.setBackground(mCircleDrawable);
+        mCircleThree.setBackground(mCircleDrawable);
 
         setGravity(Gravity.BOTTOM | Gravity.CENTER);
     }
@@ -104,7 +121,7 @@ public class LoadingView extends LinearLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                set.setStartDelay(100);
+                set.setStartDelay(0);
                 set.start();
             }
 

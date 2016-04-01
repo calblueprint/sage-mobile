@@ -1,4 +1,4 @@
-package blueprint.com.sage.main.filters;
+package blueprint.com.sage.admin.requests.filters;
 
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -7,14 +7,14 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.shared.filters.Filter;
 
 /**
- * Created by charlesx on 3/8/16.
+ * Created by charlesx on 4/1/16.
  */
-public class AnnouncementsSchoolFilter extends Filter {
+public class CheckInSchoolFilter extends Filter {
 
     private Spinner mSchoolSpinner;
 
-    public AnnouncementsSchoolFilter(RadioButton schoolRadioButton, Spinner schoolSpinner) {
-        super(schoolRadioButton);
+    public CheckInSchoolFilter(RadioButton radioButton, Spinner schoolSpinner) {
+        super(radioButton);
         mSchoolSpinner = schoolSpinner;
     }
 

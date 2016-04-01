@@ -2,4 +2,6 @@
 <resources>
     <string name="requests_check_in">Check Ins</string>
     <string name="requests_users">Users</string>
+
+    <string name="filter_check_in_all">All</string>
 </resources>

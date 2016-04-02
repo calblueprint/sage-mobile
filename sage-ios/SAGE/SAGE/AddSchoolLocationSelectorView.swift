@@ -56,7 +56,11 @@ class AddSchoolLocationSelectorView: UIView {
         self.mapView.fillWidth()
         
         self.pinImage.center = self.mapView.center
+        let newHeight = 50.0 / self.pinImage.frame.width * self.pinImage.frame.height
         self.pinImage.setWidth(50)
+        self.pinImage.setHeight(newHeight)
+        self.pinImage.setY(self.mapView.center.y - self.pinImage.frame.height)
+        
         
         self.searchBar.fillWidth()
         self.searchBar.setHeight(44.0)

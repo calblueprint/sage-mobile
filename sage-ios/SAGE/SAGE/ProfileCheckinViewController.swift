@@ -150,15 +150,15 @@ class ProfileCheckinViewController: SGTableViewController {
                         self.unverifiedCheckins.append(checkin)
                     }
                 }
-
+                
                 self.verifiedCheckins.sortInPlace({ (checkinOne, checkinTwo) -> Bool in
                     let comparisonResult = checkinOne.startTime!.compare(checkinTwo.startTime!)
                     if comparisonResult == .OrderedDescending {
                         return true
-                        } else {
-                    return false
-                        }
-                    })
+                    } else {
+                        return false
+                    }
+                })
 
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()

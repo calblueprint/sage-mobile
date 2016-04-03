@@ -45,6 +45,7 @@ class ProfileCheckinViewController: SGTableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.changeTitle("Check Ins")
         
         if self.filter != nil {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String

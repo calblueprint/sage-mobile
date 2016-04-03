@@ -33,7 +33,6 @@ import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.PaginationInstance;
 import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
-import blueprint.com.sage.shared.filters.FilterController;
 import blueprint.com.sage.shared.fragments.ListFilterFragment;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.listeners.EndlessRecyclerViewScrollListener;
@@ -91,7 +90,6 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         super.onCreateView(inflater, container, savedInstanceState);
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_announcements_list, container, false);
         ButterKnife.bind(this, view);
-        mFilterView.setVisibility(View.GONE);
 
         initializeFilters();
         initializeViews();
@@ -121,7 +119,6 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
             mAddAnnouncementButton.setVisibility(View.GONE);
         }
 
-        mFilterController = new FilterController();
         mPaginationInstance = PaginationInstance.newInstance();
 
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -146,13 +143,9 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     }
 
     public void initializeFilters() {
-        if (mBaseInterface.getSchool() != null) {
-            if (mBaseInterface.getUser().isAdmin()) {
-                AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll, mBaseInterface.getUser(), mBaseInterface.getSchool());
-                mFilterController.addFilters(allFilter);
-                mFilterAllLayout.setVisibility(View.VISIBLE);
-            }
+        mFilterView.setVisibility(View.GONE);
 
+        if (mBaseInterface.getSchool() != null) {
             AnnouncementsMySchoolFilter mySchoolFilter = new AnnouncementsMySchoolFilter(mFilterMySchool, mBaseInterface.getSchool());
             mFilterController.addFilters(mySchoolFilter);
             mFilterMySchoolLayout.setVisibility(View.VISIBLE);
@@ -172,6 +165,10 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         mFilterController.addFilters(generalFilter);
 
         if (mBaseInterface.getUser().isAdmin() || mBaseInterface.getSchool() != null) {
+            AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll, mBaseInterface.getUser(), mBaseInterface.getSchool());
+            mFilterController.addFilters(allFilter);
+            mFilterAllLayout.setVisibility(View.VISIBLE);
+
             mFilterController.onFilterChecked(mFilterAll.getId());
         } else {
             mFilterController.onFilterChecked(mFilterGeneral.getId());

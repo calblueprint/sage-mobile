@@ -227,4 +227,16 @@ class BrowseMentorsViewController: SGTableViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SGSectionHeaderView()
+        view.setSectionTitle(self.getSectionHeaderTitle(section))
+        return view
+    }
+    
+    func getSectionHeaderTitle(sectionNumber: Int) -> String {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let charAtIndex = String(alphabet[alphabet.startIndex.advancedBy(sectionNumber)])
+        return charAtIndex
+    }
+    
 }

@@ -135,6 +135,7 @@
 		5D8AF98F1BEF059D0008D2C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */; };
 		5D916A1B1C013529003959CE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D916A1A1C013529003959CE /* ProfileViewController.swift */; };
 		5D916A1D1C01353D003959CE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D916A1C1C01353D003959CE /* ProfileView.swift */; };
+		5DA5F0EE1CB08DC100D1FC85 /* SGSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5F0ED1CB08DC100D1FC85 /* SGSectionHeaderView.swift */; };
 		5DBE8FAB1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE8FAA1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift */; };
 		5DBE8FAD1C7A6ECE009EE20C /* AddSchoolRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */; };
 		5DC788901C8CF08F00301A3C /* PastSemestersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */; };
@@ -308,6 +309,7 @@
 		5D8AF98E1BEF059D0008D2C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5D916A1A1C013529003959CE /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5D916A1C1C01353D003959CE /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5DA5F0ED1CB08DC100D1FC85 /* SGSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGSectionHeaderView.swift; sourceTree = "<group>"; };
 		5DBE8FAA1C7A6DB7009EE20C /* AddSchoolRadiusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolRadiusViewController.swift; sourceTree = "<group>"; };
 		5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolRadiusView.swift; sourceTree = "<group>"; };
 		5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastSemestersViewController.swift; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 				E4B250D01C65C764008652FD /* ProfileImageView.swift */,
 				E4B347E21C866E990026D43D /* SGTitleView.swift */,
 				4207EBD21C880DB000501F96 /* NoContentView.swift */,
+				5DA5F0ED1CB08DC100D1FC85 /* SGSectionHeaderView.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -1162,6 +1165,7 @@
 				E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */,
 				E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
+				5DA5F0EE1CB08DC100D1FC85 /* SGSectionHeaderView.swift in Sources */,
 				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,
 				4207EBD31C880DB000501F96 /* NoContentView.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,

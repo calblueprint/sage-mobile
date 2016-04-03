@@ -74,6 +74,8 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_verify_check_in_list, parent, false);
         ButterKnife.bind(this, view);
+
+        initializeFilters();
         initializeViews();
         return view;
     }
@@ -105,6 +107,8 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
     }
 
     public void initializeFilters() {
+        mFilterView.setVisibility(View.GONE);
+
         CheckInAllFilter checkInAllFilter = new CheckInAllFilter(mCheckInFilterAll);
         CheckInSchoolFilter checkInSchoolFilter = new CheckInSchoolFilter(mCheckInSchoolButton, mCheckInSchoolSpinner);
         mFilterController.addFilters(checkInAllFilter, checkInSchoolFilter);

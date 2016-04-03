@@ -7,16 +7,23 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
-class CheckinRequestsViewController: UITableViewController {
+class CheckinRequestsViewController: SGTableViewController {
     var requests: [Checkin]?
+    var filter: [String: AnyObject]?
+
     var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var titleView = SGTitleView(title: "Check In Requests", subtitle: "All")
     
-    
+    //
+    // MARK: - Init
+    //
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+        self.setNoContentMessage("No new check in requests!")
     }
     
 
@@ -28,12 +35,16 @@ class CheckinRequestsViewController: UITableViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
+    //
+    // MARK: - NSNotification
+    //
     func userEdited(notification: NSNotification) {
         let user = notification.object!.copy() as! User
         if self.requests != nil && self.requests!.count != 0 {
             for i in 0...(self.requests!.count-1) {
                 let currentRequest = self.requests![i]
                 if user.id == currentRequest.user!.id {
+                    self.hideNoContentView()
                     currentRequest.user = user
                     let indexPath = NSIndexPath(forRow: i, inSection: 0)
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
@@ -42,19 +53,31 @@ class CheckinRequestsViewController: UITableViewController {
         }
     }
     
+    //
+    // MARK: - ViewController Lifecycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Check In Requests"
+        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
+        let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
+        let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+        self.navigationItem.rightBarButtonItem = filterButton
+
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
 
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadCheckinRequests", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "loadCheckinRequestsWithReset:", forControlEvents: .ValueChanged)
         
+        if LoginOperations.getUser()!.isDirector() {
+            self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+            self.titleView.setSubtitle("My School")
+        }
         self.loadCheckinRequests()
     }
     
@@ -63,24 +86,75 @@ class CheckinRequestsViewController: UITableViewController {
         self.activityIndicator.centerVertically()
     }
     
+    //
+    // MARK: - Public Methods
+    //
     func showErrorAndSetMessage(message: String) {
         let error = self.currentErrorMessage
         let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
     }
     
-    func loadCheckinRequests() {
-        AdminOperations.loadCheckinRequests({ (checkinRequests) -> Void in
+    func loadCheckinRequests(reset reset: Bool = false) {
+        if reset {
+            self.requests = nil
+            self.tableView.reloadData()
+            self.activityIndicator.startAnimating()
+        }
+
+        AdminOperations.loadCheckinRequests(filter: self.filter, completion: { (checkinRequests) -> Void in
             self.requests = checkinRequests
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
+            
+            if self.requests == nil || self.requests?.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
 
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }
     }
     
+    func showFilterOptions() {
+        let menuController = MenuController(title: "Filter Options")
+
+        menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
+            self.filter = nil
+            self.loadCheckinRequests(reset: true)
+            self.titleView.setSubtitle("All")
+        }))
+
+        if LoginOperations.getUser()!.isDirector() {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                self.filter = [CheckinConstants.kSchoolId: String(LoginOperations.getUser()!.directorID)]
+                self.loadCheckinRequests(reset: true)
+                self.titleView.setSubtitle("My School")
+            }))
+        }
+
+        menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
+            SchoolOperations.loadSchools({ (schools) -> Void in
+                controller.setList(schools)
+                }, failure: { (errorMessage) -> Void in
+            })
+            }, displayText: { (school: School) -> String in
+                return school.name!
+            }, handler: { (selectedSchool) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+                self.loadCheckinRequests(reset: true)
+                self.titleView.setSubtitle(selectedSchool.name!)
+        }))
+        
+        self.presentViewController(menuController, animated: false, completion: nil)
+    }
+    
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let requests = self.requests {
             return requests.count
@@ -124,6 +198,7 @@ class CheckinRequestsViewController: UITableViewController {
                 
                 }, failure: { (message) -> Void in
                     self.requests?.insert(checkin, atIndex: indexPath.row)
+                    self.hideNoContentView()
                     self.tableView.reloadData()
                     self.showErrorAndSetMessage(message)
             })
@@ -131,9 +206,13 @@ class CheckinRequestsViewController: UITableViewController {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
             AdminOperations.denyCheckin(checkin, completion: nil, failure: { (message) -> Void in
                 self.requests?.insert(checkin, atIndex: indexPath.row)
+                self.hideNoContentView()
                 self.tableView.reloadData()
                 self.showErrorAndSetMessage(message)
             })
+        }
+        if self.requests?.count == 0 {
+            self.showNoContentView()
         }
     }
     

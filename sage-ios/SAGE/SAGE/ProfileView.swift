@@ -20,13 +20,7 @@ class ProfileView: UIView {
     let userName = UILabel()
     let userVolunteerLevel = UILabel()
     let userSchool = UILabel()
-    let topBorder = UIView()
-    let bottomBorder = UIView()
-    let centerBorder = UIView()
-    let userStatusContainer = UIView()
-    let userStatusLabel = UILabel()
-    let userCommitmentContainer = UIView()
-    let userCommitmentLabel = UILabel()
+    let userCheckinSummary = ProfileCheckinSummaryView()
     let userRoleLabel = UILabel()
     
     // profile page constants
@@ -37,7 +31,6 @@ class ProfileView: UIView {
     let titleFontSize = CGFloat(22)
     let profileImageSize = CGFloat(90)
     let profileImageBorder = CGFloat(6)
-    let boxHeight = CGFloat(100)
     
     let userStatusString = "User Status String"
     let userCommitmentString = "User Commitment String"
@@ -46,7 +39,7 @@ class ProfileView: UIView {
         get {
             return self.currentUserProfile
         }
-        set(isCurrentUser) {
+        set (isCurrentUser) {
             if isCurrentUser {
                 self.profileEditButton.hidden = false
             } else {
@@ -97,13 +90,7 @@ class ProfileView: UIView {
         self.profileContent.addSubview(self.userRoleLabel)
 
         self.profileContent.addSubview(self.userVolunteerLevel)
-        self.profileContent.addSubview(self.topBorder)
-        self.profileContent.addSubview(self.bottomBorder)
-        self.profileContent.addSubview(self.centerBorder)
-        self.profileContent.addSubview(self.userStatusContainer)
-        self.userStatusContainer.addSubview(self.userStatusLabel)
-        self.profileContent.addSubview(self.userCommitmentContainer)
-        self.userCommitmentContainer.addSubview(self.userCommitmentLabel)
+        self.profileContent.addSubview(self.userCheckinSummary)
         setupSubviews()
     }
 
@@ -118,44 +105,14 @@ class ProfileView: UIView {
         }
     }
     
-    func styleAttributedString(name: String, string: NSMutableAttributedString, length: Int) {
-        let boldString = [NSFontAttributeName: UIFont.getSemiboldFont(30)]
-
-        if name == self.userStatusString {
-            string.addAttributes(boldString, range: NSRange(location: 0, length: length))
-            let remainderLocation = string.length - 5
-            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: remainderLocation, length: 5))
-        }
-        
-        if name == self.userCommitmentString {
-            string.addAttributes(boldString, range: NSRange(location: 0, length: length))
-            string.addAttribute(NSForegroundColorAttributeName, value: UIColor.secondaryTextColor, range: NSRange(location: 3, length: 10))
-        }
-    }
-    
-    func setupWithUser(user: User) {
-        self.setButtonVisibility(user)
+    func setupWithUser(user: User, pastSemester: Bool = false) {
+        self.setButtonVisibility(user, pastSemester: pastSemester)
         
         self.profileUserImg.setImageWithUser(user, showBadge: false)
         self.userName.text = user.fullName()
         self.userSchool.text = user.school?.name
         self.userVolunteerLevel.text = user.volunteerLevelToString(user.level)
-        
-        if let semesterSummary = user.semesterSummary {
-            self.userStatusLabel.font = UIFont.normalFont
-            let hoursCompletedString = String(semesterSummary.getTotalHours())
-            let userStatusString = NSMutableAttributedString(string: hoursCompletedString + " / " + String(semesterSummary.hoursRequired) + " \nhours")
-            styleAttributedString(self.userStatusString, string: userStatusString, length: hoursCompletedString.characters.count)
-            self.userStatusLabel.attributedText = userStatusString
-        } else {
-            self.userStatusLabel.font = UIFont.normalFont
-            self.userStatusLabel.text = "Inactive"
-        }
-        
-        let weeklyHoursRequiredString = String(user.getRequiredHours())
-        let userCommitmentString = NSMutableAttributedString(string: weeklyHoursRequiredString + " \nhours/week")
-        styleAttributedString(self.userCommitmentString, string: userCommitmentString, length: weeklyHoursRequiredString.characters.count)
-        self.userCommitmentLabel.attributedText = userCommitmentString
+        self.userCheckinSummary.setupWithUser(user, pastSemester: pastSemester)
         
         var roleString = "Mentor"
         if user.role == .Admin {
@@ -177,7 +134,6 @@ class ProfileView: UIView {
     
     func setupSubviews() {
         self.backgroundColor = UIColor.whiteColor()
-        self.header.backgroundColor = UIColor.mainColor
         
         self.profileUserImgBorder.layer.cornerRadius = (self.profileImageSize + self.profileImageBorder)/2
         self.profileUserImgBorder.backgroundColor = UIColor.whiteColor()
@@ -207,7 +163,6 @@ class ProfileView: UIView {
         self.demoteButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         self.demoteButton.hidden = true
         self.demoteButton.titleLabel?.font = UIFont.normalFont
-
         
         self.profileUserImg.layer.cornerRadius = self.profileImageSize/2
         self.profileUserImg.clipsToBounds = true
@@ -221,19 +176,6 @@ class ProfileView: UIView {
         self.userRoleLabel.textColor = UIColor.whiteColor()
         self.userRoleLabel.clipsToBounds = true
         self.userRoleLabel.layer.cornerRadius = 2
-        
-        self.topBorder.backgroundColor = UIColor.borderColor
-        self.bottomBorder.backgroundColor = UIColor.borderColor
-        self.centerBorder.backgroundColor = UIColor.borderColor
-        
-        self.userStatusLabel.font = UIFont.normalFont
-        self.userStatusLabel.numberOfLines = 0
-        self.userStatusLabel.textAlignment = .Center
-        
-        self.userCommitmentLabel.font = UIFont.normalFont
-        self.userCommitmentLabel.numberOfLines = 0
-        self.userCommitmentLabel.textAlignment = .Center
-        
     }
     
     override func layoutSubviews() {
@@ -311,47 +253,17 @@ class ProfileView: UIView {
         let userRoleLabelY = CGRectGetMaxY(userVolunteerLevel.frame) + 3
         self.userRoleLabel.setY(userRoleLabelY)
         
-        // set up lines
-        self.topBorder.setHeight(UIConstants.dividerHeight())
-        self.topBorder.fillWidth()
-        self.topBorder.setX(0)
         let topBorderY = CGRectGetMaxY(userRoleLabel.frame) + 20
-        self.topBorder.setY(topBorderY)
+        self.userCheckinSummary.setY(topBorderY)
+        self.userCheckinSummary.setHeight(self.userCheckinSummary.boxHeight)
+        self.userCheckinSummary.fillWidth()
         
-        self.bottomBorder.setHeight(UIConstants.dividerHeight())
-        self.bottomBorder.fillWidth()
-        self.bottomBorder.setX(0)
-        self.bottomBorder.setY(topBorderY + self.boxHeight)
-        
-        self.centerBorder.setHeight(self.boxHeight)
-        self.centerBorder.setWidth(UIConstants.dividerHeight())
-        let middle = CGRectGetWidth(topBorder.frame)/2
-        self.centerBorder.setX(middle)
-        self.centerBorder.setY(topBorderY)
-        
-        // set up stats containers
-        self.userStatusContainer.setX(0)
-        self.userStatusContainer.setY(topBorderY+1)
-        self.userStatusContainer.setHeight(self.boxHeight-1)
-        self.userStatusContainer.setWidth(middle)
-        
-        self.userCommitmentContainer.setX(middle+1)
-        self.userCommitmentContainer.setY(topBorderY+1)
-        self.userCommitmentContainer.setWidth(middle)
-        self.userCommitmentContainer.setHeight(self.boxHeight-1)
-        
-        self.userCommitmentLabel.sizeToFit()
-        self.userCommitmentLabel.centerInSuperview()
-        
-        self.userStatusLabel.sizeToFit()
-        self.userStatusLabel.centerInSuperview()
-        
-        let height = CGRectGetMaxY(self.bottomBorder.frame)
+        let height = CGRectGetMaxY(self.userCheckinSummary.frame)
         self.profileContent.setHeight(height)
         self.setHeight(height)
     }
     
-    func setButtonVisibility(user: User) {
+    func setButtonVisibility(user: User, pastSemester: Bool = false) {
         self.showBothButtons = false
         if LoginOperations.getUser()?.id == user.id {
             self.currentUserProfile = true
@@ -368,11 +280,20 @@ class ProfileView: UIView {
                 self.showBothButtons = true
             }
         }
+        if pastSemester {
+            self.currentUserProfile = false
+            self.canPromote = false
+            self.canDemote = false
+        }
         self.layoutSubviews()
     }
     
     deinit {
         self.profileUserImg.cancelImageRequestOperation()
+    }
+    
+    func setHeaderBackgroundColor(color: UIColor) {
+        self.header.backgroundColor = color
     }
     
     func startPromoting() {

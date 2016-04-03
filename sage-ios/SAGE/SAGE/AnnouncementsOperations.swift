@@ -11,21 +11,23 @@ import AFNetworking
 
 class AnnouncementsOperations {
     
-    static func loadAnnouncements(completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
-        var params: [String: String]
-        if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
-            params = [
-                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
-                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
-            ]
-        } else {
-            let schoolID = LoginOperations.getUser()!.school!.id
-            params = [
-                NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
-                NetworkingConstants.kSortOrder: NetworkingConstants.kDescending,
-                AnnouncementConstants.kDefault: String(schoolID)
-            ]
+    static func loadAnnouncements(page: Int? = nil, filter: [String: AnyObject]? = nil, completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
+        var params: [String: AnyObject] = [
+            NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
+            NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
+        ]
+        
+        if let page = page {
+            params[NetworkingConstants.kPage] = page
         }
+        
+        if !(LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President) {
+            if filter == nil {
+                let schoolID = LoginOperations.getUser()!.school!.id
+                params[AnnouncementConstants.kDefault] = String(schoolID)
+            }
+        }
+        params.appendDictionary(filter)
 
         BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: params, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]

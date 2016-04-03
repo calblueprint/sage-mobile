@@ -36,6 +36,7 @@ class NoSemesterView: UIView {
         self.content.fillHeight()
         
         self.message.font = UIFont.normalFont
+        self.message.textColor = UIColor.secondaryTextColor
         self.message.textAlignment = NSTextAlignment.Center
         self.message.lineBreakMode = NSLineBreakMode.ByWordWrapping
         self.message.numberOfLines = 0

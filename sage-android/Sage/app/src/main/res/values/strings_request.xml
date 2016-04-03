@@ -4,4 +4,5 @@
     <string name="requests_users">Users</string>
 
     <string name="filter_check_in_all">All</string>
+    <string name="filter_check_in_my_school">My School</string>
 </resources>

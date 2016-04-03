@@ -63,6 +63,10 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
     @Bind(R.id.add_announcement_fab) FloatingActionButton mAddAnnouncementButton;
 
+    @Bind(R.id.announcement_filter_all_layout) View mFilterAllLayout;
+    @Bind(R.id.announcement_filter_my_school_layout) View mFilterMySchoolLayout;
+    @Bind(R.id.announcement_filter_school_layout) View mFilterSchoolLayout;
+
     @Bind(R.id.announcement_filter_all) RadioButton mFilterAll;
     @Bind(R.id.announcement_filter_general) RadioButton mFilterGeneral;
     @Bind(R.id.announcement_filter_school) RadioButton mFilterSchool;
@@ -89,8 +93,8 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         ButterKnife.bind(this, view);
         mFilterView.setVisibility(View.GONE);
 
-        initializeViews();
         initializeFilters();
+        initializeViews();
         return view;
     }
 
@@ -142,18 +146,36 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     }
 
     public void initializeFilters() {
-        AnnouncementsMySchoolFilter mySchoolFilter = new AnnouncementsMySchoolFilter(mFilterMySchool, mBaseInterface.getSchool());
-        AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll, mBaseInterface.getUser(), mBaseInterface.getSchool());
+        if (mBaseInterface.getSchool() != null) {
+            if (mBaseInterface.getUser().isAdmin()) {
+                AnnouncementsAllFilter allFilter = new AnnouncementsAllFilter(mFilterAll, mBaseInterface.getUser(), mBaseInterface.getSchool());
+                mFilterController.addFilters(allFilter);
+                mFilterAllLayout.setVisibility(View.VISIBLE);
+            }
+
+            AnnouncementsMySchoolFilter mySchoolFilter = new AnnouncementsMySchoolFilter(mFilterMySchool, mBaseInterface.getSchool());
+            mFilterController.addFilters(mySchoolFilter);
+            mFilterMySchoolLayout.setVisibility(View.VISIBLE);
+        }
+
+        if (mBaseInterface.getUser().isAdmin()) {
+            AnnouncementsSchoolFilter schoolFilter = new AnnouncementsSchoolFilter(mFilterSchool, mFilterSchoolSpinner);
+            mFilterController.addFilters(schoolFilter);
+            mFilterSchoolLayout.setVisibility(View.VISIBLE);
+
+            mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.filter_spinner_header, R.layout.filter_spinner_item);
+            mFilterSchoolSpinner.setAdapter(mSchoolAdapter);
+            makeSchoolsRequest();
+        }
+
         AnnouncementsGeneralFilter generalFilter = new AnnouncementsGeneralFilter(mFilterGeneral);
-        AnnouncementsSchoolFilter schoolFilter = new AnnouncementsSchoolFilter(mFilterSchool, mFilterSchoolSpinner);
-        mFilterController.addFilters(mySchoolFilter, allFilter, generalFilter, schoolFilter);
+        mFilterController.addFilters(generalFilter);
 
-        mSchoolAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.filter_spinner_header, R.layout.filter_spinner_item);
-        mFilterSchoolSpinner.setAdapter(mSchoolAdapter);
-
-        mFilterController.onFilterChecked(mFilterAll.getId());
-
-        makeSchoolsRequest();
+        if (mBaseInterface.getUser().isAdmin() || mBaseInterface.getSchool() != null) {
+            mFilterController.onFilterChecked(mFilterAll.getId());
+        } else {
+            mFilterController.onFilterChecked(mFilterGeneral.getId());
+        }
     }
 
     public void makeAnnouncementsRequest() {

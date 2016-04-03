@@ -129,6 +129,7 @@ class ProfileCheckinSummaryView: UIView {
         
         self.hoursPercentageLabel.font = UIFont.normalFont
         self.hoursPercentageLabel.textColor = UIColor.grayColor()
+        self.hoursPercentageLabel.frame = CGRectIntegral(self.hoursPercentageLabel.frame)g
         
         self.progressView.setWidth(self.timerSize)
         self.progressView.setHeight(self.timerSize)

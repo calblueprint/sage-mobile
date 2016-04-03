@@ -12,6 +12,7 @@ import UIKit
 class SGSectionHeaderView: UIView {
     
     let sectionTitle = UILabel()
+    let sectionHeight = CGFloat(26)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,15 +27,15 @@ class SGSectionHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.sectionTitle.sizeToFit()
-        self.sectionTitle.fillWidthWithMargin(UIConstants.textMargin)
+        self.sectionTitle.fillWidthWithMargin(UIConstants.sideMargin)
         self.sectionTitle.centerVertically()
     }
     
     func setupSubviews() {
         self.backgroundColor = UIColor.lightestGrayColor
-        self.setHeight(26)
+        self.setHeight(self.sectionHeight)
         
-        self.sectionTitle.setX(UIConstants.textMargin)
+        self.sectionTitle.setX(UIConstants.sideMargin)
         self.sectionTitle.setY(0)
         self.sectionTitle.font = UIFont.semiboldFont
         self.sectionTitle.textColor = UIColor.grayColor()

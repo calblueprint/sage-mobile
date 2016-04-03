@@ -15,7 +15,10 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <FrameLayout style="@style/FilterLayout">
+            <FrameLayout
+                style="@style/FilterLayout"
+                android:id="@+id/announcement_filter_all_layout"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/FilterText"
@@ -27,7 +30,8 @@
 
             </FrameLayout>
 
-            <FrameLayout style="@style/FilterLayout">
+            <FrameLayout
+                style="@style/FilterLayout">
 
                 <TextView
                     style="@style/FilterText"
@@ -39,7 +43,10 @@
 
             </FrameLayout>
 
-            <FrameLayout style="@style/FilterLayout">
+            <FrameLayout
+                style="@style/FilterLayout"
+                android:id="@+id/announcement_filter_my_school_layout"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/FilterText"
@@ -51,7 +58,10 @@
 
             </FrameLayout>
 
-            <FrameLayout style="@style/FilterLayout">
+            <FrameLayout
+                style="@style/FilterLayout"
+                android:id="@+id/announcement_filter_school_layout"
+                android:visibility="gone">
 
                 <Spinner
                     style="@style/FilterSpinner"

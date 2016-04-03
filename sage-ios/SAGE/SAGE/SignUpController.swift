@@ -394,7 +394,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
             message = "Enter a berkeley.edu email address."
         } else if emailView.emailInput.text != emailView.emailConfirmationInput.text {
             valid = false
-            message = "Your email must match your email confirmation."
+            message = "Your emails must match."
         }
         return (valid, message)
     }
@@ -412,7 +412,7 @@ extension SignUpController: UIImagePickerControllerDelegate, UINavigationControl
             message = "Password must be at least 8 characters."
         } else if passwordView.password.text != passwordView.passwordConfirmation.text {
             valid = false
-            message = "Your password must match your password confirmation."
+            message = "Your passwords must match."
         }
         return (valid, message)
     }

@@ -11,11 +11,16 @@ import AFNetworking
 
 class AnnouncementsOperations {
     
-    static func loadAnnouncements(filter filter: [String: AnyObject]? = nil, completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
+    static func loadAnnouncements(page: Int? = nil, filter: [String: AnyObject]? = nil, completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
         var params: [String: AnyObject] = [
             NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending
         ]
+        
+        if let page = page {
+            params[NetworkingConstants.kPage] = page
+        }
+        
         if !(LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President) {
             if filter == nil {
                 let schoolID = LoginOperations.getUser()!.school!.id

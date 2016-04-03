@@ -85,9 +85,9 @@ class SignUpRequestsViewController: SGTableViewController {
     }
     
     func showFilterOptions() {
-        let menuController = MenuController(title: "Filter Options")
+        let menuController = MenuController(title: "Display Options")
 
-        menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
+        menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.filter = nil
             self.loadSignUpRequests(reset: true)
             self.changeSubtitle("All")

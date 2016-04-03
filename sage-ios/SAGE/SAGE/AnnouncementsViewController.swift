@@ -136,7 +136,7 @@ class AnnouncementsViewController: SGTableViewController {
     }
 
     func showFilterOptions() {
-        let menuController = MenuController(title: "Filter Options")
+        let menuController = MenuController(title: "Display Options")
         menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.filter = nil
             self.getAnnouncements(reset: true)

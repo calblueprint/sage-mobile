@@ -75,6 +75,7 @@ class UsersTableViewCell: UITableViewCell {
         self.totalHours.sizeToFit()
         self.totalHours.centerVertically()
         self.totalHours.setX(self.frame.width - self.totalHours.frame.width - UIConstants.sideMargin)
+        self.totalHours.frame = CGRectIntegral(self.totalHours.frame)
         
         let mentorSchoolX = CGRectGetMaxX(self.mentorPicture.frame) + UIConstants.textMargin;
         

@@ -228,8 +228,8 @@ class ProfileView: UIView {
         self.profileUserImg.setX(profileUserImgX + self.profileImageBorder/2)
         
         // set up basic user information
-        self.userName.fillWidth()
         self.userName.sizeToFit()
+        self.userName.fillWidthWithMargin(self.leftMargin)
         self.userName.setX(self.leftMargin)
         let userNameY = CGRectGetMaxY(profileUserImg.frame) + 20
         self.userName.setY(userNameY)

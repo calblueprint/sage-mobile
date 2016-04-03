@@ -191,18 +191,6 @@ class BrowseMentorsViewController: SGTableViewController {
         return 26
     }
     
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        let alphabet = "abcdefghijklmnopqrstuvwxyz"
-        var charArray = [String: Int]()
-        for i in 0...25 {
-            let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
-            let letterString = String(letterChar)
-            charArray[letterString] = i
-        }
-        return charArray[title.lowercaseString]!
-    }
-    
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let user = self.mentors![indexPath.section][indexPath.row]
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
@@ -225,6 +213,18 @@ class BrowseMentorsViewController: SGTableViewController {
             topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         }
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SGSectionHeaderView()
+        view.setSectionTitle(self.getSectionHeaderTitle(section))
+        return view
+    }
+    
+    func getSectionHeaderTitle(sectionNumber: Int) -> String {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let charAtIndex = String(alphabet[alphabet.startIndex.advancedBy(sectionNumber)])
+        return charAtIndex
     }
     
 }

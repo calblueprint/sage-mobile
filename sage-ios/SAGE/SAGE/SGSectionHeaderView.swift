@@ -26,7 +26,6 @@ class SGSectionHeaderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.sectionTitle.sizeToFit()
         self.sectionTitle.fillWidthWithMargin(UIConstants.sideMargin)
         self.sectionTitle.fillHeight()
     }

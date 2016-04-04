@@ -13,7 +13,8 @@ class SignUpView: UIView {
     
     var pageControl: UIPageControl = UIPageControl()
     var nameView = SignUpNameView()
-    var emailPasswordView = SignUpEmailPasswordView()
+    var emailView = SignUpEmailView()
+    var passwordView = SignUpPasswordView()
     var schoolHoursView = SignUpSchoolHoursView()
     var photoView = SignUpPhotoView()
     var allViews = [SignUpFormView]()
@@ -43,10 +44,10 @@ class SignUpView: UIView {
 
         self.scrollView.pagingEnabled = true
         self.scrollView.scrollsToTop = false
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) * 4, CGRectGetHeight(self.frame))
+        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) * 5, CGRectGetHeight(self.frame))
         self.scrollView.showsHorizontalScrollIndicator = false
         self.scrollView.showsVerticalScrollIndicator = false
-        self.pageControl.numberOfPages = 4
+        self.pageControl.numberOfPages = 5
         self.pageControl.currentPage = 0
         self.pageControl.userInteractionEnabled = false
         
@@ -56,7 +57,8 @@ class SignUpView: UIView {
         self.addSubview(self.scrollView)
         
         self.scrollView.addSubview(self.nameView)
-        self.scrollView.addSubview(self.emailPasswordView)
+        self.scrollView.addSubview(self.emailView)
+        self.scrollView.addSubview(self.passwordView)
         self.scrollView.addSubview(self.schoolHoursView)
         self.scrollView.addSubview(self.photoView)
         
@@ -65,19 +67,22 @@ class SignUpView: UIView {
         self.bringSubviewToFront(self.pageControl)
         
         self.allViews.append(self.nameView)
-        self.allViews.append(self.emailPasswordView)
+        self.allViews.append(self.emailView)
+        self.allViews.append(self.passwordView)
         self.allViews.append(self.schoolHoursView)
         self.allViews.append(self.photoView)
         
         self.nameView.setX(0)
-        self.emailPasswordView.setX(screenWidth)
-        self.schoolHoursView.setX(2 * screenWidth)
-        self.photoView.setX(3 * screenWidth)
+        self.emailView.setX(screenWidth)
+        self.passwordView.setX(2 * screenWidth)
+        self.schoolHoursView.setX(3 * screenWidth)
+        self.photoView.setX(4 * screenWidth)
         
         self.nameView.backgroundColor = UIColor.lightRedColor
-        self.emailPasswordView.backgroundColor = UIColor.lightOrangeColor
-        self.schoolHoursView.backgroundColor = UIColor.lightYellowColor
-        self.photoView.backgroundColor = UIColor.lightGreenColor
+        self.emailView.backgroundColor = UIColor.lightOrangeColor
+        self.passwordView.backgroundColor = UIColor.lightYellowColor
+        self.schoolHoursView.backgroundColor = UIColor.lightGreenColor
+        self.photoView.backgroundColor = UIColor.lightBlueColor
         
         // any view setup goes here
     }
@@ -125,7 +130,7 @@ class SignUpView: UIView {
         let colorOffset = (offset % screenWidth) / screenWidth
         self.pageControl.currentPage = colorIndex
         
-        let colors = [UIColor.lightRedColor, UIColor.lightOrangeColor, UIColor.lightYellowColor, UIColor.lightGreenColor, UIColor.lightGreenColor]
+        let colors = [UIColor.lightRedColor, UIColor.lightOrangeColor, UIColor.lightYellowColor, UIColor.lightGreenColor, UIColor.lightBlueColor, UIColor.lightBlueColor]
         
         for formView in self.allViews {
             formView.backgroundColor = self.calculateColor(colors[colorIndex], secondColor: colors[colorIndex + 1], offset: colorOffset)
@@ -164,16 +169,24 @@ class SignUpView: UIView {
         if (!self.movedUp) && screenHeight == 568 {
             UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
                     self.nameView.icon.alpha = 0.0
-                    self.emailPasswordView.icon.alpha = 0.0
+                    self.emailView.icon.alpha = 0.0
+                    self.passwordView.icon.alpha = 0.0
                     self.pageControl.alpha = 0.0
                     self.nameView.firstNameInput.setY(self.nameView.firstNameInput.frame.origin.y - 65)
                     self.nameView.firstDivider.setY(self.nameView.firstDivider.frame.origin.y - 65)
                     self.nameView.lastNameInput.setY(self.nameView.lastNameInput.frame.origin.y - 65)
                     self.nameView.secondDivider.setY(self.nameView.secondDivider.frame.origin.y - 65)
-                    self.emailPasswordView.emailInput.setY(self.emailPasswordView.emailInput.frame.origin.y - 65)
-                    self.emailPasswordView.firstDivider.setY(self.emailPasswordView.firstDivider.frame.origin.y - 65)
-                    self.emailPasswordView.passwordInput.setY(self.emailPasswordView.passwordInput.frame.origin.y - 65)
-                    self.emailPasswordView.secondDivider.setY(self.emailPasswordView.secondDivider.frame.origin.y - 65)
+                
+                    self.emailView.emailInput.setY(self.emailView.emailInput.frame.origin.y - 65)
+                    self.emailView.firstDivider.setY(self.emailView.firstDivider.frame.origin.y - 65)
+                    self.emailView.emailConfirmationInput.setY(self.emailView.emailConfirmationInput.frame.origin.y - 65)
+                    self.emailView.secondDivider.setY(self.emailView.secondDivider.frame.origin.y - 65)
+                
+                    self.passwordView.password.setY(self.passwordView.password.frame.origin.y - 65)
+                    self.passwordView.firstDivider.setY(self.passwordView.firstDivider.frame.origin.y - 65)
+                    self.passwordView.passwordConfirmation.setY(self.passwordView.passwordConfirmation.frame.origin.y - 65)
+                    self.passwordView.secondDivider.setY(self.passwordView.secondDivider.frame.origin.y - 65)
+
 
                 }, completion: nil)
             
@@ -191,12 +204,20 @@ class SignUpView: UIView {
                     self.nameView.firstDivider.setY(self.nameView.firstDivider.frame.origin.y + 65)
                     self.nameView.lastNameInput.setY(self.nameView.lastNameInput.frame.origin.y + 65)
                     self.nameView.secondDivider.setY(self.nameView.secondDivider.frame.origin.y + 65)
-                    self.emailPasswordView.emailInput.setY(self.emailPasswordView.emailInput.frame.origin.y + 65)
-                    self.emailPasswordView.firstDivider.setY(self.emailPasswordView.firstDivider.frame.origin.y + 65)
-                    self.emailPasswordView.passwordInput.setY(self.emailPasswordView.passwordInput.frame.origin.y + 65)
-                    self.emailPasswordView.secondDivider.setY(self.emailPasswordView.secondDivider.frame.origin.y + 65)
+                
+                    self.emailView.emailInput.setY(self.emailView.emailInput.frame.origin.y + 65)
+                    self.emailView.firstDivider.setY(self.emailView.firstDivider.frame.origin.y + 65)
+                    self.emailView.emailConfirmationInput.setY(self.emailView.emailConfirmationInput.frame.origin.y + 65)
+                    self.emailView.secondDivider.setY(self.emailView.secondDivider.frame.origin.y + 65)
+                
+                    self.passwordView.password.setY(self.passwordView.password.frame.origin.y + 65)
+                    self.passwordView.firstDivider.setY(self.passwordView.firstDivider.frame.origin.y + 65)
+                    self.passwordView.passwordConfirmation.setY(self.passwordView.passwordConfirmation.frame.origin.y + 65)
+                    self.passwordView.secondDivider.setY(self.passwordView.secondDivider.frame.origin.y + 65)
+                
                     self.nameView.icon.alpha = 1.0
-                    self.emailPasswordView.icon.alpha = 1.0
+                    self.emailView.icon.alpha = 1.0
+                    self.passwordView.icon.alpha = 1.0
                     self.pageControl.alpha = 1.0
                 }, completion: nil)
             

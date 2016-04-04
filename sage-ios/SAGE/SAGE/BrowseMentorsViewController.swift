@@ -108,7 +108,7 @@ class BrowseMentorsViewController: SGTableViewController {
             if self.mentors![section].count == 0 {
                 return 0.0
             } else {
-                return 22.0
+                return SGSectionHeaderView.sectionHeight
             }
         } else {
             return 0.0

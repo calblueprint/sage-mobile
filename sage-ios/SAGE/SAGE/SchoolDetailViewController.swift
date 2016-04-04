@@ -184,20 +184,24 @@ class SchoolDetailViewController: SGTableViewController {
         return UsersTableViewCell.cellHeight()
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Director"
-        } else {
-            return "Students"
-        }
-    }
-    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let _ = self.school?.director {
-            return UITableViewAutomaticDimension
+            return SGSectionHeaderView.sectionHeight
         } else {
             return 0
         }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SGSectionHeaderView()
+        var title = ""
+        if section == 0 {
+            title = "Director"
+        } else {
+            title = "Students"
+        }
+        view.setSectionTitle(title)
+        return view
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

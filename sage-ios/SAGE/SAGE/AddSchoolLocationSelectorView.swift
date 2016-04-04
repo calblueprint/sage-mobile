@@ -36,6 +36,8 @@ class AddSchoolLocationSelectorView: UIView {
         self.searchBar.backgroundColor = UIColor.mainColor
         self.searchBar.barTintColor = UIColor.whiteColor()
         self.searchBar.searchBarStyle = .Minimal
+        let textField = self.searchBar.valueForKey("searchField") as? UITextField
+        textField?.textColor = UIColor.whiteColor()
         
         let imageSize: CGFloat = 15
         let iconColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)

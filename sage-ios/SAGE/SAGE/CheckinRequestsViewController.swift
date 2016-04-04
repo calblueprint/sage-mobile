@@ -76,6 +76,8 @@ class CheckinRequestsViewController: SGTableViewController {
         if LoginOperations.getUser()!.isDirector() {
             self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
             self.changeSubtitle("My School")
+        } else {
+            self.changeSubtitle("All")
         }
         self.loadCheckinRequests()
     }

@@ -19,6 +19,10 @@ class SignUpRequestsViewController: SGTableViewController {
         super.init(style: style)
         self.setNoContentMessage("No new sign up requests!")
     }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -46,6 +50,8 @@ class SignUpRequestsViewController: SGTableViewController {
         if LoginOperations.getUser()!.isDirector() {
             self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
             self.changeSubtitle("My School")
+        } else {
+            self.changeSubtitle("All")
         }
         self.loadSignUpRequests()
     }

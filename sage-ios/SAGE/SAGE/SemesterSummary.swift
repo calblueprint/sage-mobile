@@ -106,8 +106,22 @@ class SemesterSummary: NSObject, NSCoding {
     //
     // MARK: - Public Methods
     //
-    func getTotalHours() -> Int {
-        return self.totalMinutes / 60
+    func getTotalHours() -> Float {
+        return Float(self.totalMinutes) / 60
+    }
+    
+    func getTotalHoursAsString() -> String {
+        let totalHours = Float(self.totalMinutes) / 60
+        var hoursCompletedString = String()
+        if totalHours == 0 {
+            hoursCompletedString = "0"
+        } else {
+            let formatter = NSNumberFormatter()
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = 1
+            hoursCompletedString = String(format: "%.1f", totalHours)
+        }
+        return hoursCompletedString
     }
 
     func statusToString(status: Status) -> String {

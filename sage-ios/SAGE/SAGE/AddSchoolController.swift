@@ -28,6 +28,9 @@ class AddSchoolController: FormController {
     func locationButtonTapped() {
         let tableViewController = AddSchoolLocationTableViewController()
         tableViewController.parentVC = self
+        if let location = self.location {
+            tableViewController.configureWithLocation(location)
+        }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
@@ -79,16 +82,24 @@ class AddSchoolController: FormController {
         (self.view as! AddSchoolView).displayChosenDirector(director)
     }
     
-    func didSelectPlace(prediction: GMSAutocompletePrediction) {
-        let placeID = prediction.placeID
-        let placeClient = GMSPlacesClient.sharedClient()
-        placeClient.lookUpPlaceID(placeID) { (predictedPlace, error) -> Void in
-            if let place = predictedPlace {
-                self.location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
-                self.address = place.formattedAddress
-                (self.view as! AddSchoolView).displayChosenPlace(place)
-            }
+    func didSelectCoordinate(coordinate: CLLocationCoordinate2D) {
+        self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
+    
+    func didSelectPlace(place: GMSPlace) {
+        let coordinate = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+        self.didSelectCoordinate(coordinate)
+        self.address = place.formattedAddress
+        (self.view as? AddSchoolView)?.displayChosenPlace(place)
+    }
+    
+    func selectPlacemarkData(placemark: CLPlacemark, coordinate: CLLocationCoordinate2D) {
+        let newAddress = placemark.makeAddressString()
+        if newAddress != "" {
+            self.address = newAddress
+            (self.view as? AddSchoolView)?.displayAddressText(address)
         }
+        self.didSelectCoordinate(coordinate)
     }
 
 }

@@ -21,14 +21,14 @@ class CheckinRequestsViewController: SGTableViewController {
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
-        self.setNoContentMessage("No new checkin requests!")
+        self.setNoContentMessage("No new check in requests!")
     }
     
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -51,6 +51,7 @@ class CheckinRequestsViewController: SGTableViewController {
         }
     }
     
+
     //
     // MARK: - ViewController Lifecycle
     //

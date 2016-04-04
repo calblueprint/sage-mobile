@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 
 class AddSchoolLocationSelectorView: UIView {
     
@@ -35,6 +36,18 @@ class AddSchoolLocationSelectorView: UIView {
         self.searchBar.backgroundColor = UIColor.mainColor
         self.searchBar.barTintColor = UIColor.whiteColor()
         self.searchBar.searchBarStyle = .Minimal
+        
+        let imageSize: CGFloat = 15
+        let iconColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
+        let searchIcon = FAKIonIcons.androidSearchIconWithSize(imageSize)
+        searchIcon.addAttribute(NSForegroundColorAttributeName, value: iconColor)
+        let searchIconImage = searchIcon.imageWithSize(CGSizeMake(imageSize, imageSize))
+        self.searchBar.setImage(searchIconImage, forSearchBarIcon: .Search, state: .Normal)
+        let cancelIcon = FAKIonIcons.androidCancelIconWithSize(imageSize)
+        cancelIcon.addAttribute(NSForegroundColorAttributeName, value: iconColor)
+        let cancelIconImage = cancelIcon.imageWithSize(CGSizeMake(imageSize, imageSize))
+        self.searchBar.setImage(cancelIconImage, forSearchBarIcon: .Clear, state: .Normal)
+        
         self.addSubview(self.searchBar)
         
         self.mapView.addSubview(self.pinImage)

@@ -5,4 +5,7 @@
 
     <string name="filter_check_in_all">All</string>
     <string name="filter_check_in_my_school">My School</string>
+
+    <string name="filter_user_all">All</string>
+    <string name="filter_user_my_school">My School</string>
 </resources>

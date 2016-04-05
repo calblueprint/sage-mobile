@@ -81,18 +81,12 @@ class EditProfileController: FormController {
     @objc private func schoolButtonTapped() {
         let tableViewController = SelectSchoolEditProfileController()
         tableViewController.parentVCEditProfile = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
     @objc private func hoursButtonTapped() {
         let tableViewController = SelectHoursEditProfileController()
         tableViewController.parentVCEditProfile = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     

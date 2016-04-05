@@ -10,12 +10,10 @@ import UIKit
 import FontAwesomeKit
 
 class CheckinRequestsViewController: SGTableViewController {
+    
     var requests: [Checkin]?
-    var filter: [String: AnyObject]?
 
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Check In Requests", subtitle: "All")
     
     //
     // MARK: - Init
@@ -59,7 +57,7 @@ class CheckinRequestsViewController: SGTableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.titleView = self.titleView
+        self.changeTitle("Check In Requests")
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -77,7 +75,9 @@ class CheckinRequestsViewController: SGTableViewController {
         
         if LoginOperations.getUser()!.isDirector() {
             self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
-            self.titleView.setSubtitle("My School")
+            self.changeSubtitle("My School")
+        } else {
+            self.changeSubtitle("All")
         }
         self.loadCheckinRequests()
     }
@@ -90,11 +90,6 @@ class CheckinRequestsViewController: SGTableViewController {
     //
     // MARK: - Public Methods
     //
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
     
     func loadCheckinRequests(reset reset: Bool = false) {
         if reset {
@@ -121,19 +116,19 @@ class CheckinRequestsViewController: SGTableViewController {
     }
     
     func showFilterOptions() {
-        let menuController = MenuController(title: "Filter Options")
+        let menuController = MenuController(title: "Display Options")
 
-        menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
+        menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.filter = nil
             self.loadCheckinRequests(reset: true)
-            self.titleView.setSubtitle("All")
+            self.changeSubtitle("All")
         }))
 
         if LoginOperations.getUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [CheckinConstants.kSchoolId: String(LoginOperations.getUser()!.directorID)]
                 self.loadCheckinRequests(reset: true)
-                self.titleView.setSubtitle("My School")
+                self.changeSubtitle("My School")
             }))
         }
 
@@ -147,7 +142,7 @@ class CheckinRequestsViewController: SGTableViewController {
             }, handler: { (selectedSchool) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
                 self.loadCheckinRequests(reset: true)
-                self.titleView.setSubtitle(selectedSchool.name!)
+                self.changeSubtitle(selectedSchool.name!)
         }))
         
         self.presentViewController(menuController, animated: false, completion: nil)

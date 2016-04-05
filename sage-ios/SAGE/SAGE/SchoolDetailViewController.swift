@@ -61,7 +61,7 @@ class SchoolDetailViewController: SGTableViewController {
     // MARK: - Configuration
     //
     func configureWithSchool(school: School) {
-        self.title = school.name!
+        self.changeTitle(school.name!)
         AdminOperations.loadSchool(school.id, completion: { (updatedSchool) -> Void in
             self.hideNoContentView()
             self.configureWithCompleteSchool(updatedSchool)
@@ -124,9 +124,6 @@ class SchoolDetailViewController: SGTableViewController {
     func editSchool() {
         let editSchoolController = EditSchoolController()
         editSchoolController.configureWithSchool(self.school)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(editSchoolController, animated: true)
     }
     
@@ -138,7 +135,7 @@ class SchoolDetailViewController: SGTableViewController {
         if newSchool.id == self.school!.id {
             self.school = newSchool
             self.configureWithCompleteSchool(newSchool)
-            self.title = newSchool.name
+            self.changeTitle(newSchool.name)
             self.tableView.reloadData()
         }
     }
@@ -187,20 +184,24 @@ class SchoolDetailViewController: SGTableViewController {
         return UsersTableViewCell.cellHeight()
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Director"
-        } else {
-            return "Students"
-        }
-    }
-    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let _ = self.school?.director {
-            return UITableViewAutomaticDimension
+            return SGSectionHeaderView.sectionHeight
         } else {
             return 0
         }
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SGSectionHeaderView()
+        var title = ""
+        if section == 0 {
+            title = "Director"
+        } else {
+            title = "Students"
+        }
+        view.setSectionTitle(title)
+        return view
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -211,9 +212,6 @@ class SchoolDetailViewController: SGTableViewController {
             userProfile = self.school!.students![indexPath.row]
         }
         let viewController = ProfileViewController(user: userProfile)
-        if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController!.pushViewController(viewController, animated: true)
     }
 

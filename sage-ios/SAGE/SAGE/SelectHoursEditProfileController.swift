@@ -26,7 +26,7 @@ class SelectHoursEditProfileController: SGTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Choose Hours"
+        self.changeTitle("Choose Hours")
         self.tableView.tableFooterView = UIView()
     }
 

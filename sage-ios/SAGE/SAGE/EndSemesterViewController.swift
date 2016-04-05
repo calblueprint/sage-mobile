@@ -8,7 +8,7 @@
 
 import Foundation
 
-class EndSemesterViewController: UIViewController {
+class EndSemesterViewController: SGViewController {
 
     let endView = EndSemesterView()
 

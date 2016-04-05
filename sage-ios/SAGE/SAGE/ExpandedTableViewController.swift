@@ -16,6 +16,7 @@ class ExpandedTableViewController<Element> : UITableViewController {
     private(set) var handler: (Element) -> Void = {_ in }
 
     private var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var menuItem: ExpandMenuItem<Element>?
 
     //
     // MARK: - Initialization
@@ -87,6 +88,7 @@ class ExpandedTableViewController<Element> : UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.menuItem?.controller?.dismiss()
         self.handler(self.list[indexPath.row])
     }
 }

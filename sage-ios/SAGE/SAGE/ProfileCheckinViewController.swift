@@ -16,11 +16,8 @@ class ProfileCheckinViewController: SGTableViewController {
     var userCheckinSummary = ProfileCheckinSummaryView()
     var verifiedCheckins = [Checkin]()
     var unverifiedCheckins = [Checkin]()
-    var filter: [String: AnyObject]?
 
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Check Ins", subtitle: "")
     
     //
     // MARK: - Initialization
@@ -60,15 +57,15 @@ class ProfileCheckinViewController: SGTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.changeTitle("Check Ins")
         self.setupHeader()
         
         if self.filter != nil {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
             self.setSemesterTitle(semesterID)
         } else {
-            self.titleView.setSubtitle("This Semester")
+            self.changeSubtitle("This Semester")
         }
-        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -93,9 +90,9 @@ class ProfileCheckinViewController: SGTableViewController {
     
     func setSemesterTitle(semesterID: String) {
         SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
-            self.titleView.setSubtitle(semester.displayText())
+            self.changeSubtitle(semester.displayText())
             }) { (errorMessage) -> Void in
-                self.titleView.setSubtitle("Past Semester")
+                self.changeSubtitle("Past Semester")
         }
     }
     
@@ -107,12 +104,6 @@ class ProfileCheckinViewController: SGTableViewController {
     //
     // MARK: - Public Methods
     //
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
     func loadCheckins(reset reset: Bool = false) {
         if reset {
             ProfileOperations.getUser(filter: self.filter, user: self.user!, completion: { (user) -> Void in
@@ -184,7 +175,7 @@ class ProfileCheckinViewController: SGTableViewController {
             menuController.addMenuItem(MenuItem(title: "This Semester", handler: { (_) -> Void in
                 self.filter = nil
                 self.loadCheckins(reset: true)
-                self.titleView.setSubtitle("This Semester")
+                self.changeSubtitle("This Semester")
             }))
         }
 
@@ -198,7 +189,7 @@ class ProfileCheckinViewController: SGTableViewController {
             }, handler: { (selectedSemester) -> Void in
                 self.filter = [SemesterConstants.kSemesterId: String(selectedSemester.id)]
                 self.loadCheckins(reset: true)
-                self.titleView.setSubtitle(selectedSemester.displayText())
+                self.changeSubtitle(selectedSemester.displayText())
         }))
 
         self.presentViewController(menuController, animated: false, completion: nil)

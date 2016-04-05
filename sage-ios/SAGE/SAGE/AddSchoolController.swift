@@ -26,23 +26,17 @@ class AddSchoolController: FormController {
     }
     
     func locationButtonTapped() {
-        let vc = AddSchoolLocationTableViewController()
-        vc.parentVC = self
+        let tableViewController = AddSchoolLocationTableViewController()
+        tableViewController.parentVC = self
         if let location = self.location {
-            vc.configureWithLocation(location)
+            tableViewController.configureWithLocation(location)
         }
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
     func directorButtonTapped() {
         let tableViewController = AddSchoolDirectorTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
 
@@ -52,9 +46,6 @@ class AddSchoolController: FormController {
         } else {
             let viewController = AddSchoolRadiusViewController(center: self.location!.coordinate, radius: self.radius)
             viewController.parentVC = self
-            if let topItem = self.navigationController?.navigationBar.topItem {
-                topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-            }
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }

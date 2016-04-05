@@ -21,7 +21,6 @@ class MenuItem: UIView {
     //
     required init(title: String, handler: (AnyObject) -> Void) {
         super.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.whiteColor()
         self.setupSubviews()
 
         self.titleLabel.text = title
@@ -29,7 +28,8 @@ class MenuItem: UIView {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: "itemTapped:")
         tapGesture.cancelsTouchesInView = false
-        self.addGestureRecognizer(tapGesture)
+        self.titleLabel.addGestureRecognizer(tapGesture)
+        self.titleLabel.userInteractionEnabled = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,6 +39,7 @@ class MenuItem: UIView {
     func setupSubviews() {
         self.setHeight(MenuView.menuItemHeight)
 
+        self.titleLabel.backgroundColor = UIColor.whiteColor()
         self.titleLabel.textColor = UIColor.blackColor()
         self.titleLabel.font = UIFont.getDefaultFont(15)
         self.titleLabel.textAlignment = .Center
@@ -55,12 +56,12 @@ class MenuItem: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        self.titleLabel.setX(UIConstants.sideMargin)
-        self.titleLabel.fillWidthWithMargin(UIConstants.sideMargin)
-        self.titleLabel.fillHeight()
+        self.titleLabel.setX(0)
+        self.titleLabel.fillWidth()
+        self.titleLabel.setHeight(MenuView.menuItemHeight)
 
         self.divider.fillWidth()
-        self.divider.alignBottomWithMargin(0)
+        self.divider.setY(CGRectGetMaxY(self.titleLabel.frame) - UIConstants.dividerHeight())
     }
 
     //

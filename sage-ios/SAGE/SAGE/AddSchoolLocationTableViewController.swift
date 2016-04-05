@@ -72,7 +72,7 @@ class AddSchoolLocationTableViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Search for Schools"
+        self.changeTitle("Search for Schools")
     }
 
     // MARK: - Table view data source

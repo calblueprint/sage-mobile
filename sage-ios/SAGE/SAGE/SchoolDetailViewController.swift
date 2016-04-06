@@ -92,11 +92,16 @@ class SchoolDetailViewController: SGTableViewController {
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
 
-        let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
-        editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
-        let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-        let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: "editSchool")
-        self.navigationItem.rightBarButtonItem = rightButton
+        if let role = LoginOperations.getUser()?.role {
+            if role == .Admin || role == .President {
+                let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
+                editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
+                let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+                let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: "editSchool")
+                self.navigationItem.rightBarButtonItem = rightButton
+
+            }
+        }
         
         if let coordinate = self.school?.location?.coordinate {
             let marker = GMSMarker(position: coordinate)

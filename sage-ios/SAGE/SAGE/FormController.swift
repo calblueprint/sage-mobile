@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FormController: UIViewController {
+class FormController: SGViewController {
     
     var finishButton: SGBarButtonItem?
     var currentErrorMessage: ErrorView?

@@ -8,15 +8,15 @@
 
 import UIKit
 
-class AddSchoolDirectorTableViewController: UITableViewController {
+class AddSchoolDirectorTableViewController: SGTableViewController {
     
     var directors: [[User]]?
-    var currentErrorMessage: ErrorView?
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     weak var parentVC: AddSchoolController?
     
     init() {
         super.init(style: .Plain)
+        self.setNoContentMessage("No potential directors could be found.")
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -30,7 +30,7 @@ class AddSchoolDirectorTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.sectionIndexColor = UIColor.mainColor
-        self.title = "Choose Director"
+        self.changeTitle("Choose Director")
         self.tableView.tableFooterView = UIView()
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
@@ -69,6 +69,20 @@ class AddSchoolDirectorTableViewController: UITableViewController {
                 let firstLetterIndex = charArray[firstLetter]
                 self.directors![firstLetterIndex!].append(director)
             }
+            
+            var empty = true
+            for directorArray in self.directors! {
+                if directorArray.count != 0 {
+                    empty = false
+                }
+            }
+            
+            if empty {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+            
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
@@ -93,12 +107,6 @@ class AddSchoolDirectorTableViewController: UITableViewController {
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         let letterChar = alphabet[alphabet.startIndex.advancedBy(section)]
         return String(letterChar)
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

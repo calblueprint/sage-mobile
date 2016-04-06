@@ -56,6 +56,17 @@ class AnnouncementsDetailViewController: UIViewController {
                 self.navigationItem.rightBarButtonItem = rightButton
             }
         }
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "showProfile")
+        self.detailView.announcementUserImg.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    func showProfile() {
+        if let sender = self.announcement.sender {
+            let profileViewController = ProfileViewController(user: sender)
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+
+        }
     }
     
     //
@@ -64,9 +75,6 @@ class AnnouncementsDetailViewController: UIViewController {
     func editAnnouncement() {
         let editAnnouncementController = EditAnnouncementController()
         editAnnouncementController.configureWithAnnouncement(self.announcement)
-        if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController!.pushViewController(editAnnouncementController, animated: true)
     }
     

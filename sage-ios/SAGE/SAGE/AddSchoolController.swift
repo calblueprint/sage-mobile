@@ -13,6 +13,7 @@ class AddSchoolController: FormController {
     var director: User?
     var location: CLLocation?
     var address: String?
+    var radius: CLLocationDistance? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,13 +22,14 @@ class AddSchoolController: FormController {
         self.title = "Add School"
         addSchoolView.location.button.addTarget(self, action: "locationButtonTapped", forControlEvents: .TouchUpInside)
         addSchoolView.director.button.addTarget(self, action: "directorButtonTapped", forControlEvents: .TouchUpInside)
+        addSchoolView.radius.button.addTarget(self, action: "radiusButtonTapped", forControlEvents: .TouchUpInside)
     }
     
     func locationButtonTapped() {
         let tableViewController = AddSchoolLocationTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        if let location = self.location {
+            tableViewController.configureWithLocation(location)
         }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
@@ -35,21 +37,31 @@ class AddSchoolController: FormController {
     func directorButtonTapped() {
         let tableViewController = AddSchoolDirectorTableViewController()
         tableViewController.parentVC = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
-    
+
+    func radiusButtonTapped() {
+        if self.location == nil {
+            self.showAlertControllerError("Please choose a location first.")
+        } else {
+            let viewController = AddSchoolRadiusViewController(center: self.location!.coordinate, radius: self.radius)
+            viewController.parentVC = self
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+
     func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
         if self.location == nil {
             self.showAlertControllerError("Please choose a location.")
+        } else if self.radius == nil {
+            self.showAlertControllerError("Please choose a radius.")
         } else if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {
             self.showAlertControllerError("What's the school's name?")
-        } else {
+        }
+        else {
             self.finishButton?.startLoading()
-            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director, address: self.address)
+            let school = School(name: addSchoolView.name.textField.text, location: self.location, director: self.director, address: self.address, radius: self.radius!)
             AdminOperations.createSchool(school, completion: { (createdSchool) -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addSchoolKey, object: createdSchool)
@@ -60,21 +72,34 @@ class AddSchoolController: FormController {
         }
     }
     
+    func didSelectRadius(radius: CLLocationDistance) {
+        self.radius = radius
+        (self.view as! AddSchoolView).displayRadius(radius)
+    }
+
     func didSelectDirector(director: User) {
         self.director = director
         (self.view as! AddSchoolView).displayChosenDirector(director)
     }
     
-    func didSelectPlace(prediction: GMSAutocompletePrediction) {
-        let placeID = prediction.placeID
-        let placeClient = GMSPlacesClient.sharedClient()
-        placeClient.lookUpPlaceID(placeID) { (predictedPlace, error) -> Void in
-            if let place = predictedPlace {
-                self.location = CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
-                self.address = place.formattedAddress
-                (self.view as! AddSchoolView).displayChosenPlace(place)
-            }
+    func didSelectCoordinate(coordinate: CLLocationCoordinate2D) {
+        self.location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    }
+    
+    func didSelectPlace(place: GMSPlace) {
+        let coordinate = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+        self.didSelectCoordinate(coordinate)
+        self.address = place.formattedAddress
+        (self.view as? AddSchoolView)?.displayChosenPlace(place)
+    }
+    
+    func selectPlacemarkData(placemark: CLPlacemark, coordinate: CLLocationCoordinate2D) {
+        let newAddress = placemark.makeAddressString()
+        if newAddress != "" {
+            self.address = newAddress
+            (self.view as? AddSchoolView)?.displayAddressText(address)
         }
+        self.didSelectCoordinate(coordinate)
     }
 
 }

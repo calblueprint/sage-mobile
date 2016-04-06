@@ -26,10 +26,10 @@ class UsersTableViewCell: UITableViewCell {
         
         self.contentView.addSubview(self.totalHours)
         self.totalHours.textColor = UIColor.secondaryTextColor
-        self.totalHours.font = UIFont.getDefaultFont(16)
+        self.totalHours.font = UIFont.getDefaultFont(14)
         
         self.contentView.addSubview(self.mentorName)
-        self.mentorName.font = UIFont.getSemiboldFont(16)
+        self.mentorName.font = UIFont.semiboldFont
         
         self.contentView.addSubview(self.schoolName)
         self.schoolName.font = UIFont.getDefaultFont(14)
@@ -42,7 +42,7 @@ class UsersTableViewCell: UITableViewCell {
         self.mentorName.text = user.fullName()
         self.schoolName.text = user.school?.name
         if let semesterSummary = user.semesterSummary {
-            self.totalHours.text = String(semesterSummary.getTotalHours())
+            self.totalHours.text = String(semesterSummary.getTotalHoursAsString())
             self.totalHours.text! += " hour"
             if semesterSummary.getTotalHours() != 1 {
                 self.totalHours.text! += "s"
@@ -75,6 +75,7 @@ class UsersTableViewCell: UITableViewCell {
         self.totalHours.sizeToFit()
         self.totalHours.centerVertically()
         self.totalHours.setX(self.frame.width - self.totalHours.frame.width - UIConstants.sideMargin)
+        self.totalHours.frame = CGRectIntegral(self.totalHours.frame)
         
         let mentorSchoolX = CGRectGetMaxX(self.mentorPicture.frame) + UIConstants.textMargin;
         

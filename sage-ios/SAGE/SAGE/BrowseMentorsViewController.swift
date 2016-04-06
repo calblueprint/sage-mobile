@@ -7,11 +7,11 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
-class BrowseMentorsViewController: UITableViewController {
+class BrowseMentorsViewController: SGTableViewController {
     
     var mentors: [[User]]?
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     init() {
@@ -44,10 +44,24 @@ class BrowseMentorsViewController: UITableViewController {
         self.alphabetizeAndLoad(users)
     }
     
+    func setSemesterTitle(semesterID: String) {
+        SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
+            self.changeSubtitle(semester.displayText())
+            }) { (errorMessage) -> Void in
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.changeTitle("Mentors")
+        if self.filter != nil {
+            let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
+            self.setSemesterTitle(semesterID)
+        } else {
+            self.changeSubtitle("This Semester")
+        }
+        
         self.tableView.sectionIndexColor = UIColor.mainColor
-        self.title = "Mentors"
         self.tableView.tableFooterView = UIView()
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
         
@@ -55,7 +69,11 @@ class BrowseMentorsViewController: UITableViewController {
         self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl?.backgroundColor = UIColor.mainColor
+        if self.filter != nil {
+            self.refreshControl?.backgroundColor = UIColor.lightGrayColor
+        } else {
+            self.refreshControl?.backgroundColor = UIColor.mainColor
+        }
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "loadMentors", forControlEvents: .ValueChanged)
         
@@ -73,13 +91,7 @@ class BrowseMentorsViewController: UITableViewController {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
     }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
+
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         var charArray = [String]()
@@ -96,7 +108,7 @@ class BrowseMentorsViewController: UITableViewController {
             if self.mentors![section].count == 0 {
                 return 0.0
             } else {
-                return 22.0
+                return SGSectionHeaderView.sectionHeight
             }
         } else {
             return 0.0
@@ -104,9 +116,18 @@ class BrowseMentorsViewController: UITableViewController {
     }
     
     func loadMentors() {
-        AdminOperations.loadMentors({ (mentorArray) -> Void in
+        if filter == nil {
+            if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                self.setNoContentMessage("No mentors found :(")
+            } else {
+                self.setNoContentMessage("There is currently no semester!")
+            }
+        } else {
+            self.setNoContentMessage("No mentors found :(")
+        }
+        
+        AdminOperations.loadMentors(filter: self.filter, completion: { (mentorArray) -> Void in
             self.alphabetizeAndLoad(mentorArray)
-            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }
@@ -130,6 +151,19 @@ class BrowseMentorsViewController: UITableViewController {
             self.mentors![firstLetterIndex!].append(mentor)
         }
         
+        var empty = true
+        for mentorArray in self.mentors! {
+            if mentorArray.count != 0 {
+                empty = false
+            }
+        }
+        
+        if empty {
+            self.showNoContentView()
+        } else {
+            self.hideNoContentView()
+        }
+        
         self.tableView.reloadData()
         self.activityIndicator.stopAnimating()
         self.refreshControl?.endRefreshing()
@@ -146,18 +180,6 @@ class BrowseMentorsViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 26
     }
-    
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        let alphabet = "abcdefghijklmnopqrstuvwxyz"
-        var charArray = [String: Int]()
-        for i in 0...25 {
-            let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
-            let letterString = String(letterChar)
-            charArray[letterString] = i
-        }
-        return charArray[title.lowercaseString]!
-    }
-    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let user = self.mentors![indexPath.section][indexPath.row]
@@ -176,10 +198,20 @@ class BrowseMentorsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let mentor = self.mentors![indexPath.section][indexPath.row]
         let vc = ProfileViewController(user: mentor)
-        if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
+        vc.filter = self.filter
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SGSectionHeaderView()
+        view.setSectionTitle(self.getSectionHeaderTitle(section))
+        return view
+    }
+    
+    func getSectionHeaderTitle(sectionNumber: Int) -> String {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let charAtIndex = String(alphabet[alphabet.startIndex.advancedBy(sectionNumber)])
+        return charAtIndex
     }
     
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectHoursEditProfileController: UITableViewController {
+class SelectHoursEditProfileController: SGTableViewController {
     
     weak var parentVCEditProfile: EditProfileController?
     
@@ -26,7 +26,7 @@ class SelectHoursEditProfileController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Choose Hours"
+        self.changeTitle("Choose Hours")
         self.tableView.tableFooterView = UIView()
     }
 

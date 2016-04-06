@@ -7,21 +7,25 @@
 //
 
 import Foundation
+import FontAwesomeKit
 import SwiftKeychainWrapper
 
-class AnnouncementsViewController: UITableViewController {
+class AnnouncementsViewController: SGTableViewController {
     
     var announcements = [Announcement]()
+
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var currentErrorMessage: ErrorView?
-    
+
+    //
+    // MARK: - Initialization
+    //
     override init(style: UITableViewStyle) {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementDeleted:", name: NotificationConstants.deleteAnnouncementKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
-
+        self.setNoContentMessage("No announcements could be found :(")
     }
     
     deinit {
@@ -88,17 +92,26 @@ class AnnouncementsViewController: UITableViewController {
         }
     }
     
+    //
+    // MARK: - ViewController LifeCycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setTitle("Announcements", subtitle: "All")
         self.view.backgroundColor = UIColor.whiteColor()
+
+        let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
+        let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
 
         if let role = LoginOperations.getUser()?.role {
             if role == .Admin || role == .President {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")
+                self.navigationItem.rightBarButtonItems = [filterButton, UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")]
+            } else {
+                self.navigationItem.rightBarButtonItems = [filterButton]
             }
         }
         
-        self.title = "Announcements"
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
@@ -109,25 +122,78 @@ class AnnouncementsViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "getAnnouncements", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "getAnnouncementsWithReset:", forControlEvents: .ValueChanged)
         
         self.getAnnouncements()
     }
     
+    //
+    // MARK: - Public Methods
+    //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
-    
-    func getAnnouncements() {
-        AnnouncementsOperations.loadAnnouncements({ (announcements) -> Void in
+
+    func showFilterOptions() {
+        let menuController = MenuController(title: "Display Options")
+        menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
+            self.filter = nil
+            self.getAnnouncements(reset: true)
+            self.changeSubtitle("All")
+        }))
+
+        if LoginOperations.getUser()!.isDirector() {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.getAnnouncements(reset: true)
+                self.changeSubtitle("My School")
+            }))
+        } else if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+            menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
+                self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
+                self.getAnnouncements(reset: true)
+                self.changeSubtitle(userSchool.name!)
+            }))
+        }
+
+        if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
+            menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
+                SchoolOperations.loadSchools({ (schools) -> Void in
+                    controller.setList(schools)
+                    }, failure: { (errorMessage) -> Void in
+                })
+                }, displayText: { (school: School) -> String in
+                    return school.name!
+                }, handler: { (selectedSchool) -> Void in
+                    self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
+                    self.getAnnouncements(reset: true)
+                    self.changeSubtitle(selectedSchool.name!)
+            }))
+        }
+
+        self.presentViewController(menuController, animated: false, completion: nil)
+    }
+
+    func getAnnouncements(reset reset: Bool = false) {
+        if reset {
+            self.hideNoContentView()
+            self.announcements = [Announcement]()
+            self.tableView.reloadData()
+            self.activityIndicator.startAnimating()
+        }
+
+        AnnouncementsOperations.loadAnnouncements(filter: self.filter, completion: { (announcements) -> Void in
             self.announcements = announcements
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
             self.tableView.reloadData()
+
+            if self.announcements.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
 
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
@@ -136,12 +202,9 @@ class AnnouncementsViewController: UITableViewController {
         }
     }
     
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
+    //
+    // MARK: - UITableViewDelegate
+    //
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return AnnouncementsTableViewCell.heightForAnnouncement(announcements[indexPath.row], width: CGRectGetWidth(tableView.frame))
     }
@@ -167,9 +230,6 @@ class AnnouncementsViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let announcement = self.announcements[indexPath.row]
         let view = AnnouncementsDetailViewController(announcement: announcement)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(view, animated: true)
     }
 }

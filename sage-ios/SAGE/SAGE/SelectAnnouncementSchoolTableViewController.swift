@@ -8,16 +8,16 @@
 
 import UIKit
 
-class SelectAnnouncementSchoolTableViewController: UITableViewController {
+class SelectAnnouncementSchoolTableViewController: SGTableViewController {
     
     var schools: [School]?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .White)
     weak var parentVC: AddAnnouncementController?
-    var currentErrorMessage: ErrorView?
     let everyoneSchool = School(id: -1, name: "Everyone", students: [User]())
     
     init() {
         super.init(style: .Plain)
+        self.setNoContentMessage("Could not find any schools.")
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -30,7 +30,7 @@ class SelectAnnouncementSchoolTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Choose School"
+        self.changeTitle("Choose School")
         self.tableView.tableFooterView = UIView()
         
         self.view.addSubview(self.activityIndicator)
@@ -51,15 +51,16 @@ class SelectAnnouncementSchoolTableViewController: UITableViewController {
             self.tableView.reloadData()
             self.activityIndicator.stopAnimating()
             self.refreshControl?.endRefreshing()
+            
+            if self.schools?.count == 0 {
+                self.showNoContentView()
+            } else {
+                self.hideNoContentView()
+            }
+            
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
         }
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     override func viewWillLayoutSubviews() {

@@ -37,8 +37,17 @@ class RequestHoursViewController: FormController {
     
     @objc private func completeForm() {
         if self.requestHoursView.isValid() {
-            self.finishButton?.startLoading()
             let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
+            if !finalCheckin.verified && (finalCheckin.comment?.characters.count == nil || finalCheckin.comment?.characters.count == 0) {
+                let alertController = UIAlertController(
+                    title: "Error",
+                    message: "Please add a comment.",
+                    preferredStyle: .Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                return
+            }
+            self.finishButton?.startLoading()
             CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
                 KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
                 if checkinResponse.verified {

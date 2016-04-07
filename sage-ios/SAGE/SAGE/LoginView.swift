@@ -13,11 +13,15 @@ class LoginView: UIView {
     var loginPasswordField: UITextField = UITextField()
     var signUpLink: UIButton = UIButton()
     var sageLabel: UILabel = UILabel()
+    var forgotPasswordLabel: UILabel = UILabel()
     var containerView: UIView = UIView()
     var firstDivider: UIView = UIView()
     var secondDivider: UIView = UIView()
     var loginButton: SGButton = SGButton()
     var currentErrorMessage: ErrorView?
+    var forgotPasswordLink: UIButton = UIButton()
+    var backToLoginLink: UIButton = UIButton()
+    var forgotPasswordButton: SGButton = SGButton()
     
     var movedUp: Bool = false
     
@@ -52,8 +56,13 @@ class LoginView: UIView {
         self.sageLabel.text = "SAGE"
         self.sageLabel.textColor = UIColor.whiteColor()
         self.sageLabel.font = UIFont.getTitleFont(64)
-        
         self.containerView.addSubview(self.sageLabel)
+        
+        self.forgotPasswordLabel.text = "Forgot Password"
+        self.forgotPasswordLabel.textColor = UIColor.whiteColor()
+        self.forgotPasswordLabel.font = UIFont.getTitleFont(30)
+        self.containerView.addSubview(self.forgotPasswordLabel)
+        self.forgotPasswordLabel.alpha = 0
         
         self.loginEmailField.textColor = UIColor.whiteColor()
         self.loginEmailField.attributedPlaceholder = NSAttributedString(string:"Email", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
@@ -83,11 +92,40 @@ class LoginView: UIView {
         self.signUpLink.titleLabel!.textColor = UIColor.whiteColor()
         self.containerView.addSubview(self.signUpLink)
         
+        let forgotPasswordString = "Forgot password? Recover it here."
+        let passwordRange = (forgotPasswordString as NSString).rangeOfString("here")
+        let attributedSignUpString = NSMutableAttributedString(string: forgotPasswordString)
+        attributedSignUpString.addAttribute(NSUnderlineStyleAttributeName, value: NSNumber(int: 1), range: passwordRange)
+        self.forgotPasswordLink.setAttributedTitle(attributedSignUpString, forState: .Normal)
+        self.forgotPasswordLink.titleLabel!.textAlignment = .Center
+        self.forgotPasswordLink.titleLabel!.font = UIFont.metaFont
+        self.forgotPasswordLink.titleLabel!.textColor = UIColor.whiteColor()
+        self.containerView.addSubview(self.forgotPasswordLink)
+        
+        let backtoLoginString = "Back to login"
+        let backRange = (backtoLoginString as NSString).rangeOfString("Back to login")
+        let attributedLoginString = NSMutableAttributedString(string: backtoLoginString)
+        attributedLoginString.addAttribute(NSUnderlineStyleAttributeName, value: NSNumber(int: 1), range: backRange)
+        self.backToLoginLink.setAttributedTitle(attributedLoginString, forState: .Normal)
+        self.backToLoginLink.titleLabel!.textAlignment = .Center
+        self.backToLoginLink.titleLabel!.font = UIFont.metaFont
+        self.backToLoginLink.titleLabel!.textColor = UIColor.whiteColor()
+        self.containerView.addSubview(self.backToLoginLink)
+        self.backToLoginLink.alpha = 0
+        
         self.loginButton.backgroundColor = UIColor(white: 1, alpha: 0.45)
         self.loginButton.setTitle("Log in", forState: .Normal)
         self.loginButton.layer.cornerRadius = 5
         self.loginButton.clipsToBounds = true
         self.containerView.addSubview(self.loginButton)
+        
+        self.forgotPasswordButton.backgroundColor = UIColor(white: 1, alpha: 0.45)
+        self.forgotPasswordButton.setTitle("Submit", forState: .Normal)
+        self.forgotPasswordButton.titleLabel?.font = self.loginButton.titleLabel?.font
+        self.forgotPasswordButton.layer.cornerRadius = 5
+        self.forgotPasswordButton.clipsToBounds = true
+        self.containerView.addSubview(self.forgotPasswordButton)
+        self.forgotPasswordButton.alpha = 0
         
     }
    
@@ -114,6 +152,12 @@ class LoginView: UIView {
         self.sageLabel.setWidth(self.containerView.frame.width)
         self.sageLabel.setHeight(self.containerView.frame.height * 0.4)
         self.sageLabel.textAlignment = .Center
+        
+        self.forgotPasswordLabel.setX(0)
+        self.forgotPasswordLabel.setY(0)
+        self.forgotPasswordLabel.setWidth(self.containerView.frame.width)
+        self.forgotPasswordLabel.setHeight(self.containerView.frame.height * 0.4)
+        self.forgotPasswordLabel.textAlignment = .Center
         
         let dividerMargin: CGFloat = 30
         let textOffset: CGFloat = 40
@@ -144,10 +188,22 @@ class LoginView: UIView {
         self.loginButton.setHeight(40)
         self.loginButton.setY(self.containerView.frame.height * 0.48 + 65)
         
+        self.forgotPasswordButton.frame = self.loginButton.frame
+        
         self.signUpLink.setX(0)
         self.signUpLink.setY(CGRectGetMaxY(self.loginButton.frame) + 20)
         self.signUpLink.setWidth(self.containerView.frame.width)
         self.signUpLink.setHeight(20)
+
+        self.forgotPasswordLink.setX(0)
+        self.forgotPasswordLink.setY(CGRectGetMaxY(self.signUpLink.frame) + 5)
+        self.forgotPasswordLink.setWidth(self.containerView.frame.width)
+        self.forgotPasswordLink.setHeight(20)
+        
+        self.backToLoginLink.setX(0)
+        self.backToLoginLink.setY(CGRectGetMaxY(self.signUpLink.frame) + 5)
+        self.backToLoginLink.setWidth(self.containerView.frame.width)
+        self.backToLoginLink.setHeight(20)
     }
     
     //

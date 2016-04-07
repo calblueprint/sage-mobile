@@ -227,4 +227,16 @@ class LoginOperations: NSObject {
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
         KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
     }
+    
+    static func sendPasswordResetRequest(email: String, completion: (() -> Void), failure: (String) -> Void) {
+        let operationManager = BaseOperation.manager()
+        var params = [String: AnyObject]()
+        params[NetworkingConstants.kEmail] = email
+        
+        operationManager.POST(StringConstants.kEndpointPasswordReset, parameters: params, success: { (operation, object) -> Void in
+            completion()
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+    }
 }

@@ -15,5 +15,8 @@ struct NetworkingConstants {
     
     static let kAscending = "asc"
     static let kDescending = "desc"
+    
+    static let kDeviceType = "device_type"
+    static let kDeviceID = "device_id"
 }
 

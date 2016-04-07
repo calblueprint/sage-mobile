@@ -106,6 +106,9 @@ struct StringConstants {
     
     static func kUserAdminPromoteURL(id: Int) -> String {
         return StringConstants.kEndpointBaseURL + "/admin/users/" + String(id) + "/promote"
-
+    }
+    
+    static func kEndpointRegisterForNotifications(userID: Int) -> String {
+        return StringConstants.kEndpointBaseURL + "/users/" + String(userID) + "/register"
     }
 }

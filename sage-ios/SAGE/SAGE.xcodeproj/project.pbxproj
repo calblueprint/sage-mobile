@@ -145,7 +145,7 @@
 		5DBE8FAD1C7A6ECE009EE20C /* AddSchoolRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */; };
 		5DC788901C8CF08F00301A3C /* PastSemestersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */; };
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
-		5DE8FCC91CB5F3CA00774F5A /* NotificationOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE8FCC81CB5F3CA00774F5A /* NotificationOperations.swift */; };
+		5DE8FCC91CB5F3CA00774F5A /* PushNotificationOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE8FCC81CB5F3CA00774F5A /* PushNotificationOperations.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
 		7DAB510B471F2447CE373B43 /* Pods_SAGE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419E12842510C77C653D2AE2 /* Pods_SAGE.framework */; };
@@ -190,6 +190,7 @@
 		E4D8DCA51C6ABDB0003C0637 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC901C6ABDB0003C0637 /* SF-UI-Text-RegularItalic.otf */; };
 		E4D8DCA61C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC911C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf */; };
 		E4D8DCA71C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC921C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf */; };
+		E4F7290F1CB62B1500A61E67 /* PushNotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -333,7 +334,7 @@
 		5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolRadiusView.swift; sourceTree = "<group>"; };
 		5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastSemestersViewController.swift; sourceTree = "<group>"; };
 		5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewCell.swift; sourceTree = "<group>"; };
-		5DE8FCC81CB5F3CA00774F5A /* NotificationOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationOperations.swift; sourceTree = "<group>"; };
+		5DE8FCC81CB5F3CA00774F5A /* PushNotificationOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationOperations.swift; sourceTree = "<group>"; };
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -381,6 +382,7 @@
 		E4D8DC911C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
 		E4D8DC921C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		E4F4D1AE1DF02A430022D035 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SAGE-hgizdykbzycmlfdnsftftvsxcbiw/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
+		E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -605,6 +607,7 @@
 				4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */,
 				27F990C51BBDD76800D61DA2 /* StringConstants.swift */,
 				422AC8BC1C64956500A30D1C /* NetworkingConstants.swift */,
+				E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -620,7 +623,7 @@
 				5D63EF111BFC86340036D478 /* SchoolOperations.swift */,
 				5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */,
 				E4CF49E81C5624690078A799 /* SemesterOperations.swift */,
-				5DE8FCC81CB5F3CA00774F5A /* NotificationOperations.swift */,
+				5DE8FCC81CB5F3CA00774F5A /* PushNotificationOperations.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -1145,7 +1148,7 @@
 				E4CF49E91C5624690078A799 /* SemesterOperations.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				E4B347E01C7B0C540026D43D /* ExpandedTableViewController.swift in Sources */,
-				5DE8FCC91CB5F3CA00774F5A /* NotificationOperations.swift in Sources */,
+				5DE8FCC91CB5F3CA00774F5A /* PushNotificationOperations.swift in Sources */,
 				5DC788901C8CF08F00301A3C /* PastSemestersViewController.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
@@ -1217,6 +1220,7 @@
 				421515981CC891AC008B854F /* SuccessView.swift in Sources */,
 				42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
+				E4F7290F1CB62B1500A61E67 /* PushNotificationConstants.swift in Sources */,
 				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
 				E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  NotificationOperations.swift
+//  PushNotificationOperations.swift
 //  SAGE
 //
 //  Created by Erica Yin on 4/5/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NotificationOperations {
+class PushNotificationOperations {
 
     static func registerForNotifications(userID: Int, deviceID: String, deviceType: Int, completion: () -> Void, failure: (String) -> Void) {
         let params = [

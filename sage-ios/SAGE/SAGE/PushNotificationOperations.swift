@@ -10,16 +10,21 @@ import Foundation
 
 class PushNotificationOperations {
 
-    static func registerForNotifications(userID: Int, deviceID: String, deviceType: Int, completion: () -> Void, failure: (String) -> Void) {
-        let params = [
-            NetworkingConstants.kDeviceType: deviceType,
-            NetworkingConstants.kDeviceID: deviceID
-        ]
+    static func registerForNotifications(deviceID: String, completion: () -> Void, failure: (String) -> Void) {
+        if let user = LoginOperations.getUser() {
+            let params = [
+                NetworkingConstants.kDeviceType: 1,
+                NetworkingConstants.kDeviceID: deviceID
+            ]
 
-        BaseOperation.manager().POST(StringConstants.kEndpointRegisterForNotifications(userID), parameters: params, success: { (operation, data) -> Void in
-            completion()
-            }) { (operation, error) -> Void in
-                failure(BaseOperation.getErrorMessage(error))
+            BaseOperation.manager().POST(StringConstants.kEndpointRegisterForNotifications(user.id), parameters: params, success: { (operation, data) -> Void in
+                completion()
+                }) { (operation, error) -> Void in
+                    failure(BaseOperation.getErrorMessage(error))
+            }
+        } else {
+            return
         }
+
     }
 }

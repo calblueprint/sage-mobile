@@ -57,7 +57,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for i in 0..<deviceToken.length {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
-        // Send device Token to server
+        PushNotificationOperations.registerForNotifications(tokenString, completion: { () -> Void in
+            }) { (message) -> Void in
+                print(message)
+        }
     }
 
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

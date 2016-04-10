@@ -1,4 +1,4 @@
-package blueprint.com.sage.network;
+package blueprint.com.sage.network.sessions;
 
 import android.app.Activity;
 import android.util.Log;
@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Session;
+import blueprint.com.sage.network.BaseRequest;
 
 /**
  * Created by kelseylam on 10/14/15.

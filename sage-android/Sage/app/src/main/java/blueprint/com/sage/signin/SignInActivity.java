@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.signIn.fragments.SignInFragment;
 import blueprint.com.sage.utility.view.FragUtils;
 
 /**
@@ -11,9 +12,7 @@ import blueprint.com.sage.utility.view.FragUtils;
  * Activity for signing in.
  */
 public class SignInActivity extends FragmentActivity {
-
-//    private SharedPreferences mPreferences;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

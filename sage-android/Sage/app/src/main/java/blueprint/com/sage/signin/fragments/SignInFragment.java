@@ -1,4 +1,4 @@
-package blueprint.com.sage.signIn;
+package blueprint.com.sage.signIn.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.views.SimpleLoadingLayout;
 import blueprint.com.sage.signUp.SignUpActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -87,13 +88,18 @@ public class SignInFragment extends Fragment {
         HashMap<String, String> params = new HashMap<>();
         params.put("email", email);
         params.put("password", password);
-        Requests.SignIn.with(getActivity()).makeSignInRequest(params);
+        Requests.Sessions.with(getActivity()).makeSignInRequest(params);
     }
 
     @OnClick(R.id.sign_in_sign_up)
     public void onSignUpPressed(TextView textView) {
         Intent intent = new Intent(getActivity(), SignUpActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.sign_in_reset_password)
+    public void onResetPasswordPressed() {
+        FragUtils.replaceBackStack(R.id.sign_in_container, ResetPasswordFragment.newInstance(), getActivity());
     }
 
     public void onEvent(SignInEvent event) {

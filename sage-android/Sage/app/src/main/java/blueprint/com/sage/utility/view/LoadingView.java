@@ -74,7 +74,6 @@ public class LoadingView extends LinearLayout {
         return mCircleOneAnimationSet != null && mCircleTwoAnimationSet != null && mCircleThreeAnimationSet != null;
     }
 
-
     private ObjectAnimator getUpAnimator(View view) {
         return getTranslateAnimator(view, getHeight() - getPaddingBottom() - view.getHeight(), getPaddingTop());
     }

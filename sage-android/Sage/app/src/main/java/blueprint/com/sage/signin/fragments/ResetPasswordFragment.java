@@ -83,7 +83,7 @@ public class ResetPasswordFragment extends Fragment implements FormValidation {
     }
 
     public void onEvent(ResetPasswordEvent event) {
-        Toast.makeText(getActivity(), event.getApiSuccess().getMessage(), Toast.LENGTH_SHORT);
+        Toast.makeText(getActivity(), event.getApiSuccess().getMessage(), Toast.LENGTH_SHORT).show();
         FragUtils.popBackStack(this);
     }
 

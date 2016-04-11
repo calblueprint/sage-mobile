@@ -10,5 +10,5 @@ import lombok.Data;
 public class ResetPasswordEvent {
     private APISuccess apiSuccess;
 
-    public ResetPasswordEvent(APISuccess success) { this.apiSuccess = apiSuccess; }
+    public ResetPasswordEvent(APISuccess success) { this.apiSuccess = success; }
 }

@@ -32,6 +32,7 @@ import blueprint.com.sage.events.semesters.JoinSemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.events.semesters.StartSemesterEvent;
+import blueprint.com.sage.events.sessions.ResetPasswordEvent;
 import blueprint.com.sage.events.sessions.SignInEvent;
 import blueprint.com.sage.events.user_semesters.UpdateUserSemesterEvent;
 import blueprint.com.sage.events.users.CreateAdminEvent;
@@ -43,6 +44,7 @@ import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.APIError;
+import blueprint.com.sage.models.APISuccess;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
@@ -69,6 +71,8 @@ import blueprint.com.sage.network.semesters.JoinSemesterRequest;
 import blueprint.com.sage.network.semesters.SemesterListRequest;
 import blueprint.com.sage.network.semesters.SemesterRequest;
 import blueprint.com.sage.network.semesters.StartSemesterRequest;
+import blueprint.com.sage.network.sessions.ResetPasswordRequest;
+import blueprint.com.sage.network.sessions.SignInRequest;
 import blueprint.com.sage.network.user_semesters.UpdateUserSemesterRequest;
 import blueprint.com.sage.network.users.CreateAdminRequest;
 import blueprint.com.sage.network.users.CreateUserRequest;
@@ -562,15 +566,15 @@ public class Requests {
         }
     }
 
-    public static class SignIn {
+    public static class Sessions {
         private FragmentActivity mActivity;
 
-        public SignIn(FragmentActivity activity) {
+        public Sessions(FragmentActivity activity) {
             mActivity = activity;
         }
 
-        public static SignIn with(FragmentActivity activity) {
-            return new SignIn(activity);
+        public static Sessions with(FragmentActivity activity) {
+            return new Sessions(activity);
         }
 
         public void makeSignInRequest(HashMap<String, String> params) {
@@ -586,6 +590,24 @@ public class Requests {
                 }
             });
             Requests.addToRequestQueue(mActivity, loginRequest);
+        }
+
+        public void makeResetPasswordRequest(HashMap<String, String> params) {
+            ResetPasswordRequest request = new ResetPasswordRequest(mActivity, params,
+                    new Response.Listener<APISuccess>() {
+                        @Override
+                        public void onResponse(APISuccess apiSuccess) {
+                            Requests.postEvent(new ResetPasswordEvent(apiSuccess), false);
+                        }
+
+                    }, new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
         }
     }
 

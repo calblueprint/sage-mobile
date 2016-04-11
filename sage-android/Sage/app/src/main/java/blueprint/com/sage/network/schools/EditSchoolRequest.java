@@ -21,7 +21,7 @@ public class EditSchoolRequest extends BaseRequest {
     public EditSchoolRequest(final Activity activity, School school,
                                final Response.Listener<School> onSuccess,
                                final Response.Listener<APIError> onFailure) {
-        super(Method.PUT, makeUrl(null, "admin", "schools", String.valueOf(school.getId())),
+        super(Method.PUT, makeUrl(activity, null, "admin", "schools", String.valueOf(school.getId())),
                 convertToParams(school, "school", activity),
                 new Response.Listener<JSONObject>() {
                     @Override

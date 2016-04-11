@@ -1,10 +1,7 @@
 package blueprint.com.sage.admin.browse.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,18 +11,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AutocompletePrediction;
-import com.google.android.gms.location.places.AutocompletePredictionBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -44,6 +39,7 @@ import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.SchoolsInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
+import blueprint.com.sage.shared.views.ScrollMapView;
 import blueprint.com.sage.utility.view.MapUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,8 +58,10 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     @Bind(R.id.create_school_layout) View mLayout;
     @Bind(R.id.create_school_name) EditText mSchoolName;
     @Bind(R.id.create_school_address) AutoCompleteTextView mSchoolAddress;
-    @Bind(R.id.create_school_map) MapView mMapView;
+    @Bind(R.id.create_school_map) ScrollMapView mMapView;
     @Bind(R.id.create_school_director) Spinner mDirector;
+    @Bind(R.id.create_school_radius) SeekBar mRadius;
+    @Bind(R.id.create_school_radius_int) TextView mRadiusInt;
 
     private List<User> mUsers;
     private SchoolUserSpinnerAdapter mUserAdapter;
@@ -75,6 +73,10 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     private BaseInterface mBaseInterface;
     private PlacePredictionAdapter mPlaceAdapter;
     private FormValidator mValidator;
+    protected MenuItem mItem;
+
+    LatLng mBounds;
+    public final int MAX_RADIUS = 1000;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -185,7 +187,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         mMap.getUiSettings().setCompassEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(MapUtils.ZOOM));
-        mMap.getUiSettings().setAllGesturesEnabled(false);
 
         LatLng latLng;
         if (mSchool == null) {
@@ -194,11 +195,47 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             latLng = new LatLng(mSchool.getLat(), mSchool.getLng());
         }
         moveMapToLatLng(latLng);
+        mBounds = latLng;
+
+        mRadius.setMax(MAX_RADIUS);
+        final int initialRadius;
+        if (mSchool != null) {
+            initialRadius = mSchool.getRadius();
+            mRadius.setProgress(initialRadius);
+        } else {
+            initialRadius = 0;
+        }
+
+        mRadiusInt.setText(initialRadius + " m");
+        mMapView.setRadius(initialRadius);
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition position) {
+                mBounds = mMap.getCameraPosition().target;
+            }
+        });
+
+        mRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int radius = progress;
+                mMapView.setRadius(radius);
+                mRadiusInt.setText(radius + " m");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
     }
 
     private void moveMapToLatLng(LatLng latLng) {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.addMarker(MapUtils.getMarkerOptions(latLng, getActivity()));
     }
 
     public void validateAndSubmitRequest() {
@@ -210,17 +247,17 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
         String name = mSchoolName.getText().toString();
         String address = mSchoolAddress.getText().toString();
-        LatLng bounds = MapUtils.getLatLngFromAddress(getActivity(), address);
         SchoolUserSpinnerAdapter.Item selectedDirector =
                 (SchoolUserSpinnerAdapter.Item) mDirector.getSelectedItem();
 
         mSchool.setName(name);
         mSchool.setAddress(address);
         mSchool.setDirectorId(selectedDirector.toInt());
+        mSchool.setRadius(mRadius.getProgress());
 
-        if (bounds != null) {
-            mSchool.setLat((float) bounds.latitude);
-            mSchool.setLng((float) bounds.longitude);
+        if (mBounds != null) {
+            mSchool.setLat((float) mBounds.latitude);
+            mSchool.setLng((float) mBounds.longitude);
         }
 
         makeRequest();

@@ -3,9 +3,14 @@ package blueprint.com.sage.utility.view;
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.util.Log;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -58,5 +63,26 @@ public class MapUtils {
     public static MarkerOptions getMarkerOptions(LatLng latLng, Activity activity) {
         return new MarkerOptions().position(latLng)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_blue_48dp));
+    }
+
+    public static CircleOptions getCircleOptions(Activity activity, LatLng latLng, int radius) {
+        return new CircleOptions()
+                    .center(latLng)
+                    .radius(radius)
+                    .strokeWidth(5.0f)
+                    .strokeColor(ViewUtils.getColor(activity, R.color.transparent))
+                    .fillColor(ViewUtils.getColor(activity, R.color.map_circle_fill));
+    }
+
+    public static int convertRadius(MapView mapView, GoogleMap map, int radius) {
+        int newRadius;
+        int width = mapView.getMeasuredWidth();
+        Projection projection = map.getProjection();
+        LatLng left = projection.getVisibleRegion().nearLeft;
+        LatLng right = projection.getVisibleRegion().nearRight;
+        float[] dist = new float[1];
+        Location.distanceBetween(left.latitude, left.longitude, right.latitude, right.longitude, dist);
+        newRadius = Math.round(width / dist[0] * radius);
+        return newRadius;
     }
 }

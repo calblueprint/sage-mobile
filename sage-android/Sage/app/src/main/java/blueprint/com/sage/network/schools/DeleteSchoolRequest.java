@@ -22,7 +22,7 @@ public class DeleteSchoolRequest extends BaseRequest {
     public DeleteSchoolRequest(final Activity activity, School school,
                                final Response.Listener<School> onSuccess,
                                final Response.Listener<APIError> onError) {
-        super(Method.DELETE, makeUrl(null, "admin", "schools", String.valueOf(school.getId())), null,
+        super(Method.DELETE, makeUrl(activity, null, "admin", "schools", String.valueOf(school.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

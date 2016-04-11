@@ -22,7 +22,7 @@ public class StartSemesterRequest extends BaseRequest {
     public StartSemesterRequest(final Activity activity, Semester semester,
                                 final Response.Listener<Semester> onSuccess,
                                 final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "admin", "semesters"),
+        super(Method.POST, makeUrl(activity, null, "admin", "semesters"),
                 convertToParams(semester, "semester", activity),
                 new Response.Listener<JSONObject>() {
                     @Override

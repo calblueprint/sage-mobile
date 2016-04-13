@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class EditProfileController: FormController {
     
@@ -119,6 +120,7 @@ class EditProfileController: FormController {
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.changeSchoolKey, object: updatedUser.school!)
+                LoginOperations.storeUserDataInKeychain(updatedUser)
                 }) { (errorMessage) -> Void in
                     self.finishButton?.stopLoading()
                     let alertController = UIAlertController(

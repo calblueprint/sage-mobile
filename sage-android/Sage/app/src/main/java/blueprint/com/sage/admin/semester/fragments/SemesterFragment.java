@@ -124,7 +124,7 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
     }
 
     private void exportSemester() {
-
+        Requests.Semesters.with(getActivity()).makeExportRequest(mSemester);
     }
 
     public void onEvent(SemesterEvent event) {

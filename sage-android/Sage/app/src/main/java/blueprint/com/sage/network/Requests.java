@@ -27,6 +27,7 @@ import blueprint.com.sage.events.schools.DeleteSchoolEvent;
 import blueprint.com.sage.events.schools.EditSchoolEvent;
 import blueprint.com.sage.events.schools.SchoolEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.events.semesters.ExportSemesterEvent;
 import blueprint.com.sage.events.semesters.FinishSemesterEvent;
 import blueprint.com.sage.events.semesters.JoinSemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterEvent;
@@ -66,6 +67,7 @@ import blueprint.com.sage.network.schools.DeleteSchoolRequest;
 import blueprint.com.sage.network.schools.EditSchoolRequest;
 import blueprint.com.sage.network.schools.SchoolListRequest;
 import blueprint.com.sage.network.schools.SchoolRequest;
+import blueprint.com.sage.network.semesters.ExportSemesterRequest;
 import blueprint.com.sage.network.semesters.FinishSemesterRequest;
 import blueprint.com.sage.network.semesters.JoinSemesterRequest;
 import blueprint.com.sage.network.semesters.SemesterListRequest;
@@ -698,6 +700,23 @@ public class Requests {
                         }
                     },
                     new Response.Listener<APIError>() {
+                        @Override
+                        public void onResponse(APIError apiError) {
+                            Requests.postError(apiError);
+                        }
+                    });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeExportRequest(Semester semester) {
+            Request request = new ExportSemesterRequest(mActivity, semester,
+                    new Response.Listener<APISuccess>() {
+                        @Override
+                        public void onResponse(APISuccess success) {
+                            Requests.postEvent(new ExportSemesterEvent(success), false);
+                        }
+                    }, new Response.Listener<APIError>() {
                         @Override
                         public void onResponse(APIError apiError) {
                             Requests.postError(apiError);

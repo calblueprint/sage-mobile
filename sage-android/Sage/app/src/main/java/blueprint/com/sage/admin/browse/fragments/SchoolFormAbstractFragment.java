@@ -74,6 +74,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     private BaseInterface mBaseInterface;
     private PlacePredictionAdapter mPlaceAdapter;
     private FormValidator mValidator;
+
     protected MenuItem mItem;
     private LatLng mBounds;
 

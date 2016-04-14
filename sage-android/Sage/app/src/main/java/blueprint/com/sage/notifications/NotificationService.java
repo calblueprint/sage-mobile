@@ -1,44 +1,50 @@
 package blueprint.com.sage.notifications;
 
-import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.gcm.GcmListenerService;
 
 import blueprint.com.sage.main.MainActivity;
 
 /**
  * Created by kelseylam on 3/30/16.
  */
-public class GcmIntentService extends IntentService {
+public class NotificationService extends GcmListenerService {
 
     public static final int NOTIFICATION_ID = 1;
+    private static final String TAG = "NotificationService";
     private NotificationManager mNotificationManager;
 
-    public GcmIntentService() {
-        super("GcmIntentService");
-    }
+//    @Override
+//    public void onHandleIntent(Intent intent) {
+//        Bundle extras = intent.getExtras();
+//        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+//
+//        String messageType = gcm.getMessageType(intent);
+//
+//        if (!extras.isEmpty()) {
+//            if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+//                String message = extras.getString("message");
+//                String type = extras.getString("type");
+//                String object = extras.getString("object");
+//                sendNotification(message, type, object);
+//            }
+//        }
+//    }
 
     @Override
-    public void onHandleIntent(Intent intent) {
-        Bundle extras = intent.getExtras();
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+    public void onMessageReceived(String from, Bundle data) {
+        String message = data.getString("message");
+        Log.d(TAG, "From: " + from);
+        Log.d(TAG, "Message: " + message);
 
-        String messageType = gcm.getMessageType(intent);
-
-        if (!extras.isEmpty()) {
-            if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                String message = extras.getString("message");
-                String type = extras.getString("type");
-                String object = extras.getString("object");
-                sendNotification(message, type, object);
-            }
-        }
+//        sendNotification(message);
     }
 
     private void sendNotification(String message, String type, String object) {

@@ -33,4 +33,8 @@
     <!-- Filter -->
     <string name="filter">Filter</string>
     <string name="show_filters">Show Filters</string>
+
+    <!--Shared Preferences-->
+    <string name="sent_token_to_server">sentTokenToServer</string>
+    <string name=""
 </resources>

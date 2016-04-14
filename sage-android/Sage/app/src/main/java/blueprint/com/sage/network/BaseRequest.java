@@ -132,6 +132,20 @@ public class BaseRequest extends JsonObjectRequest {
         return new JSONObject(params);
     }
 
+    public static JSONObject convertToParams(HashMap<String, String> params) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            for (String key : params.keySet()) {
+                jsonObject.put(key, params.get(key));
+
+            }
+        } catch(JSONException exception) {
+            Log.e("JSONException", exception.toString());
+        }
+
+        return jsonObject;
+    }
+
     public static NetworkManager getNetworkManager(Context context) {
         return NetworkManager.getInstance(context);
     }

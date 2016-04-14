@@ -5,6 +5,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,7 +58,7 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         mCheckIns = new ArrayList<>();
         mUsers = new ArrayList<>();
 
@@ -89,6 +92,24 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
         ViewUtils.setToolBarElevation(getActivity(), 8);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        int menuId = mSemester.getFinish() != null ? R.menu.menu_export : R.menu.menu_save;
+        inflater.inflate(menuId, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_export:
+                exportSemester();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void initializeViews() {
         mAdapter = new SimplePagerAdapter(getChildFragmentManager());
 
@@ -98,7 +119,12 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        getActivity().setTitle(R.string.semester);
         ViewUtils.setToolBarElevation(getActivity(), 0);
+    }
+
+    private void exportSemester() {
+
     }
 
     public void onEvent(SemesterEvent event) {

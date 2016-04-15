@@ -1,16 +1,11 @@
 package blueprint.com.sage.landing;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -32,6 +27,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * Created by kelseylam on 2/3/16.
@@ -39,11 +36,9 @@ import io.fabric.sdk.android.Fabric;
 public class LandingActivity extends AbstractActivity {
 
     @Bind(R.id.landing_loading_view) LoadingView mLoadingView;
-    @Bind(R.id.landing_layout) FrameLayout mLandingLayout;
-    @Bind(R.id.landing_splash) ImageView mLandingSplash;
+    @Bind(R.id.landing_splash) GifImageView mLandingSplash;
 
-    private SharedPreferences mPreferences;
-    private AnimationDrawable mAnimationDrawable;
+    private GifDrawable mSplashDrawable;
     private int mTotalAnimationTime;
     private Timer mTimer;
 
@@ -78,21 +73,6 @@ public class LandingActivity extends AbstractActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-
-        mAnimationDrawable.stop();
-        for (int i = 0; i < mAnimationDrawable.getNumberOfFrames(); i++) {
-            BitmapDrawable drawable = (BitmapDrawable) mAnimationDrawable.getFrame(i);
-            drawable.getBitmap().recycle();
-            drawable.setCallback(null);
-        }
-
-        mAnimationDrawable.setCallback(null);
-        mAnimationDrawable = null;
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
@@ -100,10 +80,9 @@ public class LandingActivity extends AbstractActivity {
 
     private void initializeViews() {
         mTimer = new Timer();
-
-        mAnimationDrawable = (AnimationDrawable) mLandingSplash.getDrawable();
-        int msPerFrame = getResources().getInteger(R.integer.splash_animation_frame);
-        mTotalAnimationTime = mAnimationDrawable.getNumberOfFrames() * msPerFrame;
+        mSplashDrawable = (GifDrawable) mLandingSplash.getDrawable();
+        Log.e("helo", "" + mSplashDrawable.getDuration());
+        mTotalAnimationTime = mSplashDrawable.getDuration() - 1500;
     }
 
     private void startAnimation(final Class<?> cls) {
@@ -117,12 +96,21 @@ public class LandingActivity extends AbstractActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 mLoadingView.setVisibility(View.GONE);
-                mAnimationDrawable.start();
+                mSplashDrawable.start();
 
                 TimerTask timerTask = new TimerTask() {
                     @Override
                     public void run() {
-                        startActivity(cls);
+                        runOnUiThread(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mSplashDrawable.stop();
+                                        mLandingSplash.setVisibility(View.GONE);
+                                        startActivity(cls);
+                                    }
+                                });
+
                     }
                 };
 
@@ -144,7 +132,7 @@ public class LandingActivity extends AbstractActivity {
                 Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         startActivity(intent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(0, R.anim.splash_fade_out);
     }
 
     public void onEvent(SessionEvent event) {

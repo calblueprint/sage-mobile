@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
+import blueprint.com.sage.events.semesters.ExportSemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.APIError;
@@ -46,6 +49,8 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
     private List<CheckIn> mCheckIns;
     private Semester mSemester;
     private SimplePagerAdapter mAdapter;
+
+    private MenuItem mItem;
 
     public static SemesterFragment newInstance(Semester semester) {
         SemesterFragment fragment = new SemesterFragment();
@@ -95,13 +100,14 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        int menuId = mSemester.getFinish() != null ? R.menu.menu_export : R.menu.menu_save;
+        int menuId = mSemester.getFinish() != null ? R.menu.menu_export : R.menu.menu_empty;
         inflater.inflate(menuId, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_export:
                 exportSemester();
@@ -124,6 +130,7 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
     }
 
     private void exportSemester() {
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Semesters.with(getActivity()).makeExportRequest(mSemester);
     }
 
@@ -133,6 +140,14 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
         EventBus.getDefault().post(new CheckInListEvent(mSemester.getCheckIns()));
         EventBus.getDefault().post(new UserListEvent(mSemester.getUsers()));
     }
+
+    public void onEvent(ExportSemesterEvent event) {
+        Log.e("made even", "made");
+        Toast.makeText(getActivity(), event.getApiSuccess().getMessage(), Toast.LENGTH_SHORT).show();
+        mItem.setActionView(null);
+    }
+
+    public void onEvent(APIError event) { mItem.setActionView(null); }
 
     public void setUsers(List<User> users) { mUsers = users; }
     public List<User> getUsers() { return mUsers; }

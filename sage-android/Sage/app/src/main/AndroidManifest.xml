@@ -73,7 +73,8 @@
 
         <activity
             android:name=".admin.requests.VerifyCheckInRequestsActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".admin.requests.VerifyUserRequestsActivity"
@@ -82,7 +83,8 @@
 
         <activity
             android:name=".users.profile.EditUserActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".admin.semester.CreateSemesterActivity"
@@ -111,15 +113,18 @@
 
         <activity
             android:name=".announcements.CreateAnnouncementActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".announcements.AnnouncementActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".main.AboutActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

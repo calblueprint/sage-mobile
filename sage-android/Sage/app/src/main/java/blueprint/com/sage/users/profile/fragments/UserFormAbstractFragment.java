@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -79,6 +80,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     protected BaseInterface mBaseInterface;
     protected ToolbarInterface mToolbarInterface;
     protected User mUser;
+    protected MenuItem mItem;
 
     List<School> mSchools;
 
@@ -125,6 +127,7 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
                 validateAndSubmitRequest();
@@ -217,6 +220,10 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
 
         if (mUser != null && mUser.getSchoolId() > 0)
             setSchool(mUser.getSchoolId());
+    }
+
+    public void onEvent(APIErrorEvent event) {
+        mItem.setActionView(null);
     }
 
     public void setSchool(int id) {

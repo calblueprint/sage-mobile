@@ -50,7 +50,7 @@ public class BaseRequest extends JsonObjectRequest {
                     }
                 } else {
                     if (networkResponse.statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
-                        Toast.makeText(activity, "Invalid user", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity, "Unauthorized action!", Toast.LENGTH_SHORT).show();
                         NetworkUtils.logoutCurrentUser(activity);
                     } else {
                         try {

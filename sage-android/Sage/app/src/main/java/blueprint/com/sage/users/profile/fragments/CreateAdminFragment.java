@@ -47,6 +47,7 @@ public class CreateAdminFragment extends UserFormAbstractFragment {
         mUser.setSchoolId(schoolId);
         mUser.setProfile(mProfileBitmap);
 
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Users.with(getActivity()).makeCreateAdminRequest(mUser);
     }
 

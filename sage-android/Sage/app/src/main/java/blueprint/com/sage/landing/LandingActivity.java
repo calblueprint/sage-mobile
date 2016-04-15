@@ -81,8 +81,7 @@ public class LandingActivity extends AbstractActivity {
     private void initializeViews() {
         mTimer = new Timer();
         mSplashDrawable = (GifDrawable) mLandingSplash.getDrawable();
-        Log.e("helo", "" + mSplashDrawable.getDuration());
-        mTotalAnimationTime = mSplashDrawable.getDuration() - 1500;
+        mTotalAnimationTime = mSplashDrawable.getDuration() - 2500;
     }
 
     private void startAnimation(final Class<?> cls) {
@@ -90,8 +89,7 @@ public class LandingActivity extends AbstractActivity {
         fadeOutAnimation.setDuration(500);
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-            }
+            public void onAnimationStart(Animation animation) {}
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -105,8 +103,8 @@ public class LandingActivity extends AbstractActivity {
                                 new Runnable() {
                                     @Override
                                     public void run() {
-                                        mSplashDrawable.stop();
                                         mLandingSplash.setVisibility(View.GONE);
+                                        mSplashDrawable.stop();
                                         startActivity(cls);
                                     }
                                 });

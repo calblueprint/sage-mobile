@@ -1,6 +1,5 @@
 package blueprint.com.sage.notifications;
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,23 +17,24 @@ public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
     public static final String SENT_TOKEN_TO_SERVER = "sentTokenToServer";
-    private Activity mActivity;
+//    private Activity mActivity;
 
-    public static RegistrationIntentService newInstance(Activity activity) {
-        RegistrationIntentService service = new RegistrationIntentService();
-        service.setActivity(activity);
-        return service;
-    }
+//    public static RegistrationIntentService newInstance(Activity activity) {
+//        RegistrationIntentService service = new RegistrationIntentService();
+//        service.setActivity(activity);
+//        return service;
+//    }
 
     public RegistrationIntentService() {
         super(TAG);
     }
 
-    public void setActivity(Activity activity) {
-        mActivity = activity;
-    }
+//    public void setActivity(Activity activity) {
+//        mActivity = activity;
+//    }
 
-    public void onHandleIntent(Intent intent) {
+    @Override
+    protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preferences), MODE_PRIVATE);
 
 //        Bundle extras = intent.getExtras();
@@ -67,6 +67,7 @@ public class RegistrationIntentService extends IntentService {
     }
 
     private void sendRegistrationToServer(String token) {
+        Log.i("wow", token);
 //        Context context = getApplicationContext();
 //        Requests.Users.with(context).makeRegisterRequest();
     }

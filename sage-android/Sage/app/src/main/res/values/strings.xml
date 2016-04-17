@@ -36,5 +36,5 @@
 
     <!--Shared Preferences-->
     <string name="sent_token_to_server">sentTokenToServer</string>
-    <string name=""
+    <string name="registration_complete">registrationComplete</string>
 </resources>

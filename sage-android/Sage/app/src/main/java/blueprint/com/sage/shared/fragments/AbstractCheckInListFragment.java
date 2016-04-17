@@ -69,8 +69,6 @@ public abstract class AbstractCheckInListFragment extends Fragment implements Sw
         mCheckInList.setAdapter(mAdapter);
 
         mCheckInRefreshView.setOnRefreshListener(this);
-
-        mToolbarInterface.setTitle("Check Ins");
     }
 
     public void onEvent(APIErrorEvent event) {

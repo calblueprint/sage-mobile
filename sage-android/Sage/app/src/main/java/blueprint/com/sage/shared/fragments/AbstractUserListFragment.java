@@ -37,7 +37,7 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
 
     public RecyclerView.Adapter mUserListAdapter;
 
-    private ToolbarInterface mToolbarInterface;
+    public ToolbarInterface mToolbarInterface;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +79,6 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
 
         mRefreshUsers.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);
-
-        mToolbarInterface.setTitle("Users");
     }
 
     @OnClick(R.id.user_list_fab)

@@ -48,7 +48,6 @@ public class SemesterUserListFragment extends AbstractUserListFragment {
 
     public void onEvent(UserListEvent event) {
         mUsersInterface.setUsers(event.getUsers());
-
         ((AbstractUserListAdapter) mUserListAdapter).setUsers(mUsersInterface.getUsers());
 
         mRefreshUsers.setRefreshing(false);

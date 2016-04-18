@@ -21,28 +21,16 @@ public class NotificationService extends GcmListenerService {
     private static final String TAG = "NotificationService";
     private NotificationManager mNotificationManager;
 
-//    @Override
-//    public void onHandleIntent(Intent intent) {
-//        Bundle extras = intent.getExtras();
-//        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-//
-//        String messageType = gcm.getMessageType(intent);
-//
-//        if (!extras.isEmpty()) {
-//            if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-//                String message = extras.getString("message");
-//                String type = extras.getString("type");
-//                String object = extras.getString("object");
-//                sendNotification(message, type, object);
-//            }
-//        }
-//    }
-
     @Override
     public void onMessageReceived(String from, Bundle data) {
+
+
         String message = data.getString("message");
+        String type = data.getString("type");
+        String object = data.getString("object");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
+        sendNotification(message, type, object);
 
 //        sendNotification(message);
     }
@@ -70,7 +58,7 @@ public class NotificationService extends GcmListenerService {
                 PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(contentIntent);
 
-        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }

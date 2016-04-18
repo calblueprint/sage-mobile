@@ -25,9 +25,11 @@ import blueprint.com.sage.events.SessionEvent;
 import blueprint.com.sage.main.MainActivity;
 import blueprint.com.sage.models.Session;
 import blueprint.com.sage.network.Requests;
+import blueprint.com.sage.notifications.RegistrationIntentService;
 import blueprint.com.sage.shared.activities.AbstractActivity;
 import blueprint.com.sage.signIn.SignInActivity;
 import blueprint.com.sage.signUp.UnverifiedActivity;
+import blueprint.com.sage.utility.RegistrationUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.LoadingView;
 import butterknife.Bind;
@@ -53,6 +55,7 @@ public class LandingActivity extends AbstractActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean mIsReceiverRegistered;
     private String mRegistrationId;
+    private int mAppVersion;
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "LandingActivity";
@@ -80,9 +83,11 @@ public class LandingActivity extends AbstractActivity {
         }
 
         mRegistrationId = mPreferences.getString("registration_id", "none");
+        mAppVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
 
-        if (getRegistrationId().isEmpty()) {
-            registerInBackground();
+        if (getRegistrationId().isEmpty() && checkPlayServices()) {
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
         }
 
         Requests.Users.with(this).makeStateRequest(getUser());
@@ -102,34 +107,6 @@ public class LandingActivity extends AbstractActivity {
 //        };
 //        registerReceiver();
 //
-//        if (checkPlayServices()) {
-//            // Start IntentService to register this application with GCM.
-//            Intent intent = new Intent(this, RegistrationIntentService.class);
-//            startService(intent);
-//        }
-    }
-
-    public void registerInBackground() {
-//        new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... params) {
-//                String msg = "";
-//                JSONObject user = new JSONObject();
-//                JSONObject objParams = new JSONObject();
-//                try {
-//                    if (mGoogleCloudMessaging == null) mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(LandingActivity.this);
-//                    objParams.put("registration_id", mGoogleCloudMessaging.register(SENDER_ID));
-//                    objParams.put("device_type", 0);
-//                    user.put("user", objParams);
-//                } catch (Exception ex) {
-//                    msg = "Error :" + ex.getMessage();
-//                }
-//                return msg;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String msg) { Log.i("ERROR", msg + "\n"); }
-//        }.execute(null, null, null);
     }
 
     @Override
@@ -235,20 +212,16 @@ public class LandingActivity extends AbstractActivity {
             return "";
         }
 
-        // Check if app was updated; if so, it must clear the registration ID
-        // since the existing registration ID is not guaranteed to work with
-        // the new app version.
-//        int currentVersion = Utility.getAppVersion(this);
-//        if (mAppVersion != currentVersion) {
-//            Log.i(TAG, "App version changed.");
-//            mPreferences.edit().putInt("app_version", currentVersion).apply();
-//            return "";
-//        }
+        int currentVersion = RegistrationUtils.getAppVersion(this);
+        if (mAppVersion != currentVersion) {
+            Log.i(TAG, "App version changed.");
+            mPreferences.edit().putInt("app_version", currentVersion).apply();
+            return "";
+        }
         return mRegistrationId;
     }
 
-    private void registerReceiver(){
-
+    private void registerReceiver() {
         if(!mIsReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(getString(R.string.registration_complete)));

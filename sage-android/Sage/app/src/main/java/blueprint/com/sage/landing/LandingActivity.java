@@ -1,33 +1,20 @@
 package blueprint.com.sage.landing;
 
-import blueprint.com.sage.shared.activities.AbstractActivity;
-
-import android.content.Intent;
 import android.content.BroadcastReceiver;
-<<<<<<< HEAD
-import android.content.Context;
-=======
->>>>>>> tentative changes to landing activity
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-<<<<<<< HEAD
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-=======
->>>>>>> tentative changes to landing activity
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import org.json.JSONObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -76,13 +63,10 @@ public class LandingActivity extends AbstractActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_landing);
 
-<<<<<<< HEAD
         ButterKnife.bind(this);
 
         initializeViews();
-=======
         mPreferences = getSharedPreferences();
->>>>>>> tentative changes to landing activity
 
         if (!NetworkUtils.isConnectedToInternet(this)) {
             Toast.makeText(this, "You're not connected to the internet!", Toast.LENGTH_SHORT).show();
@@ -126,36 +110,26 @@ public class LandingActivity extends AbstractActivity {
     }
 
     public void registerInBackground() {
-        new AsyncTask<String, String, String>() {
-            @Override
-<<<<<<< HEAD
-            public void onReceive(Context context, Intent intent) {
-                boolean sentToken = mPreferences
-                        .getBoolean(QuickStartPreferences.SENT_TOKEN_TO_SERVER, false);
-                if (sentToken) {
-                    mInformationTextView.setText(getString(R.string.gcm_send_message));
-                } else {
-                    mInformationTextView.setText(getString(R.string.token_error_message));
-=======
-            protected String doInBackground(String... params) {
-                String msg = "";
-                JSONObject user = new JSONObject();
-                JSONObject objParams = new JSONObject();
-                try {
-                    if (mGoogleCloudMessaging == null) mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(LandingActivity.this);
-                    objParams.put("registration_id", mGoogleCloudMessaging.register(SENDER_ID));
-                    objParams.put("device_type", 0);
-                    user.put("user", objParams);
-                } catch (Exception ex) {
-                    msg = "Error :" + ex.getMessage();
->>>>>>> tentative changes to landing activity
-                }
-                return msg;
-            }
-
-            @Override
-            protected void onPostExecute(String msg) { Log.i("ERROR", msg + "\n"); }
-        }.execute(null, null, null);
+//        new AsyncTask<String, String, String>() {
+//            @Override
+//            protected String doInBackground(String... params) {
+//                String msg = "";
+//                JSONObject user = new JSONObject();
+//                JSONObject objParams = new JSONObject();
+//                try {
+//                    if (mGoogleCloudMessaging == null) mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(LandingActivity.this);
+//                    objParams.put("registration_id", mGoogleCloudMessaging.register(SENDER_ID));
+//                    objParams.put("device_type", 0);
+//                    user.put("user", objParams);
+//                } catch (Exception ex) {
+//                    msg = "Error :" + ex.getMessage();
+//                }
+//                return msg;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String msg) { Log.i("ERROR", msg + "\n"); }
+//        }.execute(null, null, null);
     }
 
     @Override

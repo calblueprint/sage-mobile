@@ -1,6 +1,7 @@
 package blueprint.com.sage.notifications;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -9,6 +10,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.network.Requests;
 
 /**
  * Created by kelseylam on 4/11/16.
@@ -68,7 +70,7 @@ public class RegistrationIntentService extends IntentService {
 
     private void sendRegistrationToServer(String token) {
         Log.i("wow", token);
-//        Context context = getApplicationContext();
-//        Requests.Users.with(context).makeRegisterRequest();
+        Requests.Users.with(getApplicationContext()).makeRegisterRequest();
     }
+
 }

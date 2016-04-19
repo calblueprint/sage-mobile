@@ -151,6 +151,7 @@
 		E446119B1C754CC4006E90FA /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119A1C754CC4006E90FA /* MenuView.swift */; };
 		E446119E1C7568C5006E90FA /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119D1C7568C5006E90FA /* MenuItem.swift */; };
 		E44611A01C756A73006E90FA /* ExpandMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119F1C756A73006E90FA /* ExpandMenuItem.swift */; };
+		E450EAFB1CC5B83B00E97417 /* ExportSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */; };
 		E48082491C8F980500A38E57 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48082481C8F980500A38E57 /* Dictionary.swift */; };
 		E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */; };
 		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
@@ -331,6 +332,7 @@
 		E446119A1C754CC4006E90FA /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E446119D1C7568C5006E90FA /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		E446119F1C756A73006E90FA /* ExpandMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandMenuItem.swift; sourceTree = "<group>"; };
+		E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportSemesterViewController.swift; sourceTree = "<group>"; };
 		E48082481C8F980500A38E57 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterView.swift; sourceTree = "<group>"; };
 		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 			isa = PBXGroup;
 			children = (
 				5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */,
+				E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */,
 			);
 			name = "Past Semesters";
 			sourceTree = "<group>";
@@ -1186,6 +1189,7 @@
 				E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				5DA5F0EE1CB08DC100D1FC85 /* SGSectionHeaderView.swift in Sources */,
+				E450EAFB1CC5B83B00E97417 /* ExportSemesterViewController.swift in Sources */,
 				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,
 				4207EBD31C880DB000501F96 /* NoContentView.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,

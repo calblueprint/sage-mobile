@@ -74,7 +74,7 @@ class AdminTableViewController: SGTableViewController {
         case 1:
             return 2
         case 2:
-            return 1
+            return 2
         case 3:
             return 1
         default: return 0
@@ -119,6 +119,8 @@ class AdminTableViewController: SGTableViewController {
             switch indexPath.row {
             case 0:
                 self.navigationController?.pushViewController(PastSemestersViewController(), animated: true)
+            case 1:
+                self.navigationController?.pushViewController(ExportSemesterViewController(), animated: true)
             default: break
             }
         case 3:
@@ -171,6 +173,11 @@ class AdminTableViewController: SGTableViewController {
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Past Semesters"
                 let icon = FAKIonIcons.androidTimeIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
+                cell.imageView?.image = icon
+            } else {
+                cell.textLabel?.text = "Export Semester"
+                let icon = FAKIonIcons.shareIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             }

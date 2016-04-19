@@ -36,6 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         application.registerUserNotificationSettings(settings)
 
+        //Handle push notifications
+        if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+            // 2
+            //let aps = notification["aps"] as! [String: AnyObject]
+            // 3
+            //(window?.rootViewController as? UITabBarController)?.selectedIndex = 1
+        }
+
         return true
     }
 

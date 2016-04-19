@@ -22,11 +22,14 @@ class ExportSemesterViewController: PastSemestersViewController {
         if let _ = self.semesters {
             self.loadingButton.startLoading()
             let semester = self.semesters![indexPath.row]
+            let cell = tableView.cellForRowAtIndexPath(indexPath)
+            cell?.backgroundColor = UIColor.lighterGrayColor
             
             SemesterOperations.exportSemester(semester, completion: { () -> Void in
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
                     self.loadingButton.stopLoading()
+                    cell?.backgroundColor = UIColor.whiteColor()
                     self.showErrorAndSetMessage(message)
             })
         }

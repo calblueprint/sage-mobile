@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Sage</string>
-
+    <string name="sage">Sage</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="save">Save</string>
@@ -30,4 +29,12 @@
     <string name="shared_preferences">SAGE_ANDROID</string>
     <string name="shared_preference_email">email</string>
     <string name="shared_preference_auth_token">auth_token</string>
+
+    <!-- Filter -->
+    <string name="filter">Filter</string>
+    <string name="show_filters">Show Filters</string>
+
+    <!--Shared Preferences-->
+    <string name="sent_token_to_server">sentTokenToServer</string>
+    <string name="registration_complete">registrationComplete</string>
 </resources>

@@ -23,7 +23,7 @@ import blueprint.com.sage.network.BaseRequest;
 public class AnnouncementsListRequest extends BaseRequest{
     public AnnouncementsListRequest(final Activity activity, HashMap<String, String> params,
                                     final Response.Listener<ArrayList<Announcement>> listener, final Response.Listener<APIError> errorListener) {
-        super(Request.Method.GET, makeUrl(params, "announcements"), null,
+        super(Request.Method.GET, makeUrl(activity, params, "announcements"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

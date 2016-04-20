@@ -21,7 +21,7 @@ public class UpdateUserSemesterRequest extends BaseRequest {
     public UpdateUserSemesterRequest(final Activity activity, UserSemester userSemester,
                                      final Response.Listener<UserSemester> onSuccess,
                                      final Response.Listener<APIError> onFailure) {
-        super(Method.PUT, makeUrl(null, "admin", "user_semesters", String.valueOf(userSemester.getId())),
+        super(Method.PUT, makeUrl(activity, null, "admin", "user_semesters", String.valueOf(userSemester.getId())),
                 convertToParams(userSemester, "user_semester", activity),
                 new Response.Listener<JSONObject>() {
                     @Override

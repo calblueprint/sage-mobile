@@ -86,10 +86,14 @@ public class MainFragment extends Fragment {
                 float toAlpha = (1 - positionOffset) * (1 - mMinAlpha) + mMinAlpha;
                 float fromAlpha = (1 - toAlpha) + mMinAlpha;
 
-                mAdapter.getTabView(position).setImageAlpha(toAlpha);
-
-                if (position + 1 < mAdapter.getCount()) {
-                    mAdapter.getTabView(position + 1).setImageAlpha(fromAlpha);
+                for (int i=0; i < mAdapter.getCount(); i++) {
+                    if (i == position + 1) {
+                        mAdapter.getTabView(i).setImageAlpha(fromAlpha);
+                    } else if (i == position) {
+                        mAdapter.getTabView(i).setImageAlpha(toAlpha);
+                    } else {
+                        mAdapter.getTabView(i).setImageAlpha(mMinAlpha);
+                    }
                 }
 
                 if (mAdapter.getItem(position) instanceof CheckInMapFragment) {

@@ -82,9 +82,9 @@ public class LoadingView extends LinearLayout {
         mCircleTwoAnimationSet.setStartDelay(100);
         mCircleThreeAnimationSet.setStartDelay(200);
 
-        mCircleOneAnimationSet.start();
-        mCircleTwoAnimationSet.start();
-        mCircleThreeAnimationSet.start();
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(mCircleOneAnimationSet, mCircleTwoAnimationSet, mCircleThreeAnimationSet);
+        animatorSet.start();
     }
 
     private boolean hasSetAnimations() {

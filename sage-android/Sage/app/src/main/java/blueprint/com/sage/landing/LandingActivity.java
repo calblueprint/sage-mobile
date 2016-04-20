@@ -83,7 +83,7 @@ public class LandingActivity extends AbstractActivity {
         mTimer = new Timer();
         mSplashDrawable = (GifDrawable) mLandingSplash.getDrawable();
         mSplashDrawable.stop();
-        mSplashDrawable.setSpeed(1.5f);
+        mSplashDrawable.setSpeed(1.75f);
         mTotalAnimationTime = mSplashDrawable.getDuration();
     }
 

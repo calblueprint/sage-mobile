@@ -21,7 +21,7 @@ import blueprint.com.sage.utility.network.NetworkManager;
 public class EditAnnouncementRequest extends BaseRequest {
     public EditAnnouncementRequest(final Activity activity, Announcement announcement,
                                      final Response.Listener<Announcement> listener, final Response.Listener<APIError> errorListener) {
-        super(Request.Method.PUT, makeUrl(null, "admin", "announcements", String.valueOf(announcement.getId())), convertToParams(announcement, "announcement", activity),
+        super(Request.Method.PUT, makeUrl(activity, null, "admin", "announcements", String.valueOf(announcement.getId())), convertToParams(announcement, "announcement", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

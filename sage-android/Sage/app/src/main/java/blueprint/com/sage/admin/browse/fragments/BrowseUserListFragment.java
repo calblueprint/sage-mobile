@@ -28,6 +28,12 @@ public class BrowseUserListFragment extends AbstractUserListFragment {
         makeUserListRequest();
     }
 
+    @Override
+    public void initializeViews() {
+        super.initializeViews();
+        mToolbarInterface.setTitle("Users");
+    }
+
     public void makeUserListRequest() { mUsersInterface.getUsersListRequest(); }
 
     public RecyclerView.Adapter getAdapter() {

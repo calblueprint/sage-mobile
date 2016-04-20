@@ -12,4 +12,10 @@
     <string name="confirm_delete">Are you sure you want to delete this announcement?</string>
     <string name="announcement_yes">Yes</string>
     <string name="announcement_no">No</string>
+
+    <!-- Announcement filter -->
+    <string name="announcement_filter_all">All</string>
+    <string name="announcement_filter_general">General</string>
+    <string name="announcement_filter_my_school">My School</string>
+    <string name="announcement_filter_school">School</string>
 </resources>

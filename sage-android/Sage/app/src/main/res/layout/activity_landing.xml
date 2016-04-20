@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/landing_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/landing_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/berkeleybackgroundblurred"/>
+        android:src="@drawable/splash"
+        android:scaleType="centerCrop"/>
 
-</LinearLayout>
+    <blueprint.com.sage.utility.view.LoadingView
+        android:id="@+id/landing_loading_view"
+        android:layout_width="wrap_content"
+        android:padding="12dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal|bottom"
+        app:circleDrawable="@drawable/list_progress_circle_white" />
+
+</FrameLayout>

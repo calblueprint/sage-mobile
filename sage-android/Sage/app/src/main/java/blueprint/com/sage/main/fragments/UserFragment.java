@@ -19,6 +19,7 @@ import blueprint.com.sage.events.user_semesters.UpdateUserSemesterEvent;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
+import blueprint.com.sage.main.AboutActivity;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.models.UserSemester;
@@ -29,6 +30,7 @@ import blueprint.com.sage.shared.interfaces.ListDialogInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.users.info.UserSemesterListActivity;
+import blueprint.com.sage.users.info.fragments.UserSemesterFragment;
 import blueprint.com.sage.users.profile.EditUserActivity;
 import blueprint.com.sage.utility.model.UserUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -170,7 +172,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mSchool.setText(schoolString);
 
 //        Kelsey's stuff
-        UserUtils.setType(getActivity(), mUser, mUserType, null, mUser.ROLES_LABEL);
+        UserUtils.setType(getActivity(), mUser, mUserType, null, User.ROLES_LABEL);
         mToolbarInterface.setTitle("User");
     }
 
@@ -190,10 +192,14 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.user_check_ins)
     public void onCheckInClick(View view) {
-        Intent intent = new Intent(getActivity(), UserSemesterListActivity.class);
-        intent.putExtra(getString(R.string.semester_user),
-                NetworkUtils.writeAsString(getActivity(), mUser));
-        FragUtils.startActivityBackStack(getActivity(), intent);
+        if (mSemester != null) {
+            FragUtils.replaceBackStack(R.id.container, UserSemesterFragment.newInstance(mUser, mSemester), getActivity());
+        } else {
+            Intent intent = new Intent(getActivity(), UserSemesterListActivity.class);
+            intent.putExtra(getString(R.string.semester_user),
+                    NetworkUtils.writeAsString(getActivity(), mUser));
+            FragUtils.startActivityBackStack(getActivity(), intent);
+        }
     }
 
     @OnClick(R.id.user_edit_profile)
@@ -203,7 +209,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
     @OnClick(R.id.user_about)
     public void onAboutClick(View view) {
-        // TODO: add about fragment
+        FragUtils.startActivityBackStack(getActivity(), AboutActivity.class);
     }
 
     @OnClick(R.id.user_log_out)

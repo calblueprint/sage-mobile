@@ -24,7 +24,7 @@ public class SchoolRequest extends BaseRequest {
                          HashMap<String, String> queryParams,
                          final Response.Listener<School> onSuccess,
                          final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(queryParams, "schools", String.valueOf(school.getId())), null,
+        super(Method.GET, makeUrl(activity, queryParams, "schools", String.valueOf(school.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

@@ -98,7 +98,6 @@ public class NetworkUtils {
 
         if (user.isVerified()) {
             intent = new Intent(activity, MainActivity.class);
-//            intent = new Intent(activity, CheckInActivity.class);
         } else {
             intent = new Intent(activity, UnverifiedActivity.class);
         }
@@ -108,8 +107,7 @@ public class NetworkUtils {
     }
 
     public static void logoutCurrentUser(Activity activity) {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
-                                                                                               Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(activity.getString(R.string.email));
         editor.remove(activity.getString(R.string.auth_token));

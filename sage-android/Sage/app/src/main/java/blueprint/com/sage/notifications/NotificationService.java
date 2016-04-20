@@ -6,10 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.main.MainActivity;
 
 /**
@@ -18,27 +19,22 @@ import blueprint.com.sage.main.MainActivity;
 public class NotificationService extends GcmListenerService {
 
     public static final int NOTIFICATION_ID = 1;
-    private static final String TAG = "NotificationService";
     private NotificationManager mNotificationManager;
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
-
-
         String message = data.getString("message");
         String type = data.getString("type");
         String object = data.getString("object");
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
         sendNotification(message, type, object);
-
-//        sendNotification(message);
     }
 
     private void sendNotification(String message, String type, String object) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setContentTitle("Sage Notification")
+                        .setSmallIcon(R.drawable.notification)
+                        .setColor(ContextCompat.getColor(getBaseContext(), R.color.amber500))
+                        .setContentTitle("Sage Mentorship")
                         .setStyle(new NotificationCompat.BigTextStyle())
                         .setContentText(message)
                         .setAutoCancel(true);

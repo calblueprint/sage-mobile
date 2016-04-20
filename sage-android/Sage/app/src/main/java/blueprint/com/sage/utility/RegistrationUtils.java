@@ -8,6 +8,9 @@ import android.content.pm.PackageManager;
  * Created by charlesx on 4/17/16.
  */
 public class RegistrationUtils {
+
+    public static int DEVICE_TYPE = 0;
+
     /**
      * Gets the current app version
      * @param context Context to get information from

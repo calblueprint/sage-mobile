@@ -1,6 +1,7 @@
 package blueprint.com.sage.landing;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -22,8 +23,10 @@ import java.util.TimerTask;
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.SessionEvent;
+import blueprint.com.sage.events.users.RegisterUserEvent;
 import blueprint.com.sage.main.MainActivity;
 import blueprint.com.sage.models.Session;
+import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.notifications.RegistrationIntentService;
 import blueprint.com.sage.shared.activities.AbstractActivity;
@@ -82,37 +85,43 @@ public class LandingActivity extends AbstractActivity {
             return;
         }
 
-        mRegistrationId = mPreferences.getString("registration_id", "none");
-        mAppVersion = mPreferences.getInt("app_version", Integer.MIN_VALUE);
+        mRegistrationId = mPreferences.getString(getString(R.string.registration_token), "none");
+        mAppVersion = mPreferences.getInt(getString(R.string.app_version), Integer.MIN_VALUE);
+        mIsReceiverRegistered = false;
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                makeRegistrationRequest(intent);
+            }
+        };
+
+        registerReceivers();
 
         if (getRegistrationId().isEmpty() && checkPlayServices()) {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
+        } else {
+            Requests.Users.with(this).makeStateRequest(getUser());
         }
-
-        Requests.Users.with(this).makeStateRequest(getUser());
-
-        // Register Broadcast Receiver
-//        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-////                boolean sentToken = mPreferences
-////                        .getBoolean(getString(R.string.sent_token_to_server), false);
-////                if (sentToken) {
-////                    mInformationTextView.setText(getString(R.string.gcm_send_message));
-////                } else {
-////                    mInformationTextView.setText(getString(R.string.token_error_message));
-////                }
-//            }
-//        };
-//        registerReceiver();
-//
     }
 
     @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceivers();
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceivers();
+        super.onPause();
     }
 
     @Override
@@ -123,10 +132,24 @@ public class LandingActivity extends AbstractActivity {
 
     private void initializeViews() {
         mTimer = new Timer();
+
         mSplashDrawable = (GifDrawable) mLandingSplash.getDrawable();
         mSplashDrawable.stop();
         mSplashDrawable.setSpeed(1.75f);
         mTotalAnimationTime = mSplashDrawable.getDuration();
+    }
+
+    private void startAnimation(Session session) {
+        try {
+            NetworkUtils.setSession(this, session);
+            if (session.getUser().isVerified()) {
+                startAnimation(MainActivity.class);
+            } else {
+                startAnimation(UnverifiedActivity.class);
+            }
+        } catch (Exception e) {
+            Log.e(getClass().toString(), e.toString());
+        }
     }
 
     private void startAnimation(final Class<?> cls) {
@@ -134,7 +157,8 @@ public class LandingActivity extends AbstractActivity {
         fadeOutAnimation.setDuration(500);
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -221,12 +245,17 @@ public class LandingActivity extends AbstractActivity {
         return mRegistrationId;
     }
 
-    private void registerReceiver() {
-        if(!mIsReceiverRegistered) {
+    private void registerReceivers() {
+        if (!mIsReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(getString(R.string.registration_complete)));
             mIsReceiverRegistered = true;
         }
+    }
+
+    private void unregisterReceivers() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        mIsReceiverRegistered = false;
     }
 
     private boolean checkPlayServices() {
@@ -245,6 +274,17 @@ public class LandingActivity extends AbstractActivity {
         return true;
     }
 
+    private void makeRegistrationRequest(Intent intent) {
+        Bundle bundle = intent.getExtras();
+        mRegistrationId = bundle.getString(getString(R.string.registration_token));
+
+        User user = getUser();
+        user.setDeviceType(RegistrationUtils.DEVICE_TYPE);
+        user.setDeviceId(mRegistrationId);
+
+        Requests.Users.with(this).makeRegistrationRequest(user);
+    }
+
     public void onEvent(SessionEvent event) {
         try {
             Session session = event.getSession();
@@ -253,6 +293,15 @@ public class LandingActivity extends AbstractActivity {
         } catch (Exception e) {
             Log.e(getClass().toString(), e.toString());
         }
+        startAnimation(event.getSession());
+    }
+
+    public void onEvent(RegisterUserEvent event) {
+        mPreferences.edit()
+                .putString(getString(R.string.registration_token), mRegistrationId)
+                .putInt(getString(R.string.app_version), RegistrationUtils.getAppVersion(this))
+                .apply();
+        startAnimation(event.getSession());
     }
 
     public void onEvent(APIErrorEvent event) { startActivity(); }

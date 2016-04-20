@@ -35,6 +35,7 @@
     <string name="show_filters">Show Filters</string>
 
     <!--Shared Preferences-->
-    <string name="sent_token_to_server">sentTokenToServer</string>
     <string name="registration_complete">registrationComplete</string>
+    <string name="registration_token">registration_token</string>
+    <string name="app_version">app_version</string>
 </resources>

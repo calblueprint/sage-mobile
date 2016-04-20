@@ -41,6 +41,7 @@ import blueprint.com.sage.events.users.CreateUserEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.events.users.PromoteUserEvent;
+import blueprint.com.sage.events.users.RegisterUserEvent;
 import blueprint.com.sage.events.users.UserEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
@@ -81,6 +82,7 @@ import blueprint.com.sage.network.users.CreateUserRequest;
 import blueprint.com.sage.network.users.DeleteUserRequest;
 import blueprint.com.sage.network.users.EditUserRequest;
 import blueprint.com.sage.network.users.PromoteUserRequest;
+import blueprint.com.sage.network.users.RegisterUserRequest;
 import blueprint.com.sage.network.users.UserListRequest;
 import blueprint.com.sage.network.users.UserRequest;
 import blueprint.com.sage.network.users.UserStateRequest;
@@ -287,6 +289,22 @@ public class Requests {
                             Requests.postError(apiError);
                         }
                     });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makeRegistrationRequest(User user) {
+            RegisterUserRequest request = new RegisterUserRequest(mActivity, user, new Response.Listener<Session>() {
+                @Override
+                public void onResponse(Session session) {
+                    Requests.postEvent(new RegisterUserEvent(session), false);
+                }
+            }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }

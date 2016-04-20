@@ -16,8 +16,8 @@
     <uses-feature android:name="android.hardware.screen.portrait" />
 
     <!--Notifications-->
-    <permission android:name="blueprint.com.sage.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
+    <permission android:name="blueprint.com.sage.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="blueprint.com.sage.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.SEND"/>
 
@@ -55,6 +55,11 @@
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
+
+        <servicema
+            android:name=".notifications.RegistrationIntentService"
+            android:exported="false">
+        </servicema>
 
         <activity
             android:name=".landing.LandingActivity"

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,11 +21,13 @@ import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.schools.SchoolListEvent;
+import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.adapters.spinners.SchoolSpinnerAdapter;
 import blueprint.com.sage.shared.adapters.spinners.StringArraySpinnerAdapter;
+import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.validators.FormValidator;
 import butterknife.Bind;
@@ -52,6 +55,8 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     private final String[] categoryList = new String[]{SCHOOL, GENERAL};
 
     protected ToolbarInterface mToolbarInterface;
+    protected BaseInterface mBaseInterface;
+    protected MenuItem mItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
         mSchools = new ArrayList<>();
         mValidator = FormValidator.newInstance(getActivity());
         mToolbarInterface = (ToolbarInterface) getActivity();
+        mBaseInterface = (BaseInterface) getActivity();
         Requests.Schools.with(getActivity()).makeListRequest(null);
     }
 
@@ -77,6 +83,17 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.menu_save, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        mItem = item;
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                validateAndSubmitRequest();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -165,4 +182,6 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
         }
         return string;
     }
+
+    public void onEvent(APIError event) { mItem.setActionView(null); }
 }

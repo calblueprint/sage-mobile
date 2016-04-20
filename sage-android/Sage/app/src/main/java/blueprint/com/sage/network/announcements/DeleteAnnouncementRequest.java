@@ -22,7 +22,7 @@ public class DeleteAnnouncementRequest extends BaseRequest {
 
     public DeleteAnnouncementRequest(final Activity activity, Announcement announcement,
                                      final Response.Listener<Announcement> listener, final Response.Listener<APIError> errorListener) {
-        super(Request.Method.DELETE, makeUrl(null, "admin", "announcements", String.valueOf(announcement.getId())), null,
+        super(Request.Method.DELETE, makeUrl(activity, null, "admin", "announcements", String.valueOf(announcement.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {

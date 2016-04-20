@@ -36,7 +36,6 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
     ProgressBar mProgressBar;
 
     public RecyclerView.Adapter mUserListAdapter;
-
     public ToolbarInterface mToolbarInterface;
 
     @Override

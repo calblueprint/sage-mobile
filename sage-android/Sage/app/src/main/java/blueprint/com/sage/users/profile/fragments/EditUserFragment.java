@@ -25,11 +25,16 @@ public class EditUserFragment extends UserFormAbstractFragment {
 
     public void initializeViews() {
         mToolbarInterface.setTitle("Edit User");
+
         mFirstName.setText(mUser.getFirstName());
         mLastName.setText(mUser.getLastName());
         mEmail.setText(mUser.getEmail());
         mUser.loadUserImage(getActivity(), mPhoto);
+
         setSchool(mUser.getSchoolId());
+
+        mPassword.setHint(R.string.optional);
+        mConfirmPassword.setHint(R.string.optional);
 
         mTypeLayout.setVisibility(View.GONE);
         mRoleLayout.setVisibility(View.GONE);

@@ -105,14 +105,13 @@ class RootController: UIViewController {
     func pushRootTabBarController() {
         self.clearViews()
         if self.rootTabBarController != nil {
-            self.rootTabBarController?.view.alpha = 1
-            self.view.bringSubviewToFront(self.rootTabBarController!.view)
-        } else {
-            let rootTabBarController = RootTabBarController()
-            self.rootTabBarController = rootTabBarController
-            self.addChildViewController(rootTabBarController)
-            self.view.addSubview(rootTabBarController.view)
+            self.rootTabBarController?.removeFromParentViewController()
+            self.rootTabBarController?.view.removeFromSuperview()
         }
+        let newRootTabBarController = RootTabBarController()
+        self.rootTabBarController = newRootTabBarController
+        self.addChildViewController(newRootTabBarController)
+        self.view.addSubview(newRootTabBarController.view)
     }
 
     private func clearViews() {

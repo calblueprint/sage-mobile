@@ -30,7 +30,6 @@ import blueprint.com.sage.models.User;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.notifications.RegistrationIntentService;
 import blueprint.com.sage.shared.activities.AbstractActivity;
-import blueprint.com.sage.signIn.SignInActivity;
 import blueprint.com.sage.signUp.UnverifiedActivity;
 import blueprint.com.sage.utility.RegistrationUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
@@ -81,7 +80,7 @@ public class LandingActivity extends AbstractActivity {
         }
 
         if (!NetworkUtils.isVerifiedUser(this, getSharedPreferences())) {
-            startAnimation(SignInActivity.class);
+            Log.e("asdf","asdf");
             return;
         }
 

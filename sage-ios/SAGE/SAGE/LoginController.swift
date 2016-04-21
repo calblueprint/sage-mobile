@@ -132,6 +132,8 @@ class LoginController: SGViewController {
         if let email = self.loginView.loginEmailField.text {
             if let password = self.loginView.loginPasswordField.text {
                 self.loginView.loginButton.startLoading()
+                self.loginView.loginEmailField.resignFirstResponder()
+                self.loginView.loginPasswordField.resignFirstResponder()
                 LoginOperations.loginWith(email, password: password, completion: {
                     (valid: Bool) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in

@@ -17,4 +17,10 @@
     <string name="admin_user_promote">Change Role</string>
     <string name="admin_user_status">Change Status</string>
     <string name="admin_user_delete">Delete User</string>
+
+    <!--Requests-->
+    <string name="admin_requests_plus">10+</string>
+    <string name="admin_check_in_requests">check_in_requests</string>
+    <string name="admin_sign_up_requests">sign_up_requests</string>
+    <string name="admin_default_zero">0</string>
 </resources>

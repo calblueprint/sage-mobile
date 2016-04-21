@@ -12,4 +12,6 @@ public @Data class Session {
     private User user;
     private School school;
     private Semester currentSemester;
+    private int checkInRequests;
+    private int signUpRequests;
 }

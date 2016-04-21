@@ -15,6 +15,14 @@ class RootController: UIViewController {
     var unverifiedController: UnverifiedViewController?
     var rootTabBarController: RootTabBarController?
     
+    private struct SharedController {
+        static var controller = RootController()
+    }
+
+    class func sharedController() -> RootController {
+        return RootController.SharedController.controller
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
@@ -68,8 +76,10 @@ class RootController: UIViewController {
     
     // a function that will fill in values and present the login view controller
     func pushLoginViewController() {
+        self.clearViews()
         if self.loginController != nil {
             self.loginController?.view.alpha = 1.0
+            self.loginController?.loginView.resetFields()
             self.view.bringSubviewToFront(self.loginController!.view)
         } else {
             let loginController = LoginController()
@@ -80,7 +90,9 @@ class RootController: UIViewController {
     }
     
     func pushUnverifiedViewController() {
+        self.clearViews()
         if self.unverifiedController != nil {
+            self.unverifiedController?.view.alpha = 1
             self.view.bringSubviewToFront(self.unverifiedController!.view)
         } else {
             let unverifiedController = UnverifiedViewController()
@@ -91,7 +103,9 @@ class RootController: UIViewController {
     }
     
     func pushRootTabBarController() {
+        self.clearViews()
         if self.rootTabBarController != nil {
+            self.rootTabBarController?.view.alpha = 1
             self.view.bringSubviewToFront(self.rootTabBarController!.view)
         } else {
             let rootTabBarController = RootTabBarController()
@@ -99,5 +113,11 @@ class RootController: UIViewController {
             self.addChildViewController(rootTabBarController)
             self.view.addSubview(rootTabBarController.view)
         }
+    }
+
+    private func clearViews() {
+        self.loginController?.view.alpha = 0
+        self.rootTabBarController?.view.alpha = 0
+        self.unverifiedController?.view.alpha = 0
     }
 }

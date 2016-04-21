@@ -70,8 +70,8 @@ class SignUpController: SGViewController  {
             // switching back to main thread to ensure that UIKIT methods get called on the main thread
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if (success) {
-                    let unverifiedController = UnverifiedViewController()
-                    self.presentViewController(unverifiedController, animated: true, completion: nil)
+                    self.dismissViewControllerAnimated(false, completion: nil)
+                    RootController.sharedController().pushUnverifiedViewController()
                 } else {
                     self.showFailureModal()
                 }
@@ -214,8 +214,7 @@ class SignUpController: SGViewController  {
         }
         self.dismissViewControllerAnimated(false, completion: nil)
         
-        (self.presentingViewController as! RootController).pushLoginViewController()
-
+        RootController.sharedController().pushLoginViewController()
     }
 }
 

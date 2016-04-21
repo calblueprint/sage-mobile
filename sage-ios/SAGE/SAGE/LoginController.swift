@@ -38,22 +38,9 @@ class LoginController: SGViewController {
                 (self.view as! LoginView).containerView.setY(currentY + 5)
                 self.view.alpha = 0.0
             }, completion: { (Bool) -> Void in
+                self.loginView.containerView.moveY(-5)
                 self.presentViewController(signUpController, animated: false, completion: nil)
         })
-    }
-    
-    //
-    // MARK: - Methods to handle navigation
-    //
-    
-    func pushRootTabBarController() {
-        let rootTabBarController = RootTabBarController()
-        self.presentViewController(rootTabBarController, animated: false, completion: nil)
-    }
-
-    func pushUnverifiedViewController() {
-        let unverifiedController = UnverifiedViewController()
-        self.presentViewController(unverifiedController, animated: true, completion: nil)
     }
     
     //
@@ -151,9 +138,9 @@ class LoginController: SGViewController {
                         if (valid) {
                             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                                 if (user.verified) {
-                                    self.pushRootTabBarController()
+                                    RootController.sharedController().pushRootTabBarController()
                                 } else {
-                                    self.pushUnverifiedViewController()
+                                    RootController.sharedController().pushUnverifiedViewController()
                                 }
                                 }) { (errorMessage) -> Void in
                                     let alertController = UIAlertController(
@@ -163,7 +150,7 @@ class LoginController: SGViewController {
                                     alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                                     self.presentViewController(alertController, animated: true, completion: nil)
                                     SAGEState.reset()
-                                    self.presentViewController(RootController(), animated: true, completion: nil)
+                                    RootController.sharedController().pushCorrectViewController()
                             }
                         } else {
                             self.loginView.loginButton.stopLoading()

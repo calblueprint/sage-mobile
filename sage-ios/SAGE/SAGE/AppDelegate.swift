@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey(APIKeys.googleMaps)
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.rootViewController = RootController()
+        window?.rootViewController = RootController.sharedController()
         window?.makeKeyAndVisible()
         
         // Navigation bar appearance

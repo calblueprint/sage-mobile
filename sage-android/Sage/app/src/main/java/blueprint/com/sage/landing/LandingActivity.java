@@ -14,6 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.SessionEvent;
 import blueprint.com.sage.main.MainActivity;
 import blueprint.com.sage.models.Session;
@@ -81,7 +82,9 @@ public class LandingActivity extends AbstractActivity {
     private void initializeViews() {
         mTimer = new Timer();
         mSplashDrawable = (GifDrawable) mLandingSplash.getDrawable();
-        mTotalAnimationTime = mSplashDrawable.getDuration() - 2500;
+        mSplashDrawable.stop();
+        mSplashDrawable.setSpeed(1.75f);
+        mTotalAnimationTime = mSplashDrawable.getDuration();
     }
 
     private void startAnimation(final Class<?> cls) {
@@ -133,17 +136,23 @@ public class LandingActivity extends AbstractActivity {
         overridePendingTransition(0, R.anim.splash_fade_out);
     }
 
+    private void startActivity() {
+        if (getUser().isVerified()) {
+            startAnimation(MainActivity.class);
+        } else {
+            startAnimation(UnverifiedActivity.class);
+        }
+    }
+
     public void onEvent(SessionEvent event) {
         try {
             Session session = event.getSession();
             NetworkUtils.setSession(this, session);
-            if (session.getUser().isVerified()) {
-                startAnimation(MainActivity.class);
-            } else {
-                startAnimation(UnverifiedActivity.class);
-            }
+            startActivity();
         } catch (Exception e) {
             Log.e(getClass().toString(), e.toString());
         }
     }
+
+    public void onEvent(APIErrorEvent event) { startActivity(); }
 }

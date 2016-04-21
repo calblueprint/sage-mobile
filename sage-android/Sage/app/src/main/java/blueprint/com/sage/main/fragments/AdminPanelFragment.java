@@ -1,11 +1,14 @@
 package blueprint.com.sage.main.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -14,8 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.admin.browse.BrowseUsersActivity;
 import blueprint.com.sage.admin.browse.BrowseSchoolsActivity;
+import blueprint.com.sage.admin.browse.BrowseUsersActivity;
 import blueprint.com.sage.admin.requests.VerifyCheckInRequestsActivity;
 import blueprint.com.sage.admin.requests.VerifyUserRequestsActivity;
 import blueprint.com.sage.admin.semester.CreateSemesterActivity;
@@ -39,6 +42,9 @@ public class AdminPanelFragment extends Fragment {
 
     @Bind(R.id.admin_settings_start_semester) View mStartSemester;
     @Bind(R.id.admin_settings_end_semester) View mEndSemester;
+    @Bind(R.id.admin_request_check_in_count) TextView mCheckInRequests;
+    @Bind(R.id.admin_request_sign_up_count) TextView mSignUpRequests;
+
 
     private List<Semester> mSemesters;
     private BaseInterface mBaseInterface;
@@ -61,6 +67,7 @@ public class AdminPanelFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_admin_panel, parent, false);
         ButterKnife.bind(this, view);
+        initializeBadges();
         return view;
     }
 
@@ -73,6 +80,7 @@ public class AdminPanelFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        initializeBadges();
         toggleSemester();
     }
 
@@ -119,6 +127,31 @@ public class AdminPanelFragment extends Fragment {
     @OnClick(R.id.admin_settings_browse_semesters)
     public void onBrowseSemesters(View view) {
         FragUtils.startActivityBackStack(getActivity(), SemesterListActivity.class);
+    }
+
+    private void initializeBadges() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getActivity().getString(R.string.preferences),
+                Context.MODE_PRIVATE);
+        int checkInCount = Integer.valueOf(sharedPreferences.getString(getActivity().getString(R.string.admin_check_in_requests),
+                getActivity().getString(R.string.admin_default_zero)));
+        int signUpCount = Integer.valueOf(sharedPreferences.getString(getActivity().getString(R.string.admin_sign_up_requests),
+                getActivity().getString(R.string.admin_default_zero)));
+
+        if (checkInCount == 0) {
+            mCheckInRequests.setVisibility(View.GONE);
+        } else if (checkInCount >= 10 ) {
+            mCheckInRequests.setText(R.string.admin_requests_plus);
+        } else {
+            mCheckInRequests.setText(String.valueOf(checkInCount));
+        }
+
+        if (signUpCount == 0) {
+            mSignUpRequests.setVisibility(View.GONE);
+        } else if (signUpCount >= 10 ) {
+            mSignUpRequests.setText(R.string.admin_requests_plus);
+        } else {
+            mSignUpRequests.setText(String.valueOf(signUpCount));
+        }
     }
 
     private void toggleSemester() {

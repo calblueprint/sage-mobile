@@ -38,6 +38,12 @@ public class UserSemesterFragment extends AbstractCheckInListFragment {
         makeCheckInRequest();
     }
 
+    @Override
+    public void initializeViews() {
+        super.initializeViews();
+        mToolbarInterface.setTitle("Check Ins");
+    }
+
     public RecyclerView.Adapter getAdapter() {
         return new UserCheckInListAdapter(getActivity(), mUser);
     }

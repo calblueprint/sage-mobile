@@ -137,9 +137,9 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (mCheckIns != null) {
             String string;
             if (mCheckIns.size() == 1) {
-                string = mCheckIns.size() + " check-in";
+                string = mCheckIns.size() + " check in";
             } else {
-                string = mCheckIns.size() + " check-ins";
+                string = mCheckIns.size() + " check ins";
             }
             viewHolder.mNumberCheckIns.setText(string);
         }

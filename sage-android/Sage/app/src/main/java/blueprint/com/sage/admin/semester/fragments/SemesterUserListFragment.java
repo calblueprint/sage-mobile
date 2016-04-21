@@ -23,7 +23,7 @@ public class SemesterUserListFragment extends AbstractUserListFragment {
     public static SemesterUserListFragment newInstance(Semester semester) {
         SemesterUserListFragment fragment = new SemesterUserListFragment();
         fragment.setSemester(semester);
-        return new SemesterUserListFragment();
+        return fragment;
     }
 
     public void setSemester(Semester semester) { mSemester = semester; }
@@ -48,7 +48,6 @@ public class SemesterUserListFragment extends AbstractUserListFragment {
 
     public void onEvent(UserListEvent event) {
         mUsersInterface.setUsers(event.getUsers());
-
         ((AbstractUserListAdapter) mUserListAdapter).setUsers(mUsersInterface.getUsers());
 
         mRefreshUsers.setRefreshing(false);

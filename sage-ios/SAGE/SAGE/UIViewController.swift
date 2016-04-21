@@ -25,7 +25,7 @@ extension UIViewController {
         self.view.bringSubviewToFront(errorView)
         errorView.setX(0)
         errorView.setY(-10)
-        
+
         UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 errorView.setY(0)
             }) { (bool) -> Void in

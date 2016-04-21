@@ -40,6 +40,7 @@ import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.utility.model.CheckInUtils;
+import blueprint.com.sage.utility.model.SessionUtils;
 import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -240,11 +241,13 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
     }
 
     private void resetCheckIn() {
+        SessionUtils.updateRequestCount(getActivity(), 1, R.string.admin_check_in_requests);
         CheckInUtils.resetCheckIn(getActivity(), mBaseInterface);
         getActivity().onBackPressed();
     }
 
-    public void onEvent(CheckInEvent event) { resetCheckIn(); }
+    public void onEvent(CheckInEvent event) { resetCheckIn();}
+
     public void onEvent(APIError event) { mItem.setActionView(null); }
 
     /**

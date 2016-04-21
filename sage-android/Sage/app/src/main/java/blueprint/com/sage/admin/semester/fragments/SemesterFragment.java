@@ -125,9 +125,15 @@ public class SemesterFragment extends Fragment implements UsersInterface, CheckI
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        getActivity().setTitle(R.string.semester);
         ViewUtils.setToolBarElevation(getActivity(), 0);
 
         getActivity().setTitle(R.string.semester);
+    }
+
+    private void exportSemester() {
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
+        Requests.Semesters.with(getActivity()).makeExportRequest(mSemester);
     }
 
     private void exportSemester() {

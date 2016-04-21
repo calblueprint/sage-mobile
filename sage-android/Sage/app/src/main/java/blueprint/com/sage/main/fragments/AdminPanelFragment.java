@@ -45,7 +45,6 @@ public class AdminPanelFragment extends Fragment {
     @Bind(R.id.admin_request_check_in_count) TextView mCheckInRequests;
     @Bind(R.id.admin_request_sign_up_count) TextView mSignUpRequests;
 
-
     private List<Semester> mSemesters;
     private BaseInterface mBaseInterface;
 

@@ -241,7 +241,10 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
     }
 
     private void resetCheckIn() {
-        SessionUtils.updateRequestCount(getActivity(), 1, R.string.admin_check_in_requests);
+        User user = mBaseInterface.getUser();
+        if (user.isAdmin() && user.getDirectorId() == user.getSchool().getId()) {
+            SessionUtils.updateRequestCount(getActivity(), 1, R.string.admin_check_in_requests);
+        }
         CheckInUtils.resetCheckIn(getActivity(), mBaseInterface);
         getActivity().onBackPressed();
     }

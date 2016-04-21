@@ -33,6 +33,8 @@
 		4207EBD11C880D5A00501F96 /* SGTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207EBD01C880D5A00501F96 /* SGTableViewController.swift */; };
 		4207EBD31C880DB000501F96 /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207EBD21C880DB000501F96 /* NoContentView.swift */; };
 		4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */; };
+		421515961CC8851D008B854F /* SGNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421515951CC8851D008B854F /* SGNavigationController.swift */; };
+		421515981CC891AC008B854F /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421515971CC891AC008B854F /* SuccessView.swift */; };
 		4216872D1C09286A00C29DEF /* SchoolDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */; };
 		4223341E1BC090E900E863D0 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223341D1BC090E900E863D0 /* Announcement.swift */; };
 		422334241BC099D400E863D0 /* Checkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422334231BC099D400E863D0 /* Checkin.swift */; };
@@ -236,6 +238,8 @@
 		4207EBD01C880D5A00501F96 /* SGTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGTableViewController.swift; sourceTree = "<group>"; };
 		4207EBD21C880DB000501F96 /* NoContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAnnouncementController.swift; sourceTree = "<group>"; };
+		421515951CC8851D008B854F /* SGNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGNavigationController.swift; sourceTree = "<group>"; };
+		421515971CC891AC008B854F /* SuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolDetailHeaderView.swift; sourceTree = "<group>"; };
 		4223341D1BC090E900E863D0 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		422334231BC099D400E863D0 /* Checkin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkin.swift; sourceTree = "<group>"; };
@@ -556,6 +560,7 @@
 				42A6CE671C0BE02700F97CFF /* Form */,
 				E446119C1C754CE2006E90FA /* Menu */,
 				429B1D131BDC881F006AADF6 /* ErrorView.swift */,
+				421515971CC891AC008B854F /* SuccessView.swift */,
 				27561FCD1C0D2E0E00DAB74A /* SGButton.swift */,
 				27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */,
 				E4B250D01C65C764008652FD /* ProfileImageView.swift */,
@@ -613,6 +618,7 @@
 			children = (
 				E4B347E11C7E7CD90026D43D /* Menu */,
 				4241AF7F1C4BB430009BC133 /* FormController.swift */,
+				421515951CC8851D008B854F /* SGNavigationController.swift */,
 				4207EBD01C880D5A00501F96 /* SGTableViewController.swift */,
 				E439C3AD1CB09CD9004F19FA /* SGViewController.swift */,
 			);
@@ -1087,6 +1093,7 @@
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
+				421515961CC8851D008B854F /* SGNavigationController.swift in Sources */,
 				E48082491C8F980500A38E57 /* Dictionary.swift in Sources */,
 				27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */,
 				5D1745F01C94B95D00C4696A /* ProfileCheckinSummaryView.swift in Sources */,
@@ -1181,6 +1188,7 @@
 				42AD426B1C7C64B600E70B39 /* CLPlacemark.swift in Sources */,
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
+				421515981CC891AC008B854F /* SuccessView.swift in Sources */,
 				42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
 				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,

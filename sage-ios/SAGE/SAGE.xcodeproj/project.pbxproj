@@ -133,6 +133,7 @@
 		5D6149191C5C5B5F0036708A /* SemesterSummaryConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6149181C5C5B5F0036708A /* SemesterSummaryConstants.swift */; };
 		5D61491B1C5D7DBA0036708A /* NoSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D61491A1C5D7DBA0036708A /* NoSemesterViewController.swift */; };
 		5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63EF111BFC86340036D478 /* SchoolOperations.swift */; };
+		5D6A3D801CC8B99D00BA3BB5 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A3D7F1CC8B99D00BA3BB5 /* SplashView.swift */; };
 		5D757DB51C12381200BDAE61 /* ProfileCheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D757DB41C12381200BDAE61 /* ProfileCheckinViewController.swift */; };
 		5D8AF9891BEECFCD0008D2C4 /* AnnouncementsDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */; };
 		5D8AF98B1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */; };
@@ -312,6 +313,7 @@
 		5D6149181C5C5B5F0036708A /* SemesterSummaryConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SemesterSummaryConstants.swift; sourceTree = "<group>"; };
 		5D61491A1C5D7DBA0036708A /* NoSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoSemesterViewController.swift; sourceTree = "<group>"; };
 		5D63EF111BFC86340036D478 /* SchoolOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolOperations.swift; sourceTree = "<group>"; };
+		5D6A3D7F1CC8B99D00BA3BB5 /* SplashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		5D757DB41C12381200BDAE61 /* ProfileCheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCheckinViewController.swift; sourceTree = "<group>"; };
 		5D8AF9881BEECFCD0008D2C4 /* AnnouncementsDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailView.swift; sourceTree = "<group>"; };
 		5D8AF98A1BEED06E0008D2C4 /* AnnouncementsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsDetailViewController.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 				2781601A1BC0E23B00A1DB75 /* Checkin */,
 				4254D2981BC62B4500C831C7 /* LoginView.swift */,
 				427432EF1BC776FD00464200 /* UnverifiedView.swift */,
+				5D6A3D7F1CC8B99D00BA3BB5 /* SplashView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1184,6 +1187,7 @@
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
 				E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */,
 				E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */,
+				5D6A3D801CC8B99D00BA3BB5 /* SplashView.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				5DA5F0EE1CB08DC100D1FC85 /* SGSectionHeaderView.swift in Sources */,
 				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,

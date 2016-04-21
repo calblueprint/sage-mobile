@@ -14,6 +14,8 @@ class RootController: UIViewController {
     var loginController: LoginController?
     var unverifiedController: UnverifiedViewController?
     var rootTabBarController: RootTabBarController?
+    var initialSplashView = SplashView(frame: CGRect(), animated: false)
+    var animatedSplashView = SplashView(frame: CGRect(), animated: true)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,13 +44,15 @@ class RootController: UIViewController {
     }
     
     func pushCorrectViewController() {
+        self.view = self.initialSplashView
         if LoginOperations.userIsLoggedIn() {
             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                 KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
+                self.view = self.animatedSplashView
                 if (user.verified) {
-                    self.pushRootTabBarController()
+                    self.performSelector("pushRootTabBarController", withObject: nil, afterDelay: 1.4)
                 } else {
-                    self.pushUnverifiedViewController()
+                    self.performSelector("pushUnverifiedViewController", withObject: nil, afterDelay: 1.4)
                 }
                 }) { (errorMessage) -> Void in
                     let alertController = UIAlertController(
@@ -63,7 +67,8 @@ class RootController: UIViewController {
 
             }
         } else {
-            self.pushLoginViewController()
+            self.view = self.animatedSplashView
+            self.performSelector("pushLoginViewController", withObject: nil, afterDelay: 1.4)
         }
     }
     

@@ -19,6 +19,7 @@ import blueprint.com.sage.admin.requests.adapters.VerifyUserListAdapter;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.interfaces.UsersInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.model.SessionUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -94,10 +95,12 @@ public class VerifyUsersListFragment extends Fragment implements OnRefreshListen
 
     public void onEvent(VerifyUserEvent verifyUserEvent) {
         mUserAdapter.removeUser(verifyUserEvent.getPosition());
+        SessionUtils.updateRequestCount(getActivity(), -1, R.string.admin_sign_up_requests);
     }
 
     public void onEvent(DeleteUserEvent deleteUserRequest) {
         mUserAdapter.removeUser(deleteUserRequest.getPosition());
+        SessionUtils.updateRequestCount(getActivity(), -1, R.string.admin_sign_up_requests);
     }
 
     public void onEvent(APIErrorEvent event) {

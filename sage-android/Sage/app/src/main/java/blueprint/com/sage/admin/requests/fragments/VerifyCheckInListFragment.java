@@ -19,6 +19,7 @@ import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.shared.interfaces.CheckInsInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
+import blueprint.com.sage.utility.model.SessionUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -96,11 +97,13 @@ public class VerifyCheckInListFragment extends Fragment implements OnRefreshList
     public void onEvent(DeleteCheckInEvent event) {
         int position = event.getPosition();
         mCheckInAdapter.removeCheckIn(position);
+        SessionUtils.updateRequestCount(getActivity(), -1, R.string.admin_check_in_requests);
     }
 
     public void onEvent(VerifyCheckInEvent event) {
         int position = event.getPosition();
         mCheckInAdapter.removeCheckIn(position);
+        SessionUtils.updateRequestCount(getActivity(), -1, R.string.admin_check_in_requests);
     }
 
     public void onEvent(APIErrorEvent event) {

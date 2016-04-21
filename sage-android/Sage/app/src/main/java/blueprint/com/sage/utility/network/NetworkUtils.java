@@ -48,9 +48,22 @@ public class NetworkUtils {
                 .putString(activity.getString(R.string.auth_token), session.getAuthenticationToken())
                 .apply();
 
+        setRequests(activity, session.getSignUpRequests(), session.getCheckInRequests());
         setUser(activity, session.getUser());
         setSchool(activity, session.getSchool());
         setCurrentSemester(activity, session.getCurrentSemester());
+    }
+
+    public static void setRequests(Activity activity, int signUpRequests, int checkInRequests) throws Exception {
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
+                Context.MODE_PRIVATE);
+
+        String signUp = Integer.toString(signUpRequests);
+        String checkIn = Integer.toString(checkInRequests);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(activity.getString(R.string.admin_sign_up_requests), signUp).apply();
+        editor.putString(activity.getString(R.string.admin_check_in_requests), checkIn).apply();
     }
 
     public static void setUser(Activity activity, User user) throws Exception {
@@ -129,14 +142,14 @@ public class NetworkUtils {
 
     public static boolean isVerifiedUser(Context context, SharedPreferences preferences) {
         return !preferences.getString(context.getString(R.string.email), "").isEmpty() &&
-               !preferences.getString(context.getString(R.string.auth_token), "").isEmpty() &&
-               // TODO: replace this with getString after Kelsey merges her stuff
-               !preferences.getString(context.getString(R.string.user), "").isEmpty() &&
-               !preferences.getString(context.getString(R.string.school), "").isEmpty();
+                !preferences.getString(context.getString(R.string.auth_token), "").isEmpty() &&
+                // TODO: replace this with getString after Kelsey merges her stuff
+                !preferences.getString(context.getString(R.string.user), "").isEmpty() &&
+                !preferences.getString(context.getString(R.string.school), "").isEmpty();
     }
 
     public static void writeAsPreferences(Activity activity, String key, Object object) {
-        SharedPreferences sharedPreferences = 
+        SharedPreferences sharedPreferences =
                 activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
 
         String objectString = writeAsString(activity, object);

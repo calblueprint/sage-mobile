@@ -13,6 +13,7 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
+import blueprint.com.sage.shared.views.ProgressViewHolder;
 import blueprint.com.sage.utility.model.UserUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,13 +29,14 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
 
     private static final int HEADER_VIEW = 0;
     private static final int USER_VIEW = 1;
+    private static final int LOADING_VIEW = 2;
 
     public AbstractUserListAdapter(FragmentActivity activity, List<User> users) {
         super();
         mActivity = activity;
     }
 
-    public abstract void setUpUsers(List<User> users);
+    public abstract void setUpUsers(List<User> users, boolean hasReset);
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
@@ -43,6 +45,9 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
             case HEADER_VIEW:
                 view = LayoutInflater.from(mActivity).inflate(R.layout.user_header_list_item, parent, false);
                 return new HeaderViewHolder(view);
+            case LOADING_VIEW:
+                view = LayoutInflater.from(mActivity).inflate(R.layout.progress_list_item, parent, false);
+                return new ProgressViewHolder(view);
             default:
                 view = LayoutInflater.from(mActivity).inflate(R.layout.user_list_item, parent, false);
                 return new UserViewHolder(view);
@@ -55,11 +60,15 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
             return;
 
         Item item = mItemList.get(position);
-
-        if (item.isHeader()) {
-            setUpHeaderView((HeaderViewHolder) viewHolder, item);
-        } else {
-            setUpUserView((UserViewHolder) viewHolder, item);
+        switch(item.getType()) {
+            case HEADER_VIEW:
+                setUpHeaderView((HeaderViewHolder) viewHolder, item);
+                break;
+            case LOADING_VIEW:
+                break;
+            default:
+                setUpUserView((UserViewHolder) viewHolder, item);
+                break;
         }
     }
 
@@ -85,13 +94,18 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
         });
         user.loadUserImage(mActivity, viewHolder.mImage);
 
-        UserUtils.setTypeBackground(mActivity, user, viewHolder.mUserType, viewHolder.mBorder, user.ABBREV_ROLES_LABEL);
+        UserUtils.setTypeBackground(mActivity, user, viewHolder.mUserType, viewHolder.mBorder, User.ABBREV_ROLES_LABEL);
     }
 
     public abstract void onItemClick(User user);
 
+    public void resetUsers(List<User> users) {
+        setUpUsers(users, true);
+        notifyDataSetChanged();
+    }
+
     public void setUsers(List<User> users) {
-        setUpUsers(users);
+        setUpUsers(users, false);
         notifyDataSetChanged();
     }
 
@@ -136,10 +150,12 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
 
         private User user;
         private String header;
+        private int type;
 
-        public Item(User user, String header) {
+        public Item(User user, String header, int type) {
             this.user = user;
             this.header = header;
+            this.type = type;
         }
 
         public boolean isHeader() { return header != null; }

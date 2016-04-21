@@ -12,9 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.APIErrorEvent;
+import blueprint.com.sage.models.User;
+import blueprint.com.sage.shared.PaginationInstance;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
+import blueprint.com.sage.shared.listeners.EndlessRecyclerViewScrollListener;
 import blueprint.com.sage.shared.views.RecycleViewEmpty;
 import blueprint.com.sage.users.profile.fragments.CreateAdminFragment;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -32,15 +38,20 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
     @Bind(R.id.user_list_list) public RecycleViewEmpty mUserList;
     @Bind(R.id.user_list_refresh) public SwipeRefreshLayout mRefreshUsers;
     @Bind(R.id.user_list_fab) public FloatingActionButton mFloatingActionButton;
-    @Bind(R.id.list_progress_bar)
-    ProgressBar mProgressBar;
+    @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
 
     public RecyclerView.Adapter mUserListAdapter;
     public ToolbarInterface mToolbarInterface;
 
+    public PaginationInstance mPaginationInstance;
+    private LinearLayoutManager mLinearLayoutManager;
+
+    public List<User> mUsers;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUsers = new ArrayList<>();
         mToolbarInterface = (ToolbarInterface) getActivity();
     }
 
@@ -70,11 +81,19 @@ public abstract class AbstractUserListFragment extends Fragment implements OnRef
 
     public void initializeViews() {
         mUserListAdapter = getAdapter();
-
-        mUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mUserList.setLayoutManager(mLinearLayoutManager);
         mUserList.setEmptyView(mEmptyView);
         mUserList.setProgressBar(mProgressBar);
         mUserList.setAdapter(mUserListAdapter);
+        mUserList.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager, mPaginationInstance) {
+            @Override
+            public void onLoadMore() {
+                makeUserListRequest();
+            }
+        });
+
+        mPaginationInstance = PaginationInstance.newInstance();
 
         mRefreshUsers.setOnRefreshListener(this);
         mEmptyView.setOnRefreshListener(this);

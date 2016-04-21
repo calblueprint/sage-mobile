@@ -120,8 +120,8 @@ public class LandingActivity extends AbstractActivity {
 
     @Override
     protected void onPause() {
-        unregisterReceivers();
         super.onPause();
+        unregisterReceivers();
     }
 
     @Override
@@ -208,19 +208,6 @@ public class LandingActivity extends AbstractActivity {
         } else {
             startAnimation(UnverifiedActivity.class);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        registerReceiver();
-    }
-
-    @Override
-    protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        mIsReceiverRegistered = false;
-        super.onPause();
     }
 
     /**

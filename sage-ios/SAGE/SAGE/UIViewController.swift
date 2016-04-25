@@ -51,14 +51,14 @@ extension UIViewController {
         self.view.addSubview(successView)
         self.view.bringSubviewToFront(successView)
         successView.setX(0)
-        successView.setY(-10)
+        successView.setY(-10 + UIConstants.navbarHeight)
 
         UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
             successView.setY(0)
             }) { (bool) -> Void in
                 UIView.animateWithDuration(UIView.animationTime, delay: 3, options: .CurveLinear, animations: { () -> Void in
                     successView.alpha = 0.0
-                    successView.setY(-1 * size)
+                    successView.setY(-1 * size + UIConstants.navbarHeight)
                     }, completion: nil)
         }
         return successView

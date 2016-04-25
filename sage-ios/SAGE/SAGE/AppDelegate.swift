@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //Handle push notifications
         if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+            RootController.sharedController().displayAnnouncement(Announcement(id: 1, sender: User(firstName:"A", lastName:"S"), title: "YES", text: "ESSESE", timeCreated: NSDate(), school: nil))
             // 2
             //let aps = notification["aps"] as! [String: AnyObject]
             // 3
@@ -49,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        (self.window?.rootViewController as! RootController).pushCorrectViewController()
+        //(self.window?.rootViewController as! RootController).pushCorrectViewController()
     }
 
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
@@ -76,7 +77,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        // handle remote notification
+        let objectString = userInfo[PushNotificationConstants.kObject] as! String
+        let notificationType = userInfo[PushNotificationConstants.kType] as! Int
+
+        switch notificationType {
+        case PushNotificationConstants.kAnnouncementType:
+            let announcementJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
+            let announcement = Announcement(properties: announcementJSON)
+
+            // App is already in foreground
+            if (application.applicationState == .Active) {
+                RootController.sharedController().displayAnnouncement(announcement)
+                return;
+            }
+            // App is transitioning from background to foreground
+            RootController.sharedController().displayAnnouncement(announcement)
+        case PushNotificationConstants.kCheckInRequestType:
+            let checkInRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kCheckInRequest] as! [String: AnyObject]
+            let checkInRequest = Checkin(propertyDictionary: checkInRequestJSON)
+
+            // App is already in foreground
+            if (application.applicationState == .Active) {
+                //RootController.sharedController().displayAnnouncement(announcement)
+                return;
+            }
+            // App is transitioning from background to foreground
+            //RootController.sharedController().displayAnnouncement(announcement)
+        case PushNotificationConstants.kSignUpRequestType:
+            let signUpRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
+            let signUpRequest = User(propertyDictionary: signUpRequestJSON)
+
+            // App is already in foreground
+            if (application.applicationState == .Active) {
+                //RootController.sharedController().displayAnnouncement(announcement)
+                return;
+            }
+            // App is transitioning from background to foreground
+            //RootController.sharedController().displayAnnouncement(announcement)
+        default:
+            break
+        }
+
     }
 }
 

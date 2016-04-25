@@ -49,6 +49,9 @@ class RootController: UIViewController {
         self.pushCorrectViewController()
     }
     
+    //
+    // MARK: - Public Methods
+    //
     func pushCorrectViewController() {
         if SAGEState.currentUser() != nil {
             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
@@ -113,10 +116,20 @@ class RootController: UIViewController {
         self.addChildViewController(newRootTabBarController)
         self.view.addSubview(newRootTabBarController.view)
     }
-
+    
+    //
+    // MARK: - Private Methods
+    //
     private func clearViews() {
         self.loginController?.view.alpha = 0
         self.rootTabBarController?.view.alpha = 0
         self.unverifiedController?.view.alpha = 0
+    }
+
+    //
+    // MARK: - Push Notification Handling
+    //
+    func displayAnnouncement(announcement: Announcement) {
+        self.rootTabBarController?.displayAnnouncement(announcement)
     }
 }

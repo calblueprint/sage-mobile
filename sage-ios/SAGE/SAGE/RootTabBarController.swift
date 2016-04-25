@@ -12,6 +12,13 @@ import SwiftKeychainWrapper
 
 class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
+    var announcementsViewController = AnnouncementsViewController(style: .Plain)
+    var checkInViewController = CheckinViewController()
+    var profileViewController = ProfileViewController(user: SAGEState.currentUser()!)
+    var adminViewController: AdminTableViewController?
+    var schoolViewController: SchoolDetailViewController?
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.tintColor = UIColor.mainColor
@@ -35,12 +42,9 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
 
-        let announcementsViewController = AnnouncementsViewController(style: .Plain)
-        
-        let checkInViewController = CheckinViewController()
-        
-        let profileViewController = ProfileViewController(user: SAGEState.currentUser()!)
-        
+        let announcementsViewController = self.announcementsViewController
+        let checkInViewController = self.checkInViewController
+        let profileViewController = self.profileViewController
         var rootViewControllers = [announcementsViewController, checkInViewController, profileViewController]
         
         if let role = SAGEState.currentUser()?.role {
@@ -51,6 +55,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 titles.append(NSLocalizedString("Admin", comment: "Admin"))
                 
                 let adminViewController = AdminTableViewController(style: .Grouped)
+                self.adminViewController = adminViewController
                 rootViewControllers.append(adminViewController)
             } else if let school = SAGEState.currentSchool() {
                 let icon = FAKIonIcons.androidHomeIconWithSize(UIConstants.tabBarIconSize)
@@ -59,6 +64,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 titles.append(NSLocalizedString("School", comment: "School"))
 
                 let schoolViewController = SchoolDetailViewController()
+                self.schoolViewController = schoolViewController
                 schoolViewController.configureWithSchool(school as! School)
                 rootViewControllers.append(schoolViewController)
             }
@@ -77,5 +83,17 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         }
         
         self.viewControllers = viewControllers
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
+    //
+    // MARK: - Push Notification Handling
+    //
+    func displayAnnouncement(announcement: Announcement) {
+        self.selectedIndex = 0
+        self.announcementsViewController.displayAnnouncement(announcement)
     }
 }

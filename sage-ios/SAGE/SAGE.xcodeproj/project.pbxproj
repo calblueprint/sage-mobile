@@ -159,6 +159,7 @@
 		E446119E1C7568C5006E90FA /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119D1C7568C5006E90FA /* MenuItem.swift */; };
 		E44611A01C756A73006E90FA /* ExpandMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119F1C756A73006E90FA /* ExpandMenuItem.swift */; };
 		E450EAFB1CC5B83B00E97417 /* ExportSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */; };
+		E470D3F71CCEDE4F000CB2F2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470D3F61CCEDE4F000CB2F2 /* String.swift */; };
 		E48082491C8F980500A38E57 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48082481C8F980500A38E57 /* Dictionary.swift */; };
 		E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */; };
 		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
@@ -350,6 +351,7 @@
 		E446119D1C7568C5006E90FA /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		E446119F1C756A73006E90FA /* ExpandMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandMenuItem.swift; sourceTree = "<group>"; };
 		E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportSemesterViewController.swift; sourceTree = "<group>"; };
+		E470D3F61CCEDE4F000CB2F2 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		E48082481C8F980500A38E57 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterView.swift; sourceTree = "<group>"; };
 		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
@@ -524,6 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				E48082481C8F980500A38E57 /* Dictionary.swift */,
+				E470D3F61CCEDE4F000CB2F2 /* String.swift */,
 				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
 				42EDBDED1BDF38420092D5F5 /* UIImage.swift */,
 				E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */,
@@ -1194,6 +1197,7 @@
 				5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */,
 				5D61491B1C5D7DBA0036708A /* NoSemesterViewController.swift in Sources */,
 				27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */,
+				E470D3F71CCEDE4F000CB2F2 /* String.swift in Sources */,
 				4241AF841C4BB65F009BC133 /* EditProfileView.swift in Sources */,
 				42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */,
 				42A6CE641C0BDFC700F97CFF /* SchoolsTableViewCell.swift in Sources */,

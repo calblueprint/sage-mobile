@@ -95,6 +95,15 @@ class AnnouncementsViewController: SGTableViewController {
     }
     
     //
+    // MARK: - Push Notification Handling
+    //
+    func displayAnnouncement(announcement: Announcement) {
+        let view = AnnouncementsDetailViewController(announcement: announcement)
+        self.navigationController?.pushViewController(view, animated: true)
+        self.getAnnouncements()
+    }
+
+    //
     // MARK: - ViewController LifeCycle
     //
     override func viewDidLoad() {

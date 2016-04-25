@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             // App is already in foreground
             if (application.applicationState == .Active) {
-                RootController.sharedController().displayAnnouncement(announcement)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
                 return;
             }
             // App is transitioning from background to foreground

@@ -14,7 +14,7 @@ class SGNavigationController: UINavigationController {
 
     func showSuccessAndSetMessage(message: String) {
         let success = self.successView
-        let successView = super.showSuccess(message, currentSuccess: success, color: UIColor.lightRedColor)
+        let successView = super.showSuccess(message, currentSuccess: success, color: UIColor.lightGreenColor)
         self.successView = successView
     }
 

@@ -15,6 +15,10 @@ class RootController: UIViewController {
     var unverifiedController: UnverifiedViewController?
     var rootTabBarController: RootTabBarController?
     
+    private var notifiedAnnouncementIds = Set<Int>()
+    private var notifiedCheckinRequestIds = Set<Int>()
+    private var notifiedSignupRequestIds = Set<Int>()
+
     private struct SharedController {
         static var controller = RootController()
     }
@@ -129,7 +133,19 @@ class RootController: UIViewController {
     //
     // MARK: - Push Notification Handling
     //
-    func displayAnnouncement(announcement: Announcement) {
-        self.rootTabBarController?.displayAnnouncement(announcement)
+    func handleNewAnnouncement(announcement: Announcement, applicationState: UIApplicationState) {
+        // Check for duplicate notifications because iOS 9 sucks
+        if !self.notifiedAnnouncementIds.contains(announcement.id!) {
+            self.notifiedAnnouncementIds.insert(announcement.id!)
+            // App is already in foreground
+            if (applicationState == .Active) {
+                //if announcementController is active
+                //else
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
+            } else {
+                // App is transitioning from background/launching to foreground
+                self.rootTabBarController?.displayAnnouncement(announcement)
+            }
+        }
     }
 }

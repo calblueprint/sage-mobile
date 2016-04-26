@@ -38,11 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //Handle push notifications
         if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
-            RootController.sharedController().displayAnnouncement(Announcement(id: 1, sender: User(firstName:"A", lastName:"S"), title: "YES", text: "ESSESE", timeCreated: NSDate(), school: nil))
-            // 2
-            //let aps = notification["aps"] as! [String: AnyObject]
-            // 3
-            //(window?.rootViewController as? UITabBarController)?.selectedIndex = 1
+
         }
 
         return true
@@ -84,14 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case PushNotificationConstants.kAnnouncementType:
             let announcementJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
             let announcement = Announcement(properties: announcementJSON)
-
-            // App is already in foreground
-            if (application.applicationState == .Active) {
-                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
-                return;
-            }
-            // App is transitioning from background to foreground
-            RootController.sharedController().displayAnnouncement(announcement)
+            RootController.sharedController().handleNewAnnouncement(announcement, applicationState: application.applicationState)
         case PushNotificationConstants.kCheckInRequestType:
             let checkInRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kCheckInRequest] as! [String: AnyObject]
             let checkInRequest = Checkin(propertyDictionary: checkInRequestJSON)

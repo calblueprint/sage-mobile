@@ -78,11 +78,4 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         
         self.viewControllers = viewControllers
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        for (var i = 0; i < 4; i++) {
-            (self.viewControllers![i] as! SGNavigationController).showSuccessAndSetMessage("fuck you")
-        }
-    }
 }

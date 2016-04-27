@@ -28,7 +28,7 @@ class SuccessView: UIView {
         self.background.backgroundColor = color
         self.background.alpha = alpha!
 
-        self.addSubview(self.message)
+        self.background.addSubview(self.message)
         self.message.text = messageString
         self.message.textColor = UIColor.whiteColor()
         self.message.font = UIFont.normalFont
@@ -47,13 +47,16 @@ class SuccessView: UIView {
     }
 
     override func layoutSubviews() {
+        super.layoutSubviews()
+        self.background.fillHeight()
+        self.background.fillWidth()
+
         self.message.sizeToFit()
         self.message.centerHorizontally()
         self.message.centerVertically()
         if !self.centered {
             self.message.setY(self.message.frame.origin.y + 10)
         }
-        self.background.frame = self.frame
     }
 
     required init?(coder aDecoder: NSCoder) {

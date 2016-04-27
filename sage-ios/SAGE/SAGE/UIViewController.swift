@@ -41,24 +41,21 @@ extension UIViewController {
         if currentSuccess != nil {
             currentSuccess?.removeFromSuperview()
         }
-        var size: CGFloat
-        if let _ = self.navigationController {
-            size = 44.0
-        } else {
-            size = 64.0
-        }
+
+        let size: CGFloat = 44.0
         let successView = SuccessView(height: size, messageString: message, color: color, alpha: alpha, centered: centered)
         self.view.addSubview(successView)
         self.view.bringSubviewToFront(successView)
+        successView.layoutSubviews()
         successView.setX(0)
-        successView.setY(-10 + UIConstants.navbarHeight)
+        successView.setY(-10)
 
         UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
-            successView.setY(0)
+            successView.setY(UIConstants.navbarHeight)
             }) { (bool) -> Void in
                 UIView.animateWithDuration(UIView.animationTime, delay: 3, options: .CurveLinear, animations: { () -> Void in
                     successView.alpha = 0.0
-                    successView.setY(-1 * size + UIConstants.navbarHeight)
+                    successView.setY(-1 * size)
                     }, completion: nil)
         }
         return successView

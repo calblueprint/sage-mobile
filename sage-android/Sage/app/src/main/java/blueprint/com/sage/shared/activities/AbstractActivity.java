@@ -44,7 +44,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements Base
                 .addApi(Places.PLACE_DETECTION_API)
                 .build();
 
-        if (!NetworkUtils.isVerifiedUser(this, mPreferences))
+        if (!NetworkUtils.isVerifiedUser(this))
             NetworkUtils.logoutCurrentUser(this);
 
         setUpSession();

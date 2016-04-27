@@ -12,6 +12,7 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.main.MainActivity;
+import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
  * Created by kelseylam on 3/30/16.
@@ -26,7 +27,10 @@ public class NotificationService extends GcmListenerService {
         String message = data.getString("message");
         String type = data.getString("type");
         String object = data.getString("object");
-        sendNotification(message, type, object);
+
+        if (NetworkUtils.isVerifiedUser(getBaseContext())) {
+            sendNotification(message, type, object);
+        }
     }
 
     private void sendNotification(String message, String type, String object) {

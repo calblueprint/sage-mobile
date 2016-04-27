@@ -56,10 +56,10 @@
             </intent-filter>
         </service>
 
-        <servicema
+        <service
             android:name=".notifications.RegistrationIntentService"
             android:exported="false">
-        </servicema>
+        </service>
 
         <activity
             android:name=".landing.LandingActivity"

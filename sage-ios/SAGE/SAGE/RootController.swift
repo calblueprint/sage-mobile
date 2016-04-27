@@ -119,6 +119,11 @@ class RootController: UIViewController {
         self.rootTabBarController = newRootTabBarController
         self.addChildViewController(newRootTabBarController)
         self.view.addSubview(newRootTabBarController.view)
+
+        // Push notifications
+        let userNotificationTypes: UIUserNotificationType = [.Alert , .Badge , .Sound]
+        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
     }
     
     //
@@ -140,10 +145,13 @@ class RootController: UIViewController {
             // App is already in foreground
             if (applicationState == .Active) {
                 //if announcementController is active
-                //else
+                if self.rootTabBarController?.activeIndex() != .Announcement {
+
+                }
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
             } else {
                 // App is transitioning from background/launching to foreground
+                self.rootTabBarController?.setActiveIndex(.Announcement)
                 self.rootTabBarController?.displayAnnouncement(announcement)
             }
         }

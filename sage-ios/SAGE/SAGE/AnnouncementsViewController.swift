@@ -99,6 +99,7 @@ class AnnouncementsViewController: SGTableViewController {
     //
     func displayAnnouncement(announcement: Announcement) {
         let view = AnnouncementsDetailViewController(announcement: announcement)
+        self.navigationController?.popToRootViewControllerAnimated(false)
         self.navigationController?.pushViewController(view, animated: true)
         self.getAnnouncements()
     }

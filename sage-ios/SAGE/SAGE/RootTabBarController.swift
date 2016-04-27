@@ -18,6 +18,12 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     var adminViewController: AdminTableViewController?
     var schoolViewController: SchoolDetailViewController?
 
+    enum Index: Int {
+        case Announcement = 0
+        case Checkin = 1
+        case Profile = 2
+        case Special = 3
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,10 +96,21 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     }
 
     //
+    // MARK: - Public Methods
+    //
+    func activeIndex() -> Index {
+        return Index(rawValue: self.selectedIndex)!
+    }
+
+    func setActiveIndex(index: Index) {
+        self.selectedIndex = index.rawValue
+    }
+
+    //
     // MARK: - Push Notification Handling
     //
     func displayAnnouncement(announcement: Announcement) {
-        self.selectedIndex = 0
+        self.setActiveIndex(.Announcement)
         self.announcementsViewController.displayAnnouncement(announcement)
     }
 }

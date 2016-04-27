@@ -3,10 +3,8 @@ package blueprint.com.sage.landing;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,8 +12,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,9 +52,7 @@ public class LandingActivity extends AbstractActivity {
 
     private SharedPreferences mPreferences;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
-    private boolean mIsReceiverRegistered;
     private String mRegistrationId;
-    private int mAppVersion;
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "LandingActivity";
@@ -85,10 +79,6 @@ public class LandingActivity extends AbstractActivity {
             return;
         }
 
-        mRegistrationId = mPreferences.getString(getString(R.string.registration_token), "none");
-        mAppVersion = mPreferences.getInt(getString(R.string.app_version), Integer.MIN_VALUE);
-        mIsReceiverRegistered = false;
-
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -96,9 +86,9 @@ public class LandingActivity extends AbstractActivity {
             }
         };
 
-        registerReceivers();
+        RegistrationUtils.registerReceivers(this, mRegistrationBroadcastReceiver);
 
-        if (getRegistrationId().isEmpty() && checkPlayServices()) {
+        if (RegistrationUtils.getRegistrationId(this).isEmpty() && RegistrationUtils.checkPlayServices(this)) {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         } else {
@@ -115,13 +105,13 @@ public class LandingActivity extends AbstractActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceivers();
+        RegistrationUtils.registerReceivers(this, mRegistrationBroadcastReceiver);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceivers();
+        RegistrationUtils.unregisterReceivers(this, mRegistrationBroadcastReceiver);
     }
 
     @Override
@@ -208,57 +198,6 @@ public class LandingActivity extends AbstractActivity {
         } else {
             startAnimation(UnverifiedActivity.class);
         }
-    }
-
-    /**
-     * Gets the current registration ID for application on GCM service.
-     * If result is empty, the app needs to register.
-     *
-     * @return registration ID, or empty string if there is no existing
-     *         registration ID.
-     */
-    private String getRegistrationId() {
-        if (mRegistrationId.equals("none")) {
-            Log.i(TAG, "Registration not found.");
-            return "";
-        }
-
-        int currentVersion = RegistrationUtils.getAppVersion(this);
-        if (mAppVersion != currentVersion) {
-            Log.i(TAG, "App version changed.");
-            mPreferences.edit().putInt("app_version", currentVersion).apply();
-            return "";
-        }
-        return mRegistrationId;
-    }
-
-    private void registerReceivers() {
-        if (!mIsReceiverRegistered) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                    new IntentFilter(getString(R.string.registration_complete)));
-            mIsReceiverRegistered = true;
-        }
-    }
-
-    private void unregisterReceivers() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        mIsReceiverRegistered = false;
-    }
-
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
     }
 
     private void makeRegistrationRequest(Intent intent) {

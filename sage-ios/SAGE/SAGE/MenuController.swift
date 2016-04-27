@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MenuController: UIViewController {
+class MenuController: SGViewController {
 
     var menuView = MenuView()
     var menuList = [MenuItem]()

@@ -8,12 +8,11 @@
 
 import Foundation
 
-class PastSemestersViewController: UITableViewController {
+class PastSemestersViewController: SGTableViewController {
     
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var semesters: [Semester]?
-    var previousVC: UIViewController?
+    weak var previousVC: UIViewController?
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
@@ -21,7 +20,7 @@ class PastSemestersViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Past Semesters"
+        self.changeTitle("Past Semesters")
         self.tableView.tableFooterView = UIView()
         self.previousVC = self
         
@@ -52,12 +51,6 @@ class PastSemestersViewController: UITableViewController {
                 self.refreshControl?.endRefreshing()
                 self.showErrorAndSetMessage(errorMessage)
         }
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -95,9 +88,6 @@ class PastSemestersViewController: UITableViewController {
             let semesterID = self.semesters![indexPath.row].id
             let vc = BrowseMentorsViewController()
             vc.navigationController?.navigationBar.barTintColor = UIColor.lightGrayColor
-            if let topItem = self.navigationController!.navigationBar.topItem {
-                topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-            }
             vc.filter = [SemesterConstants.kSemesterId: String(semesterID)]
             self.navigationController?.pushViewController(vc, animated: true)
         }

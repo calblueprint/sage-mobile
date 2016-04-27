@@ -11,7 +11,6 @@ import UIKit
 class BrowseSchoolsViewController: SGTableViewController {
     
     var schools: [School]?
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     
     override init(style: UITableViewStyle) {
@@ -80,7 +79,7 @@ class BrowseSchoolsViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Schools"
+        self.changeTitle("Schools")
         self.tableView.tableFooterView = UIView()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSchool")
@@ -104,16 +103,7 @@ class BrowseSchoolsViewController: SGTableViewController {
     
     func addSchool() {
         let addSchoolController = AddSchoolController()
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(addSchoolController, animated: true)
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
     }
     
     func loadSchools() {
@@ -164,9 +154,6 @@ class BrowseSchoolsViewController: SGTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let school = self.schools![indexPath.row]
         let vc = SchoolDetailViewController()
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         vc.configureWithSchool(school)
         self.navigationController?.pushViewController(vc, animated: true)
     }

@@ -10,16 +10,18 @@ import UIKit
 import FontAwesomeKit
 
 class SignUpRequestsViewController: SGTableViewController {
+    
     var requests: [User]?
-    var filter: [String: AnyObject]?
 
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Sign Up Requests", subtitle: "All")
     
     override init(style: UITableViewStyle) {
         super.init(style: style)
         self.setNoContentMessage("No new sign up requests!")
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -28,7 +30,7 @@ class SignUpRequestsViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.titleView = self.titleView
+        self.changeTitle("Sign Up Requests")
         self.tableView.tableFooterView = UIView()
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -47,7 +49,9 @@ class SignUpRequestsViewController: SGTableViewController {
 
         if LoginOperations.getUser()!.isDirector() {
             self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
-            self.titleView.setSubtitle("My School")
+            self.changeSubtitle("My School")
+        } else {
+            self.changeSubtitle("All")
         }
         self.loadSignUpRequests()
     }
@@ -60,12 +64,6 @@ class SignUpRequestsViewController: SGTableViewController {
     //
     // MARK: - Public Methods
     //
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
     func loadSignUpRequests(reset reset: Bool = false) {
         if reset {
             self.requests = nil
@@ -93,19 +91,19 @@ class SignUpRequestsViewController: SGTableViewController {
     }
     
     func showFilterOptions() {
-        let menuController = MenuController(title: "Filter Options")
+        let menuController = MenuController(title: "Display Options")
 
-        menuController.addMenuItem(MenuItem(title: "None", handler: { (_) -> Void in
+        menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.filter = nil
             self.loadSignUpRequests(reset: true)
-            self.titleView.setSubtitle("All")
+            self.changeSubtitle("All")
         }))
 
         if LoginOperations.getUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
                 self.loadSignUpRequests(reset: true)
-                self.titleView.setSubtitle("My School")
+                self.changeSubtitle("My School")
             }))
         }
 
@@ -119,7 +117,7 @@ class SignUpRequestsViewController: SGTableViewController {
             }, handler: { (selectedSchool) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
                 self.loadSignUpRequests(reset: true)
-                self.titleView.setSubtitle(selectedSchool.name!)
+                self.changeSubtitle(selectedSchool.name!)
         }))
     
         self.presentViewController(menuController, animated: false, completion: nil)
@@ -206,9 +204,6 @@ class SignUpRequestsViewController: SGTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let request = self.requests![indexPath.row]
         let vc = ProfileViewController(user: request)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

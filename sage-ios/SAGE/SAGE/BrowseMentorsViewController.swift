@@ -12,10 +12,7 @@ import SwiftKeychainWrapper
 class BrowseMentorsViewController: SGTableViewController {
     
     var mentors: [[User]]?
-    var currentErrorMessage: ErrorView?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var titleView = SGTitleView(title: "Mentors", subtitle: "")
-    var filter: [String: AnyObject]?
     
     init() {
         super.init(style: .Plain)
@@ -49,21 +46,20 @@ class BrowseMentorsViewController: SGTableViewController {
     
     func setSemesterTitle(semesterID: String) {
         SemesterOperations.getSemester(semesterID as String, completion: { (semester) -> Void in
-            self.titleView.setSubtitle(semester.displayText())
+            self.changeSubtitle(semester.displayText())
             }) { (errorMessage) -> Void in
-                self.titleView.setSubtitle("Past Semester")
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.changeTitle("Mentors")
         if self.filter != nil {
             let semesterID = self.filter![SemesterConstants.kSemesterId] as! String
             self.setSemesterTitle(semesterID)
         } else {
-            self.titleView.setSubtitle("This Semester")
+            self.changeSubtitle("This Semester")
         }
-        self.navigationItem.titleView = self.titleView
         
         self.tableView.sectionIndexColor = UIColor.mainColor
         self.tableView.tableFooterView = UIView()
@@ -95,13 +91,7 @@ class BrowseMentorsViewController: SGTableViewController {
         self.activityIndicator.centerHorizontally()
         self.activityIndicator.centerVertically()
     }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.mainColor)
-        self.currentErrorMessage = errorView
-    }
-    
+
     override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
         let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         var charArray = [String]()
@@ -118,7 +108,7 @@ class BrowseMentorsViewController: SGTableViewController {
             if self.mentors![section].count == 0 {
                 return 0.0
             } else {
-                return 22.0
+                return SGSectionHeaderView.sectionHeight
             }
         } else {
             return 0.0
@@ -191,18 +181,6 @@ class BrowseMentorsViewController: SGTableViewController {
         return 26
     }
     
-    override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
-        let alphabet = "abcdefghijklmnopqrstuvwxyz"
-        var charArray = [String: Int]()
-        for i in 0...25 {
-            let letterChar = alphabet[alphabet.startIndex.advancedBy(i)]
-            let letterString = String(letterChar)
-            charArray[letterString] = i
-        }
-        return charArray[title.lowercaseString]!
-    }
-    
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let user = self.mentors![indexPath.section][indexPath.row]
         var cell = self.tableView.dequeueReusableCellWithIdentifier("BrowseMentorsCell")
@@ -221,10 +199,19 @@ class BrowseMentorsViewController: SGTableViewController {
         let mentor = self.mentors![indexPath.section][indexPath.row]
         let vc = ProfileViewController(user: mentor)
         vc.filter = self.filter
-        if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = SGSectionHeaderView()
+        view.setSectionTitle(self.getSectionHeaderTitle(section))
+        return view
+    }
+    
+    func getSectionHeaderTitle(sectionNumber: Int) -> String {
+        let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let charAtIndex = String(alphabet[alphabet.startIndex.advancedBy(sectionNumber)])
+        return charAtIndex
     }
     
 }

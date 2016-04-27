@@ -45,6 +45,7 @@ class AddSchoolView: FormView {
         self.location.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.location)
 
+
         self.radius.label.text = "Radius"
         self.radius.button.setTitle("Choose the radius tolerance", forState: .Normal)
         self.radius.setHeight(FormFieldItem.defaultHeight)
@@ -88,6 +89,7 @@ class AddSchoolView: FormView {
         self.name.textField.text = place.name
         self.location.button.setTitleColor(UIColor.blackColor(), forState: .Normal)
     }
+    
     
     func displayAddressText(text: String?) {
         if let addressText = text {

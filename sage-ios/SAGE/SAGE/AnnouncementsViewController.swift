@@ -12,14 +12,12 @@ import SwiftKeychainWrapper
 
 class AnnouncementsViewController: SGTableViewController {
     
-    var announcements: [Announcement] = []
-    var filter: [String: AnyObject]?
-
-    var currentErrorMessage: ErrorView?
-    var titleView = SGTitleView(title: "Announcements", subtitle: "All")
+    //var announcements: [Announcement] = []
     var page = 0
     var loadedAllAnnouncements = false
     var currentlyLoadingPage = false
+    var announcements = [Announcement]()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
 
     //
     // MARK: - Initialization
@@ -103,6 +101,7 @@ class AnnouncementsViewController: SGTableViewController {
     //
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setTitle("Announcements", subtitle: "All")
         self.view.backgroundColor = UIColor.whiteColor()
 
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
@@ -117,7 +116,6 @@ class AnnouncementsViewController: SGTableViewController {
             }
         }
         
-        self.navigationItem.titleView = self.titleView
         self.tableView.tableFooterView = UIView()
         
         self.refreshControl = UIRefreshControl()
@@ -133,31 +131,28 @@ class AnnouncementsViewController: SGTableViewController {
     //
     func showAnnouncementForm() {
         let addAnnouncementController = AddAnnouncementController()
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(addAnnouncementController, animated: true)
     }
 
     func showFilterOptions() {
-        let menuController = MenuController(title: "Filter Options")
+        let menuController = MenuController(title: "Display Options")
         menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.filter = nil
-            self.getAnnouncements(reset: true, page: 0)
-            self.titleView.setSubtitle("All")
+            self.getAnnouncements(reset: true)
+            self.changeSubtitle("All")
         }))
 
         if LoginOperations.getUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
-                self.getAnnouncements(reset: true, page: 0)
-                self.titleView.setSubtitle("My School")
+                self.getAnnouncements(reset: true)
+                self.changeSubtitle("My School")
             }))
         } else if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
-                self.getAnnouncements(reset: true, page: 0)
-                self.titleView.setSubtitle(userSchool.name!)
+                self.getAnnouncements(reset: true)
+                self.changeSubtitle(userSchool.name!)
             }))
         }
 
@@ -171,8 +166,8 @@ class AnnouncementsViewController: SGTableViewController {
                     return school.name!
                 }, handler: { (selectedSchool) -> Void in
                     self.filter = [AnnouncementConstants.kSchoolID: String(selectedSchool.id)]
-                    self.getAnnouncements(reset: true, page: 0)
-                    self.titleView.setSubtitle(selectedSchool.name!)
+                    self.getAnnouncements(reset: true)
+                    self.changeSubtitle(selectedSchool.name!)
             }))
         }
 
@@ -230,12 +225,6 @@ class AnnouncementsViewController: SGTableViewController {
         }
     }
     
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        let errorView = super.showError(message, currentError: error, color: UIColor.lightRedColor)
-        self.currentErrorMessage = errorView
-    }
-    
     //
     // MARK: - UITableViewDelegate
     //
@@ -290,9 +279,6 @@ class AnnouncementsViewController: SGTableViewController {
         if indexPath.section == 0 {
             let announcement = self.announcements[indexPath.row]
             let view = AnnouncementsDetailViewController(announcement: announcement)
-            if let topItem = self.navigationController?.navigationBar.topItem {
-                topItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
-            }
             self.navigationController?.pushViewController(view, animated: true)
         }
     }

@@ -23,7 +23,7 @@ class AdminOperations {
         }
         
         if params.count > 0 {
-            manager.GET(StringConstants.kEndpointGetMentors, parameters: filter, success: { (operation, data) -> Void in
+            manager.GET(StringConstants.kEndpointGetMentors, parameters: params, success: { (operation, data) -> Void in
                 var userArray = [User]()
                 let userData = data["users"] as! [AnyObject]
                 for userDict in userData {

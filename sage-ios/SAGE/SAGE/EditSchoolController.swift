@@ -49,6 +49,20 @@ class EditSchoolController: AddSchoolController {
         }
     }
     
+    override func locationButtonTapped() {
+        let vc = AddSchoolLocationTableViewController()
+        vc.parentVC = self
+        if let location = self.location {
+            vc.configureWithLocation(location)
+        } else if let location = self.school?.location {
+            vc.configureWithLocation(location)
+        }
+        if let topItem = self.navigationController?.navigationBar.topItem {
+            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        }
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
         if addSchoolView.name.textField.text == nil || addSchoolView.name.textField.text == "" {

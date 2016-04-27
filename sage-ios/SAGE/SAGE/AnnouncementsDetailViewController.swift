@@ -64,9 +64,6 @@ class AnnouncementsDetailViewController: UIViewController {
     func showProfile() {
         if let sender = self.announcement.sender {
             let profileViewController = ProfileViewController(user: sender)
-            if let topItem = self.navigationController!.navigationBar.topItem {
-                topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-            }
             self.navigationController?.pushViewController(profileViewController, animated: true)
 
         }
@@ -78,9 +75,6 @@ class AnnouncementsDetailViewController: UIViewController {
     func editAnnouncement() {
         let editAnnouncementController = EditAnnouncementController()
         editAnnouncementController.configureWithAnnouncement(self.announcement)
-        if let topItem = self.navigationController!.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController!.pushViewController(editAnnouncementController, animated: true)
     }
     

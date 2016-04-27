@@ -42,7 +42,7 @@ class AdminTableViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Admin"
+        self.changeTitle("Admin")
     }
     
     //

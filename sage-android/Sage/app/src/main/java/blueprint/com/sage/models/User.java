@@ -34,6 +34,7 @@ public @Data class User {
     private String currentPassword;
     private String passwordConfirmation;
     private String imageUrl;
+
     private int deviceType;
     private String deviceId;
 

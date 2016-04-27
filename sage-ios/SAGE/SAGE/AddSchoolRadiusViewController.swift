@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AddSchoolRadiusViewController: UIViewController {
+class AddSchoolRadiusViewController: SGViewController {
 
     var schoolRadiusView: AddSchoolRadiusView
     weak var parentVC: AddSchoolController?

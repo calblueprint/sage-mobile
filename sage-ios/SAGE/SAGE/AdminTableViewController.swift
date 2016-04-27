@@ -47,7 +47,7 @@ class AdminTableViewController: SGTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Admin"
+        self.changeTitle("Admin")
     }
     
     //
@@ -179,7 +179,7 @@ class AdminTableViewController: SGTableViewController {
         case 2:
             if indexPath.row == 0 {
                 cell.textLabel?.text = "Past Semesters"
-                let icon = FAKIonIcons.locationIconWithSize(iconSize)
+                let icon = FAKIonIcons.androidTimeIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
             }

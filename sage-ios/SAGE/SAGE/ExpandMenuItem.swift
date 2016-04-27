@@ -26,11 +26,13 @@ class ExpandMenuItem<Element>: MenuItem {
     required init(title: String, list:[Element], displayText: (Element) -> String, handler: (Element) -> Void) {
         self.expandedListController = ExpandedTableViewController(list: list, displayText: displayText, handler: handler)
         super.init(title: title, handler: {_ in })
+        self.expandedListController.menuItem = self
     }
 
     convenience init(title: String, listRetriever:(ExpandedTableViewController<Element>) -> Void, displayText: (Element) -> String, handler: (Element) -> Void) {
         self.init(title: title, list: [Element](), displayText: displayText, handler: handler)
         self.expandedListController = ExpandedTableViewController(listRetriever: listRetriever, displayText: displayText, handler: handler)
+        self.expandedListController.menuItem = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -56,9 +58,6 @@ class ExpandMenuItem<Element>: MenuItem {
 
         self.listContainerView.backgroundColor = UIColor.whiteColor()
         self.listContainerView.clipsToBounds = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: "expandedItemTapped:")
-        tapGesture.cancelsTouchesInView = false
-        self.listContainerView.addGestureRecognizer(tapGesture)
         self.addSubview(self.listContainerView)
     }
 
@@ -69,12 +68,12 @@ class ExpandMenuItem<Element>: MenuItem {
         super.layoutSubviews()
 
         self.expandCaret.alignRightWithMargin(UIConstants.sideMargin)
-        self.expandCaret.centerVertically()
+        self.expandCaret.setHeight(MenuView.menuItemHeight)
 
         self.topDivider.fillWidth()
 
         self.listContainerView.fillWidth()
-        self.listContainerView.setY(CGRectGetHeight(self.frame))
+        self.listContainerView.setY(MenuView.menuItemHeight)
     }
 
     //
@@ -89,6 +88,7 @@ class ExpandMenuItem<Element>: MenuItem {
                 self.expandCaret.transform = CGAffineTransformIdentity
                 }, completion: nil)
 
+            self.setHeight(MenuView.menuItemHeight)
             UIView.animateWithDuration(UIConstants.longAnimationTime,
                 delay: 0,
                 usingSpringWithDamping: UIConstants.defaultSpringDampening,
@@ -123,6 +123,7 @@ class ExpandMenuItem<Element>: MenuItem {
                 self.expandCaret.transform = CGAffineTransformMakeRotation(pi)
                 }, completion: nil)
 
+            self.fillHeight()
             UIView.animateWithDuration(UIConstants.longAnimationTime,
                 delay: 0,
                 usingSpringWithDamping: UIConstants.defaultSpringDampening,
@@ -136,24 +137,5 @@ class ExpandMenuItem<Element>: MenuItem {
                 }) { (completed) -> Void in
             }
         }
-    }
-
-    func expandedItemTapped(sender: UIGestureRecognizer) {
-        self.controller?.dismiss()
-    }
-
-    //
-    // MARK: - Bounds Hit Test Adjustment
-    //
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-
-        // Convert the point to the target view's coordinate system.
-        let pointForTargetView = self.listContainerView.convertPoint(point, fromView: self)
-
-        // Allow for any gestures on the listContainerView
-        if CGRectContainsPoint(self.listContainerView.bounds, pointForTargetView) {
-            return self.listContainerView.hitTest(pointForTargetView, withEvent:event)
-        }
-        return super.hitTest(point, withEvent: event)
     }
 }

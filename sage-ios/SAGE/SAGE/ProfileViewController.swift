@@ -14,8 +14,6 @@ class ProfileViewController: SGTableViewController {
     var user: User?
     var profileView = ProfileView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    var currentErrorMessage: ErrorView?
-    var filter: [String: AnyObject]?
     
     init(user: User) {
         self.user = user
@@ -211,21 +209,8 @@ class ProfileViewController: SGTableViewController {
     
     func editProfile() {
         let editProfileController = EditProfileController(user: self.user!.copy() as! User)
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         editProfileController.editProfileView.photoView.image = self.profileView.profileUserImg.image().copy() as? UIImage
         self.navigationController?.pushViewController(editProfileController, animated: true)
-    }
-    
-    func showErrorAndSetMessage(message: String) {
-        let error = self.currentErrorMessage
-        var color = UIColor.mainColor
-        if self.filter != nil {
-            color = UIColor.lightGrayColor
-        }
-        let errorView = super.showError(message, currentError: error, color: color)
-        self.currentErrorMessage = errorView
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftKeychainWrapper
 
 class EditProfileController: FormController {
     
@@ -81,18 +82,12 @@ class EditProfileController: FormController {
     @objc private func schoolButtonTapped() {
         let tableViewController = SelectSchoolEditProfileController()
         tableViewController.parentVCEditProfile = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
     @objc private func hoursButtonTapped() {
         let tableViewController = SelectHoursEditProfileController()
         tableViewController.parentVCEditProfile = self
-        if let topItem = self.navigationController?.navigationBar.topItem {
-            topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        }
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
@@ -125,6 +120,7 @@ class EditProfileController: FormController {
                 self.navigationController?.popViewControllerAnimated(true)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.changeSchoolKey, object: updatedUser.school!)
+                LoginOperations.storeUserDataInKeychain(updatedUser)
                 }) { (errorMessage) -> Void in
                     self.finishButton?.stopLoading()
                     let alertController = UIAlertController(

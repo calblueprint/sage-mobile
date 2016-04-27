@@ -113,6 +113,7 @@ class CheckinViewController: UIViewController {
         if let currentSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             if currentSchool.id == school.id {
                 self.school = school
+
                 self.distanceTolerance = school.radius
                 self.checkinView.mapView.clear()
                 let marker = GMSMarker(position: self.school!.location!.coordinate)

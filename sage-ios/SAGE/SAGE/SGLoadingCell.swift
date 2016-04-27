@@ -16,11 +16,14 @@ class SGLoadingCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(self.loadingIndicator)
         self.backgroundColor = UIColor.whiteColor()
-        self.loadingIndicator.startAnimating()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func startAnimating() {
+        self.loadingIndicator.startAnimating()
     }
 
     override func layoutSubviews() {

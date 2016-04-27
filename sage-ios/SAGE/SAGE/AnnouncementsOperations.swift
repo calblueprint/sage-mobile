@@ -11,7 +11,7 @@ import AFNetworking
 
 class AnnouncementsOperations {
     
-    static func loadAnnouncements(page: Int? = nil, filter: [String: AnyObject]? = nil, completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
+    static func loadAnnouncements(page page: Int? = nil, filter: [String: AnyObject]? = nil, completion: (([Announcement]) -> Void), failure:((String) -> Void)) {
         var params: [String: AnyObject] = [
             NetworkingConstants.kSortAttr: CheckinConstants.kTimeCreated,
             NetworkingConstants.kSortOrder: NetworkingConstants.kDescending

@@ -125,7 +125,7 @@ class AnnouncementsViewController: SGTableViewController {
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: "getAnnouncementsWithReset:", forControlEvents: .ValueChanged)
         
-       self.getAnnouncements(page: 0)
+       self.getAnnouncements()
     }
     
     //
@@ -179,7 +179,7 @@ class AnnouncementsViewController: SGTableViewController {
         self.presentViewController(menuController, animated: false, completion: nil)
     }
 
-    func getAnnouncements(reset reset: Bool = false, page: Int) {
+    func getAnnouncements(reset reset: Bool = false, page: Int = 0) {
         if reset {
             self.hideNoContentView()
             self.announcements = []
@@ -188,7 +188,7 @@ class AnnouncementsViewController: SGTableViewController {
         }
         
         if !self.loadedAllAnnouncements {
-            AnnouncementsOperations.loadAnnouncements(page, filter: self.filter, completion: { (newAnnouncements) -> Void in
+            AnnouncementsOperations.loadAnnouncements(page: page, filter: self.filter, completion: { (newAnnouncements) -> Void in
                 if newAnnouncements.count != 0 {
                     self.page = page
                     self.refreshControl?.endRefreshing()
@@ -266,11 +266,15 @@ class AnnouncementsViewController: SGTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 1 {
-            let loadingCell = SGLoadingCell()
-            loadingCell.userInteractionEnabled = false
-            loadingCell.separatorInset = UIEdgeInsetsMake(0, 0, 0, CGRectGetWidth(self.tableView.bounds))
+            var loadingCell = tableView.dequeueReusableCellWithIdentifier("LoadingCell")
+            if (loadingCell == nil) {
+                loadingCell = SGLoadingCell(style: .Default, reuseIdentifier: "LoadingCell")
+            }
+            (loadingCell as! SGLoadingCell).startAnimating()
+            loadingCell!.userInteractionEnabled = false
+            loadingCell!.separatorInset = UIEdgeInsetsMake(0, 0, 0, CGRectGetWidth(self.tableView.bounds))
             self.getAnnouncements(page: self.page + 1)
-            return loadingCell
+            return loadingCell!
         } else {
             var cell = tableView.dequeueReusableCellWithIdentifier("Announcement")
             if (cell == nil) {

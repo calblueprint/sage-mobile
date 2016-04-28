@@ -26,6 +26,7 @@ class ExportSemesterViewController: PastSemestersViewController {
             cell?.backgroundColor = UIColor.lighterGrayColor
             
             SemesterOperations.exportSemester(semester, completion: { () -> Void in
+                self.showSuccessAndSetMessage("Semester details sent to your e-mail!")
                 self.navigationController?.popViewControllerAnimated(true)
                 }, failure: { (message) -> Void in
                     self.loadingButton.stopLoading()

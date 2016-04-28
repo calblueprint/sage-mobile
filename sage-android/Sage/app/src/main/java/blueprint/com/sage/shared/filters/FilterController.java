@@ -46,11 +46,6 @@ public class FilterController {
         return mQueryParams;
     }
 
-    public HashMap<String, String> getQueryParams(HashMap<String, String> queryParams) {
-        mQueryParams.putAll(queryParams);
-        return mQueryParams;
-    }
-
     public void resetFilters() {
         mQueryParams = new HashMap<>();
     }

@@ -15,61 +15,43 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <FrameLayout
-                style="@style/FilterLayout"
-                android:id="@+id/announcement_filter_all_layout"
-                android:visibility="gone">
+            <FrameLayout style="@style/FilterLayout">
 
                 <TextView
                     style="@style/FilterText"
-                    android:text="@string/announcement_filter_all"/>
+                    android:text="@string/filter_check_in_all"/>
 
                 <RadioButton
                     style="@style/FilterRadioButton"
-                    android:id="@+id/announcement_filter_all"/>
-
-            </FrameLayout>
-
-            <FrameLayout
-                style="@style/FilterLayout">
-
-                <TextView
-                    style="@style/FilterText"
-                    android:text="@string/announcement_filter_general"/>
-
-                <RadioButton
-                    style="@style/FilterRadioButton"
-                    android:id="@+id/announcement_filter_general"/>
+                    android:id="@+id/check_in_filter_all"/>
 
             </FrameLayout>
 
             <FrameLayout
                 style="@style/FilterLayout"
-                android:id="@+id/announcement_filter_my_school_layout"
+                android:id="@+id/filter_check_in_my_school_layout"
                 android:visibility="gone">
 
                 <TextView
                     style="@style/FilterText"
-                    android:text="@string/announcement_filter_my_school"/>
+                    android:text="@string/filter_check_in_my_school"/>
 
                 <RadioButton
                     style="@style/FilterRadioButton"
-                    android:id="@+id/announcement_filter_my_school"/>
+                    android:id="@+id/check_in_filter_my_school"/>
 
             </FrameLayout>
 
-            <FrameLayout
-                style="@style/FilterLayout"
-                android:id="@+id/announcement_filter_school_layout"
-                android:visibility="gone">
+
+            <FrameLayout style="@style/FilterLayout">
 
                 <Spinner
                     style="@style/FilterSpinner"
-                    android:id="@+id/announcement_filter_school_spinner" />
+                    android:id="@+id/check_in_filter_school_spinner" />
 
                 <RadioButton
                     style="@style/FilterRadioButton"
-                    android:id="@+id/announcement_filter_school"/>
+                    android:id="@+id/check_in_filter_school"/>
 
             </FrameLayout>
 

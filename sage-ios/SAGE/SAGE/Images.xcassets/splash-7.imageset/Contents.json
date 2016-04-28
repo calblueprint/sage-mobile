@@ -2,8 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "splash-7.jpg",
+      "filename" : "splash-7.png",
       "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

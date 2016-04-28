@@ -19,18 +19,7 @@ class RootController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        let image = UIImage.init(named: UIConstants.blurredBerkeleyBackground)
-        let imageView = UIImageView.init(frame: frame)
-        imageView.image = image
-        self.view.addSubview(imageView)
-        
-        let activityIndicatorFrame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        let activityIndicator = UIActivityIndicatorView(frame: activityIndicatorFrame)
-        activityIndicator.color = UIColor.whiteColor()
-        activityIndicator.startAnimating()
-        activityIndicator.center = self.view.center
-        self.view.addSubview(activityIndicator)
+        self.view.addSubview(self.initialSplashView)
         
         let sageFrame = CGRectMake(0, self.view.frame.height/20, self.view.frame.width, self.view.frame.height)
         let sageLabel = UILabel.init(frame: sageFrame)
@@ -44,16 +33,17 @@ class RootController: UIViewController {
     }
     
     func pushCorrectViewController() {
-        self.view = self.initialSplashView
         if LoginOperations.userIsLoggedIn() {
             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                 KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
-                self.view = self.animatedSplashView
+                self.initialSplashView.removeFromSuperview()
                 if (user.verified) {
-                    self.performSelector("pushRootTabBarController", withObject: nil, afterDelay: 1.4)
+                    self.pushRootTabBarController()
                 } else {
-                    self.performSelector("pushUnverifiedViewController", withObject: nil, afterDelay: 1.4)
+                    self.pushUnverifiedViewController()
                 }
+                self.view.addSubview(self.animatedSplashView)
+                self.performSelector("removeSplashView", withObject: nil, afterDelay: self.animatedSplashView.animationDuration)
                 }) { (errorMessage) -> Void in
                     let alertController = UIAlertController(
                         title: "Failure",
@@ -64,12 +54,17 @@ class RootController: UIViewController {
                         self.pushLoginViewController()
                     }))
                     self.presentViewController(alertController, animated: true, completion: nil)
-
             }
         } else {
-            self.view = self.animatedSplashView
-            self.performSelector("pushLoginViewController", withObject: nil, afterDelay: 1.4)
+            self.initialSplashView.removeFromSuperview()
+            self.pushLoginViewController()
+            self.view.addSubview(self.animatedSplashView)
+            self.performSelector("removeSplashView", withObject: nil, afterDelay: self.animatedSplashView.animationDuration)
         }
+    }
+    
+    func removeSplashView() {
+        self.animatedSplashView.removeFromSuperview()
     }
     
     // a function that will fill in values and present the login view controller

@@ -13,6 +13,7 @@ class SplashView: UIView {
     
     var splashView = UIImageView()
     var animated: Bool
+    let animationDuration = 1.7
     
     init(frame: CGRect, animated: Bool) {
         self.animated = animated
@@ -27,11 +28,20 @@ class SplashView: UIView {
     override func layoutSubviews() {
         self.fillWidth()
         self.fillHeight()
-        self.backgroundColor = UIColor.redColor()
+        self.backgroundColor = UIColor.clearColor()
         self.splashView.fillWidth()
         self.splashView.fillHeight()
         if self.animated {
-            self.splashView.image = UIImage.animatedImageNamed("splash-", duration: 1.5)
+            var animatedImagesArray = [UIImage]()
+            for (var i = 1; i < 38; i += 1) {
+                let imageName = "splash-" + String(i)
+                animatedImagesArray.append(UIImage(named:imageName)!)
+            }
+            self.splashView.animationImages = animatedImagesArray
+            self.splashView.animationDuration = self.animationDuration
+            self.splashView.animationRepeatCount = 1
+            self.splashView.startAnimating()
+//            self.splashView.image = UIImage.animatedImageNamed("splash-", duration: 1.7)
         } else {
             self.splashView.image = UIImage(named: "initial-splash")
         }

@@ -61,6 +61,10 @@ struct StringConstants {
     static func kEndpointEndSemester(id: Int) -> String {
         return kEndpointBaseURL + "/admin/semesters/" + String(id) + "/finish"
     }
+    
+    static func kEndpointExportSemester(id: Int) -> String {
+        return kEndpointBaseURL + "/admin/semesters/" + String(id) + "/export"
+    }
 
     static let defaultErrorMessage = "Sorry, something went wrong."
     

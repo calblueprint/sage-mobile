@@ -99,4 +99,13 @@ class SemesterOperations {
         }
     }
     
+    static func exportSemester(semester: Semester, completion: (() -> Void)?, failure: (String) -> Void) {
+        
+        BaseOperation.manager().GET(StringConstants.kEndpointExportSemester(semester.id), parameters: nil, success: { (operation, data) -> Void in
+            completion?()
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+    
 }

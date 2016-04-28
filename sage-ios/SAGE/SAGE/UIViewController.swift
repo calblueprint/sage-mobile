@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+    
+    func showSuccessAndSetMessage(message: String) {
+        if let navigationController = self.navigationController as? SGNavigationController {
+            navigationController.showSuccessAndSetMessage(message)
+        }
+    }
 
     func showError(message: String, currentError: ErrorView?, color: UIColor = UIColor.whiteColor(), alpha: CGFloat? = 1.0, centered: Bool? = true) -> ErrorView {
         if currentError != nil {

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+
     func showError(message: String, currentError: ErrorView?, color: UIColor = UIColor.whiteColor(), alpha: CGFloat? = 1.0, centered: Bool? = true) -> ErrorView {
         if currentError != nil {
             currentError?.removeFromSuperview()
@@ -35,30 +36,6 @@ extension UIViewController {
                     }, completion: nil)
             }
         return errorView
-    }
-    
-    func showSuccess(message: String, currentSuccess: SuccessView?, color: UIColor = UIColor.whiteColor(), alpha: CGFloat? = 1.0, centered: Bool? = true) -> SuccessView {
-        if currentSuccess != nil {
-            currentSuccess?.removeFromSuperview()
-        }
-
-        let size: CGFloat = 44.0
-        let successView = SuccessView(height: size, messageString: message, color: color, alpha: alpha, centered: centered)
-        self.view.addSubview(successView)
-        self.view.bringSubviewToFront(successView)
-        successView.layoutSubviews()
-        successView.setX(0)
-        successView.setY(-10)
-
-        UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
-            successView.setY(UIConstants.navbarHeight)
-            }) { (bool) -> Void in
-                UIView.animateWithDuration(UIView.animationTime, delay: 3, options: .CurveLinear, animations: { () -> Void in
-                    successView.alpha = 0.0
-                    successView.setY(-1 * size)
-                    }, completion: nil)
-        }
-        return successView
     }
 
     func showAlertControllerError(errorMessage: String) {

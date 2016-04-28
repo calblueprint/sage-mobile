@@ -148,6 +148,7 @@
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
+		E416760D1CD1A2BB00CC07C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */; };
 		E439C3AE1CB09CD9004F19FA /* SGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439C3AD1CB09CD9004F19FA /* SGViewController.swift */; };
 		E44611991C754AE6006E90FA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44611981C754AE6006E90FA /* MenuController.swift */; };
 		E446119B1C754CC4006E90FA /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119A1C754CC4006E90FA /* MenuView.swift */; };
@@ -331,6 +332,7 @@
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		E439C3AD1CB09CD9004F19FA /* SGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGViewController.swift; sourceTree = "<group>"; };
 		E44611981C754AE6006E90FA /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		E446119A1C754CC4006E90FA /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 				E48082481C8F980500A38E57 /* Dictionary.swift */,
 				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
 				42EDBDED1BDF38420092D5F5 /* UIImage.swift */,
+				E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */,
 				27F990BF1BBCE3B300D61DA2 /* UIView.swift */,
 				424A137B1BEED27300775E86 /* UIViewController.swift */,
 				422715441BC7359D00FD719C /* UIFont.swift */,
@@ -1112,6 +1115,7 @@
 				5DBE8FAD1C7A6ECE009EE20C /* AddSchoolRadiusView.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
 				42C4352C1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift in Sources */,
+				E416760D1CD1A2BB00CC07C3 /* UINavigationController.swift in Sources */,
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,
 				42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,

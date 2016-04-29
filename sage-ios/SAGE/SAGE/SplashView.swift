@@ -30,10 +30,10 @@ class SplashView: UIView {
         self.fillHeight()
         self.splashView.fillWidth()
         self.splashView.fillHeight()
+        self.setupAnimations()
     }
     
-    func setupSubviews() {
-        self.backgroundColor = UIColor.clearColor()
+    func setupAnimations() {
         if self.animated {
             var animatedImagesArray = [UIImage]()
             for (var i = 1; i < 38; i += 1) {

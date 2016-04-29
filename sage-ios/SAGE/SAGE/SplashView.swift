@@ -28,23 +28,24 @@ class SplashView: UIView {
     override func layoutSubviews() {
         self.fillWidth()
         self.fillHeight()
-        self.backgroundColor = UIColor.clearColor()
         self.splashView.fillWidth()
         self.splashView.fillHeight()
+    }
+    
+    func setupSubviews() {
+        self.backgroundColor = UIColor.clearColor()
         if self.animated {
             var animatedImagesArray = [UIImage]()
             for (var i = 1; i < 38; i += 1) {
                 let imageName = "splash-" + String(i)
-                animatedImagesArray.append(UIImage(named:imageName)!)
+                animatedImagesArray.append(UIImage(named: imageName)!)
             }
             self.splashView.animationImages = animatedImagesArray
             self.splashView.animationDuration = self.animationDuration
             self.splashView.animationRepeatCount = 1
             self.splashView.startAnimating()
-//            self.splashView.image = UIImage.animatedImageNamed("splash-", duration: 1.7)
         } else {
             self.splashView.image = UIImage(named: "initial-splash")
         }
     }
-
 }

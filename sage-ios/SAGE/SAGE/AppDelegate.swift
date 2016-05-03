@@ -32,7 +32,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().translucent = false
 
         //Handle push notifications
-        if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+        if let userInfo = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+
+            let objectString = userInfo[PushNotificationConstants.kObject] as! String
+            let notificationType = userInfo[PushNotificationConstants.kType] as! Int
+
+            switch notificationType {
+            case PushNotificationConstants.kAnnouncementType:
+                let announcementJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
+                let announcement = Announcement(properties: announcementJSON)
+                RootController.sharedController().handleNewAnnouncement(announcement, applicationState: application.applicationState, launching: true)
+            case PushNotificationConstants.kCheckInRequestType:
+                let checkInRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kCheckInRequest] as! [String: AnyObject]
+                let checkInRequest = Checkin(propertyDictionary: checkInRequestJSON)
+            case PushNotificationConstants.kSignUpRequestType:
+                let signUpRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
+                let signUpRequest = User(propertyDictionary: signUpRequestJSON)
+            default:
+                break
+            }
 
         }
 
@@ -78,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case PushNotificationConstants.kAnnouncementType:
             let announcementJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
             let announcement = Announcement(properties: announcementJSON)
-            RootController.sharedController().handleNewAnnouncement(announcement, applicationState: application.applicationState)
+            RootController.sharedController().handleNewAnnouncement(announcement, applicationState: application.applicationState, launching: false)
         case PushNotificationConstants.kCheckInRequestType:
             let checkInRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kCheckInRequest] as! [String: AnyObject]
             let checkInRequest = Checkin(propertyDictionary: checkInRequestJSON)

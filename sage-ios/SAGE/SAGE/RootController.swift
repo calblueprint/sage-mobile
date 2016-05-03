@@ -19,6 +19,10 @@ class RootController: UIViewController {
     private var notifiedCheckinRequestIds = Set<Int>()
     private var notifiedSignupRequestIds = Set<Int>()
 
+    private var notifiedAnnouncement: Announcement?
+    private var notifiedCheckinRequest: Checkin?
+    private var notifiedSignupRequest: User?
+
     private struct SharedController {
         static var controller = RootController()
     }
@@ -120,6 +124,9 @@ class RootController: UIViewController {
         self.addChildViewController(newRootTabBarController)
         self.view.addSubview(newRootTabBarController.view)
 
+        // Go to notification view if notification is attached during launch
+        self.handleNotificationFromLaunch()
+
         // Push notifications
         let userNotificationTypes: UIUserNotificationType = [.Alert , .Badge , .Sound]
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
@@ -138,7 +145,7 @@ class RootController: UIViewController {
     //
     // MARK: - Push Notification Handling
     //
-    func handleNewAnnouncement(announcement: Announcement, applicationState: UIApplicationState) {
+    func handleNewAnnouncement(announcement: Announcement, applicationState: UIApplicationState, launching: Bool) {
         // Check for duplicate notifications because iOS 9 sucks
         if !self.notifiedAnnouncementIds.contains(announcement.id!) {
             self.notifiedAnnouncementIds.insert(announcement.id!)
@@ -150,10 +157,26 @@ class RootController: UIViewController {
                 }
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
             } else {
-                // App is transitioning from background/launching to foreground
-                self.rootTabBarController?.setActiveIndex(.Announcement)
-                self.rootTabBarController?.displayAnnouncement(announcement)
+                if launching {
+                    // App is just launching
+                    self.notifiedAnnouncement = announcement
+                } else {
+                    // App is transitioning from background to foreground
+                    self.rootTabBarController?.setActiveIndex(.Announcement)
+                    self.rootTabBarController?.displayAnnouncement(announcement, resetData: true)
+                }
             }
+        }
+    }
+
+    private func handleNotificationFromLaunch() {
+        if let announcement = self.notifiedAnnouncement {
+            self.rootTabBarController?.setActiveIndex(.Announcement)
+            self.rootTabBarController?.displayAnnouncement(announcement)
+        } else if let checkinRequest = self.notifiedCheckinRequest {
+            self.rootTabBarController?.setActiveIndex(.Special)
+        } else if let signupRequest = self.notifiedSignupRequest {
+            self.rootTabBarController?.setActiveIndex(.Special)
         }
     }
 }

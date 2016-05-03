@@ -109,8 +109,8 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     //
     // MARK: - Push Notification Handling
     //
-    func displayAnnouncement(announcement: Announcement) {
+    func displayAnnouncement(announcement: Announcement, resetData: Bool = false) {
         self.setActiveIndex(.Announcement)
-        self.announcementsViewController.displayAnnouncement(announcement)
+        self.announcementsViewController.displayAnnouncement(announcement, resetData: resetData)
     }
 }

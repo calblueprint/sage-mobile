@@ -75,6 +75,7 @@ class NotificationView: UIView {
         self.imageView.image = image
         self.layoutSubviews()
 
+        self.setY(-NotificationView.notificationHeight)
         UIView.animateWithDuration(animationTime,  delay: 0, options: .CurveLinear, animations: { () -> Void in
             self.moveY(NotificationView.notificationHeight)
             }) { (finished) -> Void in

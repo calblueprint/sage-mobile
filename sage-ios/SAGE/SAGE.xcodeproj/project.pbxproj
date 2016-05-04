@@ -192,6 +192,7 @@
 		E4D8DCA61C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC911C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf */; };
 		E4D8DCA71C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC921C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf */; };
 		E4F7290F1CB62B1500A61E67 /* PushNotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */; };
+		E4FBD3A11CD96D2000FA5A14 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FBD3A01CD96D2000FA5A14 /* NotificationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -385,6 +386,7 @@
 		E4D8DC921C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		E4F4D1AE1DF02A430022D035 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SAGE-hgizdykbzycmlfdnsftftvsxcbiw/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
 		E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationConstants.swift; sourceTree = "<group>"; };
+		E4FBD3A01CD96D2000FA5A14 /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -597,6 +599,7 @@
 				E4B347E21C866E990026D43D /* SGTitleView.swift */,
 				4207EBD21C880DB000501F96 /* NoContentView.swift */,
 				5DA5F0ED1CB08DC100D1FC85 /* SGSectionHeaderView.swift */,
+				E4FBD3A01CD96D2000FA5A14 /* NotificationView.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -1115,6 +1118,7 @@
 				5D6149111C5B76450036708A /* JoinSemesterView.swift in Sources */,
 				42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */,
 				42DE22161C0F92BE00071879 /* NotificationConstants.swift in Sources */,
+				E4FBD3A11CD96D2000FA5A14 /* NotificationView.swift in Sources */,
 				42F85ED81C01328700F62C37 /* AddSchoolController.swift in Sources */,
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,

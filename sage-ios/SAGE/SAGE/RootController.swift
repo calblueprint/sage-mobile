@@ -23,6 +23,8 @@ class RootController: UIViewController {
     private var notifiedCheckinRequest: Checkin?
     private var notifiedSignupRequest: User?
 
+    private var notificationView = NotificationView()
+
     private struct SharedController {
         static var controller = RootController()
     }
@@ -54,9 +56,17 @@ class RootController: UIViewController {
         sageLabel.font = UIFont.getDefaultFont(20)
         self.view.addSubview(sageLabel)
         
+        self.view.addSubview(self.notificationView)
+
         self.pushCorrectViewController()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.notificationView.setX(0)
+        self.notificationView.fillWidth()
+    }
+
     //
     // MARK: - Public Methods
     //
@@ -142,6 +152,11 @@ class RootController: UIViewController {
         self.unverifiedController?.view.alpha = 0
     }
 
+    private func showNotificationView(title title: String, subtitle: String, image: UIImage?) {
+        self.view.bringSubviewToFront(self.notificationView)
+        self.notificationView.showNotification(title: title, subtitle: subtitle, image: image)
+    }
+
     //
     // MARK: - Push Notification Handling
     //
@@ -153,7 +168,9 @@ class RootController: UIViewController {
             if (applicationState == .Active) {
                 //if announcementController is active
                 if self.rootTabBarController?.activeIndex() != .Announcement {
-
+                    let profileImageView = ProfileImageView()
+                    profileImageView.setImageWithUser(announcement.sender!)
+                    self.showNotificationView(title: announcement.sender!.fullName(), subtitle: announcement.text!, image: profileImageView.image())
                 }
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
             } else {

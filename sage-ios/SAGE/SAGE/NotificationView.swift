@@ -27,8 +27,9 @@ class NotificationView: UIView {
     }
 
     private func setupSubviews() {
-        self.setHeight(NotificationView.notificationHeight)
+        self.backgroundColor = UIColor.whiteColor()
         self.setY(-NotificationView.notificationHeight)
+        self.setHeight(NotificationView.notificationHeight)
 
         self.titleLabel.font = UIFont.semiboldFont
         self.addSubview(self.titleLabel)
@@ -54,25 +55,31 @@ class NotificationView: UIView {
         } else {
             self.titleLabel.setX(UIConstants.sideMargin)
         }
+        self.titleLabel.sizeToFit()
+        self.titleLabel.fillWidthWithMargin(UIConstants.sideMargin)
         self.titleLabel.alignBottomWithMargin(CGRectGetHeight(self.frame)/2)
 
         self.subtitleLabel.setX(CGRectGetMinX(self.titleLabel.frame))
+        self.subtitleLabel.sizeToFit()
+        self.subtitleLabel.fillWidthWithMargin(UIConstants.sideMargin)
         self.subtitleLabel.setY(CGRectGetHeight(self.frame)/2)
     }
 
 
 
     func showNotification(title title: String, subtitle: String, image: UIImage?) {
+        let animationTime = 0.10
+
         self.titleLabel.text = title
         self.subtitleLabel.text = subtitle
         self.imageView.image = image
-
         self.layoutSubviews()
-        UIView.animateWithDuration(UIConstants.normalAnimationTime, animations: { () -> Void in
+
+        UIView.animateWithDuration(animationTime,  delay: 0, options: .CurveLinear, animations: { () -> Void in
             self.moveY(NotificationView.notificationHeight)
             }) { (finished) -> Void in
                 if finished {
-                    UIView.animateWithDuration(UIConstants.normalAnimationTime, animations: { () -> Void in
+                    UIView.animateWithDuration(animationTime, delay: 4, options: .CurveLinear, animations: { () -> Void in
                         self.moveY(-NotificationView.notificationHeight)
                         }, completion: nil)
                 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class NotificationView: UIView {
 
@@ -39,6 +40,7 @@ class NotificationView: UIView {
 
         self.imageView.setWidth(imageViewHeight)
         self.imageView.setHeight(imageViewHeight)
+        self.imageView.contentMode = .ScaleAspectFill
         self.imageView.layer.cornerRadius = imageViewHeight/2
         self.imageView.clipsToBounds = true
         self.addSubview(self.imageView)
@@ -68,7 +70,6 @@ class NotificationView: UIView {
 
 
     func showNotification(title title: String, subtitle: String, image: UIImage?) {
-        let animationTime = 0.10
 
         self.titleLabel.text = title
         self.subtitleLabel.text = subtitle
@@ -76,13 +77,21 @@ class NotificationView: UIView {
         self.layoutSubviews()
 
         self.setY(-NotificationView.notificationHeight)
-        UIView.animateWithDuration(animationTime,  delay: 0, options: .CurveLinear, animations: { () -> Void in
+        UIApplication.sharedApplication().statusBarStyle = .Default
+        UIView.animateWithDuration(UIConstants.normalAnimationTime,  delay: 0, usingSpringWithDamping: UIConstants.defaultSpringDampening, initialSpringVelocity: UIConstants.defaultSpringVelocity*2, options: [], animations: { () -> Void in
             self.moveY(NotificationView.notificationHeight)
             }) { (finished) -> Void in
                 if finished {
-                    UIView.animateWithDuration(animationTime, delay: 4, options: .CurveLinear, animations: { () -> Void in
+                    UIView.animateWithDuration(UIConstants.fastAnimationTime, delay: 4, options: .CurveEaseIn, animations: { () -> Void in
                         self.moveY(-NotificationView.notificationHeight)
-                        }, completion: nil)
+                        }) { (finished) -> Void in
+                            // If in session mode, keep black
+                            if let _ = KeychainWrapper.stringForKey(KeychainConstants.kSessionStartTime) {
+                                UIApplication.sharedApplication().statusBarStyle = .Default
+                            } else {
+                                UIApplication.sharedApplication().statusBarStyle = .LightContent
+                            }
+                    }
                 }
         }
     }

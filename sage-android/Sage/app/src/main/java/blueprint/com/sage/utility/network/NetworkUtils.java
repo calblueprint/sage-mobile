@@ -122,12 +122,14 @@ public class NetworkUtils {
     public static void logoutCurrentUser(Activity activity) {
         SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(activity.getString(R.string.email));
-        editor.remove(activity.getString(R.string.auth_token));
-        editor.remove(activity.getString(R.string.user));
-        editor.remove(activity.getString(R.string.school));
-        editor.remove(activity.getString(R.string.current_semester));
-        editor.apply();
+        editor.remove(activity.getString(R.string.email))
+                .remove(activity.getString(R.string.auth_token))
+                .remove(activity.getString(R.string.user))
+                .remove(activity.getString(R.string.school))
+                .remove(activity.getString(R.string.current_semester))
+                .remove(activity.getString(R.string.registration_token))
+                .remove(activity.getString(R.string.app_version))
+                .apply();
 
         FragUtils.startActivity(activity, SignInActivity.class);
     }

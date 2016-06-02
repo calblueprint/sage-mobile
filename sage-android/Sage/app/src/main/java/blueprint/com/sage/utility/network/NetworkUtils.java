@@ -156,10 +156,10 @@ public class NetworkUtils {
         }
     }
 
-    public static String writeAsString(Activity activity, Object object) {
+    public static String writeAsString(Context context, Object object) {
         String objectString = null;
         try {
-            ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+            ObjectMapper mapper = NetworkManager.getInstance(context).getObjectMapper();
             objectString = mapper.writeValueAsString(object);
         } catch(Exception e) {
             Log.e(NetworkUtils.class.toString(), e.toString());
@@ -167,8 +167,8 @@ public class NetworkUtils {
         return objectString;
     }
 
-    public static <T> T writeAsObject(Activity activity, String objectString, TypeReference<T> typeReference) {
-        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+    public static <T> T writeAsObject(Context context, String objectString, TypeReference<T> typeReference) {
+        ObjectMapper mapper = NetworkManager.getInstance(context).getObjectMapper();
         try {
             return mapper.readValue(objectString, typeReference);
         } catch(Exception e) {

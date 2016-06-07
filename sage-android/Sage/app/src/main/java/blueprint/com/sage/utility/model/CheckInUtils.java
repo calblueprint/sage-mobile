@@ -2,10 +2,14 @@ package blueprint.com.sage.utility.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.utility.view.ViewUtils;
 
 /**
  * Created by charlesx on 1/14/16.

@@ -58,6 +58,8 @@
 
     <!--Check In List-->
     <string name ="check_in_at">\u0020at\u0020</string>
-    <string name="check_in_hours_required">\u0020hours required</string>
-    <string name="check_in_summary">Summary</string>
+    <string name="check_in_hours_required">%1$.1f of %2$d hours completed</string>
+    <string name="check_in_inactive">Inactive</string>
+    <string name="check_in_percent">%d%%</string>
+
 </resources>

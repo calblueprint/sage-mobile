@@ -35,7 +35,6 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.browse.adapters.PlacePredictionAdapter;
 import blueprint.com.sage.admin.browse.adapters.SchoolUserSpinnerAdapter;
-import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -76,7 +75,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
     private BaseInterface mBaseInterface;
     private PlacePredictionAdapter mPlaceAdapter;
     private FormValidator mValidator;
-    protected MenuItem mItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -115,7 +113,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
                 validateAndSubmitRequest();
@@ -226,7 +223,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             mSchool.setLng((float) bounds.longitude);
         }
 
-        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         makeRequest();
     }
 
@@ -267,8 +263,4 @@ public abstract class SchoolFormAbstractFragment extends Fragment
             mPlaceAdapter.setPredictions(predictions);
     }
     private List<AutocompletePrediction> getPredictions() { return mPredictions; }
-
-    public void onEvent(APIErrorEvent event) {
-        mItem.setActionView(null);
-    }
 }

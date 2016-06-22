@@ -7,10 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import blueprint.com.sage.R;
+import blueprint.com.sage.admin.requests.VerifyCheckInRequestsActivity;
+import blueprint.com.sage.admin.requests.VerifyUserRequestsActivity;
 import blueprint.com.sage.events.announcements.AnnouncementNotificationEvent;
 import blueprint.com.sage.events.checkIns.CheckInNotificationEvent;
 import blueprint.com.sage.events.users.SignUpNotificationEvent;
@@ -72,7 +78,25 @@ public class NotificationService extends GcmListenerService {
         intentBundle.putInt("type", type);
         intentBundle.putString("object", object);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Class<?> cls = null;
+
+        switch(type) {
+            case ANNOUNCEMENT_NOTIFICATION:
+                cls = MainActivity.class;
+                break;
+            case CHECK_IN_NOTIFICATION:
+                cls = VerifyCheckInRequestsActivity.class;
+                break;
+            case SIGN_UP_NOTIFICATION:
+                cls = VerifyUserRequestsActivity.class;
+                break;
+        }
+
+        if (cls == null) {
+            return;
+        }
+
+        Intent intent = new Intent(this, cls);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_CLEAR_TOP |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -88,6 +112,7 @@ public class NotificationService extends GcmListenerService {
     }
 
     private void sendAnnouncementNotifications(String object) {
+
         EventBus.getDefault().post(new AnnouncementNotificationEvent(getApplicationContext(), object));
     }
 
@@ -97,5 +122,16 @@ public class NotificationService extends GcmListenerService {
 
     private void sendSignUpNotification(String object) {
         EventBus.getDefault().post(new SignUpNotificationEvent(getApplicationContext(), object));
+    }
+
+    private String getObjectStringFromJsonKey(String object, String key) {
+        try {
+            JSONObject jsonObject = new JSONObject(object);
+            return jsonObject.getJSONObject(key).toString();
+        } catch (JSONException e) {
+            Log.e(getClass().toString(), e.toString());
+        }
+
+        return null;
     }
 }

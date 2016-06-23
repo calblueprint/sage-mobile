@@ -167,7 +167,7 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void initializeViews(Bundle savedInstanceState) {
-        mMapView.onCreate(savedInstanceState);
+        mMapView.onCreate(null);
         mMapView.getMapAsync(this);
 
         toggleButtons();

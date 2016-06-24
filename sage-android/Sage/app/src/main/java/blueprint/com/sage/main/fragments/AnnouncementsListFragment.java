@@ -248,7 +248,7 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         mSchools = event.getSchools();
         mSchoolAdapter.setSchools(mSchools);
     }
-
+    
     /**
      * Filtering section
      */

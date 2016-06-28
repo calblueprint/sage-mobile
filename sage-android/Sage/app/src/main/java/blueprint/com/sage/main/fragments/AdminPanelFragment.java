@@ -23,6 +23,7 @@ import blueprint.com.sage.admin.requests.VerifyCheckInRequestsActivity;
 import blueprint.com.sage.admin.requests.VerifyUserRequestsActivity;
 import blueprint.com.sage.admin.semester.CreateSemesterActivity;
 import blueprint.com.sage.admin.semester.FinishSemesterActivity;
+import blueprint.com.sage.admin.semester.PauseSemesterActivity;
 import blueprint.com.sage.admin.semester.SemesterListActivity;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.models.Semester;
@@ -128,6 +129,13 @@ public class AdminPanelFragment extends Fragment {
         FragUtils.startActivityBackStack(getActivity(), SemesterListActivity.class);
     }
 
+    @OnClick(R.id.admin_settings_pause_semester)
+    public void onPauseSemester(View view) {
+        FragUtils.startActivityForResultFragment(getActivity(), getParentFragment(),
+                PauseSemesterActivity.class,
+                FragUtils.PAUSE_SEMESTER_REQUEST_CODE);
+    }
+
     private void initializeBadges() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getActivity().getString(R.string.preferences),
                 Context.MODE_PRIVATE);
@@ -202,6 +210,10 @@ public class AdminPanelFragment extends Fragment {
                 .commit();
         mSemesters = new ArrayList<>();
         toggleSemester();
+    }
+
+    public void onPauseSemester(Intent data) {
+//        TODO
     }
 
     public void onEvent(SemesterListEvent event) {

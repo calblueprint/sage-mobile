@@ -27,4 +27,8 @@
     <string name="join_semester_text">Looks like a new semester has started - hit "Join" to start your semester and start your mentoring sessions.</string>
     <string name="join_semester">Join</string>
     <string name="join_semester_success">You\'ve joined this semester - you can now start mentoring sessions.</string>
+
+    <!--Pause Semester-->
+    <string name="pause_semester_button">Pause</string>
+    <string name="pause_semester_date">Users do not need to check in from %1$s to %2$s.</string>
 </resources>

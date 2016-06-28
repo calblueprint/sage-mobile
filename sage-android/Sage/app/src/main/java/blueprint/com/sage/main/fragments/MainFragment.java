@@ -130,6 +130,9 @@ public class MainFragment extends Fragment {
             case FragUtils.SHOW_ANNOUNCEMENT_REQUEST_CODE:
                 updateAnnouncementList(data);
                 break;
+            case FragUtils.PAUSE_SEMESTER_REQUEST_CODE:
+                displayBreak(data);
+                break;
         }
     }
 
@@ -186,6 +189,10 @@ public class MainFragment extends Fragment {
             AnnouncementsListFragment announcementsListFragment = (AnnouncementsListFragment) fragment;
             announcementsListFragment.changeAnnouncement(data);
         }
+    }
+
+    private void displayBreak(Intent data) {
+        //TODO
     }
 }
 

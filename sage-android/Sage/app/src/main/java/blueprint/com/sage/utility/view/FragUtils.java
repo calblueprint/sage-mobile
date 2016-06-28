@@ -21,6 +21,7 @@ public class FragUtils {
     public static final int FINISH_SEMESTER_REQUEST_CODE = 101;
     public static final int CREATE_ANNOUNCEMENT_REQUEST_CODE = 102;
     public static final int SHOW_ANNOUNCEMENT_REQUEST_CODE = 103;
+    public static final int PAUSE_SEMESTER_REQUEST_CODE = 104;
 
     public static void replace(int id, Fragment fragment, FragmentActivity activity) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();

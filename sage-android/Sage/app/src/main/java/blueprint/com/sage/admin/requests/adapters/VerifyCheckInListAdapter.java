@@ -33,6 +33,8 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.
     private static final int CHECK_IN_VIEW = 1;
     private final static String NO_SCHOOL = "No School";
 
+    private final static String NEW_CHECK_INS = "New Check Ins";
+
     public VerifyCheckInListAdapter(Activity activity, List<CheckIn> checkIns) {
         super();
         mActivity = activity;
@@ -144,6 +146,27 @@ public class VerifyCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.
     public void removeCheckIn(int position) {
         mItems.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void addNewCheckIn(CheckIn checkIn) {
+        Item newCheckIn = new Item(checkIn, null);
+
+        if (!hasNewCheckInHeader()) {
+            Item newCheckInHeader = new Item(null, NEW_CHECK_INS);
+            mItems.add(0, newCheckInHeader);
+            mItems.add(1, newCheckIn);
+            notifyItemRangeInserted(0, 2);
+        } else {
+            mItems.add(1, newCheckIn);
+            notifyItemInserted(1);
+        }
+    }
+
+    private boolean hasNewCheckInHeader() {
+        return mItems != null &&
+                mItems.size() > 0 &&
+                mItems.get(0).isHeader() &&
+                mItems.get(0).getHeader().equals(NEW_CHECK_INS);
     }
 
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {

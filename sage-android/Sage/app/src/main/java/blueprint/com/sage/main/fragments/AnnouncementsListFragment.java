@@ -22,6 +22,7 @@ import blueprint.com.sage.R;
 import blueprint.com.sage.announcements.AnnouncementActivity;
 import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.announcements.adapters.AnnouncementsListAdapter;
+import blueprint.com.sage.events.announcements.AnnouncementNotificationEvent;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.main.filters.AnnouncementsAllFilter;
@@ -52,7 +53,7 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     private LinearLayoutManager mLinearLayoutManager;
     private PaginationInstance mPaginationInstance;
     private ArrayList<Announcement> mAnnouncements;
-    private AnnouncementsListAdapter mAdapter;
+    private AnnouncementsListAdapter mAnnouncementsAdapter;
     private BaseInterface mBaseInterface;
 
     @Bind(R.id.announcement_list_container) ViewGroup mContainer;
@@ -133,8 +134,8 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
                     }
                 });
 
-        mAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity(), getParentFragment());
-        mAnnouncementsList.setAdapter(mAdapter);
+        mAnnouncementsAdapter = new AnnouncementsListAdapter(mAnnouncements, getActivity(), getParentFragment());
+        mAnnouncementsList.setAdapter(mAnnouncementsAdapter);
 
         mEmptyView.setOnRefreshListener(this);
         mAnnouncementsRefreshView.setOnRefreshListener(this);
@@ -201,8 +202,8 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         String string = data.getStringExtra(getString(R.string.create_announcement));
         Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
         mAnnouncements.add(0, announcement);
-        mAdapter.setAnnouncements(mAnnouncements);
-        mAdapter.notifyDataSetChanged();
+        mAnnouncementsAdapter.setAnnouncements(mAnnouncements);
+        mAnnouncementsAdapter.notifyDataSetChanged();
     }
 
     public void changeAnnouncement(Intent data) {
@@ -226,17 +227,17 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
                 mAnnouncements.set(index, announcement);
                 break;
         }
-        mAdapter.setAnnouncements(mAnnouncements);
-        mAdapter.notifyDataSetChanged();
+        mAnnouncementsAdapter.setAnnouncements(mAnnouncements);
+        mAnnouncementsAdapter.notifyDataSetChanged();
     }
 
     public void onEvent(AnnouncementsListEvent event) {
         mAnnouncements = event.getAnnouncements();
 
         if (mPaginationInstance.hasResetPage()) {
-            mAdapter.resetAnnouncements(mAnnouncements);
+            mAnnouncementsAdapter.resetAnnouncements(mAnnouncements);
         } else {
-            mAdapter.setAnnouncements(mAnnouncements);
+            mAnnouncementsAdapter.setAnnouncements(mAnnouncements);
         }
 
         mEmptyView.setRefreshing(false);
@@ -247,6 +248,19 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     public void onEvent(SchoolListEvent event) {
         mSchools = event.getSchools();
         mSchoolAdapter.setSchools(mSchools);
+    }
+
+    public void onEvent(AnnouncementNotificationEvent event) {
+        if (shouldAddNotification(event.getAnnouncement())) {
+            mAnnouncementsAdapter.addAnnouncement(event.getAnnouncement());
+        }
+    }
+
+    private boolean shouldAddNotification(Announcement announcement) {
+        return mFilterAll.isChecked() ||
+                (announcement.isGeneral() || mFilterGeneral.isChecked()) ||
+                (announcement.getSchoolId() ==
+                        mSchoolAdapter.getItem(mFilterSchoolSpinner.getSelectedItemPosition()).getId());
     }
 
     /**

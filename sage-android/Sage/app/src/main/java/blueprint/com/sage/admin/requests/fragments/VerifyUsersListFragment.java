@@ -23,6 +23,7 @@ import blueprint.com.sage.admin.requests.filters.UserSchoolFilter;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
+import blueprint.com.sage.events.users.SignUpNotificationEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.School;
@@ -182,6 +183,10 @@ public class VerifyUsersListFragment extends ListFilterFragment implements OnRef
     public void onEvent(APIErrorEvent event) {
         mEmptyView.setRefreshing(false);
         mRefreshUser.setRefreshing(false);
+    }
+
+    public void onEvent(SignUpNotificationEvent event) {
+        // TODO: What is the behavior here?
     }
 
     @OnClick({ R.id.user_filter_my_school, R.id.user_filter_school, R.id.user_filter_all})

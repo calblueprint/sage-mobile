@@ -22,6 +22,7 @@ import blueprint.com.sage.admin.requests.filters.CheckInMySchoolFilter;
 import blueprint.com.sage.admin.requests.filters.CheckInSchoolFilter;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.checkIns.CheckInListEvent;
+import blueprint.com.sage.events.checkIns.CheckInNotificationEvent;
 import blueprint.com.sage.events.checkIns.DeleteCheckInEvent;
 import blueprint.com.sage.events.checkIns.VerifyCheckInEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
@@ -191,6 +192,9 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
         mSchoolsAdapter.setSchools(mSchools);
     }
 
+    public void onEvent(CheckInNotificationEvent event) {
+        mCheckInAdapter.addNewCheckIn(event.getCheckIn());
+    }
 
     @OnClick({ R.id.check_in_filter_my_school, R.id.check_in_filter_school, R.id.check_in_filter_all })
     public void onRadioButtonClick(View view) {

@@ -37,6 +37,9 @@ public class NotificationService extends GcmListenerService {
     public static final int CHECK_IN_NOTIFICATION = 1;
     public static final int SIGN_UP_NOTIFICATION = 2;
 
+    public static final String TYPE = "type";
+    public static final String OBJECT = "object";
+
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
@@ -75,8 +78,8 @@ public class NotificationService extends GcmListenerService {
                         .setAutoCancel(true);
 
         Bundle intentBundle = new Bundle();
-        intentBundle.putInt("type", type);
-        intentBundle.putString("object", object);
+        intentBundle.putInt(TYPE, type);
+        intentBundle.putString(OBJECT, object);
 
         Class<?> cls = null;
 

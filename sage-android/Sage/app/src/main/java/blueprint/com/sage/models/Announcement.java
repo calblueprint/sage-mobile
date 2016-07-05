@@ -28,6 +28,11 @@ public @Data class Announcement {
     private School school;
 
     @JsonIgnore
+    public boolean isGeneral() {
+        return category == 1;
+    }
+
+    @JsonIgnore
     public String getDate() {
         SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy");
         return format.format(createdAt);

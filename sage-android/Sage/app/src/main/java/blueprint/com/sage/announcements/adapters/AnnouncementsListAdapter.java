@@ -133,6 +133,11 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<RecyclerView.
         notifyDataSetChanged();
     }
 
+    public void addAnnouncement(Announcement announcement) {
+        mItems.add(0, new Item(announcement, null, ANNOUNCEMENT_VIEW));
+        notifyItemInserted(0);
+    }
+
     public class AnnouncementsListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         FragmentActivity mActivity;

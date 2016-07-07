@@ -1,7 +1,11 @@
 package blueprint.com.sage.admin.semester.fragments;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +52,8 @@ public class PauseSemesterFragment extends Fragment {
         String startDate = DateUtils.getFormattedDateNow(DateUtils.ABBREV_YEAR_FORMAT);
         String endDate = DateUtils.getDateInAWeek();
 
-        mDateRange.setText(getResources().getString(R.string.pause_semester_date).format(startDate, endDate);
-        
+        mDateRange.setText(getResources().getString(R.string.pause_semester_date).format(startDate, endDate));
+
     }
 
     @Override
@@ -66,17 +70,40 @@ public class PauseSemesterFragment extends Fragment {
 
     @OnClick(R.id.pause_semester_button)
     public void onPauseSemester(View view) {
-        Requests.Semesters.with(getActivity()).makePauseRequest(mBaseInterface.getCurrentSemester());
+        confirmPause();
+    }
+
+    public void confirmPause() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.pause_semester_confirm);
+        builder.setCancelable(true);
+        builder.setPositiveButton(
+                R.string.pause_semester_yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Requests.Semesters.with(getActivity()).makePauseRequest(mBaseInterface.getCurrentSemester());
+                    }
+                });
+
+        builder.setNegativeButton(
+                R.string.pause_semester_no,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void onEvent(PauseSemesterEvent event) {
-//        Announcement announcement = event.getMAnnouncement();
-//        Intent intent = new Intent();
-//        Bundle bundle = new Bundle();
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
 //        bundle.putString(getString(R.string.create_announcement),
 //                NetworkUtils.writeAsString(getActivity(), announcement));
-//        intent.putExtras(bundle);
-//        getActivity().setResult(Activity.RESULT_OK, intent);
-//        getActivity().onBackPressed();
+        intent.putExtras(bundle);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().onBackPressed();
     }
 }

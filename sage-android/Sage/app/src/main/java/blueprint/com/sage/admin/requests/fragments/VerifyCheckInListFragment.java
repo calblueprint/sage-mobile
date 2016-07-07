@@ -57,6 +57,8 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
     @Bind(R.id.check_in_filter_all) RadioButton mCheckInFilterAll;
     @Bind(R.id.check_in_filter_school) RadioButton mCheckInSchoolButton;
     @Bind(R.id.check_in_filter_school_spinner) Spinner mCheckInSchoolSpinner;
+    @Bind(R.id.filter_view) View mFilterView;
+    @Bind(R.id.list_filter_container) View mFilterContainer;
 
     private VerifyCheckInListAdapter mCheckInAdapter;
 
@@ -118,8 +120,6 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
     }
 
     public void initializeFilters() {
-        mFilterView.setVisibility(View.GONE);
-
         CheckInAllFilter checkInAllFilter = new CheckInAllFilter(mCheckInFilterAll);
         CheckInSchoolFilter checkInSchoolFilter = new CheckInSchoolFilter(mCheckInSchoolButton, mCheckInSchoolSpinner);
         mFilterController.addFilters(checkInAllFilter, checkInSchoolFilter);
@@ -145,7 +145,7 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("sort[attr]", "lower(name)");
         queryParams.put("sort[order]", "asc");
-
+        queryParams.putAll(mFilterController.onFilter());
         Requests.Schools.with(getActivity()).makeListRequest(queryParams);
     }
 
@@ -201,6 +201,20 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
         mFilterController.onFilterChecked(view.getId());
     }
 
+    @Override
+    @OnClick(R.id.filter_view)
+    public void onFilterViewShow() {
+        mFilterController.showFilter(getActivity(), mFilterContainer);
+    }
+
+    @Override
+    @OnClick(R.id.filter_cancel)
+    public void onFilterViewHide() {
+        mFilterController.hideFilter(getActivity(), mFilterContainer);
+    }
+
+    @Override
+    @OnClick(R.id.filter_confirm)
     public void onFilterClick() {
         mEmptyView.setRefreshing(true);
         mCheckInRefreshLayout.setRefreshing(true);

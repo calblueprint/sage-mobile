@@ -23,6 +23,8 @@ public @Data class Semester {
     private List<CheckIn> checkIns;
     private List<User> users;
 
+    private boolean paused;
+
     public static final String[] SEASONS = { "Fall", "Spring" };
 
     @JsonIgnore

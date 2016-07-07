@@ -72,6 +72,8 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     @Bind(R.id.announcement_filter_school) RadioButton mFilterSchool;
     @Bind(R.id.announcement_filter_my_school) RadioButton mFilterMySchool;
     @Bind(R.id.announcement_filter_school_spinner) Spinner mFilterSchoolSpinner;
+    @Bind(R.id.filter_view) View mFilterView;
+    @Bind(R.id.list_filter_container) View mFilterContainer;
 
     private SchoolSpinnerAdapter mSchoolAdapter;
     private List<School> mSchools;
@@ -144,8 +146,6 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     }
 
     public void initializeFilters() {
-        mFilterView.setVisibility(View.GONE);
-
         if (mBaseInterface.getSchool() != null) {
             AnnouncementsMySchoolFilter mySchoolFilter = new AnnouncementsMySchoolFilter(mFilterMySchool, mBaseInterface.getSchool());
             mFilterController.addFilters(mySchoolFilter);
@@ -272,16 +272,31 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
     /**
      * Filtering section
      */
+
     @OnClick({ R.id.announcement_filter_my_school, R.id.announcement_filter_all, R.id.announcement_filter_general, R.id.announcement_filter_school })
     public void onRadioButtonClick(View view) {
         mFilterController.onFilterChecked(view.getId());
     }
 
+    @Override
+    @OnClick(R.id.filter_confirm)
     public void onFilterClick() {
         mPaginationInstance.resetPage();
         mEmptyView.setRefreshing(true);
         mAnnouncementsRefreshView.setRefreshing(true);
         makeAnnouncementsRequest();
         onFilterViewHide();
+    }
+
+    @Override
+    @OnClick(R.id.filter_view)
+    public void onFilterViewShow() {
+        mFilterController.showFilter(getActivity(), mFilterContainer);
+    }
+
+    @Override
+    @OnClick(R.id.filter_cancel)
+    public void onFilterViewHide() {
+        mFilterController.hideFilter(getActivity(), mFilterContainer);
     }
 }

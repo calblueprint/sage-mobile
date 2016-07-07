@@ -133,6 +133,10 @@ class AdminTableViewController: SGTableViewController {
                         self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
                     }
                 }
+            case 1:
+                if LoginOperations.getUser()?.role == .President {
+                    self.presentViewController(PauseSemesterViewController(), animated: true, completion: nil)
+                }
             default: break
             }
         default: break

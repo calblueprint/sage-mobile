@@ -43,7 +43,7 @@ public class NotificationService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        int type = data.getInt("type");
+        int type = Integer.valueOf(data.getString("type"));
         String object = data.getString("object");
 
         if (NetworkUtils.isVerifiedUser(getBaseContext())) {
@@ -115,16 +115,21 @@ public class NotificationService extends GcmListenerService {
     }
 
     private void sendAnnouncementNotifications(String object) {
-
-        EventBus.getDefault().post(new AnnouncementNotificationEvent(getApplicationContext(), object));
+        EventBus.getDefault().post(
+                new AnnouncementNotificationEvent(
+                        getApplicationContext(), getObjectStringFromJsonKey(object, "announcement")));
     }
 
     private void sendCheckInNotification(String object) {
-        EventBus.getDefault().post(new CheckInNotificationEvent(getApplicationContext(), object));
+        EventBus.getDefault().post(
+                new CheckInNotificationEvent(
+                        getApplicationContext(), getObjectStringFromJsonKey(object, "check_in")));
     }
 
     private void sendSignUpNotification(String object) {
-        EventBus.getDefault().post(new SignUpNotificationEvent(getApplicationContext(), object));
+        EventBus.getDefault().post(
+                new SignUpNotificationEvent(
+                        getApplicationContext(), getObjectStringFromJsonKey(object, "user")));
     }
 
     private String getObjectStringFromJsonKey(String object, String key) {

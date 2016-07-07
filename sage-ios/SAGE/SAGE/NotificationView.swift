@@ -17,8 +17,8 @@ class NotificationView: UIView {
     private let imageView = UIImageView()
     private let divider = UIView()
 
-    static let notificationHeight = UIConstants.navbarHeight + 10
-    private let imageViewHeight = UIConstants.bareNavbarHeight - 10
+    static let notificationHeight = UIConstants.navbarHeight
+    private let imageViewHeight: CGFloat = 32
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,8 +34,7 @@ class NotificationView: UIView {
         self.setY(-NotificationView.notificationHeight)
         self.setHeight(NotificationView.notificationHeight)
 
-        self.contentContainer.setY(UIConstants.statusBarHeight)
-        self.contentContainer.setHeight(UIConstants.bareNavbarHeight)
+        self.contentContainer.setHeight(NotificationView.notificationHeight)
         self.addSubview(self.contentContainer)
 
         self.titleLabel.font = UIFont.semiboldFont
@@ -53,14 +52,14 @@ class NotificationView: UIView {
 
         self.divider.setHeight(UIConstants.dividerHeight())
         self.divider.backgroundColor = UIColor.borderColor
-        self.addSubview(self.divider)
+        self.contentContainer.addSubview(self.divider)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
 
         self.contentContainer.fillWidth()
-        self.contentContainer.fillHeightWithMargin(3)
+        self.contentContainer.fillHeight()
 
         self.imageView.setX(UIConstants.sideMargin)
         self.imageView.centerVertically()
@@ -79,7 +78,7 @@ class NotificationView: UIView {
         self.subtitleLabel.fillWidthWithMargin(UIConstants.sideMargin)
         self.subtitleLabel.setY(CGRectGetMaxY(self.titleLabel.frame))
 
-        self.divider.setY(CGRectGetMaxY(self.frame) - CGRectGetHeight(self.divider.frame))
+        self.divider.setY(CGRectGetMaxY(self.contentContainer.frame) - CGRectGetHeight(self.divider.frame))
         self.divider.fillWidth()
     }
 
@@ -93,22 +92,26 @@ class NotificationView: UIView {
         self.layoutSubviews()
 
         self.setY(-NotificationView.notificationHeight)
-        UIApplication.sharedApplication().statusBarStyle = .Default
+        self.hideStatusBar()
         UIView.animateWithDuration(UIConstants.normalAnimationTime,  delay: 0, usingSpringWithDamping: UIConstants.defaultSpringDampening, initialSpringVelocity: UIConstants.defaultSpringVelocity*2, options: [], animations: { () -> Void in
             self.moveY(NotificationView.notificationHeight)
             }) { (finished) -> Void in
                 if finished {
-                    UIView.animateWithDuration(UIConstants.fastAnimationTime, delay: 4, options: .CurveEaseIn, animations: { () -> Void in
+                    let delay: NSTimeInterval = 4
+                    self.performSelector("showStatusBar", withObject: nil, afterDelay: delay)
+                    UIView.animateWithDuration(UIConstants.fastAnimationTime, delay: delay, options: .CurveEaseOut, animations: { () -> Void in
                         self.moveY(-NotificationView.notificationHeight)
                         }) { (finished) -> Void in
-                            // If in session mode, keep black
-                            if let _ = KeychainWrapper.stringForKey(KeychainConstants.kSessionStartTime) {
-                                UIApplication.sharedApplication().statusBarStyle = .Default
-                            } else {
-                                UIApplication.sharedApplication().statusBarStyle = .LightContent
-                            }
                     }
                 }
         }
+    }
+
+    @objc private func hideStatusBar() {
+        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
+    }
+
+    @objc private func showStatusBar() {
+        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
     }
 }

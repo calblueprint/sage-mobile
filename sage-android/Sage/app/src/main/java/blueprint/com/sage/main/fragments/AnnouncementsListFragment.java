@@ -250,9 +250,15 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         mSchoolAdapter.setSchools(mSchools);
     }
 
-    public void onEvent(AnnouncementNotificationEvent event) {
+    public void onEvent(final AnnouncementNotificationEvent event) {
         if (shouldAddNotification(event.getAnnouncement())) {
-            mAnnouncementsAdapter.addAnnouncement(event.getAnnouncement());
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAnnouncementsAdapter.addAnnouncement(event.getAnnouncement());
+                    mAnnouncementsList.smoothScrollToPosition(0);
+                }
+            });
         }
     }
 

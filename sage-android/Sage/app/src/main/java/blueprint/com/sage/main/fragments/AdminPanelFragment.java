@@ -43,6 +43,7 @@ public class AdminPanelFragment extends Fragment {
 
     @Bind(R.id.admin_settings_start_semester) View mStartSemester;
     @Bind(R.id.admin_settings_end_semester) View mEndSemester;
+    @Bind(R.id.admin_settings_pause_semester) View mPauseSemester;
     @Bind(R.id.admin_request_check_in_count) TextView mCheckInRequests;
     @Bind(R.id.admin_request_sign_up_count) TextView mSignUpRequests;
 
@@ -164,6 +165,7 @@ public class AdminPanelFragment extends Fragment {
     private void toggleSemester() {
         mStartSemester.setVisibility(View.GONE);
         mEndSemester.setVisibility(View.GONE);
+        mPauseSemester.setVisibility(View.GONE);
 
         if (!mBaseInterface.getUser().isPresident()) {
             return;
@@ -174,6 +176,9 @@ public class AdminPanelFragment extends Fragment {
                     mBaseInterface.getSharedPreferences().getString(getString(R.string.activity_current_semester), "");
             setSemester(semesterString);
             mEndSemester.setVisibility(View.VISIBLE);
+            if (!mBaseInterface.getCurrentSemester().isPaused()) {
+                mPauseSemester.setVisibility(View.VISIBLE);
+            }
         } else if (mSemesters == null || mSemesters.size() == 0) {
             mStartSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters.size() == 1) {

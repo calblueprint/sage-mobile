@@ -252,13 +252,13 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
 
     public void onEvent(final AnnouncementNotificationEvent event) {
         if (shouldAddNotification(event.getAnnouncement())) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAnnouncementsAdapter.addAnnouncement(event.getAnnouncement());
-                    mAnnouncementsList.smoothScrollToPosition(0);
-                }
-            });
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAnnouncementsAdapter.addAnnouncement(event.getAnnouncement());
+                        mAnnouncementsList.smoothScrollToPosition(0);
+                    }
+                });
         }
     }
 

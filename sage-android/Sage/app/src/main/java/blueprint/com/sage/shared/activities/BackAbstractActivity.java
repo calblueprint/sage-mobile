@@ -47,7 +47,10 @@ public class BackAbstractActivity extends AbstractActivity implements ToolbarInt
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        ViewUtils.hideKeyboard(fragment);
+        if (fragment != null) {
+            ViewUtils.hideKeyboard(fragment);
+        }
+
         super.onBackPressed();
     }
 

@@ -192,8 +192,14 @@ public class VerifyCheckInListFragment extends ListFilterFragment implements OnR
         mSchoolsAdapter.setSchools(mSchools);
     }
 
-    public void onEvent(CheckInNotificationEvent event) {
-        mCheckInAdapter.addNewCheckIn(event.getCheckIn());
+    public void onEvent(final CheckInNotificationEvent event) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mCheckInAdapter.addNewCheckIn(event.getCheckIn());
+                mCheckInList.smoothScrollToPosition(0);
+            }
+        });
     }
 
     @OnClick({ R.id.check_in_filter_my_school, R.id.check_in_filter_school, R.id.check_in_filter_all })

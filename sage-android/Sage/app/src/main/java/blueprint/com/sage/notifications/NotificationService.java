@@ -17,10 +17,10 @@ import org.json.JSONObject;
 import blueprint.com.sage.R;
 import blueprint.com.sage.admin.requests.VerifyCheckInRequestsActivity;
 import blueprint.com.sage.admin.requests.VerifyUserRequestsActivity;
+import blueprint.com.sage.announcements.AnnouncementActivity;
 import blueprint.com.sage.events.announcements.AnnouncementNotificationEvent;
 import blueprint.com.sage.events.checkIns.CheckInNotificationEvent;
 import blueprint.com.sage.events.users.SignUpNotificationEvent;
-import blueprint.com.sage.main.MainActivity;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import de.greenrobot.event.EventBus;
 
@@ -36,9 +36,6 @@ public class NotificationService extends GcmListenerService {
     public static final int ANNOUNCEMENT_NOTIFICATION = 0;
     public static final int CHECK_IN_NOTIFICATION = 1;
     public static final int SIGN_UP_NOTIFICATION = 2;
-
-    public static final String TYPE = "type";
-    public static final String OBJECT = "object";
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
@@ -78,14 +75,12 @@ public class NotificationService extends GcmListenerService {
                         .setAutoCancel(true);
 
         Bundle intentBundle = new Bundle();
-        intentBundle.putInt(TYPE, type);
-        intentBundle.putString(OBJECT, object);
-
         Class<?> cls = null;
 
         switch(type) {
             case ANNOUNCEMENT_NOTIFICATION:
-                cls = MainActivity.class;
+                cls = AnnouncementActivity.class;
+                intentBundle.putString("announcement", getObjectStringFromJsonKey(object, "announcement"));
                 break;
             case CHECK_IN_NOTIFICATION:
                 cls = VerifyCheckInRequestsActivity.class;

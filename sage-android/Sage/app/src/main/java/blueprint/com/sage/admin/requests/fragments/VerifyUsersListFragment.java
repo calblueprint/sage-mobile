@@ -184,11 +184,17 @@ public class VerifyUsersListFragment extends ListFilterFragment implements OnRef
         mRefreshUser.setRefreshing(false);
     }
 
-    public void onEvent(SignUpNotificationEvent event) {
-        mUserAdapter.addUser(event.getUser());
+    public void onEvent(final SignUpNotificationEvent event) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUserAdapter.addUser(event.getUser());
+                mUserList.smoothScrollToPosition(0);
+            }
+        });
     }
 
-    @OnClick({ R.id.announcement_filter_my_school, R.id.announcement_filter_all, R.id.announcement_filter_general, R.id.announcement_filter_school })
+    @OnClick({ R.id.user_filter_my_school, R.id.user_filter_school, R.id.user_filter_all })
     public void onRadioButtonClick(View view) {
         mFilterController.onFilterChecked(view.getId());
     }

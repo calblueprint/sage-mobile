@@ -158,7 +158,8 @@
 
         <LinearLayout
             style="@style/PanelLayout"
-            android:id="@+id/admin_settings_pause_semester">
+            android:id="@+id/admin_settings_pause_semester"
+            android:visibility="gone">
 
             <ImageView
                 style="@style/PanelIcon"

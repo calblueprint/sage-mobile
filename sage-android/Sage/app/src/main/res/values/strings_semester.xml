@@ -29,6 +29,7 @@
     <string name="join_semester_success">You\'ve joined this semester - you can now start mentoring sessions.</string>
 
     <!--Pause Semester-->
+    <string name="pause_semester">pause_semester</string>
     <string name="pause_semester_button">Continue</string>
     <string name="pause_semester_date">Mentors do not need to check in from %1$s to %2$s.</string>
     <string name="pause_semester_confirm">Are you sure you want to pause the current semester?</string>

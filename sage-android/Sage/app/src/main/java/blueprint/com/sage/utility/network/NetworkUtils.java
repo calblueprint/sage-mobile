@@ -40,8 +40,7 @@ public class NetworkUtils {
     }
 
     public static void setSession(Activity activity, Session session) throws Exception {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(activity);
 
         sharedPreferences.edit()
                 .putString(activity.getString(R.string.email), session.getEmail())
@@ -67,8 +66,7 @@ public class NetworkUtils {
     }
 
     public static void setUser(Activity activity, User user) throws Exception {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(activity);
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
         String userString = mapper.writeValueAsString(user);
@@ -78,8 +76,7 @@ public class NetworkUtils {
     }
 
     public static void setSchool(Activity activity, School school) throws Exception {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(activity);
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
         String schoolString = mapper.writeValueAsString(school);
@@ -89,8 +86,7 @@ public class NetworkUtils {
     }
 
     public static void setCurrentSemester(Activity activity, Semester semester) throws Exception {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences),
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(activity);
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
         String currentSemesterString = mapper.writeValueAsString(semester);
@@ -101,9 +97,7 @@ public class NetworkUtils {
 
     public static void loginUser(Activity activity) throws Exception {
         Intent intent;
-
-        SharedPreferences sharedPreferences =
-                activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(activity);
 
         ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
         String userString = sharedPreferences.getString(activity.getString(R.string.user), "");
@@ -120,14 +114,17 @@ public class NetworkUtils {
     }
 
     public static void logoutCurrentUser(Activity activity) {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(activity);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(activity.getString(R.string.email));
-        editor.remove(activity.getString(R.string.auth_token));
-        editor.remove(activity.getString(R.string.user));
-        editor.remove(activity.getString(R.string.school));
-        editor.remove(activity.getString(R.string.current_semester));
-        editor.apply();
+
+        editor.remove(activity.getString(R.string.email))
+                .remove(activity.getString(R.string.auth_token))
+                .remove(activity.getString(R.string.user))
+                .remove(activity.getString(R.string.school))
+                .remove(activity.getString(R.string.current_semester))
+                .remove(activity.getString(R.string.registration_token))
+                .remove(activity.getString(R.string.app_version))
+                .apply();
 
         FragUtils.startActivity(activity, SignInActivity.class);
     }
@@ -140,17 +137,16 @@ public class NetworkUtils {
         return hasGps || hasNetwork;
     }
 
-    public static boolean isVerifiedUser(Context context, SharedPreferences preferences) {
-        return !preferences.getString(context.getString(R.string.email), "").isEmpty() &&
-                !preferences.getString(context.getString(R.string.auth_token), "").isEmpty() &&
-                // TODO: replace this with getString after Kelsey merges her stuff
-                !preferences.getString(context.getString(R.string.user), "").isEmpty() &&
-                !preferences.getString(context.getString(R.string.school), "").isEmpty();
+    public static boolean isVerifiedUser(Context context) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        return !sharedPreferences.getString(context.getString(R.string.email), "").isEmpty() &&
+                !sharedPreferences.getString(context.getString(R.string.auth_token), "").isEmpty() &&
+                !sharedPreferences.getString(context.getString(R.string.user), "").isEmpty() &&
+                !sharedPreferences.getString(context.getString(R.string.school), "").isEmpty();
     }
 
     public static void writeAsPreferences(Activity activity, String key, Object object) {
-        SharedPreferences sharedPreferences =
-                activity.getSharedPreferences(activity.getString(R.string.preferences), Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(activity);
 
         String objectString = writeAsString(activity, object);
         if (objectString != null) {
@@ -160,10 +156,10 @@ public class NetworkUtils {
         }
     }
 
-    public static String writeAsString(Activity activity, Object object) {
+    public static String writeAsString(Context context, Object object) {
         String objectString = null;
         try {
-            ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+            ObjectMapper mapper = NetworkManager.getInstance(context).getObjectMapper();
             objectString = mapper.writeValueAsString(object);
         } catch(Exception e) {
             Log.e(NetworkUtils.class.toString(), e.toString());
@@ -171,8 +167,8 @@ public class NetworkUtils {
         return objectString;
     }
 
-    public static <T> T writeAsObject(Activity activity, String objectString, TypeReference<T> typeReference) {
-        ObjectMapper mapper = NetworkManager.getInstance(activity).getObjectMapper();
+    public static <T> T writeAsObject(Context context, String objectString, TypeReference<T> typeReference) {
+        ObjectMapper mapper = NetworkManager.getInstance(context).getObjectMapper();
         try {
             return mapper.readValue(objectString, typeReference);
         } catch(Exception e) {
@@ -183,5 +179,9 @@ public class NetworkUtils {
 
     public static <T> T getStickyEvent(Class<T> className) {
         return EventBus.getDefault().getStickyEvent(className);
+    }
+
+    public static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences(context.getString(R.string.preferences), Context.MODE_PRIVATE);
     }
 }

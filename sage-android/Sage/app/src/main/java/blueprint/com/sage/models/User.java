@@ -35,6 +35,9 @@ public @Data class User {
     private String passwordConfirmation;
     private String imageUrl;
 
+    private int deviceType;
+    private String deviceId;
+
     private UserSemester userSemester;
     private School school;
     private List<CheckIn> checkIns;

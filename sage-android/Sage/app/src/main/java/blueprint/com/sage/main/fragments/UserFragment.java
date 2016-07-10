@@ -172,7 +172,7 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mSchool.setText(schoolString);
 
 //        Kelsey's stuff
-        UserUtils.setType(getActivity(), mUser, mUserType, null, User.ROLES_LABEL);
+        UserUtils.setTypeBackground(getActivity(), mUser, mUserType, null, User.ROLES_LABEL);
         mToolbarInterface.setTitle("User");
     }
 

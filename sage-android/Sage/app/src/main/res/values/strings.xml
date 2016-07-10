@@ -33,4 +33,9 @@
     <!-- Filter -->
     <string name="filter">Filter</string>
     <string name="show_filters">Show Filters</string>
+
+    <!--Shared Preferences-->
+    <string name="registration_complete">registrationComplete</string>
+    <string name="registration_token">registration_token</string>
+    <string name="app_version">app_version</string>
 </resources>

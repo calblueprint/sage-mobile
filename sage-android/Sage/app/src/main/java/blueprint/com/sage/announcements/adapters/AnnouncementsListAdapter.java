@@ -1,17 +1,14 @@
 package blueprint.com.sage.announcements.adapters;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,7 @@ import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.shared.views.ProgressViewHolder;
+import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -133,6 +131,11 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<RecyclerView.
         notifyDataSetChanged();
     }
 
+    public void addAnnouncement(Announcement announcement) {
+        mItems.add(0, new Item(announcement, null, ANNOUNCEMENT_VIEW));
+        notifyItemInserted(0);
+    }
+
     public class AnnouncementsListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         FragmentActivity mActivity;
@@ -161,19 +164,12 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<RecyclerView.
             }
 
             Intent intent = new Intent(mActivity, AnnouncementActivity.class);
-            intent.putExtra("Announcement", announcementToString(item.getAnnouncement()));
-            FragUtils.startActivityForResultFragment(mActivity, mFragment, AnnouncementActivity.class, FragUtils.SHOW_ANNOUNCEMENT_REQUEST_CODE, intent);
-        }
 
-        public String announcementToString(Announcement announcement) {
-            ObjectMapper mapper = new ObjectMapper();
-            String string = null;
-            try {
-                string = mapper.writeValueAsString(announcement);
-            } catch (JsonProcessingException e) {
-                Log.e(getClass().toString(), e.toString());
-            }
-            return string;
+            Bundle bundle = new Bundle();
+            bundle.putString("announcement", NetworkUtils.writeAsString(mActivity, item.getAnnouncement()));
+            intent.putExtras(bundle);
+
+            FragUtils.startActivityForResultFragment(mActivity, mFragment, AnnouncementActivity.class, FragUtils.SHOW_ANNOUNCEMENT_REQUEST_CODE, intent);
         }
     }
 

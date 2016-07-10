@@ -23,6 +23,7 @@ import blueprint.com.sage.admin.requests.filters.UserSchoolFilter;
 import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.users.DeleteUserEvent;
+import blueprint.com.sage.events.users.SignUpNotificationEvent;
 import blueprint.com.sage.events.users.UserListEvent;
 import blueprint.com.sage.events.users.VerifyUserEvent;
 import blueprint.com.sage.models.School;
@@ -55,6 +56,8 @@ public class VerifyUsersListFragment extends ListFilterFragment implements OnRef
     @Bind(R.id.verify_user_list_list) RecycleViewEmpty mUserList;
     @Bind(R.id.verify_user_list_refresh) SwipeRefreshLayout mRefreshUser;
     @Bind(R.id.list_progress_bar) ProgressBar mProgressBar;
+    @Bind(R.id.filter_view) View mFilterView;
+    @Bind(R.id.list_filter_container) View mFilterContainer;
 
     private VerifyUserListAdapter mUserAdapter;
     private ToolbarInterface mToolbarInterface;
@@ -99,8 +102,6 @@ public class VerifyUsersListFragment extends ListFilterFragment implements OnRef
     }
 
     public void initializeFilters() {
-        mFilterView.setVisibility(View.GONE);
-
         mSchoolsAdapter = new SchoolSpinnerAdapter(getActivity(), mSchools, R.layout.filter_spinner_header, R.layout.filter_spinner_item);
         mUserSchoolSpinner.setAdapter(mSchoolsAdapter);
 
@@ -112,9 +113,8 @@ public class VerifyUsersListFragment extends ListFilterFragment implements OnRef
         if (mBaseInterface.getSchool() != null) {
             UserMySchoolFilter userMySchoolFilter = new UserMySchoolFilter(mUserMySchool, mBaseInterface.getSchool());
             mFilterController.addFilters(userMySchoolFilter);
-            mUserMySchool.setVisibility(View.VISIBLE);
-
             mFilterController.onFilterChecked(mUserMySchool.getId());
+            mUserMySchoolLayout.setVisibility(View.VISIBLE);
         } else {
             mFilterController.onFilterChecked(mUserAll.getId());
         }
@@ -150,7 +150,7 @@ public class VerifyUsersListFragment extends ListFilterFragment implements OnRef
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("verified", "false");
         queryParams.put("sort_school", "true");
-
+        queryParams.putAll(mFilterController.onFilter());
         Requests.Users.with(getActivity()).makeListRequest(queryParams);
     }
 
@@ -184,9 +184,35 @@ public class VerifyUsersListFragment extends ListFilterFragment implements OnRef
         mRefreshUser.setRefreshing(false);
     }
 
-    @OnClick({ R.id.user_filter_my_school, R.id.user_filter_school, R.id.user_filter_all})
-    public void onFilterButtonClick(View view) { mFilterController.onFilterChecked(view.getId()); }
+    public void onEvent(final SignUpNotificationEvent event) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUserAdapter.addUser(event.getUser());
+                mUserList.smoothScrollToPosition(0);
+            }
+        });
+    }
 
+    @OnClick({ R.id.user_filter_my_school, R.id.user_filter_school, R.id.user_filter_all })
+    public void onRadioButtonClick(View view) {
+        mFilterController.onFilterChecked(view.getId());
+    }
+
+    @Override
+    @OnClick(R.id.filter_view)
+    public void onFilterViewShow() {
+        mFilterController.showFilter(getActivity(), mFilterContainer);
+    }
+
+    @Override
+    @OnClick(R.id.filter_cancel)
+    public void onFilterViewHide() {
+        mFilterController.hideFilter(getActivity(), mFilterContainer);
+    }
+
+    @Override
+    @OnClick(R.id.filter_confirm)
     public void onFilterClick() {
         mEmptyView.setRefreshing(true);
         mRefreshUser.setRefreshing(true);

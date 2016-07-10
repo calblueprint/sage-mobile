@@ -27,11 +27,10 @@ public class ViewUtils {
                 context.getResources().getDisplayMetrics());
     }
 
-    @TargetApi(23)
+    @TargetApi(21)
     public static void setStatusBarColor(Activity activity, int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            activity.getWindow().setStatusBarColor(activity.getResources()
-                                                       .getColor(color, activity.getTheme()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            activity.getWindow().setStatusBarColor(ContextCompat.getColor(activity, color));
     }
 
     public static void setToolBarElevation(Activity activity, float elevation) {
@@ -40,6 +39,7 @@ public class ViewUtils {
             actionBar.setElevation(elevation);
     }
 
+    @TargetApi(21)
     public static void setElevation(View view, float elevation) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             view.setElevation(elevation);
@@ -67,12 +67,7 @@ public class ViewUtils {
         return ContextCompat.getColor(context, color);
     }
 
-    @SuppressWarnings("deprecation")
     public static Drawable getDrawable(Context context, int drawable) {
-        if (android.os.Build.VERSION.SDK_INT >= 21) {
-            return context.getResources().getDrawable(drawable, context.getTheme());
-        } else {
-            return context.getResources().getDrawable(drawable);
-        }
+        return ContextCompat.getDrawable(context, drawable);
     }
 }

@@ -55,7 +55,7 @@ public class LoadingView extends LinearLayout {
         mCircleDrawable = attributes.getDrawable(R.styleable.LoadingView_circleDrawable);
 
         if (mCircleDrawable == null) {
-            mCircleDrawable = getContext().getDrawable(R.drawable.list_progress_circle);
+            mCircleDrawable = ViewUtils.getDrawable(getContext(), R.drawable.list_progress_circle);
         }
 
         mCircleOne.setBackground(mCircleDrawable);
@@ -121,7 +121,7 @@ public class LoadingView extends LinearLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                set.setStartDelay(0);
+                set.setStartDelay(100);
                 set.start();
             }
 

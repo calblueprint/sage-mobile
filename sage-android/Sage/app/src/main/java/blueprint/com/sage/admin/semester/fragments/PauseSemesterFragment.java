@@ -12,12 +12,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import blueprint.com.sage.R;
+import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.events.semesters.PauseSemesterEvent;
 import blueprint.com.sage.models.Semester;
 import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.DateUtils;
+import blueprint.com.sage.utility.view.FragUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,7 +56,7 @@ public class PauseSemesterFragment extends Fragment {
         String startDate = DateUtils.getFormattedDateNow(DateUtils.ABBREV_YEAR_FORMAT);
         String endDate = DateUtils.getDateInAWeek();
 
-        mDateRange.setText(getResources().getString(R.string.pause_semester_date).format(startDate, endDate));
+        mDateRange.setText(String.format(getResources().getString(R.string.pause_semester_date), startDate, endDate));
     }
 
     @Override
@@ -99,12 +101,12 @@ public class PauseSemesterFragment extends Fragment {
     }
 
     public void onEvent(PauseSemesterEvent event) {
-        
+        FragUtils.startActivityForResultFragment(getActivity(), getParentFragment(), CreateAnnouncementActivity.class, FragUtils.CREATE_ANNOUNCEMENT_REQUEST_CODE);
 
         Semester semester = event.getSemester();
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.pause_semester),
+        bundle.putString(getString(R.string.activity_pause_semester),
                 NetworkUtils.writeAsString(getActivity(), semester));
         intent.putExtras(bundle);
         getActivity().setResult(Activity.RESULT_OK, intent);

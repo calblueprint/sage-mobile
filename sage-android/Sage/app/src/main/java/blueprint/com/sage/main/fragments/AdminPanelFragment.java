@@ -183,6 +183,9 @@ public class AdminPanelFragment extends Fragment {
             mStartSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters.size() == 1) {
             mEndSemester.setVisibility(View.VISIBLE);
+            if (!mBaseInterface.getCurrentSemester().isPaused()) {
+                mPauseSemester.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -218,7 +221,15 @@ public class AdminPanelFragment extends Fragment {
     }
 
     public void onPauseSemester(Intent data) {
-//        TODO
+        String semesterString = data.getExtras().getString(getString(R.string.activity_pause_semester), "");
+        if (semesterString.isEmpty()) return;
+
+        setSemester(semesterString);
+        mBaseInterface.getSharedPreferences()
+                .edit()
+                .putString(getString(R.string.activity_current_semester), semesterString)
+                .commit();
+        toggleSemester();
     }
 
     public void onEvent(SemesterListEvent event) {

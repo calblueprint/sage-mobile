@@ -104,10 +104,12 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
     }
 
@@ -165,6 +167,15 @@ public class MainFragment extends Fragment {
         }
     }
 
+    private void displayBreak(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AdminPanelFragment)) continue;
+
+            AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
+            adminPanelFragment.onPauseSemester(data);
+        }
+    }
+
     private void setUpMap() {
         for (Fragment fragment : getChildFragmentManager().getFragments()) {
             if (!(fragment instanceof CheckInMapFragment)) continue;
@@ -189,10 +200,6 @@ public class MainFragment extends Fragment {
             AnnouncementsListFragment announcementsListFragment = (AnnouncementsListFragment) fragment;
             announcementsListFragment.changeAnnouncement(data);
         }
-    }
-
-    private void displayBreak(Intent data) {
-        //TODO
     }
 }
 

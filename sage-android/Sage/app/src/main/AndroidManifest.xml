@@ -136,6 +136,11 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".admin.semester.PauseSemesterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".admin.semester.SemesterListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>

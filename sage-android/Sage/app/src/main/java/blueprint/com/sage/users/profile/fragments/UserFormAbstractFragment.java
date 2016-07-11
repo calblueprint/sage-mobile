@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -64,6 +65,8 @@ public abstract class UserFormAbstractFragment extends Fragment implements FormV
     @Bind(R.id.create_user_type) Spinner mType;
     @Bind(R.id.create_user_role) Spinner mRole;
     @Bind(R.id.create_user_photo) CircleImageView mPhoto;
+
+    @Bind(R.id.create_user_scroll_view) ScrollView mScrollView;
 
     protected Bitmap mProfileBitmap;
 

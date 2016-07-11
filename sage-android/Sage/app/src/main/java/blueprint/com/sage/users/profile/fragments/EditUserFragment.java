@@ -39,6 +39,11 @@ public class EditUserFragment extends UserFormAbstractFragment {
     }
 
     public void validateAndSubmitRequest() {
+        if (!mValidator.hasNonBlankField(mCurrentPassword, "Current Password")) {
+            mScrollView.scrollTo(0, mScrollView.getBottom());
+            return;
+        }
+
         if (!isValidUser())
             return;
 
@@ -66,8 +71,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
                 mValidator.hasNonBlankField(mLastName, "Last Name") &
                 hasValidEmail() &
                 (hasEmptyPasswords() || hasMatchingPasswords()) &
-                mValidator.mustBePicked(mSchool, "School", mLayout) &
-                mValidator.hasNonBlankField(mCurrentPassword, "Current Password");
+                mValidator.mustBePicked(mSchool, "School", mLayout);
     }
 
     private boolean hasValidEmail() {

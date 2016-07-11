@@ -33,6 +33,9 @@ public class EditUserFragment extends UserFormAbstractFragment {
 
         mTypeLayout.setVisibility(View.GONE);
         mRoleLayout.setVisibility(View.GONE);
+
+        mPassword.setHint(getString(R.string.optional));
+        mConfirmPassword.setHint(getString(R.string.optional));
     }
 
     public void validateAndSubmitRequest() {

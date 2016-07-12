@@ -62,6 +62,12 @@ public class ViewUtils {
         }
     }
 
+    public static void changeTint(Drawable drawable, Context context, int color) {
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            drawable.setTint(ViewUtils.getColor(context, color));
+        }
+    }
+
     @SuppressWarnings("deprecation")
     public static int getColor(Context context, int color) {
         return ContextCompat.getColor(context, color);

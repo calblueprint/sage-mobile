@@ -150,6 +150,8 @@
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
 		E416760D1CD1A2BB00CC07C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */; };
 		E439C3AE1CB09CD9004F19FA /* SGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439C3AD1CB09CD9004F19FA /* SGViewController.swift */; };
+		E444E3521D2E2AE2004C38D6 /* PauseSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */; };
+		E444E3541D2E2F3C004C38D6 /* PauseSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E444E3531D2E2F3C004C38D6 /* PauseSemesterView.swift */; };
 		E44611991C754AE6006E90FA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44611981C754AE6006E90FA /* MenuController.swift */; };
 		E446119B1C754CC4006E90FA /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119A1C754CC4006E90FA /* MenuView.swift */; };
 		E446119E1C7568C5006E90FA /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119D1C7568C5006E90FA /* MenuItem.swift */; };
@@ -334,6 +336,8 @@
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		E439C3AD1CB09CD9004F19FA /* SGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGViewController.swift; sourceTree = "<group>"; };
+		E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseSemesterViewController.swift; sourceTree = "<group>"; };
+		E444E3531D2E2F3C004C38D6 /* PauseSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseSemesterView.swift; sourceTree = "<group>"; };
 		E44611981C754AE6006E90FA /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		E446119A1C754CC4006E90FA /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E446119D1C7568C5006E90FA /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
@@ -635,6 +639,7 @@
 				4280CE1A1BF43F01005D1B97 /* Browse */,
 				27EB32A81C3917E900FD8050 /* EndSemesterView.swift */,
 				E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */,
+				E444E3531D2E2F3C004C38D6 /* PauseSemesterView.swift */,
 			);
 			name = "Admin Views";
 			sourceTree = "<group>";
@@ -827,6 +832,7 @@
 			children = (
 				27EB32A61C3917D400FD8050 /* EndSemesterViewController.swift */,
 				E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */,
+				E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */,
 			);
 			name = Semester;
 			sourceTree = "<group>";
@@ -1131,6 +1137,7 @@
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
 				27EB32A91C3917E900FD8050 /* EndSemesterView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
+				E444E3541D2E2F3C004C38D6 /* PauseSemesterView.swift in Sources */,
 				42AD42691C794ECB00E70B39 /* AddSchoolLocationSelectorView.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
@@ -1191,6 +1198,7 @@
 				424DEC001BF4B8810099CCE0 /* LoginOperations.swift in Sources */,
 				42AD426B1C7C64B600E70B39 /* CLPlacemark.swift in Sources */,
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
+				E444E3521D2E2AE2004C38D6 /* PauseSemesterViewController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
 				421515981CC891AC008B854F /* SuccessView.swift in Sources */,
 				42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */,

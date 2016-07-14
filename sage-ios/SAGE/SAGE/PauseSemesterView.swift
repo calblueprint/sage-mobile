@@ -123,10 +123,11 @@ class PauseSemesterView: UIView {
     // MARK: - Public Methods
     //
     func showAnnouncementPrompt(completion completion: () -> Void) {
-        self.continueButton.enabled = false
+        self.continueButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
         
         let outwardTranslation: CGFloat = UIConstants.screenHeight/2
         let inwardTranslation: CGFloat = outwardTranslation - 25
+        
         UIView .animateWithDuration(UIConstants.normalAnimationTime, delay: 0, usingSpringWithDamping: UIConstants.defaultSpringDampening, initialSpringVelocity: UIConstants.defaultSpringVelocity, options: [], animations: { 
             self.titleLabel.moveY(-outwardTranslation)
             self.descriptionLabel.moveY(-outwardTranslation)
@@ -139,7 +140,7 @@ class PauseSemesterView: UIView {
                 self.continueButton.backgroundColor = UIColor.mainColor
                 self.continueButton.setTitle("Let's Do it!", forState: .Normal)
                 
-                self.announcementCell.backgroundColor = UIColor(white: 0.99, alpha: 1)
+                self.announcementCell.backgroundColor = UIColor.lightestGrayColor
                 self.announcementCell.alpha = 1
                 self.announcementCell.setupWithAnnouncement(self.makeDummyAnnouncement())
                 self.announcementCell.setY(CGRectGetMinY(self.titleLabel.frame))

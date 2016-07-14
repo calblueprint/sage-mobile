@@ -83,6 +83,16 @@ class SemesterOperations {
         }
     }
     
+    static func pauseSemester(completion: () -> Void, failure: (String) -> Void) {
+        let semester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as! Semester
+        
+        BaseOperation.manager().POST(StringConstants.kEndpointPauseSemester(semester.id), parameters:nil, success: { (operation, data) -> Void in
+            completion()
+        }) { (operation, error) -> Void in
+            failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+    
     static func joinSemester(completion: (() -> Void)?, failure: (String) -> Void) {
         BaseOperation.manager().POST(StringConstants.kEndpointJoinSemester, parameters: nil, success: { (operation, data) -> Void in
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]

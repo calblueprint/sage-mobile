@@ -60,7 +60,7 @@ class AdminTableViewController: SGTableViewController {
     // MARK: - UITableViewDelegate
     //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if LoginOperations.getUser()?.role != .President {
+        if LoginOperations.getUser()?.role == .President {
             return 4
         } else {
             return 3
@@ -132,7 +132,9 @@ class AdminTableViewController: SGTableViewController {
                     self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
                 }
             case 1:
-                self.presentViewController(PauseSemesterViewController(), animated: true, completion: nil)
+                let pauseSemesterVC = PauseSemesterViewController()
+                pauseSemesterVC.presentingNavigationController = self.navigationController
+                self.presentViewController(pauseSemesterVC, animated: true, completion: nil)
             default: break
             }
         default: break

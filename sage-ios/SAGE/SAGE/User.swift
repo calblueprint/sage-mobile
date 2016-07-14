@@ -48,6 +48,7 @@ class User: NSObject, NSCoding {
         self.level = VolunteerLevel(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kLevel))!
         self.role = UserRole(rawValue: aDecoder.decodeIntegerForKey(UserConstants.kRole))!
         self.verified = aDecoder.decodeBoolForKey(UserConstants.kVerified)
+        self.imageURL = aDecoder.decodeObjectForKey(UserConstants.kImgURL) as? NSURL
         self.directorID = aDecoder.decodeIntegerForKey(UserConstants.kDirectorID)
         super.init()
     }
@@ -61,6 +62,7 @@ class User: NSObject, NSCoding {
         aCoder.encodeInteger(level.rawValue, forKey: UserConstants.kLevel)
         aCoder.encodeInteger(role.rawValue, forKey: UserConstants.kRole)
         aCoder.encodeBool(self.verified, forKey: UserConstants.kVerified)
+        aCoder.encodeObject(self.imageURL, forKey: UserConstants.kImgURL)
         aCoder.encodeInteger(self.directorID, forKey: UserConstants.kDirectorID)
     }
     

@@ -12,6 +12,8 @@ class PauseSemesterViewController: SGViewController {
     
     let pauseView = PauseSemesterView()
     
+    weak var presentingNavigationController: UINavigationController?
+    
     //
     // MARK: - ViewController Lifecycle
     //
@@ -24,7 +26,7 @@ class PauseSemesterViewController: SGViewController {
         
         self.pauseView.cancelIconButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
         self.pauseView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        self.pauseView.continueButton.addTarget(self, action: "pauseSemester", forControlEvents: .TouchUpInside)
+        self.pauseView.continueButton.addTarget(self, action: "confirmPause", forControlEvents: .TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -61,21 +63,31 @@ class PauseSemesterViewController: SGViewController {
     }
     
     @objc private func pauseSemester() {
-        self.pauseView.showAnnouncementPrompt { 
-            self.pauseView.continueButton.addTarget(self, action: "createAnnouncement", forControlEvents: .TouchUpInside)
+        self.pauseView.continueButton.startLoading()
+        SemesterOperations.pauseSemester({ () -> Void in
+            self.pauseView.continueButton.stopLoading()
+            self.pauseView.showAnnouncementPrompt {
+                self.pauseView.continueButton.addTarget(self, action: "showCreateAnnouncement", forControlEvents: .TouchUpInside)
+            }
+        }) { (errorMessage) -> Void in
+            self.pauseView.continueButton.stopLoading()
+            let alertController = UIAlertController(
+                title: "Failure",
+                message: errorMessage,
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
-//        self.pauseView.continueButton.startLoading()
-//        SemesterOperations.endSemester({ () -> Void in
-//            self.pauseView.continueButton.stopLoading()
-//            self.pauseView.showAnnouncementPrompt()
-//        }) { (errorMessage) -> Void in
-//            self.pauseView.continueButton.stopLoading()
-//            let alertController = UIAlertController(
-//                title: "Failure",
-//                message: errorMessage,
-//                preferredStyle: .Alert)
-//            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-//            self.presentViewController(alertController, animated: true, completion: nil)
-//        }
     }
+
+    @objc private func showCreateAnnouncement() {
+        self.dismissViewControllerAnimated(true) {
+            if let navigationController = self.presentingNavigationController {
+                let addAnnouncementVC = AddAnnouncementController()
+                addAnnouncementVC.prefillWithAnnouncement(Announcement(title: "Break Next Week"))
+                navigationController.pushViewController(addAnnouncementVC, animated: true)
+            }
+        }
+    }
+
 }

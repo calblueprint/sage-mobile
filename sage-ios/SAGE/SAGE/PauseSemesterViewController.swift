@@ -10,19 +10,21 @@ import Foundation
 
 class PauseSemesterViewController: SGViewController {
     
-    let endView = EndSemesterView()
+    let pauseView = PauseSemesterView()
     
     //
     // MARK: - ViewController Lifecycle
     //
     override func loadView() {
-        self.view = self.endView
+        self.view = self.pauseView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.endView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        self.endView.finalButton.addTarget(self, action: "endSemester", forControlEvents: .TouchUpInside)
+        
+        self.pauseView.cancelIconButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+        self.pauseView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
+        self.pauseView.continueButton.addTarget(self, action: "pauseSemester", forControlEvents: .TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -32,7 +34,6 @@ class PauseSemesterViewController: SGViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.endView.showFirstLabel()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -47,18 +48,34 @@ class PauseSemesterViewController: SGViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @objc private func endSemester() {
-        self.endView.finalButton.startLoading()
-        SemesterOperations.endSemester({ () -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil) // Show the semester doesnt exist modal
-        }) { (errorMessage) -> Void in
-            self.endView.finalButton.stopLoading()
-            let alertController = UIAlertController(
-                title: "Failure",
-                message: errorMessage,
-                preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            self.presentViewController(alertController, animated: true, completion: nil)
+    @objc private func confirmPause() {
+        let alertController = UIAlertController(
+            title: "Are you sure?",
+            message: "Would you like to give a break next week?",
+            preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action) in
+            self.pauseSemester()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    @objc private func pauseSemester() {
+        self.pauseView.showAnnouncementPrompt { 
+            self.pauseView.continueButton.addTarget(self, action: "createAnnouncement", forControlEvents: .TouchUpInside)
         }
+//        self.pauseView.continueButton.startLoading()
+//        SemesterOperations.endSemester({ () -> Void in
+//            self.pauseView.continueButton.stopLoading()
+//            self.pauseView.showAnnouncementPrompt()
+//        }) { (errorMessage) -> Void in
+//            self.pauseView.continueButton.stopLoading()
+//            let alertController = UIAlertController(
+//                title: "Failure",
+//                message: errorMessage,
+//                preferredStyle: .Alert)
+//            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+//            self.presentViewController(alertController, animated: true, completion: nil)
+//        }
     }
 }

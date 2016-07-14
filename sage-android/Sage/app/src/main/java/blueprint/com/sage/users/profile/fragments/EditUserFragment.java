@@ -3,6 +3,7 @@ package blueprint.com.sage.users.profile.fragments;
 import android.util.Log;
 import android.view.View;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -53,6 +54,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
         mUser.setSchoolId(schoolId);
         mUser.setProfile(mProfileBitmap);
 
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Users.with(getActivity()).makeStickyEditRequest(mUser);
     }
 
@@ -84,7 +86,10 @@ public class EditUserFragment extends UserFormAbstractFragment {
     public void onEvent(EditUserEvent event) {
         try {
             NetworkUtils.setUser(getActivity(), event.getUser());
+            NetworkUtils.setSchool(getActivity(), event.getUser().getSchool());
+
             mBaseInterface.setUser(event.getUser());
+            mBaseInterface.setSchool(event.getUser().getSchool());
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }

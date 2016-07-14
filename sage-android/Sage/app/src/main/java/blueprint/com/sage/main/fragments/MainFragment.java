@@ -86,10 +86,14 @@ public class MainFragment extends Fragment {
                 float toAlpha = (1 - positionOffset) * (1 - mMinAlpha) + mMinAlpha;
                 float fromAlpha = (1 - toAlpha) + mMinAlpha;
 
-                mAdapter.getTabView(position).setImageAlpha(toAlpha);
-
-                if (position + 1 < mAdapter.getCount()) {
-                    mAdapter.getTabView(position + 1).setImageAlpha(fromAlpha);
+                for (int i = 0; i < mAdapter.getCount(); i++) {
+                    if (i == position) {
+                        mAdapter.getTabView(position).setImageAlpha(toAlpha);
+                    } else if (i == position + 1 && position + 1 < mAdapter.getCount()) {
+                        mAdapter.getTabView(position + 1).setImageAlpha(fromAlpha);
+                    } else {
+                        mAdapter.getTabView(i).setImageAlpha(mMinAlpha);
+                    }
                 }
 
                 if (mAdapter.getItem(position) instanceof CheckInMapFragment) {
@@ -100,10 +104,12 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
     }
 
@@ -125,6 +131,9 @@ public class MainFragment extends Fragment {
                 break;
             case FragUtils.SHOW_ANNOUNCEMENT_REQUEST_CODE:
                 updateAnnouncementList(data);
+                break;
+            case FragUtils.PAUSE_SEMESTER_REQUEST_CODE:
+                displayBreak(data);
                 break;
         }
     }
@@ -155,6 +164,15 @@ public class MainFragment extends Fragment {
 
             AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
             adminPanelFragment.onFinishSemester(data);
+        }
+    }
+
+    private void displayBreak(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AdminPanelFragment)) continue;
+
+            AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
+            adminPanelFragment.onPauseSemester(data);
         }
     }
 

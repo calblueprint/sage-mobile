@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
+import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -41,7 +44,23 @@ public class SemesterCheckInListAdapter extends RecyclerView.Adapter<SemesterChe
 
         CheckIn checkIn = mCheckIns.get(position);
 
-        viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
+        if (checkIn.getUser() == null) {
+            viewHolder.mAt.setVisibility(View.GONE);
+            viewHolder.mUserText.setVisibility(View.GONE);
+        } else {
+            viewHolder.mUserText.setText(checkIn.getUser().getName());
+        }
+        if (checkIn.getSchool() == null) {
+            viewHolder.mSchoolText.setVisibility(View.GONE);
+            if (checkIn.getUser() != null) {
+                viewHolder.mAt.setVisibility(View.GONE);
+                viewHolder.mSchoolText.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
+        }
+
+        viewHolder.mDateTime.setText(DateUtils.forPattern(new DateTime(checkIn.getStart()), DateUtils.DATE_FORMAT_ABBREV));
         viewHolder.mTotalTime.setText(checkIn.getTotalTime());
         viewHolder.mComment.setText(checkIn.getComment());
     }
@@ -56,6 +75,9 @@ public class SemesterCheckInListAdapter extends RecyclerView.Adapter<SemesterChe
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        @Bind(R.id.check_in_list_item_at) TextView mAt;
+        @Bind(R.id.check_in_list_item_user) TextView mUserText;
+        @Bind(R.id.check_in_list_item_date_time) TextView mDateTime;
         @Bind(R.id.check_in_list_item_school) TextView mSchoolText;
         @Bind(R.id.check_in_list_item_total) TextView mTotalTime;
         @Bind(R.id.check_in_list_item_comment) TextView mComment;

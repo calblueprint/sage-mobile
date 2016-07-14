@@ -61,6 +61,20 @@
                 style="@style/PanelTitle"
                 android:text="@string/admin_check_ins" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/admin_request_check_in_count"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:background="@drawable/red_circle"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -74,6 +88,21 @@
             <TextView
                 style="@style/PanelTitle"
                 android:text="@string/admin_users" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/admin_request_sign_up_count"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:textSize="10sp"
+                    android:gravity="center"
+                    android:background="@drawable/red_circle"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
 
         </LinearLayout>
 
@@ -124,6 +153,21 @@
             <TextView
                 style="@style/PanelTitle"
                 android:text="@string/admin_browse_semesters" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/PanelLayout"
+            android:id="@+id/admin_settings_pause_semester"
+            android:visibility="gone">
+
+            <ImageView
+                style="@style/PanelIcon"
+                android:src="@drawable/ic_pause_black_48dp"/>
+
+            <TextView
+                style="@style/PanelTitle"
+                android:text="@string/admin_pause_semester" />
 
         </LinearLayout>
     </LinearLayout>

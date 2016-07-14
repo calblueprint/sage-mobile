@@ -11,10 +11,17 @@
     <string name="admin_end_semester">End Semester</string>
     <string name="admin_start_semester">Start Semester</string>
     <string name="admin_browse_semesters">Browse Semesters</string>
+    <string name="admin_pause_semester">Pause Semester</string>
 
     <!-- Admin panel for a specific user -->
     <string name="admin_user_settings">Admin</string>
     <string name="admin_user_promote">Change Role</string>
     <string name="admin_user_status">Change Status</string>
     <string name="admin_user_delete">Delete User</string>
+
+    <!--Requests-->
+    <string name="admin_requests_plus">10+</string>
+    <string name="admin_check_in_requests">check_in_requests</string>
+    <string name="admin_sign_up_requests">sign_up_requests</string>
+    <string name="admin_default_zero">0</string>
 </resources>

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    asdf
+    <integer name="splash_animation_frame">33</integer>
 </resources>

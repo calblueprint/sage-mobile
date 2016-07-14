@@ -8,6 +8,7 @@
     <color name="background_white">#FFF3F3F3</color>
     <color name="shadow">#33000000</color>
     <color name="black">#000000</color>
+    <color name="black72">#72000000</color>
     <color name="date_gray">#ACACAC</color>
     <color name="divider_gray">#E6E6E6</color>
 
@@ -26,6 +27,9 @@
     <color name="red500_disabled">#EEF44336</color>
 
     <!-- Check In Map -->
+    <color name="map_circle_stroke">#BFFFC107</color>
+    <color name="map_circle_fill">#80FFC107</color>
+
     <array name="sign_up_colors">
         <item>#F44336</item>
         <item>#FFC107</item>

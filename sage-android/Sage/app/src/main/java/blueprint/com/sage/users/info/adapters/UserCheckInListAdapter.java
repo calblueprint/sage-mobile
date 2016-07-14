@@ -6,7 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +18,8 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.utility.model.CheckInUtils;
+import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Data;
@@ -26,9 +32,13 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Activity mActivity;
     private List<Item> mItems;
     private User mUser;
+    private List<CheckIn> mCheckIns;
 
     private static final int HEADER_VIEW = 0;
     private static final int CHECK_IN_VIEW = 1;
+
+    private static final String COMPLETE = "Complete";
+    private static final String INCOMPLETE = "Incomplete";
 
     public UserCheckInListAdapter(Activity activity, User user) {
         super();
@@ -41,6 +51,7 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private void setUpCheckIn() {
         mItems = new ArrayList<>();
+        mCheckIns = new ArrayList<>();
 
         if (mUser.getUserSemester() == null) {
             return;
@@ -48,12 +59,16 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         mItems.add(new Item(HEADER_VIEW, null));
 
-        if (mUser.getCheckIns().size() == 0) {
+        if (mUser.getCheckIns() == null || mUser.getCheckIns().size() == 0) {
             return;
         }
 
-        for (CheckIn checkIn : mUser.getCheckIns())
-            mItems.add(new Item(CHECK_IN_VIEW, checkIn));
+        for (CheckIn checkIn : mUser.getCheckIns()) {
+            if (checkIn.isVerified()) {
+                mCheckIns.add(checkIn);
+                mItems.add(new Item(CHECK_IN_VIEW, checkIn));
+            }
+        }
     }
 
     @Override
@@ -89,19 +104,22 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void setListItemView(ListViewHolder viewHolder, CheckIn checkIn) {
-        viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
+        viewHolder.mAt.setVisibility(View.GONE);
+        viewHolder.mUserText.setVisibility(View.GONE);
+
+        if (checkIn.getSchool() == null) {
+            viewHolder.mSchoolText.setVisibility(View.GONE);
+        } else {
+            viewHolder.mSchoolText.setText(checkIn.getSchool().getName());
+        }
+        viewHolder.mDateTime.setText(DateUtils.forPattern(new DateTime(checkIn.getStart()), DateUtils.DATE_FORMAT_ABBREV));
         viewHolder.mTotalTime.setText(checkIn.getTotalTime());
         viewHolder.mComment.setText(checkIn.getComment());
     }
 
     private void setHeaderView(HeaderViewHolder viewHolder) {
-        viewHolder.mTotal.setText(String.valueOf(mUser.getUserSemester().getTotalTime()));
-        viewHolder.mRequired.setText(String.valueOf(mUser.getUserSemester().getHoursRequired()));
-        viewHolder.mComplete.setText(String.valueOf(mUser.getUserSemester().isCompleted()));
-
-        if (mUser.getCheckIns() != null) {
-            viewHolder.mNumberCheckIns.setText(String.valueOf(mUser.getCheckIns().size()));
-        }
+        CheckInUtils.setCheckInSummary(mActivity, mUser, viewHolder.mHoursWeekly, viewHolder.mPercent,
+                                        viewHolder.mHoursRequired, viewHolder.mActive, viewHolder.mProgressBar);
     }
 
     @Override
@@ -120,10 +138,11 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.user_semester_total) TextView mTotal;
-        @Bind(R.id.user_semester_required) TextView mRequired;
-        @Bind(R.id.user_semester_complete) TextView mComplete;
-        @Bind(R.id.user_semester_number_check_ins) TextView mNumberCheckIns;
+        @Bind(R.id.user_semester_hours_weekly) TextView mHoursWeekly;
+        @Bind(R.id.user_semester_hours_required) TextView mHoursRequired;
+        @Bind(R.id.user_semester_progress_bar) ProgressBar mProgressBar;
+        @Bind(R.id.user_semester_percent) TextView mPercent;
+        @Bind(R.id.user_semester_active_image) ImageView mActive;
 
         public HeaderViewHolder(View v) {
             super(v);
@@ -132,7 +151,9 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     static class ListViewHolder extends RecyclerView.ViewHolder {
-
+        @Bind(R.id.check_in_list_item_at) TextView mAt;
+        @Bind(R.id.check_in_list_item_user) TextView mUserText;
+        @Bind(R.id.check_in_list_item_date_time) TextView mDateTime;
         @Bind(R.id.check_in_list_item_school) TextView mSchoolText;
         @Bind(R.id.check_in_list_item_total) TextView mTotalTime;
         @Bind(R.id.check_in_list_item_comment) TextView mComment;

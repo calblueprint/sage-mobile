@@ -61,83 +61,57 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/user_type_rectangle"/>
 
-        <TableLayout
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="*">
+        <View style="@style/PanelDivider"
+            android:layout_marginTop="10dp"/>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp">
 
-                <LinearLayout
-                    style="@style/UserProfileGrid"
-                    android:orientation="vertical"
-                    android:layout_marginRight="0.5dp"
-                    android:layout_marginEnd="0.5dp">
+        <RelativeLayout style="@style/CheckInContainerRelativeLayout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:paddingTop="10dp">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
+            <LinearLayout style="@style/CheckInLinearLayout"
+                android:id="@+id/user_linear_required"
+                android:layout_marginTop="12dp">
 
-                        <TextView
-                            android:id="@+id/user_total_time"
-                            android:fontFamily="sans-serif-medium"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="32sp"
-                            android:text="@string/user_zero" />
+                <ImageView style="@style/CheckInImage"
+                    android:id="@+id/user_active_image"
+                    android:background="@drawable/ic_done_white"/>
 
-                        <TextView
-                            android:id="@+id/user_slash"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:textSize="32sp"
-                            android:text="@string/user_slash"/>
+                <TextView style="@style/CheckInText"
+                    android:id="@+id/user_hours_required" />
 
-                        <TextView
-                            android:id="@+id/user_total_semester"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="32sp"
-                            android:text="@string/user_zero"/>
+            </LinearLayout>
 
-                    </LinearLayout>
+            <LinearLayout style="@style/CheckInLinearLayout"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/user_linear_required">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/user_hours"/>
+                <ImageView style="@style/CheckInImage"
+                    android:background="@drawable/ic_alarm_on_black"/>
 
-                </LinearLayout>
+                <TextView style="@style/CheckInText"
+                    android:id="@+id/user_hours_weekly"/>
 
-                <LinearLayout
-                    style="@style/UserProfileGrid"
-                    android:layout_marginLeft="0.5dp"
-                    android:layout_marginStart="0.5dp"
-                    android:orientation="vertical">
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/user_hours_week"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/user_zero"
-                        android:textSize="32sp"/>
+            <FrameLayout style="@style/CheckInProgressBarContainer"
+                android:id="@+id/user_progress_container">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/user_hours_week"/>
-                </LinearLayout>
-            </TableRow>
-        </TableLayout>
+                <ProgressBar style="@style/CheckInProgressBarBackground"/>
+
+                <ProgressBar style="@style/CheckInProgressBar"
+                    android:id="@+id/user_progress_bar" />
+
+
+                <TextView style="@style/CheckInPercent"
+                    android:id="@+id/user_percent" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <View style="@style/PanelDivider"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             style="@style/PanelHeader"

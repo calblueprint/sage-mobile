@@ -1,6 +1,5 @@
 package blueprint.com.sage.announcements;
 
-import android.view.MenuItem;
 import android.view.View;
 
 import blueprint.com.sage.R;
@@ -18,16 +17,6 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
         EditAnnouncementFragment fragment = new EditAnnouncementFragment();
         fragment.setAnnouncement(announcement);
         return fragment;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_save:
-                validateAndSubmitRequest();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     public void setAnnouncement(Announcement announcement) { mAnnouncement = announcement; }
@@ -54,8 +43,11 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
         if (!isValid())
             return;
         setAnnouncementCategoryAndSchool();
+
         mAnnouncement.setTitle(mAnnouncementTitle.getText().toString());
         mAnnouncement.setBody(mAnnouncementBody.getText().toString());
+
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Announcements.with(getActivity()).makeEditRequest(mAnnouncement);
     }
 

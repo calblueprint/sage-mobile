@@ -13,7 +13,7 @@ import blueprint.com.sage.models.User;
  * Created by kelseylam on 2/16/16.
  */
 public class UserUtils {
-    public static void setType(Activity activity, User user, TextView userType, ImageView border, String[] roles) {
+    public static void setTypeBackground(Activity activity, User user, TextView userType, ImageView border, String[] roles) {
         int role = user.getRole();
         if (user.getDirectorId() != 0) {
             role = 3;

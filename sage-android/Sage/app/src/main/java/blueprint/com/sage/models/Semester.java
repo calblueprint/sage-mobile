@@ -23,6 +23,7 @@ public @Data class Semester {
     private List<User> users;
 
     private boolean paused;
+    private DateTime datePaused;
 
     public static final String[] SEASONS = { "Fall", "Spring" };
 

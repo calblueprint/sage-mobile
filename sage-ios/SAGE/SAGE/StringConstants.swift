@@ -63,6 +63,10 @@ struct StringConstants {
         return kEndpointBaseURL + "/admin/semesters/" + String(id) + "/finish"
     }
     
+    static func kEndpointPauseSemester(id: Int) -> String {
+        return kEndpointBaseURL + "/admin/semesters/" + String(id) + "/pause"
+    }
+    
     static func kEndpointExportSemester(id: Int) -> String {
         return kEndpointBaseURL + "/admin/semesters/" + String(id) + "/export"
     }

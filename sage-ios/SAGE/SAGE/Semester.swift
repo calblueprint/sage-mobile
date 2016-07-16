@@ -42,7 +42,7 @@ class Semester: NSObject, NSCoding {
                 self.startDate = formatter.dateFromString(value as! String)
             case SemesterConstants.kFinishDate:
                 let formatter = NSDateFormatter()
-                if let val = value as? String {
+                if let _ = value as? String {
                     formatter.dateFormat = StringConstants.JSONdateFormat
                     self.finishDate = formatter.dateFromString(value as! String)
                 }

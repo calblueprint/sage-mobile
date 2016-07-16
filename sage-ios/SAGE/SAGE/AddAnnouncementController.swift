@@ -26,6 +26,17 @@ class AddAnnouncementController: FormController {
         self.addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
     }
     
+    func prefillWithAnnouncement(announcement: Announcement) {
+        (self.view as! AddAnnouncementView).deleteAnnouncementButton.hidden = false
+        if let school = announcement.school {
+            self.addAnnouncementView.displayChosenSchool(school)
+        } else {
+            self.addAnnouncementView.school.button.setTitle("Everyone", forState: .Normal)
+        }
+        self.addAnnouncementView.title.textField.text = announcement.title
+        self.addAnnouncementView.commentField.textView.text = announcement.text
+    }
+    
     @objc private func schoolButtonTapped() {
         let tableViewController = SelectAnnouncementSchoolTableViewController()
         tableViewController.parentVC = self
@@ -59,7 +70,7 @@ class AddAnnouncementController: FormController {
     }
     
     private func exportToAnnouncement() -> Announcement {
-        let addView = self.view as! AddAnnouncementView
+        let addView = self.addAnnouncementView
         let announcement = Announcement(sender: LoginOperations.getUser(), title: addView.title.textField.text, text: addView.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.school)
         return announcement
     }

@@ -37,7 +37,7 @@ class SemesterOperations {
         let endpoint = StringConstants.kEndpointSemesters + "/" + semesterID
         
         manager.GET(endpoint, parameters: nil, success: { (operation, data) -> Void in
-            var semester = Semester(propertyDictionary: data["semester"] as! [String: AnyObject])
+            let semester = Semester(propertyDictionary: data["semester"] as! [String: AnyObject])
             completion(semester)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
@@ -80,6 +80,16 @@ class SemesterOperations {
             completion()
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+    
+    static func pauseSemester(completion: () -> Void, failure: (String) -> Void) {
+        let semester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as! Semester
+        
+        BaseOperation.manager().POST(StringConstants.kEndpointPauseSemester(semester.id), parameters:nil, success: { (operation, data) -> Void in
+            completion()
+        }) { (operation, error) -> Void in
+            failure(BaseOperation.getErrorMessage(error))
         }
     }
     

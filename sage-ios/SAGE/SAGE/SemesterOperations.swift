@@ -37,7 +37,7 @@ class SemesterOperations {
         let endpoint = StringConstants.kEndpointSemesters + "/" + semesterID
         
         manager.GET(endpoint, parameters: nil, success: { (operation, data) -> Void in
-            var semester = Semester(propertyDictionary: data["semester"] as! [String: AnyObject])
+            let semester = Semester(propertyDictionary: data["semester"] as! [String: AnyObject])
             completion(semester)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

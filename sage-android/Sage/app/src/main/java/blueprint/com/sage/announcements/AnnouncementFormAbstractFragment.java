@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.events.APIErrorEvent;
 import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.models.School;
@@ -48,7 +46,6 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
     protected List<School> mSchools;
     private FormValidator mValidator;
     protected SchoolSpinnerAdapter mSchoolAdapter;
-    protected MenuItem mItem;
 
     private final String SCHOOL = "School Announcement";
     private final String GENERAL = "General Announcement";
@@ -167,9 +164,5 @@ public abstract class AnnouncementFormAbstractFragment extends Fragment {
         } catch (JsonProcessingException exception) {
         }
         return string;
-    }
-
-    public void onEvent(APIErrorEvent event) {
-        mItem.setActionView(null);
     }
 }

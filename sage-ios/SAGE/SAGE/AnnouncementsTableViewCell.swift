@@ -43,7 +43,7 @@ class AnnouncementsTableViewCell: UITableViewCell {
     }
     
     func setupWithAnnouncement(announcement: Announcement) {
-        self.announcementUserImg.setImageWithUser(announcement.sender!)
+        self.announcementUserImg.setImageWithUser(announcement.sender!, showBadge: false)
         self.announcementTitle.text = announcement.title
         self.announcementMessage.text = announcement.text
         

@@ -23,7 +23,10 @@ class SGBarButtonItem: UIBarButtonItem {
             self.customButton.titleLabel?.font = defaultFont
         }
         self.customButton.setTitle(title, forState: .Normal)
-        let width = self.customButton.titleLabel!.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+        var width = self.customButton.titleLabel!.sizeThatFits(CGSizeMake(CGFloat.max, CGFloat.max)).width
+        if width == 0 {
+            width = 20
+        }
         self.customButton.setSize(CGSizeMake(width, UIConstants.barbuttonSize))
         self.customButton.addTarget(target, action: action, forControlEvents: .TouchUpInside)
         self.customView = self.customButton

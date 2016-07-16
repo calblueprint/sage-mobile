@@ -74,9 +74,9 @@ class AdminTableViewController: SGTableViewController {
         case 1:
             return 2
         case 2:
-            return 1
+            return 2
         case 3:
-            return 1
+            return 2
         default: return 0
         }
     }
@@ -119,18 +119,22 @@ class AdminTableViewController: SGTableViewController {
             switch indexPath.row {
             case 0:
                 self.navigationController?.pushViewController(PastSemestersViewController(), animated: true)
+            case 1:
+                self.navigationController?.pushViewController(ExportSemesterViewController(), animated: true)
             default: break
             }
         case 3:
             switch indexPath.row {
             case 0:
-                if LoginOperations.getUser()?.role == .President {
-                    if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
-                        self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
-                    } else {
-                        self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
-                    }
+                if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                    self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
+                } else {
+                    self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
                 }
+            case 1:
+                let pauseSemesterVC = PauseSemesterViewController()
+                pauseSemesterVC.presentingNavigationController = self.navigationController
+                self.presentViewController(pauseSemesterVC, animated: true, completion: nil)
             default: break
             }
         default: break
@@ -173,9 +177,14 @@ class AdminTableViewController: SGTableViewController {
                 let icon = FAKIonIcons.androidTimeIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+            } else {
+                cell.textLabel?.text = "Export Semester"
+                let icon = FAKIonIcons.shareIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
+                cell.imageView?.image = icon
             }
         case 3:
-            if LoginOperations.getUser()?.role == .President && indexPath.row == 0 {
+            if indexPath.row == 0 {
                 if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
                     cell.textLabel?.text = "End Semester"
                     let icon = FAKIonIcons.logOutIconWithSize(iconSize)
@@ -187,6 +196,11 @@ class AdminTableViewController: SGTableViewController {
                         .imageWithSize(CGSizeMake(iconSize, iconSize))
                     cell.imageView?.image = icon
                 }
+            } else if indexPath.row == 1 {
+                cell.textLabel?.text = "Pause Hours"
+                let icon = FAKIonIcons.minusCircledIconWithSize(iconSize)
+                    .imageWithSize(CGSizeMake(iconSize, iconSize))
+                cell.imageView?.image = icon
             }
         default: break
         }

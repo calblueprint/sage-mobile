@@ -37,7 +37,7 @@ class SemesterOperations {
         let endpoint = StringConstants.kEndpointSemesters + "/" + semesterID
         
         manager.GET(endpoint, parameters: nil, success: { (operation, data) -> Void in
-            var semester = Semester(propertyDictionary: data["semester"] as! [String: AnyObject])
+            let semester = Semester(propertyDictionary: data["semester"] as! [String: AnyObject])
             completion(semester)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
@@ -83,6 +83,16 @@ class SemesterOperations {
         }
     }
     
+    static func pauseSemester(completion: () -> Void, failure: (String) -> Void) {
+        let semester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as! Semester
+        
+        BaseOperation.manager().POST(StringConstants.kEndpointPauseSemester(semester.id), parameters:nil, success: { (operation, data) -> Void in
+            completion()
+        }) { (operation, error) -> Void in
+            failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+    
     static func joinSemester(completion: (() -> Void)?, failure: (String) -> Void) {
         BaseOperation.manager().POST(StringConstants.kEndpointJoinSemester, parameters: nil, success: { (operation, data) -> Void in
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]
@@ -93,6 +103,15 @@ class SemesterOperations {
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.joinSemesterKey, object: semesterSummary)
             }
             KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
+            completion?()
+            }) { (operation, error) -> Void in
+                failure(BaseOperation.getErrorMessage(error))
+        }
+    }
+    
+    static func exportSemester(semester: Semester, completion: (() -> Void)?, failure: (String) -> Void) {
+        
+        BaseOperation.manager().GET(StringConstants.kEndpointExportSemester(semester.id), parameters: nil, success: { (operation, data) -> Void in
             completion?()
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

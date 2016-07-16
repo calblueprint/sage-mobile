@@ -16,5 +16,7 @@ struct NetworkingConstants {
     static let kAscending = "asc"
     static let kDescending = "desc"
     static let kPage = "page"
+    
+    static let kEmail = "email"
 }
 

@@ -21,7 +21,6 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
                 validateAndSubmitRequest();
@@ -44,8 +43,6 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
         mAnnouncement.setBody(mAnnouncementBody.getText().toString());
         BaseInterface baseInterface = (BaseInterface) getActivity();
         mAnnouncement.setUserId(baseInterface.getUser().getId());
-
-        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Announcements.with(getActivity()).makeCreateRequest(mAnnouncement);
     }
 
@@ -56,9 +53,6 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
         bundle.putString(getString(R.string.create_announcement),
                 NetworkUtils.writeAsString(getActivity(), announcement));
         intent.putExtras(bundle);
-
-        mItem.setActionView(null);
-
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().onBackPressed();
     }

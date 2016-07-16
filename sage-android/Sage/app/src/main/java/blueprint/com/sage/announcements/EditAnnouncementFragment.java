@@ -22,7 +22,6 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
                 validateAndSubmitRequest();
@@ -57,8 +56,6 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
         setAnnouncementCategoryAndSchool();
         mAnnouncement.setTitle(mAnnouncementTitle.getText().toString());
         mAnnouncement.setBody(mAnnouncementBody.getText().toString());
-
-        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Announcements.with(getActivity()).makeEditRequest(mAnnouncement);
     }
 
@@ -67,8 +64,6 @@ public class EditAnnouncementFragment extends AnnouncementFormAbstractFragment {
         AnnouncementInterface activity = (AnnouncementInterface) getActivity();
         activity.setAnnouncement(announcement);
         activity.setType(AnnouncementActivity.EDITED);
-
-        mItem.setActionView(null);
         FragUtils.popBackStack(this);
     }
 }

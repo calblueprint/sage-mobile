@@ -26,6 +26,9 @@ class LoginOperations: NSObject {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
             KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
             KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kSignUpRequests)
+            KeychainWrapper.removeObjectForKey(KeychainConstants.kCheckInRequests)
+            
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
             KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
@@ -44,6 +47,10 @@ class LoginOperations: NSObject {
             if !(schoolJSON is NSNull) {
                 school = School(propertyDictionary: schoolJSON as! [String: AnyObject])
             }
+            
+            let signUpRequests = data["session"]!!["sign_up_requests"]
+            let checkInRequests = data["session"]!!["check_in_requests"]
+            
             if (currentSemester != nil) {
                 KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
             }
@@ -53,6 +60,15 @@ class LoginOperations: NSObject {
             if (school != nil) {
                 KeychainWrapper.setObject(school!, forKey: KeychainConstants.kSchool)
             }
+            if (signUpRequests != nil)
+            {
+                KeychainWrapper.setObject(signUpRequests as! Int, forKey: KeychainConstants.kSignUpRequests)
+            }
+            if (checkInRequests != nil)
+            {
+                KeychainWrapper.setObject(checkInRequests as! Int, forKey: KeychainConstants.kCheckInRequests)
+            }
+            
             completion(user, currentSemester, semesterSummary)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

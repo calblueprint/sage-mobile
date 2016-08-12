@@ -48,5 +48,4 @@
         android:background="@color/divider_gray"
         android:layout_marginTop="10dp"
         android:layout_below="@id/user_semester_progress_container" />
-
 </RelativeLayout>

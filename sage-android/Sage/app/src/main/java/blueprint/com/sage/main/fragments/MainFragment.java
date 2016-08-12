@@ -104,10 +104,12 @@ public class MainFragment extends Fragment {
             }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
     }
 
@@ -129,6 +131,9 @@ public class MainFragment extends Fragment {
                 break;
             case FragUtils.SHOW_ANNOUNCEMENT_REQUEST_CODE:
                 updateAnnouncementList(data);
+                break;
+            case FragUtils.PAUSE_SEMESTER_REQUEST_CODE:
+                displayBreak(data);
                 break;
         }
     }
@@ -159,6 +164,15 @@ public class MainFragment extends Fragment {
 
             AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
             adminPanelFragment.onFinishSemester(data);
+        }
+    }
+
+    private void displayBreak(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AdminPanelFragment)) continue;
+
+            AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
+            adminPanelFragment.onPauseSemester(data);
         }
     }
 

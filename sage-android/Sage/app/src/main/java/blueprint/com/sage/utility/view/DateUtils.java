@@ -5,6 +5,8 @@ import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.Calendar;
+
 /**
  * Created by charlesx on 10/30/15.
  * Date utilities.
@@ -60,6 +62,10 @@ public class DateUtils {
         return forPattern(DateTime.now(), DATE_FORMAT);
     }
 
+    public static String getFormattedDateNow(String pattern) {
+        return forPattern(DateTime.now(), pattern);
+    }
+
     public static String forPattern(DateTime dateTime, String pattern) {
         DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
         return formatter.print(dateTime);
@@ -77,15 +83,12 @@ public class DateUtils {
         return startDate + " - " + finishDate;
     }
 
-    public static String getDateRange(DateTime start, DateTime finish, String pattern) {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
-        String startDate = formatter.print(start);
-        String finishDate;
-        if (finish != null) {
-            finishDate = formatter.print(finish);
-        } else {
-            finishDate = DateUtils.PRESENT;
-        }
-        return startDate + " - " + finishDate;
+    public static String getDateInAWeek() {
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.WEEK_OF_YEAR, 1);
+        DateTime dateTime = new DateTime(now.getTime());
+        return forPattern(dateTime, DateUtils.ABBREV_YEAR_FORMAT);
     }
+
+
 }

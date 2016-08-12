@@ -155,5 +155,20 @@
                 android:text="@string/admin_browse_semesters" />
 
         </LinearLayout>
+
+        <LinearLayout
+            style="@style/PanelLayout"
+            android:id="@+id/admin_settings_pause_semester"
+            android:visibility="gone">
+
+            <ImageView
+                style="@style/PanelIcon"
+                android:src="@drawable/ic_pause_black_48dp"/>
+
+            <TextView
+                style="@style/PanelTitle"
+                android:text="@string/admin_pause_semester" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

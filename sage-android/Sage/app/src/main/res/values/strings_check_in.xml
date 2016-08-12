@@ -61,5 +61,4 @@
     <string name="check_in_hours_required">%1$.1f of %2$d hours completed</string>
     <string name="check_in_inactive">Inactive</string>
     <string name="check_in_percent">%d%%</string>
-
 </resources>

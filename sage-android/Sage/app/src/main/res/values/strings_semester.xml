@@ -30,9 +30,8 @@
     <string name="join_semester_success">You\'ve joined this semester - you can now start mentoring sessions.</string>
 
     <!--Pause Semester-->
-    <string name="pause_semester_button">Continue</string>
-    <string name="pause_semester_date">Hit "Continue" to pause the semester. Mentors will not need to check in from %1$s to %2$s.</string>
-    <string name="pause_semester_confirm">Are you sure you want to pause the current semester?</string>
-    <string name="pause_semester_yes">Yes</string>
-    <string name="pause_semester_no">No</string>
+    <string name="pause_semester_header">Pause Hours</string>
+    <string name="pause_semester_button">Proceed</string>
+    <string name="pause_semester_message">Pausing Hours means that students will not be required to mentor for the following week.</string>
+    <string name="pause_semester_cancel">Cancel</string>
 </resources>

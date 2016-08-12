@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,8 +18,8 @@ import java.util.List;
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.User;
+import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.view.DateUtils;
-import blueprint.com.sage.utility.view.ViewUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import lombok.Data;
@@ -117,41 +118,8 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void setHeaderView(HeaderViewHolder viewHolder) {
-        int hours = mUser.getUserSemester().getTotalTime() / 60;
-        viewHolder.mTotal.setText(String.valueOf(hours));
-        viewHolder.mRequired.setText(String.valueOf(mUser.getUserSemester().getHoursRequired()));
-        viewHolder.mStringRequired.setText(String.valueOf(mUser.getUserSemester().getHoursRequired()));
-
-        if (mUser.getUserSemester().isCompleted()) {
-            if (android.os.Build.VERSION.SDK_INT >= 21) {
-                viewHolder.mProgressBar.getProgressDrawable().setTint(ViewUtils.getColor(mActivity, R.color.green500));
-            }
-            viewHolder.mComplete.setText(COMPLETE);
-        } else {
-            if (android.os.Build.VERSION.SDK_INT >= 21) {
-                viewHolder.mProgressBar.getProgressDrawable().setTint(ViewUtils.getColor(mActivity, R.color.red500));
-            }
-            viewHolder.mComplete.setText(INCOMPLETE);
-        }
-
-        if (mCheckIns != null) {
-            String string;
-            if (mCheckIns.size() == 1) {
-                string = mCheckIns.size() + " check in";
-            } else {
-                string = mCheckIns.size() + " check ins";
-            }
-            viewHolder.mNumberCheckIns.setText(string);
-        }
-
-        int progress;
-        if (mUser.getUserSemester().getHoursRequired() == 0) {
-            progress = 75;
-        } else {
-            double num = hours * 1.0 / mUser.getUserSemester().getHoursRequired() * 1.0 * 100.0 * 3.0 /4.0;
-            progress = (int) num;
-        }
-        viewHolder.mProgressBar.setProgress(progress);
+        CheckInUtils.setCheckInSummary(mActivity, mUser, viewHolder.mHoursWeekly, viewHolder.mPercent,
+                                        viewHolder.mHoursRequired, viewHolder.mActive, viewHolder.mProgressBar);
     }
 
     @Override
@@ -170,12 +138,11 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.user_semester_total) TextView mTotal;
-        @Bind(R.id.user_semester_required) TextView mRequired;
-        @Bind(R.id.user_semester_hours_required) TextView mStringRequired;
-        @Bind(R.id.user_semester_complete) TextView mComplete;
-        @Bind(R.id.user_semester_number_check_ins) TextView mNumberCheckIns;
+        @Bind(R.id.user_semester_hours_weekly) TextView mHoursWeekly;
+        @Bind(R.id.user_semester_hours_required) TextView mHoursRequired;
         @Bind(R.id.user_semester_progress_bar) ProgressBar mProgressBar;
+        @Bind(R.id.user_semester_percent) TextView mPercent;
+        @Bind(R.id.user_semester_active_image) ImageView mActive;
 
         public HeaderViewHolder(View v) {
             super(v);

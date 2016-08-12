@@ -77,7 +77,6 @@ public abstract class SchoolFormAbstractFragment extends Fragment
 
     protected MenuItem mItem;
     private LatLng mBounds;
-
     private final int MAX_RADIUS = 1000;
 
     @Override
@@ -210,6 +209,7 @@ public abstract class SchoolFormAbstractFragment extends Fragment
         }
 
         mRadiusInt.setText(initialRadius + " m");
+        mMapView.setRadius(initialRadius);
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override

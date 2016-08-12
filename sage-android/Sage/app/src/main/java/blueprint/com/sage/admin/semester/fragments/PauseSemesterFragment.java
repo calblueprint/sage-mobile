@@ -32,8 +32,6 @@ public class PauseSemesterFragment extends Fragment {
 
     BaseInterface mBaseInterface;
 
-    @Bind(R.id.pause_semester_date_range) TextView mDateRange;
-
     public static PauseSemesterFragment newInstance() { return new PauseSemesterFragment(); }
 
     @Override
@@ -48,15 +46,7 @@ public class PauseSemesterFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_pause_semester, parent, false);
         ButterKnife.bind(this, view);
-        initializeViews();
         return view;
-    }
-
-    private void initializeViews() {
-        String startDate = DateUtils.getFormattedDateNow(DateUtils.ABBREV_YEAR_FORMAT);
-        String endDate = DateUtils.getDateInAWeek();
-
-        mDateRange.setText(String.format(getResources().getString(R.string.pause_semester_date), startDate, endDate));
     }
 
     @Override
@@ -73,31 +63,12 @@ public class PauseSemesterFragment extends Fragment {
 
     @OnClick(R.id.pause_semester_button)
     public void onPauseSemester(View view) {
-        confirmPause();
+        Requests.Semesters.with(getActivity()).makePauseRequest(mBaseInterface.getCurrentSemester());
     }
 
-    public void confirmPause() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.pause_semester_confirm);
-        builder.setCancelable(true);
-        builder.setPositiveButton(
-                R.string.pause_semester_yes,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Requests.Semesters.with(getActivity()).makePauseRequest(mBaseInterface.getCurrentSemester());
-                    }
-                });
-
-        builder.setNegativeButton(
-                R.string.pause_semester_no,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-        AlertDialog alert = builder.create();
-        alert.show();
+    @OnClick(R.id.pause_semester_button_cancel)
+    public void onCancelPauseSemester(View view) {
+        getActivity().onBackPressed();
     }
 
     public void onEvent(PauseSemesterEvent event) {

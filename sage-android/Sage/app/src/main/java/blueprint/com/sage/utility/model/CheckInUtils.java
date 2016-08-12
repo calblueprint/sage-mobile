@@ -2,10 +2,14 @@ package blueprint.com.sage.utility.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.User;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
+import blueprint.com.sage.utility.view.ViewUtils;
 
 /**
  * Created by charlesx on 1/14/16.
@@ -30,5 +34,38 @@ public class CheckInUtils {
                 .remove(context.getString(R.string.check_in_total_seconds, user.getId()))
                 .remove(context.getString(R.string.check_in_end_time, user.getId()))
                 .apply();
+    }
+
+    public static void setCheckInSummary(Context context, User user, TextView hoursWeekly, TextView percent, TextView hoursRequired,
+                                         ImageView active, ProgressBar progressBar) {
+        double hours = user.getUserSemester().getTotalTime() / 60.0;
+
+        hoursWeekly.setText(user.getHoursString());
+        percent.setText(context.getResources().getString(R.string.check_in_percent,
+                (int) (hours / user.getUserSemester().getHoursRequired() * 100)));
+
+        if (user.getUserSemester().isActive()) {
+            hoursRequired.setText(String.format(context.getResources().getString(R.string.check_in_hours_required),
+                    hours, user.getUserSemester().getHoursRequired()));
+            active.setBackground(context.getResources().getDrawable(R.drawable.ic_done_white));
+        } else {
+            hoursRequired.setText(context.getResources().getString(R.string.check_in_inactive));
+            active.setBackground(context.getResources().getDrawable(R.drawable.ic_flag_black_48dp));
+        }
+
+        if (user.getUserSemester().isCompleted()) {
+            ViewUtils.changeTint(progressBar.getProgressDrawable(), context, R.color.green500);
+        } else {
+            ViewUtils.changeTint(progressBar.getProgressDrawable(), context, R.color.red500);
+        }
+
+        int progress;
+        if (user.getUserSemester().getHoursRequired() == 0) {
+            progress = 75;
+        } else {
+            double num = hours * 1.0 / user.getUserSemester().getHoursRequired() * 1.0 * 100.0 * 3.0 /4.0;
+            progress = (int) num;
+        }
+        progressBar.setProgress(progress);
     }
 }

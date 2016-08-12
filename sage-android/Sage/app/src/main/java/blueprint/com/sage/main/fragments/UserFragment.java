@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -32,6 +34,7 @@ import blueprint.com.sage.shared.views.CircleImageView;
 import blueprint.com.sage.users.info.UserSemesterListActivity;
 import blueprint.com.sage.users.info.fragments.UserSemesterFragment;
 import blueprint.com.sage.users.profile.EditUserActivity;
+import blueprint.com.sage.utility.model.CheckInUtils;
 import blueprint.com.sage.utility.model.UserUtils;
 import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
@@ -51,9 +54,11 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     @Bind(R.id.user_school) TextView mSchool;
     @Bind(R.id.user_volunteer) TextView mVolunteer;
 
-    @Bind(R.id.user_total_time) TextView mTotalHours;
-    @Bind(R.id.user_total_semester) TextView mTotalSemester;
-    @Bind(R.id.user_hours_week) TextView mTotalWeek;
+    @Bind(R.id.user_hours_weekly) TextView mHoursWeekly;
+    @Bind(R.id.user_hours_required) TextView mHoursRequired;
+    @Bind(R.id.user_progress_bar) ProgressBar mProgressBar;
+    @Bind(R.id.user_percent) TextView mPercent;
+    @Bind(R.id.user_active_image) ImageView mActive;
 
     @Bind(R.id.user_photo) CircleImageView mPhoto;
 
@@ -160,13 +165,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
         mVolunteer.setText(User.VOLUNTEER_SPINNER[mUser.getVolunteerType()]);
 
-        int hoursRequired = mUser.getUserSemester() == null ? 0 : mUser.getUserSemester().getHoursRequired();
-        mTotalSemester.setText(String.valueOf(hoursRequired));
-
-        String totalHours = mUser.getUserSemester() == null ? String.valueOf(0) : mUser.getUserSemester().getTimeString();
-        mTotalHours.setText(totalHours);
-
-        mTotalWeek.setText(String.valueOf(mUser.getVolunteerType() + 1));
+        CheckInUtils.setCheckInSummary(getActivity(), mUser, mHoursWeekly, mPercent,
+                mHoursRequired, mActive, mProgressBar);
 
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);

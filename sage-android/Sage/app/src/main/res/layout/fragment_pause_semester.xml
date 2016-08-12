@@ -7,7 +7,17 @@
     android:padding="20dp">
 
     <TextView
-        android:id="@+id/pause_semester_date_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textSize="34sp"
+        android:textColor="@color/black"
+        android:text="@string/pause_semester_header"/>
+
+    <TextView
+        android:id="@+id/pause_semester_message"
+        android:text="@string/pause_semester_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"
@@ -16,8 +26,15 @@
 
     <Button style="@style/DefaultButton"
         android:id="@+id/pause_semester_button"
+        android:shadowColor="@color/green500"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pause_semester_button"/>
+
+    <Button style="@style/DefaultButton"
+        android:id="@+id/pause_semester_button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pause_semester_cancel"/>
 
 </LinearLayout>

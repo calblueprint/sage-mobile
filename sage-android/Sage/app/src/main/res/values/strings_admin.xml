@@ -11,6 +11,7 @@
     <string name="admin_end_semester">End Semester</string>
     <string name="admin_start_semester">Start Semester</string>
     <string name="admin_browse_semesters">Browse Semesters</string>
+    <string name="admin_pause_semester">Pause Hours</string>
 
     <!-- Admin panel for a specific user -->
     <string name="admin_user_settings">Admin</string>

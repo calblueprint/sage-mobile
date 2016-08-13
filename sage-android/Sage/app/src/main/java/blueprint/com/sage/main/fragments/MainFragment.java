@@ -130,6 +130,9 @@ public class MainFragment extends Fragment {
             case FragUtils.SHOW_ANNOUNCEMENT_REQUEST_CODE:
                 updateAnnouncementList(data);
                 break;
+            case FragUtils.PAUSE_SEMESTER_REQUEST_CODE:
+                pauseSemester(data);
+                break;
         }
     }
 
@@ -162,6 +165,15 @@ public class MainFragment extends Fragment {
         }
     }
 
+    private void pauseSemester(Intent data) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (!(fragment instanceof AdminPanelFragment)) continue;
+
+            AdminPanelFragment adminPanelFragment = (AdminPanelFragment) fragment;
+            adminPanelFragment.onPauseSemester(data);
+        }
+    }
+
     private void setUpMap() {
         for (Fragment fragment : getChildFragmentManager().getFragments()) {
             if (!(fragment instanceof CheckInMapFragment)) continue;
@@ -188,4 +200,3 @@ public class MainFragment extends Fragment {
         }
     }
 }
-

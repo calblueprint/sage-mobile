@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.events.APIErrorEvent;
-import blueprint.com.sage.events.announcements.AnnouncementEvent;
 import blueprint.com.sage.events.SessionEvent;
+import blueprint.com.sage.events.announcements.AnnouncementEvent;
 import blueprint.com.sage.events.announcements.AnnouncementsListEvent;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.events.announcements.DeleteAnnouncementEvent;
@@ -30,6 +30,7 @@ import blueprint.com.sage.events.schools.SchoolListEvent;
 import blueprint.com.sage.events.semesters.ExportSemesterEvent;
 import blueprint.com.sage.events.semesters.FinishSemesterEvent;
 import blueprint.com.sage.events.semesters.JoinSemesterEvent;
+import blueprint.com.sage.events.semesters.PauseSemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterEvent;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.events.semesters.StartSemesterEvent;
@@ -71,6 +72,7 @@ import blueprint.com.sage.network.schools.SchoolRequest;
 import blueprint.com.sage.network.semesters.ExportSemesterRequest;
 import blueprint.com.sage.network.semesters.FinishSemesterRequest;
 import blueprint.com.sage.network.semesters.JoinSemesterRequest;
+import blueprint.com.sage.network.semesters.PauseSemesterRequest;
 import blueprint.com.sage.network.semesters.SemesterListRequest;
 import blueprint.com.sage.network.semesters.SemesterRequest;
 import blueprint.com.sage.network.semesters.StartSemesterRequest;
@@ -183,11 +185,11 @@ public class Requests {
                             EventBus.getDefault().post(new CreateUserEvent(session));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -200,11 +202,11 @@ public class Requests {
                             Requests.postEvent(new EditUserEvent(user), false);
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
             Requests.addToRequestQueue(mActivity, request);
         }
 
@@ -232,11 +234,11 @@ public class Requests {
                             EventBus.getDefault().post(new CreateAdminEvent(user));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -249,11 +251,11 @@ public class Requests {
                             EventBus.getDefault().post(new UserEvent(user));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -266,11 +268,11 @@ public class Requests {
                             EventBus.getDefault().post(new PromoteUserEvent(user));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -433,11 +435,11 @@ public class Requests {
                             EventBus.getDefault().post(new CreateSchoolEvent(school));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -448,13 +450,13 @@ public class Requests {
                         @Override
                         public void onResponse(School school) {
                             EventBus.getDefault().post(new SchoolEvent(school));
-                       }
+                        }
                     }, new Response.Listener<APIError>() {
-                    @Override
-                    public void onResponse(APIError apiError) {
-                        Requests.postError(apiError);
-                    }
-                });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -467,11 +469,11 @@ public class Requests {
                             EventBus.getDefault().post(new EditSchoolEvent(school));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -484,11 +486,11 @@ public class Requests {
                             EventBus.getDefault().post(new DeleteSchoolEvent(school));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -621,11 +623,11 @@ public class Requests {
                         }
 
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -682,11 +684,11 @@ public class Requests {
                             EventBus.getDefault().post(new SemesterEvent(semester));
                         }
                     }, new Response.Listener<APIError>() {
-                        @Override
-                        public void onResponse(APIError apiError) {
-                            Requests.postError(apiError);
-                        }
-                    });
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
 
             Requests.addToRequestQueue(mActivity, request);
         }
@@ -735,6 +737,24 @@ public class Requests {
                             Requests.postEvent(new ExportSemesterEvent(success), false);
                         }
                     }, new Response.Listener<APIError>() {
+                @Override
+                public void onResponse(APIError apiError) {
+                    Requests.postError(apiError);
+                }
+            });
+
+            Requests.addToRequestQueue(mActivity, request);
+        }
+
+        public void makePauseRequest(Semester semester) {
+            Request request = new PauseSemesterRequest(mActivity, semester,
+                    new Response.Listener<Semester>() {
+                        @Override
+                        public void onResponse(Semester semester) {
+                            Requests.postEvent(new PauseSemesterEvent(semester), false);
+                        }
+                    },
+                    new Response.Listener<APIError>() {
                         @Override
                         public void onResponse(APIError apiError) {
                             Requests.postError(apiError);

@@ -21,6 +21,10 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
         mToolbarInterface.setTitle("Create Announcement");
         mAnnouncement = new Announcement();
         initializeSpinners();
+
+        Intent intent = getActivity().getIntent();
+        String title = intent.getStringExtra(getString(R.string.pause_semester_announcement_string, ""));
+        mAnnouncementTitle.setText(title);
     }
 
     protected void validateAndSubmitRequest() {

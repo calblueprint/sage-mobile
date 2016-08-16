@@ -1,21 +1,19 @@
 package blueprint.com.sage.admin.semester.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.announcements.CreateAnnouncementActivity;
 import blueprint.com.sage.events.semesters.PauseSemesterEvent;
-import blueprint.com.sage.models.Semester;
-import blueprint.com.sage.network.Requests;
 import blueprint.com.sage.shared.interfaces.BaseInterface;
-import blueprint.com.sage.utility.network.NetworkUtils;
 import blueprint.com.sage.utility.view.FragUtils;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -25,6 +23,7 @@ import de.greenrobot.event.EventBus;
  */
 public class PauseSemesterFragment extends Fragment {
 
+    @Bind(R.id.pause_semester_button) Button mPauseSemesterButton;
     BaseInterface mBaseInterface;
 
     public static PauseSemesterFragment newInstance() { return new PauseSemesterFragment(); }
@@ -32,7 +31,6 @@ public class PauseSemesterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mBaseInterface = (BaseInterface) getActivity();
     }
 
@@ -58,7 +56,33 @@ public class PauseSemesterFragment extends Fragment {
 
     @OnClick(R.id.pause_semester_button)
     public void onPauseSemester(View view) {
-        Requests.Semesters.with(getActivity()).makePauseRequest(mBaseInterface.getCurrentSemester());
+        confirmPause();
+    }
+
+    public void confirmPause() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.pause_semester_confirm_title);
+        builder.setMessage(R.string.pause_semester_confirm_msg);
+        builder.setCancelable(true);
+        builder.setPositiveButton(
+                R.string.pause_semester_continue,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        FragUtils.replace(R.id.container, FinishPauseSemesterFragment.newInstance(mBaseInterface.getCurrentSemester()), getActivity());
+//                        Requests.Semesters.with(getActivity()).makePauseRequest(mBaseInterface.getCurrentSemester());
+                    }
+                });
+
+        builder.setNegativeButton(
+                R.string.pause_semester_cancel,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @OnClick(R.id.pause_semester_button_cancel)
@@ -67,15 +91,6 @@ public class PauseSemesterFragment extends Fragment {
     }
 
     public void onEvent(PauseSemesterEvent event) {
-        FragUtils.startActivityForResultFragment(getActivity(), this, CreateAnnouncementActivity.class, FragUtils.CREATE_ANNOUNCEMENT_REQUEST_CODE);
-
-        Semester semester = event.getSemester();
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.activity_pause_semester),
-                NetworkUtils.writeAsString(getActivity(), semester));
-        intent.putExtras(bundle);
-        getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().onBackPressed();
+//        FragUtils.replace(R.id.container, FinishPauseSemesterFragment.newInstance(event.getSemester()), getActivity());
     }
 }

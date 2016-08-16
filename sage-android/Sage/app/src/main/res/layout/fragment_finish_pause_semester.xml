@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingTop="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:text="@string/pause_semester_done"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="30dp"
+        android:text="@string/pause_semester_create_annoncement"/>
+
+    <View
+        android:id="@+id/announcement_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_gray"
+        android:layout_below="@id/announcement_body"/>
+
+    <include android:id="@+id/pause_semester_announcement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        layout="@layout/announcement_row"/>
+
+    <Button style="@style/SemesterButton"
+        android:id="@+id/pause_semester_confirm_announcement"
+        android:textColor="@color/white"
+        android:background="@drawable/yellow_button"
+        android:layout_marginBottom="10dp"
+        android:text="@string/pause_semester_confirm_announcement"/>
+
+    <Button style="@style/SemesterButton"
+        android:id="@+id/pause_semester_cancel_announcement"
+        android:background="@drawable/gray_button"
+        android:text="@string/pause_semester_cancel"/>
+
+</LinearLayout>

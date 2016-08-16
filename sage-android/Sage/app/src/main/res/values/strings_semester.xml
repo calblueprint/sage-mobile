@@ -34,4 +34,14 @@
     <string name="pause_semester_button">Proceed</string>
     <string name="pause_semester_message">Pausing Hours means that students will not be required to mentor for the following week.</string>
     <string name="pause_semester_cancel">Cancel</string>
+    <string name="pause_semester_confirm_title">Are you sure?</string>
+    <string name="pause_semester_confirm_msg">Would you like to give a break next week?</string>
+    <string name="pause_semester_continue">Continue</string>
+    <string name="pause_semester_done">Done!</string>
+    <string name="pause_semester_create_annoncement">Now, create at announcement to let your mentors know</string>
+    <string name="pause_semester_confirm_announcement">Let\'s Do it!</string>
+    <string name="pause_semester_today">Today</string>
+    <string name="pause_semester_announcement_title">Break Next Week</string>
+    <string name="pause_semester_announcement_body">Have a good break everybody!</string>
+    <string name="pause_semester_announcement_string">Pause Semester Announcement Title</string>
 </resources>

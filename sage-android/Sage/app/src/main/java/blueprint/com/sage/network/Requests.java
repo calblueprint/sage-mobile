@@ -757,15 +757,6 @@ public class Requests {
                     new Response.Listener<APIError>() {
                         @Override
                         public void onResponse(APIError apiError) {
-//                            Semester semester = new Semester();
-//                            semester.setId(1000);
-//                            semester.setStart(new Date(2016, 5, 9));
-//                            semester.setSeason(0);
-//                            semester.setCheckIns(new ArrayList<CheckIn>());
-//                            semester.setUsers(new ArrayList<User>());
-//                            semester.setPaused(false);
-//                            semester.setDatePaused(null);
-
                             Requests.postError(apiError);
                         }
                     });

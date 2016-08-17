@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pause_semester_wrapper"
     style="@style/FormContainerLinearLayout"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,12 +25,25 @@
         android:gravity="center"
         android:textSize="20sp"/>
 
-    <Button style="@style/SemesterButton"
-        android:id="@+id/pause_semester_button"
-        android:textColor="@color/white"
-        android:background="@drawable/green_button"
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="@string/pause_semester_button"/>
+        android:background="@drawable/green_button">
+
+        <Button style="@style/SemesterButton"
+            android:id="@+id/pause_semester_button"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
+            android:text="@string/pause_semester_button"/>
+
+        <include layout="@layout/actionbar_indeterminate_progress"
+            android:id="@+id/pause_semester_loading"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
     <Button style="@style/SemesterButton"
         android:id="@+id/pause_semester_button_cancel"

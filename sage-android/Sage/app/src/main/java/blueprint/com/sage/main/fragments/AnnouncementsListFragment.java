@@ -202,8 +202,8 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         String string = data.getStringExtra(getString(R.string.create_announcement));
         Announcement announcement = NetworkUtils.writeAsObject(getActivity(), string, new TypeReference<Announcement>() {});
         mAnnouncements.add(0, announcement);
-        mAnnouncementsAdapter.setAnnouncements(mAnnouncements);
-        mAnnouncementsAdapter.notifyDataSetChanged();
+        mAnnouncementsAdapter.addAnnouncement(announcement);
+        mAnnouncementsList.scrollToPosition(0);
     }
 
     public void changeAnnouncement(Intent data) {
@@ -222,13 +222,13 @@ public class AnnouncementsListFragment extends ListFilterFragment implements Swi
         switch (type) {
             case AnnouncementActivity.DELETED:
                 mAnnouncements.remove(index);
+                mAnnouncementsAdapter.deleteAnnouncement(index);
                 break;
             case AnnouncementActivity.EDITED:
                 mAnnouncements.set(index, announcement);
+                mAnnouncementsAdapter.editAnnouncement(announcement, index);
                 break;
         }
-        mAnnouncementsAdapter.setAnnouncements(mAnnouncements);
-        mAnnouncementsAdapter.notifyDataSetChanged();
     }
 
     public void onEvent(AnnouncementsListEvent event) {

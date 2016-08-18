@@ -136,6 +136,17 @@ public class AnnouncementsListAdapter extends RecyclerView.Adapter<RecyclerView.
         notifyItemInserted(0);
     }
 
+    public void deleteAnnouncement(int index) {
+        mItems.remove(index);
+        notifyItemRemoved(index);
+        notifyItemRangeChanged(index, mItems.size());
+    }
+
+    public void editAnnouncement(Announcement announcement, int index) {
+        mItems.set(index, new Item(announcement, "", ANNOUNCEMENT_VIEW));
+        notifyItemChanged(index);
+    }
+
     public class AnnouncementsListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         FragmentActivity mActivity;

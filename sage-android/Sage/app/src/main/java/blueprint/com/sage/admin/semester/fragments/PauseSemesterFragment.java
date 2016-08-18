@@ -103,11 +103,11 @@ public class PauseSemesterFragment extends Fragment {
         Intent pauseIntent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putString(getString(R.string.activity_pause_semester),
-                NetworkUtils.writeAsString(getActivity(), mBaseInterface.getCurrentSemester()));
+                NetworkUtils.writeAsString(getActivity(), event.getSemester()));
         pauseIntent.putExtras(bundle);
         getActivity().setResult(Activity.RESULT_OK, pauseIntent);
 
-        FragUtils.replace(R.id.container, FinishPauseSemesterFragment.newInstance(mBaseInterface.getCurrentSemester()), getActivity());
+        FragUtils.replace(R.id.container, FinishPauseSemesterFragment.newInstance(), getActivity());
     }
 
     public void onEvent(APIErrorEvent event) {

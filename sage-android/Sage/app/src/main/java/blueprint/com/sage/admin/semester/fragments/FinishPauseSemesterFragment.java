@@ -3,6 +3,7 @@ package blueprint.com.sage.admin.semester.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +41,8 @@ public class FinishPauseSemesterFragment extends Fragment {
     private BaseInterface mBaseInterface;
     private Semester mSemester;
 
-    public static FinishPauseSemesterFragment newInstance(Semester semester) {
-        FinishPauseSemesterFragment fragment = new FinishPauseSemesterFragment();
-        fragment.setSemester(semester);
-        return fragment;
+    public static FinishPauseSemesterFragment newInstance() {
+        return new FinishPauseSemesterFragment();
     }
 
     @Override
@@ -64,20 +63,19 @@ public class FinishPauseSemesterFragment extends Fragment {
     private void initializeAnnouncementView() {
         User user = mBaseInterface.getUser();
 
-        if (user != null) {
-            mUser.setText(user.getName());
-            user.loadUserImage(getActivity(), mPicture);
-
-            mTime.setText(getString(R.string.pause_semester_today));
-            mTitle.setText(getString(R.string.pause_semester_announcement_title));
-            mBody.setText(getString(R.string.pause_semester_announcement_body));
-
-            mSchool.setVisibility(View.GONE);
+        if (user == null) {
+            Log.e("User Null", "Base Interface user is null");
+            return;
         }
-    }
 
-    private void setSemester(Semester semester) {
-        mSemester = semester;
+        mUser.setText(user.getName());
+        user.loadUserImage(getActivity(), mPicture);
+
+        mTime.setText(getString(R.string.pause_semester_today));
+        mTitle.setText(getString(R.string.pause_semester_announcement_title));
+        mBody.setText(getString(R.string.pause_semester_announcement_body));
+
+        mSchool.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.pause_semester_confirm_announcement)

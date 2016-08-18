@@ -165,13 +165,14 @@ public class UserFragment extends Fragment implements ListDialogInterface {
 
         mVolunteer.setText(User.VOLUNTEER_SPINNER[mUser.getVolunteerType()]);
 
-        CheckInUtils.setCheckInSummary(getActivity(), mUser, mHoursWeekly, mPercent,
-                mHoursRequired, mActive, mProgressBar);
+        if (mUser.getUserSemester() != null) {
+            CheckInUtils.setCheckInSummary(getActivity(), mUser, mHoursWeekly, mPercent,
+                    mHoursRequired, mActive, mProgressBar);
+        }
 
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);
 
-//        Kelsey's stuff
         UserUtils.setTypeBackground(getActivity(), mUser, mUserType, null, User.ROLES_LABEL);
         mToolbarInterface.setTitle("User");
     }
@@ -185,8 +186,14 @@ public class UserFragment extends Fragment implements ListDialogInterface {
             mUserSettingsLayout.setVisibility(View.GONE);
         }
 
+        // Show role changing settings only for the president.
         if (!mBaseInterface.getUser().isPresident() && mRoleLayout != null) {
             mRoleLayout.setVisibility(View.GONE);
+        }
+
+        // Hide admin settings if we're viewing the user fragment through the admin browsing tab.
+        if (mSemester != null) {
+            mAdminSettingsLayout.setVisibility(View.GONE);
         }
     }
 

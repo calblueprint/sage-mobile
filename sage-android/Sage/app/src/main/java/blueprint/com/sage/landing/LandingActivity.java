@@ -38,9 +38,6 @@ import io.fabric.sdk.android.Fabric;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-/**
- * Created by kelseylam on 2/3/16.
- */
 public class LandingActivity extends AbstractActivity {
 
     @Bind(R.id.landing_loading_view) LoadingView mLoadingView;

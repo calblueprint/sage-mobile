@@ -38,9 +38,6 @@ import io.fabric.sdk.android.Fabric;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-/**
- * Created by kelseylam on 2/3/16.
- */
 public class LandingActivity extends AbstractActivity {
 
     @Bind(R.id.landing_loading_view) LoadingView mLoadingView;
@@ -125,7 +122,7 @@ public class LandingActivity extends AbstractActivity {
 
         mSplashDrawable = (GifDrawable) mLandingSplash.getDrawable();
         mSplashDrawable.stop();
-        mSplashDrawable.setSpeed(1.75f);
+        mSplashDrawable.setSpeed(5f);
         mTotalAnimationTime = mSplashDrawable.getDuration();
     }
 
@@ -144,7 +141,7 @@ public class LandingActivity extends AbstractActivity {
 
     private void startAnimation(final Class<?> cls) {
         Animation fadeOutAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-        fadeOutAnimation.setDuration(500);
+        fadeOutAnimation.setDuration(400);
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -167,11 +164,10 @@ public class LandingActivity extends AbstractActivity {
                                         startActivity(cls);
                                     }
                                 });
-
                     }
                 };
 
-                mTimer.schedule(timerTask, mTotalAnimationTime);
+                mTimer.schedule(timerTask, mTotalAnimationTime / 4);
             }
 
             @Override

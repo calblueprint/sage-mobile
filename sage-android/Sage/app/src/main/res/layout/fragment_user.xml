@@ -25,7 +25,7 @@
                 android:id="@+id/user_photo"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="@dimen/admin_layout_margin"
                 android:layout_alignParentBottom="true"
                 android:elevation="16dp"/>
 
@@ -54,6 +54,7 @@
             android:id="@+id/user_type"
             android:fontFamily="sans-serif-medium"
             android:textColor="@color/white"
+            android:text="Volunteer"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:paddingLeft="4dp"
@@ -61,57 +62,30 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/user_type_rectangle"/>
 
-        <View style="@style/PanelDivider"
-            android:layout_marginTop="10dp"/>
+        <View
+            style="@style/PanelDivider"
+            android:layout_marginTop="@dimen/admin_layout_margin"/>
 
+        <FrameLayout
+            style="@style/CheckInContainerRelativeLayout"
+            android:id="@+id/user_check_in_info_layout">
 
-        <RelativeLayout style="@style/CheckInContainerRelativeLayout"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:paddingTop="10dp">
+            <include layout="@layout/user_check_in_info"
+                />
 
-            <LinearLayout style="@style/CheckInLinearLayout"
-                android:id="@+id/user_linear_required"
-                android:layout_marginTop="12dp">
+        </FrameLayout>
 
-                <ImageView style="@style/CheckInImage"
-                    android:id="@+id/user_active_image"
-                    android:background="@drawable/ic_done_white"/>
+        <TextView
+            style="@style/CheckInText"
+            android:id="@+id/user_no_semester_text"
+            android:layout_width="match_parent"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp"
+            android:paddingLeft="@dimen/admin_layout_margin"
+            android:paddingRight="@dimen/admin_layout_margin"
+            android:text="@string/user_profile_no_semester"/>
 
-                <TextView style="@style/CheckInText"
-                    android:id="@+id/user_hours_required" />
-
-            </LinearLayout>
-
-            <LinearLayout style="@style/CheckInLinearLayout"
-                android:layout_marginTop="20dp"
-                android:layout_below="@id/user_linear_required">
-
-                <ImageView style="@style/CheckInImage"
-                    android:background="@drawable/ic_alarm_on_black"/>
-
-                <TextView style="@style/CheckInText"
-                    android:id="@+id/user_hours_weekly"/>
-
-            </LinearLayout>
-
-            <FrameLayout style="@style/CheckInProgressBarContainer"
-                android:id="@+id/user_progress_container">
-
-                <ProgressBar style="@style/CheckInProgressBarBackground"/>
-
-                <ProgressBar style="@style/CheckInProgressBar"
-                    android:id="@+id/user_progress_bar" />
-
-
-                <TextView style="@style/CheckInPercent"
-                    android:id="@+id/user_percent" />
-
-            </FrameLayout>
-
-        </RelativeLayout>
-
-        <View style="@style/PanelDivider"
-            android:layout_marginTop="10dp"/>
+        <View style="@style/PanelDivider" />
 
         <TextView
             style="@style/PanelHeader"
@@ -130,8 +104,6 @@
                 android:text="@string/user_check_ins" />
 
         </LinearLayout>
-
-        <View style="@style/PanelDivider" />
 
         <include layout="@layout/user_settings"
             android:id="@+id/user_settings_layout"

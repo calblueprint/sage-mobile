@@ -62,6 +62,7 @@ public class AnnouncementActivity extends BackAbstractActivity implements Announ
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         String string;
+
         switch (mType) {
             case ORIGINAL:
                 string = null;
@@ -69,9 +70,11 @@ public class AnnouncementActivity extends BackAbstractActivity implements Announ
             default:
                 string = getString(R.string.change_announcement);
         }
+
         bundle.putString(string, NetworkUtils.writeAsString(this, mAnnouncement));
         bundle.putInt(getString(R.string.announcement_type), mType);
         intent.putExtras(bundle);
+
         setResult(Activity.RESULT_OK, intent);
         super.finish();
     }

@@ -1,52 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout style="@style/CheckInContainerRelativeLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<FrameLayout style="@style/CheckInContainerRelativeLayout">
 
-    <LinearLayout style="@style/CheckInLinearLayout"
-        android:id="@+id/user_semester_linear_required"
-        android:layout_marginTop="12dp">
+    <include layout="@layout/user_check_in_info" />
 
-        <ImageView style="@style/CheckInImage"
-            android:id="@+id/user_semester_active_image"
-            android:background="@drawable/ic_done_white"/>
-
-        <TextView style="@style/CheckInText"
-            android:id="@+id/user_semester_hours_required" />
-
-    </LinearLayout>
-
-    <LinearLayout style="@style/CheckInLinearLayout"
-        android:id="@+id/user_semester_linear_weekly"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/user_semester_linear_required">
-
-        <ImageView style="@style/CheckInImage"
-            android:background="@drawable/ic_alarm_on_black"/>
-
-        <TextView style="@style/CheckInText"
-            android:id="@+id/user_semester_hours_weekly"/>
-
-    </LinearLayout>
-
-    <FrameLayout style="@style/CheckInProgressBarContainer"
-        android:id="@+id/user_semester_progress_container">
-
-        <ProgressBar style="@style/CheckInProgressBarBackground"/>
-
-        <ProgressBar style="@style/CheckInProgressBar"
-            android:id="@+id/user_semester_progress_bar" />
-
-
-        <TextView style="@style/CheckInPercent"
-            android:id="@+id/user_semester_percent" />
-
-    </FrameLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_gray"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/user_semester_progress_container" />
-
-</RelativeLayout>
+</FrameLayout>

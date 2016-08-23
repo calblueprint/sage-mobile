@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View style="@style/PanelDivider" />
+
     <TextView
         style="@style/PanelHeader"
         android:text="@string/user_profile" />

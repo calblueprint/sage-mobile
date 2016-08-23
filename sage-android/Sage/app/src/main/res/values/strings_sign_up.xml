@@ -6,7 +6,7 @@
     <string name="sign_up_profile">Profile</string>
     <string name="sign_up_password">Password</string>
     <string name="sign_up_password_confirm">Confirm Password</string>
-    <string name="sign_up_current_password">Current Password</string>
+    <string name="sign_up_current_password">Confirm changes with password</string>
     <string name="sign_up_first_name">First Name</string>
     <string name="sign_up_last_name">Last Name</string>
     <string name="sign_up_type">Volunteer Type</string>

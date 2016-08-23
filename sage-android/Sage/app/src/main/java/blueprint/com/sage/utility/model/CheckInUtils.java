@@ -47,7 +47,7 @@ public class CheckInUtils {
         if (user.getUserSemester().isActive()) {
             hoursRequired.setText(String.format(context.getResources().getString(R.string.check_in_hours_required),
                     hours, user.getUserSemester().getHoursRequired()));
-            active.setBackground(context.getResources().getDrawable(R.drawable.ic_done_white));
+            active.setBackground(context.getResources().getDrawable(R.drawable.ic_done_black_24dp));
         } else {
             hoursRequired.setText(context.getResources().getString(R.string.check_in_inactive));
             active.setBackground(context.getResources().getDrawable(R.drawable.ic_flag_black_48dp));

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -54,6 +55,8 @@ public class UserFragment extends Fragment implements ListDialogInterface {
     @Bind(R.id.user_school) TextView mSchool;
     @Bind(R.id.user_volunteer) TextView mVolunteer;
 
+    @Bind(R.id.user_no_semester_text) TextView mNoSemesterText;
+    @Bind(R.id.user_check_in_info_layout) FrameLayout mUserCheckInLayout;
     @Bind(R.id.user_hours_weekly) TextView mHoursWeekly;
     @Bind(R.id.user_hours_required) TextView mHoursRequired;
     @Bind(R.id.user_progress_bar) ProgressBar mProgressBar;
@@ -150,6 +153,17 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         if (mStatusLayout == null) return;
         int visibility = mUser.getUserSemester() != null ? View.VISIBLE : View.GONE;
         mStatusLayout.setVisibility(visibility);
+
+        if (mUser.getUserSemester() != null) {
+            mNoSemesterText.setVisibility(View.GONE);
+            mUserCheckInLayout.setVisibility(View.VISIBLE);
+
+            CheckInUtils.setCheckInSummary(getActivity(), mUser, mHoursWeekly, mPercent,
+                    mHoursRequired, mActive, mProgressBar);
+        } else {
+            mNoSemesterText.setVisibility(View.VISIBLE);
+            mUserCheckInLayout.setVisibility(View.GONE);
+        }
     }
 
     private void initializeUser() {
@@ -164,11 +178,6 @@ public class UserFragment extends Fragment implements ListDialogInterface {
         mName.setText(mUser.getName());
 
         mVolunteer.setText(User.VOLUNTEER_SPINNER[mUser.getVolunteerType()]);
-
-        if (mUser.getUserSemester() != null) {
-            CheckInUtils.setCheckInSummary(getActivity(), mUser, mHoursWeekly, mPercent,
-                    mHoursRequired, mActive, mProgressBar);
-        }
 
         String schoolString = mUser.getSchool() == null ? "N/A" : mUser.getSchool().getName();
         mSchool.setText(schoolString);

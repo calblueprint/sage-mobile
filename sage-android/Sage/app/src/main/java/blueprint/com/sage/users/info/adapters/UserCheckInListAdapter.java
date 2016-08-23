@@ -138,11 +138,11 @@ public class UserCheckInListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.user_semester_hours_weekly) TextView mHoursWeekly;
-        @Bind(R.id.user_semester_hours_required) TextView mHoursRequired;
-        @Bind(R.id.user_semester_progress_bar) ProgressBar mProgressBar;
-        @Bind(R.id.user_semester_percent) TextView mPercent;
-        @Bind(R.id.user_semester_active_image) ImageView mActive;
+        @Bind(R.id.user_hours_weekly) TextView mHoursWeekly;
+        @Bind(R.id.user_hours_required) TextView mHoursRequired;
+        @Bind(R.id.user_progress_bar) ProgressBar mProgressBar;
+        @Bind(R.id.user_percent) TextView mPercent;
+        @Bind(R.id.user_active_image) ImageView mActive;
 
         public HeaderViewHolder(View v) {
             super(v);

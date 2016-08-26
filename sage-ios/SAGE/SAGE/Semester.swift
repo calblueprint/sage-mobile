@@ -18,6 +18,7 @@ class Semester: NSObject, NSCoding {
     var id: Int = -1
     var startDate: NSDate?
     var finishDate: NSDate?
+    var isPaused: Bool = false
     var term: Term = .Spring
     
     //
@@ -48,6 +49,8 @@ class Semester: NSObject, NSCoding {
                 }
             case SemesterConstants.kTerm:
                 self.term = Semester.termFromInt(value as! Int)
+            case SemesterConstants.kIsPaused:
+                self.isPaused = value as! Bool
             default: break
             }
         }
@@ -101,6 +104,7 @@ class Semester: NSObject, NSCoding {
         self.startDate = aDecoder.decodeObjectForKey(SemesterConstants.kStartDate) as? NSDate
         self.finishDate = aDecoder.decodeObjectForKey(SemesterConstants.kFinishDate) as? NSDate
         self.term = Semester.termFromInt(aDecoder.decodeIntegerForKey(SemesterConstants.kTerm))
+        self.isPaused = aDecoder.decodeBoolForKey(SemesterConstants.kIsPaused)
         super.init()
     }
     
@@ -109,6 +113,7 @@ class Semester: NSObject, NSCoding {
         aCoder.encodeObject(self.startDate, forKey: SemesterConstants.kStartDate)
         aCoder.encodeObject(self.finishDate, forKey: SemesterConstants.kFinishDate)
         aCoder.encodeInteger(self.term.rawValue, forKey: SemesterConstants.kTerm)
+        aCoder.encodeBool(self.isPaused, forKey: SemesterConstants.kIsPaused)
     }
 }
 

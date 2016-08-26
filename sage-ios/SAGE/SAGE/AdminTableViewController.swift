@@ -75,8 +75,15 @@ class AdminTableViewController: SGTableViewController {
             return 2
         case 2:
             return 2
+        // No need to account for if the user is a President for showing the Pause Semester
+        // since this section doesn't show at all for non-Presidents
         case 3:
-            return 2
+            if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+                if !currentSemester.isPaused {
+                    return 2
+                }
+            }
+            return 1
         default: return 0
         }
     }

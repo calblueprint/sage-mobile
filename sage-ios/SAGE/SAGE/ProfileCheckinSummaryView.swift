@@ -79,8 +79,14 @@ class ProfileCheckinSummaryView: UIView {
             self.userStatusLabel.font = UIFont.normalFont
             let userStatusString = NSMutableAttributedString(string: semesterSummary.getTotalHoursAsString() + " of " + String(semesterSummary.hoursRequired) + " hours completed")
             self.userStatusLabel.attributedText = userStatusString
-            let hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
-            self.hoursPercentageLabel.text = String(Int(hoursCompletedPercentage * 100)) + "%"
+            var hoursCompletedPercentage = Float(0)
+            if (semesterSummary.hoursRequired != 0) {
+                hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
+            } else if (semesterSummary.getTotalHours() > 0) {
+                hoursCompletedPercentage = Float(100)
+            }
+            self.hoursPercentageLabel.text = String(Int(hoursCompletedPercentage)) + "%"
+            
             self.userStatusIcon.image = FAKIonIcons.checkmarkIconWithSize(iconSize)
                 .imageWithSize(CGSizeMake(iconSize, iconSize))
             if pastSemester {

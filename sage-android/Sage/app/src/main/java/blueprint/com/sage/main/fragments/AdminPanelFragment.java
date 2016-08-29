@@ -1,11 +1,14 @@
 package blueprint.com.sage.main.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -14,12 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import blueprint.com.sage.R;
-import blueprint.com.sage.admin.browse.BrowseUsersActivity;
 import blueprint.com.sage.admin.browse.BrowseSchoolsActivity;
+import blueprint.com.sage.admin.browse.BrowseUsersActivity;
 import blueprint.com.sage.admin.requests.VerifyCheckInRequestsActivity;
 import blueprint.com.sage.admin.requests.VerifyUserRequestsActivity;
 import blueprint.com.sage.admin.semester.CreateSemesterActivity;
 import blueprint.com.sage.admin.semester.FinishSemesterActivity;
+import blueprint.com.sage.admin.semester.PauseSemesterActivity;
 import blueprint.com.sage.admin.semester.SemesterListActivity;
 import blueprint.com.sage.events.semesters.SemesterListEvent;
 import blueprint.com.sage.models.Semester;
@@ -39,6 +43,9 @@ public class AdminPanelFragment extends Fragment {
 
     @Bind(R.id.admin_settings_start_semester) View mStartSemester;
     @Bind(R.id.admin_settings_end_semester) View mEndSemester;
+    @Bind(R.id.admin_settings_pause_semester) View mPauseSemester;
+    @Bind(R.id.admin_request_check_in_count) TextView mCheckInRequests;
+    @Bind(R.id.admin_request_sign_up_count) TextView mSignUpRequests;
 
     private List<Semester> mSemesters;
     private BaseInterface mBaseInterface;
@@ -61,6 +68,7 @@ public class AdminPanelFragment extends Fragment {
         super.onCreateView(inflater, parent, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_admin_panel, parent, false);
         ButterKnife.bind(this, view);
+        initializeBadges();
         return view;
     }
 
@@ -73,6 +81,7 @@ public class AdminPanelFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        initializeBadges();
         toggleSemester();
     }
 
@@ -121,9 +130,42 @@ public class AdminPanelFragment extends Fragment {
         FragUtils.startActivityBackStack(getActivity(), SemesterListActivity.class);
     }
 
+    @OnClick(R.id.admin_settings_pause_semester)
+    public void onPauseSemester(View view) {
+        FragUtils.startActivityForResultFragment(getActivity(), getParentFragment(),
+                PauseSemesterActivity.class,
+                FragUtils.PAUSE_SEMESTER_REQUEST_CODE);
+    }
+
+    private void initializeBadges() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getActivity().getString(R.string.preferences),
+                Context.MODE_PRIVATE);
+        int checkInCount = Integer.valueOf(sharedPreferences.getString(getActivity().getString(R.string.admin_check_in_requests),
+                getActivity().getString(R.string.admin_default_zero)));
+        int signUpCount = Integer.valueOf(sharedPreferences.getString(getActivity().getString(R.string.admin_sign_up_requests),
+                getActivity().getString(R.string.admin_default_zero)));
+
+        if (checkInCount == 0) {
+            mCheckInRequests.setVisibility(View.GONE);
+        } else if (checkInCount >= 10 ) {
+            mCheckInRequests.setText(R.string.admin_requests_plus);
+        } else {
+            mCheckInRequests.setText(String.valueOf(checkInCount));
+        }
+
+        if (signUpCount == 0) {
+            mSignUpRequests.setVisibility(View.GONE);
+        } else if (signUpCount >= 10 ) {
+            mSignUpRequests.setText(R.string.admin_requests_plus);
+        } else {
+            mSignUpRequests.setText(String.valueOf(signUpCount));
+        }
+    }
+
     private void toggleSemester() {
         mStartSemester.setVisibility(View.GONE);
         mEndSemester.setVisibility(View.GONE);
+        mPauseSemester.setVisibility(View.GONE);
 
         if (!mBaseInterface.getUser().isPresident()) {
             return;
@@ -134,10 +176,16 @@ public class AdminPanelFragment extends Fragment {
                     mBaseInterface.getSharedPreferences().getString(getString(R.string.activity_current_semester), "");
             setSemester(semesterString);
             mEndSemester.setVisibility(View.VISIBLE);
+            if (!mBaseInterface.getCurrentSemester().isPaused()) {
+                mPauseSemester.setVisibility(View.VISIBLE);
+            }
         } else if (mSemesters == null || mSemesters.size() == 0) {
             mStartSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters.size() == 1) {
             mEndSemester.setVisibility(View.VISIBLE);
+            if (!mBaseInterface.getCurrentSemester().isPaused()) {
+                mPauseSemester.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -169,6 +217,18 @@ public class AdminPanelFragment extends Fragment {
                 .remove(getString(R.string.activity_current_semester))
                 .commit();
         mSemesters = new ArrayList<>();
+        toggleSemester();
+    }
+
+    public void onPauseSemester(Intent data) {
+        String semesterString = data.getExtras().getString(getString(R.string.activity_pause_semester), "");
+        if (semesterString.isEmpty()) return;
+
+        setSemester(semesterString);
+        mBaseInterface.getSharedPreferences()
+                .edit()
+                .putString(getString(R.string.activity_current_semester), semesterString)
+                .commit();
         toggleSemester();
     }
 

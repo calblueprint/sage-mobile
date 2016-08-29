@@ -29,6 +29,7 @@ import java.util.Calendar;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.checkIns.CheckInEvent;
+import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.CheckIn;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -39,6 +40,7 @@ import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.shared.interfaces.DateInterface;
 import blueprint.com.sage.shared.interfaces.ToolbarInterface;
 import blueprint.com.sage.utility.model.CheckInUtils;
+import blueprint.com.sage.utility.model.SessionUtils;
 import blueprint.com.sage.utility.view.DateUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -66,6 +68,8 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     private BaseInterface mBaseInterface;
     private ToolbarInterface mToolbarInterface;
+
+    private MenuItem mItem;
 
     public static CreateCheckInFragment newInstance() { return new CreateCheckInFragment(); }
 
@@ -107,6 +111,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mItem = item;
         switch (item.getItemId()) {
             case R.id.menu_save:
                 validateAndSubmitRequest();
@@ -223,6 +228,7 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
             Snackbar.make(mLayout, R.string.check_in_request_blank, Snackbar.LENGTH_SHORT).show();
         }
 
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         CheckIn checkIn = new CheckIn(startDate.toDate(), endDate.toDate(), user, school, comment);
         Requests.CheckIns.with(getActivity()).makeCreateRequest(checkIn);
     }
@@ -235,11 +241,17 @@ public class CreateCheckInFragment extends Fragment implements FormValidation, D
     }
 
     private void resetCheckIn() {
+        User user = mBaseInterface.getUser();
+        if (user.isAdmin() && user.getDirectorId() == user.getSchool().getId()) {
+            SessionUtils.updateRequestCount(getActivity(), 1, R.string.admin_check_in_requests);
+        }
         CheckInUtils.resetCheckIn(getActivity(), mBaseInterface);
         getActivity().onBackPressed();
     }
 
-    public void onEvent(CheckInEvent event) { resetCheckIn(); }
+    public void onEvent(CheckInEvent event) { resetCheckIn();}
+
+    public void onEvent(APIError event) { mItem.setActionView(null); }
 
     /**
      * Pickers for both date and time

@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
+import blueprint.com.sage.R;
+
 /**
  * Created by charlesx on 10/12/15.
  * Some Fragment Utilities
@@ -19,6 +21,7 @@ public class FragUtils {
     public static final int FINISH_SEMESTER_REQUEST_CODE = 101;
     public static final int CREATE_ANNOUNCEMENT_REQUEST_CODE = 102;
     public static final int SHOW_ANNOUNCEMENT_REQUEST_CODE = 103;
+    public static final int PAUSE_SEMESTER_REQUEST_CODE = 104;
 
     public static void replace(int id, Fragment fragment, FragmentActivity activity) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
@@ -27,6 +30,7 @@ public class FragUtils {
 
     public static void replaceBackStack(int id, Fragment fragment, FragmentActivity activity) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(id, fragment).addToBackStack(null).commit();
     }
 

@@ -1,4 +1,4 @@
-package blueprint.com.sage.network;
+package blueprint.com.sage.network.sessions;
 
 import android.app.Activity;
 import android.util.Log;
@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.Session;
+import blueprint.com.sage.network.BaseRequest;
 
 /**
  * Created by kelseylam on 10/14/15.
@@ -21,7 +22,7 @@ import blueprint.com.sage.models.Session;
 public class SignInRequest extends BaseRequest {
     public SignInRequest(final Activity activity, HashMap<String, String> params,
                          final Response.Listener<Session> listener, final Response.Listener<APIError> errorListener) {
-        super(Request.Method.POST, makeUrl(null, "users", "sign_in"), loginRequestParams(params),
+        super(Request.Method.POST, makeUrl(activity, null, "users", "sign_in"), loginRequestParams(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
@@ -37,6 +38,7 @@ public class SignInRequest extends BaseRequest {
                     }
                 }, errorListener, activity);
     }
+    
     public static JSONObject loginRequestParams(HashMap<String, String> userParams) {
         JSONObject userJson = new JSONObject(userParams);
         HashMap<String, JSONObject> params = new HashMap<>();

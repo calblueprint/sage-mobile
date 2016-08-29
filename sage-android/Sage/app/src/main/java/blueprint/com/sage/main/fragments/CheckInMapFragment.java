@@ -167,7 +167,7 @@ public class CheckInMapFragment extends Fragment
     }
 
     private void initializeViews(Bundle savedInstanceState) {
-        mMapView.onCreate(savedInstanceState);
+        mMapView.onCreate(null);
         mMapView.getMapAsync(this);
 
         toggleButtons();
@@ -361,7 +361,7 @@ public class CheckInMapFragment extends Fragment
                 school.getLng(),
                 results);
 
-        return results[0] <= MapUtils.DISTANCE;
+        return results[0] <= school.getRadius();
     }
 
     private Location getLocation() {

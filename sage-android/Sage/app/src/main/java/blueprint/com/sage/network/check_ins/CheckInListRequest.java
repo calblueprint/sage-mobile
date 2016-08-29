@@ -26,7 +26,7 @@ public class CheckInListRequest extends BaseRequest {
                               HashMap<String, String> queryParams,
                               final Response.Listener<ArrayList<CheckIn>> onSuccess,
                               final Response.Listener<APIError> onFailure) {
-        super(Method.GET, makeUrl(queryParams, "check_ins"), null,
+        super(Method.GET, makeUrl(activity, queryParams, "check_ins"), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

@@ -21,7 +21,7 @@ public class DeleteUserRequest extends BaseRequest {
     public DeleteUserRequest(final Activity activity, User user,
                              final Response.Listener<User> onSuccess,
                              final Response.Listener<APIError> onFailure) {
-        super(Method.DELETE, makeUrl(null, "users", String.valueOf(user.getId())), null,
+        super(Method.DELETE, makeUrl(activity, null, "users", String.valueOf(user.getId())), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

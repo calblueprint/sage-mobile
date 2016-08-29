@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pause_semester_wrapper"
+    style="@style/FormContainerLinearLayout"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textSize="34sp"
+        android:textColor="@color/black"
+        android:text="@string/pause_semester_header"/>
+
+    <TextView
+        android:id="@+id/pause_semester_message"
+        android:text="@string/pause_semester_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:gravity="center"
+        android:textSize="20sp"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/green_button">
+
+        <Button style="@style/SemesterButton"
+            android:id="@+id/pause_semester_button"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
+            android:text="@string/pause_semester_button"/>
+
+        <include layout="@layout/actionbar_indeterminate_progress"
+            android:id="@+id/pause_semester_loading"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+    </FrameLayout>
+
+    <Button style="@style/SemesterButton"
+        android:id="@+id/pause_semester_button_cancel"
+        android:background="@drawable/gray_button"
+        android:text="@string/pause_semester_cancel"/>
+
+</LinearLayout>

@@ -194,22 +194,6 @@ public class Requests {
             Requests.addToRequestQueue(mActivity, request);
         }
 
-        public void makeEditRequest(User user) {
-            EditUserRequest request = new EditUserRequest(mActivity, user,
-                    new Response.Listener<User>() {
-                        @Override
-                        public void onResponse(User user) {
-                            Requests.postEvent(new EditUserEvent(user), false);
-                        }
-                    }, new Response.Listener<APIError>() {
-                @Override
-                public void onResponse(APIError apiError) {
-                    Requests.postError(apiError);
-                }
-            });
-            Requests.addToRequestQueue(mActivity, request);
-        }
-
         public void makeStickyEditRequest(User user) {
             EditUserRequest request = new EditUserRequest(mActivity, user,
                     new Response.Listener<User>() {

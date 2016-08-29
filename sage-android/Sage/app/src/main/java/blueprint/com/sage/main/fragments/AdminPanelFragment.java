@@ -176,14 +176,14 @@ public class AdminPanelFragment extends Fragment {
                     mBaseInterface.getSharedPreferences().getString(getString(R.string.activity_current_semester), "");
             setSemester(semesterString);
             mEndSemester.setVisibility(View.VISIBLE);
-            if (!mBaseInterface.getCurrentSemester().isPaused() && mBaseInterface.getCurrentSemester().getDatePaused() == null) {
+            if (!mBaseInterface.getCurrentSemester().isPaused()) {
                 mPauseSemester.setVisibility(View.VISIBLE);
             }
         } else if (mSemesters == null || mSemesters.size() == 0) {
             mStartSemester.setVisibility(View.VISIBLE);
         } else if (mSemesters.size() == 1) {
             mEndSemester.setVisibility(View.VISIBLE);
-            if (!mBaseInterface.getCurrentSemester().isPaused() && mBaseInterface.getCurrentSemester().getDatePaused() == null) {
+            if (!mBaseInterface.getCurrentSemester().isPaused()) {
                 mPauseSemester.setVisibility(View.VISIBLE);
             }
         }

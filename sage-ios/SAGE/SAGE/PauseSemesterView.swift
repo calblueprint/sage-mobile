@@ -104,7 +104,8 @@ class PauseSemesterView: UIView {
         self.cancelButton.setX(CGRectGetMinX(self.continueButton.frame))
         self.cancelButton.setY(CGRectGetMaxY(self.continueButton.frame) + UIConstants.verticalMargin)
         
-        self.announcementCell.fillWidth()
+        self.announcementCell.setX(UIConstants.sideMargin)
+        self.announcementCell.fillWidthWithMargin(UIConstants.sideMargin)
         
         self.container.setHeight(CGRectGetMaxY(self.cancelButton.frame))
         self.container.centerVertically()
@@ -140,7 +141,9 @@ class PauseSemesterView: UIView {
                 self.continueButton.backgroundColor = UIColor.mainColor
                 self.continueButton.setTitle("Let's Do it!", forState: .Normal)
                 
-                self.announcementCell.backgroundColor = UIColor.lightestGrayColor
+                self.announcementCell.layer.borderColor = UIColor.borderColor.CGColor
+                self.announcementCell.layer.borderWidth = UIConstants.dividerHeight()
+                self.announcementCell.layer.cornerRadius = 4
                 self.announcementCell.alpha = 1
                 self.announcementCell.setupWithAnnouncement(self.makeDummyAnnouncement())
                 self.announcementCell.setY(CGRectGetMinY(self.titleLabel.frame))

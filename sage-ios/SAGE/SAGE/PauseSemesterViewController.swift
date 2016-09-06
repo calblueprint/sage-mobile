@@ -84,7 +84,7 @@ class PauseSemesterViewController: SGViewController {
         self.dismissViewControllerAnimated(true) {
             if let navigationController = self.presentingNavigationController {
                 let addAnnouncementVC = AddAnnouncementController()
-                addAnnouncementVC.prefillWithAnnouncement(Announcement(title: "Break Next Week"))
+                addAnnouncementVC.addAnnouncementView.title.textField.text = "Break Next Week"
                 navigationController.pushViewController(addAnnouncementVC, animated: true)
             }
         }

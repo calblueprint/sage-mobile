@@ -33,6 +33,8 @@
 		4207EBD11C880D5A00501F96 /* SGTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207EBD01C880D5A00501F96 /* SGTableViewController.swift */; };
 		4207EBD31C880DB000501F96 /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207EBD21C880DB000501F96 /* NoContentView.swift */; };
 		4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */; };
+		421515961CC8851D008B854F /* SGNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421515951CC8851D008B854F /* SGNavigationController.swift */; };
+		421515981CC891AC008B854F /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421515971CC891AC008B854F /* SuccessView.swift */; };
 		4216872D1C09286A00C29DEF /* SchoolDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */; };
 		4223341E1BC090E900E863D0 /* Announcement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4223341D1BC090E900E863D0 /* Announcement.swift */; };
 		422334241BC099D400E863D0 /* Checkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422334231BC099D400E863D0 /* Checkin.swift */; };
@@ -93,6 +95,7 @@
 		427B72461C0C4C5B00A32DF5 /* EditSchoolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */; };
 		4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4280CE171BF43E5C005D1B97 /* AdminOperations.swift */; };
 		429B1D141BDC881F006AADF6 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429B1D131BDC881F006AADF6 /* ErrorView.swift */; };
+		42A1ECE01CB0926100563B79 /* SGLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A1ECDF1CB0926100563B79 /* SGLoadingCell.swift */; };
 		42A2E00F1C02943E00033577 /* AddAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */; };
 		42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A2E0101C0294C500033577 /* AddAnnouncementView.swift */; };
 		42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */; };
@@ -146,11 +149,15 @@
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
+		E416760D1CD1A2BB00CC07C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */; };
 		E439C3AE1CB09CD9004F19FA /* SGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439C3AD1CB09CD9004F19FA /* SGViewController.swift */; };
+		E444E3521D2E2AE2004C38D6 /* PauseSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */; };
+		E444E3541D2E2F3C004C38D6 /* PauseSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E444E3531D2E2F3C004C38D6 /* PauseSemesterView.swift */; };
 		E44611991C754AE6006E90FA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44611981C754AE6006E90FA /* MenuController.swift */; };
 		E446119B1C754CC4006E90FA /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119A1C754CC4006E90FA /* MenuView.swift */; };
 		E446119E1C7568C5006E90FA /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119D1C7568C5006E90FA /* MenuItem.swift */; };
 		E44611A01C756A73006E90FA /* ExpandMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119F1C756A73006E90FA /* ExpandMenuItem.swift */; };
+		E450EAFB1CC5B83B00E97417 /* ExportSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */; };
 		E48082491C8F980500A38E57 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48082481C8F980500A38E57 /* Dictionary.swift */; };
 		E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */; };
 		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
@@ -235,6 +242,8 @@
 		4207EBD01C880D5A00501F96 /* SGTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGTableViewController.swift; sourceTree = "<group>"; };
 		4207EBD21C880DB000501F96 /* NoContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAnnouncementController.swift; sourceTree = "<group>"; };
+		421515951CC8851D008B854F /* SGNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGNavigationController.swift; sourceTree = "<group>"; };
+		421515971CC891AC008B854F /* SuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
 		4216872C1C09286A00C29DEF /* SchoolDetailHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolDetailHeaderView.swift; sourceTree = "<group>"; };
 		4223341D1BC090E900E863D0 /* Announcement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Announcement.swift; sourceTree = "<group>"; };
 		422334231BC099D400E863D0 /* Checkin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkin.swift; sourceTree = "<group>"; };
@@ -272,6 +281,7 @@
 		427B72451C0C4C5B00A32DF5 /* EditSchoolController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditSchoolController.swift; sourceTree = "<group>"; };
 		4280CE171BF43E5C005D1B97 /* AdminOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminOperations.swift; sourceTree = "<group>"; };
 		429B1D131BDC881F006AADF6 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		42A1ECDF1CB0926100563B79 /* SGLoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGLoadingCell.swift; sourceTree = "<group>"; };
 		42A2E00E1C02943E00033577 /* AddAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnouncementController.swift; sourceTree = "<group>"; };
 		42A2E0101C0294C500033577 /* AddAnnouncementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAnnouncementView.swift; sourceTree = "<group>"; };
 		42A6CE611C0BDF6800F97CFF /* SchoolDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolDetailViewController.swift; sourceTree = "<group>"; };
@@ -326,11 +336,15 @@
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		E439C3AD1CB09CD9004F19FA /* SGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGViewController.swift; sourceTree = "<group>"; };
+		E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseSemesterViewController.swift; sourceTree = "<group>"; };
+		E444E3531D2E2F3C004C38D6 /* PauseSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseSemesterView.swift; sourceTree = "<group>"; };
 		E44611981C754AE6006E90FA /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		E446119A1C754CC4006E90FA /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E446119D1C7568C5006E90FA /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		E446119F1C756A73006E90FA /* ExpandMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandMenuItem.swift; sourceTree = "<group>"; };
+		E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportSemesterViewController.swift; sourceTree = "<group>"; };
 		E48082481C8F980500A38E57 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterView.swift; sourceTree = "<group>"; };
 		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
@@ -494,6 +508,7 @@
 				E48082481C8F980500A38E57 /* Dictionary.swift */,
 				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
 				42EDBDED1BDF38420092D5F5 /* UIImage.swift */,
+				E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */,
 				27F990BF1BBCE3B300D61DA2 /* UIView.swift */,
 				424A137B1BEED27300775E86 /* UIViewController.swift */,
 				422715441BC7359D00FD719C /* UIFont.swift */,
@@ -554,6 +569,7 @@
 				42A6CE671C0BE02700F97CFF /* Form */,
 				E446119C1C754CE2006E90FA /* Menu */,
 				429B1D131BDC881F006AADF6 /* ErrorView.swift */,
+				421515971CC891AC008B854F /* SuccessView.swift */,
 				27561FCD1C0D2E0E00DAB74A /* SGButton.swift */,
 				27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */,
 				E4B250D01C65C764008652FD /* ProfileImageView.swift */,
@@ -611,6 +627,7 @@
 			children = (
 				E4B347E11C7E7CD90026D43D /* Menu */,
 				4241AF7F1C4BB430009BC133 /* FormController.swift */,
+				421515951CC8851D008B854F /* SGNavigationController.swift */,
 				4207EBD01C880D5A00501F96 /* SGTableViewController.swift */,
 				E439C3AD1CB09CD9004F19FA /* SGViewController.swift */,
 			);
@@ -624,6 +641,7 @@
 				4280CE1A1BF43F01005D1B97 /* Browse */,
 				27EB32A81C3917E900FD8050 /* EndSemesterView.swift */,
 				E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */,
+				E444E3531D2E2F3C004C38D6 /* PauseSemesterView.swift */,
 			);
 			name = "Admin Views";
 			sourceTree = "<group>";
@@ -703,6 +721,7 @@
 				42A6CE631C0BDFC700F97CFF /* SchoolsTableViewCell.swift */,
 				42A6CE651C0BDFFD00F97CFF /* UsersTableViewCell.swift */,
 				5D221C231C18D296008FBD9B /* CheckinTableViewCell.swift */,
+				42A1ECDF1CB0926100563B79 /* SGLoadingCell.swift */,
 			);
 			name = "Table View Cells";
 			sourceTree = "<group>";
@@ -766,6 +785,7 @@
 			isa = PBXGroup;
 			children = (
 				5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */,
+				E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */,
 			);
 			name = "Past Semesters";
 			sourceTree = "<group>";
@@ -815,6 +835,7 @@
 			children = (
 				27EB32A61C3917D400FD8050 /* EndSemesterViewController.swift */,
 				E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */,
+				E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */,
 			);
 			name = Semester;
 			sourceTree = "<group>";
@@ -1084,8 +1105,10 @@
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
+				421515961CC8851D008B854F /* SGNavigationController.swift in Sources */,
 				E48082491C8F980500A38E57 /* Dictionary.swift in Sources */,
 				27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */,
+				42A1ECE01CB0926100563B79 /* SGLoadingCell.swift in Sources */,
 				5D1745F01C94B95D00C4696A /* ProfileCheckinSummaryView.swift in Sources */,
 				422334241BC099D400E863D0 /* Checkin.swift in Sources */,
 				E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */,
@@ -1102,6 +1125,7 @@
 				5DBE8FAD1C7A6ECE009EE20C /* AddSchoolRadiusView.swift in Sources */,
 				422334311BC0C97E00E863D0 /* SchoolConstants.swift in Sources */,
 				42C4352C1C013FA0000F6671 /* AddSchoolDirectorTableViewController.swift in Sources */,
+				E416760D1CD1A2BB00CC07C3 /* UINavigationController.swift in Sources */,
 				27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */,
 				42705CCD1BEB4F6D0081B29D /* AdminTableViewController.swift in Sources */,
 				42EFD67D1BC9EC900063FD78 /* SignUpPhotoView.swift in Sources */,
@@ -1117,6 +1141,7 @@
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
 				27EB32A91C3917E900FD8050 /* EndSemesterView.swift in Sources */,
 				4223342F1BC0C97000E863D0 /* CheckinConstants.swift in Sources */,
+				E444E3541D2E2F3C004C38D6 /* PauseSemesterView.swift in Sources */,
 				42AD42691C794ECB00E70B39 /* AddSchoolLocationSelectorView.swift in Sources */,
 				5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */,
 				5D63EF121BFC86340036D478 /* SchoolOperations.swift in Sources */,
@@ -1177,7 +1202,9 @@
 				424DEC001BF4B8810099CCE0 /* LoginOperations.swift in Sources */,
 				42AD426B1C7C64B600E70B39 /* CLPlacemark.swift in Sources */,
 				42C3933F1BC45DB900630F93 /* LoginController.swift in Sources */,
+				E444E3521D2E2AE2004C38D6 /* PauseSemesterViewController.swift in Sources */,
 				42C393431BC4607D00630F93 /* UnverifiedViewController.swift in Sources */,
+				421515981CC891AC008B854F /* SuccessView.swift in Sources */,
 				42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
 				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,
@@ -1186,6 +1213,7 @@
 				E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */,
 				422334261BC09E0400E863D0 /* User.swift in Sources */,
 				5DA5F0EE1CB08DC100D1FC85 /* SGSectionHeaderView.swift in Sources */,
+				E450EAFB1CC5B83B00E97417 /* ExportSemesterViewController.swift in Sources */,
 				42F71DF31BF802D2004E1B3B /* CheckinRequestsViewController.swift in Sources */,
 				4207EBD31C880DB000501F96 /* NoContentView.swift in Sources */,
 				427432F01BC776FD00464200 /* UnverifiedView.swift in Sources */,

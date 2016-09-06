@@ -66,8 +66,8 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         
         var viewControllers = [UIViewController]()
         
-        for (var i = 0; i < rootViewControllers.count; i++) {
-            let navigationController = UINavigationController()
+        for i in 0 ..< rootViewControllers.count {
+            let navigationController = SGNavigationController()
             navigationController.delegate = self
             navigationController.tabBarItem = UITabBarItem(title: titles[i], image: images[i], tag:i)
             navigationController.tabBarItem.titlePositionAdjustment = UIOffsetMake(0, -3) // Offset to move text up
@@ -77,9 +77,5 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         }
         
         self.viewControllers = viewControllers
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
     }
 }

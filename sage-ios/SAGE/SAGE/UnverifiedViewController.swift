@@ -8,13 +8,13 @@
 
 import UIKit
 
-class UnverifiedViewController: UIViewController {
+class UnverifiedViewController: SGViewController {
     
     
     override func loadView() {
         self.view = UnverifiedView()
         let unverifiedView = self.view as! UnverifiedView
-        unverifiedView.signOutButton.addTarget(self, action: "signOut", forControlEvents: .TouchUpInside)
+        unverifiedView.signOutButton.addTarget(self, action: #selector(UnverifiedViewController.signOut), forControlEvents: .TouchUpInside)
     }
     
     override func viewDidLoad() {

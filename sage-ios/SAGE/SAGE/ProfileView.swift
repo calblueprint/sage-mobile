@@ -99,10 +99,9 @@ class ProfileView: UIView {
     }
     
     func adjustToScroll(offset: CGFloat) {
-        if (offset > 0) {
-            self.profileUserImg.alpha = 3/offset
-            self.profileUserImgBorder.alpha = 3/offset
-        }
+        let alpha = 1 - offset/50
+        self.profileUserImg.alpha = alpha
+        self.profileUserImgBorder.alpha = alpha
     }
     
     func setupWithUser(user: User, pastSemester: Bool = false) {

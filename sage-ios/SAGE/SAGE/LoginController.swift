@@ -9,7 +9,7 @@
 import UIKit
 import SwiftKeychainWrapper
 
-class LoginController: UIViewController {
+class LoginController: SGViewController {
     
     var loginView = LoginView()
 
@@ -17,8 +17,11 @@ class LoginController: UIViewController {
         self.view = self.loginView
         self.loginView.loginEmailField.delegate = self
         self.loginView.loginPasswordField.delegate = self
-        self.loginView.signUpLink.addTarget(self, action: "signUpLinkTapped", forControlEvents: .TouchUpInside)
-        self.loginView.loginButton.addTarget(self, action: "attemptLogin", forControlEvents: .TouchUpInside)
+        self.loginView.signUpLink.addTarget(self, action: #selector(LoginController.signUpLinkTapped), forControlEvents: .TouchUpInside)
+        self.loginView.loginButton.addTarget(self, action: #selector(LoginController.attemptLogin), forControlEvents: .TouchUpInside)
+        self.loginView.forgotPasswordLink.addTarget(self, action: #selector(LoginController.showResetPasswordScreen), forControlEvents: .TouchUpInside)
+        self.loginView.backToLoginLink.addTarget(self, action: #selector(LoginController.backToLogin), forControlEvents: .TouchUpInside)
+        self.loginView.forgotPasswordButton.addTarget(self, action: #selector(LoginController.resetPassword), forControlEvents: .TouchUpInside)
     }
     
     //
@@ -61,6 +64,81 @@ class LoginController: UIViewController {
         let error = self.loginView.currentErrorMessage
         let errorView = super.showError(message, currentError: error, alpha: 0.4, centered: false)
         self.loginView.currentErrorMessage = errorView
+    }
+    
+    func resetPassword() {
+        if self.loginView.loginEmailField.text == "" {
+            self.showErrorAndSetMessage("Please enter an email.")
+        } else {
+            LoginOperations.sendPasswordResetRequest(self.loginView.loginEmailField.text!, completion: { () -> Void in
+                    self.showErrorAndSetMessage("Password reset - check your email!")
+                }, failure: { (message) -> Void in
+                    self.showErrorAndSetMessage(message)
+            })
+        }
+    }
+    
+    func backToLogin() {
+        UIView.animateWithDuration(UIConstants.normalAnimationTime, delay: 0, usingSpringWithDamping: UIConstants.defaultSpringDampening, initialSpringVelocity: UIConstants.defaultSpringVelocity, options: .CurveEaseInOut, animations: { () -> Void in
+            self.loginView.forgotPasswordButton.frame = self.loginView.loginButton.frame
+            self.loginView.backToLoginLink.setY(CGRectGetMaxY(self.loginView.signUpLink.frame) + 5)
+            self.loginView.sageLabel.alpha = 1
+            self.loginView.forgotPasswordLabel.alpha = 0
+
+            }) { (result) -> Void in
+                UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+                    // make some things appear
+                    self.loginView.loginButton.alpha = 1
+                    
+                    self.loginView.signUpLink.alpha = 1
+                    
+                    self.loginView.forgotPasswordLink.alpha = 1
+                    
+                    self.loginView.loginPasswordField.alpha = 1
+                    
+                    self.loginView.secondDivider.alpha = 1
+                    
+                    
+                    // make other things disappear
+                    self.loginView.backToLoginLink.alpha = 0
+                    
+                    self.loginView.forgotPasswordButton.alpha = 0
+                    
+                })
+        }
+
+    }
+    
+    func showResetPasswordScreen() {
+
+        UIView.animateWithDuration(UIView.animationTime, animations: { () -> Void in
+            // make some things disappear
+            self.loginView.loginButton.alpha = 0
+            
+            self.loginView.signUpLink.alpha = 0
+            
+            self.loginView.forgotPasswordLink.alpha = 0
+            
+            self.loginView.loginPasswordField.alpha = 0
+            
+            self.loginView.secondDivider.alpha = 0
+            
+            self.loginView.sageLabel.alpha = 0
+            
+            // make other things appear
+            self.loginView.backToLoginLink.alpha = 1
+            
+            self.loginView.forgotPasswordButton.alpha = 1
+            
+            self.loginView.forgotPasswordLabel.alpha = 1
+            
+            }) { (result) -> Void in
+                UIView.animateWithDuration(UIConstants.normalAnimationTime, delay: 0, usingSpringWithDamping: UIConstants.defaultSpringDampening, initialSpringVelocity: UIConstants.defaultSpringVelocity, options: .CurveEaseInOut, animations: { () -> Void in
+                    self.loginView.forgotPasswordButton.setY(CGRectGetMaxY(self.loginView.loginEmailField.frame) + 10)
+                    self.loginView.backToLoginLink.setY(CGRectGetMaxY(self.loginView.forgotPasswordButton.frame) + 10)
+                    }) { (complete) -> Void in
+                    }
+        }
     }
 
     func attemptLogin() {

@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+    
+    func showSuccessAndSetMessage(message: String) {
+        if let navigationController = self.navigationController as? SGNavigationController {
+            navigationController.showSuccessAndSetMessage(message)
+        }
+    }
+
     func showError(message: String, currentError: ErrorView?, color: UIColor = UIColor.whiteColor(), alpha: CGFloat? = 1.0, centered: Bool? = true) -> ErrorView {
         if currentError != nil {
             currentError?.removeFromSuperview()
@@ -25,7 +32,7 @@ extension UIViewController {
         self.view.bringSubviewToFront(errorView)
         errorView.setX(0)
         errorView.setY(-10)
-        
+
         UIView.animateWithDuration(UIView.animationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 errorView.setY(0)
             }) { (bool) -> Void in
@@ -36,7 +43,7 @@ extension UIViewController {
             }
         return errorView
     }
-    
+
     func showAlertControllerError(errorMessage: String) {
         let alertController = UIAlertController(
             title: "Failure",

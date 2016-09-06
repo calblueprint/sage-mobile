@@ -24,8 +24,8 @@ class ProfileCheckinViewController: SGTableViewController {
     //
     init(user: User?) {
         super.init(style: .Grouped)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "unverifiedCheckinAdded:", name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileCheckinViewController.verifiedCheckinAdded(_:)), name: NotificationConstants.addVerifiedCheckinKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileCheckinViewController.unverifiedCheckinAdded(_:)), name: NotificationConstants.addUnverifiedCheckinKey, object: nil)
         self.user = user
     }
     
@@ -70,7 +70,7 @@ class ProfileCheckinViewController: SGTableViewController {
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: #selector(ProfileCheckinViewController.showFilterOptions))
         self.navigationItem.rightBarButtonItem = filterButton
 
         self.view.addSubview(self.activityIndicator)
@@ -83,7 +83,7 @@ class ProfileCheckinViewController: SGTableViewController {
             self.refreshControl?.backgroundColor = UIColor.mainColor
         }
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadCheckinsWithReset:", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(ProfileCheckinViewController.loadCheckins(reset:)), forControlEvents: .ValueChanged)
         
         self.loadCheckins()
     }

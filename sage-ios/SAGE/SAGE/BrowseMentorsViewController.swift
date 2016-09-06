@@ -16,7 +16,7 @@ class BrowseMentorsViewController: SGTableViewController {
     
     init() {
         super.init(style: .Plain)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowseMentorsViewController.userEdited(_:)), name: NotificationConstants.editProfileKey, object: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -75,7 +75,7 @@ class BrowseMentorsViewController: SGTableViewController {
             self.refreshControl?.backgroundColor = UIColor.mainColor
         }
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadMentors", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(BrowseMentorsViewController.loadMentors), forControlEvents: .ValueChanged)
         
         self.loadMentors()
         

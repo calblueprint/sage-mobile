@@ -52,13 +52,13 @@ class SignUpController: SGViewController  {
         let schoolHoursView = signUpView.schoolHoursView
         let photoView = signUpView.photoView
         
-        signUpView.xButton.addTarget(self, action: "xButtonPressed", forControlEvents: .TouchUpInside)
-        schoolHoursView.chooseSchoolButton.addTarget(self, action: "presentSchoolModal", forControlEvents: .TouchUpInside)
-        schoolHoursView.chooseHoursButton.addTarget(self, action: "presentHoursModal", forControlEvents: .TouchUpInside)
-        photoView.photoButton.addTarget(self, action: "choosePhoto", forControlEvents: .TouchUpInside)
-        photoView.takePhotoButton.addTarget(self, action: "choosePhoto", forControlEvents: .TouchUpInside)
-        photoView.skipAndFinishLink.addTarget(self, action: "createAccountAndProceedToAppWithoutPicture", forControlEvents: .TouchUpInside)
-        photoView.finishButton.addTarget(self, action: "createAccountAndProceedToAppWithPicture", forControlEvents: .TouchUpInside)
+        signUpView.xButton.addTarget(self, action: #selector(SignUpController.xButtonPressed), forControlEvents: .TouchUpInside)
+        schoolHoursView.chooseSchoolButton.addTarget(self, action: #selector(SignUpController.presentSchoolModal), forControlEvents: .TouchUpInside)
+        schoolHoursView.chooseHoursButton.addTarget(self, action: #selector(SignUpController.presentHoursModal), forControlEvents: .TouchUpInside)
+        photoView.photoButton.addTarget(self, action: #selector(SignUpController.choosePhoto), forControlEvents: .TouchUpInside)
+        photoView.takePhotoButton.addTarget(self, action: #selector(SignUpController.choosePhoto), forControlEvents: .TouchUpInside)
+        photoView.skipAndFinishLink.addTarget(self, action: #selector(SignUpController.createAccountAndProceedToAppWithoutPicture), forControlEvents: .TouchUpInside)
+        photoView.finishButton.addTarget(self, action: #selector(SignUpController.createAccountAndProceedToAppWithPicture), forControlEvents: .TouchUpInside)
     }
     
     //

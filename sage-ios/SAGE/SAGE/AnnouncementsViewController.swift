@@ -22,10 +22,10 @@ class AnnouncementsViewController: SGTableViewController {
     //
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementAdded:", name: NotificationConstants.addAnnouncementKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementDeleted:", name: NotificationConstants.deleteAnnouncementKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnouncementsViewController.announcementAdded(_:)), name: NotificationConstants.addAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnouncementsViewController.announcementEdited(_:)), name: NotificationConstants.editAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnouncementsViewController.announcementDeleted(_:)), name: NotificationConstants.deleteAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnouncementsViewController.userEdited(_:)), name: NotificationConstants.editProfileKey, object: nil)
         self.setNoContentMessage("No announcements could be found :(")
     }
     
@@ -104,11 +104,11 @@ class AnnouncementsViewController: SGTableViewController {
 
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: #selector(AnnouncementsViewController.showFilterOptions))
 
         if let role = LoginOperations.getUser()?.role {
             if role == .Admin || role == .President {
-                self.navigationItem.rightBarButtonItems = [filterButton, UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "showAnnouncementForm")]
+                self.navigationItem.rightBarButtonItems = [filterButton, UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AnnouncementsViewController.showAnnouncementForm))]
             } else {
                 self.navigationItem.rightBarButtonItems = [filterButton]
             }
@@ -119,7 +119,7 @@ class AnnouncementsViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "fetchAnnouncements", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(AnnouncementsViewController.fetchAnnouncements), forControlEvents: .ValueChanged)
         
     }
     

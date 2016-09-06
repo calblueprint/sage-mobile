@@ -19,7 +19,7 @@ class AnnouncementsDetailViewController: SGViewController {
     //
     init() {
         super.init(nibName: nil, bundle: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "announcementEdited:", name: NotificationConstants.editAnnouncementKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AnnouncementsDetailViewController.announcementEdited(_:)), name: NotificationConstants.editAnnouncementKey, object: nil)
     }
     
     deinit {
@@ -52,12 +52,12 @@ class AnnouncementsDetailViewController: SGViewController {
                 let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
                 editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
                 let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-                let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: "editAnnouncement")
+                let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: #selector(AnnouncementsDetailViewController.editAnnouncement))
                 self.navigationItem.rightBarButtonItem = rightButton
             }
         }
 
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "showProfile")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AnnouncementsDetailViewController.showProfile))
         self.detailView.announcementUserImg.addGestureRecognizer(tapGestureRecognizer)
     }
 

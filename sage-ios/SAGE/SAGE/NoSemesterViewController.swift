@@ -21,7 +21,7 @@ class NoSemesterViewController: SGViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterStarted:", name: NotificationConstants.startSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NoSemesterViewController.semesterStarted(_:)), name: NotificationConstants.startSemesterKey, object: nil)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {

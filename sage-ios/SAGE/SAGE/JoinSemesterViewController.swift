@@ -22,7 +22,7 @@ class JoinSemesterViewController: SGViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(JoinSemesterViewController.semesterEnded(_:)), name: NotificationConstants.endSemesterKey, object: nil)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -45,7 +45,7 @@ class JoinSemesterViewController: SGViewController {
         super.viewDidLoad()
         let backButton = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: navigationController, action: nil)
         navigationItem.leftBarButtonItem = backButton
-        self.joinSemesterView.button.addTarget(self, action: "joinSemester:", forControlEvents: .TouchUpInside)
+        self.joinSemesterView.button.addTarget(self, action: #selector(JoinSemesterViewController.joinSemester(_:)), forControlEvents: .TouchUpInside)
     }
     
     //

@@ -52,10 +52,10 @@ class CheckinViewController: SGViewController {
 
         self.setupDefaultTitleLabel()
         self.setupSessionTitleLabel()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "presentRequestHoursView")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(CheckinViewController.presentRequestHoursView))
         
-        self.checkinView.startButton.addTarget(self, action: "userPressedBeginSession", forControlEvents: .TouchUpInside)
-        self.checkinView.endButton.addTarget(self, action: "userPressedEndSession", forControlEvents: .TouchUpInside)
+        self.checkinView.startButton.addTarget(self, action: #selector(CheckinViewController.userPressedBeginSession), forControlEvents: .TouchUpInside)
+        self.checkinView.endButton.addTarget(self, action: #selector(CheckinViewController.userPressedEndSession), forControlEvents: .TouchUpInside)
 
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
@@ -64,8 +64,8 @@ class CheckinViewController: SGViewController {
             let marker = GMSMarker(position: self.school!.location!.coordinate)
             marker.map = self.checkinView.mapView
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolChanged:", name: NotificationConstants.changeSchoolKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CheckinViewController.schoolChanged(_:)), name: NotificationConstants.changeSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CheckinViewController.schoolEdited(_:)), name: NotificationConstants.editSchoolKey, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -226,7 +226,7 @@ class CheckinViewController: SGViewController {
         } else {
             self.checkinView.updateTimerWithTime(timePassed, percentage: CGFloat(timePassed/self.requiredTime))
             if (self.inSession) {
-                self.performSelector("updateSessionTime", withObject: nil, afterDelay: 1)
+                self.performSelector(#selector(CheckinViewController.updateSessionTime), withObject: nil, afterDelay: 1)
             }
         }
     }

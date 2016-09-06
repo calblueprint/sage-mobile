@@ -17,8 +17,8 @@ class AdminTableViewController: SGTableViewController {
     //
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterStarted:", name: NotificationConstants.startSemesterKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.semesterStarted(_:)), name: NotificationConstants.startSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.semesterEnded(_:)), name: NotificationConstants.endSemesterKey, object: nil)
     }
     
     deinit {

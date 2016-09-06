@@ -25,7 +25,7 @@ class RequestHoursViewController: FormController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismiss")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(RequestHoursViewController.dismiss))
     }
     
     //

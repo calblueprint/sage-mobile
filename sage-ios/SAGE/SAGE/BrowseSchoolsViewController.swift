@@ -15,9 +15,9 @@ class BrowseSchoolsViewController: SGTableViewController {
     
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolAdded:", name: NotificationConstants.addSchoolKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolDeleted:", name: NotificationConstants.deleteSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowseSchoolsViewController.schoolAdded(_:)), name: NotificationConstants.addSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowseSchoolsViewController.schoolEdited(_:)), name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowseSchoolsViewController.schoolDeleted(_:)), name: NotificationConstants.deleteSchoolKey, object: nil)
         self.setNoContentMessage("No schools currently exist.")
     }
     
@@ -82,7 +82,7 @@ class BrowseSchoolsViewController: SGTableViewController {
         self.changeTitle("Schools")
         self.tableView.tableFooterView = UIView()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addSchool")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(BrowseSchoolsViewController.addSchool))
 
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
@@ -90,7 +90,7 @@ class BrowseSchoolsViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadSchools", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(BrowseSchoolsViewController.loadSchools), forControlEvents: .ValueChanged)
         
         self.loadSchools()
         

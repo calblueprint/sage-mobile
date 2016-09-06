@@ -15,7 +15,7 @@ class EditSchoolController: AddSchoolController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Edit School"
-        (self.view as! AddSchoolView).deleteSchoolButton.addTarget(self, action: "deleteSchool:", forControlEvents: .TouchUpInside)
+        (self.view as! AddSchoolView).deleteSchoolButton.addTarget(self, action: #selector(EditSchoolController.deleteSchool(_:)), forControlEvents: .TouchUpInside)
     }
     
     func configureWithSchool(school: School?) {

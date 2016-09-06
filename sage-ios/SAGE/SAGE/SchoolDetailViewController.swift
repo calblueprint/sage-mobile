@@ -20,8 +20,8 @@ class SchoolDetailViewController: SGTableViewController {
     //
     init() {
         super.init(nibName: nil, bundle: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SchoolDetailViewController.schoolEdited(_:)), name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SchoolDetailViewController.editedProfile(_:)), name: NotificationConstants.editProfileKey, object: nil)
         self.setNoContentMessage("School could not be loaded.")
     }
     
@@ -46,7 +46,7 @@ class SchoolDetailViewController: SGTableViewController {
                 self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
             }
             if var students = school.students {
-                for var index = 0; index < students.count; ++index {
+                for var index = 0; index < students.count; index += 1 {
                     let student = students[index]
                     if student.id == newUser.id {
                         self.school!.students![index] = newUser
@@ -97,7 +97,7 @@ class SchoolDetailViewController: SGTableViewController {
                 let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
                 editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
                 let editIconImage = editIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-                let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: "editSchool")
+                let rightButton = UIBarButtonItem(image: editIconImage, style: .Plain, target: self, action: #selector(SchoolDetailViewController.editSchool))
                 self.navigationItem.rightBarButtonItem = rightButton
 
             }
@@ -114,7 +114,7 @@ class SchoolDetailViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "reload", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(SchoolDetailViewController.reload), forControlEvents: .ValueChanged)
     }
     
     func reload() {

@@ -38,9 +38,9 @@ class EditProfileController: FormController {
         self.title = "Edit Profile"
         self.editProfileView.setupWithUser(self.user)
         
-        editProfileView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
-        editProfileView.hours.button.addTarget(self, action: "hoursButtonTapped", forControlEvents: .TouchUpInside)
-        editProfileView.photoButton.addTarget(self, action: "chooseNewPhoto", forControlEvents: .TouchUpInside)
+        editProfileView.school.button.addTarget(self, action: #selector(EditProfileController.schoolButtonTapped), forControlEvents: .TouchUpInside)
+        editProfileView.hours.button.addTarget(self, action: #selector(EditProfileController.hoursButtonTapped), forControlEvents: .TouchUpInside)
+        editProfileView.photoButton.addTarget(self, action: #selector(EditProfileController.chooseNewPhoto), forControlEvents: .TouchUpInside)
     }
     
     @objc private func chooseNewPhoto() {
@@ -101,7 +101,7 @@ class EditProfileController: FormController {
         self.editProfileView.displayHours(self.user.level)
     }
     
-    func completeForm() {
+    override func completeForm() {
         if self.editProfileView.isValid() {
             self.user.firstName = self.editProfileView.getFirstName()
             self.user.lastName = self.editProfileView.getLastName()

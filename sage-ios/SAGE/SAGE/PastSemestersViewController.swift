@@ -30,7 +30,7 @@ class PastSemestersViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.lightGrayColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadSemesters", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(PastSemestersViewController.loadSemesters), forControlEvents: .ValueChanged)
         
         self.loadSemesters()
     }

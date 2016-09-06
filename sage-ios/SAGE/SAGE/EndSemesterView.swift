@@ -114,11 +114,11 @@ class EndSemesterView: UIView {
     }
 
     private func setupActions() {
-        let firstBeginRecognizer = UILongPressGestureRecognizer(target: self, action: "firstButtonPressed:")
+        let firstBeginRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(EndSemesterView.firstButtonPressed(_:)))
         firstBeginRecognizer.minimumPressDuration = 0.01
         self.firstButton.addGestureRecognizer(firstBeginRecognizer)
 
-        let secondBeginRecognizer = UILongPressGestureRecognizer(target: self, action: "secondButtonPressed:")
+        let secondBeginRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(EndSemesterView.secondButtonPressed(_:)))
         secondBeginRecognizer.minimumPressDuration = 0.01
         self.secondButton.addGestureRecognizer(secondBeginRecognizer)
     }

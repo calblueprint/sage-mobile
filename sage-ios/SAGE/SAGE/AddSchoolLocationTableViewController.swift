@@ -19,8 +19,8 @@ class AddSchoolLocationTableViewController: SGTableViewController {
     
     init() {
         super.init(style: .Plain)
-        self.rightMapButton = UIBarButtonItem(title: "Map", style: .Done, target: self, action: "returnToMap")
-        self.rightSearchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: "goToSearch")
+        self.rightMapButton = UIBarButtonItem(title: "Map", style: .Done, target: self, action: #selector(AddSchoolLocationTableViewController.returnToMap))
+        self.rightSearchButton = UIBarButtonItem(title: "Search", style: .Done, target: self, action: #selector(AddSchoolLocationTableViewController.goToSearch))
         self.navigationItem.rightBarButtonItem = self.rightMapButton
         self.setNoContentMessage("No potential directors could be found.")
     }

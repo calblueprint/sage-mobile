@@ -35,7 +35,7 @@ class AddSchoolRadiusViewController: SGViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Choose Radius"
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Finish", style: UIBarButtonItemStyle.Plain, target: self, action: "saveRadius:")
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Finish", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(AddSchoolRadiusViewController.saveRadius(_:)))
         saveButton.setTitleTextAttributes([NSFontAttributeName: UIFont.getSemiboldFont(17)], forState: .Normal)
         self.navigationItem.rightBarButtonItem = saveButton
     }

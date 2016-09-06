@@ -40,7 +40,7 @@ class AddSchoolDirectorTableViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadPotentialDirectors", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(AddSchoolDirectorTableViewController.loadPotentialDirectors), forControlEvents: .ValueChanged)
         
         self.loadPotentialDirectors()
     }

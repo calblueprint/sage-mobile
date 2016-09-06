@@ -24,9 +24,9 @@ class PauseSemesterViewController: SGViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.pauseView.cancelIconButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        self.pauseView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        self.pauseView.continueButton.addTarget(self, action: "confirmPause", forControlEvents: .TouchUpInside)
+        self.pauseView.cancelIconButton.addTarget(self, action: #selector(PauseSemesterViewController.cancelPressed), forControlEvents: .TouchUpInside)
+        self.pauseView.cancelButton.addTarget(self, action: #selector(PauseSemesterViewController.cancelPressed), forControlEvents: .TouchUpInside)
+        self.pauseView.continueButton.addTarget(self, action: #selector(PauseSemesterViewController.confirmPause), forControlEvents: .TouchUpInside)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -67,7 +67,7 @@ class PauseSemesterViewController: SGViewController {
         SemesterOperations.pauseSemester({ () -> Void in
             self.pauseView.continueButton.stopLoading()
             self.pauseView.showAnnouncementPrompt {
-                self.pauseView.continueButton.addTarget(self, action: "showCreateAnnouncement", forControlEvents: .TouchUpInside)
+                self.pauseView.continueButton.addTarget(self, action: #selector(PauseSemesterViewController.showCreateAnnouncement), forControlEvents: .TouchUpInside)
             }
         }) { (errorMessage) -> Void in
             self.pauseView.continueButton.stopLoading()

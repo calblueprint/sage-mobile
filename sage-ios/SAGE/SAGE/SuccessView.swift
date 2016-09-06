@@ -38,7 +38,7 @@ class SuccessView: UIView {
 
         self.userInteractionEnabled = true
         let successTapRecognizer = UITapGestureRecognizer()
-        successTapRecognizer.addTarget(self, action: "errorMessageTapped")
+        successTapRecognizer.addTarget(self, action: #selector(SuccessView.errorMessageTapped))
         self.addGestureRecognizer(successTapRecognizer)
     }
 

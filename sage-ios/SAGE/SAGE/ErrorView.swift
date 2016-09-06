@@ -38,7 +38,7 @@ class ErrorView: UIView {
 
         self.userInteractionEnabled = true
         let errorTapRecognizer = UITapGestureRecognizer()
-        errorTapRecognizer.addTarget(self, action: "errorMessageTapped")
+        errorTapRecognizer.addTarget(self, action: #selector(ErrorView.errorMessageTapped))
         self.addGestureRecognizer(errorTapRecognizer)
     }
     

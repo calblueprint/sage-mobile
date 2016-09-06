@@ -26,7 +26,7 @@ class MenuItem: UIView {
         self.titleLabel.text = title
         self.handler = handler
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: "itemTapped:")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(MenuItem.itemTapped(_:)))
         tapGesture.cancelsTouchesInView = false
         self.titleLabel.addGestureRecognizer(tapGesture)
         self.titleLabel.userInteractionEnabled = true

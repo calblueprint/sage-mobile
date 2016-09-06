@@ -28,7 +28,7 @@ class AddSchoolRadiusView: UIView {
         if radius != nil {
             self.radius = radius!
         }
-        self.slider.addTarget(self, action: "sliderValueDidChange:", forControlEvents: .ValueChanged)
+        self.slider.addTarget(self, action: #selector(AddSchoolRadiusView.sliderValueDidChange(_:)), forControlEvents: .ValueChanged)
         self.setupSubviews()
     }
 

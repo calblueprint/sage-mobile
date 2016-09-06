@@ -35,7 +35,7 @@ class RequestHoursViewController: FormController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @objc private func completeForm() {
+    override func completeForm() {
         if self.requestHoursView.isValid() {
             let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
             if !finalCheckin.verified && (finalCheckin.comment?.characters.count == nil || finalCheckin.comment?.characters.count == 0) {

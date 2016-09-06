@@ -35,10 +35,10 @@ class MenuController: SGViewController {
         self.view = self.menuView
         self.menuView.setTitle(self.title)
 
-        let dismissGesture = UITapGestureRecognizer(target: self, action: "dismiss")
+        let dismissGesture = UITapGestureRecognizer(target: self, action: #selector(MenuController.dismiss))
         self.menuView.backgroundView.addGestureRecognizer(dismissGesture)
 
-        self.menuView.closeButton.addTarget(self, action: "dismiss", forControlEvents: .TouchUpInside)
+        self.menuView.closeButton.addTarget(self, action: #selector(MenuController.dismiss), forControlEvents: .TouchUpInside)
     }
 
     override func viewWillAppear(animated: Bool) {

@@ -147,7 +147,7 @@ class SignUpView: UIView {
     }
     
     func setUpGestureRecognizer() {
-        self.tapRecognizer.addTarget(self, action: "screenTapped")
+        self.tapRecognizer.addTarget(self, action: #selector(SignUpView.screenTapped))
         self.addGestureRecognizer(self.tapRecognizer)
         self.userInteractionEnabled = true
     }
@@ -158,8 +158,8 @@ class SignUpView: UIView {
     
     func setUpKeyboardNotifications() {
         let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(SignUpView.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(SignUpView.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {

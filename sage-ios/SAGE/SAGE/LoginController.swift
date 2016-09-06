@@ -9,7 +9,7 @@
 import UIKit
 import SwiftKeychainWrapper
 
-class LoginController: UIViewController {
+class LoginController: SGViewController {
     
     var loginView = LoginView()
 
@@ -17,11 +17,11 @@ class LoginController: UIViewController {
         self.view = self.loginView
         self.loginView.loginEmailField.delegate = self
         self.loginView.loginPasswordField.delegate = self
-        self.loginView.signUpLink.addTarget(self, action: "signUpLinkTapped", forControlEvents: .TouchUpInside)
-        self.loginView.loginButton.addTarget(self, action: "attemptLogin", forControlEvents: .TouchUpInside)
-        self.loginView.forgotPasswordLink.addTarget(self, action: "showResetPasswordScreen", forControlEvents: .TouchUpInside)
-        self.loginView.backToLoginLink.addTarget(self, action: "backToLogin", forControlEvents: .TouchUpInside)
-        self.loginView.forgotPasswordButton.addTarget(self, action: "resetPassword", forControlEvents: .TouchUpInside)
+        self.loginView.signUpLink.addTarget(self, action: #selector(LoginController.signUpLinkTapped), forControlEvents: .TouchUpInside)
+        self.loginView.loginButton.addTarget(self, action: #selector(LoginController.attemptLogin), forControlEvents: .TouchUpInside)
+        self.loginView.forgotPasswordLink.addTarget(self, action: #selector(LoginController.showResetPasswordScreen), forControlEvents: .TouchUpInside)
+        self.loginView.backToLoginLink.addTarget(self, action: #selector(LoginController.backToLogin), forControlEvents: .TouchUpInside)
+        self.loginView.forgotPasswordButton.addTarget(self, action: #selector(LoginController.resetPassword), forControlEvents: .TouchUpInside)
     }
     
     //

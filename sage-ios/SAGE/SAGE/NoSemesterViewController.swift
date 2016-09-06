@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NoSemesterViewController: UIViewController {
+class NoSemesterViewController: SGViewController {
     
     var noSemesterView = NoSemesterView()
     
@@ -21,7 +21,7 @@ class NoSemesterViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterStarted:", name: NotificationConstants.startSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NoSemesterViewController.semesterStarted(_:)), name: NotificationConstants.startSemesterKey, object: nil)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {

@@ -136,7 +136,7 @@ class RequestHoursView: FormView {
         self.dateField.textField.delegate = self
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .Date
-        datePicker.addTarget(self, action: "datePicked:", forControlEvents: .ValueChanged)
+        datePicker.addTarget(self, action: #selector(RequestHoursView.datePicked(_:)), forControlEvents: .ValueChanged)
         self.dateField.textField.inputView = datePicker
         self.dateField.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.dateField)
@@ -146,7 +146,7 @@ class RequestHoursView: FormView {
         self.startTimeField.textField.delegate = self
         let startTimePicker = UIDatePicker()
         startTimePicker.datePickerMode = .Time
-        startTimePicker.addTarget(self, action: "startTimePicked:", forControlEvents: .ValueChanged)
+        startTimePicker.addTarget(self, action: #selector(RequestHoursView.startTimePicked(_:)), forControlEvents: .ValueChanged)
         self.startTimeField.textField.inputView = startTimePicker
         self.startTimeField.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.startTimeField)
@@ -156,7 +156,7 @@ class RequestHoursView: FormView {
         self.endTimeField.textField.delegate = self
         let endTimePicker = UIDatePicker()
         endTimePicker.datePickerMode = .Time
-        endTimePicker.addTarget(self, action: "endTimePicked:", forControlEvents: .ValueChanged)
+        endTimePicker.addTarget(self, action: #selector(RequestHoursView.endTimePicked(_:)), forControlEvents: .ValueChanged)
         self.endTimeField.textField.inputView = endTimePicker
         self.endTimeField.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.endTimeField)

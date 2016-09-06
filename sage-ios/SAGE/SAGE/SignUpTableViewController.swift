@@ -61,7 +61,7 @@ class SignUpTableViewController: SGTableViewController, UINavigationBarDelegate 
             self.activityIndicator.startAnimating()
         }
         
-        let rightButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelClicked")
+        let rightButton = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(SignUpTableViewController.cancelClicked))
         self.navigationItem.rightBarButtonItem = rightButton
         
         if self.modalType == ContentType.School {

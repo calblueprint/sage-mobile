@@ -66,7 +66,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         
         var viewControllers = [UIViewController]()
         
-        for (var i = 0; i < rootViewControllers.count; i++) {
+        for i in 0 ..< rootViewControllers.count {
             let navigationController = SGNavigationController()
             navigationController.delegate = self
             navigationController.tabBarItem = UITabBarItem(title: titles[i], image: images[i], tag:i)

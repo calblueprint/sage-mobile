@@ -18,11 +18,11 @@ class ProfileViewController: SGTableViewController {
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "editedProfile:", name: NotificationConstants.editProfileKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "schoolEdited:", name: NotificationConstants.editSchoolKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "verifiedCheckinAdded:", name: NotificationConstants.addVerifiedCheckinKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterJoined:", name: NotificationConstants.joinSemesterKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "semesterEnded:", name: NotificationConstants.endSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.editedProfile(_:)), name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.schoolEdited(_:)), name: NotificationConstants.editSchoolKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.verifiedCheckinAdded(_:)), name: NotificationConstants.addVerifiedCheckinKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.semesterJoined(_:)), name: NotificationConstants.joinSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.semesterEnded(_:)), name: NotificationConstants.endSemesterKey, object: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -88,9 +88,9 @@ class ProfileViewController: SGTableViewController {
         headerFrame.size.height = headerOffset
         self.profileView.frame = headerFrame
         self.tableView.tableHeaderView = self.profileView
-        self.profileView.profileEditButton.addTarget(self, action: "editProfile", forControlEvents: .TouchUpInside)
-        self.profileView.promoteButton.addTarget(self, action: "promote", forControlEvents: .TouchUpInside)
-        self.profileView.demoteButton.addTarget(self, action: "demote", forControlEvents: .TouchUpInside)
+        self.profileView.profileEditButton.addTarget(self, action: #selector(ProfileViewController.editProfile), forControlEvents: .TouchUpInside)
+        self.profileView.promoteButton.addTarget(self, action: #selector(ProfileViewController.promote), forControlEvents: .TouchUpInside)
+        self.profileView.demoteButton.addTarget(self, action: #selector(ProfileViewController.demote), forControlEvents: .TouchUpInside)
     }
     
     override func viewDidLoad() {
@@ -113,7 +113,7 @@ class ProfileViewController: SGTableViewController {
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "getUser", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(ProfileViewController.getUser), forControlEvents: .ValueChanged)
         self.view.bringSubviewToFront(self.refreshControl!)
         
         self.getUser()

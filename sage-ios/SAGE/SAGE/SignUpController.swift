@@ -9,7 +9,7 @@
 import UIKit
 import FontAwesomeKit
 
-class SignUpController: UIViewController  {
+class SignUpController: SGViewController  {
     
     // using nsmutable dictionaries so we can pass them by reference instead of by value
     var school: School?

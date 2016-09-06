@@ -9,7 +9,7 @@
 import Foundation
 import FontAwesomeKit
 
-class AnnouncementsDetailViewController: UIViewController {
+class AnnouncementsDetailViewController: SGViewController {
     
     var announcement = Announcement()
     var detailView = AnnouncementsDetailView()

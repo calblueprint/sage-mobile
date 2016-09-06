@@ -11,7 +11,7 @@ import Foundation
 import FontAwesomeKit
 import SwiftKeychainWrapper
 
-class CheckinViewController: UIViewController {
+class CheckinViewController: SGViewController {
 
     let locationManager = CLLocationManager()
     var currentLocation = CLLocation()

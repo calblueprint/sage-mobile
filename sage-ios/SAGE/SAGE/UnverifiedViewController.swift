@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UnverifiedViewController: UIViewController {
+class UnverifiedViewController: SGViewController {
     
     
     override func loadView() {

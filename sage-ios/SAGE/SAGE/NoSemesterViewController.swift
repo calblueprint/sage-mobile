@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NoSemesterViewController: UIViewController {
+class NoSemesterViewController: SGViewController {
     
     var noSemesterView = NoSemesterView()
     

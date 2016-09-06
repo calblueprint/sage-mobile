@@ -9,7 +9,7 @@
 import Foundation
 import SwiftKeychainWrapper
 
-class JoinSemesterViewController: UIViewController {
+class JoinSemesterViewController: SGViewController {
     
     var joinSemesterView = JoinSemesterView()
     

@@ -9,7 +9,7 @@
 import UIKit
 import SwiftKeychainWrapper
 
-class LoginController: UIViewController {
+class LoginController: SGViewController {
     
     var loginView = LoginView()
 

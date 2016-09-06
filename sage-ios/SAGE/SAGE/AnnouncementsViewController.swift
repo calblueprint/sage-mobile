@@ -12,10 +12,8 @@ import SwiftKeychainWrapper
 
 class AnnouncementsViewController: SGTableViewController {
     
-    //var announcements: [Announcement] = []
     var page = 0
     var loadedAllAnnouncements = false
-    var currentlyLoadingPage = false
     var announcements = [Announcement]()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
 
@@ -121,9 +119,8 @@ class AnnouncementsViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "getAnnouncementsWithReset:", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: "fetchAnnouncements", forControlEvents: .ValueChanged)
         
-       self.getAnnouncements()
     }
     
     //
@@ -173,20 +170,32 @@ class AnnouncementsViewController: SGTableViewController {
 
         self.presentViewController(menuController, animated: false, completion: nil)
     }
+    
+    func fetchAnnouncements() {
+        self.getAnnouncements()
+    }
 
-    func getAnnouncements(reset reset: Bool = false, page: Int = 0) {
+    func getAnnouncements(reset reset: Bool = false, page: Int = 1) {
         if reset {
             self.hideNoContentView()
             self.announcements = []
+            self.page = 0
             self.tableView.reloadData()
+            self.loadedAllAnnouncements = false
+        }
+        
+        // Want to get first batch of announcements again
+        if page == 1 {
+            self.announcements = []
+            self.page = 0
             self.loadedAllAnnouncements = false
         }
         
         if !self.loadedAllAnnouncements {
             AnnouncementsOperations.loadAnnouncements(page: page, filter: self.filter, completion: { (newAnnouncements) -> Void in
+                self.refreshControl?.endRefreshing()
                 if newAnnouncements.count != 0 {
                     self.page = page
-                    self.refreshControl?.endRefreshing()
                     
                     var indexPaths = [NSIndexPath]()
                     var i = 0
@@ -197,16 +206,10 @@ class AnnouncementsViewController: SGTableViewController {
                     
                     self.announcements.appendContentsOf(newAnnouncements)
                     
-                    self.tableView.beginUpdates()
-                    self.tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .None)
-                    self.tableView.endUpdates()
-                    
+                    self.tableView.reloadData()
                 } else {
                     self.loadedAllAnnouncements = true
-                    
-                    self.tableView.beginUpdates()
-                    self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .None)
-                    self.tableView.endUpdates()
+                    self.tableView.reloadData()
 
                 }
                 
@@ -215,9 +218,7 @@ class AnnouncementsViewController: SGTableViewController {
                 } else {
                     self.hideNoContentView()
                 }
-                
-                self.currentlyLoadingPage = false
-                
+
                 }) { (errorMessage) -> Void in
                     self.refreshControl?.endRefreshing()
                     self.showErrorAndSetMessage("Could not load announcements.")

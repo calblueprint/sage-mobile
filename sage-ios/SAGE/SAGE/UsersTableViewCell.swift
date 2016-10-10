@@ -41,14 +41,18 @@ class UsersTableViewCell: UITableViewCell {
         self.mentorPicture.setImageWithUser(user)
         self.mentorName.text = user.fullName()
         self.schoolName.text = user.school?.name
-        if let semesterSummary = user.semesterSummary {
-            self.totalHours.text = String(semesterSummary.getTotalHoursAsString())
-            self.totalHours.text! += " hour"
-            if semesterSummary.getTotalHours() != 1 {
-                self.totalHours.text! += "s"
+        if let role = LoginOperations.getUser()?.role {
+            if role == .Admin || role == .President {
+                if let semesterSummary = user.semesterSummary {
+                    self.totalHours.text = String(semesterSummary.getTotalHoursAsString())
+                    self.totalHours.text! += " hour"
+                    if semesterSummary.getTotalHours() != 1 {
+                        self.totalHours.text! += "s"
+                    }
+                } else {
+                    self.totalHours.text = "Inactive"
+                }
             }
-        } else {
-            self.totalHours.text = "Inactive"
         }
     }
     

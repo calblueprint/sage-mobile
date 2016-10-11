@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout style="@style/CheckInContainerRelativeLayout">
-
-    <include layout="@layout/user_check_in_info" />
-
-</FrameLayout>

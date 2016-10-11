@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Dimens for the admin panel -->
-<resources>
-    <dimen name="admin_layout_header_margin">8dp</dimen>
-    <dimen name="admin_layout_margin">16dp</dimen>
-</resources>

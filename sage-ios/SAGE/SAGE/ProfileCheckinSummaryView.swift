@@ -81,7 +81,7 @@ class ProfileCheckinSummaryView: UIView {
             self.userStatusLabel.attributedText = userStatusString
             var hoursCompletedPercentage = Float(0)
             if (semesterSummary.hoursRequired != 0) {
-                hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired)
+                hoursCompletedPercentage = Float(semesterSummary.getTotalHours())/Float(semesterSummary.hoursRequired) * 100.0
             } else if (semesterSummary.getTotalHours() > 0) {
                 hoursCompletedPercentage = Float(100)
             }
@@ -99,7 +99,7 @@ class ProfileCheckinSummaryView: UIView {
             if hoursCompletedPercentage == 0 {
                 progressArcColor = UIColor.lighterGrayColor.CGColor
             }
-            self.completedProgressArc.path = self.createArcWithPercentage(CGFloat(min(1, hoursCompletedPercentage) * 0.75))
+            self.completedProgressArc.path = self.createArcWithPercentage(CGFloat(min(1, hoursCompletedPercentage/(100.0)) * 0.75))
         } else {
             self.userStatusLabel.font = UIFont.normalFont
             self.userStatusLabel.text = "Inactive"

@@ -85,7 +85,7 @@ public abstract class AbstractUserListAdapter extends RecyclerView.Adapter<Recyc
         });
         user.loadUserImage(mActivity, viewHolder.mImage);
 
-        UserUtils.setType(mActivity, user, viewHolder.mUserType, viewHolder.mBorder, user.ABBREV_ROLES_LABEL);
+        UserUtils.setTypeBackground(mActivity, user, viewHolder.mUserType, viewHolder.mBorder, user.ABBREV_ROLES_LABEL);
     }
 
     public abstract void onItemClick(User user);

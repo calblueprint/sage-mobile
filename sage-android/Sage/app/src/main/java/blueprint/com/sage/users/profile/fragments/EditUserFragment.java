@@ -3,6 +3,7 @@ package blueprint.com.sage.users.profile.fragments;
 import android.util.Log;
 import android.view.View;
 
+import blueprint.com.sage.R;
 import blueprint.com.sage.events.users.EditUserEvent;
 import blueprint.com.sage.models.School;
 import blueprint.com.sage.models.User;
@@ -32,9 +33,17 @@ public class EditUserFragment extends UserFormAbstractFragment {
 
         mTypeLayout.setVisibility(View.GONE);
         mRoleLayout.setVisibility(View.GONE);
+
+        mPassword.setHint(getString(R.string.optional));
+        mConfirmPassword.setHint(getString(R.string.optional));
     }
 
     public void validateAndSubmitRequest() {
+        if (!mValidator.hasNonBlankField(mCurrentPassword, "Current Password")) {
+            mScrollView.scrollTo(0, mScrollView.getBottom());
+            return;
+        }
+
         if (!isValidUser())
             return;
 
@@ -53,6 +62,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
         mUser.setSchoolId(schoolId);
         mUser.setProfile(mProfileBitmap);
 
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Users.with(getActivity()).makeStickyEditRequest(mUser);
     }
 
@@ -61,8 +71,7 @@ public class EditUserFragment extends UserFormAbstractFragment {
                 mValidator.hasNonBlankField(mLastName, "Last Name") &
                 hasValidEmail() &
                 (hasEmptyPasswords() || hasMatchingPasswords()) &
-                mValidator.mustBePicked(mSchool, "School", mLayout) &
-                mValidator.hasNonBlankField(mCurrentPassword, "Current Password");
+                mValidator.mustBePicked(mSchool, "School", mLayout);
     }
 
     private boolean hasValidEmail() {
@@ -84,7 +93,10 @@ public class EditUserFragment extends UserFormAbstractFragment {
     public void onEvent(EditUserEvent event) {
         try {
             NetworkUtils.setUser(getActivity(), event.getUser());
+            NetworkUtils.setSchool(getActivity(), event.getUser().getSchool());
+
             mBaseInterface.setUser(event.getUser());
+            mBaseInterface.setSchool(event.getUser().getSchool());
         } catch(Exception e) {
             Log.e(getClass().toString(), e.toString());
         }

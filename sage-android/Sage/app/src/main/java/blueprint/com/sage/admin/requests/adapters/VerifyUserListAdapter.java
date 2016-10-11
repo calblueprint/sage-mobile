@@ -30,7 +30,9 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private static final int HEADER_VIEW = 0;
     private static final int USER_VIEW = 1;
+
     private final static String NO_SCHOOL = "No School";
+    private final static String NEW_CHECK_INS = "New Check Ins";
 
     public VerifyUserListAdapter(Activity activity, List<User> users) {
         super();
@@ -106,9 +108,7 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         final User user = item.getUser();
         viewHolder.mName.setText(user.getName());
 
-        if (user.getSchool() != null) {
-            viewHolder.mSchool.setText(user.getSchool().getName());
-        }
+        viewHolder.mVolunteer.setText(User.VOLUNTEER_SPINNER[user.getVolunteerType()]);
 
         viewHolder.mVerify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +137,28 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyDataSetChanged();
     }
 
+    public void addUser(User user) {
+        Item newCheckIn = new Item(user, null);
+
+        if (!hasNewCheckInHeader()) {
+            Item newCheckInHeader = new Item(null, NEW_CHECK_INS);
+            mItems.add(0, newCheckInHeader);
+            mItems.add(1, newCheckIn);
+            notifyItemRangeInserted(0, 2);
+        } else {
+            mItems.add(1, newCheckIn);
+            notifyItemInserted(1);
+        }
+    }
+
+    private boolean hasNewCheckInHeader() {
+        return mItems != null &&
+                mItems.size() > 0 &&
+                mItems.get(0).isHeader() &&
+                mItems.get(0).getHeader().equals(NEW_CHECK_INS);
+    }
+
+
     public void removeUser(int position) {
         mItems.remove(position);
         notifyItemRemoved(position);
@@ -156,7 +178,7 @@ public class VerifyUserListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         @Bind(R.id.verify_user_list_photo) CircleImageView mImage;
         @Bind(R.id.verify_user_list_name) TextView mName;
-        @Bind(R.id.verify_user_list_school) TextView mSchool;
+        @Bind(R.id.verify_user_list_volunteer) TextView mVolunteer;
         @Bind(R.id.verify_user_list_item_verify) ImageButton mVerify;
         @Bind(R.id.verify_user_list_item_delete) ImageButton mDelete;
 

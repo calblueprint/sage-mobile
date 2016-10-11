@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.models.Announcement;
@@ -29,14 +27,15 @@ public class AnnouncementActivity extends BackAbstractActivity implements Announ
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        Announcement announcement = null;
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            announcement = mapper.readValue(getIntent().getStringExtra("Announcement"), Announcement.class);
-            FragUtils.replace(R.id.container, AnnouncementFragment.newInstance(announcement), this);
 
-        } catch (IOException exception) {
-            String error = "Announcement";
+        Bundle bundle = getIntent().getExtras();
+
+        try {
+            Announcement announcement = NetworkUtils.writeAsObject(this,
+                    bundle.getString("announcement"), new TypeReference<Announcement>() {});
+            FragUtils.replace(R.id.container, AnnouncementFragment.newInstance(announcement), this);
+        } catch (Exception exception) {
+            String error = "announcement";
             Toast.makeText(this, getString(R.string.cannot_be_displayed, error), Toast.LENGTH_SHORT).show();
             onBackPressed();
         }
@@ -63,6 +62,7 @@ public class AnnouncementActivity extends BackAbstractActivity implements Announ
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         String string;
+
         switch (mType) {
             case ORIGINAL:
                 string = null;
@@ -70,9 +70,11 @@ public class AnnouncementActivity extends BackAbstractActivity implements Announ
             default:
                 string = getString(R.string.change_announcement);
         }
+
         bundle.putString(string, NetworkUtils.writeAsString(this, mAnnouncement));
         bundle.putInt(getString(R.string.announcement_type), mType);
         intent.putExtras(bundle);
+
         setResult(Activity.RESULT_OK, intent);
         super.finish();
     }

@@ -3,13 +3,11 @@ package blueprint.com.sage.announcements;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import blueprint.com.sage.R;
 import blueprint.com.sage.events.announcements.CreateAnnouncementEvent;
 import blueprint.com.sage.models.Announcement;
 import blueprint.com.sage.network.Requests;
-import blueprint.com.sage.shared.interfaces.BaseInterface;
 import blueprint.com.sage.utility.network.NetworkUtils;
 
 /**
@@ -19,30 +17,27 @@ public class CreateAnnouncementFragment extends AnnouncementFormAbstractFragment
 
     public static CreateAnnouncementFragment newInstance() { return new CreateAnnouncementFragment(); }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_save:
-                validateAndSubmitRequest();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     public void initializeViews() {
         mToolbarInterface.setTitle("Create Announcement");
         mAnnouncement = new Announcement();
         initializeSpinners();
+
+        Intent intent = getActivity().getIntent();
+        String title = intent.getStringExtra(getString(R.string.pause_semester_announcement_string, ""));
+        mAnnouncementTitle.setText(title);
     }
 
     protected void validateAndSubmitRequest() {
         if (!isValid())
             return;
+
         setAnnouncementCategoryAndSchool();
+
         mAnnouncement.setTitle(mAnnouncementTitle.getText().toString());
         mAnnouncement.setBody(mAnnouncementBody.getText().toString());
-        BaseInterface baseInterface = (BaseInterface) getActivity();
-        mAnnouncement.setUserId(baseInterface.getUser().getId());
+
+        mAnnouncement.setUserId(mBaseInterface.getUser().getId());
+        mItem.setActionView(R.layout.actionbar_indeterminate_progress);
         Requests.Announcements.with(getActivity()).makeCreateRequest(mAnnouncement);
     }
 

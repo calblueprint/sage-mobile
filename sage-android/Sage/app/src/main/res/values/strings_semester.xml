@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="semester">Semester</string>
     <string name="semester_start_date">Start Date</string>
     <string name="semester_season">Season</string>
 
@@ -21,9 +22,26 @@
     <string name="activity_create_semester">create_semester</string>
     <string name="semester_user">user</string>
     <string name="activity_current_semester">activity_current_semester</string>
+    <string name="activity_pause_semester">pause_semester</string>
 
     <!-- Join semester -->
     <string name="join_semester_text">Looks like a new semester has started - hit "Join" to start your semester and start your mentoring sessions.</string>
     <string name="join_semester">Join</string>
     <string name="join_semester_success">You\'ve joined this semester - you can now start mentoring sessions.</string>
+
+    <!--Pause Semester-->
+    <string name="pause_semester_header">Pause Hours</string>
+    <string name="pause_semester_button">Proceed</string>
+    <string name="pause_semester_message">Pausing Hours means that students will not be required to mentor for the following week.</string>
+    <string name="pause_semester_cancel">Cancel</string>
+    <string name="pause_semester_confirm_title">Are you sure?</string>
+    <string name="pause_semester_confirm_msg">Would you like to give a break next week?</string>
+    <string name="pause_semester_continue">Continue</string>
+    <string name="pause_semester_done">Done!</string>
+    <string name="pause_semester_create_annoncement">Now, create at announcement to let your mentors know</string>
+    <string name="pause_semester_confirm_announcement">Let\'s Do it!</string>
+    <string name="pause_semester_today">Today</string>
+    <string name="pause_semester_announcement_title">Break Next Week</string>
+    <string name="pause_semester_announcement_body">Have a good break everybody!</string>
+    <string name="pause_semester_announcement_string">Pause Semester Announcement Title</string>
 </resources>

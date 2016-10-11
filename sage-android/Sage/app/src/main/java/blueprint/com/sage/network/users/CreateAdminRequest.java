@@ -7,10 +7,7 @@ import com.android.volley.Response;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 import blueprint.com.sage.models.APIError;
 import blueprint.com.sage.models.User;
@@ -24,7 +21,7 @@ public class CreateAdminRequest extends BaseRequest {
     public CreateAdminRequest(final Activity activity, User user,
                               final Response.Listener<User> onSuccess,
                               final Response.Listener<APIError> onFailure) {
-        super(Method.POST, makeUrl(null, "admin", "users"), convertToParams(user, "user", activity),
+        super(Method.POST, makeUrl(activity, null, "admin", "users"), convertToParams(user, "user", activity),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject o) {

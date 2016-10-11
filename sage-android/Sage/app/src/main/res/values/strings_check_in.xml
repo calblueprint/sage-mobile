@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="check_in_default_start_time">00:00</string>
+    <string name="check_in_start_message">You\'ve started your mentoring session - have fun!</string>
+
+    <string name="menu_create_request">Create Request</string>
+
+    <!-- CheckIn Shared Preferences -->
+    <string name="check_in_start_time">start_time $1%d</string>
+    <string name="check_in_total_seconds">total_seconds $1%d</string>
+    <string name="check_in_recent_seconds">recent_seconds $1%d</string>
+    <string name="check_in_end_time">end_time $1%d</string>
+
+    <!-- Invalid location dialog -->
+    <string name="check_in_oob_title">Invalid location.</string>
+    <string name="check_in_oob_body">Look\'s like your too far away from the school! Try checking in a little closer.</string>
+    <string name="check_in_no_school">Looks like you aren\'t a register mentor! Edit your profile to sign up for a school.</string>
+    <string name="check_in_oob_confirm">Return</string>
+
+    <string name="check_in_start_title">Choose an option</string>
+    <string name="check_in_start_body">Click start session to begin your session, or submit a check in request.</string>
+    <string name="check_in_start_confirm">Start session</string>
+    <string name="check_in_request">Create Request</string>
+
+    <string name="check_in_finish_title">Finish Session</string>
+    <string name="check_in_finish_body">Do you want to finish your mentoring session?</string>
+    <string name="check_in_finish_confirm">Finish</string>
+    <string name="check_in_finish_return">Back</string>
+
+    <string name="check_in_location_off_title">Location Services off</string>
+    <string name="check_in_location_off_body">Please enable location services to continue.</string>
+
+    <string name="check_in_location_off_confirm">Settings</string>
+    <string name="check_in_location_off_return">Cancel</string>
+
+    <!-- Check In Request Form -->
+    <string name="check_in_request_date">Date</string>
+    <string name="check_in_request_start_time">Start Time</string>
+    <string name="check_in_request_end_time">End Time</string>
+    <string name="check_in_request_total_time">Total Time:</string>
+    <string name="check_in_request_comment">Comments</string>
+    <string name="check_in_default_total">0 hrs, 0 min</string>
+    <string name="check_in_cancel_request">Delete Request</string>
+
+    <!-- Check In Request Errors -->
+    <string name="check_in_request_error">Invalid check-in request.</string>
+    <string name="check_in_request_blank">Date and times cannot be blank!</string>
+    <string name="check_in_request_invalid_dates">Invalid start and end times</string>
+    <string name="check_in_request_too_long">Check-ins cannot exceed six hours - your request has been reset.</string>
+    <string name="check_in_request_invalid_time">Check In requests cannot exceed six hours.</string>
+    <string name="check_in_no_current_semester">Looks like there\'s no active semester right now.</string>
+
+    <string name="check_in_request_delete_title">Delete Request?</string>
+    <string name="check_in_request_delete_body">Are you sure you want to delete your request? This will reset your session.</string>
+
+    <!-- Verify Check In strings -->
+    <string name="check_in_total_time">%1$s - %2$s</string>
+</resources>

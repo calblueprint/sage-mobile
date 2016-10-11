@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/tab_view_image"
+        android:layout_width="@dimen/tab_layout_image"
+        android:layout_height="@dimen/tab_layout_image"
+        android:scaleType="centerCrop"
+        android:alpha="@dimen/tabs_alpha"/>
+
+</LinearLayout>

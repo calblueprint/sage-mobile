@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/announcement_row">
+            <blueprint.com.sage.shared.views.CircleImageView
+                android:id="@+id/announcement_profile_picture"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/white_circle"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/announcement_user"
+                style="@style/AnnouncementRow"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:text="User Name"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/announcement_school"
+                style="@style/AnnouncementRow"
+                android:text="@string/announcement_school"
+                android:layout_toRightOf="@id/announcement_user"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="0dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/announcement_time"
+                style="@style/AnnouncementRow"
+                android:textColor="@color/date_gray"
+                android:text="2 days ago"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/announcement_user"/>
+
+            <TextView
+                android:id="@+id/announcement_title"
+                style="@style/AnnouncementRow"
+                android:text="Title"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:layout_below="@id/announcement_time"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/announcement_body"
+                style="@style/AnnouncementRow"
+                android:text="The actual announcement."
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:layout_below="@id/announcement_title"
+                android:maxLines="6"
+                android:ellipsize="end" />
+
+            <View
+                android:id="@+id/announcement_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_gray"
+                android:layout_below="@id/announcement_body"/>
+        </RelativeLayout>
+</LinearLayout>

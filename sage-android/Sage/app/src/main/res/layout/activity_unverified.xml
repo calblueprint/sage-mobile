@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/unverified_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <RelativeLayout
+                android:layout_width="180dp"
+                android:layout_height="180dp">
+
+                <blueprint.com.sage.shared.views.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/checkmark_circled"
+                    android:layout_centerHorizontal="true" />
+
+                <blueprint.com.sage.shared.views.CircleImageView
+                    android:id="@+id/unverified_photo_circle"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/DefaultHeader"
+                android:layout_marginTop="10dp"
+                android:text="@string/unverified_body" />
+
+            <Button
+                style="@style/DefaultButton"
+                android:id="@+id/unverified_log_out"
+                android:layout_marginTop="30dp"
+                android:text="@string/user_log_out" />
+        </LinearLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageView">
+        <attr name="border" format="boolean" />
+        <attr name="background_color" format="color" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="shadow" format="boolean" />
+    </declare-styleable>
+    
+    <declare-styleable name="FloatingTextView">
+        <attr name="android:textColor" />
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+    </declare-styleable>
+
+    <declare-styleable name="SimpleLoadingLayout">
+        <attr name="textColor" format="color" />
+        <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="unpressed" format="reference" />
+        <attr name="pressed" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="NoSwipeViewPager">
+        <attr name="scrollFactor" format="float" />
+    </declare-styleable>
+</resources>

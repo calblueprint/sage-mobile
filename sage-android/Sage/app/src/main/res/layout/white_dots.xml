@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/white_dots_container"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        style="@style/SignUpCircle"
+        android:id="@+id/white_dot_1" />
+
+    <ImageView
+        style="@style/SignUpCircle"
+        android:id="@+id/white_dot_2" />
+
+    <ImageView
+        style="@style/SignUpCircle"
+        android:id="@+id/white_dot_3" />
+
+    <ImageView
+        style="@style/SignUpCircle"
+        android:id="@+id/white_dot_4" />
+
+</LinearLayout>

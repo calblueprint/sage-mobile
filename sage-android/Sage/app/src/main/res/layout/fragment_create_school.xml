@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/create_school_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.gms.maps.MapView
+            style="@style/CreateSchoolMap"
+            android:id="@+id/create_school_map" />
+
+        <LinearLayout style="@style/FormContainerLinearLayout">
+
+            <ImageView
+                style="@style/FormIcon"
+                android:src="@drawable/ic_location_city_black"/>
+
+            <LinearLayout
+                style="@style/FormEditLinearLayout">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/school_name"/>
+
+                <EditText
+                    style="@style/FormText"
+                    android:id="@+id/create_school_name"
+                    android:hint="@string/required"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/FormContainerLinearLayout">
+
+            <ImageView
+                style="@style/FormIcon"
+                android:id="@+id/create_school_address_icon"
+                android:src="@drawable/ic_place_black" />
+
+            <LinearLayout style="@style/FormEditLinearLayout">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/school_address"/>
+
+                <blueprint.com.sage.shared.views.DelayAutoCompleteTextView
+                    style="@style/FormText"
+                    android:id="@+id/create_school_address"
+                    android:hint="@string/required" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/FormContainerLinearLayout">
+
+            <ImageView
+                style="@style/FormIcon"
+                android:src="@drawable/ic_face_black" />
+
+            <LinearLayout style="@style/FormEditLinearLayout">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/school_director" />
+
+                <Spinner
+                    style="@style/FormSpinner"
+                    android:id="@+id/create_school_director" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/PanelHeader"
+        android:text="@string/user_profile" />
+
+    <LinearLayout
+        style="@style/PanelLayout"
+        android:id="@+id/user_edit_profile">
+
+        <ImageView
+            style="@style/PanelIcon"
+            android:src="@drawable/ic_edit_black_24dp"/>
+
+        <TextView
+            style="@style/PanelTitle"
+            android:text="@string/user_edit" />
+
+    </LinearLayout>
+
+    <View style="@style/PanelDivider" />
+
+    <TextView
+        style="@style/PanelHeader"
+        android:text="@string/user_general_settings" />
+
+    <LinearLayout
+        style="@style/PanelLayout"
+        android:id="@+id/user_about">
+
+        <ImageView
+            style="@style/PanelIcon"
+            android:src="@drawable/ic_cell_black_24dp"/>
+
+        <TextView
+            style="@style/PanelTitle"
+            android:text="@string/user_about" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/PanelLayout"
+        android:id="@+id/user_log_out">
+
+        <ImageView
+            style="@style/PanelIcon"
+            android:src="@drawable/ic_exit_to_app_black"/>
+
+        <TextView
+            style="@style/PanelTitle"
+            android:text="@string/user_log_out" />
+
+    </LinearLayout>
+</LinearLayout>

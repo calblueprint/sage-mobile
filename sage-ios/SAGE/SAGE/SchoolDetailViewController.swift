@@ -212,12 +212,12 @@ class SchoolDetailViewController: SGTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var userProfile: User
         if let role = LoginOperations.getUser()?.role {
-            if indexPath.section == 0 {
-                userProfile = self.school!.director!
-            } else {
-                userProfile = self.school!.students![indexPath.row]
-            }
             if role == .Admin || role == .President {
+                if indexPath.section == 0 {
+                    userProfile = self.school!.director!
+                } else {
+                    userProfile = self.school!.students![indexPath.row]
+                }
                 let viewController = ProfileViewController(user: userProfile)
                 self.navigationController!.pushViewController(viewController, animated: true)
             }

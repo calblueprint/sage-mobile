@@ -216,8 +216,12 @@ class SchoolDetailViewController: SGTableViewController {
         } else {
             userProfile = self.school!.students![indexPath.row]
         }
-        let viewController = ProfileViewController(user: userProfile)
-        self.navigationController!.pushViewController(viewController, animated: true)
+        if let role = LoginOperations.getUser()?.role {
+            if role == .Admin || role == .President {
+                let viewController = ProfileViewController(user: userProfile)
+                self.navigationController!.pushViewController(viewController, animated: true)
+            }
+        }
     }
 
     

@@ -32,6 +32,7 @@
 		27F990C91BBDDB7E00D61DA2 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */; };
 		4207EBD11C880D5A00501F96 /* SGTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207EBD01C880D5A00501F96 /* SGTableViewController.swift */; };
 		4207EBD31C880DB000501F96 /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4207EBD21C880DB000501F96 /* NoContentView.swift */; };
+		421029D81D3A134300957071 /* SGNotificationCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421029D71D3A134300957071 /* SGNotificationCircle.swift */; };
 		4211CCD81C0F86BF00C4797F /* EditAnnouncementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */; };
 		421515961CC8851D008B854F /* SGNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421515951CC8851D008B854F /* SGNavigationController.swift */; };
 		421515981CC891AC008B854F /* SuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421515971CC891AC008B854F /* SuccessView.swift */; };
@@ -241,6 +242,7 @@
 		27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		4207EBD01C880D5A00501F96 /* SGTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGTableViewController.swift; sourceTree = "<group>"; };
 		4207EBD21C880DB000501F96 /* NoContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
+		421029D71D3A134300957071 /* SGNotificationCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGNotificationCircle.swift; sourceTree = "<group>"; };
 		4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAnnouncementController.swift; sourceTree = "<group>"; };
 		421515951CC8851D008B854F /* SGNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGNavigationController.swift; sourceTree = "<group>"; };
 		421515971CC891AC008B854F /* SuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessView.swift; sourceTree = "<group>"; };
@@ -576,6 +578,7 @@
 				E4B347E21C866E990026D43D /* SGTitleView.swift */,
 				4207EBD21C880DB000501F96 /* NoContentView.swift */,
 				5DA5F0ED1CB08DC100D1FC85 /* SGSectionHeaderView.swift */,
+				421029D71D3A134300957071 /* SGNotificationCircle.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -1166,6 +1169,7 @@
 				2781601C1BC0E25B00A1DB75 /* CheckinViewController.swift in Sources */,
 				42EF02D21C91340F00C36926 /* SignUpEmailView.swift in Sources */,
 				4254C1EF1BFDD6A200D0D33E /* SignUpRequestsViewController.swift in Sources */,
+				421029D81D3A134300957071 /* SGNotificationCircle.swift in Sources */,
 				5D221C241C18D296008FBD9B /* CheckinTableViewCell.swift in Sources */,
 				42A6CE661C0BDFFD00F97CFF /* UsersTableViewCell.swift in Sources */,
 				E4B250D31C65D092008652FD /* UIImageView.swift in Sources */,

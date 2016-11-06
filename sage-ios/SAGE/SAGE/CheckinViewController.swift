@@ -12,9 +12,15 @@ import FontAwesomeKit
 import SwiftKeychainWrapper
 
 class CheckinViewController: SGViewController {
-
+    
+    var semaphore = dispatch_semaphore_create(0)
+    
     let locationManager = CLLocationManager()
-    var currentLocation = CLLocation()
+    var currentLocation = CLLocation() {
+        didSet {
+            dispatch_semaphore_signal(semaphore)
+        }
+    }
     var school: School?
     var distanceTolerance: CLLocationDistance?
     
@@ -34,11 +40,13 @@ class CheckinViewController: SGViewController {
     // MARK: - ViewController Lifecycle
     //
     override func loadView() {
+        print("Loading view...")
         self.view = self.checkinView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("View did load...")
         if let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
             self.school = school
             self.distanceTolerance = school.radius
@@ -59,7 +67,6 @@ class CheckinViewController: SGViewController {
 
         self.locationManager.delegate = self
         self.locationManager.requestWhenInUseAuthorization()
-        self.startGettingCurrentLocation()
         if self.school != nil {
             let marker = GMSMarker(position: self.school!.location!.coordinate)
             marker.map = self.checkinView.mapView
@@ -70,6 +77,9 @@ class CheckinViewController: SGViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.startGettingCurrentLocation()
+        print("View will appear...")
         
         // Change mode on loading view depending on whether user is
         // mid-check in or not
@@ -92,6 +102,8 @@ class CheckinViewController: SGViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        print("Viw will disappear...")
+        self.locationManager.stopUpdatingLocation()
         UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
@@ -133,33 +145,20 @@ class CheckinViewController: SGViewController {
                 preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
-
+            
         } else if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .AuthorizedWhenInUse, .AuthorizedAlways:
                 // Verify location
-                if self.currentLocationIsBySchool() {
-                    let alertController = UIAlertController(
-                        title: "Start mentoring session?",
-                        message: nil,
-                        preferredStyle: .ActionSheet)
-                    alertController.addAction(UIAlertAction(title: "Start Session", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                        //save start time locally and start timer
-                        self.presentSessionMode(UIConstants.normalAnimationTime)
-                        self.inSession = true
-                        self.startTime = NSDate.timeIntervalSinceReferenceDate()
-                        self.updateSessionTime()
-                        KeychainWrapper.setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
-                    }))
-                    alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                    self.presentViewController(alertController, animated: true, completion: nil)
+                if !self.currentLocation.recent() {
+                    self.checkinView.presentActivityIndicator()
+                    self.startGettingCurrentLocation()
+                    semaphore = dispatch_semaphore_create(0)
+                    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+                    self.checkinView.hideActivityIndicator()
+                    self.beginSessionHelper()
                 } else {
-                    let alertController = UIAlertController(
-                        title: "Location too far",
-                        message: "You are too far from \(school!.name!). Please move closer to start mentoring.",
-                        preferredStyle: .Alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    self.presentViewController(alertController, animated: true, completion: nil)
+                    self.beginSessionHelper()
                 }
                 break
             case .Denied, .Restricted, .NotDetermined:
@@ -171,6 +170,48 @@ class CheckinViewController: SGViewController {
     
     @objc private func userPressedEndSession() {
         //Verify location
+        if !self.currentLocation.recent() {
+            self.checkinView.presentActivityIndicator()
+            self.startGettingCurrentLocation()
+            semaphore = dispatch_semaphore_create(0)
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            self.checkinView.hideActivityIndicator()
+            self.endSessionHelper()
+        } else {
+            self.endSessionHelper()
+        }
+    }
+    
+    //
+    // MARK: - Private methods
+    //
+    private func beginSessionHelper() {
+        if self.currentLocationIsBySchool() {
+            let alertController = UIAlertController(
+                title: "Start mentoring session?",
+                message: nil,
+                preferredStyle: .ActionSheet)
+            alertController.addAction(UIAlertAction(title: "Start Session", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                //save start time locally and start timer
+                self.presentSessionMode(UIConstants.normalAnimationTime)
+                self.inSession = true
+                self.startTime = NSDate.timeIntervalSinceReferenceDate()
+                self.updateSessionTime()
+                KeychainWrapper.setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(
+                title: "Location too far",
+                message: "You are too far from \(school!.name!). Please move closer to start mentoring.",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    private func endSessionHelper() {
         if self.currentLocationIsBySchool() {
             let alertController = UIAlertController(
                 title: "Finish mentoring session?",
@@ -204,9 +245,6 @@ class CheckinViewController: SGViewController {
         }
     }
     
-    //
-    // MARK: - Private methods
-    //
     @objc private func updateSessionTime() {
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
@@ -332,11 +370,35 @@ extension CheckinViewController: CLLocationManagerDelegate {
     }
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-        if let location = locations.first {
+        if let location = locations.last where location.recent() {
             self.currentLocation = location
-            self.checkinView.mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-            self.locationManager.stopUpdatingLocation()
         }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        switch error.code {
+        case 0: break
+        case 1:
+            self.presentNeedsLocationAlert()
+            break
+        default:
+            let alertController = UIAlertController(
+                title: "Well this is awkward...",
+                message: "Something went wrong and we couldn't retrieve your location. \(error.localizedDescription)",
+                preferredStyle: .Alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+}
+
+//
+// MARK: - NSDate Extension
+//
+extension CLLocation {
+    func recent() -> Bool {
+        let interval = self.timestamp.timeIntervalSinceNow
+        let tolerance = NSTimeInterval(floatLiteral: -30.0)
+        return interval > tolerance
     }
 }

@@ -4,8 +4,9 @@ use_frameworks!
 
 target 'SAGE' do
   pod 'GoogleMaps'
+  pod 'GooglePlaces'
   pod 'AFNetworking', '~> 2.0'
   pod 'FontAwesomeKit', :git => 'https://github.com/PrideChung/FontAwesomeKit.git'
-  pod 'SwiftKeychainWrapper'
+  pod 'SwiftKeychainWrapper', '~> 2.0'
   pod 'BSKeyboardControls', '~> 2.2'
 end

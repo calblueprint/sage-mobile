@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class AddSchoolController: FormController {
     
@@ -20,9 +21,9 @@ class AddSchoolController: FormController {
         let addSchoolView = AddSchoolView(frame: self.view.frame)
         self.view = addSchoolView
         self.title = "Add School"
-        addSchoolView.location.button.addTarget(self, action: "locationButtonTapped", forControlEvents: .TouchUpInside)
-        addSchoolView.director.button.addTarget(self, action: "directorButtonTapped", forControlEvents: .TouchUpInside)
-        addSchoolView.radius.button.addTarget(self, action: "radiusButtonTapped", forControlEvents: .TouchUpInside)
+        addSchoolView.location.button.addTarget(self, action: #selector(self.locationButtonTapped), forControlEvents: .TouchUpInside)
+        addSchoolView.director.button.addTarget(self, action: #selector(self.directorButtonTapped), forControlEvents: .TouchUpInside)
+        addSchoolView.radius.button.addTarget(self, action: #selector(self.radiusButtonTapped), forControlEvents: .TouchUpInside)
     }
     
     func locationButtonTapped() {
@@ -50,7 +51,7 @@ class AddSchoolController: FormController {
         }
     }
 
-    func completeForm() {
+    override func completeForm() {
         let addSchoolView = (self.view as! AddSchoolView)
         if self.location == nil {
             self.showAlertControllerError("Please choose a location.")

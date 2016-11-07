@@ -38,7 +38,7 @@ class ProfileOperations: NSObject {
 
         var makeRequest = true
         if (filter == nil) || filter?.count == 0 {
-            if let semesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id {
+            if let semesterID = (KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id {
                 params[SemesterConstants.kSemesterId] = semesterID
             } else {
                 makeRequest = false

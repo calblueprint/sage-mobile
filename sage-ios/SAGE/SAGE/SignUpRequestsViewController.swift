@@ -35,7 +35,7 @@ class SignUpRequestsViewController: SGTableViewController {
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: #selector(SignUpRequestsViewController.showFilterOptions))
         self.navigationItem.rightBarButtonItem = filterButton
 
         self.view.addSubview(self.activityIndicator)
@@ -44,7 +44,7 @@ class SignUpRequestsViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadSignUpRequestsWithReset:", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(SignUpRequestsViewController.loadSignUpRequests(reset:)), forControlEvents: .ValueChanged)
         
 
         if LoginOperations.getUser()!.isDirector() {
@@ -192,8 +192,8 @@ class SignUpRequestsViewController: SGTableViewController {
             cell = SignUpRequestTableViewCell(style: .Default, reuseIdentifier: "SignUpRequestCell")
         }
         (cell as! SignUpRequestTableViewCell).configureWithUser(user)
-        (cell as! SignUpRequestTableViewCell).checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
-        (cell as! SignUpRequestTableViewCell).xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
+        (cell as! SignUpRequestTableViewCell).checkButton.addTarget(self, action: #selector(SignUpRequestsViewController.checkButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        (cell as! SignUpRequestTableViewCell).xButton.addTarget(self, action: #selector(SignUpRequestsViewController.xButtonPressed(_:)), forControlEvents: .TouchUpInside)
         return cell!
     }
     

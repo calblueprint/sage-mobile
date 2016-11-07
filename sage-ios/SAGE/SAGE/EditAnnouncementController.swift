@@ -21,7 +21,7 @@ class EditAnnouncementController: AddAnnouncementController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Edit Announcement"
-        (self.view as! AddAnnouncementView).deleteAnnouncementButton.addTarget(self, action: "deleteAnnouncement:", forControlEvents: .TouchUpInside)
+        (self.view as! AddAnnouncementView).deleteAnnouncementButton.addTarget(self, action: #selector(EditAnnouncementController.deleteAnnouncement(_:)), forControlEvents: .TouchUpInside)
     }
     
     func configureWithAnnouncement(announcement: Announcement) {

@@ -11,7 +11,7 @@ import AFNetworking
 
 class LoginOperations: NSObject {
     static func userIsLoggedIn() -> Bool {
-        if let _ = KeychainWrapper.objectForKey(KeychainConstants.kUser) {
+        if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kUser) {
             return true
         } else {
             return false
@@ -19,16 +19,16 @@ class LoginOperations: NSObject {
     }
     
     static func getUser() -> User? {
-        return KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User
+        return KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kUser) as? User
     }
     
     static func getState(completion: ((User, Semester?, SemesterSummary?) -> Void), failure:((String) -> Void)) {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(LoginOperations.getUser()!), parameters: nil, success: { (operation, data) -> Void in
-            KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
-            KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
+            KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kCurrentSemester)
+            KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSemesterSummary)
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
-            KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
+            KeychainWrapper.defaultKeychainWrapper().setObject(user, forKey: KeychainConstants.kUser)
             let currentSemesterJSON = data["session"]!!["current_semester"]
             var currentSemester: Semester? = nil
             if !(currentSemesterJSON is NSNull) {
@@ -45,13 +45,13 @@ class LoginOperations: NSObject {
                 school = School(propertyDictionary: schoolJSON as! [String: AnyObject])
             }
             if (currentSemester != nil) {
-                KeychainWrapper.setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
+                KeychainWrapper.defaultKeychainWrapper().setObject(currentSemester!, forKey: KeychainConstants.kCurrentSemester)
             }
             if (semesterSummary != nil) {
-                KeychainWrapper.setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
+                KeychainWrapper.defaultKeychainWrapper().setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
             }
             if (school != nil) {
-                KeychainWrapper.setObject(school!, forKey: KeychainConstants.kSchool)
+                KeychainWrapper.defaultKeychainWrapper().setObject(school!, forKey: KeychainConstants.kSchool)
             }
             completion(user, currentSemester, semesterSummary)
             }) { (operation, error) -> Void in
@@ -60,15 +60,15 @@ class LoginOperations: NSObject {
     }
     
     static func verifyUser(completion: ((Bool) -> Void)) {
-        if let user = KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User {
+        if let user = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kUser) as? User {
             if user.verified {
                 completion(true)
             } else {
                 let email = user.email
-                let authToken = (KeychainWrapper.objectForKey(KeychainConstants.kAuthToken) as? String)
+                let authToken = (KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kAuthToken) as? String)
                 if (email != nil && authToken != nil) {
                     LoginOperations.loginWith(email!, authToken: authToken!, completion: { (success) -> Void in
-                        if success && (KeychainWrapper.objectForKey(KeychainConstants.kUser) as! User).verified {
+                        if success && (KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kUser) as! User).verified {
                             completion(true)
                         } else {
                             completion(false)
@@ -84,14 +84,14 @@ class LoginOperations: NSObject {
     }
     
     static func updateUserRoleInKeychain(role: User.UserRole) -> User {
-        let existingUser = KeychainWrapper.objectForKey(KeychainConstants.kUser) as! User
+        let existingUser = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kUser) as! User
         existingUser.role = role
-        KeychainWrapper.setObject(existingUser, forKey: KeychainConstants.kUser)
+        KeychainWrapper.defaultKeychainWrapper().setObject(existingUser, forKey: KeychainConstants.kUser)
         return existingUser
     }
     
     static func storeUserDataInKeychain(user: User, authToken: String? = nil) {
-        if let existingUser = (KeychainWrapper.objectForKey(KeychainConstants.kUser) as? User) {
+        if let existingUser = (KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kUser) as? User) {
             if -1 != user.id {
                 existingUser.id = user.id
             }
@@ -106,7 +106,7 @@ class LoginOperations: NSObject {
             }
             if let school = user.school {
                 existingUser.school = school
-                KeychainWrapper.setObject(school, forKey: KeychainConstants.kSchool)
+                KeychainWrapper.defaultKeychainWrapper().setObject(school, forKey: KeychainConstants.kSchool)
             }
             if User.VolunteerLevel.Default != user.level {
                 existingUser.level = user.level
@@ -116,15 +116,15 @@ class LoginOperations: NSObject {
             }
             existingUser.semesterSummary = user.semesterSummary
             existingUser.verified = user.verified
-            KeychainWrapper.setObject(existingUser, forKey: KeychainConstants.kUser)
+            KeychainWrapper.defaultKeychainWrapper().setObject(existingUser, forKey: KeychainConstants.kUser)
         } else {
-            KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
+            KeychainWrapper.defaultKeychainWrapper().setObject(user, forKey: KeychainConstants.kUser)
             if let auth = authToken {
-                KeychainWrapper.setObject(auth, forKey: KeychainConstants.kAuthToken)
+                KeychainWrapper.defaultKeychainWrapper().setObject(auth, forKey: KeychainConstants.kAuthToken)
             }
             if let school = user.school {
                 user.school = school
-                KeychainWrapper.setObject(school, forKey: KeychainConstants.kSchool)
+                KeychainWrapper.defaultKeychainWrapper().setObject(school, forKey: KeychainConstants.kSchool)
             }
         }
     }
@@ -220,12 +220,12 @@ class LoginOperations: NSObject {
     }
     
     static func deleteUserKeychainData() {
-        KeychainWrapper.removeObjectForKey(KeychainConstants.kUser)
-        KeychainWrapper.removeObjectForKey(KeychainConstants.kAuthToken)
-        KeychainWrapper.removeObjectForKey(KeychainConstants.kSchool)
-        KeychainWrapper.removeObjectForKey(KeychainConstants.kCurrentSemester)
-        KeychainWrapper.removeObjectForKey(KeychainConstants.kSemesterSummary)
-        KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+        KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kUser)
+        KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kAuthToken)
+        KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSchool)
+        KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kCurrentSemester)
+        KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSemesterSummary)
+        KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSessionStartTime)
     }
     
     static func sendPasswordResetRequest(email: String, completion: (() -> Void), failure: (String) -> Void) {

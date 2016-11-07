@@ -121,9 +121,10 @@ class CheckinView: UIView {
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if let key = keyPath where key == "myLocation" {
-            self.mapView.removeObserver(self, forKeyPath: "myLocation")
-            let location = (object! as! GMSMapView).myLocation
-            self.mapView.animateToLocation(location.coordinate)
+            if let location = (object! as! GMSMapView).myLocation {
+                self.mapView.removeObserver(self, forKeyPath: "myLocation")
+                self.mapView.animateToLocation(location.coordinate)
+            }
         }
     }
     

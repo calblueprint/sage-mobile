@@ -145,7 +145,7 @@ class AnnouncementsViewController: SGTableViewController {
                 self.getAnnouncements(reset: true)
                 self.changeSubtitle("My School")
             }))
-        } else if let userSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+        } else if let userSchool = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) as? School {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
                 self.getAnnouncements(reset: true)

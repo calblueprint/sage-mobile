@@ -23,7 +23,7 @@ class AddAnnouncementController: FormController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Create Announcement"
-        self.addAnnouncementView.school.button.addTarget(self, action: "schoolButtonTapped", forControlEvents: .TouchUpInside)
+        self.addAnnouncementView.school.button.addTarget(self, action: #selector(AddAnnouncementController.schoolButtonTapped), forControlEvents: .TouchUpInside)
     }
     
     func prefillWithAnnouncement(announcement: Announcement) {
@@ -43,7 +43,7 @@ class AddAnnouncementController: FormController {
         self.navigationController?.pushViewController(tableViewController, animated: true)
     }
     
-    func completeForm() {
+    override func completeForm() {
         if self.addAnnouncementView.isValid() {
             let finalAnnouncement = self.exportToAnnouncement()
             self.finishButton?.startLoading()

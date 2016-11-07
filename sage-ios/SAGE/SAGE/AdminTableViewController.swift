@@ -78,7 +78,8 @@ class AdminTableViewController: SGTableViewController {
         // No need to account for if the user is a President for showing the Pause Semester
         // since this section doesn't show at all for non-Presidents
         case 3:
-            if let currentSemester = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+            if let currentSemester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+//            if let currentSemester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
                 if !currentSemester.isPaused {
                     return 2
                 }
@@ -133,7 +134,7 @@ class AdminTableViewController: SGTableViewController {
         case 3:
             switch indexPath.row {
             case 0:
-                if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) {
                     self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
                 } else {
                     self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
@@ -192,7 +193,7 @@ class AdminTableViewController: SGTableViewController {
             }
         case 3:
             if indexPath.row == 0 {
-                if let _ = KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) {
+                if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) {
                     cell.textLabel?.text = "End Semester"
                     let icon = FAKIonIcons.logOutIconWithSize(iconSize)
                         .imageWithSize(CGSizeMake(iconSize, iconSize))

@@ -54,7 +54,7 @@ class StartSemesterView: FormView {
         self.startDateItem.textField.delegate = self
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .Date
-        datePicker.addTarget(self, action: "datePicked:", forControlEvents: .ValueChanged)
+        datePicker.addTarget(self, action: #selector(StartSemesterView.datePicked(_:)), forControlEvents: .ValueChanged)
         self.startDateItem.textField.inputView = datePicker
         self.startDateItem.setHeight(FormFieldItem.defaultHeight)
         self.scrollView.addSubview(self.startDateItem)

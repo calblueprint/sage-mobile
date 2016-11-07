@@ -39,7 +39,7 @@ class SelectAnnouncementSchoolTableViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadSchools", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(SelectAnnouncementSchoolTableViewController.loadSchools), forControlEvents: .ValueChanged)
         
         self.loadSchools()
     }

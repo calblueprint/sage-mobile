@@ -15,7 +15,7 @@ class FormController: SGViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: "completeForm")
+        self.finishButton = SGBarButtonItem(title: "Finish", style: .Done, target: self, action: #selector(self.completeForm))
         self.navigationItem.rightBarButtonItem = self.finishButton
 
         // Do any additional setup after loading the view.
@@ -25,5 +25,9 @@ class FormController: SGViewController {
         let error = self.currentErrorMessage
         let errorView = self.showError(message, currentError: error, color: UIColor.mainColor)
         self.currentErrorMessage = errorView
+    }
+    
+    func completeForm() {
+        preconditionFailure("This method must be overridden")
     }
 }

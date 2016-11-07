@@ -212,7 +212,7 @@ class LoginView: UIView {
     
     func setUpGestureRecognizer() {
         let recognizer = UITapGestureRecognizer()
-        recognizer.addTarget(self, action: "screenTapped")
+        recognizer.addTarget(self, action: #selector(LoginView.screenTapped))
         self.addGestureRecognizer(recognizer)
         self.userInteractionEnabled = true
     }
@@ -228,8 +228,8 @@ class LoginView: UIView {
     
     func setUpKeyboardNotifications() {
         let center: NSNotificationCenter = NSNotificationCenter.defaultCenter()
-        center.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        center.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(LoginView.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(LoginView.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification) {

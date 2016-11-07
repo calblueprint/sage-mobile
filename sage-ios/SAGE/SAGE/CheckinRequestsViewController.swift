@@ -20,7 +20,7 @@ class CheckinRequestsViewController: SGTableViewController {
     //
     override init(style: UITableViewStyle) {
         super.init(style: style)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userEdited:", name: NotificationConstants.editProfileKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CheckinRequestsViewController.userEdited(_:)), name: NotificationConstants.editProfileKey, object: nil)
         self.setNoContentMessage("No new check in requests!")
     }
     
@@ -62,7 +62,7 @@ class CheckinRequestsViewController: SGTableViewController {
         
         let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
-        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: "showFilterOptions")
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: #selector(CheckinRequestsViewController.showFilterOptions))
         self.navigationItem.rightBarButtonItem = filterButton
 
         self.view.addSubview(self.activityIndicator)
@@ -71,7 +71,7 @@ class CheckinRequestsViewController: SGTableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.backgroundColor = UIColor.mainColor
         self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: "loadCheckinRequestsWithReset:", forControlEvents: .ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(CheckinRequestsViewController.loadCheckinRequests(reset:)), forControlEvents: .ValueChanged)
         
         if LoginOperations.getUser()!.isDirector() {
             self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
@@ -220,8 +220,8 @@ class CheckinRequestsViewController: SGTableViewController {
             cell = CheckinRequestTableViewCell(style: .Default, reuseIdentifier: "CheckinRequestCell")
         }
         (cell as! CheckinRequestTableViewCell).configureWithCheckin(checkin)
-        (cell as! CheckinRequestTableViewCell).checkButton.addTarget(self, action: "checkButtonPressed:", forControlEvents: .TouchUpInside)
-        (cell as! CheckinRequestTableViewCell).xButton.addTarget(self, action: "xButtonPressed:", forControlEvents: .TouchUpInside)
+        (cell as! CheckinRequestTableViewCell).checkButton.addTarget(self, action: #selector(CheckinRequestsViewController.checkButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        (cell as! CheckinRequestTableViewCell).xButton.addTarget(self, action: #selector(CheckinRequestsViewController.xButtonPressed(_:)), forControlEvents: .TouchUpInside)
         return cell!
     }
     

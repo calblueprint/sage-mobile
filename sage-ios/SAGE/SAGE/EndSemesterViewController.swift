@@ -21,8 +21,8 @@ class EndSemesterViewController: SGViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.endView.cancelButton.addTarget(self, action: "cancelPressed", forControlEvents: .TouchUpInside)
-        self.endView.finalButton.addTarget(self, action: "endSemester", forControlEvents: .TouchUpInside)
+        self.endView.cancelButton.addTarget(self, action: #selector(EndSemesterViewController.cancelPressed), forControlEvents: .TouchUpInside)
+        self.endView.finalButton.addTarget(self, action: #selector(EndSemesterViewController.endSemester), forControlEvents: .TouchUpInside)
     }
 
     override func viewWillAppear(animated: Bool) {

@@ -52,7 +52,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 
                 let adminViewController = AdminTableViewController(style: .Grouped)
                 rootViewControllers.append(adminViewController)
-            } else if let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) {
+            } else if let school = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) {
                 let icon = FAKIonIcons.androidHomeIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)

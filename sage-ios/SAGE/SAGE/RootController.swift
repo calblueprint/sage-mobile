@@ -44,7 +44,7 @@ class RootController: UIViewController {
     func pushCorrectViewController() {
         if LoginOperations.userIsLoggedIn() {
             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
-                KeychainWrapper.setObject(user, forKey: KeychainConstants.kUser)
+                KeychainWrapper.defaultKeychainWrapper().setObject(user, forKey: KeychainConstants.kUser)
                 if (user.verified) {
                     self.pushRootTabBarController()
                 } else {

@@ -27,7 +27,11 @@ class StartSemesterViewController: FormController {
     //
     // MARK: - Navigation Button Handlers
     //
+<<<<<<< HEAD
     override func completeForm() {
+=======
+    @objc override func completeForm() {
+>>>>>>> master
         if self.startSemesterView.isValid() {
             let finalSemester = self.startSemesterView.exportToSemester()
             if finalSemester.startDate == nil || !finalSemester.startDate!.timeIntervalSinceNow.isSignMinus {

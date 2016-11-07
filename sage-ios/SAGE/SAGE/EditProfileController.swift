@@ -32,6 +32,7 @@ class EditProfileController: FormController {
     override func loadView() {
         self.view = self.editProfileView
     }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

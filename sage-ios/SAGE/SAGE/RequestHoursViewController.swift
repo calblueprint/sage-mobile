@@ -35,7 +35,11 @@ class RequestHoursViewController: FormController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+<<<<<<< HEAD
     override func completeForm() {
+=======
+    @objc override func completeForm() {
+>>>>>>> master
         if self.requestHoursView.isValid() {
             let finalCheckin = self.requestHoursView.exportToCheckinVerified(self.inSession)
             if !finalCheckin.verified && (finalCheckin.comment?.characters.count == nil || finalCheckin.comment?.characters.count == 0) {
@@ -49,7 +53,7 @@ class RequestHoursViewController: FormController {
             }
             self.finishButton?.startLoading()
             CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
-                KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSessionStartTime)
                 if checkinResponse.verified {
                     NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addVerifiedCheckinKey, object: checkinResponse)
                 } else {

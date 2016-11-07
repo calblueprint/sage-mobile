@@ -17,12 +17,15 @@ class CheckinView: UIView {
     var timerLabel: UILabel = UILabel()
     var timerArc: CAShapeLayer = CAShapeLayer()
     var timerBubble: UIView = UIView()
+    var activityIndicatorView = UIView()
     var mapView: GMSMapView = GMSMapView()
     
     private let buttonSize: CGFloat = 56.0
     private let timerSize: CGFloat = 80.0
     private let margin: CGFloat = 10.0
     private let shadowOpacity: Float = 0.5
+    
+    private let berkeleyCoordinates = CLLocationCoordinate2D(latitude: 37.8715926, longitude: -122.27274699999998)
 
     //
     // MARK: - Initialization
@@ -55,6 +58,8 @@ class CheckinView: UIView {
         self.timerLabel.fillWidth()
         self.timerLabel.fillHeight()
         self.timerLabel.centerInSuperview()
+        
+        self.activityIndicatorView.centerInSuperview()
     }
     
     //
@@ -73,6 +78,22 @@ class CheckinView: UIView {
         self.timerLabel.textColor = UIColor.lightRedColor
         self.timerArc.fillColor = UIColor.lightRedColor.CGColor
         self.updateTimerWithTime(timeElapsed, percentage: percentage)
+    }
+    
+    func presentActivityIndicator() {
+        if self.activityIndicatorView == 0 {
+            self.showView(self.activityIndicatorView, hide: nil, duration: 0.2, showAlpha: 0.9)
+            (self.activityIndicatorView.subviews.first! as! UIActivityIndicatorView).startAnimating()
+        }
+    }
+    
+    func hideActivityIndicator() {
+        if self.activityIndicatorView.alpha != 0 {
+            (self.activityIndicatorView.subviews.first! as! UIActivityIndicatorView).stopAnimating()
+            UIView.animateWithDuration(0.2) { () -> Void in
+                self.activityIndicatorView.alpha = 0
+            }
+        }
     }
     
     func updateTimerWithTime(timeElapsed: NSTimeInterval, percentage: CGFloat) {
@@ -98,10 +119,21 @@ class CheckinView: UIView {
         }
     }
     
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if let key = keyPath where key == "myLocation" {
+            if let location = (object! as! GMSMapView).myLocation {
+                self.mapView.removeObserver(self, forKeyPath: "myLocation")
+                self.mapView.animateToLocation(location.coordinate)
+            }
+        }
+    }
+    
     //
     // MARK: - Private methods
     //
     private func setupSubviews() {
+        self.mapView.camera = GMSCameraPosition(target: berkeleyCoordinates, zoom: 18, bearing: 0, viewingAngle: 0)
+        self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
         self.addSubview(self.mapView)
         
         let checkSize: CGFloat = 24
@@ -142,11 +174,25 @@ class CheckinView: UIView {
         self.timerBubble.setSize(width: timerSize, height: timerSize)
         self.timerBubble.layer.cornerRadius = timerSize/2
         self.timerView.insertSubview(self.timerBubble, atIndex: 0)
+        
+        self.activityIndicatorView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        self.activityIndicatorView.backgroundColor = UIColor.whiteColor()
+        self.activityIndicatorView.alpha = 0
+        self.activityIndicatorView.layer.cornerRadius = 10
+        self.addShadowToView(self.activityIndicatorView)
+        
+        let activityView = UIActivityIndicatorView()
+        activityView.activityIndicatorViewStyle = .WhiteLarge
+        activityView.color = UIColor.grayColor()
+        self.activityIndicatorView.addSubview(activityView)
+        
+        activityView.centerInSuperview()
+        self.addSubview(self.activityIndicatorView)
     }
     
-    private func showView(showView: UIView, hide hideView: UIView?, duration: NSTimeInterval) {
+    private func showView(showView: UIView, hide hideView: UIView?, duration: NSTimeInterval, showAlpha: CGFloat = 1) {
         showView.transform = CGAffineTransformMakeScale(0.05, 0.05)
-        showView.alpha = 1
+        showView.alpha = showAlpha
         self.bringSubviewToFront(showView)
         
         UIView.animateWithDuration(duration,

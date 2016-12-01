@@ -23,7 +23,7 @@ extension UIImage {
         original.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
         let compressedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return compressedImage
+        return compressedImage!
     }
     
     static func defaultProfileImage() -> UIImage {

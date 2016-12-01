@@ -97,7 +97,7 @@ class AddSchoolLocationTableViewController: SGTableViewController {
         cell!.textLabel?.attributedText = result.attributedFullText
         cell?.detailTextLabel?.font = UIFont.metaFont
         cell?.detailTextLabel?.textColor = UIColor.secondaryTextColor
-        self.placesClient.lookUpPlaceID(result.placeID) { (place, error) -> Void in
+        self.placesClient.lookUpPlaceID(result.placeID!) { (place, error) -> Void in
             cell?.detailTextLabel?.text = place?.formattedAddress
         }
         return cell!
@@ -107,7 +107,7 @@ class AddSchoolLocationTableViewController: SGTableViewController {
         self.locationView.activityIndicator.startAnimating()
         let placeID = self.autocompleteSuggestions[indexPath.row].placeID
         let placeClient = GMSPlacesClient.sharedClient()
-        placeClient.lookUpPlaceID(placeID) { (predictedPlace, error) -> Void in
+        placeClient.lookUpPlaceID(placeID!) { (predictedPlace, error) -> Void in
             if let place = predictedPlace {
                 let coordinate = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
                 self.locationView.mapView.camera = GMSCameraPosition(target: coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
@@ -149,7 +149,7 @@ extension AddSchoolLocationTableViewController: UISearchBarDelegate {
 }
 
 extension AddSchoolLocationTableViewController: GMSMapViewDelegate {
-    func mapView(mapView: GMSMapView!, idleAtCameraPosition position: GMSCameraPosition!) {
+    func mapView(mapView: GMSMapView, idleAtCameraPosition position: GMSCameraPosition) {
         let centerPoint = self.locationView.mapView.center
         let coordinate = self.locationView.mapView.projection.coordinateForPoint(centerPoint)
         

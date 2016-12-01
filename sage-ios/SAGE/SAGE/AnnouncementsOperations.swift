@@ -33,7 +33,7 @@ class AnnouncementsOperations {
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
             var announcements = [Announcement]()
             for item in announcementsJSON {
-                let singleAnnouncement = Announcement(properties: item)
+                let singleAnnouncement = Announcement(propertyDictionary: item)
                 announcements.append(singleAnnouncement)
             }
             completion(announcements)

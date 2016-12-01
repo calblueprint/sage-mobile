@@ -323,7 +323,7 @@ class AdminOperations {
         
         manager.POST(StringConstants.kEndpointCreateAnnouncement, parameters: params, success: { (operation, data) -> Void in
             let announcementDict = (data as! [String: AnyObject])["announcement"] as! [String: AnyObject]
-            let createdAnnouncement = Announcement(properties: announcementDict)
+            let createdAnnouncement = Announcement(propertyDictionary: announcementDict)
             completion(createdAnnouncement)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

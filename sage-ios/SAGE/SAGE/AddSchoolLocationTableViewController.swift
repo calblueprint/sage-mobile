@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class AddSchoolLocationTableViewController: SGTableViewController {
 

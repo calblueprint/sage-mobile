@@ -39,7 +39,7 @@ class CheckinViewController: SGViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+        if let school = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) as? School {
             self.school = school
             self.distanceTolerance = school.radius
         }
@@ -73,7 +73,7 @@ class CheckinViewController: SGViewController {
         
         // Change mode on loading view depending on whether user is
         // mid-check in or not
-        if let storedStartTime = KeychainWrapper.stringForKey(KeychainConstants.kSessionStartTime) {
+        if let storedStartTime = KeychainWrapper.defaultKeychainWrapper().stringForKey(KeychainConstants.kSessionStartTime) {
             self.presentSessionMode(0)
             self.inSession = true
             self.startTime = NSTimeInterval(storedStartTime)!
@@ -83,9 +83,9 @@ class CheckinViewController: SGViewController {
             self.inSession = false
         }
         
-        if (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) == nil && KeychainWrapper.objectForKey(KeychainConstants.kSemesterSummary) == nil) {
+        if (KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) == nil && KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSemesterSummary) == nil) {
             self.navigationController!.pushViewController(NoSemesterViewController(), animated: false)
-        } else if (KeychainWrapper.objectForKey(KeychainConstants.kSemesterSummary) == nil && KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) != nil) {
+        } else if (KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSemesterSummary) == nil && KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) != nil) {
             self.navigationController!.pushViewController(JoinSemesterViewController(), animated: false)
         }
     }
@@ -110,7 +110,7 @@ class CheckinViewController: SGViewController {
     
     @objc private func schoolEdited(notification: NSNotification) {
         let school = notification.object!.copy() as! School
-        if let currentSchool = KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School {
+        if let currentSchool = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) as? School {
             if currentSchool.id == school.id {
                 self.school = school
 
@@ -149,7 +149,7 @@ class CheckinViewController: SGViewController {
                         self.inSession = true
                         self.startTime = NSDate.timeIntervalSinceReferenceDate()
                         self.updateSessionTime()
-                        KeychainWrapper.setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
+                        KeychainWrapper.defaultKeychainWrapper().setString(String(format: "%f", self.startTime), forKey: KeychainConstants.kSessionStartTime)
                     }))
                     alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
@@ -187,7 +187,7 @@ class CheckinViewController: SGViewController {
                 confirmAlert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (action: UIAlertAction) -> Void in
                     self.presentDefaultMode(UIConstants.normalAnimationTime)
                     self.inSession = false
-                    KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                    KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSessionStartTime)
                 }))
                 confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
                 self.presentViewController(confirmAlert, animated: true, completion: nil)
@@ -215,7 +215,7 @@ class CheckinViewController: SGViewController {
             let cancelSessionBlock: (UIAlertAction) -> Void = { (alertAction) -> Void in
                 self.presentDefaultMode(UIConstants.normalAnimationTime)
                 self.inSession = false
-                KeychainWrapper.removeObjectForKey(KeychainConstants.kSessionStartTime)
+                KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSessionStartTime)
             }
             let alertController = UIAlertController(
                 title: "Session limit exceeded",

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey(APIKeys.googleMaps)
         
         // Allow keychain wrapper to always access values
-        KeychainWrapper.setString(kSecAttrAccessibleAlways as String, forKey:kSecAttrAccessible as String)
+        KeychainWrapper.defaultKeychainWrapper().setString(kSecAttrAccessibleAlways as String, forKey:kSecAttrAccessible as String)
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = RootController()

@@ -8,6 +8,3 @@
 
 @import GoogleMaps;
 @import GooglePlaces;
-@import AFNetworking;
-@import FontAwesomeKit;
-@import BSKeyboardControls;

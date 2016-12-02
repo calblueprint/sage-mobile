@@ -108,7 +108,7 @@ class RequestHoursView: FormView {
             user: LoginOperations.getUser(),
             startTime: self.startTime,
             endTime: self.endTime,
-            school: KeychainWrapper.objectForKey(KeychainConstants.kSchool) as? School,
+            school: KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) as? School,
             comment: self.commentField.textView.text,
             verified: verified
         )

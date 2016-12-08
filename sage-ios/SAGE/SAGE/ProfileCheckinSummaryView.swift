@@ -14,7 +14,6 @@ class ProfileCheckinSummaryView: UIView {
     let topBorder = UIView()
     let bottomBorder = UIView()
     let centerBorder = UIView()
-    let userInformationContainer = UIView()
     let userStatusLabel = UILabel()
     let userStatusIcon = UIImageView()
     let userCommitmentLabel = UILabel()
@@ -61,11 +60,10 @@ class ProfileCheckinSummaryView: UIView {
         self.progressContainer.addSubview(self.progressView)
         self.progressView.layer.addSublayer(self.progressArc)
         self.progressView.layer.addSublayer(self.completedProgressArc)
-        self.addSubview(self.userInformationContainer)
-        self.userInformationContainer.addSubview(self.userCommitmentLabel)
-        self.userInformationContainer.addSubview(self.userCommitmentIcon)
-        self.userInformationContainer.addSubview(self.userStatusLabel)
-        self.userInformationContainer.addSubview(self.userStatusIcon)
+        self.addSubview(self.userCommitmentLabel)
+        self.addSubview(self.userCommitmentIcon)
+        self.addSubview(self.userStatusLabel)
+        self.addSubview(self.userStatusIcon)
         setupSubviews()
     }
     
@@ -114,6 +112,7 @@ class ProfileCheckinSummaryView: UIView {
         self.userCommitmentLabel.attributedText = userCommitmentString
         self.userCommitmentIcon.image = FAKIonIcons.androidTimeIconWithSize(iconSize)
             .imageWithSize(CGSizeMake(iconSize, iconSize))
+        
         self.completedProgressArc.fillColor = progressArcColor
         self.progressArc.fillColor = UIColor.lighterGrayColor.CGColor
         self.topBorder.backgroundColor = UIColor.borderColor
@@ -146,11 +145,18 @@ class ProfileCheckinSummaryView: UIView {
         self.completedProgressArc.path = self.createArcWithPercentage(0)
         self.completedProgressArc.fillColor = UIColor.whiteColor().CGColor
         
-        self.userCommitmentLabel.font = UIFont.normalFont
         self.userStatusLabel.font = UIFont.normalFont
+        self.userStatusLabel.setHeight(30)
         
+        self.userCommitmentLabel.font = UIFont.normalFont
+        self.userCommitmentLabel.setHeight(30)
+        
+        self.userStatusIcon.setSize(width: 20, height: 30)
+        self.userStatusIcon.contentMode = .Center
         self.userStatusIcon.image = UIImage()
         
+        self.userCommitmentIcon.setSize(width: 20, height: 30)
+        self.userCommitmentIcon.contentMode = .Center
         self.userCommitmentIcon.image = UIImage()
     }
     
@@ -177,27 +183,19 @@ class ProfileCheckinSummaryView: UIView {
         self.hoursPercentageLabel.sizeToFit()
         self.hoursPercentageLabel.centerInSuperview()
         
-        self.userStatusLabel.setHeight(self.timerSize/2)
-        self.userStatusLabel.fillWidth()
-        self.userStatusLabel.setX(25)
-        self.userStatusLabel.setY(0)
+        self.userStatusIcon.setX(UIConstants.sideMargin)
+        self.userStatusIcon.alignBottomWithMargin(CGRectGetHeight(self.frame)/2)
         
-        self.userCommitmentLabel.setHeight(self.timerSize/2)
-        self.userCommitmentLabel.fillWidth()
-        self.userCommitmentLabel.setX(25)
-        self.userCommitmentLabel.setY(CGRectGetMaxY(self.userStatusLabel.frame) - 8)
+        self.userCommitmentIcon.setX(CGRectGetMinX(self.userStatusIcon.frame))
+        self.userCommitmentIcon.setY(CGRectGetMaxY(self.userStatusIcon.frame))
         
-        self.userStatusIcon.setX(0)
-        self.userStatusIcon.setY(8)
-        self.userStatusIcon.sizeToFit()
+        self.userStatusLabel.setX(CGRectGetMaxX(self.userStatusIcon.frame) + UIConstants.textMargin)
+        self.userStatusLabel.alignBottomWithMargin(CGRectGetHeight(self.frame)/2)
+        self.userStatusLabel.fillWidthWithMargin(UIConstants.screenWidth - CGRectGetMinX(self.progressContainer.frame))
+
+        self.userCommitmentLabel.setX(CGRectGetMinX(self.userStatusLabel.frame))
+        self.userCommitmentLabel.setY(CGRectGetMaxY(self.userStatusLabel.frame))
+        self.userCommitmentLabel.fillWidthWithMargin(UIConstants.screenWidth - CGRectGetMinX(self.progressContainer.frame))
         
-        self.userCommitmentIcon.setX(0)
-        self.userCommitmentIcon.setY(CGRectGetMaxY(self.userStatusLabel.frame))
-        self.userCommitmentIcon.sizeToFit()
-        
-        self.userInformationContainer.setWidth(300)
-        self.userInformationContainer.setHeight(60)
-        self.userInformationContainer.setX(self.sideMargin)
-        self.userInformationContainer.centerVertically()
     }
 }

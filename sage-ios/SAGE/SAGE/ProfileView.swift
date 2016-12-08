@@ -22,6 +22,7 @@ class ProfileView: UIView {
     let userSchool = UILabel()
     let userCheckinSummary = ProfileCheckinSummaryView()
     let userRoleLabel = UILabel()
+    let userDangerButton = UIButton()
     
     // profile page constants
     let viewHeight = CGFloat(355)
@@ -88,6 +89,7 @@ class ProfileView: UIView {
         self.profileContent.addSubview(self.userName)
         self.profileContent.addSubview(self.userSchool)
         self.profileContent.addSubview(self.userRoleLabel)
+        self.profileContent.addSubview(self.userDangerButton)
 
         self.profileContent.addSubview(self.userVolunteerLevel)
         self.profileContent.addSubview(self.userCheckinSummary)
@@ -126,7 +128,11 @@ class ProfileView: UIView {
             roleString = "Unverified"
         }
         self.userRoleLabel.text = roleString
-        self.userRoleLabel.backgroundColor = user.roleColor()
+        self.userRoleLabel.backgroundColor = user.roleColor(preventInactive: true)
+        
+        if user.semesterSummary?.status == .Inactive {
+            self.userDangerButton.hidden = false
+        }
         
         layoutSubviews()
     }
@@ -175,6 +181,14 @@ class ProfileView: UIView {
         self.userRoleLabel.textColor = UIColor.whiteColor()
         self.userRoleLabel.clipsToBounds = true
         self.userRoleLabel.layer.cornerRadius = 2
+        
+        self.userDangerButton.titleLabel?.font = UIFont.getBoldFont(14)
+        self.userDangerButton.setTitle("!", forState: .Normal)
+        self.userDangerButton.backgroundColor = UIColor.lightRedColor
+        self.userDangerButton.setSize(width: 20, height: 20)
+        self.userDangerButton.clipsToBounds = true
+        self.userDangerButton.layer.cornerRadius = 10
+        self.userDangerButton.hidden = true
     }
     
     override func layoutSubviews() {
@@ -251,6 +265,9 @@ class ProfileView: UIView {
         self.userRoleLabel.setX(self.leftMargin - 4)
         let userRoleLabelY = CGRectGetMaxY(userVolunteerLevel.frame) + 3
         self.userRoleLabel.setY(userRoleLabelY)
+        
+        self.userDangerButton.setX(CGRectGetMaxX(self.userRoleLabel.frame) + UIConstants.textMargin)
+        self.userDangerButton.center.y = self.userRoleLabel.center.y
         
         let topBorderY = CGRectGetMaxY(userRoleLabel.frame) + 20
         self.userCheckinSummary.setY(topBorderY)

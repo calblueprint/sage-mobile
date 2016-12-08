@@ -35,6 +35,8 @@
 	<string>Your location is needed to verify your check ins.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is needed to verify your check ins.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need to access your photos if you want to upload them.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-UI-Text-Regular.otf</string>

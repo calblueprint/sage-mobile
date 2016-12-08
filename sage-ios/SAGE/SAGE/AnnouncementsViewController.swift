@@ -115,12 +115,6 @@ class AnnouncementsViewController: SGTableViewController {
         }
         
         self.tableView.tableFooterView = UIView()
-        
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.backgroundColor = UIColor.mainColor
-        self.refreshControl?.tintColor = UIColor.whiteColor()
-        self.refreshControl?.addTarget(self, action: #selector(AnnouncementsViewController.fetchAnnouncements), forControlEvents: .ValueChanged)
-        
     }
     
     //

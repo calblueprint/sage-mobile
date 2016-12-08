@@ -47,7 +47,7 @@ class AnnouncementsDetailViewController: SGViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = announcement.title
         self.detailView.setupWithAnnouncement(self.announcement)
-        if let currentID = LoginOperations.getUser()?.id {
+        if let currentID = SAGEState.currentUser()?.id {
             if currentID == self.announcement.sender!.id {
                 let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
                 editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])

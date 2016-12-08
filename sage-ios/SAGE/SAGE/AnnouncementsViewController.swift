@@ -106,7 +106,7 @@ class AnnouncementsViewController: SGTableViewController {
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
         let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: #selector(AnnouncementsViewController.showFilterOptions))
 
-        if let role = LoginOperations.getUser()?.role {
+        if let role = SAGEState.currentUser()?.role {
             if role == .Admin || role == .President {
                 self.navigationItem.rightBarButtonItems = [filterButton, UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(AnnouncementsViewController.showAnnouncementForm))]
             } else {
@@ -139,13 +139,13 @@ class AnnouncementsViewController: SGTableViewController {
             self.changeSubtitle("All")
         }))
 
-        if LoginOperations.getUser()!.isDirector() {
+        if SAGEState.currentUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
-                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.filter = [AnnouncementConstants.kSchoolID: String(SAGEState.currentUser()!.directorID)]
                 self.getAnnouncements(reset: true)
                 self.changeSubtitle("My School")
             }))
-        } else if let userSchool = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) as? School {
+        } else if let userSchool = SAGEState.currentSchool() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
                 self.filter = [AnnouncementConstants.kSchoolID: String(userSchool.id)]
                 self.getAnnouncements(reset: true)
@@ -153,7 +153,7 @@ class AnnouncementsViewController: SGTableViewController {
             }))
         }
 
-        if LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President {
+        if SAGEState.currentUser()!.role == .Admin || SAGEState.currentUser()!.role == .President {
             menuController.addMenuItem(ExpandMenuItem(title: "School", listRetriever: { (controller) -> Void in
                 SchoolOperations.loadSchools({ (schools) -> Void in
                     controller.setList(schools)

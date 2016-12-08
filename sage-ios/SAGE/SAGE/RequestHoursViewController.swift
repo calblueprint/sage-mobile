@@ -49,7 +49,7 @@ class RequestHoursViewController: FormController {
             }
             self.finishButton?.startLoading()
             CheckinOperations.createCheckin(finalCheckin, success: { (checkinResponse) -> Void in
-                KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSessionStartTime)
+                SAGEState.removeSessionStartTime()
                 if checkinResponse.verified {
                     NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addVerifiedCheckinKey, object: checkinResponse)
                 } else {

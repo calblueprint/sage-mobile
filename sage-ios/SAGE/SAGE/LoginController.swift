@@ -162,7 +162,7 @@ class LoginController: SGViewController {
                                         preferredStyle: .Alert)
                                     alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                                     self.presentViewController(alertController, animated: true, completion: nil)
-                                    LoginOperations.deleteUserKeychainData()
+                                    SAGEState.reset()
                                     self.presentViewController(RootController(), animated: true, completion: nil)
                             }
                         } else {

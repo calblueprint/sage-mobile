@@ -264,14 +264,14 @@ class ProfileView: UIView {
     
     func setButtonVisibility(user: User, pastSemester: Bool = false) {
         self.showBothButtons = false
-        if LoginOperations.getUser()?.id == user.id {
+        if SAGEState.currentUser()?.id == user.id {
             self.currentUserProfile = true
         } else {
             self.currentUserProfile = false
         }
         self.canPromote = false
         self.canDemote = false
-        let loggedInUser = LoginOperations.getUser()!
+        let loggedInUser = SAGEState.currentUser()!
         if loggedInUser.role == .President && loggedInUser.id != user.id {
             self.canPromote = true
             if user.role == .Admin {

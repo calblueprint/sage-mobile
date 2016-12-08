@@ -41,7 +41,7 @@ class UsersTableViewCell: UITableViewCell {
         self.mentorPicture.setImageWithUser(user)
         self.mentorName.text = user.fullName()
         self.schoolName.text = user.school?.name
-        if let role = LoginOperations.getUser()?.role {
+        if let role = SAGEState.currentUser()?.role {
             if role == .Admin || role == .President {
                 if let semesterSummary = user.semesterSummary {
                     self.totalHours.text = String(semesterSummary.getTotalHoursAsString())

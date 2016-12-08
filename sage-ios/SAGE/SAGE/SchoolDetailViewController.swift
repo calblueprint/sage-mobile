@@ -92,7 +92,7 @@ class SchoolDetailViewController: SGTableViewController {
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
 
-        if let role = LoginOperations.getUser()?.role {
+        if let role = SAGEState.currentUser()?.role {
             if role == .Admin || role == .President {
                 let editIcon = FAKIonIcons.androidCreateIconWithSize(UIConstants.barbuttonIconSize)
                 editIcon.setAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()])
@@ -211,7 +211,7 @@ class SchoolDetailViewController: SGTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var userProfile: User
-        if let role = LoginOperations.getUser()?.role {
+        if let role = SAGEState.currentUser()?.role {
             if role == .Admin || role == .President {
                 if indexPath.section == 0 {
                     userProfile = self.school!.director!

@@ -47,8 +47,8 @@ class SignUpRequestsViewController: SGTableViewController {
         self.refreshControl?.addTarget(self, action: #selector(SignUpRequestsViewController.loadSignUpRequests(reset:)), forControlEvents: .ValueChanged)
         
 
-        if LoginOperations.getUser()!.isDirector() {
-            self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+        if SAGEState.currentUser()!.isDirector() {
+            self.filter = [AnnouncementConstants.kSchoolID: String(SAGEState.currentUser()!.directorID)]
             self.changeSubtitle("My School")
         } else {
             self.changeSubtitle("All")
@@ -99,9 +99,9 @@ class SignUpRequestsViewController: SGTableViewController {
             self.changeSubtitle("All")
         }))
 
-        if LoginOperations.getUser()!.isDirector() {
+        if SAGEState.currentUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
-                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.filter = [AnnouncementConstants.kSchoolID: String(SAGEState.currentUser()!.directorID)]
                 self.loadSignUpRequests(reset: true)
                 self.changeSubtitle("My School")
             }))

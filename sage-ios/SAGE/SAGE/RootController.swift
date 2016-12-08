@@ -42,9 +42,8 @@ class RootController: UIViewController {
     }
     
     func pushCorrectViewController() {
-        if LoginOperations.userIsLoggedIn() {
+        if SAGEState.currentUser() != nil {
             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
-                KeychainWrapper.defaultKeychainWrapper().setObject(user, forKey: KeychainConstants.kUser)
                 if (user.verified) {
                     self.pushRootTabBarController()
                 } else {
@@ -56,7 +55,7 @@ class RootController: UIViewController {
                         message: errorMessage as String,
                         preferredStyle: .Alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                        LoginOperations.deleteUserKeychainData()
+                        SAGEState.reset()
                         self.pushLoginViewController()
                     }))
                     self.presentViewController(alertController, animated: true, completion: nil)

@@ -148,6 +148,7 @@
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
 		7DAB510B471F2447CE373B43 /* Pods_SAGE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419E12842510C77C653D2AE2 /* Pods_SAGE.framework */; };
+		E4058DA71DF9154D00727DC5 /* SAGEState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4058DA61DF9154D00727DC5 /* SAGEState.swift */; };
 		E416760D1CD1A2BB00CC07C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */; };
 		E439C3AE1CB09CD9004F19FA /* SGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439C3AD1CB09CD9004F19FA /* SGViewController.swift */; };
 		E444E3521D2E2AE2004C38D6 /* PauseSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */; };
@@ -336,6 +337,7 @@
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA27C974D4E670D2D0C24E5 /* Pods-SAGE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAGE.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAGE/Pods-SAGE.release.xcconfig"; sourceTree = "<group>"; };
 		D5A2D43AF72895ACB3317068 /* Pods-SAGE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAGE.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAGE/Pods-SAGE.debug.xcconfig"; sourceTree = "<group>"; };
+		E4058DA61DF9154D00727DC5 /* SAGEState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAGEState.swift; sourceTree = "<group>"; };
 		E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		E439C3AD1CB09CD9004F19FA /* SGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGViewController.swift; sourceTree = "<group>"; };
 		E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseSemesterViewController.swift; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				27F990BC1BBCC58D00D61DA2 /* Views */,
 				27F990BD1BBCC59500D61DA2 /* Models */,
 				27F990C71BBDDB6000D61DA2 /* Networking */,
+				E4058DA51DF9153800727DC5 /* Helpers */,
 				27F990BA1BBCC57300D61DA2 /* Categories */,
 				27F990C21BBDD14E00D61DA2 /* Constants */,
 				E4D8DC7D1C6ABD4C003C0637 /* Fonts */,
@@ -822,6 +825,14 @@
 			name = Announcements;
 			sourceTree = "<group>";
 		};
+		E4058DA51DF9153800727DC5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E4058DA61DF9154D00727DC5 /* SAGEState.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		E446119C1C754CE2006E90FA /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1094,6 +1105,7 @@
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
+				E4058DA71DF9154D00727DC5 /* SAGEState.swift in Sources */,
 				421515961CC8851D008B854F /* SGNavigationController.swift in Sources */,
 				E48082491C8F980500A38E57 /* Dictionary.swift in Sources */,
 				27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */,

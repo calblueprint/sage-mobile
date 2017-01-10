@@ -1,56 +1,63 @@
 PODS:
-  - AFNetworking (2.6.0):
-    - AFNetworking/NSURLConnection (= 2.6.0)
-    - AFNetworking/NSURLSession (= 2.6.0)
-    - AFNetworking/Reachability (= 2.6.0)
-    - AFNetworking/Security (= 2.6.0)
-    - AFNetworking/Serialization (= 2.6.0)
-    - AFNetworking/UIKit (= 2.6.0)
-  - AFNetworking/NSURLConnection (2.6.0):
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.0):
+  - AFNetworking/NSURLSession (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.0)
-  - AFNetworking/Security (2.6.0)
-  - AFNetworking/Serialization (2.6.0)
-  - AFNetworking/UIKit (2.6.0):
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - BSKeyboardControls (2.2)
-  - FontAwesomeKit (2.1.9):
-    - FontAwesomeKit/Core (= 2.1.9)
-    - FontAwesomeKit/FontAwesome (= 2.1.9)
-    - FontAwesomeKit/FoundationIcons (= 2.1.9)
-    - FontAwesomeKit/IonIcons (= 2.1.9)
-    - FontAwesomeKit/Material (= 2.1.9)
-    - FontAwesomeKit/Octicons (= 2.1.9)
-    - FontAwesomeKit/Zocial (= 2.1.9)
-  - FontAwesomeKit/Core (2.1.9)
-  - FontAwesomeKit/FontAwesome (2.1.9):
+  - FontAwesomeKit (2.2.1):
+    - FontAwesomeKit/Core (= 2.2.1)
+    - FontAwesomeKit/FontAwesome (= 2.2.1)
+    - FontAwesomeKit/FoundationIcons (= 2.2.1)
+    - FontAwesomeKit/IonIcons (= 2.2.1)
+    - FontAwesomeKit/Material (= 2.2.1)
+    - FontAwesomeKit/Octicons (= 2.2.1)
+    - FontAwesomeKit/Zocial (= 2.2.1)
+  - FontAwesomeKit/Core (2.2.1)
+  - FontAwesomeKit/FontAwesome (2.2.1):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/FoundationIcons (2.1.9):
+  - FontAwesomeKit/FoundationIcons (2.2.1):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/IonIcons (2.1.9):
+  - FontAwesomeKit/IonIcons (2.2.1):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/Material (2.1.9):
+  - FontAwesomeKit/Material (2.2.1):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/Octicons (2.1.9):
+  - FontAwesomeKit/Octicons (2.2.1):
     - FontAwesomeKit/Core
-  - FontAwesomeKit/Zocial (2.1.9):
+  - FontAwesomeKit/Zocial (2.2.1):
     - FontAwesomeKit/Core
-  - GoogleMaps (1.10.3)
-  - SwiftKeychainWrapper (1.0.11)
+  - GoogleMaps (2.1.1):
+    - GoogleMaps/Maps (= 2.1.1)
+  - GoogleMaps/Base (2.1.1)
+  - GoogleMaps/Maps (2.1.1):
+    - GoogleMaps/Base
+  - GooglePlaces (2.1.1):
+    - GoogleMaps/Base (= 2.1.1)
+  - SwiftKeychainWrapper (2.0.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - BSKeyboardControls (~> 2.2)
   - FontAwesomeKit (from `https://github.com/PrideChung/FontAwesomeKit.git`)
   - GoogleMaps
-  - SwiftKeychainWrapper
+  - GooglePlaces
+  - SwiftKeychainWrapper (~> 2.0)
 
 EXTERNAL SOURCES:
   FontAwesomeKit:
@@ -58,14 +65,17 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FontAwesomeKit:
-    :commit: 2b704d61cabc8aaa288dbb4f7b44f2d8b4f91c80
+    :commit: ffcc61b71c5ae5196705d3486e20e5391fb9396c
     :git: https://github.com/PrideChung/FontAwesomeKit.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
-  FontAwesomeKit: 1a21b835bd74f0591bfc1dac8c5540188eab3f38
-  GoogleMaps: 945e4ac3b74bcca3ddada51df256eb7beddb474d
-  SwiftKeychainWrapper: 011a6946923948ffa49708014dd691164d7621d1
+  FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
+  GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
+  GooglePlaces: 35636d86e5020cba3856eb988c09a5491de0a65a
+  SwiftKeychainWrapper: 3575838215fa36c816899c301a7afe370bd94814
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: be2a55b21fb1c03d7185988037ee7c731e7ac1dc
+
+COCOAPODS: 1.1.1

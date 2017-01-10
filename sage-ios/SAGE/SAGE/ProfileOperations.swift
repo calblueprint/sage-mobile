@@ -38,7 +38,7 @@ class ProfileOperations: NSObject {
 
         var makeRequest = true
         if (filter == nil) || filter?.count == 0 {
-            if let semesterID = (KeychainWrapper.objectForKey(KeychainConstants.kCurrentSemester) as? Semester)?.id {
+            if let semesterID = SAGEState.currentSemester()?.id {
                 params[SemesterConstants.kSemesterId] = semesterID
             } else {
                 makeRequest = false
@@ -104,7 +104,7 @@ class ProfileOperations: NSObject {
         manager.PATCH(updateProfileURLString, parameters: params, success: { (operation, data) -> Void in
             let newUserData = (data as! [String: AnyObject])["user"] as! [String: AnyObject]
             let newUser = User(propertyDictionary: newUserData)
-            LoginOperations.storeUserDataInKeychain(newUser)
+            SAGEState.setCurrentUser(newUser)
             completion(newUser)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

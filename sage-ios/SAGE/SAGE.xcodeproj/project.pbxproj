@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		114953511C190CAA00A74845 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114953501C190CAA00A74845 /* APIKeys.swift */; };
-		22E8AFA2C4807E582FFD7452 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F3B940583EC03D3C82EAAD0 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */; };
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
@@ -70,7 +69,6 @@
 		4223344B1BC0D2C300E863D0 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990B81BBCC3CB00D61DA2 /* UIColor.swift */; };
 		4223344C1BC0D2C500E863D0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; };
 		4223344D1BC0D2C600E863D0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F990BF1BBCE3B300D61DA2 /* UIView.swift */; };
-		4223344F1BC0D87B00E863D0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4223344E1BC0D87B00E863D0 /* libPods.a */; };
 		422334511BC0D8D400E863D0 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334501BC0D8D400E863D0 /* libAFNetworking.a */; };
 		422334531BC0D8D900E863D0 /* libFontAwesomeKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 422334521BC0D8D900E863D0 /* libFontAwesomeKit.a */; };
 		422715451BC7359D00FD719C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422715441BC7359D00FD719C /* UIFont.swift */; };
@@ -149,6 +147,8 @@
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
+		7DAB510B471F2447CE373B43 /* Pods_SAGE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419E12842510C77C653D2AE2 /* Pods_SAGE.framework */; };
+		E4058DA71DF9154D00727DC5 /* SAGEState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4058DA61DF9154D00727DC5 /* SAGEState.swift */; };
 		E416760D1CD1A2BB00CC07C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */; };
 		E439C3AE1CB09CD9004F19FA /* SGViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E439C3AD1CB09CD9004F19FA /* SGViewController.swift */; };
 		E444E3521D2E2AE2004C38D6 /* PauseSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */; };
@@ -209,7 +209,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		038E557A8664D96BC0F724A9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		114953501C190CAA00A74845 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGBarButtonItem.swift; sourceTree = "<group>"; };
 		2705CC3A1BB927D7004FE927 /* SAGE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAGE.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,6 +238,7 @@
 		27F990C31BBDD1F300D61DA2 /* UIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		27F990C51BBDD76800D61DA2 /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		27F990C81BBDDB7E00D61DA2 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		419E12842510C77C653D2AE2 /* Pods_SAGE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SAGE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4207EBD01C880D5A00501F96 /* SGTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGTableViewController.swift; sourceTree = "<group>"; };
 		4207EBD21C880DB000501F96 /* NoContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
 		4211CCD71C0F86BF00C4797F /* EditAnnouncementController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAnnouncementController.swift; sourceTree = "<group>"; };
@@ -312,7 +312,6 @@
 		42F75B211BD451DA00835595 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		42F85ED71C01328700F62C37 /* AddSchoolController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolController.swift; sourceTree = "<group>"; };
 		42F85ED91C0132CB00F62C37 /* AddSchoolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolView.swift; sourceTree = "<group>"; };
-		4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5D1745EF1C94B95D00C4696A /* ProfileCheckinSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCheckinSummaryView.swift; sourceTree = "<group>"; };
 		5D221C231C18D296008FBD9B /* CheckinTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinTableViewCell.swift; sourceTree = "<group>"; };
 		5D6149101C5B76450036708A /* JoinSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinSemesterView.swift; sourceTree = "<group>"; };
@@ -336,6 +335,9 @@
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEA27C974D4E670D2D0C24E5 /* Pods-SAGE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAGE.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAGE/Pods-SAGE.release.xcconfig"; sourceTree = "<group>"; };
+		D5A2D43AF72895ACB3317068 /* Pods-SAGE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAGE.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAGE/Pods-SAGE.debug.xcconfig"; sourceTree = "<group>"; };
+		E4058DA61DF9154D00727DC5 /* SAGEState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SAGEState.swift; sourceTree = "<group>"; };
 		E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		E439C3AD1CB09CD9004F19FA /* SGViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGViewController.swift; sourceTree = "<group>"; };
 		E444E3511D2E2AE2004C38D6 /* PauseSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseSemesterViewController.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 		E4D8DC901C6ABDB0003C0637 /* SF-UI-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-RegularItalic.otf"; sourceTree = "<group>"; };
 		E4D8DC911C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
 		E4D8DC921C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		E4F4D1AE1DF02A430022D035 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SAGE-hgizdykbzycmlfdnsftftvsxcbiw/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,7 +386,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22E8AFA2C4807E582FFD7452 /* Pods.framework in Frameworks */,
+				7DAB510B471F2447CE373B43 /* Pods_SAGE.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +396,6 @@
 			files = (
 				422334531BC0D8D900E863D0 /* libFontAwesomeKit.a in Frameworks */,
 				422334511BC0D8D400E863D0 /* libAFNetworking.a in Frameworks */,
-				4223344F1BC0D87B00E863D0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +413,7 @@
 		19047DE251CEEBDEB3C70618 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4F4D1AE1DF02A430022D035 /* AFNetworking.framework */,
 				4264DFEA1BC59BE20097804D /* AFNetworking.framework */,
 				4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */,
 				4264DFEC1BC59BE20097804D /* SwiftKeychainWrapper.framework */,
@@ -418,8 +421,18 @@
 				422334501BC0D8D400E863D0 /* libAFNetworking.a */,
 				4223344E1BC0D87B00E863D0 /* libPods.a */,
 				8F3B940583EC03D3C82EAAD0 /* Pods.framework */,
+				419E12842510C77C653D2AE2 /* Pods_SAGE.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		23AB4585507EDB103B3816A4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D5A2D43AF72895ACB3317068 /* Pods-SAGE.debug.xcconfig */,
+				AEA27C974D4E670D2D0C24E5 /* Pods-SAGE.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		2705CC311BB927D7004FE927 = {
@@ -429,8 +442,8 @@
 				2705CC511BB927D8004FE927 /* SAGETests */,
 				2705CC5C1BB927D8004FE927 /* SAGEUITests */,
 				2705CC3B1BB927D7004FE927 /* Products */,
-				EDECFCEB40B96BC560906CF2 /* Pods */,
 				19047DE251CEEBDEB3C70618 /* Frameworks */,
+				23AB4585507EDB103B3816A4 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -451,6 +464,7 @@
 				27F990BC1BBCC58D00D61DA2 /* Views */,
 				27F990BD1BBCC59500D61DA2 /* Models */,
 				27F990C71BBDDB6000D61DA2 /* Networking */,
+				E4058DA51DF9153800727DC5 /* Helpers */,
 				27F990BA1BBCC57300D61DA2 /* Categories */,
 				27F990C21BBDD14E00D61DA2 /* Constants */,
 				E4D8DC7D1C6ABD4C003C0637 /* Fonts */,
@@ -811,6 +825,14 @@
 			name = Announcements;
 			sourceTree = "<group>";
 		};
+		E4058DA51DF9153800727DC5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E4058DA61DF9154D00727DC5 /* SAGEState.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		E446119C1C754CE2006E90FA /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -868,15 +890,6 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
-		EDECFCEB40B96BC560906CF2 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */,
-				038E557A8664D96BC0F724A9 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -884,12 +897,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2705CC621BB927D8004FE927 /* Build configuration list for PBXNativeTarget "SAGE" */;
 			buildPhases = (
-				34AA61E0AFDC48298B0E34A9 /* Check Pods Manifest.lock */,
+				A9192957CFC76BE64126FB9A /* [CP] Check Pods Manifest.lock */,
 				2705CC361BB927D7004FE927 /* Sources */,
 				2705CC371BB927D7004FE927 /* Frameworks */,
 				2705CC381BB927D7004FE927 /* Resources */,
-				D618C8EF9DED9A7A181AC325 /* Copy Pods Resources */,
-				E6627A52F2E0F2FC3135C391 /* Embed Pods Frameworks */,
+				5144703345A5E1B8837DC871 /* [CP] Embed Pods Frameworks */,
+				FC07E214A81F685CEB547679 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -922,7 +935,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2705CC681BB927D8004FE927 /* Build configuration list for PBXNativeTarget "SAGEUITests" */;
 			buildPhases = (
-				72372038996B782EA1C12B94 /* Check Pods Manifest.lock */,
 				2705CC551BB927D8004FE927 /* Sources */,
 				2705CC561BB927D8004FE927 /* Frameworks */,
 				2705CC571BB927D8004FE927 /* Resources */,
@@ -943,19 +955,22 @@
 		2705CC321BB927D7004FE927 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Cal Blueprint";
 				TargetAttributes = {
 					2705CC391BB927D7004FE927 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = ZBABCTHDAY;
+						LastSwiftMigration = 0800;
 					};
 					2705CC4D1BB927D8004FE927 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 2705CC391BB927D7004FE927;
 					};
 					2705CC581BB927D8004FE927 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 2705CC391BB927D7004FE927;
 					};
 				};
@@ -1027,64 +1042,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		34AA61E0AFDC48298B0E34A9 /* Check Pods Manifest.lock */ = {
+		5144703345A5E1B8837DC871 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAGE/Pods-SAGE-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		72372038996B782EA1C12B94 /* Check Pods Manifest.lock */ = {
+		A9192957CFC76BE64126FB9A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D618C8EF9DED9A7A181AC325 /* Copy Pods Resources */ = {
+		FC07E214A81F685CEB547679 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E6627A52F2E0F2FC3135C391 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAGE/Pods-SAGE-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1105,6 +1105,7 @@
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
 				27F990C41BBDD1F300D61DA2 /* UIConstants.swift in Sources */,
+				E4058DA71DF9154D00727DC5 /* SAGEState.swift in Sources */,
 				421515961CC8851D008B854F /* SGNavigationController.swift in Sources */,
 				E48082491C8F980500A38E57 /* Dictionary.swift in Sources */,
 				27D1B67C1BE0417000F9D026 /* RequestHoursViewController.swift in Sources */,
@@ -1284,8 +1285,8 @@
 /* Begin XCBuildConfiguration section */
 		2705CC601BB927D8004FE927 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1296,8 +1297,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1325,7 +1328,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1343,8 +1345,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1365,15 +1369,16 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		2705CC631BB927D8004FE927 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = D5A2D43AF72895ACB3317068 /* Pods-SAGE.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1390,14 +1395,16 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SAGE/SAGE-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		2705CC641BB927D8004FE927 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 038E557A8664D96BC0F724A9 /* Pods.release.xcconfig */;
+			baseConfigurationReference = AEA27C974D4E670D2D0C24E5 /* Pods-SAGE.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1414,14 +1421,15 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SAGE/SAGE-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		2705CC661BB927D8004FE927 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = SAGETests/Info.plist;
@@ -1432,6 +1440,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGETests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAGE.app/SAGE";
 			};
 			name = Debug;
@@ -1449,18 +1458,20 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGETests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SAGE.app/SAGE";
 			};
 			name = Release;
 		};
 		2705CC691BB927D8004FE927 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4460619C7F02BF25BCA11953 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SAGEUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGEUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = SAGE;
 				USES_XCTRUNNER = YES;
 			};
@@ -1468,12 +1479,13 @@
 		};
 		2705CC6A1BB927D8004FE927 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 038E557A8664D96BC0F724A9 /* Pods.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SAGEUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calblueprint.SAGEUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = SAGE;
 				USES_XCTRUNNER = YES;
 			};

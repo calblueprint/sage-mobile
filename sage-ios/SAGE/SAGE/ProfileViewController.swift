@@ -56,7 +56,7 @@ class ProfileViewController: SGTableViewController {
 
     func verifiedCheckinAdded(notification: NSNotification) {
         let checkin = notification.object!.copy() as! Checkin
-        if LoginOperations.getUser()?.id == checkin.user?.id {
+        if SAGEState.currentUser()?.id == checkin.user?.id {
             self.user?.semesterSummary?.totalMinutes += checkin.minuteDuration()
             self.profileView.setupWithUser(self.user!, pastSemester: self.filter != nil)
             self.tableView.reloadData()
@@ -66,7 +66,7 @@ class ProfileViewController: SGTableViewController {
     
     func semesterJoined(notification: NSNotification) {
         let summary = notification.object!.copy() as! SemesterSummary
-        if LoginOperations.getUser()?.id == self.user?.id {
+        if SAGEState.currentUser()?.id == self.user?.id {
             self.user?.semesterSummary = summary
             self.profileView.setupWithUser(self.user!, pastSemester: self.filter != nil)
             self.tableView.reloadData()
@@ -159,12 +159,15 @@ class ProfileViewController: SGTableViewController {
         self.profileView.startPromoting()
         ProfileOperations.promote(self.user!, role: role, completion: { (updatedUser) -> Void in
             if role == .President {
-                let existingUser = LoginOperations.updateUserRoleInKeychain(.Admin)
-                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: existingUser)
+                let currentUser = SAGEState.currentUser()!
+                currentUser.role = .Admin
+                SAGEState.setCurrentUser(currentUser)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: currentUser)
             }
             self.user = updatedUser
             self.profileView.setupWithUser(updatedUser, pastSemester: self.filter != nil)
             self.profileView.promoteButton.stopLoading()
+            NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
             }, failure: { (message) -> Void in
                 self.showErrorAndSetMessage(message)
         })
@@ -182,6 +185,7 @@ class ProfileViewController: SGTableViewController {
                 self.user = updatedUser
                 self.profileView.setupWithUser(updatedUser, pastSemester: self.filter != nil)
                 self.profileView.demoteButton.stopLoading()
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.editProfileKey, object: updatedUser)
 
                 }, failure: { (message) -> Void in
                     self.showErrorAndSetMessage(message)
@@ -218,9 +222,9 @@ class ProfileViewController: SGTableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if LoginOperations.getUser()!.id == self.user!.id && self.filter == nil {
+        if SAGEState.currentUser()!.id == self.user!.id && self.filter == nil {
             return 2
-        } else if (LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President) {
+        } else if (SAGEState.currentUser()!.role == .Admin || SAGEState.currentUser()!.role == .President) {
             return 1
         }
         return 0
@@ -266,7 +270,7 @@ class ProfileViewController: SGTableViewController {
             let logoutAction = UIAlertAction(title: "Log Out", style: .Destructive, handler: {
                 (alert: UIAlertAction!) -> Void in
                 let rootController = RootController()
-                LoginOperations.deleteUserKeychainData()
+                SAGEState.reset()
                 self.presentViewController(rootController, animated: true, completion: nil)
             })
                 

@@ -39,11 +39,11 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         
         let checkInViewController = CheckinViewController()
         
-        let profileViewController = ProfileViewController(user: LoginOperations.getUser()!)
+        let profileViewController = ProfileViewController(user: SAGEState.currentUser()!)
         
         var rootViewControllers = [announcementsViewController, checkInViewController, profileViewController]
         
-        if let role = LoginOperations.getUser()?.role {
+        if let role = SAGEState.currentUser()?.role {
             if role == .Admin || role == .President {
                 let icon = FAKIonIcons.folderIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
@@ -52,7 +52,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 
                 let adminViewController = AdminTableViewController(style: .Grouped)
                 rootViewControllers.append(adminViewController)
-            } else if let school = KeychainWrapper.objectForKey(KeychainConstants.kSchool) {
+            } else if let school = SAGEState.currentSchool() {
                 let icon = FAKIonIcons.androidHomeIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)

@@ -18,7 +18,7 @@ class UnverifiedViewController: SGViewController {
     }
     
     override func viewDidLoad() {
-        if let imageURL = LoginOperations.getUser()?.imageURL {
+        if let imageURL = SAGEState.currentUser()?.imageURL {
             (self.view as! UnverifiedView).photo.setImageWithURL(imageURL)
         } else {
             (self.view as! UnverifiedView).photo.image = UIImage.defaultProfileImage()
@@ -33,7 +33,7 @@ class UnverifiedViewController: SGViewController {
     
     func signOut() {
         let loginController = LoginController()
-        LoginOperations.deleteUserKeychainData()
+        SAGEState.reset()
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         self.presentViewController(loginController, animated: true, completion: nil)
     }

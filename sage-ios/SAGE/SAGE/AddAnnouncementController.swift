@@ -71,7 +71,7 @@ class AddAnnouncementController: FormController {
     
     private func exportToAnnouncement() -> Announcement {
         let addView = self.addAnnouncementView
-        let announcement = Announcement(sender: LoginOperations.getUser(), title: addView.title.textField.text, text: addView.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.school)
+        let announcement = Announcement(sender: SAGEState.currentUser(), title: addView.title.textField.text, text: addView.commentField.textView.text, timeCreated: NSDate(timeIntervalSinceNow: 0), school: self.school)
         return announcement
     }
     

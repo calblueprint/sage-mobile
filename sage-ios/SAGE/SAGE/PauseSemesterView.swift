@@ -167,7 +167,7 @@ class PauseSemesterView: UIView {
     private func makeDummyAnnouncement() -> Announcement {
         return Announcement(
             id: 0,
-            sender: LoginOperations.getUser(),
+            sender: SAGEState.currentUser(),
             title: "Break Next Week",
             text: "Have a good break everybody!",
             timeCreated: NSDate(),

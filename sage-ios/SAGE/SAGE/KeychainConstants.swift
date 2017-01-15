@@ -22,5 +22,8 @@ struct KeychainConstants {
     static let kCurrentSemester: String = "Current Semester"
     static let kSemesterSummary: String = "Semester Summary"
     
+    static let kSignUpRequests: String = "SignUpRequests"
+    static let kCheckInRequests: String = "CheckInRequests"
+    
     
 }

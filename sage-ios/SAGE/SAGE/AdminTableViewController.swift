@@ -11,7 +11,7 @@ import FontAwesomeKit
 import SwiftKeychainWrapper
 
 class AdminTableViewController: SGTableViewController {
-
+    
     //
     // MARK: - Initialization
     //
@@ -172,10 +172,14 @@ class AdminTableViewController: SGTableViewController {
                 let icon = FAKIonIcons.locationIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+                let notificationCircleCount = KeychainWrapper.objectForKey(KeychainConstants.kCheckInRequests) as! Int
+                cell.accessoryView = SGNotificationCircle(number: notificationCircleCount)
             } else {
                 cell.textLabel?.text = "Sign Ups"
                 let icon = FAKIonIcons.personAddIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
+                let notificationCircleCount = KeychainWrapper.objectForKey(KeychainConstants.kSignUpRequests) as! Int
+                cell.accessoryView = SGNotificationCircle(number: notificationCircleCount)
                 cell.imageView?.image = icon
             }
         case 2:

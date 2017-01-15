@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch notificationType {
         case PushNotificationConstants.kAnnouncementType:
             let announcementJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
-            let announcement = Announcement(properties: announcementJSON)
+            let announcement = Announcement(propertyDictionary: announcementJSON)
             RootController.sharedController().handleNewAnnouncement(announcement, applicationState: applicationState, launching: launching)
         case PushNotificationConstants.kCheckInRequestType:
             let checkInRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kCheckInRequest] as! [String: AnyObject]

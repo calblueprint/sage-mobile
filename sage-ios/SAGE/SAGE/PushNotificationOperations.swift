@@ -11,7 +11,7 @@ import Foundation
 class PushNotificationOperations {
 
     static func registerForNotifications(deviceID: String, completion: () -> Void, failure: (String) -> Void) {
-        if let user = LoginOperations.getUser() {
+        if let user = SAGEState.currentUser() {
             let params = [
                 NetworkingConstants.kDeviceType: 1,
                 NetworkingConstants.kDeviceID: deviceID

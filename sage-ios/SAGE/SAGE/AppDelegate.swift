@@ -71,7 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        self.handleNotification(userInfo, applicationState: application.applicationState, launching: false)
+        if SAGEState.currentUser() != nil {
+            self.handleNotification(userInfo, applicationState: application.applicationState, launching: false)
+        }
     }
 
     //
@@ -89,9 +91,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case PushNotificationConstants.kCheckInRequestType:
             let checkInRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kCheckInRequest] as! [String: AnyObject]
             let checkInRequest = Checkin(propertyDictionary: checkInRequestJSON)
+            RootController.sharedController().handleNewCheckInRequest(checkInRequest, applicationState: applicationState, launching: launching)
         case PushNotificationConstants.kSignUpRequestType:
             let signUpRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
             let signUpRequest = User(propertyDictionary: signUpRequestJSON)
+            RootController.sharedController().handleNewSignUpRequest(signUpRequest, applicationState: applicationState, launching: launching)
+
         default:
             break
         }

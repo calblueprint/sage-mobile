@@ -57,6 +57,17 @@ class AdminTableViewController: SGTableViewController {
     }
     
     //
+    // MARK: - Push Notification Handling
+    //
+    func displayCheckinRequestsView() {
+        self.navigationController?.pushViewController(CheckinRequestsViewController(), animated: true)
+    }
+    
+    func displaySignupRequestsView() {
+        self.navigationController?.pushViewController(SignUpRequestsViewController(), animated: true)
+    }
+    
+    //
     // MARK: - UITableViewDelegate
     //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

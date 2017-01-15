@@ -113,4 +113,14 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         self.setActiveIndex(.Announcement)
         self.announcementsViewController.displayAnnouncement(announcement, resetData: resetData)
     }
+    
+    func displayCheckinRequestsView() {
+        self.setActiveIndex(.Special)
+        self.adminViewController?.displayCheckinRequestsView()
+    }
+    
+    func displaySignupRequestsView() {
+        self.setActiveIndex(.Special)
+        self.adminViewController?.displayCheckinRequestsView()
+    }
 }

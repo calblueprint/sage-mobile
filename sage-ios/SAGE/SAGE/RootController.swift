@@ -175,7 +175,7 @@ class RootController: UIViewController {
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addAnnouncementKey, object: announcement)
             } else {
                 if launching {
-                    // App is just launching
+                    // App is just launching, let self.handleNotificationFromLaunch get called
                     self.notifiedAnnouncement = announcement
                 } else {
                     // App is transitioning from background to foreground
@@ -185,15 +185,69 @@ class RootController: UIViewController {
             }
         }
     }
+    
+    func handleNewCheckInRequest(checkinRequest: Checkin, applicationState: UIApplicationState, launching: Bool) {
+        // Check for duplicate notifications because iOS 9 sucks
+        if !self.notifiedCheckinRequestIds.contains(checkinRequest.id) {
+            self.notifiedCheckinRequestIds.insert(checkinRequest.id)
+            // App is already in foreground
+            if (applicationState == .Active) {
+                //if announcementController is active
+                if self.rootTabBarController?.activeIndex() != .Special {
+                    let profileImageView = ProfileImageView()
+                    profileImageView.setImageWithUser(checkinRequest.user!)
+                    self.showNotificationView(title: checkinRequest.user!.fullName(), subtitle: "New Checkin Request", image: profileImageView.image())
+                }
+                // TODO: add NSNotification for new checkin request
+            } else {
+                if launching {
+                    // App is just launching, let self.handleNotificationFromLaunch get called
+                    self.notifiedCheckinRequest = checkinRequest
+                } else {
+                    // App is transitioning from background to foreground
+                    self.rootTabBarController?.setActiveIndex(.Special)
+                    self.rootTabBarController?.displayCheckinRequestsView()
+                }
+            }
+        }
+    }
+    
+    func handleNewSignUpRequest(user: User, applicationState: UIApplicationState, launching: Bool) {
+        // Check for duplicate notifications because iOS 9 sucks
+        if !self.notifiedSignupRequestIds.contains(user.id) {
+            self.notifiedSignupRequestIds.insert(user.id)
+            // App is already in foreground
+            if (applicationState == .Active) {
+                //if announcementController is active
+                if self.rootTabBarController?.activeIndex() != .Special {
+                    let profileImageView = ProfileImageView()
+                    profileImageView.setImageWithUser(user)
+                    self.showNotificationView(title: user.fullName(), subtitle: "New Signup Request", image: profileImageView.image())
+                }
+                // TODO: add NSNotification for new signup request
+            } else {
+                if launching {
+                    // App is just launching, let self.handleNotificationFromLaunch get called
+                    self.notifiedSignupRequest = user
+                } else {
+                    // App is transitioning from background to foreground
+                    self.rootTabBarController?.setActiveIndex(.Special)
+                    self.rootTabBarController?.displaySignupRequestsView()
+                }
+            }
+        }
+    }
 
     private func handleNotificationFromLaunch() {
         if let announcement = self.notifiedAnnouncement {
             self.rootTabBarController?.setActiveIndex(.Announcement)
             self.rootTabBarController?.displayAnnouncement(announcement)
-        } else if let checkinRequest = self.notifiedCheckinRequest {
+        } else if self.notifiedCheckinRequest != nil {
             self.rootTabBarController?.setActiveIndex(.Special)
-        } else if let signupRequest = self.notifiedSignupRequest {
+            self.rootTabBarController?.displayCheckinRequestsView()
+        } else if self.notifiedSignupRequest != nil {
             self.rootTabBarController?.setActiveIndex(.Special)
+            self.rootTabBarController?.displaySignupRequestsView()
         }
     }
 }

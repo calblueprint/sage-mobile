@@ -36,15 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.handleNotification(userInfo, applicationState: application.applicationState, launching: true)
         }
 
+        self.resetIconBadgeNumber(application)
+        self.setupNotifications(application)
         return true
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        // Push notifications
-        let userNotificationTypes: UIUserNotificationType = [.Alert , .Badge , .Sound]
-        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-        application.registerUserNotificationSettings(settings)
+        self.resetIconBadgeNumber(application)
+        self.setupNotifications(application)
     }
 
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
@@ -79,6 +78,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //
     // MARK: - Private Functions
     //
+    private func resetIconBadgeNumber(application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
+    }
+    
+    private func setupNotifications(application: UIApplication) {
+        // Push notifications
+        let userNotificationTypes: UIUserNotificationType = [.Alert , .Badge , .Sound]
+        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+        application.registerUserNotificationSettings(settings)
+    }
+    
     private func handleNotification(notification: [NSObject: AnyObject], applicationState: UIApplicationState, launching: Bool) {
         let objectString = notification[PushNotificationConstants.kObject] as! String
         let notificationType = notification[PushNotificationConstants.kType] as! Int

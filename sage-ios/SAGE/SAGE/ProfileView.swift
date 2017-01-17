@@ -197,7 +197,7 @@ class ProfileView: UIView {
         self.profileContent.fillWidth()
         
         // set up header
-        self.header.setY(-500)
+        self.header.setY(-self.headerOffset)
         self.header.fillWidth()
         self.header.setHeight(self.headerHeight+self.headerOffset)
         
@@ -231,7 +231,7 @@ class ProfileView: UIView {
         // set up image
         self.profileUserImgBorder.setHeight(self.profileImageSize + self.profileImageBorder)
         self.profileUserImgBorder.setWidth(self.profileImageSize + self.profileImageBorder)
-        self.profileUserImgBorder.setY(self.headerHeight/2)
+        self.profileUserImgBorder.setY(self.headerHeight - (self.profileImageSize + self.profileImageBorder)/2)
         self.profileUserImgBorder.setX(self.leftMargin)
         
         self.profileUserImg.setDiameter(self.profileImageSize)
@@ -244,13 +244,13 @@ class ProfileView: UIView {
         self.userName.sizeToFit()
         self.userName.fillWidthWithMargin(self.leftMargin)
         self.userName.setX(self.leftMargin)
-        let userNameY = CGRectGetMaxY(profileUserImg.frame) + 20
+        let userNameY = CGRectGetMaxY(profileUserImgBorder.frame) + UIConstants.verticalMargin
         self.userName.setY(userNameY)
         
         self.userSchool.fillWidth()
         self.userSchool.sizeToFit()
         self.userSchool.setX(self.leftMargin)
-        let userSchoolY = CGRectGetMaxY(userName.frame) + 3
+        let userSchoolY = CGRectGetMaxY(userName.frame) + UIConstants.verticalMargin
         self.userSchool.setY(userSchoolY)
         
         self.userVolunteerLevel.fillWidth()

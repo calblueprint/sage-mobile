@@ -12,8 +12,8 @@ struct PushNotificationConstants {
 
     static let kObject = "object"
     static let kAnnouncement = "announcement"
-    static let kCheckInRequest = "check in request"
-    static let kSignupRequest = "sign up request"
+    static let kCheckInRequest = "check_in"
+    static let kSignUpRequest = "user"
 
     static let kType = "type"
     static let kAnnouncementType = 0

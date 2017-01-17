@@ -121,6 +121,6 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     
     func displaySignupRequestsView() {
         self.setActiveIndex(.Special)
-        self.adminViewController?.displayCheckinRequestsView()
+        self.adminViewController?.displaySignupRequestsView()
     }
 }

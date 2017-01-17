@@ -37,13 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         self.resetIconBadgeNumber(application)
-        self.setupNotifications(application)
         return true
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         self.resetIconBadgeNumber(application)
-        self.setupNotifications(application)
     }
 
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
@@ -82,13 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.applicationIconBadgeNumber = 0
     }
     
-    private func setupNotifications(application: UIApplication) {
-        // Push notifications
-        let userNotificationTypes: UIUserNotificationType = [.Alert , .Badge , .Sound]
-        let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-        application.registerUserNotificationSettings(settings)
-    }
-    
     private func handleNotification(notification: [NSObject: AnyObject], applicationState: UIApplicationState, launching: Bool) {
         let objectString = notification[PushNotificationConstants.kObject] as! String
         let notificationType = notification[PushNotificationConstants.kType] as! Int
@@ -103,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let checkInRequest = Checkin(propertyDictionary: checkInRequestJSON)
             RootController.sharedController().handleNewCheckInRequest(checkInRequest, applicationState: applicationState, launching: launching)
         case PushNotificationConstants.kSignUpRequestType:
-            let signUpRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kAnnouncement] as! [String: AnyObject]
+            let signUpRequestJSON = objectString.convertToDictionary()![PushNotificationConstants.kSignUpRequest] as! [String: AnyObject]
             let signUpRequest = User(propertyDictionary: signUpRequestJSON)
             RootController.sharedController().handleNewSignUpRequest(signUpRequest, applicationState: applicationState, launching: launching)
 

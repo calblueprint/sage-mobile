@@ -32,10 +32,9 @@ class UnverifiedViewController: SGViewController {
     }
     
     func signOut() {
-        let loginController = LoginController()
         SAGEState.reset()
         UIApplication.sharedApplication().statusBarStyle = .LightContent
-        self.presentViewController(loginController, animated: true, completion: nil)
+        RootController.sharedController().pushLoginViewController()
     }
     
     //

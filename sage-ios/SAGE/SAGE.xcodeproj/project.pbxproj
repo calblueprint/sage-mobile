@@ -145,6 +145,7 @@
 		5DBE8FAD1C7A6ECE009EE20C /* AddSchoolRadiusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */; };
 		5DC788901C8CF08F00301A3C /* PastSemestersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */; };
 		5DD14CFE1BD3394E00B935DE /* AnnouncementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */; };
+		5DE8FCC91CB5F3CA00774F5A /* PushNotificationOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE8FCC81CB5F3CA00774F5A /* PushNotificationOperations.swift */; };
 		5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */; };
 		5DF193691C0C34A7003A6B0E /* ProfileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */; };
 		7DAB510B471F2447CE373B43 /* Pods_SAGE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 419E12842510C77C653D2AE2 /* Pods_SAGE.framework */; };
@@ -158,6 +159,7 @@
 		E446119E1C7568C5006E90FA /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119D1C7568C5006E90FA /* MenuItem.swift */; };
 		E44611A01C756A73006E90FA /* ExpandMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E446119F1C756A73006E90FA /* ExpandMenuItem.swift */; };
 		E450EAFB1CC5B83B00E97417 /* ExportSemesterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */; };
+		E470D3F71CCEDE4F000CB2F2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470D3F61CCEDE4F000CB2F2 /* String.swift */; };
 		E48082491C8F980500A38E57 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48082481C8F980500A38E57 /* Dictionary.swift */; };
 		E4A3C5491C4C93E60000D7D9 /* StartSemesterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */; };
 		E4A3C54B1C4C93F90000D7D9 /* StartSemesterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */; };
@@ -189,6 +191,8 @@
 		E4D8DCA51C6ABDB0003C0637 /* SF-UI-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC901C6ABDB0003C0637 /* SF-UI-Text-RegularItalic.otf */; };
 		E4D8DCA61C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC911C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf */; };
 		E4D8DCA71C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8DC921C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf */; };
+		E4F7290F1CB62B1500A61E67 /* PushNotificationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */; };
+		E4FBD3A11CD96D2000FA5A14 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FBD3A01CD96D2000FA5A14 /* NotificationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -332,6 +336,7 @@
 		5DBE8FAC1C7A6ECE009EE20C /* AddSchoolRadiusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSchoolRadiusView.swift; sourceTree = "<group>"; };
 		5DC7888F1C8CF08F00301A3C /* PastSemestersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastSemestersViewController.swift; sourceTree = "<group>"; };
 		5DD14CFD1BD3394E00B935DE /* AnnouncementsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsTableViewCell.swift; sourceTree = "<group>"; };
+		5DE8FCC81CB5F3CA00774F5A /* PushNotificationOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationOperations.swift; sourceTree = "<group>"; };
 		5DEC6C4D1BC9FD260085BF07 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileOperations.swift; sourceTree = "<group>"; };
 		8F3B940583EC03D3C82EAAD0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -346,7 +351,9 @@
 		E446119A1C754CC4006E90FA /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E446119D1C7568C5006E90FA /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		E446119F1C756A73006E90FA /* ExpandMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandMenuItem.swift; sourceTree = "<group>"; };
+		E44EB16A1E2B645600371C33 /* SAGE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAGE.entitlements; sourceTree = "<group>"; };
 		E450EAFA1CC5B83B00E97417 /* ExportSemesterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportSemesterViewController.swift; sourceTree = "<group>"; };
+		E470D3F61CCEDE4F000CB2F2 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		E48082481C8F980500A38E57 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 		E4A3C5481C4C93E60000D7D9 /* StartSemesterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterView.swift; sourceTree = "<group>"; };
 		E4A3C54A1C4C93F90000D7D9 /* StartSemesterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartSemesterController.swift; sourceTree = "<group>"; };
@@ -379,6 +386,8 @@
 		E4D8DC911C6ABDB0003C0637 /* SF-UI-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-Semibold.otf"; sourceTree = "<group>"; };
 		E4D8DC921C6ABDB0003C0637 /* SF-UI-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		E4F4D1AE1DF02A430022D035 /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = "../../../../Library/Developer/Xcode/DerivedData/SAGE-hgizdykbzycmlfdnsftftvsxcbiw/Build/Products/Debug-iphonesimulator/AFNetworking/AFNetworking.framework"; sourceTree = "<group>"; };
+		E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationConstants.swift; sourceTree = "<group>"; };
+		E4FBD3A01CD96D2000FA5A14 /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -460,6 +469,7 @@
 		2705CC3C1BB927D7004FE927 /* SAGE */ = {
 			isa = PBXGroup;
 			children = (
+				E44EB16A1E2B645600371C33 /* SAGE.entitlements */,
 				27F990BB1BBCC58700D61DA2 /* Controllers */,
 				27F990BC1BBCC58D00D61DA2 /* Views */,
 				27F990BD1BBCC59500D61DA2 /* Models */,
@@ -520,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				E48082481C8F980500A38E57 /* Dictionary.swift */,
+				E470D3F61CCEDE4F000CB2F2 /* String.swift */,
 				27F990B81BBCC3CB00D61DA2 /* UIColor.swift */,
 				42EDBDED1BDF38420092D5F5 /* UIImage.swift */,
 				E416760C1CD1A2BB00CC07C3 /* UINavigationController.swift */,
@@ -590,6 +601,7 @@
 				E4B347E21C866E990026D43D /* SGTitleView.swift */,
 				4207EBD21C880DB000501F96 /* NoContentView.swift */,
 				5DA5F0ED1CB08DC100D1FC85 /* SGSectionHeaderView.swift */,
+				E4FBD3A01CD96D2000FA5A14 /* NotificationView.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -603,6 +615,7 @@
 				4254D2921BC5AABF00C831C7 /* KeychainConstants.swift */,
 				27F990C51BBDD76800D61DA2 /* StringConstants.swift */,
 				422AC8BC1C64956500A30D1C /* NetworkingConstants.swift */,
+				E4F7290E1CB62B1500A61E67 /* PushNotificationConstants.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -618,6 +631,7 @@
 				5D63EF111BFC86340036D478 /* SchoolOperations.swift */,
 				5DF193681C0C34A7003A6B0E /* ProfileOperations.swift */,
 				E4CF49E81C5624690078A799 /* SemesterOperations.swift */,
+				5DE8FCC81CB5F3CA00774F5A /* PushNotificationOperations.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -962,14 +976,21 @@
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = ZBABCTHDAY;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2705CC4D1BB927D8004FE927 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = ZBABCTHDAY;
 						LastSwiftMigration = 0800;
 						TestTargetID = 2705CC391BB927D7004FE927;
 					};
 					2705CC581BB927D8004FE927 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = ZBABCTHDAY;
 						LastSwiftMigration = 0800;
 						TestTargetID = 2705CC391BB927D7004FE927;
 					};
@@ -1101,6 +1122,7 @@
 				5D6149111C5B76450036708A /* JoinSemesterView.swift in Sources */,
 				42EFD67B1BC9EC830063FD78 /* SignUpSchoolHoursView.swift in Sources */,
 				42DE22161C0F92BE00071879 /* NotificationConstants.swift in Sources */,
+				E4FBD3A11CD96D2000FA5A14 /* NotificationView.swift in Sources */,
 				42F85ED81C01328700F62C37 /* AddSchoolController.swift in Sources */,
 				4223341E1BC090E900E863D0 /* Announcement.swift in Sources */,
 				2781601E1BC0E26B00A1DB75 /* CheckinView.swift in Sources */,
@@ -1137,6 +1159,7 @@
 				E4CF49E91C5624690078A799 /* SemesterOperations.swift in Sources */,
 				4280CE181BF43E5C005D1B97 /* AdminOperations.swift in Sources */,
 				E4B347E01C7B0C540026D43D /* ExpandedTableViewController.swift in Sources */,
+				5DE8FCC91CB5F3CA00774F5A /* PushNotificationOperations.swift in Sources */,
 				5DC788901C8CF08F00301A3C /* PastSemestersViewController.swift in Sources */,
 				27F990C01BBCE3B400D61DA2 /* UIView.swift in Sources */,
 				42A2E0111C0294C500033577 /* AddAnnouncementView.swift in Sources */,
@@ -1182,6 +1205,7 @@
 				5DEC6C4E1BC9FD260085BF07 /* AnnouncementsViewController.swift in Sources */,
 				5D61491B1C5D7DBA0036708A /* NoSemesterViewController.swift in Sources */,
 				27F990B91BBCC3CB00D61DA2 /* UIColor.swift in Sources */,
+				E470D3F71CCEDE4F000CB2F2 /* String.swift in Sources */,
 				4241AF841C4BB65F009BC133 /* EditProfileView.swift in Sources */,
 				42EFD6741BC9E6F30063FD78 /* SignUpView.swift in Sources */,
 				42A6CE641C0BDFC700F97CFF /* SchoolsTableViewCell.swift in Sources */,
@@ -1208,6 +1232,7 @@
 				421515981CC891AC008B854F /* SuccessView.swift in Sources */,
 				42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
+				E4F7290F1CB62B1500A61E67 /* PushNotificationConstants.swift in Sources */,
 				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,
 				E4CF49E61C5462920078A799 /* SemesterConstants.swift in Sources */,
@@ -1303,10 +1328,12 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ZBABCTHDAY;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1324,7 +1351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1351,10 +1378,12 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = ZBABCTHDAY;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1366,7 +1395,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1381,8 +1410,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_ENTITLEMENTS = SAGE/SAGE.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZBABCTHDAY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
@@ -1407,8 +1438,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_ENTITLEMENTS = SAGE/SAGE.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = ZBABCTHDAY;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",

@@ -18,5 +18,8 @@ struct NetworkingConstants {
     static let kPage = "page"
     
     static let kEmail = "email"
+
+    static let kDeviceType = "device_type"
+    static let kDeviceID = "device_id"
 }
 

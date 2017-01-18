@@ -207,6 +207,15 @@ class LoginView: UIView {
     }
     
     //
+    // MARK: - Public Methods
+    //
+    func resetFields() {
+        self.loginEmailField.text = ""
+        self.loginPasswordField.text = ""
+        self.loginButton.stopLoading()
+    }
+
+    //
     // MARK: - Gesture recognizer methods
     //
     

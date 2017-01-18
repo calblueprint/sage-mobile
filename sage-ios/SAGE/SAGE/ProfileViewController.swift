@@ -269,9 +269,8 @@ class ProfileViewController: SGTableViewController {
             
             let logoutAction = UIAlertAction(title: "Log Out", style: .Destructive, handler: {
                 (alert: UIAlertAction!) -> Void in
-                let rootController = RootController()
                 SAGEState.reset()
-                self.presentViewController(rootController, animated: true, completion: nil)
+                RootController.sharedController().pushCorrectViewController()
             })
                 
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {

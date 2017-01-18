@@ -183,11 +183,13 @@ class AdminTableViewController: SGTableViewController {
                 let icon = FAKIonIcons.locationIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+                cell.accessoryView = SGNotificationCircleView(number: SAGEState.checkinRequestCount())
             } else {
                 cell.textLabel?.text = "Sign Ups"
                 let icon = FAKIonIcons.personAddIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+                cell.accessoryView = SGNotificationCircleView(number: SAGEState.signUpRequestCount())
             }
         case 2:
             if indexPath.row == 0 {

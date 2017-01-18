@@ -15,19 +15,23 @@ class LoginOperations: NSObject {
         BaseOperation.manager().GET(StringConstants.kEndpointUserState(SAGEState.currentUser()!), parameters: nil, success: { (operation, data) -> Void in
             SAGEState.removeCurrentSemester()
             SAGEState.removeSemesterSummary()
+            
             let userJSON = data["session"]!!["user"] as! [String: AnyObject]
             let user = User(propertyDictionary: userJSON)
             SAGEState.setCurrentUser(user)
+            
             let currentSemesterJSON = data["session"]!!["current_semester"]
             var currentSemester: Semester? = nil
             if !(currentSemesterJSON is NSNull) {
                 currentSemester = Semester(propertyDictionary: currentSemesterJSON as! [String: AnyObject])
             }
+            
             let semesterSummaryJSON = userJSON["user_semester"]
             var semesterSummary: SemesterSummary? = nil
             if !(semesterSummaryJSON is NSNull) {
                 semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
             }
+            
             let schoolJSON = data["session"]!!["school"]
             var school: School? = nil
             if !(schoolJSON is NSNull) {
@@ -42,6 +46,19 @@ class LoginOperations: NSObject {
             if (school != nil) {
                 SAGEState.setCurrentSchool(school!)
             }
+            
+            let checkinRequests = data["session"]!!["check_in_requests"]
+            if let checkinCount = checkinRequests as? Int {
+                print(checkinCount)
+                SAGEState.setCheckinRequestCount(checkinCount)
+            }
+            
+            let signUpRequests = data["session"]!!["sign_up_requests"]
+            if let signUpCount = signUpRequests as? Int {
+                print(signUpCount)
+                SAGEState.setSignUpRequestCount(signUpCount)
+            }
+            
             completion(user, currentSemester, semesterSummary)
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

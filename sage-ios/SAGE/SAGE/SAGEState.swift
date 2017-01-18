@@ -85,6 +85,30 @@ class SAGEState {
         self.removeObjectForKey(KeychainConstants.kSessionStartTime)
     }
     
+    class func checkinRequestCount() -> Int {
+        return self.integerForKey(KeychainConstants.kCheckInRequests)
+    }
+    
+    class func setCheckinRequestCount(requestCount: Int) {
+        self.saveInteger(requestCount, key: KeychainConstants.kCheckInRequests)
+    }
+    
+    class func removeCheckinRequestCount() {
+        self.removeObjectForKey(KeychainConstants.kCheckInRequests)
+    }
+    
+    class func signUpRequestCount() -> Int {
+        return self.integerForKey(KeychainConstants.kSignUpRequests)
+    }
+    
+    class func setSignUpRequestCount(requestCount: Int) {
+        self.saveInteger(requestCount, key: KeychainConstants.kSignUpRequests)
+    }
+    
+    class func removeSignUpRequestCount() {
+        self.removeObjectForKey(KeychainConstants.kSignUpRequests)
+    }
+    
     class func reset() {
         self.removeCurrentUser()
         self.removeCurrentSchool()
@@ -92,6 +116,8 @@ class SAGEState {
         self.removeSemesterSummary()
         self.removeAuthToken()
         self.removeSessionStartTime()
+        self.removeCheckinRequestCount()
+        self.removeSignUpRequestCount()
     }
     
     //
@@ -109,6 +135,16 @@ class SAGEState {
             return NSKeyedUnarchiver.unarchiveObjectWithData(decodedObject)
         }
         return nil
+    }
+    
+    private class func saveInteger(value: Int, key: String) {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setInteger(value, forKey: key)
+        userDefaults.synchronize()
+    }
+    
+    private class func integerForKey(key: String) -> Int {
+        return NSUserDefaults.standardUserDefaults().integerForKey(key)
     }
     
     private class func saveDouble(value: Double, key: String) {

@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         PushNotificationOperations.registerForNotifications(tokenString, completion: { () -> Void in })
         { (message) -> Void in
-            print(message)
+            //print(message)
         }
     }
 

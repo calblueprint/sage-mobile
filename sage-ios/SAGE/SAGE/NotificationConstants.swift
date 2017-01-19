@@ -23,4 +23,10 @@ struct NotificationConstants {
     static let joinSemesterKey: String = notificationBaseName + "joinSemester"
     static let startSemesterKey: String = notificationBaseName + "startSemester"
     static let endSemesterKey: String = notificationBaseName + "endSemester"
+    static let addCheckinRequestKey: String = notificationBaseName + "addCheckinRequest"
+    static let deleteCheckinRequestKey: String = notificationBaseName + "addCheckinRequest"
+    static let updateCheckinRequestCountKey: String = notificationBaseName + "updateCheckinRequestCount"
+    static let addSignupRequestKey: String = notificationBaseName + "addSignupRequest"
+    static let deleteSignupRequestKey: String = notificationBaseName + "deleteSignupRequest"
+    static let updateSignupRequestCountKey: String = notificationBaseName + "updateSignupRequestCount"
 }

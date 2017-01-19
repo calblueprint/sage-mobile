@@ -49,14 +49,14 @@ class LoginOperations: NSObject {
             
             let checkinRequests = data["session"]!!["check_in_requests"]
             if let checkinCount = checkinRequests as? Int {
-                print(checkinCount)
                 SAGEState.setCheckinRequestCount(checkinCount)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateCheckinRequestCountKey, object: nil)
             }
             
             let signUpRequests = data["session"]!!["sign_up_requests"]
             if let signUpCount = signUpRequests as? Int {
-                print(signUpCount)
                 SAGEState.setSignUpRequestCount(signUpCount)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateSignupRequestCountKey, object: nil)
             }
             
             completion(user, currentSemester, semesterSummary)

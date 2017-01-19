@@ -83,6 +83,15 @@ class SignUpRequestsViewController: SGTableViewController {
                 self.hideNoContentView()
             }
             
+            if let filter = self.filter {
+                if filter[CheckinConstants.kSchoolId] as! String == String(SAGEState.currentUser()!.directorID) {
+                    let count = self.requests != nil ? self.requests!.count : 0
+                    SAGEState.setSignUpRequestCount(count)
+                    print("ya")
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateSignupRequestCountKey, object: nil)
+                }
+            }
+            
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
@@ -163,6 +172,7 @@ class SignUpRequestsViewController: SGTableViewController {
         let indexPath = self.tableView.indexPathForCell(cell)!
         let user = self.requests![indexPath.row]
         self.requests?.removeAtIndex(indexPath.row)
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteSignupRequestKey, object: user)
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             AdminOperations.verifyUser(user, completion: nil, failure: { (message) -> Void in

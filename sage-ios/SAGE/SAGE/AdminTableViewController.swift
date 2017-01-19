@@ -19,6 +19,14 @@ class AdminTableViewController: SGTableViewController {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.semesterStarted(_:)), name: NotificationConstants.startSemesterKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.semesterEnded(_:)), name: NotificationConstants.endSemesterKey, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.checkinRequestAdded(_:)), name: NotificationConstants.addCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.checkinRequestDeleted(_:)), name: NotificationConstants.deleteCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.checkinRequestCountUpdated(_:)), name: NotificationConstants.updateCheckinRequestCountKey, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.signUpRequestAdded(_:)), name: NotificationConstants.addSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.signUpRequestDeleted(_:)), name: NotificationConstants.deleteSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.signUpRequestCountUpdated(_:)), name: NotificationConstants.updateSignupRequestCountKey, object: nil)
     }
     
     deinit {
@@ -53,6 +61,34 @@ class AdminTableViewController: SGTableViewController {
     }
     
     func semesterEnded(notification: NSNotification) {
+        self.tableView.reloadData()
+    }
+    
+    func checkinRequestAdded(notification: NSNotification) {
+        SAGEState.setCheckinRequestCount(SAGEState.checkinRequestCount() + 1)
+        self.tableView.reloadData()
+    }
+    
+    func checkinRequestDeleted(notification: NSNotification) {
+        SAGEState.setCheckinRequestCount(SAGEState.checkinRequestCount() - 1)
+        self.tableView.reloadData()
+    }
+    
+    func checkinRequestCountUpdated(notification: NSNotification) {
+        self.tableView.reloadData()
+    }
+    
+    func signUpRequestAdded(notification: NSNotification) {
+        SAGEState.setSignUpRequestCount(SAGEState.signUpRequestCount() + 1)
+        self.tableView.reloadData()
+    }
+    
+    func signUpRequestDeleted(notification: NSNotification) {
+        SAGEState.setSignUpRequestCount(SAGEState.signUpRequestCount() - 1)
+        self.tableView.reloadData()
+    }
+    
+    func signUpRequestCountUpdated(notification: NSNotification) {
         self.tableView.reloadData()
     }
     

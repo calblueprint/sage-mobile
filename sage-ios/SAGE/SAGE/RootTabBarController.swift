@@ -49,12 +49,42 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
+    //
+    // MARK: - ViewController Lifecycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.tintColor = UIColor.mainColor
         self.tabBar.translucent = false
         self.setupTabs()
         self.updateAdminBadge()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
+    //
+    // MARK: - Public Methods
+    //
+    func activeIndex() -> Index {
+        return Index(rawValue: self.selectedIndex)!
+    }
+
+    func setActiveIndex(index: Index) {
+        self.selectedIndex = index.rawValue
+    }
+
+    //
+    // MARK: - Private Methods
+    //
+    @objc private func updateAdminBadge() {
+        let totalCount = SAGEState.checkinRequestCount() + SAGEState.signUpRequestCount()
+        var badgeString: String? = String(totalCount)
+        if totalCount == 0 {
+            badgeString = nil
+        }
+        self.tabBar.items![Index.Special.rawValue].badgeValue = badgeString
     }
     
     private func setupTabs() {
@@ -72,7 +102,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
             FAKIonIcons.personIconWithSize(UIConstants.tabBarIconSize)
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
-
+        
         let announcementsViewController = self.announcementsViewController
         let checkInViewController = self.checkInViewController
         let profileViewController = self.profileViewController
@@ -93,7 +123,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)
                 titles.append(NSLocalizedString("School", comment: "School"))
-
+                
                 let schoolViewController = SchoolDetailViewController()
                 self.schoolViewController = schoolViewController
                 schoolViewController.configureWithSchool(school as! School)
@@ -116,21 +146,6 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         self.viewControllers = viewControllers
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
-    //
-    // MARK: - Public Methods
-    //
-    func activeIndex() -> Index {
-        return Index(rawValue: self.selectedIndex)!
-    }
-
-    func setActiveIndex(index: Index) {
-        self.selectedIndex = index.rawValue
-    }
-
     //
     // MARK: - Push Notification Handling
     //
@@ -147,17 +162,5 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     func displaySignupRequestsView() {
         self.setActiveIndex(.Special)
         self.adminViewController?.displaySignupRequestsView()
-    }
-    
-    //
-    // MARK: - Private Methods
-    //
-    @objc private func updateAdminBadge() {
-        let totalCount = SAGEState.checkinRequestCount() + SAGEState.signUpRequestCount()
-        var badgeString: String? = String(totalCount)
-        if totalCount == 0 {
-            badgeString = nil
-        }
-        self.tabBar.items![Index.Special.rawValue].badgeValue = badgeString
     }
 }

@@ -113,9 +113,7 @@ class CheckinRequestsViewController: SGTableViewController {
             if let filter = self.filter {
                 if filter[CheckinConstants.kSchoolId] as! String == String(SAGEState.currentUser()!.directorID) {
                     let count = self.requests != nil ? self.requests!.count : 0
-                    SAGEState.setCheckinRequestCount(count)
-                    print("ya")
-                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateCheckinRequestCountKey, object: nil)
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateCheckinRequestCountKey, object: count)
                 }
             }
 

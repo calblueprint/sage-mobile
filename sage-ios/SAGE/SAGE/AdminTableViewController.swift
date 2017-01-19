@@ -12,6 +12,10 @@ import SwiftKeychainWrapper
 
 class AdminTableViewController: SGTableViewController {
 
+    
+    private var checkinRequestCount = SAGEState.checkinRequestCount()
+    private var signupRequestCount = SAGEState.signUpRequestCount()
+    
     //
     // MARK: - Initialization
     //
@@ -65,30 +69,38 @@ class AdminTableViewController: SGTableViewController {
     }
     
     func checkinRequestAdded(notification: NSNotification) {
-        SAGEState.setCheckinRequestCount(SAGEState.checkinRequestCount() + 1)
+        self.checkinRequestCount += 1
+        SAGEState.setCheckinRequestCount(self.checkinRequestCount)
         self.tableView.reloadData()
     }
     
     func checkinRequestDeleted(notification: NSNotification) {
-        SAGEState.setCheckinRequestCount(SAGEState.checkinRequestCount() - 1)
+        self.checkinRequestCount -= 1
+        SAGEState.setCheckinRequestCount(self.checkinRequestCount)
         self.tableView.reloadData()
     }
     
     func checkinRequestCountUpdated(notification: NSNotification) {
+        self.checkinRequestCount = notification.object as! Int
+        SAGEState.setCheckinRequestCount(self.checkinRequestCount)
         self.tableView.reloadData()
     }
     
     func signUpRequestAdded(notification: NSNotification) {
-        SAGEState.setSignUpRequestCount(SAGEState.signUpRequestCount() + 1)
+        self.signupRequestCount += 1
+        SAGEState.setSignUpRequestCount(self.signupRequestCount)
         self.tableView.reloadData()
     }
     
     func signUpRequestDeleted(notification: NSNotification) {
-        SAGEState.setSignUpRequestCount(SAGEState.signUpRequestCount() - 1)
+        self.signupRequestCount -= 1
+        SAGEState.setSignUpRequestCount(self.signupRequestCount)
         self.tableView.reloadData()
     }
     
     func signUpRequestCountUpdated(notification: NSNotification) {
+        self.signupRequestCount = notification.object as! Int
+        SAGEState.setSignUpRequestCount(self.signupRequestCount)
         self.tableView.reloadData()
     }
     
@@ -219,13 +231,23 @@ class AdminTableViewController: SGTableViewController {
                 let icon = FAKIonIcons.locationIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
-                cell.accessoryView = SGNotificationCircleView(number: SAGEState.checkinRequestCount())
+                let requestCount = self.checkinRequestCount
+                if requestCount == 0 {
+                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                } else {
+                    cell.accessoryView = SGNotificationCircleView(number: requestCount)
+                }
             } else {
                 cell.textLabel?.text = "Sign Ups"
                 let icon = FAKIonIcons.personAddIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
-                cell.accessoryView = SGNotificationCircleView(number: SAGEState.signUpRequestCount())
+                let requestCount = self.signupRequestCount
+                if requestCount == 0 {
+                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                } else {
+                    cell.accessoryView = SGNotificationCircleView(number: requestCount)
+                }
             }
         case 2:
             if indexPath.row == 0 {

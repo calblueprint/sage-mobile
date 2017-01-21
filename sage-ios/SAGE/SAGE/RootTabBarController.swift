@@ -24,12 +24,67 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         case Profile = 2
         case Special = 3
     }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.addCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.deleteCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.updateCheckinRequestCountKey, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.addSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.deleteSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.updateSignupRequestCountKey, object: nil)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
 
+    //
+    // MARK: - ViewController Lifecycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.tintColor = UIColor.mainColor
         self.tabBar.translucent = false
         self.setupTabs()
+        self.updateAdminBadge()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
+    //
+    // MARK: - Public Methods
+    //
+    func activeIndex() -> Index {
+        return Index(rawValue: self.selectedIndex)!
+    }
+
+    func setActiveIndex(index: Index) {
+        self.selectedIndex = index.rawValue
+    }
+
+    //
+    // MARK: - Private Methods
+    //
+    @objc private func updateAdminBadge() {
+        let totalCount = SAGEState.checkinRequestCount() + SAGEState.signUpRequestCount()
+        var badgeString: String? = String(totalCount)
+        if totalCount == 0 {
+            badgeString = nil
+        }
+        self.tabBar.items![Index.Special.rawValue].badgeValue = badgeString
     }
     
     private func setupTabs() {
@@ -47,7 +102,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
             FAKIonIcons.personIconWithSize(UIConstants.tabBarIconSize)
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
-
+        
         let announcementsViewController = self.announcementsViewController
         let checkInViewController = self.checkInViewController
         let profileViewController = self.profileViewController
@@ -68,7 +123,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)
                 titles.append(NSLocalizedString("School", comment: "School"))
-
+                
                 let schoolViewController = SchoolDetailViewController()
                 self.schoolViewController = schoolViewController
                 schoolViewController.configureWithSchool(school as! School)
@@ -91,21 +146,6 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         self.viewControllers = viewControllers
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
-    //
-    // MARK: - Public Methods
-    //
-    func activeIndex() -> Index {
-        return Index(rawValue: self.selectedIndex)!
-    }
-
-    func setActiveIndex(index: Index) {
-        self.selectedIndex = index.rawValue
-    }
-
     //
     // MARK: - Push Notification Handling
     //

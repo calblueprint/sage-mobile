@@ -109,6 +109,13 @@ class CheckinRequestsViewController: SGTableViewController {
             } else {
                 self.hideNoContentView()
             }
+            
+            if let filter = self.filter {
+                if filter[CheckinConstants.kSchoolId] as! String == String(SAGEState.currentUser()!.directorID) {
+                    let count = self.requests != nil ? self.requests!.count : 0
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateCheckinRequestCountKey, object: count)
+                }
+            }
 
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
@@ -187,6 +194,7 @@ class CheckinRequestsViewController: SGTableViewController {
         let indexPath = self.tableView.indexPathForCell(cell)!
         let checkin = self.requests![indexPath.row]
         self.requests?.removeAtIndex(indexPath.row)
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteCheckinRequestKey, object: checkin)
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             AdminOperations.approveCheckin(checkin, completion: { (verifiedCheckin) -> Void in

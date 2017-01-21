@@ -198,7 +198,7 @@ class RootController: UIViewController {
                     profileImageView.setImageWithUser(checkinRequest.user!)
                     self.showNotificationView(title: checkinRequest.user!.fullName(), subtitle: "New Checkin Request", image: profileImageView.image())
                 }
-                // TODO: add NSNotification for new checkin request
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addCheckinRequestKey, object: checkinRequest)
             } else {
                 if launching {
                     // App is just launching, let self.handleNotificationFromLaunch get called
@@ -224,7 +224,7 @@ class RootController: UIViewController {
                     profileImageView.setImageWithUser(user)
                     self.showNotificationView(title: user.fullName(), subtitle: "New Signup Request", image: profileImageView.image())
                 }
-                // TODO: add NSNotification for new signup request
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.addSignupRequestKey, object: user)
             } else {
                 if launching {
                     // App is just launching, let self.handleNotificationFromLaunch get called

@@ -46,11 +46,7 @@ class SchoolDetailViewController: SGTableViewController {
                 self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
             }
             if var students = school.students {
-<<<<<<< HEAD
-                for var index = 0; index < students.count; index += 1 {
-=======
                 for index in 0..<students.count {
->>>>>>> master
                     let student = students[index]
                     if student.id == newUser.id {
                         self.school!.students![index] = newUser

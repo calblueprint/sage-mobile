@@ -68,11 +68,7 @@ class MenuView: UIView {
 
         let startingOffset = UIConstants.navbarHeight
         if let list = self.menuList {
-<<<<<<< HEAD
-            for var i = 0; i < list.count; i += 1 {
-=======
             for i in 0..<list.count {
->>>>>>> master
                 let menuItem = list[i]
                 menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i))
                 menuItem.fillWidth()
@@ -139,12 +135,8 @@ class MenuView: UIView {
 
 
         let itemOffset: CGFloat = 200
-<<<<<<< HEAD
-        for var i = 0; i < self.menuList?.count; i += 1 {
-=======
 //        for var i = 0; i < self.menuList?.count; i += 1 {
         for i in 0..<self.menuList!.count {
->>>>>>> master
             let menuItem = self.menuList![i]
             menuItem.moveY(itemOffset)
             UIView.animateWithDuration(UIConstants.longAnimationTime,
@@ -172,11 +164,7 @@ class MenuView: UIView {
         }, completion: nil)
 
         let itemOffset: CGFloat = 200
-<<<<<<< HEAD
-        for var i = self.menuList!.count - 1; i >= 0; i -= 1 {
-=======
         for i in (self.menuList!.count - 1).stride(through: 0, by: -1) {
->>>>>>> master
             let menuItem = self.menuList![i]
             let delay = Double(self.menuList!.count - 1 - i) * 0.07
             UIView.animateWithDuration(UIConstants.normalAnimationTime,

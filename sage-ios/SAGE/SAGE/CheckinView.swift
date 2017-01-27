@@ -8,6 +8,7 @@
 
 import UIKit
 import FontAwesomeKit
+import GoogleMaps
 
 class CheckinView: UIView {
 

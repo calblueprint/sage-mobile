@@ -12,11 +12,79 @@ import SwiftKeychainWrapper
 
 class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
 
+    var announcementsViewController = AnnouncementsViewController(style: .Plain)
+    var checkInViewController = CheckinViewController()
+    var profileViewController = ProfileViewController(user: SAGEState.currentUser()!)
+    var adminViewController: AdminTableViewController?
+    var schoolViewController: SchoolDetailViewController?
+
+    enum Index: Int {
+        case Announcement = 0
+        case Checkin = 1
+        case Profile = 2
+        case Special = 3
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.addCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.deleteCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.updateCheckinRequestCountKey, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.addSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.deleteSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RootTabBarController.updateAdminBadge), name: NotificationConstants.updateSignupRequestCountKey, object: nil)
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
+    //
+    // MARK: - ViewController Lifecycle
+    //
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.tintColor = UIColor.mainColor
         self.tabBar.translucent = false
         self.setupTabs()
+        self.updateAdminBadge()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
+    //
+    // MARK: - Public Methods
+    //
+    func activeIndex() -> Index {
+        return Index(rawValue: self.selectedIndex)!
+    }
+
+    func setActiveIndex(index: Index) {
+        self.selectedIndex = index.rawValue
+    }
+
+    //
+    // MARK: - Private Methods
+    //
+    @objc private func updateAdminBadge() {
+        let totalCount = SAGEState.checkinRequestCount() + SAGEState.signUpRequestCount()
+        var badgeString: String? = String(totalCount)
+        if totalCount == 0 {
+            badgeString = nil
+        }
+        self.tabBar.items![Index.Special.rawValue].badgeValue = badgeString
     }
     
     private func setupTabs() {
@@ -34,16 +102,13 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
             FAKIonIcons.personIconWithSize(UIConstants.tabBarIconSize)
                 .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
         ]
-
-        let announcementsViewController = AnnouncementsViewController(style: .Plain)
         
-        let checkInViewController = CheckinViewController()
-        
-        let profileViewController = ProfileViewController(user: LoginOperations.getUser()!)
-        
+        let announcementsViewController = self.announcementsViewController
+        let checkInViewController = self.checkInViewController
+        let profileViewController = self.profileViewController
         var rootViewControllers = [announcementsViewController, checkInViewController, profileViewController]
         
-        if let role = LoginOperations.getUser()?.role {
+        if let role = SAGEState.currentUser()?.role {
             if role == .Admin || role == .President {
                 let icon = FAKIonIcons.folderIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
@@ -51,15 +116,17 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 titles.append(NSLocalizedString("Admin", comment: "Admin"))
                 
                 let adminViewController = AdminTableViewController(style: .Grouped)
+                self.adminViewController = adminViewController
                 rootViewControllers.append(adminViewController)
-            } else if let school = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) {
+            } else if let school = SAGEState.currentSchool() {
                 let icon = FAKIonIcons.androidHomeIconWithSize(UIConstants.tabBarIconSize)
                     .imageWithSize(CGSizeMake(UIConstants.tabBarIconSize, UIConstants.tabBarIconSize))
                 images.append(icon)
                 titles.append(NSLocalizedString("School", comment: "School"))
-
+                
                 let schoolViewController = SchoolDetailViewController()
-                schoolViewController.configureWithSchool(school as! School)
+                self.schoolViewController = schoolViewController
+                schoolViewController.configureWithSchool(school)
                 rootViewControllers.append(schoolViewController)
             }
         }
@@ -77,5 +144,23 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
         }
         
         self.viewControllers = viewControllers
+    }
+    
+    //
+    // MARK: - Push Notification Handling
+    //
+    func displayAnnouncement(announcement: Announcement, resetData: Bool = false) {
+        self.setActiveIndex(.Announcement)
+        self.announcementsViewController.displayAnnouncement(announcement, resetData: resetData)
+    }
+    
+    func displayCheckinRequestsView() {
+        self.setActiveIndex(.Special)
+        self.adminViewController?.displayCheckinRequestsView()
+    }
+    
+    func displaySignupRequestsView() {
+        self.setActiveIndex(.Special)
+        self.adminViewController?.displaySignupRequestsView()
     }
 }

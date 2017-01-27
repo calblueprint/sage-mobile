@@ -117,7 +117,7 @@ class BrowseMentorsViewController: SGTableViewController {
     
     func loadMentors() {
         if filter == nil {
-            if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) {
+            if let _ = SAGEState.currentSemester() {
                 self.setNoContentMessage("No mentors found :(")
             } else {
                 self.setNoContentMessage("There is currently no semester!")

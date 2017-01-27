@@ -68,7 +68,7 @@ class MenuView: UIView {
 
         let startingOffset = UIConstants.navbarHeight
         if let list = self.menuList {
-            for i in 0..<list.count {
+            for i in 0 ..< list.count {
                 let menuItem = list[i]
                 menuItem.setY(startingOffset + MenuView.menuItemHeight*CGFloat(i))
                 menuItem.fillWidth()

@@ -219,7 +219,7 @@ class User: NSObject, NSCoding {
         return (self.role == .Admin || self.role == .President) && self.directorID != -1
     }
     
-    func roleColor() -> UIColor {
+    func roleColor(preventInactive preventInactive: Bool = false) -> UIColor {
         var result = UIColor.clearColor()
         switch self.role {
         case .Admin:
@@ -234,7 +234,7 @@ class User: NSObject, NSCoding {
             break
         }
         
-        if self.semesterSummary?.status == .Inactive {
+        if !preventInactive && self.semesterSummary?.status == .Inactive {
             result = UIColor.lightRedColor
         }
         return result

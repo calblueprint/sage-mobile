@@ -122,7 +122,7 @@ class ProfileCheckinViewController: SGTableViewController {
 
         if let user = self.user {
             if filter == nil {
-                if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) {
+                if let _ = SAGEState.currentSemester() {
                     self.setNoContentMessage("No checkins found from this semester!")
                 } else {
                     self.setNoContentMessage("There is currently no semester!")
@@ -171,7 +171,7 @@ class ProfileCheckinViewController: SGTableViewController {
     func showFilterOptions() {
         let menuController = MenuController(title: "Display Options")
 
-        if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+        if let _ = SAGEState.currentSemester() {
             menuController.addMenuItem(MenuItem(title: "This Semester", handler: { (_) -> Void in
                 self.filter = nil
                 self.loadCheckins(reset: true)
@@ -203,7 +203,7 @@ class ProfileCheckinViewController: SGTableViewController {
 
         var add: Bool = false
         if checkin.user?.id == self.user?.id {
-            if let currentSemester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+            if let currentSemester = SAGEState.currentSemester() {
                 if let filter = self.filter {
                     if currentSemester.id == Int(filter[SemesterConstants.kSemesterId] as! String) {
                         add = true
@@ -226,7 +226,7 @@ class ProfileCheckinViewController: SGTableViewController {
 
         var add: Bool = false
         if checkin.user?.id == self.user?.id {
-            if let currentSemester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+            if let currentSemester = SAGEState.currentSemester() {
                 if let filter = self.filter {
                     if currentSemester.id == Int(filter[SemesterConstants.kSemesterId] as! String) {
                         add = true

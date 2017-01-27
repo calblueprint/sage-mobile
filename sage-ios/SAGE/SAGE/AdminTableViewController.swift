@@ -12,6 +12,10 @@ import SwiftKeychainWrapper
 
 class AdminTableViewController: SGTableViewController {
 
+    
+    private var checkinRequestCount = SAGEState.checkinRequestCount()
+    private var signupRequestCount = SAGEState.signUpRequestCount()
+    
     //
     // MARK: - Initialization
     //
@@ -19,6 +23,14 @@ class AdminTableViewController: SGTableViewController {
         super.init(style: style)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.semesterStarted(_:)), name: NotificationConstants.startSemesterKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.semesterEnded(_:)), name: NotificationConstants.endSemesterKey, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.checkinRequestAdded(_:)), name: NotificationConstants.addCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.checkinRequestDeleted(_:)), name: NotificationConstants.deleteCheckinRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.checkinRequestCountUpdated(_:)), name: NotificationConstants.updateCheckinRequestCountKey, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.signUpRequestAdded(_:)), name: NotificationConstants.addSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.signUpRequestDeleted(_:)), name: NotificationConstants.deleteSignupRequestKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AdminTableViewController.signUpRequestCountUpdated(_:)), name: NotificationConstants.updateSignupRequestCountKey, object: nil)
     }
     
     deinit {
@@ -56,11 +68,58 @@ class AdminTableViewController: SGTableViewController {
         self.tableView.reloadData()
     }
     
+    func checkinRequestAdded(notification: NSNotification) {
+        self.checkinRequestCount += 1
+        SAGEState.setCheckinRequestCount(self.checkinRequestCount)
+        self.tableView.reloadData()
+    }
+    
+    func checkinRequestDeleted(notification: NSNotification) {
+        self.checkinRequestCount -= 1
+        SAGEState.setCheckinRequestCount(self.checkinRequestCount)
+        self.tableView.reloadData()
+    }
+    
+    func checkinRequestCountUpdated(notification: NSNotification) {
+        self.checkinRequestCount = notification.object as! Int
+        SAGEState.setCheckinRequestCount(self.checkinRequestCount)
+        self.tableView.reloadData()
+    }
+    
+    func signUpRequestAdded(notification: NSNotification) {
+        self.signupRequestCount += 1
+        SAGEState.setSignUpRequestCount(self.signupRequestCount)
+        self.tableView.reloadData()
+    }
+    
+    func signUpRequestDeleted(notification: NSNotification) {
+        self.signupRequestCount -= 1
+        SAGEState.setSignUpRequestCount(self.signupRequestCount)
+        self.tableView.reloadData()
+    }
+    
+    func signUpRequestCountUpdated(notification: NSNotification) {
+        self.signupRequestCount = notification.object as! Int
+        SAGEState.setSignUpRequestCount(self.signupRequestCount)
+        self.tableView.reloadData()
+    }
+    
+    //
+    // MARK: - Push Notification Handling
+    //
+    func displayCheckinRequestsView() {
+        self.navigationController?.pushViewController(CheckinRequestsViewController(), animated: true)
+    }
+    
+    func displaySignupRequestsView() {
+        self.navigationController?.pushViewController(SignUpRequestsViewController(), animated: true)
+    }
+    
     //
     // MARK: - UITableViewDelegate
     //
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if LoginOperations.getUser()?.role == .President {
+        if SAGEState.currentUser()?.role == .President {
             return 4
         } else {
             return 3
@@ -78,8 +137,7 @@ class AdminTableViewController: SGTableViewController {
         // No need to account for if the user is a President for showing the Pause Semester
         // since this section doesn't show at all for non-Presidents
         case 3:
-            if let currentSemester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
-//            if let currentSemester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as? Semester {
+            if let currentSemester = SAGEState.currentSemester() {
                 if !currentSemester.isPaused {
                     return 2
                 }
@@ -134,7 +192,7 @@ class AdminTableViewController: SGTableViewController {
         case 3:
             switch indexPath.row {
             case 0:
-                if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) {
+                if let _ = SAGEState.currentSemester() {
                     self.presentViewController(EndSemesterViewController(), animated: true, completion: nil)
                 } else {
                     self.navigationController?.pushViewController(StartSemesterViewController(), animated: true)
@@ -173,11 +231,23 @@ class AdminTableViewController: SGTableViewController {
                 let icon = FAKIonIcons.locationIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+                let requestCount = self.checkinRequestCount
+                if requestCount == 0 {
+                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                } else {
+                    cell.accessoryView = SGNotificationCircleView(number: requestCount)
+                }
             } else {
                 cell.textLabel?.text = "Sign Ups"
                 let icon = FAKIonIcons.personAddIconWithSize(iconSize)
                     .imageWithSize(CGSizeMake(iconSize, iconSize))
                 cell.imageView?.image = icon
+                let requestCount = self.signupRequestCount
+                if requestCount == 0 {
+                    cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                } else {
+                    cell.accessoryView = SGNotificationCircleView(number: requestCount)
+                }
             }
         case 2:
             if indexPath.row == 0 {
@@ -193,7 +263,7 @@ class AdminTableViewController: SGTableViewController {
             }
         case 3:
             if indexPath.row == 0 {
-                if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) {
+                if let _ = SAGEState.currentSemester() {
                     cell.textLabel?.text = "End Semester"
                     let icon = FAKIonIcons.logOutIconWithSize(iconSize)
                         .imageWithSize(CGSizeMake(iconSize, iconSize))

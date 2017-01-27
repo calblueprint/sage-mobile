@@ -15,7 +15,7 @@ class BaseOperation {
     class func manager() -> AFHTTPRequestOperationManager {
         let baseURL = NSURL(string: StringConstants.kBaseURL)
         let operationManager = AFHTTPRequestOperationManager.init(baseURL: baseURL)
-        if let _ = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kAuthToken) {
+        if let _ = SAGEState.authToken() {
             BaseOperation.addAuthParams(operationManager)
         }
         return operationManager
@@ -24,8 +24,8 @@ class BaseOperation {
     // This should be added to every params with any request while logged in
     private class func addAuthParams(manager: AFHTTPRequestOperationManager) {
         manager.requestSerializer = AFJSONRequestSerializer()
-        manager.requestSerializer.setValue(KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kAuthToken) as? String, forHTTPHeaderField: "X-AUTH-TOKEN")
-        if let user = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kUser) as? User {
+        manager.requestSerializer.setValue(SAGEState.authToken(), forHTTPHeaderField: "X-AUTH-TOKEN")
+        if let user = SAGEState.currentUser() {
             if let email = user.email {
                  manager.requestSerializer.setValue(email, forHTTPHeaderField: "X-AUTH-EMAIL")
             }

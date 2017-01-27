@@ -22,6 +22,7 @@ class ProfileView: UIView {
     let userSchool = UILabel()
     let userCheckinSummary = ProfileCheckinSummaryView()
     let userRoleLabel = UILabel()
+    let userDangerButton = UIButton()
     
     // profile page constants
     let viewHeight = CGFloat(355)
@@ -88,6 +89,7 @@ class ProfileView: UIView {
         self.profileContent.addSubview(self.userName)
         self.profileContent.addSubview(self.userSchool)
         self.profileContent.addSubview(self.userRoleLabel)
+        self.profileContent.addSubview(self.userDangerButton)
 
         self.profileContent.addSubview(self.userVolunteerLevel)
         self.profileContent.addSubview(self.userCheckinSummary)
@@ -126,7 +128,11 @@ class ProfileView: UIView {
             roleString = "Unverified"
         }
         self.userRoleLabel.text = roleString
-        self.userRoleLabel.backgroundColor = user.roleColor()
+        self.userRoleLabel.backgroundColor = user.roleColor(preventInactive: true)
+        
+        if user.semesterSummary?.status == .Inactive {
+            self.userDangerButton.hidden = false
+        }
         
         layoutSubviews()
     }
@@ -175,6 +181,14 @@ class ProfileView: UIView {
         self.userRoleLabel.textColor = UIColor.whiteColor()
         self.userRoleLabel.clipsToBounds = true
         self.userRoleLabel.layer.cornerRadius = 2
+        
+        self.userDangerButton.titleLabel?.font = UIFont.getBoldFont(14)
+        self.userDangerButton.setTitle("!", forState: .Normal)
+        self.userDangerButton.backgroundColor = UIColor.lightRedColor
+        self.userDangerButton.setSize(width: 20, height: 20)
+        self.userDangerButton.clipsToBounds = true
+        self.userDangerButton.layer.cornerRadius = 10
+        self.userDangerButton.hidden = true
     }
     
     override func layoutSubviews() {
@@ -183,7 +197,7 @@ class ProfileView: UIView {
         self.profileContent.fillWidth()
         
         // set up header
-        self.header.setY(-500)
+        self.header.setY(-self.headerOffset)
         self.header.fillWidth()
         self.header.setHeight(self.headerHeight+self.headerOffset)
         
@@ -217,7 +231,7 @@ class ProfileView: UIView {
         // set up image
         self.profileUserImgBorder.setHeight(self.profileImageSize + self.profileImageBorder)
         self.profileUserImgBorder.setWidth(self.profileImageSize + self.profileImageBorder)
-        self.profileUserImgBorder.setY(self.headerHeight/2)
+        self.profileUserImgBorder.setY(self.headerHeight - (self.profileImageSize + self.profileImageBorder)/2)
         self.profileUserImgBorder.setX(self.leftMargin)
         
         self.profileUserImg.setDiameter(self.profileImageSize)
@@ -230,13 +244,13 @@ class ProfileView: UIView {
         self.userName.sizeToFit()
         self.userName.fillWidthWithMargin(self.leftMargin)
         self.userName.setX(self.leftMargin)
-        let userNameY = CGRectGetMaxY(profileUserImg.frame) + 20
+        let userNameY = CGRectGetMaxY(profileUserImgBorder.frame) + UIConstants.verticalMargin
         self.userName.setY(userNameY)
         
         self.userSchool.fillWidth()
         self.userSchool.sizeToFit()
         self.userSchool.setX(self.leftMargin)
-        let userSchoolY = CGRectGetMaxY(userName.frame) + 3
+        let userSchoolY = CGRectGetMaxY(userName.frame) + UIConstants.verticalMargin
         self.userSchool.setY(userSchoolY)
         
         self.userVolunteerLevel.fillWidth()
@@ -252,6 +266,9 @@ class ProfileView: UIView {
         let userRoleLabelY = CGRectGetMaxY(userVolunteerLevel.frame) + 3
         self.userRoleLabel.setY(userRoleLabelY)
         
+        self.userDangerButton.setX(CGRectGetMaxX(self.userRoleLabel.frame) + UIConstants.textMargin)
+        self.userDangerButton.center.y = self.userRoleLabel.center.y
+        
         let topBorderY = CGRectGetMaxY(userRoleLabel.frame) + 20
         self.userCheckinSummary.setY(topBorderY)
         self.userCheckinSummary.setHeight(self.userCheckinSummary.boxHeight)
@@ -264,14 +281,14 @@ class ProfileView: UIView {
     
     func setButtonVisibility(user: User, pastSemester: Bool = false) {
         self.showBothButtons = false
-        if LoginOperations.getUser()?.id == user.id {
+        if SAGEState.currentUser()?.id == user.id {
             self.currentUserProfile = true
         } else {
             self.currentUserProfile = false
         }
         self.canPromote = false
         self.canDemote = false
-        let loggedInUser = LoginOperations.getUser()!
+        let loggedInUser = SAGEState.currentUser()!
         if loggedInUser.role == .President && loggedInUser.id != user.id {
             self.canPromote = true
             if user.role == .Admin {

@@ -47,8 +47,8 @@ class SignUpRequestsViewController: SGTableViewController {
         self.refreshControl?.addTarget(self, action: #selector(SignUpRequestsViewController.loadSignUpRequests(reset:)), forControlEvents: .ValueChanged)
         
 
-        if LoginOperations.getUser()!.isDirector() {
-            self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+        if SAGEState.currentUser()!.isDirector() {
+            self.filter = [AnnouncementConstants.kSchoolID: String(SAGEState.currentUser()!.directorID)]
             self.changeSubtitle("My School")
         } else {
             self.changeSubtitle("All")
@@ -83,6 +83,13 @@ class SignUpRequestsViewController: SGTableViewController {
                 self.hideNoContentView()
             }
             
+            if let filter = self.filter {
+                if filter[CheckinConstants.kSchoolId] as! String == String(SAGEState.currentUser()!.directorID) {
+                    let count = self.requests != nil ? self.requests!.count : 0
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateSignupRequestCountKey, object: count)
+                }
+            }
+            
             }) { (errorMessage) -> Void in
                 self.activityIndicator.stopAnimating()
                 self.refreshControl?.endRefreshing()
@@ -99,9 +106,9 @@ class SignUpRequestsViewController: SGTableViewController {
             self.changeSubtitle("All")
         }))
 
-        if LoginOperations.getUser()!.isDirector() {
+        if SAGEState.currentUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
-                self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+                self.filter = [AnnouncementConstants.kSchoolID: String(SAGEState.currentUser()!.directorID)]
                 self.loadSignUpRequests(reset: true)
                 self.changeSubtitle("My School")
             }))
@@ -163,6 +170,7 @@ class SignUpRequestsViewController: SGTableViewController {
         let indexPath = self.tableView.indexPathForCell(cell)!
         let user = self.requests![indexPath.row]
         self.requests?.removeAtIndex(indexPath.row)
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteSignupRequestKey, object: user)
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             AdminOperations.verifyUser(user, completion: nil, failure: { (message) -> Void in

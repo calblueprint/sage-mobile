@@ -21,9 +21,9 @@ class AnnouncementsOperations {
             params[NetworkingConstants.kPage] = page
         }
         
-        if !(LoginOperations.getUser()!.role == .Admin || LoginOperations.getUser()!.role == .President) {
+        if !(SAGEState.currentUser()!.role == .Admin || SAGEState.currentUser()!.role == .President) {
             if filter == nil {
-                let schoolID = LoginOperations.getUser()!.school!.id
+                let schoolID = SAGEState.currentUser()!.school!.id
                 params[AnnouncementConstants.kDefault] = String(schoolID)
             }
         }
@@ -33,7 +33,7 @@ class AnnouncementsOperations {
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
             var announcements = [Announcement]()
             for item in announcementsJSON {
-                let singleAnnouncement = Announcement(properties: item)
+                let singleAnnouncement = Announcement(propertyDictionary: item)
                 announcements.append(singleAnnouncement)
             }
             completion(announcements)

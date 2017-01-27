@@ -73,8 +73,8 @@ class CheckinRequestsViewController: SGTableViewController {
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: #selector(CheckinRequestsViewController.loadCheckinRequests(reset:)), forControlEvents: .ValueChanged)
         
-        if LoginOperations.getUser()!.isDirector() {
-            self.filter = [AnnouncementConstants.kSchoolID: String(LoginOperations.getUser()!.directorID)]
+        if SAGEState.currentUser()!.isDirector() {
+            self.filter = [AnnouncementConstants.kSchoolID: String(SAGEState.currentUser()!.directorID)]
             self.changeSubtitle("My School")
         } else {
             self.changeSubtitle("All")
@@ -109,6 +109,13 @@ class CheckinRequestsViewController: SGTableViewController {
             } else {
                 self.hideNoContentView()
             }
+            
+            if let filter = self.filter {
+                if filter[CheckinConstants.kSchoolId] as! String == String(SAGEState.currentUser()!.directorID) {
+                    let count = self.requests != nil ? self.requests!.count : 0
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.updateCheckinRequestCountKey, object: count)
+                }
+            }
 
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
@@ -124,9 +131,9 @@ class CheckinRequestsViewController: SGTableViewController {
             self.changeSubtitle("All")
         }))
 
-        if LoginOperations.getUser()!.isDirector() {
+        if SAGEState.currentUser()!.isDirector() {
             menuController.addMenuItem(MenuItem(title: "My School", handler: { (_) -> Void in
-                self.filter = [CheckinConstants.kSchoolId: String(LoginOperations.getUser()!.directorID)]
+                self.filter = [CheckinConstants.kSchoolId: String(SAGEState.currentUser()!.directorID)]
                 self.loadCheckinRequests(reset: true)
                 self.changeSubtitle("My School")
             }))
@@ -187,6 +194,7 @@ class CheckinRequestsViewController: SGTableViewController {
         let indexPath = self.tableView.indexPathForCell(cell)!
         let checkin = self.requests![indexPath.row]
         self.requests?.removeAtIndex(indexPath.row)
+        NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteCheckinRequestKey, object: checkin)
         if accepted {
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Right)
             AdminOperations.approveCheckin(checkin, completion: { (verifiedCheckin) -> Void in

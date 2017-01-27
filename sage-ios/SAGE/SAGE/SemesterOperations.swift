@@ -53,7 +53,7 @@ class SemesterOperations {
         BaseOperation.manager().POST(StringConstants.kEndpointStartSemester, parameters: params, success: { (operation, data) -> Void in
             let semesterDict = (data as! [String: AnyObject])["semester"] as! [String: AnyObject]
             let createdSemester = Semester(propertyDictionary: semesterDict)
-            KeychainWrapper.defaultKeychainWrapper().setObject(createdSemester, forKey: KeychainConstants.kCurrentSemester)
+            SAGEState.setCurrentSemester(createdSemester)
             NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.startSemesterKey, object: createdSemester)
             completion(createdSemester)
             }) { (operation, error) -> Void in
@@ -62,7 +62,7 @@ class SemesterOperations {
     }
     
     static func endSemester(completion: () -> Void, failure: (String) -> Void) {
-        let semester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as! Semester
+        let semester = SAGEState.currentSemester()!
 
         let formatter = NSDateFormatter()
         formatter.dateFormat = StringConstants.displayDateFormat
@@ -73,9 +73,9 @@ class SemesterOperations {
         ]
 
         BaseOperation.manager().POST(StringConstants.kEndpointEndSemester(semester.id), parameters: params, success: { (operation, data) -> Void in
-            KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSessionStartTime)
-            KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kSemesterSummary)
-            KeychainWrapper.defaultKeychainWrapper().removeObjectForKey(KeychainConstants.kCurrentSemester)
+            SAGEState.removeSessionStartTime()
+            SAGEState.removeSemesterSummary()
+            SAGEState.removeCurrentSemester()
             NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.endSemesterKey, object: nil)
             completion()
             }) { (operation, error) -> Void in
@@ -84,7 +84,7 @@ class SemesterOperations {
     }
     
     static func pauseSemester(completion: () -> Void, failure: (String) -> Void) {
-        let semester = KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kCurrentSemester) as! Semester
+        let semester = SAGEState.currentSemester()!
         
         BaseOperation.manager().POST(StringConstants.kEndpointPauseSemester(semester.id), parameters:nil, success: { (operation, data) -> Void in
             completion()
@@ -102,7 +102,7 @@ class SemesterOperations {
                 semesterSummary = SemesterSummary(propertyDictionary: semesterSummaryJSON as! [String: AnyObject])
                 NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.joinSemesterKey, object: semesterSummary)
             }
-            KeychainWrapper.defaultKeychainWrapper().setObject(semesterSummary!, forKey: KeychainConstants.kSemesterSummary)
+            SAGEState.setSemesterSummary(semesterSummary!)
             completion?()
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))

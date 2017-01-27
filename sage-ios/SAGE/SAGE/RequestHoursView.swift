@@ -105,10 +105,10 @@ class RequestHoursView: FormView {
             self.adjustFinalDates()
         }
         let checkin: Checkin = Checkin(
-            user: LoginOperations.getUser(),
+            user: SAGEState.currentUser(),
             startTime: self.startTime,
             endTime: self.endTime,
-            school: KeychainWrapper.defaultKeychainWrapper().objectForKey(KeychainConstants.kSchool) as? School,
+            school: SAGEState.currentSchool(),
             comment: self.commentField.textView.text,
             verified: verified
         )

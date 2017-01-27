@@ -32,7 +32,7 @@ class Announcement: NSObject {
         self.school = school;
     }
     
-    init(properties propertyDictionary: [String: AnyObject]) {
+    init(propertyDictionary: [String: AnyObject]) {
         super.init()
         for (propertyName, value) in propertyDictionary {
             switch propertyName {

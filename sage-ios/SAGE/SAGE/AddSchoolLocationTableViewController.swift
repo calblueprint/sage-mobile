@@ -136,9 +136,7 @@ extension AddSchoolLocationTableViewController: UISearchBarDelegate {
             if error == nil {
                 self.autocompleteSuggestions = [GMSAutocompletePrediction]()
                 for result in results! {
-                    if let result = result as? GMSAutocompletePrediction {
-                        self.autocompleteSuggestions.append(result)
-                    }
+                    self.autocompleteSuggestions.append(result as GMSAutocompletePrediction)
                 }
                 self.locationView.tableView.reloadData()
             } else {

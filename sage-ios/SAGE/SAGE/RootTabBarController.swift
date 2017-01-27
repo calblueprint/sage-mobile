@@ -126,7 +126,7 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
                 
                 let schoolViewController = SchoolDetailViewController()
                 self.schoolViewController = schoolViewController
-                schoolViewController.configureWithSchool(school as! School)
+                schoolViewController.configureWithSchool(school)
                 rootViewControllers.append(schoolViewController)
             }
         }

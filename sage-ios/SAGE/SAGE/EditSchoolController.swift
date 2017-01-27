@@ -40,7 +40,7 @@ class EditSchoolController: AddSchoolController {
                 geocoder.reverseGeocodeCoordinate(location.coordinate, completionHandler: { (callback, error) -> Void in
                     if error == nil {
                         let address = callback!.firstResult()
-                        let addressText = address!.lines![0] as? String
+                        let addressText = address!.lines![0]
                         school!.address = addressText
                         (self.view as! AddSchoolView).displayAddressText(addressText)
                     }

@@ -169,7 +169,7 @@ class RequestHoursView: FormView {
 
     private func adjustFinalDates() {
         let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        let components: NSCalendarUnit = [.Year, .Month, .Day , .Hour, .Minute, .NSTimeZoneCalendarUnit]
+        let components: NSCalendarUnit = [.Year, .Month, .Day , .Hour, .Minute, .TimeZone]
 
         let dateComponents = calendar!.components(components, fromDate: self.startDate)
         let startComponents = calendar!.components(components, fromDate: self.startTime)

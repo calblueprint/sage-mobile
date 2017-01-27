@@ -98,7 +98,7 @@ class NotificationView: UIView {
             }) { (finished) -> Void in
                 if finished {
                     let delay: NSTimeInterval = 4
-                    self.performSelector("showStatusBar", withObject: nil, afterDelay: delay)
+                    self.performSelector(#selector(NotificationView.showStatusBar), withObject: nil, afterDelay: delay)
                     UIView.animateWithDuration(UIConstants.fastAnimationTime, delay: delay, options: .CurveEaseOut, animations: { () -> Void in
                         self.moveY(-NotificationView.notificationHeight)
                         }) { (finished) -> Void in

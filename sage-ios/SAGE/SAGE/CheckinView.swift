@@ -61,6 +61,7 @@ class CheckinView: UIView {
         self.timerLabel.centerInSuperview()
         
         self.activityIndicatorView.centerInSuperview()
+        (self.activityIndicatorView.subviews.first! as! UIActivityIndicatorView).centerInSuperview()
     }
     
     //
@@ -82,14 +83,16 @@ class CheckinView: UIView {
     }
     
     func presentActivityIndicator() {
-        if self.activityIndicatorView == 0 {
+        if self.activityIndicatorView.hidden {
+            print("Presenting...")
             self.showView(self.activityIndicatorView, hide: nil, duration: 0.2, showAlpha: 0.9)
             (self.activityIndicatorView.subviews.first! as! UIActivityIndicatorView).startAnimating()
         }
     }
     
     func hideActivityIndicator() {
-        if self.activityIndicatorView.alpha != 0 {
+        if !self.activityIndicatorView.hidden {
+            print("Hiding...")
             (self.activityIndicatorView.subviews.first! as! UIActivityIndicatorView).stopAnimating()
             UIView.animateWithDuration(0.2) { () -> Void in
                 self.activityIndicatorView.alpha = 0

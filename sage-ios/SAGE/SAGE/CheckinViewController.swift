@@ -148,10 +148,21 @@ class CheckinViewController: SGViewController {
                 if !self.currentLocation.recent() {
                     self.checkinView.presentActivityIndicator()
                     self.startGettingCurrentLocation()
-                    semaphore = dispatch_semaphore_create(0)
-                    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-                    self.checkinView.hideActivityIndicator()
-                    self.beginSessionHelper()
+                    
+                    let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+                    dispatch_async(backgroundQueue, {
+                        print("This is run on the background queue")
+                        self.semaphore = dispatch_semaphore_create(0)
+                        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER)
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            print("This is run on the main queue, after the previous code in outer block")
+                            self.checkinView.hideActivityIndicator()
+                            self.beginSessionHelper()
+                        })
+                    })
+                    
+//                    self.checkinView.hideActivityIndicator()
+//                    self.beginSessionHelper()
                 } else {
                     self.beginSessionHelper()
                 }
@@ -168,10 +179,21 @@ class CheckinViewController: SGViewController {
         if !self.currentLocation.recent() {
             self.checkinView.presentActivityIndicator()
             self.startGettingCurrentLocation()
-            semaphore = dispatch_semaphore_create(0)
-            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-            self.checkinView.hideActivityIndicator()
-            self.endSessionHelper()
+            
+            let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+            dispatch_async(backgroundQueue, {
+                print("This is run on the background queue")
+                self.semaphore = dispatch_semaphore_create(0)
+                dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    print("This is run on the main queue, after the previous code in outer block")
+                    self.checkinView.hideActivityIndicator()
+                    self.endSessionHelper()
+                })
+            })
+            
+//            self.checkinView.hideActivityIndicator()
+//            self.endSessionHelper()
         } else {
             self.endSessionHelper()
         }

@@ -219,6 +219,10 @@ class User: NSObject, NSCoding {
         return (self.role == .Admin || self.role == .President) && self.directorID != -1
     }
     
+    func isAdmin() -> Bool {
+        return (self.role == .Admin || self.role == .President) && self.directorID == -1
+    }
+    
     func roleColor(preventInactive preventInactive: Bool = false) -> UIColor {
         var result = UIColor.clearColor()
         switch self.role {

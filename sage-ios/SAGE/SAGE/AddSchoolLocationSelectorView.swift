@@ -27,9 +27,10 @@ class AddSchoolLocationSelectorView: UIView {
         self.tableView.tableFooterView = UIView()
         
         self.addSubview(self.mapView)
-        self.mapView.camera = GMSCameraPosition(target: CLLocationCoordinate2DMake(0, 0), zoom: 15, bearing: 0, viewingAngle: 0)
+        self.mapView.camera = GMSCameraPosition(target: CLLocationCoordinate2DMake(0, 0), zoom: 10, bearing: 0, viewingAngle: 0)
         self.mapView.alpha = 0.0
         self.mapView.userInteractionEnabled = false
+        self.mapView.settings.setAllGesturesEnabled(false)
         
         self.searchBar.setHeight(44)
         self.searchBar.tintColor = UIColor.whiteColor()

@@ -33,7 +33,14 @@ class SignUpRequestsViewController: SGTableViewController {
         self.changeTitle("Sign Up Requests")
         self.tableView.tableFooterView = UIView()
         
-        let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
+        let filterIcon: FAKIonIcons
+        
+        if (SAGEState.currentUser()!.isAdmin()) {
+            filterIcon = FAKIonIcons.androidMoreVerticalIconWithSize(UIConstants.barbuttonIconSize)
+        } else {
+            filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
+        }
+        
         let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
         let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: #selector(SignUpRequestsViewController.showFilterOptions))
         self.navigationItem.rightBarButtonItem = filterButton
@@ -98,7 +105,19 @@ class SignUpRequestsViewController: SGTableViewController {
     }
     
     func showFilterOptions() {
-        let menuController = MenuController(title: "Display Options")
+        let menuController: MenuController
+        
+        if SAGEState.currentUser()!.isAdmin() {
+            menuController = MenuController(title: "Options")
+            menuController.addMenuItem(MenuItem(title: "Approve All Requests", handler: { (_) -> Void in
+                self.approveAllRequests()
+                self.filter = nil
+                self.loadSignUpRequests(reset: true)
+                self.changeSubtitle("All")
+            }))
+        } else {
+            menuController = MenuController(title: "Display Options")
+        }
 
         menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
             self.filter = nil
@@ -128,6 +147,35 @@ class SignUpRequestsViewController: SGTableViewController {
         }))
     
         self.presentViewController(menuController, animated: false, completion: nil)
+    }
+    
+    private func approveAllRequests() {
+        
+        if requests != nil {
+            
+            self.activityIndicator.startAnimating()
+            var deleteRows: [NSIndexPath] = []
+            
+            for (i, user) in requests!.enumerate() {
+                let indexPath = NSIndexPath(forRow: i, inSection: 0)
+                NSNotificationCenter.defaultCenter().postNotificationName(NotificationConstants.deleteSignupRequestKey, object: user)
+                deleteRows.append(indexPath)
+                requests!.removeAtIndex(requests!.indexOf(user)!) // indices have shifted because prior users removed
+                AdminOperations.verifyUser(user, completion: nil, failure: { (message) -> Void in
+                    self.requests?.insert(user, atIndex: indexPath.row)
+                    deleteRows.removeAtIndex(deleteRows.indexOf(indexPath)!) // just in case
+                    self.tableView.reloadData()
+                    self.hideNoContentView()
+                    self.showErrorAndSetMessage(message)
+                    return
+                })
+            }
+            
+            self.tableView.deleteRowsAtIndexPaths(deleteRows, withRowAnimation: .Right)
+            self.activityIndicator.stopAnimating()
+            self.showNoContentView()
+        }
+        
     }
     
     //
@@ -210,6 +258,7 @@ class SignUpRequestsViewController: SGTableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("Row: \(indexPath.row), Section: \(indexPath.section)")
         let request = self.requests![indexPath.row]
         let vc = ProfileViewController(user: request)
         self.navigationController?.pushViewController(vc, animated: true)

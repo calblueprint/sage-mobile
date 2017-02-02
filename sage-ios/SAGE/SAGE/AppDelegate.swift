@@ -37,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let userInfo = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
             self.handleNotification(userInfo, applicationState: application.applicationState, launching: true)
         }
+        
+        // Get authorization for local notifications
+        UserAuthorization.userNotificationInitialAuthorization()
 
         self.resetIconBadgeNumber(application)
         return true
@@ -44,6 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(application: UIApplication) {
         self.resetIconBadgeNumber(application)
+    }
+    
+    func applicationDidBecomeActive(application: UIApplication) {
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: NotificationConstants.appStateBecameActive, object: nil))
     }
 
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {

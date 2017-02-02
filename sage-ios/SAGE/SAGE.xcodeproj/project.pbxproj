@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		114953511C190CAA00A74845 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114953501C190CAA00A74845 /* APIKeys.swift */; };
+		144F7D851E4331B800A57675 /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F7D841E4331B800A57675 /* UserAuthorization.swift */; };
 		27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */; };
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
@@ -216,6 +217,7 @@
 /* Begin PBXFileReference section */
 		114953501C190CAA00A74845 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		140949381DCB6ADE0053E458 /* LeConte.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LeConte.gpx; sourceTree = "<group>"; };
+		144F7D841E4331B800A57675 /* UserAuthorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthorization.swift; sourceTree = "<group>"; };
 		27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGBarButtonItem.swift; sourceTree = "<group>"; };
 		2705CC3A1BB927D7004FE927 /* SAGE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAGE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC3D1BB927D7004FE927 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -847,6 +849,7 @@
 		E4058DA51DF9153800727DC5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				144F7D841E4331B800A57675 /* UserAuthorization.swift */,
 				E4058DA61DF9154D00727DC5 /* SAGEState.swift */,
 			);
 			name = Helpers;
@@ -1183,6 +1186,7 @@
 				27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */,
 				424A137C1BEED27300775E86 /* UIViewController.swift in Sources */,
 				27F990C61BBDD76800D61DA2 /* StringConstants.swift in Sources */,
+				144F7D851E4331B800A57675 /* UserAuthorization.swift in Sources */,
 				5D6149151C5C3F0D0036708A /* JoinSemesterViewController.swift in Sources */,
 				278912091BEEEC590005D46E /* CheckinOperations.swift in Sources */,
 				E4B347E31C866E990026D43D /* SGTitleView.swift in Sources */,

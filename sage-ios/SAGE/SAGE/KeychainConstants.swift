@@ -25,5 +25,7 @@ struct KeychainConstants {
     static let kSignUpRequests: String = "SignUpRequests"
     static let kCheckInRequests: String = "CheckInRequests"
     
+    static let kLocationNotification: String = "LocationNotification"
+    
     
 }

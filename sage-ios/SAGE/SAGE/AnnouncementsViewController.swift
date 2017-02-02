@@ -198,7 +198,7 @@ class AnnouncementsViewController: SGTableViewController {
         
         // Want to get first batch of announcements again
         if page == 1 {
-            self.announcements = []
+//            self.announcements = []
             self.page = 0
             self.loadedAllAnnouncements = false
         }
@@ -206,6 +206,7 @@ class AnnouncementsViewController: SGTableViewController {
         if !self.loadedAllAnnouncements {
             AnnouncementsOperations.loadAnnouncements(page: page, filter: self.filter, completion: { (newAnnouncements) -> Void in
                 self.refreshControl?.endRefreshing()
+                
                 if newAnnouncements.count != 0 {
                     self.page = page
                     
@@ -214,6 +215,11 @@ class AnnouncementsViewController: SGTableViewController {
                     while i < newAnnouncements.count {
                         indexPaths.append(NSIndexPath(forRow: self.announcements.count + i, inSection: 0))
                         i = i + 1
+                    }
+                    
+                    // Want to get first batch of announcements again
+                    if page == 1 {
+                        self.announcements = []
                     }
                     
                     self.announcements.appendContentsOf(newAnnouncements)

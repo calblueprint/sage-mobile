@@ -109,6 +109,16 @@ class SAGEState {
         self.removeObjectForKey(KeychainConstants.kSignUpRequests)
     }
     
+    class func setLocationNotification(preference: Bool) {
+        // true = 2, false = 1, not set = 0
+        self.saveInteger(preference ? 2 : 1, key: KeychainConstants.kLocationNotification)
+    }
+    
+    class func locationNotificationPreferenceInt() -> Int {
+        // true = 2, false = 1, not set = 0
+        return self.integerForKey(KeychainConstants.kLocationNotification)
+    }
+    
     class func reset() {
         self.removeCurrentUser()
         self.removeCurrentSchool()

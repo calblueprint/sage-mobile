@@ -8,12 +8,14 @@
 
 import Foundation
 import SwiftKeychainWrapper
+import UserNotifications
 
 class ProfileViewController: SGTableViewController {
 
     var user: User?
     var profileView = ProfileView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var notificationSwitch = UISwitch()
     
     init(user: User) {
         self.user = user
@@ -23,6 +25,7 @@ class ProfileViewController: SGTableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.verifiedCheckinAdded(_:)), name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.semesterJoined(_:)), name: NotificationConstants.joinSemesterKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.semesterEnded(_:)), name: NotificationConstants.endSemesterKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.refreshViewState), name: NotificationConstants.appStateBecameActive, object: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -80,6 +83,10 @@ class ProfileViewController: SGTableViewController {
         self.tableView.reloadData()
     }
     
+    func refreshViewState() {
+        UserAuthorization.userNotificationSwitchState(self.notificationSwitch)
+    }
+    
     func setupHeader() {
         self.tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
         self.tableView.tableHeaderView = self.profileView
@@ -115,6 +122,11 @@ class ProfileViewController: SGTableViewController {
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: #selector(ProfileViewController.getUser), forControlEvents: .ValueChanged)
         self.view.bringSubviewToFront(self.refreshControl!)
+        
+        self.notificationSwitch.onTintColor = UIColor.mainColor
+        UserAuthorization.userNotificationSwitchState(self.notificationSwitch)
+//        self.notificationSwitch.enabled = UserAuthorization.userNotificationAllowed()
+        self.notificationSwitch.addTarget(self, action: #selector(notificationSwitchAction), forControlEvents: .ValueChanged)
         
         self.getUser()
     }
@@ -217,10 +229,23 @@ class ProfileViewController: SGTableViewController {
         self.navigationController?.pushViewController(editProfileController, animated: true)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44.0
+    @objc func notificationSwitchAction(sender: UISwitch) {
+        SAGEState.setLocationNotification(sender.on)
+        if (sender.on) {
+            print("Switched on.")
+            UserAuthorization.userNotificationCheckAuthorization(presentingViewController: self, settingSwitch: notificationSwitch)
+        } else {
+            print("Switched off.")
+        }
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 && indexPath.row == 1 {
+            return 64.0
+        }
+        return 44.0
+    }
+        
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if SAGEState.currentUser()!.id == self.user!.id && self.filter == nil {
             return 2
@@ -240,22 +265,25 @@ class ProfileViewController: SGTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: nil)
-        cell.selectionStyle = .None
-        cell.textLabel!.font = UIFont.normalFont
+        let cell: UITableViewCell
         if indexPath.section == 0 {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: nil)
+            cell.selectionStyle = .None
+            cell.textLabel!.font = UIFont.normalFont
             if (indexPath.row == 0) {
                 cell.textLabel!.text = "All Check Ins"
                 cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
             } else {
                 cell.textLabel!.text = "Location Notifications"
-                cell.detailTextLabel?.text = "Notify you when you are near \(user?.getValidSchoolString() ?? "your school")."
-                let notificationSwitch = UISwitch()
-                notificationSwitch.on = true
-                notificationSwitch.addTarget(self, action: #selector(notificationSwitchAction), forControlEvents: .ValueChanged)
+                cell.detailTextLabel!.adjustsFontSizeToFitWidth = true
+                cell.detailTextLabel!.numberOfLines = 2
+                cell.detailTextLabel!.text = "We'll remind you to check in when you're near \(user?.getValidSchoolString() ?? "your school")."
                 cell.accessoryView = notificationSwitch
             }
-        } else if indexPath.section == 1 {
+        } else {
+            cell = UITableViewCell()
+            cell.selectionStyle = .None
+            cell.textLabel!.font = UIFont.normalFont
             cell.textLabel!.text = "Log Out"
             cell.textLabel?.textColor = UIColor.redColor()
             cell.textLabel!.textAlignment = .Center
@@ -263,16 +291,16 @@ class ProfileViewController: SGTableViewController {
         return cell
     }
     
-    @objc func notificationSwitchAction(sender: UISwitch) {
-        if (sender.on) {
-            print("Switched on.")
-        } else {
-            print("Switched off.")
-        }
-    }
-    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if indexPath.section == 0 && indexPath.row == 1 {
+            return false
+        } else {
+            return true
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

@@ -28,7 +28,8 @@ class AnnouncementsOperations {
             }
         }
         params.appendDictionary(filter)
-
+        
+        
         BaseOperation.manager().GET(StringConstants.kEndpointAnnouncements, parameters: params, success: { (operation, data) -> Void in
             let announcementsJSON = data["announcements"] as! [[String: AnyObject]]
             var announcements = [Announcement]()

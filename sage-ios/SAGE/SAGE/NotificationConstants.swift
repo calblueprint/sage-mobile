@@ -29,4 +29,5 @@ struct NotificationConstants {
     static let addSignupRequestKey: String = notificationBaseName + "addSignupRequest"
     static let deleteSignupRequestKey: String = notificationBaseName + "deleteSignupRequest"
     static let updateSignupRequestCountKey: String = notificationBaseName + "updateSignupRequestCount"
+    static let appStateBecameActive: String = notificationBaseName + "appBecameActive"
 }

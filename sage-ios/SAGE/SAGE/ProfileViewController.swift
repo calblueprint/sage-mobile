@@ -236,22 +236,39 @@ class ProfileViewController: SGTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return section == 0 ? 2 : 1
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: nil)
         cell.selectionStyle = .None
         cell.textLabel!.font = UIFont.normalFont
         if indexPath.section == 0 {
-            cell.textLabel!.text = "All Check Ins"
-            cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            if (indexPath.row == 0) {
+                cell.textLabel!.text = "All Check Ins"
+                cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            } else {
+                cell.textLabel!.text = "Location Notifications"
+                cell.detailTextLabel?.text = "Notify you when you are near \(user?.getValidSchoolString() ?? "your school")."
+                let notificationSwitch = UISwitch()
+                notificationSwitch.on = true
+                notificationSwitch.addTarget(self, action: #selector(notificationSwitchAction), forControlEvents: .ValueChanged)
+                cell.accessoryView = notificationSwitch
+            }
         } else if indexPath.section == 1 {
             cell.textLabel!.text = "Log Out"
             cell.textLabel?.textColor = UIColor.redColor()
             cell.textLabel!.textAlignment = .Center
         }
         return cell
+    }
+    
+    @objc func notificationSwitchAction(sender: UISwitch) {
+        if (sender.on) {
+            print("Switched on.")
+        } else {
+            print("Switched off.")
+        }
     }
     
     deinit {

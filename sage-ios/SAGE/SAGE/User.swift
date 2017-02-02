@@ -211,6 +211,14 @@ class User: NSObject, NSCoding {
         }
     }
     
+    func getValidSchoolString() -> String {
+        if (school != nil && !school!.name!.containsString("UC Berkeley")) {
+            return school!.name!
+        } else {
+            return "your school"
+        }
+    }
+    
     func isBefore(otherUser: User) -> Bool {
         return self.firstName < otherUser.firstName
     }

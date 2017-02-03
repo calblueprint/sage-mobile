@@ -10,9 +10,10 @@ import UIKit
 import SwiftKeychainWrapper
 import GoogleMaps
 import GooglePlaces
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
 
@@ -38,8 +39,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.handleNotification(userInfo, applicationState: application.applicationState, launching: true)
         }
         
+        //Handle local notifications
+//        if let userInfo = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? [String: AnyObject] {
+//            print("Launched by local notification")
+//            print(userInfo)
+//        }
+        
         // Get authorization for local notifications
         UserAuthorization.userNotificationInitialAuthorization()
+        
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.currentNotificationCenter().delegate = self
+
+//            UserNotifications.setup()
+            UserNotifications.launch()
+        } else {
+            // Fallback on earlier versions
+        }
 
         self.resetIconBadgeNumber(application)
         return true
@@ -80,6 +96,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if SAGEState.currentUser() != nil {
             self.handleNotification(userInfo, applicationState: application.applicationState, launching: false)
         }
+    }
+    
+    //
+    // MARK: - UILocalNotification Delegate (Depreciated in iOS 10)
+    //
+    //TODO
+    
+    //
+    // MARK: - UNUserNotification Delegate (iOS 10 only)
+    //
+    @available(iOS 10.0, *)
+    func userNotificationCenter(center: UNUserNotificationCenter, didReceiveNotificationResponse response: UNNotificationResponse, withCompletionHandler completionHandler: () -> Void) {
+        if (response.actionIdentifier == NotificationConstants.beginSessionActionID) {
+            print("UN begin response recieved.")
+        }
+        completionHandler()
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
+        print("Recieved notification in foreground: \(notification)")
+        completionHandler([.Alert, .Sound])
     }
 
     //

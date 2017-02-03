@@ -84,7 +84,7 @@ class ProfileViewController: SGTableViewController {
     }
     
     func refreshViewState() {
-        UserAuthorization.userNotificationSwitchState(self.notificationSwitch)
+        UserAuthorization.setUserNotificationSwitchState(self.notificationSwitch)
     }
     
     func setupHeader() {
@@ -124,8 +124,8 @@ class ProfileViewController: SGTableViewController {
         self.view.bringSubviewToFront(self.refreshControl!)
         
         self.notificationSwitch.onTintColor = UIColor.mainColor
-        UserAuthorization.userNotificationSwitchState(self.notificationSwitch)
-//        self.notificationSwitch.enabled = UserAuthorization.userNotificationAllowed()
+        UserAuthorization.setUserNotificationSwitchState(self.notificationSwitch)
+        self.notificationSwitch.enabled = UserAuthorization.userNotificationAllowed()
         self.notificationSwitch.addTarget(self, action: #selector(notificationSwitchAction), forControlEvents: .ValueChanged)
         
         self.getUser()

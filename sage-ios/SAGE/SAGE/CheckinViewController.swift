@@ -160,9 +160,6 @@ class CheckinViewController: SGViewController {
                             self.beginSessionHelper()
                         })
                     })
-                    
-//                    self.checkinView.hideActivityIndicator()
-//                    self.beginSessionHelper()
                 } else {
                     self.beginSessionHelper()
                 }
@@ -191,9 +188,6 @@ class CheckinViewController: SGViewController {
                     self.endSessionHelper()
                 })
             })
-            
-//            self.checkinView.hideActivityIndicator()
-//            self.endSessionHelper()
         } else {
             self.endSessionHelper()
         }

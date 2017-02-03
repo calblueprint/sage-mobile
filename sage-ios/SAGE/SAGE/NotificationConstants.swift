@@ -29,5 +29,15 @@ struct NotificationConstants {
     static let addSignupRequestKey: String = notificationBaseName + "addSignupRequest"
     static let deleteSignupRequestKey: String = notificationBaseName + "deleteSignupRequest"
     static let updateSignupRequestCountKey: String = notificationBaseName + "updateSignupRequestCount"
+    
+    static let beginSessionActionID: String = notificationBaseName + "beginSessionActionID" // not currently used
+    static let remindActionID: String = notificationBaseName + "remindActionID" // not currently used
+    static let locationCategoryID: String = notificationBaseName + "locationCategoryID" // not currently used
+    static let locationEntryRegionID: String = notificationBaseName + "locationEntryRegionID"
+    static let locationExitRegionID: String = notificationBaseName + "locationExitRegionID"
+    static let locationEntryNotificationID: String = notificationBaseName + "locationEntryNotificationID"
+    static let locationExitNotificationID: String = notificationBaseName + "locationExitNotificationID"
+    
     static let appStateBecameActive: String = notificationBaseName + "appBecameActive"
+    
 }

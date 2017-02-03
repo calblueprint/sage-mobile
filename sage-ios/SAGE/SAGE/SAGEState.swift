@@ -111,6 +111,11 @@ class SAGEState {
     
     class func setLocationNotification(preference: Bool) {
         // true = 2, false = 1, not set = 0
+        if (preference) {
+            UserNotifications.createLocationNotification(presentingViewController: RootController.sharedController())
+        } else {
+            UserNotifications.removeAllPendingNotifications()
+        }
         self.saveInteger(preference ? 2 : 1, key: KeychainConstants.kLocationNotification)
     }
     

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		114953511C190CAA00A74845 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114953501C190CAA00A74845 /* APIKeys.swift */; };
 		144F7D851E4331B800A57675 /* UserAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144F7D841E4331B800A57675 /* UserAuthorization.swift */; };
+		14FD31611E43556600BD4272 /* UserNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FD31601E43556600BD4272 /* UserNotifications.swift */; };
+		14FD31631E436E5900BD4272 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FD31621E436E5900BD4272 /* UserNotifications.framework */; };
+		14FD31651E436E5F00BD4272 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FD31641E436E5F00BD4272 /* UserNotificationsUI.framework */; };
 		27044BCF1C0E61AD00ABE27D /* SGBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */; };
 		2705CC3E1BB927D7004FE927 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3D1BB927D7004FE927 /* AppDelegate.swift */; };
 		2705CC401BB927D7004FE927 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2705CC3F1BB927D7004FE927 /* RootTabBarController.swift */; };
@@ -218,6 +221,9 @@
 		114953501C190CAA00A74845 /* APIKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		140949381DCB6ADE0053E458 /* LeConte.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = LeConte.gpx; sourceTree = "<group>"; };
 		144F7D841E4331B800A57675 /* UserAuthorization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthorization.swift; sourceTree = "<group>"; };
+		14FD31601E43556600BD4272 /* UserNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotifications.swift; sourceTree = "<group>"; };
+		14FD31621E436E5900BD4272 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		14FD31641E436E5F00BD4272 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		27044BCE1C0E61AD00ABE27D /* SGBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGBarButtonItem.swift; sourceTree = "<group>"; };
 		2705CC3A1BB927D7004FE927 /* SAGE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAGE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2705CC3D1BB927D7004FE927 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -400,6 +406,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14FD31651E436E5F00BD4272 /* UserNotificationsUI.framework in Frameworks */,
+				14FD31631E436E5900BD4272 /* UserNotifications.framework in Frameworks */,
 				7DAB510B471F2447CE373B43 /* Pods_SAGE.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,6 +435,8 @@
 		19047DE251CEEBDEB3C70618 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14FD31641E436E5F00BD4272 /* UserNotificationsUI.framework */,
+				14FD31621E436E5900BD4272 /* UserNotifications.framework */,
 				E4F4D1AE1DF02A430022D035 /* AFNetworking.framework */,
 				4264DFEA1BC59BE20097804D /* AFNetworking.framework */,
 				4264DFEB1BC59BE20097804D /* FontAwesomeKit.framework */,
@@ -849,6 +859,7 @@
 		E4058DA51DF9153800727DC5 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				14FD31601E43556600BD4272 /* UserNotifications.swift */,
 				144F7D841E4331B800A57675 /* UserAuthorization.swift */,
 				E4058DA61DF9154D00727DC5 /* SAGEState.swift */,
 			);
@@ -1243,6 +1254,7 @@
 				421515981CC891AC008B854F /* SuccessView.swift in Sources */,
 				42A6CE621C0BDF6800F97CFF /* SchoolDetailViewController.swift in Sources */,
 				42F75B221BD451DA00835595 /* SignUpTableViewController.swift in Sources */,
+				14FD31611E43556600BD4272 /* UserNotifications.swift in Sources */,
 				E4F7290F1CB62B1500A61E67 /* PushNotificationConstants.swift in Sources */,
 				426838731C00329E00A97832 /* SignUpRequestTableViewCell.swift in Sources */,
 				27D1B67E1BE0422900F9D026 /* RequestHoursView.swift in Sources */,

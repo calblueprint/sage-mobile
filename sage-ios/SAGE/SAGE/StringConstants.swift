@@ -16,8 +16,10 @@ struct StringConstants {
     
     #if DEBUG
         static let kEndpointBaseURL = "http://sage-rails-staging.herokuapp.com/api/v1"
+        static let debug = true
     #else
         static let kEndpointBaseURL = "http://sage-rails.herokuapp.com/api/v1"
+        static let debug = false
     #endif
 
     static let kEndpointCreateUser = kEndpointBaseURL + "/users"

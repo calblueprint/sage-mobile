@@ -10,5 +10,5 @@ import Foundation
 
 struct APIKeys {
     
-    static let googleMaps = "AIzaSyC-LouM1EA2YcOGRdpGv36AlcZYpU-Lx6M"
+    static let googleMaps = "AIzaSyAye-gUmRLl59iEbcCb7sBgwUroJsNEsN4"
 }

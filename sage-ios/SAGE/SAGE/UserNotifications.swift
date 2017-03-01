@@ -43,7 +43,7 @@ class UserNotifications: NSObject {
     }
     
     /**
-     Not applicable to this release. Still learing how to use git :)
+     Not applicable to this release. Messed up git, still learning how to use it  :)
      */
     class func setup() {
 //        print("SETUP")

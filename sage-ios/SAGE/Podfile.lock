@@ -42,13 +42,13 @@ PODS:
     - FontAwesomeKit/Core
   - FontAwesomeKit/Zocial (2.2.1):
     - FontAwesomeKit/Core
-  - GoogleMaps (2.1.1):
-    - GoogleMaps/Maps (= 2.1.1)
-  - GoogleMaps/Base (2.1.1)
-  - GoogleMaps/Maps (2.1.1):
+  - GoogleMaps (2.2.0):
+    - GoogleMaps/Maps (= 2.2.0)
+  - GoogleMaps/Base (2.2.0)
+  - GoogleMaps/Maps (2.2.0):
     - GoogleMaps/Base
-  - GooglePlaces (2.1.1):
-    - GoogleMaps/Base (= 2.1.1)
+  - GooglePlaces (2.2.0):
+    - GoogleMaps/Base (= 2.2.0)
   - SwiftKeychainWrapper (2.0.0)
 
 DEPENDENCIES:
@@ -65,17 +65,17 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FontAwesomeKit:
-    :commit: ffcc61b71c5ae5196705d3486e20e5391fb9396c
+    :commit: ed5eb02f4bcf76e218bb1c966c551a7b5240b6b4
     :git: https://github.com/PrideChung/FontAwesomeKit.git
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   BSKeyboardControls: b701935e789961102e3f20063bba7185800a2d3f
   FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
-  GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
-  GooglePlaces: 35636d86e5020cba3856eb988c09a5491de0a65a
+  GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
+  GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   SwiftKeychainWrapper: 3575838215fa36c816899c301a7afe370bd94814
 
 PODFILE CHECKSUM: be2a55b21fb1c03d7185988037ee7c731e7ac1dc
 
-COCOAPODS: 1.2.0.beta.1
+COCOAPODS: 1.2.0

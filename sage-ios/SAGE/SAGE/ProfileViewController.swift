@@ -13,6 +13,7 @@ import UserNotifications
 class ProfileViewController: SGTableViewController {
 
     var user: User?
+    var isCurrentUserProfile: Bool = true
     var profileView = ProfileView()
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     var notificationSwitch = UISwitch()
@@ -84,6 +85,7 @@ class ProfileViewController: SGTableViewController {
     }
     
     func refreshViewState() {
+        print("[ProfileVC] refreshViewState()")
         UserAuthorization.setUserNotificationSwitchState(self.notificationSwitch)
     }
     
@@ -104,6 +106,7 @@ class ProfileViewController: SGTableViewController {
         super.viewDidLoad()
         self.setupHeader()
         self.tableView.tableFooterView = UIView()
+        self.isCurrentUserProfile = self.user!.id == SAGEState.currentUser()!.id
         
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.centerHorizontally()
@@ -240,14 +243,14 @@ class ProfileViewController: SGTableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 1 {
+        if indexPath.section == 0 && indexPath.row == 1 && self.isCurrentUserProfile {
             return 64.0
         }
         return 44.0
     }
         
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if SAGEState.currentUser()!.id == self.user!.id && self.filter == nil {
+        if self.isCurrentUserProfile && self.filter == nil {
             return 2
         } else if (SAGEState.currentUser()!.role == .Admin || SAGEState.currentUser()!.role == .President) {
             return 1
@@ -261,7 +264,11 @@ class ProfileViewController: SGTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 2 : 1
+        if section == 0 && self.isCurrentUserProfile {
+            return 2
+        } else {
+            return 1
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

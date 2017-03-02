@@ -13,12 +13,14 @@ import SwiftKeychainWrapper
 
 class CheckinViewController: SGViewController {
     
-    var semaphore = dispatch_semaphore_create(0)
+    var semaphore: dispatch_semaphore_t?
     
     let locationManager = CLLocationManager()
     var currentLocation = CLLocation() {
         didSet {
-            dispatch_semaphore_signal(semaphore)
+            if let semaphore = semaphore {
+                dispatch_semaphore_signal(semaphore)
+            }
         }
     }
     var school: School?
@@ -141,7 +143,7 @@ class CheckinViewController: SGViewController {
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
 
-        } else if CLLocationManager.locationServicesEnabled() {
+        } else if CLLocationManager.locationServicesEnabled() && semaphore == nil {
             switch CLLocationManager.authorizationStatus() {
             case .AuthorizedWhenInUse, .AuthorizedAlways:
                 // Verify location
@@ -151,13 +153,16 @@ class CheckinViewController: SGViewController {
                     
                     let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
                     dispatch_async(backgroundQueue, {
-                        print("This is run on the background queue")
                         self.semaphore = dispatch_semaphore_create(0)
-                        dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER)
+                        dispatch_semaphore_wait(self.semaphore!, dispatch_time(DISPATCH_TIME_NOW, 10 * Int64(NSEC_PER_SEC)))
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            print("This is run on the main queue, after the previous code in outer block")
+                            self.semaphore = nil
                             self.checkinView.hideActivityIndicator()
-                            self.beginSessionHelper()
+                            if (self.currentLocation.recent()) {
+                                self.beginSessionHelper()
+                            } else {
+                                self.locationErrorAlert()
+                            }
                         })
                     })
                 } else {
@@ -179,13 +184,16 @@ class CheckinViewController: SGViewController {
             
             let backgroundQueue = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
             dispatch_async(backgroundQueue, {
-                print("This is run on the background queue")
                 self.semaphore = dispatch_semaphore_create(0)
-                dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER)
+                dispatch_semaphore_wait(self.semaphore!, dispatch_time(DISPATCH_TIME_NOW, 10 * Int64(NSEC_PER_SEC)))
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    print("This is run on the main queue, after the previous code in outer block")
+                    self.semaphore = nil
                     self.checkinView.hideActivityIndicator()
-                    self.endSessionHelper()
+                    if (self.currentLocation.recent()) {
+                        self.endSessionHelper()
+                    } else {
+                        self.locationErrorAlert()
+                    }
                 })
             })
         } else {
@@ -196,6 +204,15 @@ class CheckinViewController: SGViewController {
     //
     // MARK: - Private methods
     //
+    private func locationErrorAlert() {
+        let alertController = UIAlertController(
+            title: "Uh oh",
+            message: "We couldn't retrieve your location. (Error code CVC1)",
+            preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     private func beginSessionHelper() {
         if self.currentLocationIsBySchool() {
             let alertController = UIAlertController(
@@ -400,6 +417,10 @@ extension CheckinViewController: CLLocationManagerDelegate {
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    class func print(msg: String) {
+        Swift.print("[\(self)] \(msg)")
     }
 }
 

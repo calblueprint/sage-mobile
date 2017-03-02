@@ -37,7 +37,5 @@ struct NotificationConstants {
     static let locationExitRegionID: String = notificationBaseName + "locationExitRegionID"
     static let locationEntryNotificationID: String = notificationBaseName + "locationEntryNotificationID"
     static let locationExitNotificationID: String = notificationBaseName + "locationExitNotificationID"
-    
-    static let appStateBecameActive: String = notificationBaseName + "appBecameActive"
-    
+        
 }

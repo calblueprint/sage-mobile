@@ -21,9 +21,12 @@ class RootController: UIViewController {
 
     private var notifiedAnnouncement: Announcement?
     private var notifiedCheckinRequest: Checkin?
+    private var notifiedBeginCheckin = false
     private var notifiedSignupRequest: User?
 
     private var notificationView = NotificationView()
+    
+    private var verifiedUser = false
 
     private struct SharedController {
         static var controller = RootController()
@@ -74,6 +77,7 @@ class RootController: UIViewController {
         if SAGEState.currentUser() != nil {
             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                 if (user.verified) {
+                    self.verifiedUser = true
                     self.pushRootTabBarController()
                 } else {
                     self.pushUnverifiedViewController()
@@ -136,11 +140,18 @@ class RootController: UIViewController {
 
         // Go to notification view if notification is attached during launch
         self.handleNotificationFromLaunch()
+        
+        // Local notifications
+        UserNotifications.launch()
 
         // Push notifications
         let userNotificationTypes: UIUserNotificationType = [.Alert , .Badge , .Sound]
         let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+    }
+    
+    func loggedIn() -> Bool {
+        return self.verifiedUser
     }
     
     //
@@ -158,7 +169,7 @@ class RootController: UIViewController {
     }
 
     //
-    // MARK: - Push Notification Handling
+    // MARK: - Notification Handling
     //
     func handleNewAnnouncement(announcement: Announcement, applicationState: UIApplicationState, launching: Bool) {
         // Check for duplicate notifications because iOS 9 sucks
@@ -237,6 +248,14 @@ class RootController: UIViewController {
             }
         }
     }
+    
+    func showCheckinView() {
+        if let rootTabBarController = self.rootTabBarController {
+            rootTabBarController.displayCheckinView()
+        } else {
+            self.notifiedBeginCheckin = true
+        }
+    }
 
     private func handleNotificationFromLaunch() {
         if let announcement = self.notifiedAnnouncement {
@@ -248,6 +267,8 @@ class RootController: UIViewController {
         } else if self.notifiedSignupRequest != nil {
             self.rootTabBarController?.setActiveIndex(.Special)
             self.rootTabBarController?.displaySignupRequestsView()
+        } else if notifiedBeginCheckin {
+            self.rootTabBarController?.setActiveIndex(.Checkin)
         }
     }
 }

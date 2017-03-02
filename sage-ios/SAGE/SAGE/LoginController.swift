@@ -141,6 +141,7 @@ class LoginController: SGViewController {
                             LoginOperations.getState({ (user, currentSemester, userSemester) -> Void in
                                 if (user.verified) {
                                     RootController.sharedController().pushRootTabBarController()
+                                    UserNotifications.askForPreference()
                                 } else {
                                     RootController.sharedController().pushUnverifiedViewController()
                                 }

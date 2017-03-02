@@ -31,7 +31,7 @@ class UserAuthorization {
         
         let preference = SAGEState.locationNotificationPreferenceInt()
         
-        if (userNotificationSwitchEnabled() && preference == 2) {
+        if (userNotificationSwitchEnabled() && preference == 2 && RootController.sharedController().loggedIn()) {
             return true
         } else {
             return false
@@ -74,17 +74,23 @@ class UserAuthorization {
      */
     class func userNotificationInitialAuthorization() {
         
-        if #available(iOS 10.0, *) {
-             let authorizationState = SAGEState.locationNotificationPreferenceInt()
-            if (authorizationState == 0) {
+        let authorizationState = SAGEState.locationNotificationPreferenceInt()
+        if (authorizationState == 0) {
+            if #available(iOS 10.0, *) {
                 UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptions([.Alert, .Sound]) {
                     (granted, error) in
                     if (granted) {
-                        // CREATE NOTIFICATION
                         SAGEState.setLocationNotification(true)
                     } else {
                         SAGEState.setLocationNotification(false)
                     }
+                }
+            } else {
+                UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes:[.Sound, .Alert], categories: nil))
+                if (UIApplication.sharedApplication().currentUserNotificationSettings() != nil) {
+                    SAGEState.setLocationNotification(true)
+                } else {
+                    SAGEState.setLocationNotification(false)
                 }
             }
         }
@@ -96,7 +102,7 @@ class UserAuthorization {
      Presents alert linking to app's settings if auth state is denied. To be used when user interacts with a notification function
      in the app (e.g. user turns on location notifications, app needs to ensure it has proper auth)
      */
-    class func userNotificationCheckAuthorization(presentingViewController VC: UIViewController, settingSwitch: UISwitch? = nil) {
+    class func userNotificationCheckAuthorization(presentingViewController VC: UIViewController = RootController.sharedController(), settingSwitch: UISwitch? = nil, completion: (() -> Void)? = nil) {
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.currentNotificationCenter().getNotificationSettingsWithCompletionHandler() {
@@ -109,6 +115,9 @@ class UserAuthorization {
                         if (granted) {
                             // CREATE NOTIFICATION
                             SAGEState.setLocationNotification(true)
+                            if let completion = completion {
+                                completion()
+                            }
                         } else {
                             SAGEState.setLocationNotification(false)
                             dispatch_async(dispatch_get_main_queue(),{
@@ -142,11 +151,20 @@ class UserAuthorization {
                     VC.presentViewController(deniedAlert, animated: true, completion: nil)
                 default:
                     SAGEState.setLocationNotification(true)
+                    if let completion = completion {
+                        completion()
+                    }
                     break
                 }
             }
         } else {
-            // Fallback on earlier versions
+            if (UIApplication.sharedApplication().currentUserNotificationSettings() != nil) {
+                if let completion = completion {
+                    completion()
+                }
+            } else {
+                UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes:[.Sound, .Alert], categories: nil))
+            }
         }
         
     }

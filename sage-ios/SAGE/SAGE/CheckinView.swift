@@ -83,16 +83,14 @@ class CheckinView: UIView {
     }
     
     func presentActivityIndicator() {
-        if self.activityIndicatorView.hidden {
-            print("Presenting...")
+        if self.activityIndicatorView.alpha == 0 {
             self.showView(self.activityIndicatorView, hide: nil, duration: 0.2, showAlpha: 0.9)
             (self.activityIndicatorView.subviews.first! as! UIActivityIndicatorView).startAnimating()
         }
     }
     
     func hideActivityIndicator() {
-        if !self.activityIndicatorView.hidden {
-            print("Hiding...")
+        if self.activityIndicatorView.alpha != 0 {
             (self.activityIndicatorView.subviews.first! as! UIActivityIndicatorView).stopAnimating()
             UIView.animateWithDuration(0.2) { () -> Void in
                 self.activityIndicatorView.alpha = 0
@@ -233,5 +231,9 @@ class CheckinView: UIView {
             .Round,                     // edge join
             10)                         // thickness
         return strokedArc!
+    }
+    
+    class func print(msg: String) {
+        Swift.print("[\(self)] \(msg)")
     }
 }

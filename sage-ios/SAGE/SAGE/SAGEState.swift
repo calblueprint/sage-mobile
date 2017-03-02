@@ -124,6 +124,10 @@ class SAGEState {
         return self.integerForKey(KeychainConstants.kLocationNotification)
     }
     
+    class func removeLocationNotification() {
+        self.removeObjectForKey(KeychainConstants.kLocationNotification)
+    }
+    
     class func reset() {
         self.removeCurrentUser()
         self.removeCurrentSchool()
@@ -133,6 +137,9 @@ class SAGEState {
         self.removeSessionStartTime()
         self.removeCheckinRequestCount()
         self.removeSignUpRequestCount()
+        self.removeLocationNotification()
+        
+        UserNotifications.removeAllPendingNotifications()
     }
     
     //

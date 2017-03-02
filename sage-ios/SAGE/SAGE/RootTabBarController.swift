@@ -81,7 +81,8 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     @objc private func updateAdminBadge() {
         let totalCount = SAGEState.checkinRequestCount() + SAGEState.signUpRequestCount()
         var badgeString: String? = String(totalCount)
-        if totalCount == 0 {
+        // Temporary solution, total count shouldn't be negative...
+        if totalCount <= 0 {
             badgeString = nil
         }
         self.tabBar.items![Index.Special.rawValue].badgeValue = badgeString
@@ -147,11 +148,15 @@ class RootTabBarController: UITabBarController, UINavigationControllerDelegate {
     }
     
     //
-    // MARK: - Push Notification Handling
+    // MARK: - Notification Handling
     //
     func displayAnnouncement(announcement: Announcement, resetData: Bool = false) {
         self.setActiveIndex(.Announcement)
         self.announcementsViewController.displayAnnouncement(announcement, resetData: resetData)
+    }
+    
+    func displayCheckinView() {
+        self.setActiveIndex(.Checkin)
     }
     
     func displayCheckinRequestsView() {

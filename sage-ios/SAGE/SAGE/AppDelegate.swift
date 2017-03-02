@@ -33,40 +33,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UINavigationBar.appearance().translucent = false
-
+        
         //Handle push notifications
         if let userInfo = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
             self.handleNotification(userInfo, applicationState: application.applicationState, launching: true)
         }
         
         //Handle local notifications
-//        if let userInfo = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? [String: AnyObject] {
-//            print("Launched by local notification")
-//            print(userInfo)
-//        }
+        if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] {
+            NSLog("Launched by local notification: \(notification)")
+            if #available(iOS 10.0, *) {
+                // handled by delegate
+            } else {
+                RootController.sharedController().showCheckinView()
+            }
+        }
         
         // Get authorization for local notifications
         UserAuthorization.userNotificationInitialAuthorization()
+        UserNotifications.debug()
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.currentNotificationCenter().delegate = self
-
-//            UserNotifications.setup()
-            UserNotifications.launch()
-        } else {
-            // Fallback on earlier versions
         }
 
+        UserNotifications.removeDeliveredNotifications()
         self.resetIconBadgeNumber(application)
         return true
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
+        UserNotifications.removeDeliveredNotifications()
         self.resetIconBadgeNumber(application)
-    }
-    
-    func applicationDidBecomeActive(application: UIApplication) {
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: NotificationConstants.appStateBecameActive, object: nil))
     }
 
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
@@ -101,25 +99,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     //
     // MARK: - UILocalNotification Delegate (Depreciated in iOS 10)
     //
-    //TODO
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        RootController.sharedController().showCheckinView()
+    }
     
     //
     // MARK: - UNUserNotification Delegate (iOS 10 only)
     //
     @available(iOS 10.0, *)
     func userNotificationCenter(center: UNUserNotificationCenter, didReceiveNotificationResponse response: UNNotificationResponse, withCompletionHandler completionHandler: () -> Void) {
-        if (response.actionIdentifier == NotificationConstants.beginSessionActionID) {
-            print("UN begin response recieved.")
+
+        if (response.actionIdentifier == UNNotificationDefaultActionIdentifier) {
+            RootController.sharedController().showCheckinView()
+        } else if (response.actionIdentifier == NotificationConstants.beginSessionActionID) {
+            print("UN response recieved.")
         }
+        
         completionHandler()
     }
     
     @available(iOS 10.0, *)
     func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
         print("Recieved notification in foreground: \(notification)")
+        UserNotifications.removeDeliveredNotifications()
         completionHandler([.Alert, .Sound])
     }
-
+    
     //
     // MARK: - Private Functions
     //

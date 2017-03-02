@@ -26,7 +26,7 @@ class ProfileViewController: SGTableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.verifiedCheckinAdded(_:)), name: NotificationConstants.addVerifiedCheckinKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.semesterJoined(_:)), name: NotificationConstants.joinSemesterKey, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.semesterEnded(_:)), name: NotificationConstants.endSemesterKey, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.refreshViewState), name: NotificationConstants.appStateBecameActive, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProfileViewController.refreshViewState), name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -85,7 +85,6 @@ class ProfileViewController: SGTableViewController {
     }
     
     func refreshViewState() {
-        print("[ProfileVC] refreshViewState()")
         UserAuthorization.setUserNotificationSwitchState(self.notificationSwitch)
     }
     
@@ -235,10 +234,7 @@ class ProfileViewController: SGTableViewController {
     @objc func notificationSwitchAction(sender: UISwitch) {
         SAGEState.setLocationNotification(sender.on)
         if (sender.on) {
-            print("Switched on.")
             UserAuthorization.userNotificationCheckAuthorization(presentingViewController: self, settingSwitch: notificationSwitch)
-        } else {
-            print("Switched off.")
         }
     }
     

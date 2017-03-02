@@ -12,6 +12,8 @@ import UserNotifications
 
 class UserNotifications: NSObject {
     
+    static let manager = CLLocationManager()
+    
     class func launch() {
         print("LAUNCH")
         if (UserAuthorization.userNotificationAllowed()) {
@@ -24,10 +26,11 @@ class UserNotifications: NSObject {
     class func askForPreference() {
         UserAuthorization.userNotificationCheckAuthorization() { () in
             let alertController = UIAlertController(
-                title: "Let us remind you.",
+                title: "Location Notifications",
                 message: "Would you like us to remind you to begin your session when you're close to \(SAGEState.currentSchool() != nil ? SAGEState.currentSchool()!.name!.stringByReplacingOccurrencesOfString(" elementary school", withString: "", options: .CaseInsensitiveSearch, range: nil) : "your school?")",
                 preferredStyle: .Alert)
             alertController.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                self.manager.requestWhenInUseAuthorization()
                 SAGEState.setLocationNotification(true)
                 self.createLocationNotification(presentingViewController: RootController.sharedController())
             }))
@@ -55,7 +58,7 @@ class UserNotifications: NSObject {
             let name = school.name!.stringByReplacingOccurrencesOfString(" elementary school", withString: "", options: .CaseInsensitiveSearch, range: nil)
             let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
             
-            let entryRegion = CLCircularRegion(center: center, radius: 50, identifier: NotificationConstants.locationEntryRegionID)
+            let entryRegion = CLCircularRegion(center: center, radius: school.radius, identifier: NotificationConstants.locationEntryRegionID)
             entryRegion.notifyOnEntry = true
             entryRegion.notifyOnExit = false
             
@@ -84,9 +87,8 @@ class UserNotifications: NSObject {
                 exitContent.sound = UNNotificationSound.defaultSound()
 //                exitContent.categoryIdentifier = NotificationConstants.locationCategoryID
                 
-                let entryTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
-                
-//                let entryTrigger = UNLocationNotificationTrigger(region: entryRegion, repeats: true)
+//                let entryTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
+                let entryTrigger = UNLocationNotificationTrigger(region: entryRegion, repeats: true)
                 let entryRequest = UNNotificationRequest(identifier: NotificationConstants.locationEntryNotificationID, content: entryContent, trigger: entryTrigger)
                 
                 // TODO: Not implemented
@@ -105,9 +107,9 @@ class UserNotifications: NSObject {
             } else {
                 print("< iOS 10")
                 
-                var entryNotification = UILocalNotification()
-//                entryNotification.region = entryRegion
-                entryNotification.fireDate = NSDate(timeInterval: 10.0, sinceDate: NSDate())
+                let entryNotification = UILocalNotification()
+                entryNotification.region = entryRegion
+//                entryNotification.fireDate = NSDate(timeInterval: 10.0, sinceDate: NSDate())
                 entryNotification.regionTriggersOnce = false
                 entryNotification.alertTitle = entrytitle
                 entryNotification.alertBody = "\(entrySubtitle) \(entryBody)"

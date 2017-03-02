@@ -34,12 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UINavigationBar.appearance().translucent = false
         
-        //Handle push notifications
+        // Handle push notifications
         if let userInfo = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
             self.handleNotification(userInfo, applicationState: application.applicationState, launching: true)
         }
         
-        //Handle local notifications
+        // Handle local notifications
         if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] {
             NSLog("Launched by local notification: \(notification)")
             if #available(iOS 10.0, *) {
@@ -49,9 +49,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        // Handle launch from shortcut
+        if #available(iOS 9.0, *) {
+            if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+                self.handleShortcut(shortcutItem)
+                return false
+            }
+        }
+        
         // Get authorization for local notifications
         UserAuthorization.userNotificationInitialAuthorization()
-        UserNotifications.debug()
         
         if #available(iOS 10.0, *) {
             UNUserNotificationCenter.currentNotificationCenter().delegate = self
@@ -97,6 +104,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     //
+    // MARK: - Shortcut Delegate
+    //
+    @available(iOS 9.0, *)
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        completionHandler(self.handleShortcut(shortcutItem))
+    }
+    
+    @available(iOS 9.0, *)
+    private func handleShortcut(item: UIApplicationShortcutItem) -> Bool {
+        print("Shortcut used: \(item)")
+        RootController.sharedController().showCheckinView()
+        return true
+    }
+    
+    //
     // MARK: - UILocalNotification Delegate (Depreciated in iOS 10)
     //
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
@@ -122,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
         print("Recieved notification in foreground: \(notification)")
         UserNotifications.removeDeliveredNotifications()
-        completionHandler([.Alert, .Sound])
+        completionHandler([])
     }
     
     //

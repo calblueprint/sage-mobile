@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>SAGE-rc.1</string>
+	<string>SAGE</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIcons</key>
@@ -50,6 +50,17 @@
 		<string>SF-UI-Text-Bold.otf</string>
 		<string>SF-UI-Display-Light.otf</string>
 		<string>SF-UI-Display-Thin.otf</string>
+	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeMarkLocation</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Check In</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>CheckIn</string>
+		</dict>
 	</array>
 	<key>UILaunchImages</key>
 	<array>

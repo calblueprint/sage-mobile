@@ -14,13 +14,13 @@ struct StringConstants {
     static let displayDateFormat = "yyyy/MM/dd hh:mm a"
     static let JSONdateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
-//    #if DEBUG
-//        static let kEndpointBaseURL = "http://sage-rails-staging.herokuapp.com/api/v1"
-//        static let debug = true
-//    #else
+    #if DEBUG
+        static let kEndpointBaseURL = "http://sage-rails-staging.herokuapp.com/api/v1"
+        static let debug = true
+    #else
         static let kEndpointBaseURL = "http://sage-rails.herokuapp.com/api/v1"
         static let debug = false
-//    #endif
+    #endif
 
     static let kEndpointCreateUser = kEndpointBaseURL + "/users"
     static let kEndpointLogin = kEndpointBaseURL + "/users/sign_in"

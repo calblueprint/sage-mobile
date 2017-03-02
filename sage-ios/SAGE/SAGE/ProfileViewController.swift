@@ -38,6 +38,10 @@ class ProfileViewController: SGTableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.refreshViewState()
+    }
+    
     //
     // MARK: - NSNotificationCenter selectors
     //
@@ -86,6 +90,7 @@ class ProfileViewController: SGTableViewController {
     
     func refreshViewState() {
         UserAuthorization.setUserNotificationSwitchState(self.notificationSwitch)
+        self.notificationSwitch.enabled = UserAuthorization.userNotificationSwitchEnabled()
     }
     
     func setupHeader() {

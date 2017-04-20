@@ -14,9 +14,11 @@ class BrowseMentorsViewController: SGTableViewController {
     
     var mentors: [[User]]?
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    var mentorFilter : String?
     
     init() {
         super.init(style: .Plain)
+        self.mentorFilter = nil
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BrowseMentorsViewController.userEdited(_:)), name: NotificationConstants.editProfileKey, object: nil)
     }
 
@@ -83,9 +85,7 @@ class BrowseMentorsViewController: SGTableViewController {
         }
         self.refreshControl?.tintColor = UIColor.whiteColor()
         self.refreshControl?.addTarget(self, action: #selector(BrowseMentorsViewController.loadMentors), forControlEvents: .ValueChanged)
-        
         self.loadMentors()
-        
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -125,17 +125,25 @@ class BrowseMentorsViewController: SGTableViewController {
     func showFilterOptions() {
         let menuController = MenuController(title: "Display Options")
         menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
-            
+            self.mentorFilter = nil
+            self.loadMentors()
         }))
         menuController.addMenuItem(MenuItem(title: "Completed", handler: { (_) -> Void in
+            self.mentorFilter = "Completed"
+            self.loadMentors()
         }))
         menuController.addMenuItem(MenuItem(title: "Incomplete", handler: { (_) -> Void in
+            self.mentorFilter = "Incomplete"
+            self.loadMentors()
+
         }))
         self.presentViewController(menuController, animated: false, completion: nil)
     }
     
     func loadMentors() {
-        if filter == nil {
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        if self.filter == nil {
             if let _ = SAGEState.currentSemester() {
                 self.setNoContentMessage("No mentors found :(")
             } else {
@@ -144,11 +152,31 @@ class BrowseMentorsViewController: SGTableViewController {
         } else {
             self.setNoContentMessage("No mentors found :(")
         }
-        
         AdminOperations.loadMentors(filter: self.filter, completion: { (mentorArray) -> Void in
-            self.alphabetizeAndLoad(mentorArray)
+            self.helperFilter(mentorArray)
+            self.activityIndicator.stopAnimating()
             }) { (errorMessage) -> Void in
                 self.showErrorAndSetMessage(errorMessage)
+        }
+    }
+    
+    func helperFilter(mentorArray: [User]) {
+        var incompleteMentors = [User]()
+        var completedMentors = [User]()
+        for mentor in mentorArray {
+            if (mentor.semesterSummary!.completed) {
+                completedMentors.append(mentor)
+            } else {
+                incompleteMentors.append(mentor)
+            }
+        }
+        switch self.mentorFilter {
+            case .Some("Completed"):
+                return self.alphabetizeAndLoad(completedMentors)
+            case .Some("Incomplete"):
+                return self.alphabetizeAndLoad(incompleteMentors)
+            default:
+                return self.alphabetizeAndLoad(mentorArray)
         }
     }
     

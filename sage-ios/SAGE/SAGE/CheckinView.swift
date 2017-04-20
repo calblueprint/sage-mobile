@@ -126,6 +126,7 @@ class CheckinView: UIView {
         if let key = keyPath where key == "myLocation" {
             if let location = (object! as! GMSMapView).myLocation {
                 self.mapView.removeObserver(self, forKeyPath: "myLocation")
+                self.mapViewAdded = false
                 self.mapView.animateToLocation(location.coordinate)
             }
         }

@@ -94,7 +94,6 @@ class EditProfileController: FormController {
     func didSelectSchool(school: School) {
         self.user.school = school
         self.editProfileView.displaySchoolName(school.name!)
-        
     }
     
     func didSelectHours(hours: User.VolunteerLevel) {

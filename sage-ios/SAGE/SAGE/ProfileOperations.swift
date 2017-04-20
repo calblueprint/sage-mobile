@@ -109,7 +109,7 @@ class ProfileOperations: NSObject {
             }) { (operation, error) -> Void in
                 failure(BaseOperation.getErrorMessage(error))
         }
-        
+
     }
     
     static func promote(user: User, role: User.UserRole, completion: ((User) -> Void)?, failure: (String) -> Void) {

@@ -89,8 +89,7 @@ class UserNotifications: NSObject {
                 
 //                let entryTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
                 let entryTrigger = UNLocationNotificationTrigger(region: entryRegion, repeats: true)
-                let entryRequest = UNNotificationRequest(identifier: NotificationConstants.locationEntryNotificationID, content: entryContent, trigger: entryTrigger)
-                
+                let entryRequest = UNNotificationRequest(identifier: NotificationConstants.locationEntryNotificationID, content: entryContent, trigger: entryTrigger)                
                 // TODO: Not implemented
                 let exitTrigger = UNLocationNotificationTrigger(region: exitRegion, repeats: true)
                 let exitRequest = UNNotificationRequest(identifier: NotificationConstants.locationExitNotificationID, content: exitContent, trigger: exitTrigger)
@@ -104,6 +103,17 @@ class UserNotifications: NSObject {
                         VC.presentViewController(errorAlert, animated: true, completion: nil)
                     }
                 }
+                
+                UNUserNotificationCenter.currentNotificationCenter().addNotificationRequest(exitRequest) {
+                    (error) in
+                    if error != nil {
+                        let errorAlert = UIAlertController(title: "Uh Oh.", message: "We encountered an error while creating your location notification. (EC2)", preferredStyle: .Alert)
+                        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel, handler: nil)
+                        errorAlert.addAction(cancelAction)
+                        VC.presentViewController(errorAlert, animated: true, completion: nil)
+                    }
+                }
+                
             } else {
                 print("< iOS 10")
                 

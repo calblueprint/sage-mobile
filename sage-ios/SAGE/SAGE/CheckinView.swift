@@ -129,6 +129,10 @@ class CheckinView: UIView {
             }
         }
     }
+    // necessary to prevent NSInternalConsistencyException from keeping observers for GMSView
+    deinit{
+        self.mapView.removeObserver(self, forKeyPath: "myLocation")
+    }
     
     //
     // MARK: - Private methods

@@ -20,6 +20,7 @@ class CheckinView: UIView {
     var timerBubble: UIView = UIView()
     var activityIndicatorView = UIView()
     var mapView: GMSMapView = GMSMapView()
+    var mapViewAdded = false
     
     private let buttonSize: CGFloat = 56.0
     private let timerSize: CGFloat = 80.0
@@ -130,8 +131,11 @@ class CheckinView: UIView {
         }
     }
     // necessary to prevent NSInternalConsistencyException from keeping observers for GMSView
-    deinit{
-        self.mapView.removeObserver(self, forKeyPath: "myLocation")
+    func removeObservers(){
+        if (mapViewAdded){
+            self.mapView.removeObserver(self, forKeyPath: "myLocation")
+            self.mapViewAdded = false
+        }
     }
     
     //
@@ -140,6 +144,7 @@ class CheckinView: UIView {
     private func setupSubviews() {
         self.mapView.camera = GMSCameraPosition(target: berkeleyCoordinates, zoom: 18, bearing: 0, viewingAngle: 0)
         self.mapView.addObserver(self, forKeyPath: "myLocation", options: .New, context: nil)
+        self.mapViewAdded = true
         self.addSubview(self.mapView)
         
         let checkSize: CGFloat = 24

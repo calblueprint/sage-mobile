@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(center: UNUserNotificationCenter, willPresentNotification notification: UNNotification, withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void) {
         print("Recieved notification in foreground: \(notification)")
         UserNotifications.removeDeliveredNotifications()
-        completionHandler([])
+        completionHandler([.Alert, .Sound])
     }
     
     //

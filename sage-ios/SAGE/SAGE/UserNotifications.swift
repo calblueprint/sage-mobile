@@ -89,7 +89,8 @@ class UserNotifications: NSObject {
                 
 //                let entryTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 20, repeats: false)
                 let entryTrigger = UNLocationNotificationTrigger(region: entryRegion, repeats: true)
-                let entryRequest = UNNotificationRequest(identifier: NotificationConstants.locationEntryNotificationID, content: entryContent, trigger: entryTrigger)                
+                let entryRequest = UNNotificationRequest(identifier: NotificationConstants.locationEntryNotificationID, content: entryContent, trigger: entryTrigger)
+                
                 // TODO: Not implemented
                 let exitTrigger = UNLocationNotificationTrigger(region: exitRegion, repeats: true)
                 let exitRequest = UNNotificationRequest(identifier: NotificationConstants.locationExitNotificationID, content: exitContent, trigger: exitTrigger)
@@ -103,7 +104,6 @@ class UserNotifications: NSObject {
                         VC.presentViewController(errorAlert, animated: true, completion: nil)
                     }
                 }
-                
                 UNUserNotificationCenter.currentNotificationCenter().addNotificationRequest(exitRequest) {
                     (error) in
                     if error != nil {

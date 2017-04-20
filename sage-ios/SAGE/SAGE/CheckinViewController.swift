@@ -102,6 +102,7 @@ class CheckinViewController: SGViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.locationManager.stopUpdatingLocation()
+        self.checkinView.removeObservers()
         UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     

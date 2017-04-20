@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesomeKit
 import SwiftKeychainWrapper
 
 class BrowseMentorsViewController: SGTableViewController {
@@ -61,6 +62,12 @@ class BrowseMentorsViewController: SGTableViewController {
             self.changeSubtitle("This Semester")
         }
         
+        let filterIcon = FAKIonIcons.androidFunnelIconWithSize(UIConstants.barbuttonIconSize)
+        let filterImage = filterIcon.imageWithSize(CGSizeMake(UIConstants.barbuttonIconSize, UIConstants.barbuttonIconSize))
+        let filterButton = UIBarButtonItem(image: filterImage, style: .Plain, target: self, action: #selector(BrowseMentorsViewController.showFilterOptions))
+        self.navigationItem.rightBarButtonItem = filterButton
+
+        
         self.tableView.sectionIndexColor = UIColor.mainColor
         self.tableView.tableFooterView = UIView()
         self.tableView.sectionIndexBackgroundColor = UIColor.clearColor()
@@ -113,6 +120,18 @@ class BrowseMentorsViewController: SGTableViewController {
         } else {
             return 0.0
         }
+    }
+    
+    func showFilterOptions() {
+        let menuController = MenuController(title: "Display Options")
+        menuController.addMenuItem(MenuItem(title: "All", handler: { (_) -> Void in
+            
+        }))
+        menuController.addMenuItem(MenuItem(title: "Completed", handler: { (_) -> Void in
+        }))
+        menuController.addMenuItem(MenuItem(title: "Incomplete", handler: { (_) -> Void in
+        }))
+        self.presentViewController(menuController, animated: false, completion: nil)
     }
     
     func loadMentors() {
